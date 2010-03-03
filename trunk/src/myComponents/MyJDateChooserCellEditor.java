@@ -1,0 +1,67 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package myComponents;
+
+import com.toedter.calendar.JDateChooser;
+import java.awt.Component;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.AbstractCellEditor;
+import javax.swing.JTable;
+import javax.swing.table.TableCellEditor;
+import tools.options.Options;
+
+/**
+ * The cell editor for the datechooser
+ * @author lordovol
+ */
+public class MyJDateChooserCellEditor extends AbstractCellEditor implements TableCellEditor {
+
+  private static final long serialVersionUID = 917881575221755609L;
+  /**
+   * The date chooser
+   */
+  private JDateChooser dateChooser = new JDateChooser();
+  /**
+   * The date format
+   */
+  private SimpleDateFormat f = new SimpleDateFormat(Options.toString(Options.DATE_FORMAT));
+  /**
+   * Get the cell component
+   * @param table The cells table
+   * @param value The cells value
+   * @param isSelected If the cell is selected
+   * @param row The row number
+   * @param column The column number
+   * @return The date Chooser object
+   */
+  public Component getTableCellEditorComponent(JTable table, Object value,
+      boolean isSelected, int row, int column) {
+
+    Date date = null;
+    if (value instanceof Date) {
+      date = (Date) value;
+    }
+
+    dateChooser.setDate(date);
+    dateChooser.setDateFormatString(Options.toString(Options.DATE_FORMAT));
+    return dateChooser;
+  }
+
+  /**
+   * Get the value of the cell
+   * @return The cells value
+   */
+  public String getCellEditorValue() {
+    try {
+      return f.format(dateChooser.getDate());
+    } catch (NullPointerException ex) {
+      return "";
+    }
+  }
+
+
+  
+}
