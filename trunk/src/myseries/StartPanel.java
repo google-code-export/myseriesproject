@@ -47,6 +47,7 @@ public class StartPanel extends myComponents.MyDraggable {
   /** Creates new form startPanel */
   public StartPanel() {
     initComponents();
+    getRootPane().setDefaultButton(button_create);
     setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/subtitles.png")).getImage());
     getDatabases();
     progress.setVisible(false);
@@ -61,6 +62,7 @@ public class StartPanel extends myComponents.MyDraggable {
   StartPanel(MySeries m) {
     this.m = m;
     initComponents();
+    getRootPane().setDefaultButton(button_create);
     setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/subtitles.png")).getImage());
     progress.setVisible(false);
     label_title.setText("Create database");
@@ -72,6 +74,7 @@ public class StartPanel extends myComponents.MyDraggable {
     this.m = m;
     this.createNewDB = createNewDB;
     initComponents();
+    getRootPane().setDefaultButton(button_create);
     progress.setVisible(false);
     label_title.setText("Create database");
     setLocationRelativeTo(null);
@@ -283,6 +286,7 @@ public class StartPanel extends myComponents.MyDraggable {
    * @param evt
    */
     private void button_createActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_createActionPerformed
+      button_create.requestFocus();
       dbName = "";
       Boolean loadDemoData = false;
       //Load database
