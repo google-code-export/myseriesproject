@@ -74,8 +74,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   private MyEpisodesTableModel tableModel_episodes;
   private MyFilteredSeriesTableModel tableModel_filterSeries;
   private ComboBoxModel comboBoxModel_filters;
-  public static String version = "1.1(r149)";
-  public String date = "2010-02-28";
+  public static String version = "1.0(rev13)";
+  public String date = "2010-03-06";
   public static MyDisabledGlassPane glassPane;
   public static Logger logger;
   public static final long serialVersionUID = 1L;
@@ -1405,7 +1405,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
         MySeries.logger.log(Level.SEVERE, null, ex);
       } catch (IndexOutOfBoundsException ex) {
         episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
+        if(Series.getCurrentSerial().getSeries_ID() > 0 ){
         PopUpItem_AddEpisodeInEpisodes.setEnabled(true);
+        } else {
+          PopUpItem_AddEpisodeInEpisodes.setEnabled(false);
+        }
         popUpItem_deleteEpisode.setEnabled(false);
       }
 
