@@ -281,7 +281,7 @@ public class Options {
     out.println(Options.PROXY_PORT + " = ");
     out.println(Options.DIVIDER_LOCATION + " = 250");
     out.println(Options.FONT_FACE + " = Arial");
-    out.println(Options.FONT_SIZE + " = 10");
+    out.println(Options.FONT_SIZE + " = 12");
     out.println(Options.TABLE_WIDTHS + " = " + getDefaultColumnWidths());
     out.println(Options.WINDOW_STATE + " = " + JFrame.NORMAL);
     out.println(Options.WIDTH + " = 1000");
