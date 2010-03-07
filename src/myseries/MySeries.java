@@ -74,7 +74,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   private MyEpisodesTableModel tableModel_episodes;
   private MyFilteredSeriesTableModel tableModel_filterSeries;
   private ComboBoxModel comboBoxModel_filters;
-  public static String version = "1.0(rev13)";
+  public static String version = "1.0(rev14)";
   public String date = "2010-03-06";
   public static MyDisabledGlassPane glassPane;
   public static Logger logger;
@@ -305,6 +305,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     seriesPopUp = new javax.swing.JPopupMenu();
     PopUpItem_AddSeries = new javax.swing.JMenuItem();
     popUpItem_DownloadSubs = new javax.swing.JMenuItem();
+    popUpItem_GoToLocalDir = new javax.swing.JMenuItem();
     popUpItem_internetUpdate = new javax.swing.JMenuItem();
     jSeparator1 = new javax.swing.JSeparator();
     PopUpItem_AddEpisode = new javax.swing.JMenuItem();
@@ -382,6 +383,15 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       }
     });
     seriesPopUp.add(popUpItem_DownloadSubs);
+
+    popUpItem_GoToLocalDir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/localDir.png"))); // NOI18N
+    popUpItem_GoToLocalDir.setText("Open Directory");
+    popUpItem_GoToLocalDir.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        popUpItem_GoToLocalDirActionPerformed(evt);
+      }
+    });
+    seriesPopUp.add(popUpItem_GoToLocalDir);
 
     popUpItem_internetUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/internet_update.png"))); // NOI18N
     popUpItem_internetUpdate.setText("Update Episodes List");
@@ -1073,6 +1083,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     PopUpItem_DeleteSerial.setEnabled(state);
     PopUpItem_EditSerial.setEnabled(state);
     popUpItem_DownloadSubs.setEnabled(state);
+    popUpItem_GoToLocalDir.setEnabled(state);
     menuItem_exportEpisodes.setEnabled(state);
     popUpItem_exportEpisodes.setEnabled(state);
     popUpItem_internetUpdate.setEnabled(state);
@@ -1081,12 +1092,17 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       PopUpItem_DeleteSerial.setText("Delete series " + ser);
       PopUpItem_EditSerial.setText("Edit series " + ser);
       popUpItem_DownloadSubs.setText("Download Subtitles for " + ser);
+      popUpItem_GoToLocalDir.setText("Open " + ser + " directory");
       menuItem_exportEpisodes.setText("Export episodes of " + ser);
       popUpItem_exportEpisodes.setText("Export episodes of " + ser);
       popUpItem_internetUpdate.setText("Update " + ser + " episodes list");
       if (Series.getCurrentSerial().getLink().equals("")
-          || !DesktopSupport.isDesktopSupport() || !DesktopSupport.isBrowseSupport()) {
+              || !DesktopSupport.isDesktopSupport() || !DesktopSupport.isBrowseSupport()) {
         popUpItem_DownloadSubs.setEnabled(false);
+      }
+      if (Series.getCurrentSerial().getLocalDir().equals("")
+              || !DesktopSupport.isDesktopSupport()) {
+        popUpItem_GoToLocalDir.setEnabled(false);
       }
       if (Series.getCurrentSerial().getInternetUpdate() == 0) {
         popUpItem_internetUpdate.setEnabled(false);
@@ -1097,6 +1113,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       PopUpItem_DeleteSerial.setText("Delete series");
       PopUpItem_EditSerial.setText("Edit series");
       popUpItem_DownloadSubs.setText("Download Subtitles");
+      popUpItem_GoToLocalDir.setText("Open Directory");
       popUpItem_exportEpisodes.setText("Export episodes");
       popUpItem_internetUpdate.setText("Update episodes list");
     }
@@ -1176,7 +1193,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     int season = Series.getCurrentSerial().getSeason();
     int series_ID = Series.getCurrentSerial().getSeries_ID();
     int answ = MyUsefulFunctions.question("Delete Serial?", "Really delete the series "
-        + title + " season " + season + "?");
+            + title + " season " + season + "?");
     if (answ == 0) {
       try {
         String sql = "DELETE FROM series WHERE series_ID = " + series_ID;
@@ -1405,8 +1422,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
         MySeries.logger.log(Level.SEVERE, null, ex);
       } catch (IndexOutOfBoundsException ex) {
         episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
-        if(Series.getCurrentSerial().getSeries_ID() > 0 ){
-        PopUpItem_AddEpisodeInEpisodes.setEnabled(true);
+        if (Series.getCurrentSerial().getSeries_ID() > 0) {
+          PopUpItem_AddEpisodeInEpisodes.setEnabled(true);
         } else {
           PopUpItem_AddEpisodeInEpisodes.setEnabled(false);
         }
@@ -1422,7 +1439,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     String title = Episodes.getCurrentEpisode().getTitle();
     int episode_ID = Episodes.getCurrentEpisode().getEpisode_ID();
     int answ = MyUsefulFunctions.question("Delete Episode?", "Really delete the episode "
-        + title + "?");
+            + title + "?");
     if (answ == 0) {
       try {
         String sql = "DELETE FROM episodes WHERE episode_ID = " + episode_ID;
@@ -1503,7 +1520,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     glassPane.activate(null);
     SeriesRecord cSeries = Series.getCurrentSerial();
     if (Options.toString(Options.INTERNET_UPDATE_DB).equals(Options.TV_RAGE)
-        && cSeries.getTvrage_ID() == 0) {
+            && cSeries.getTvrage_ID() == 0) {
       try {
         TrGetId g = new TrGetId(this, cSeries.getSeries_ID(), cSeries.getTitle());
         cSeries.setTvrage_ID(g.tvRageID);
@@ -1538,6 +1555,16 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       }
     }
   }//GEN-LAST:event_menuItem_viewLogsActionPerformed
+
+  private void popUpItem_GoToLocalDirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_GoToLocalDirActionPerformed
+    try {
+      DesktopSupport.getDesktop().open(new File(Series.getCurrentSerial().getLocalDir()));
+    } catch (Exception ex) {
+      MySeries.logger.log(Level.WARNING, "Browse is not supported in the current OS");
+      MyUsefulFunctions.error("Browse Error!!!", "Browse is not supported");
+      return;
+    }
+  }//GEN-LAST:event_popUpItem_GoToLocalDirActionPerformed
 
   private void commitImportEpisodes() throws SQLException {
     glassPane.activate(null);
@@ -1660,6 +1687,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static javax.swing.JPanel panel_filters;
   public static javax.swing.JPanel panel_nextEpisodes;
   public static javax.swing.JMenuItem popUpItem_DownloadSubs;
+  public static javax.swing.JMenuItem popUpItem_GoToLocalDir;
   public static javax.swing.JMenuItem popUpItem_deleteEpisode;
   public static javax.swing.JMenuItem popUpItem_exportEpisodes;
   public static javax.swing.JMenuItem popUpItem_internetUpdate;
