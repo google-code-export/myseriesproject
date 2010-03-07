@@ -55,6 +55,8 @@ public class Series {
       s.setTitle(rs.getString("title"));
       s.setSeason(rs.getInt("season"));
       s.setSeries_ID(rs.getInt("series_ID"));
+      s.setTvrage_ID(rs.getInt("tvrage_ID"));
+      s.setLocalDir(rs.getString("localDir"));
       hidden = rs.getBoolean("hidden");
       s.setHidden(rs.getInt("hidden"));
       update = rs.getBoolean("internetUpdate");
@@ -101,9 +103,11 @@ public class Series {
     if (s == -1) {
       currentSeries = new SeriesRecord();
       currentSeries.setSeries_ID(0);
+      currentSeries.setTvrage_ID(0);
       currentSeries.setSeason(0);
       currentSeries.setTitle("");
       currentSeries.setLink("");
+      currentSeries.setLocalDir("");
       currentSeries.setInternetUpdate(1);
       Series.setCurrentSerial(currentSeries);
       return;
@@ -115,8 +119,10 @@ public class Series {
     ResultSet rs = SeriesRecord.query(sql);
     if (rs.next()) {
       currentSeries.setSeries_ID(rs.getInt("series_ID"));
+      currentSeries.setTvrage_ID(rs.getInt("tvrage_ID"));
       currentSeries.setSeason(rs.getInt("season"));
       currentSeries.setTitle(rs.getString("title").trim());
+      currentSeries.setLocalDir(rs.getString("localDir").trim());
       currentSeries.setLink(rs.getString("link").trim());
       currentSeries.setInternetUpdate(rs.getInt("InternetUpdate"));
       currentSeries.setTvrage_ID(rs.getInt("tvrage_ID"));
@@ -125,8 +131,10 @@ public class Series {
     //}
     } else {
       currentSeries.setSeries_ID(0);
+      currentSeries.setTvrage_ID(0);
       currentSeries.setSeason(0);
       currentSeries.setTitle("");
+      currentSeries.setLocalDir("");
       currentSeries.setLink("");
       currentSeries.setInternetUpdate(1);
       currentSeries.setTvrage_ID(0);
