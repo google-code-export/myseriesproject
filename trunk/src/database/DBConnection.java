@@ -62,7 +62,7 @@ public class DBConnection {
         stmt.execute(sql);
         }
         if(!localDir){
-        sql = "ALTER TABLE series ADD COLUMN localDir VARCHAR";
+        sql = "ALTER TABLE series ADD COLUMN localDir VARCHAR DEFAULT ''";
         stmt.execute(sql);
         }
         MyUsefulFunctions.message("Database Update", "Database Update done!!!");
