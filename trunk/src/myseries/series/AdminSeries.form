@@ -57,12 +57,12 @@
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="label_Title" alignment="1" pref="426" max="32767" attributes="0"/>
+                              <Component id="label_Title" alignment="1" pref="410" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="button_Add" min="-2" pref="60" max="-2" attributes="1"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="button_Cancel" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="295" max="32767" attributes="0"/>
+                                  <EmptySpace pref="279" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -73,20 +73,29 @@
                               <Component id="jLabel2" alignment="1" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel3" alignment="1" max="32767" attributes="1"/>
                               <Component id="jLabel4" alignment="1" max="32767" attributes="1"/>
+                              <Component id="label_localDir" alignment="1" max="32767" attributes="1"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <Component id="textfield_tvRageID" min="-2" pref="81" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="button_getTvRageID" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                                  <Component id="button_getTvRageID" linkSize="1" min="-2" pref="39" max="-2" attributes="0"/>
                               </Group>
                               <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="spinner_season" min="-2" pref="48" max="-2" attributes="0"/>
-                                  <Component id="textField_Serial" alignment="0" pref="281" max="32767" attributes="1"/>
-                                  <Component id="textfield_link" alignment="0" max="32767" attributes="1"/>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Component id="textField_Serial" alignment="0" pref="302" max="32767" attributes="1"/>
+                                          <Component id="textfield_link" alignment="0" pref="302" max="32767" attributes="1"/>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Component id="textfield_localDir" pref="257" max="32767" attributes="1"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="button_browse" linkSize="1" min="-2" pref="31" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                       </Group>
@@ -97,7 +106,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="label_Title" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -115,16 +124,19 @@
                       <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="textfield_link" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jLabel5" max="32767" attributes="1"/>
-                      <Component id="button_getTvRageID" alignment="0" max="32767" attributes="1"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="textfield_tvRageID" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="label_localDir" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="button_browse" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="textfield_localDir" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="18" max="32767" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="textfield_tvRageID" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel4" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="button_getTvRageID" pref="25" max="32767" attributes="1"/>
+                  </Group>
+                  <EmptySpace pref="25" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="button_Add" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="button_Cancel" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -205,19 +217,15 @@
         <Component class="javax.swing.JButton" name="button_getTvRageID">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/images/internet_update.png"/>
+              <Image iconType="3" name="/images/internet_update_small.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Get ID from TvRage"/>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="null"/>
-            </Property>
-            <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="iconTextGap" type="int" value="2"/>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[41, 19]"/>
+              <Dimension value="[31, 25]"/>
             </Property>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[41, 19]"/>
+              <Dimension value="[31, 25]"/>
             </Property>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
@@ -227,10 +235,28 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_getTvRageIDActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel5">
+        <Component class="javax.swing.JLabel" name="label_localDir">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Get TvRage ID"/>
+            <Property name="text" type="java.lang.String" value="Local Dir :"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="textfield_localDir">
+        </Component>
+        <Component class="javax.swing.JButton" name="button_browse">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/images/localDir.png"/>
+            </Property>
+            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[31, 25]"/>
+            </Property>
+            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[31, 25]"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_browseActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
