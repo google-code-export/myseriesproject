@@ -139,6 +139,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="View Episode"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="popUpItem_viewEpisodeActionPerformed"/>
+          </Events>
         </MenuItem>
       </SubComponents>
     </Container>
