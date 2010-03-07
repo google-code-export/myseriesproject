@@ -32,6 +32,7 @@ public class DBConnection {
     ResultSet rs;
     boolean internetUpdate = false;
     boolean tvRageID = false;
+    boolean localDir = false;
 
     try {
       rs = stmt.executeQuery(sql);
@@ -42,8 +43,11 @@ public class DBConnection {
         if (rs.getString(2).equals("tvrage_ID")) {
           tvRageID = true;
         }
+        if (rs.getString(2).equals("localDir")) {
+          localDir = true;
+        }
       }
-      if(tvRageID && internetUpdate){
+      if(tvRageID && internetUpdate && localDir){
         return true;
       }
       MyUsefulFunctions.message("Old Database version", "Database is of an older version and needs update\nA back Up is taken first!!");
@@ -55,6 +59,10 @@ public class DBConnection {
         }
         if(!tvRageID){
         sql = "ALTER TABLE series ADD COLUMN tvrage_ID INTEGER DEFAULT 0";
+        stmt.execute(sql);
+        }
+        if(!localDir){
+        sql = "ALTER TABLE series ADD COLUMN localDir VARCHAR";
         stmt.execute(sql);
         }
         MyUsefulFunctions.message("Database Update", "Database Update done!!!");
