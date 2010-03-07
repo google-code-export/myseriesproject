@@ -10,6 +10,7 @@
  */
 package myseries;
 
+import java.io.FilenameFilter;
 import java.net.URISyntaxException;
 import javax.swing.ComboBoxModel;
 import javax.swing.table.TableColumnModel;
@@ -36,6 +37,7 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -43,6 +45,8 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -55,6 +59,7 @@ import myComponents.MyJDateChooserCellRenderer;
 import myComponents.MyDisabledGlassPane;
 import myComponents.MySeriesTableModel;
 import myComponents.MyUsefulFunctions;
+import myComponents.VideoFilter;
 import myseries.filters.FilteredSeries;
 import tools.DesktopSupport;
 import tools.importExport.ExportEpisodes;
@@ -465,6 +470,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
     popUpItem_viewEpisode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/series.png"))); // NOI18N
     popUpItem_viewEpisode.setText("View Episode");
+    popUpItem_viewEpisode.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        popUpItem_viewEpisodeActionPerformed(evt);
+      }
+    });
     episodesPopUp.add(popUpItem_viewEpisode);
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -1426,7 +1436,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       } catch (IndexOutOfBoundsException ex) {
         popUpItem_deleteEpisode.setText("Delete episode");
         popUpItem_viewEpisode.setText("View episode");
-        
+
         if (Series.getCurrentSerial().getSeries_ID() > 0) {
           PopUpItem_AddEpisodeInEpisodes.setEnabled(true);
         } else {
@@ -1572,33 +1582,91 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     }
   }//GEN-LAST:event_popUpItem_GoToLocalDirActionPerformed
 
+  private void popUpItem_viewEpisodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_viewEpisodeActionPerformed
+    File localDir = new File(Series.getCurrentSerial().getLocalDir().trim());
+    int season = Series.getCurrentSerial().getSeason();
+    int episode = Episodes.getCurrentEpisode().getEpisode();
+    String regex = "[\\D]" + season + "[Xx[eE(ep)(EP)]]0*" + episode + "\\D";
+    getFiles(localDir, regex);
+  }//GEN-LAST:event_popUpItem_viewEpisodeActionPerformed
+
+  private void getFiles(File directory, String regex) {
+    ArrayList<File> videos = new ArrayList<File>();
+    File[] files = directory.listFiles(new VideoFilter());
+
+    Pattern p = Pattern.compile(regex);
+    for (int i = 0; i < files.length; i++) {
+      File file = files[i];
+      Matcher matcher = p.matcher(file.getName());
+      if (matcher.find()) {
+        videos.add(file);
+      }
+    }
+    if (videos.size() == 1) {
+      String videoName = videos.get(0).getName();
+      File video = new File(directory+ "/" + videoName);
+      if (!video.isDirectory()) {
+        playVideo(video);
+      } else {
+        getFiles(video, regex);
+      }
+    } else {
+      System.out.println("multiple files found");
+    }
+
+  }
+
+  private void playVideo(File video) {
+
+    try {
+      Desktop.getDesktop().open(video);
+    } catch (Exception ex) {
+      MySeries.logger.log(Level.WARNING, "Playing videos is not supported", ex);
+      MyUsefulFunctions.error("Not supported", "Playing videos is not supported by your OS");
+    }
+  }
+
   private void commitImportEpisodes() throws SQLException {
     glassPane.activate(null);
     ImportEpisodes imp = new ImportEpisodes(this);
+
+
   }
 
   private void commitExportEpisodes() throws IOException, SQLException {
     ExportEpisodes ex = new ExportEpisodes();
+
+
   }
 
   private void downloadSubs() throws IOException, URISyntaxException {
     if (!DesktopSupport.isBrowseSupport()) {
       MySeries.logger.log(Level.WARNING, "Browse is not supported in the current OS");
       MyUsefulFunctions.error("Browse Error!!!", "Browse is not supported");
+
+
       return;
+
+
     }
     java.net.URI uri = new java.net.URI(Series.getCurrentSerial().getLink());
     DesktopSupport.getDesktop().browse(uri);
+
+
   }
 
   private void applyFilter() throws SQLException {
     String title = "";
     title = String.valueOf(combobox_filters.getSelectedItem());
     SavedFilterRecord f = SavedFilterRecord.getSavedFilterByTitle(title);
+
+
     if (f != null) {
       combobox_downloaded.setSelectedIndex(f.getDownloaded());
       comboBox_seen.setSelectedIndex(f.getSeen());
       comboBox_subtitles.setSelectedIndex(f.getSubtitles());
+
+
     }
   }
 
@@ -1606,18 +1674,30 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     String title = "";
     title = String.valueOf(combobox_filters.getSelectedItem());
     SavedFilterRecord f;
+
+
     int answ = MyUsefulFunctions.question("Delete Filter?", "Are you sure that you want to delete the filter?");
+
+
     if (answ == 0) {
       f = SavedFilterRecord.getSavedFilterByTitle(title);
+
+
       if (f != null) {
         f.delete();
         MyUsefulFunctions.message("Filter deleted", "Filter was deleted");
 
+
+
       } else {
         MyUsefulFunctions.error("Error", "Filter could not be deleted");
+
+
       }
       comboBoxModel_filters = new DefaultComboBoxModel(SavedFilterRecord.getFiltersList());
       combobox_filters.setModel(comboBoxModel_filters);
+
+
     }
   }
 
@@ -1625,12 +1705,20 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     String title = "";
     title = String.valueOf(combobox_filters.getSelectedItem());
     SavedFilterRecord f;
+
+
     if (title.trim().equals("") || title.equals("null")) {
       MyUsefulFunctions.error("Empty title", "Please specify a save name");
+
+
     } else {
       f = SavedFilterRecord.getSavedFilterByTitle(title);
+
+
       if (f == null) {
         f = new SavedFilterRecord();
+
+
       }
       f.setDownloaded(combobox_downloaded.getSelectedIndex());
       f.setSeen(comboBox_seen.getSelectedIndex());
@@ -1640,6 +1728,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       MyUsefulFunctions.message("Filter saved", "Filter was saved");
       comboBoxModel_filters = new DefaultComboBoxModel(SavedFilterRecord.getFiltersList());
       combobox_filters.setModel(comboBoxModel_filters);
+
+
     }
   }
   // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1714,18 +1804,31 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public void tableChanged(TableModelEvent e) {
     if (e.getSource() instanceof MyEpisodesTableModel) {
       String rec[] = new String[7];
+
+
       if (e.getType() == 0) {
 
         int row = e.getFirstRow();
         TableModel model = (TableModel) e.getSource();
-        for (int i = 0; i < 7; i++) {
+
+
+        for (int i = 0; i
+                < 7; i++) {
           rec[i] = String.valueOf(model.getValueAt(row, i));
+
+
         }
         updateEpisode(rec);
+
+
         try {
           Episodes.updateEpisodesTable();
+
+
         } catch (SQLException ex) {
           MySeries.logger.log(Level.SEVERE, null, ex);
+
+
         }
 
 
@@ -1736,13 +1839,22 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
         TableModel model = (TableModel) e.getSource();
         String rec[] = new String[model.getColumnCount()];
-        for (int i = 0; i < model.getColumnCount(); i++) {
+
+
+        for (int i = 0; i
+                < model.getColumnCount(); i++) {
           rec[i] = String.valueOf(model.getValueAt(row, i));
+
+
         }
         try {
           updateSeries(rec);
+
+
         } catch (SQLException ex) {
           MySeries.logger.log(Level.SEVERE, null, ex);
+
+
         }
       }
     }
@@ -1756,20 +1868,33 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     ser.save();
     NextEpisodes.createNextEpisodes();
     NextEpisodes.show();
+
+
   }
 
   private void updateEpisode(int row) {
     String rec[] = new String[7];
-    for (int i = 0; i < 7; i++) {
+
+
+    for (int i = 0; i
+            < 7; i++) {
       rec[i] = String.valueOf(tableModel_episodes.getValueAt(row, i));
+
+
     }
     updateEpisode(rec);
+
+
     try {
       Episodes.updateEpisodesTable();
       NextEpisodes.createNextEpisodes();
       NextEpisodes.show();
+
+
     } catch (SQLException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);
+
+
     }
   }
 
@@ -1778,8 +1903,12 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       EpisodesRecord er = EpisodesRecord.getEpisodeByID(Integer.parseInt(rec[6]));
       er.setEpisode(Integer.parseInt(rec[0]));
       er.setTitle(rec[1]);
+
+
       if (!rec[2].equals("")) {
         er.setAired(rec[2]);
+
+
       }
       er.setDownloaded(rec[3].equals("true") ? 1 : 0);
       er.setSubs(rec[4].equals("None") ? 0 : rec[4].equals("English") ? 1 : rec[4].equals("Greek") ? 2 : rec[4].equals("Both") ? 3 : 4);
@@ -1787,10 +1916,15 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       er.save();
       NextEpisodes.createNextEpisodes();
       NextEpisodes.show();
+
+
     } catch (SQLException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);
+
+
     } catch (NumberFormatException ex) {
       MyUsefulFunctions.error("Not a number", "The value you entered is not a number");
+
     }
 
   }
