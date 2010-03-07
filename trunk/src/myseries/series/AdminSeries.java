@@ -173,7 +173,7 @@ public class AdminSeries extends MyDraggable {
 
     label_localDir.setText("Local Dir :");
 
-    button_browse.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/localDir.png"))); // NOI18N
+    button_browse.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/localDir_small.png"))); // NOI18N
     button_browse.setMaximumSize(new java.awt.Dimension(31, 25));
     button_browse.setMinimumSize(new java.awt.Dimension(31, 25));
     button_browse.addActionListener(new java.awt.event.ActionListener() {

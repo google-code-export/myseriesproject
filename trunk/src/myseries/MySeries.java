@@ -32,6 +32,7 @@ import help.CheckUpdate;
 import help.Help;
 import java.awt.Color;
 import java.awt.Desktop;
+import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -315,6 +316,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     episodesPopUp = new javax.swing.JPopupMenu();
     PopUpItem_AddEpisodeInEpisodes = new javax.swing.JMenuItem();
     popUpItem_deleteEpisode = new javax.swing.JMenuItem();
+    popUpItem_viewEpisode = new javax.swing.JMenuItem();
     splitPane_main = new javax.swing.JSplitPane();
     panel_Series = new javax.swing.JPanel();
     scrollPane_series = new javax.swing.JScrollPane();
@@ -442,8 +444,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     });
     seriesPopUp.add(popUpItem_exportEpisodes);
 
-    episodesPopUp.setPreferredSize(new java.awt.Dimension(200, 50));
-
     PopUpItem_AddEpisodeInEpisodes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add_episode.png"))); // NOI18N
     PopUpItem_AddEpisodeInEpisodes.setText("Add episode");
     PopUpItem_AddEpisodeInEpisodes.setEnabled(false);
@@ -462,6 +462,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       }
     });
     episodesPopUp.add(popUpItem_deleteEpisode);
+
+    popUpItem_viewEpisode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/series.png"))); // NOI18N
+    popUpItem_viewEpisode.setText("View Episode");
+    episodesPopUp.add(popUpItem_viewEpisode);
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setTitle("MySerieS v" + version+ " - Database: " + Options.toString(Options.DB_NAME).replace(".db", ""));
@@ -1409,25 +1413,27 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       try {
         int s = Integer.parseInt(String.valueOf(table_episodesList.getValueAt(rowSelected, 0)));
         Episodes.setCurrentEpisode(s);
-        episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
         PopUpItem_AddEpisodeInEpisodes.setEnabled(true);
+        popUpItem_viewEpisode.setEnabled(!Series.getCurrentSerial().getLocalDir().equals(""));
+        popUpItem_viewEpisode.setText("View episode " + Episodes.getCurrentEpisode().getTitle());
         PopUpItem_AddEpisodeInEpisodes.setText("Add new episode");
-        PopUpItem_AddEpisodeInEpisodes.validate();
-        if (rowSelected > -1) {
-          popUpItem_deleteEpisode.setEnabled(true);
-        } else {
-          popUpItem_deleteEpisode.setEnabled(false);
-        }
+        popUpItem_deleteEpisode.setEnabled(rowSelected > -1);
+        popUpItem_deleteEpisode.setText("Delete episode " + Episodes.getCurrentEpisode().getTitle());
+        popUpItem_viewEpisode.validate();
+        episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
       } catch (SQLException ex) {
         MySeries.logger.log(Level.SEVERE, null, ex);
       } catch (IndexOutOfBoundsException ex) {
-        episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
+        popUpItem_deleteEpisode.setText("Delete episode");
+        popUpItem_viewEpisode.setText("View episode");
+        
         if (Series.getCurrentSerial().getSeries_ID() > 0) {
           PopUpItem_AddEpisodeInEpisodes.setEnabled(true);
         } else {
           PopUpItem_AddEpisodeInEpisodes.setEnabled(false);
         }
         popUpItem_deleteEpisode.setEnabled(false);
+        episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
       }
 
     } else {
@@ -1691,6 +1697,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static javax.swing.JMenuItem popUpItem_deleteEpisode;
   public static javax.swing.JMenuItem popUpItem_exportEpisodes;
   public static javax.swing.JMenuItem popUpItem_internetUpdate;
+  public static javax.swing.JMenuItem popUpItem_viewEpisode;
   public static javax.swing.JScrollPane scrollPane_series;
   public static javax.swing.JPopupMenu seriesPopUp;
   public static javax.swing.JSplitPane splitPane_main;
