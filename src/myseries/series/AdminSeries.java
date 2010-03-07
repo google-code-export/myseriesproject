@@ -79,6 +79,8 @@ public class AdminSeries extends MyDraggable {
               " S" + MyUsefulFunctions.padLeft(seriesRecord.getSeason(), 2, "0"));
       textfield_link.setText(seriesRecord.getLink());
       textfield_tvRageID.setText(String.valueOf(seriesRecord.getTvrage_ID()));
+      textfield_localDir.setText(seriesRecord.getLocalDir());
+      button_Add.setText("Edit");
     } else {
       label_Title.setText("Add New Series");
     }
