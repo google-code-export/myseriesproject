@@ -10,6 +10,7 @@
  */
 package help;
 
+import java.awt.Cursor;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -37,7 +38,6 @@ public class CheckUpdate extends MyDraggable {
   /** Creates new form CheckUpdate */
   public CheckUpdate() {
     initComponents();
-    panel_download.setVisible(false);
 
     if (check()) {
       MySeries.logger.log(Level.INFO, "Checking updates");
@@ -51,22 +51,19 @@ public class CheckUpdate extends MyDraggable {
 
   class Update implements Runnable {
 
-    protected String latestVersionData[] = new String[2];
+    protected String latestVersion;
     private String currentVersion;
+    private String latestVersionUri;
 
     public void run() {
       try {
-        latestVersionData = getLatestVersion();
-        if (latestVersionData != null) {
+        latestVersion = getLatestVersion();
+        if (latestVersion != null) {
           currentVersion = MySeries.version;
-          label_latestVersion.setText(latestVersionData[1]);
-          System.out.println(latestVersionData[1]);
-          System.out.println(latestVersionData[2]);
-          if (currentVersion.compareTo(latestVersionData[1]) < 0) {
+          label_latestVersion.setText(latestVersion);
+          if (currentVersion.compareTo(latestVersion) < 0) {
             label_needUpdate.setText("An update is found");
-            label_needUpdate1.setText("Click on the icon to download it.");
-            panel_download.setVisible(true);
-            button_download.setEnabled(true);
+            label_needUpdate1.setText("Click here to go to the download page.");
           } else {
             label_needUpdate.setText("You are up to date!!!");
           }
@@ -83,19 +80,22 @@ public class CheckUpdate extends MyDraggable {
       }
     }
 
-    private String[] getLatestVersion() throws MalformedURLException, IOException {
-      URL v = new URL("http://sites.google.com/site/myjseries/version");
+    private String getLatestVersion() throws MalformedURLException, IOException {
+      URL v = new URL("http://code.google.com/p/myseriesproject/");
       BufferedReader in = new BufferedReader(new InputStreamReader(v.openStream()));
       label_needUpdate.setText("Connected to server!!!");
       String inputLine;
       while ((inputLine = in.readLine()) != null) {
-        if (inputLine.startsWith("<div dir=\"ltr\">version")) {
-          inputLine = MyUsefulFunctions.stripHTML(inputLine);
+        int pos = inputLine.indexOf("Current version :");
+        if (pos > -1) {
+          inputLine = inputLine.substring(pos + 17);
+          inputLine = MyUsefulFunctions.stripHTML(inputLine).trim();
+          String uri = inputLine.replaceAll("[\\(\\)]", "").replaceAll("rev", "r");
+          latestVersionUri = "http://code.google.com/p/myseriesproject/downloads/list";
           in.close();
           progressBar_checkUpdates.setIndeterminate(false);
           progressBar_checkUpdates.setString("");
-          String[] vars = inputLine.split("\\$", -1);
-          return vars;
+          return inputLine;
         }
       }
       return null;
@@ -130,8 +130,6 @@ public class CheckUpdate extends MyDraggable {
     label_latestVersion = new javax.swing.JLabel();
     progressBar_checkUpdates = new javax.swing.JProgressBar();
     button_close = new javax.swing.JButton();
-    panel_download = new javax.swing.JPanel();
-    button_download = new javax.swing.JButton();
     jPanel3 = new javax.swing.JPanel();
     label_needUpdate = new javax.swing.JLabel();
     label_needUpdate1 = new javax.swing.JLabel();
@@ -167,36 +165,21 @@ public class CheckUpdate extends MyDraggable {
       }
     });
 
-    button_download.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/save.png"))); // NOI18N
-    button_download.setToolTipText("Download Update");
-    button_download.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-    button_download.setEnabled(false);
-    button_download.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        button_downloadActionPerformed(evt);
-      }
-    });
-
-    javax.swing.GroupLayout panel_downloadLayout = new javax.swing.GroupLayout(panel_download);
-    panel_download.setLayout(panel_downloadLayout);
-    panel_downloadLayout.setHorizontalGroup(
-      panel_downloadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(panel_downloadLayout.createSequentialGroup()
-        .addContainerGap()
-        .addComponent(button_download, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-    );
-    panel_downloadLayout.setVerticalGroup(
-      panel_downloadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_downloadLayout.createSequentialGroup()
-        .addContainerGap(20, Short.MAX_VALUE)
-        .addComponent(button_download)
-        .addContainerGap())
-    );
-
     label_needUpdate.setText(" ");
 
+    label_needUpdate1.setFont(label_needUpdate1.getFont().deriveFont(label_needUpdate1.getFont().getStyle() | java.awt.Font.BOLD, label_needUpdate1.getFont().getSize()+1));
     label_needUpdate1.setText(" ");
+    label_needUpdate1.addMouseListener(new java.awt.event.MouseAdapter() {
+      public void mouseEntered(java.awt.event.MouseEvent evt) {
+        label_needUpdate1MouseEntered(evt);
+      }
+      public void mouseExited(java.awt.event.MouseEvent evt) {
+        label_needUpdate1MouseExited(evt);
+      }
+      public void mouseReleased(java.awt.event.MouseEvent evt) {
+        label_needUpdate1MouseReleased(evt);
+      }
+    });
 
     javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
     jPanel3.setLayout(jPanel3Layout);
@@ -204,10 +187,11 @@ public class CheckUpdate extends MyDraggable {
       jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(jPanel3Layout.createSequentialGroup()
         .addContainerGap()
-        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-          .addComponent(label_needUpdate1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-          .addComponent(label_needUpdate, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE))
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(label_needUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
+          .addGroup(jPanel3Layout.createSequentialGroup()
+            .addComponent(label_needUpdate1, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
+            .addContainerGap())))
     );
     jPanel3Layout.setVerticalGroup(
       jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,27 +210,24 @@ public class CheckUpdate extends MyDraggable {
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(jPanel1Layout.createSequentialGroup()
             .addContainerGap()
-            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(panel_download, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-          .addGroup(jPanel1Layout.createSequentialGroup()
-            .addContainerGap()
             .addComponent(button_close))
-          .addGroup(jPanel1Layout.createSequentialGroup()
-            .addGap(33, 33, 33)
-            .addComponent(progressBar_checkUpdates, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
           .addGroup(jPanel1Layout.createSequentialGroup()
             .addContainerGap()
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
+              .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
               .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                   .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                   .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                  .addComponent(label_currentVersion, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
-                  .addComponent(label_latestVersion, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE))))))
+                  .addComponent(label_currentVersion, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+                  .addComponent(label_latestVersion, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)))))
+          .addGroup(jPanel1Layout.createSequentialGroup()
+            .addContainerGap()
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(progressBar_checkUpdates, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
+              .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         .addContainerGap())
     );
     jPanel1Layout.setVerticalGroup(
@@ -265,9 +246,7 @@ public class CheckUpdate extends MyDraggable {
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(progressBar_checkUpdates, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-          .addComponent(panel_download, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-          .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
+        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(button_close)
         .addContainerGap())
@@ -277,7 +256,7 @@ public class CheckUpdate extends MyDraggable {
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
+      .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -292,10 +271,10 @@ public class CheckUpdate extends MyDraggable {
       dispose();
     }//GEN-LAST:event_button_closeActionPerformed
 
-    private void button_downloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_downloadActionPerformed
+  private void downloadUpdate() {
     try {
-      URI download = new URI(up.latestVersionData[2]);
-      if(DesktopSupport.isBrowseSupport()){
+      URI download = new URI(up.latestVersionUri);
+      if (DesktopSupport.isBrowseSupport()) {
         try {
           DesktopSupport.getDesktop().browse(download);
         } catch (IOException ex) {
@@ -306,13 +285,23 @@ public class CheckUpdate extends MyDraggable {
         MySeries.logger.log(Level.WARNING, "Opening a browser window is not supported in your OS");
       }
     } catch (URISyntaxException ex) {
-      Logger.getLogger(CheckUpdate.class.getName()).log(Level.SEVERE, null, ex);
-    } 
-    }//GEN-LAST:event_button_downloadActionPerformed
+      MySeries.logger.log(Level.SEVERE, null, ex);
+    }
+  }
+    private void label_needUpdate1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_needUpdate1MouseEntered
+      this.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_label_needUpdate1MouseEntered
+
+    private void label_needUpdate1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_needUpdate1MouseExited
+      this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }//GEN-LAST:event_label_needUpdate1MouseExited
+
+    private void label_needUpdate1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_needUpdate1MouseReleased
+      downloadUpdate();
+    }//GEN-LAST:event_label_needUpdate1MouseReleased
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton button_close;
-  private javax.swing.JButton button_download;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JLabel jLabel3;
@@ -322,7 +311,6 @@ public class CheckUpdate extends MyDraggable {
   private javax.swing.JLabel label_latestVersion;
   private javax.swing.JLabel label_needUpdate;
   private javax.swing.JLabel label_needUpdate1;
-  private javax.swing.JPanel panel_download;
   private javax.swing.JProgressBar progressBar_checkUpdates;
   // End of variables declaration//GEN-END:variables
 }
