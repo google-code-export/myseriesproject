@@ -34,11 +34,14 @@ public class CheckUpdate extends MyDraggable {
   private boolean isConected;
   private Update up;
   private static final long serialVersionUID = 34646758678L;
+  private boolean onStartUp;
 
-  /** Creates new form CheckUpdate */
-  public CheckUpdate() {
+  /** Creates new form CheckUpdate
+   * @param onStartUp 
+   */
+  public CheckUpdate(boolean onStartUp) {
     initComponents();
-
+    this.onStartUp = onStartUp;
     if (check()) {
       MySeries.logger.log(Level.INFO, "Checking updates");
       up = new Update();
@@ -46,7 +49,9 @@ public class CheckUpdate extends MyDraggable {
       t.start();
     }
     setLocationRelativeTo(null);
-    setVisible(true);
+    if (!onStartUp) {
+      setVisible(true);
+    }
   }
 
   class Update implements Runnable {
@@ -62,10 +67,15 @@ public class CheckUpdate extends MyDraggable {
           currentVersion = MySeries.version;
           label_latestVersion.setText(latestVersion);
           if (currentVersion.compareTo(latestVersion) < 0) {
+            MySeries.logger.log(Level.INFO,"Updated version is found!!!");
             label_needUpdate.setText("An update is found");
             label_needUpdate1.setText("Click here to go to the download page.");
+             if(onStartUp){
+              setVisible(true);
+            }
           } else {
             label_needUpdate.setText("You are up to date!!!");
+            MySeries.logger.log(Level.INFO,"You are up to date!!!");
           }
         } else {
           MySeries.logger.log(Level.WARNING, "Can't get the update data");
@@ -299,7 +309,6 @@ public class CheckUpdate extends MyDraggable {
     private void label_needUpdate1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_needUpdate1MouseReleased
       downloadUpdate();
     }//GEN-LAST:event_label_needUpdate1MouseReleased
-
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton button_close;
   private javax.swing.JLabel jLabel1;
