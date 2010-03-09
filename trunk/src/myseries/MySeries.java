@@ -56,6 +56,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
+import myComponents.ImagePanel;
 import myComponents.MyJDateChooserCellRenderer;
 import myComponents.MyDisabledGlassPane;
 import myComponents.MySeriesTableModel;
@@ -147,10 +148,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tableModel_series = Series.getTableModel_series();
 
     //Create image pane
-    JPanel imagePanel = new JPanel();
-    imagePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-    imagePanel.setBounds(2, (int) table_series.getPreferredSize().getHeight() + 20, 
-        (int) table_series.getPreferredSize().getWidth(), 200 );
+    ImagePanel imagePanel = new ImagePanel();
+
+    imagePanel.updatePosition((int) table_series.getPreferredSize().getHeight() + 20,
+        (int) table_series.getPreferredSize().getWidth() );
     imageLayerPanel.add(imagePanel);
      
     //Create the episodes data
