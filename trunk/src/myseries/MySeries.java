@@ -10,7 +10,6 @@
  */
 package myseries;
 
-import java.io.FilenameFilter;
 import java.net.URISyntaxException;
 import javax.swing.ComboBoxModel;
 import javax.swing.table.TableColumnModel;
@@ -33,18 +32,14 @@ import help.CheckUpdate;
 import help.Help;
 import java.awt.Color;
 import java.awt.Desktop;
-import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.DefaultCellEditor;
