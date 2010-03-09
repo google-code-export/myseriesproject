@@ -48,6 +48,11 @@ public class Options {
    */
   private static Map<String,Object> options;
 
+  /**
+   * The screenshots path
+   */
+  public static final String _SCREENSHOTS_PATH_ = "images/";
+
   public static String TV_RAGE = "TvRage";
   public static String EP_GUIDES = "EpGuides";
 
