@@ -75,7 +75,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   private MyEpisodesTableModel tableModel_episodes;
   private MyFilteredSeriesTableModel tableModel_filterSeries;
   private ComboBoxModel comboBoxModel_filters;
-  public static String version = "1.0(rev10)";
+  public static String version = "1.0(rev09)";
   public String date = "2010-03-06";
   public static MyDisabledGlassPane glassPane;
   public static Logger logger;
@@ -98,6 +98,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       //set look and feel
       //LookAndFeels.setLookAndFeel(this, Options.toString(Options.LOOK_AND_FEEL));
     }
+
     // Create connection
     MySeries.logger.log(Level.INFO, "Creating database connection");
     DBConnection.createConnection(Options.toString(Options.DB_NAME));
@@ -154,7 +155,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     glassPane = new MyDisabledGlassPane();
     JRootPane root = SwingUtilities.getRootPane(this);
     root.setGlassPane(glassPane);
-
+    //Check for updates
+    if(Options.toBoolean(Options.CHECK_VERSION)){
+      CheckUpdate c = new CheckUpdate(true);
+    }
   }
 
   public static void createLogger() {
@@ -1547,7 +1551,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
   private void menuItem_checkUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_checkUpdateActionPerformed
     glassPane.activate(null);
-    CheckUpdate cu = new CheckUpdate();
+    CheckUpdate cu = new CheckUpdate(false);
   }//GEN-LAST:event_menuItem_checkUpdateActionPerformed
 
   private void menuItem_viewLogsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_viewLogsActionPerformed
