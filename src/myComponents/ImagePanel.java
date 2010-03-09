@@ -5,11 +5,13 @@
 
 package myComponents;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+import tools.options.Options;
 
 /**
  *
@@ -17,16 +19,37 @@ import javax.swing.JPanel;
  */
 public class ImagePanel extends JPanel {
   private static final long serialVersionUID = 356475743574387L;
-  JLabel label = new JLabel("");
+  private Image image;
 
   public ImagePanel() {
-    label.setIcon(new ImageIcon(getClass().getResource("../images/database.png")));
-    add(label);
+    this.image = new ImageIcon(getClass().getResource("/images/logo.png")).getImage();
+    this.setBorder(BorderFactory.createLineBorder(Color.black));
   }
 
-
-
-  public void updatePosition(int yPos, int width){
-     setBounds(2, yPos, width, 200 );
+  public ImagePanel(Image image){
+    this.image = image;
   }
+
+  @Override
+  protected void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    g.drawImage(getImage(), 0, 0, getWidth(),getHeight(), this);
+  }
+
+  /**
+   * @return the image
+   */
+  public Image getImage() {
+    return image;
+  }
+
+  /**
+   * @param image the image to set
+   */
+  public void setImage(Image image) {
+    this.image = image;
+    repaint();
+  }
+
+  
 }

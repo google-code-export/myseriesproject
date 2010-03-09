@@ -30,11 +30,9 @@ import database.SeriesRecord;
 import help.About;
 import help.CheckUpdate;
 import help.Help;
-import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Desktop;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -45,12 +43,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.swing.BorderFactory;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -63,7 +59,6 @@ import myComponents.MySeriesTableModel;
 import myComponents.MyUsefulFunctions;
 import myComponents.VideoFilter;
 import myseries.filters.FilteredSeries;
-import org.netbeans.lib.awtextra.AbsoluteLayout;
 import tools.DesktopSupport;
 import tools.importExport.ExportEpisodes;
 import tools.internetUpdate.tvrage.TrGetId;
@@ -88,6 +83,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static MyDisabledGlassPane glassPane;
   public static Logger logger;
   public static final long serialVersionUID = 1L;
+  private ImagePanel imagePanel = new ImagePanel();;
+  private Image screenshot;
 
   /**
    *
@@ -148,12 +145,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tableModel_series = Series.getTableModel_series();
 
     //Create image pane
-    ImagePanel imagePanel = new ImagePanel();
-
-    imagePanel.updatePosition((int) table_series.getPreferredSize().getHeight() + 20,
-        (int) table_series.getPreferredSize().getWidth() );
     imageLayerPanel.add(imagePanel);
-     
+
+    Image image = new ImageIcon(getClass().getResource("/images/logo.png")).getImage();
+    setImage(image);
+    
     //Create the episodes data
     MySeries.logger.log(Level.INFO, "Creating episodes data");
     Episodes.setTableModel_episodes(tableModel_episodes);
@@ -506,6 +502,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
     panel_Series.setMaximumSize(new java.awt.Dimension(216, 32767));
     panel_Series.setPreferredSize(new java.awt.Dimension(216, 584));
+    panel_Series.addComponentListener(new java.awt.event.ComponentAdapter() {
+      public void componentResized(java.awt.event.ComponentEvent evt) {
+        panel_SeriesComponentResized(evt);
+      }
+    });
 
     scrollPane_series.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
     scrollPane_series.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -538,7 +539,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       panel_SeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(panel_SeriesLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(imageLayerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+        .addComponent(imageLayerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
         .addContainerGap())
       .addGroup(panel_SeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(panel_SeriesLayout.createSequentialGroup()
@@ -643,7 +644,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
         .addContainerGap()
         .addComponent(label_NextEpisodeTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(label_NextEpisode, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
+        .addComponent(label_NextEpisode, javax.swing.GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE)
         .addGap(18, 18, 18)
         .addComponent(panel_NextEpisodesbuttons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addContainerGap())
@@ -705,11 +706,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tabpanel_episodesList.setLayout(tabpanel_episodesListLayout);
     tabpanel_episodesListLayout.setHorizontalGroup(
       tabpanel_episodesListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 810, Short.MAX_VALUE)
+      .addGap(0, 814, Short.MAX_VALUE)
       .addGroup(tabpanel_episodesListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(tabpanel_episodesListLayout.createSequentialGroup()
           .addContainerGap()
-          .addComponent(panel_episodesList, javax.swing.GroupLayout.DEFAULT_SIZE, 786, Short.MAX_VALUE)
+          .addComponent(panel_episodesList, javax.swing.GroupLayout.DEFAULT_SIZE, 790, Short.MAX_VALUE)
           .addGap(14, 14, 14)))
     );
     tabpanel_episodesListLayout.setVerticalGroup(
@@ -805,7 +806,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(comboBox_subtitles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(combobox_filters, 0, 318, Short.MAX_VALUE)
+        .addComponent(combobox_filters, 0, 322, Short.MAX_VALUE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(button_saveFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -836,7 +837,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       .addGroup(tabpanel_FilteredSeriesLayout.createSequentialGroup()
         .addContainerGap()
         .addGroup(tabpanel_FilteredSeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(panel_allSeriesEpisodes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 790, Short.MAX_VALUE)
+          .addComponent(panel_allSeriesEpisodes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE)
           .addComponent(panel_filters, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         .addContainerGap())
     );
@@ -859,7 +860,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       .addGroup(panel_episodesLayout.createSequentialGroup()
         .addContainerGap()
         .addGroup(panel_episodesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(tabsPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE)
+          .addComponent(tabsPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 819, Short.MAX_VALUE)
           .addComponent(panel_nextEpisodes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         .addContainerGap())
     );
@@ -1104,6 +1105,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       try {
         Series.getCurrentSerial(s, true);
         tabsPanel.setTitleAt(0, Series.getCurrentSerial().getFullTitle());
+        Image image = new ImageIcon(Options._USER_DIR_ + "/" + Options._SCREENSHOTS_PATH_+"lost.jpg").getImage();
+        setImage(image);
       } catch (SQLException ex) {
         MySeries.logger.log(Level.SEVERE, null, ex);
       }
@@ -1612,6 +1615,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     getFiles(localDir, regex);
   }//GEN-LAST:event_popUpItem_viewEpisodeActionPerformed
 
+  private void panel_SeriesComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_panel_SeriesComponentResized
+    setImageWidth();
+  }//GEN-LAST:event_panel_SeriesComponentResized
+
   private void getFiles(File directory, String regex) {
     ArrayList<File> videos = new ArrayList<File>();
     File[] files = directory.listFiles(new VideoFilter());
@@ -1864,20 +1871,13 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
         String rec[] = new String[model.getColumnCount()];
 
 
-        for (int i = 0; i
-            < model.getColumnCount(); i++) {
+        for (int i = 0; i < model.getColumnCount(); i++) {
           rec[i] = String.valueOf(model.getValueAt(row, i));
-
-
         }
         try {
           updateSeries(rec);
-
-
         } catch (SQLException ex) {
           MySeries.logger.log(Level.SEVERE, null, ex);
-
-
         }
       }
     }
@@ -1891,8 +1891,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     ser.save();
     NextEpisodes.createNextEpisodes();
     NextEpisodes.show();
-
-
   }
 
   private void updateEpisode(int row) {
@@ -1950,5 +1948,20 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
     }
 
+  }
+
+  private void setImage(Image image) {
+    screenshot = image;
+    int tableWidth = splitPane_main.getDividerLocation() -26;
+    imagePanel.setBounds(0,(int) table_series.getPreferredSize().getHeight() + 20,
+        tableWidth , image.getHeight(this) *(tableWidth/image.getWidth(this)));
+    imagePanel.setImage(image);
+  }
+
+  private void setImageWidth() {
+    int width = splitPane_main.getDividerLocation() -26;
+    imagePanel.setBounds(0,(int) table_series.getPreferredSize().getHeight() + 20,
+        width , screenshot.getHeight(this) *(width/screenshot.getWidth(this)));
+    imagePanel.setImage(screenshot);
   }
 }
