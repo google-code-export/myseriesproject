@@ -74,6 +74,7 @@ public class Options {
   public static String WIDTH = "WIDTH";
   public static String HEIGHT = "HEIGHT";
   public static String INTERNET_UPDATE_DB = "INTERNET_UPDATE_DB";
+  public static String CHECK_VERSION = "CHECK_VERSION";
 
 
   static {
@@ -287,6 +288,7 @@ public class Options {
     out.println(Options.WIDTH + " = 1000");
     out.println(Options.HEIGHT + " = 600");
     out.println(Options.INTERNET_UPDATE_DB + "= TvRage");
+    out.println(Options.CHECK_VERSION + " = true");
     out.close();
   }
 
