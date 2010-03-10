@@ -46,8 +46,9 @@ public class ImagePanel extends JPanel {
   /**
    * @param image the image to set
    */
-  public void setImage(Image image) {
+  public void setImage(Image image,int width, int height) {
     this.image = image;
+    this.setSize(width, height);
     repaint();
   }
 
