@@ -140,7 +140,8 @@ public class CreateDatabase implements Runnable {
             "[link] VARCHAR," +
             "[internetUpdate] INTEGER DEFAULT 1," +
             "[tvrage_ID] INTEGER DEFAULT 0," +
-            "[localDir] VARCHAR DEFAULT '')");
+            "[localDir] VARCHAR DEFAULT ''," +
+            "[screenshot] VARCHAR DEFAULT '')");
     MySeries.logger.log(Level.INFO, "Creating table filters");
     stmt.executeUpdate("CREATE  TABLE IF NOT EXISTS [filters] " +
             "([filter_ID] INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , " +
