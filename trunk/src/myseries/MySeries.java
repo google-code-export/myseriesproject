@@ -1619,8 +1619,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
   private void panel_SeriesComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_panel_SeriesComponentResized
     try {
-      Thread.sleep(1000);
-      setImageWidth();
+      Thread.sleep(100);
+      relocateImage();
     } catch (InterruptedException ex) {
       Logger.getLogger(MySeries.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -1842,33 +1842,19 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     if (e.getSource() instanceof MyEpisodesTableModel) {
       String rec[] = new String[7];
 
-
       if (e.getType() == 0) {
-
         int row = e.getFirstRow();
         TableModel model = (TableModel) e.getSource();
 
-
-        for (int i = 0; i
-            < 7; i++) {
+        for (int i = 0; i< 7; i++) {
           rec[i] = String.valueOf(model.getValueAt(row, i));
-
-
         }
         updateEpisode(rec);
-
-
         try {
           Episodes.updateEpisodesTable();
-
-
         } catch (SQLException ex) {
           MySeries.logger.log(Level.SEVERE, null, ex);
-
-
         }
-
-
       }
     } else if (e.getSource() instanceof MySeriesTableModel) {
       if (e.getType() == 0) {
@@ -1876,8 +1862,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
         TableModel model = (TableModel) e.getSource();
         String rec[] = new String[model.getColumnCount()];
-
-
         for (int i = 0; i < model.getColumnCount(); i++) {
           rec[i] = String.valueOf(model.getValueAt(row, i));
         }
@@ -1886,6 +1870,9 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
         } catch (SQLException ex) {
           MySeries.logger.log(Level.SEVERE, null, ex);
         }
+      }else if(e.getType() == -1){
+        //workaround to update the screenshot position when series are added /deleted
+        splitPane_main.setDividerLocation(splitPane_main.getDividerLocation()+1);
       }
     }
 
@@ -1904,25 +1891,16 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     String rec[] = new String[7];
 
 
-    for (int i = 0; i
-        < 7; i++) {
+    for (int i = 0; i < 7; i++) {
       rec[i] = String.valueOf(tableModel_episodes.getValueAt(row, i));
-
-
     }
     updateEpisode(rec);
-
-
     try {
       Episodes.updateEpisodesTable();
       NextEpisodes.createNextEpisodes();
       NextEpisodes.show();
-
-
     } catch (SQLException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);
-
-
     }
   }
 
@@ -1931,12 +1909,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       EpisodesRecord er = EpisodesRecord.getEpisodeByID(Integer.parseInt(rec[6]));
       er.setEpisode(Integer.parseInt(rec[0]));
       er.setTitle(rec[1]);
-
-
       if (!rec[2].equals("")) {
         er.setAired(rec[2]);
-
-
       }
       er.setDownloaded(rec[3].equals("true") ? 1 : 0);
       er.setSubs(rec[4].equals("None") ? 0 : rec[4].equals("English") ? 1 : rec[4].equals("Greek") ? 2 : rec[4].equals("Both") ? 3 : 4);
@@ -1961,17 +1935,16 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     screenshot = image;
     int width = splitPane_main.getDividerLocation() -26;
     int height = (int) (image.getHeight(this) *((double)width/(double)image.getWidth(this)));
-    System.out.println(width+" " + height);
     imagePanel.setBounds(0,(int) table_series.getPreferredSize().getHeight() + 20,
         width , height);
     imagePanel.setImage(image,width,height);
   }
 
-  private void setImageWidth() {
+  private void relocateImage() {
       int width = splitPane_main.getDividerLocation() - 26;
       int height = (int) (screenshot.getHeight(this) *  ((double)width/(double)screenshot.getWidth(this)));
-      System.out.println(width + " " + height);
-      imagePanel.setBounds(0, (int) table_series.getPreferredSize().getHeight() + 20, width, height);
+      int yPos = (int) table_series.getPreferredSize().getHeight() + 20;
+      imagePanel.setBounds(0, yPos, width, height);
       imagePanel.setImage(screenshot, width, height);
   }
 }
