@@ -148,7 +148,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     imageLayerPanel.add(imagePanel);
     Image image = new ImageIcon(getClass().getResource("/images/logo.png")).getImage();
     setImage(image);
-
+    
     //Create the episodes data
     MySeries.logger.log(Level.INFO, "Creating episodes data");
     Episodes.setTableModel_episodes(tableModel_episodes);
@@ -1104,10 +1104,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       try {
         Series.getCurrentSerial(s, true);
         tabsPanel.setTitleAt(0, Series.getCurrentSerial().getFullTitle());
-        String imagePath = Options._USER_DIR_ + "/" + Options._SCREENSHOTS_PATH_ + "lost.jpg";
-        if(new File(imagePath).exists()){
-        screenshot = new ImageIcon(imagePath).getImage();
-        setImage(screenshot);
+        String imagePath = Options._USER_DIR_ + "/" + Options._SCREENSHOTS_PATH_+"lost.jpg";
+        if(new File(imagePath).isFile()){
+        Image image = new ImageIcon(imagePath).getImage();
+        setImage(image);
         }
       } catch (SQLException ex) {
         MySeries.logger.log(Level.SEVERE, null, ex);
@@ -1618,7 +1618,12 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   }//GEN-LAST:event_popUpItem_viewEpisodeActionPerformed
 
   private void panel_SeriesComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_panel_SeriesComponentResized
-    setImageWidth();
+    try {
+      Thread.sleep(1000);
+      setImageWidth();
+    } catch (InterruptedException ex) {
+      Logger.getLogger(MySeries.class.getName()).log(Level.SEVERE, null, ex);
+    }
   }//GEN-LAST:event_panel_SeriesComponentResized
 
   private void getFiles(File directory, String regex) {
@@ -1953,26 +1958,20 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   }
 
   private void setImage(Image image) {
-    int width = splitPane_main.getDividerLocation() - 26;
-    int height = (int) (image.getHeight(this) * ((double) width / (double) image.getWidth(this)));
-    imagePanel.setBounds(0, (int) table_series.getPreferredSize().getHeight() + 20,
-        width, height);
-    imagePanel.setImage(image, width, height);
+    screenshot = image;
+    int width = splitPane_main.getDividerLocation() -26;
+    int height = (int) (image.getHeight(this) *((double)width/(double)image.getWidth(this)));
+    System.out.println(width+" " + height);
+    imagePanel.setBounds(0,(int) table_series.getPreferredSize().getHeight() + 20,
+        width , height);
+    imagePanel.setImage(image,width,height);
   }
 
   private void setImageWidth() {
-    try {
-      Thread.sleep(500);
       int width = splitPane_main.getDividerLocation() - 26;
-
-      int height = (int) (screenshot.getHeight(this) * ((double) width / (double) screenshot.getWidth(this)));
-      imagePanel.setBounds(0, (int) table_series.getPreferredSize().getHeight() + 20,
-          width, height);
+      int height = (int) (screenshot.getHeight(this) *  ((double)width/(double)screenshot.getWidth(this)));
+      System.out.println(width + " " + height);
+      imagePanel.setBounds(0, (int) table_series.getPreferredSize().getHeight() + 20, width, height);
       imagePanel.setImage(screenshot, width, height);
-    } catch (InterruptedException ex) {
-      Logger.getLogger(MySeries.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (NullPointerException ex) {
-      System.out.println(ex.getCause());
-    }
   }
 }
