@@ -351,12 +351,12 @@ public class StartPanel extends myComponents.MyDraggable {
    * Check if needed directories exist and if not create them
    * @throws java.io.IOException
    */
-  private static void checkDirs() {
-    if (!new File(Options._USER_DIR_ + "/" + Options._DB_PATH_).isDirectory()) {
-      if (new File(Options._USER_DIR_ + "/" + Options._DB_PATH_).mkdir()) {
-        MySeries.logger.log(Level.INFO, "Created directory " + Options._DB_PATH_);
+  private static void checkDir(String dirPath) {
+    if (!new File(dirPath).isDirectory()) {
+      if (new File(dirPath).mkdir()) {
+        MySeries.logger.log(Level.INFO, "Created directory " + dirPath);
       } else {
-        MySeries.logger.log(Level.SEVERE, "Could not create directory " + Options._DB_PATH_);
+        MySeries.logger.log(Level.SEVERE, "Could not create directory " + dirPath);
       }
     }
   }
@@ -400,7 +400,8 @@ public class StartPanel extends myComponents.MyDraggable {
       
       //create dirs
       MySeries.logger.log(Level.INFO, "Checking directories");
-      checkDirs();
+      checkDir(Options._USER_DIR_ + "/" + Options._DB_PATH_);
+      checkDir(Options._USER_DIR_ + "/" + Options._SCREENSHOTS_PATH_);
       // Create the default db if not exists and create the conn, stmt
 
       if (Options.toString(Options.DB_NAME).equals("") ||
@@ -448,4 +449,5 @@ public class StartPanel extends myComponents.MyDraggable {
   public javax.swing.JProgressBar progress;
   public javax.swing.JTextField textbox_name;
   // End of variables declaration//GEN-END:variables
+
 }
