@@ -13,13 +13,12 @@ package myseries.series;
 import java.io.IOException;
 import myComponents.MyUsefulFunctions;
 import database.SeriesRecord;
-import java.awt.Color;
 import java.awt.Cursor;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.logging.Level;
-import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
+import javax.swing.SpinnerNumberModel;
 import myComponents.MyDraggable;
 import myseries.MySeries;
 import tools.internetUpdate.tvrage.TrGetId;
@@ -72,6 +71,7 @@ public class AdminSeries extends MyDraggable {
     this.seriesRecord = seriesRecord;
     initComponents();
     setLocationRelativeTo(m);
+    spinner_season.setModel(new SpinnerNumberModel(1, 1, 100, 1));
     if (seriesRecord != null) {
       spinner_season.setValue(seriesRecord.getSeason());
       textField_Serial.setText(seriesRecord.getTitle());
