@@ -19,6 +19,9 @@ public class ScreenshotFilter extends FileFilter {
 
   @Override
   public boolean accept(File f) {
+    if(f.isDirectory()){
+      return true;
+    }
      for (int i = 0; i < EXTENSIONS.length; i++) {
       String ext = EXTENSIONS[i];
       if (f.getName().endsWith(ext)) {
