@@ -7,12 +7,18 @@ package myseries.episodes;
 import myseries.series.Series;
 import database.DBConnection;
 import database.EpisodesRecord;
+import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import myComponents.MyEpisodesTableModel;
+import myComponents.MyUsefulFunctions;
+import myComponents.VideoFilter;
 
 /**
  *
@@ -37,7 +43,6 @@ public class Episodes {
    */
   private static EpisodesRecord currentEpisode;
 
-  
   /**
    * @return the tableModel_episodes
    */
@@ -66,7 +71,6 @@ public class Episodes {
     table_episodesList = aTable_episodes;
   }
 
-
   private Episodes() {
   }
 
@@ -76,22 +80,22 @@ public class Episodes {
    * @throws java.sql.SQLException
    */
   public static void setCurrentEpisode(int episode) throws SQLException {
-      String sql = "SELECT * FROM episodes " +
-              "WHERE series_ID = "+ Series.getCurrentSerial().getSeries_ID() +" AND episode = " + episode;
-      ResultSet rs = EpisodesRecord.query(sql);
-      if (rs.next()) {
-        currentEpisode = new EpisodesRecord();
-        getCurrentEpisode().setEpisode_ID(rs.getInt("episode_ID"));
-        getCurrentEpisode().setEpisode(rs.getInt("episode"));
-        getCurrentEpisode().setTitle(rs.getString("title").trim());
-        getCurrentEpisode().setAired(rs.getString("aired").trim());
-        getCurrentEpisode().setDownloaded(rs.getInt("downloaded"));
-        getCurrentEpisode().setSubs(rs.getInt("subs"));
-        getCurrentEpisode().setSeen(rs.getInt("seen"));
+    String sql = "SELECT * FROM episodes "
+            + "WHERE series_ID = " + Series.getCurrentSerial().getSeries_ID() + " AND episode = " + episode;
+    ResultSet rs = EpisodesRecord.query(sql);
+    if (rs.next()) {
+      currentEpisode = new EpisodesRecord();
+      getCurrentEpisode().setEpisode_ID(rs.getInt("episode_ID"));
+      getCurrentEpisode().setEpisode(rs.getInt("episode"));
+      getCurrentEpisode().setTitle(rs.getString("title").trim());
+      getCurrentEpisode().setAired(rs.getString("aired").trim());
+      getCurrentEpisode().setDownloaded(rs.getInt("downloaded"));
+      getCurrentEpisode().setSubs(rs.getInt("subs"));
+      getCurrentEpisode().setSeen(rs.getInt("seen"));
 
-      }
-      rs.close();
     }
+    rs.close();
+  }
 
   /**
    * Gets all the episodes of the current series
@@ -102,19 +106,20 @@ public class Episodes {
    */
   public static ArrayList<EpisodesRecord> getCurrentSeriesEpisodes() throws SQLException {
     ArrayList<EpisodesRecord> eps = new ArrayList<EpisodesRecord>();
+    ArrayList<EpisodesRecord> updated = new ArrayList<EpisodesRecord>();
     int id, subsInt, episode;
     Boolean download, seen;
     String title, aired, subs;
 
     emptyEpisodes();
-    if(Series.getCurrentSerial() == null){
-
+    if (Series.getCurrentSerial() == null) {
     }
-    String sql = "SELECT * FROM episodes WHERE series_ID = " + Series.getCurrentSerial().getSeries_ID() + 
-            " ORDER BY CAST(episode AS UNSIGNED) ASC";
+    String sql = "SELECT * FROM episodes WHERE series_ID = " + Series.getCurrentSerial().getSeries_ID()
+            + " ORDER BY CAST(episode AS UNSIGNED) ASC";
     ResultSet rs = DBConnection.stmt.executeQuery(sql);
     while (rs.next()) {
       EpisodesRecord e = new EpisodesRecord();
+      e.setSeries_ID(rs.getInt("series_ID"));
       e.setEpisode_ID(rs.getInt("episode_ID"));
       e.setTitle(rs.getString("title"));
       aired = rs.getString("aired");
@@ -123,6 +128,13 @@ public class Episodes {
       e.setEpisode(rs.getInt("episode"));
       download = rs.getBoolean("downloaded");
       e.setDownloaded(rs.getInt("downloaded"));
+      if (!download && MyUsefulFunctions.hasBeenAired(e.getAired())) {
+        System.out.println("check");
+        if (checkDownloads(Series.getCurrentSerial().getSeason(), e.getEpisode())) {
+          e.setDownloaded(1);
+          updated.add(e);
+        }
+      }
       e.setSubs(rs.getInt("subs"));
       subs = e.getSubs() == 0 ? "None" : e.getSubs() == 1 ? "English" : e.getSubs() == 2 ? "Greek" : "Both";
       seen = rs.getBoolean("seen");
@@ -131,10 +143,33 @@ public class Episodes {
       eps.add(e);
     }
     rs.close();
+    for (Iterator<EpisodesRecord> it = updated.iterator(); it.hasNext();) {
+      EpisodesRecord episodesRecord = it.next();
+      episodesRecord.save();
+      
+    }
 
     table_episodesList.setModel(getTableModel_episodes());
     getTabsPanel().setTitleAt(0, Series.getCurrentSerial().getFullTitle());
     return eps;
+  }
+
+  private static boolean checkDownloads(int season, int episode) throws SQLException {
+    File directory = new File(Series.getCurrentSerial().getLocalDir());
+    if (!directory.isDirectory()) {
+      return false;
+    }
+    File[] files = directory.listFiles(new VideoFilter());
+    String regex = "[\\D]" + season + "[Xx[eE(ep)(EP)]]0*" + episode + "\\D";
+    Pattern p = Pattern.compile(regex);
+    for (int j = 0; j < files.length; j++) {
+      File file = files[j];
+      Matcher matcher = p.matcher(file.getName());
+      if (matcher.find()) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /**
@@ -147,6 +182,10 @@ public class Episodes {
     Episodes.getCurrentSeriesEpisodes();
     tableModel_episodes = Episodes.getTableModel_episodes();
     tabsPanel = Episodes.getTabsPanel();
+
+
+
+
   }
 
   /**
@@ -156,6 +195,10 @@ public class Episodes {
     getTableModel_episodes().setRowCount(0);
     getTabsPanel().setTitleAt(0, "");
 
+
+
+
+
   }
 
   /**
@@ -163,6 +206,10 @@ public class Episodes {
    */
   public static JTabbedPane getTabsPanel() {
     return tabsPanel;
+
+
+
+
   }
 
   /**
@@ -170,6 +217,10 @@ public class Episodes {
    */
   public static void setTabsPanel(JTabbedPane tabsPanel) {
     Episodes.tabsPanel = tabsPanel;
+
+
+
+
   }
 
   /**
@@ -177,5 +228,7 @@ public class Episodes {
    */
   public static EpisodesRecord getCurrentEpisode() {
     return currentEpisode;
+
+
   }
 }

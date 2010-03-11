@@ -7,6 +7,7 @@ package database;
 import myComponents.MyUsefulFunctions;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Vector;
 
 /**
@@ -89,7 +90,7 @@ public class SeriesRecord extends Record {
     return queryUpdate(sql);
   }
 
-  /**
+   /**
    * @return the series_ID
    */
   public int getSeries_ID() {
