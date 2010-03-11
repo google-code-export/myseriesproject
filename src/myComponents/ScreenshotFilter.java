@@ -1,0 +1,36 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package myComponents;
+
+import java.io.File;
+import java.io.FilenameFilter;
+import javax.swing.filechooser.FileFilter;
+
+/**
+ *
+ * @author lordovol
+ */
+public class ScreenshotFilter extends FileFilter {
+
+  public static final String[] EXTENSIONS = {"jpg", "png", "gif", "bmp"};
+
+  @Override
+  public boolean accept(File f) {
+     for (int i = 0; i < EXTENSIONS.length; i++) {
+      String ext = EXTENSIONS[i];
+      if (f.getName().endsWith(ext)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  @Override
+  public String getDescription() {
+    return "Image Files (*.jpg, *.png, *.gif, *.bmp)";
+  }
+
+}
