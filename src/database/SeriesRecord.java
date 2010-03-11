@@ -82,9 +82,9 @@ public class SeriesRecord extends Record {
               + this.getInternetUpdate() + ", tvrage_ID = " + this.getTvrage_ID()
               + ", localDir = '" + this.localDir + "', screenshot = '" + this.screenshot + "' WHERE series_ID = " + this.getSeries_ID();
     } else {
-      sql = "INSERT INTO series (title, season, hidden, link, internetUpdate, tvrage_ID, localDir, screenshot) VALUES('" + this.title + "', "
+      sql = "INSERT INTO series (title, season, hidden, link, internetUpdate, tvrage_ID, localDir, screenshot) VALUES('" + this.getTitle() + "', "
               + this.getSeason() + ", " + this.getHidden() + ", '" + this.getLink() + "',"
-              + this.getInternetUpdate() + ", " + this.getTvrage_ID() + ", '" + this.getLocalDir() + "','" + this.screenshot + "' )";
+              + this.getInternetUpdate() + ", " + this.getTvrage_ID() + ", '" + this.getLocalDir() + "','" + this.getScreenshot() + "' )";
     }
     return queryUpdate(sql);
   }
