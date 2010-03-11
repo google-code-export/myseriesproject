@@ -333,9 +333,9 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     popUpItem_viewEpisode = new javax.swing.JMenuItem();
     splitPane_main = new javax.swing.JSplitPane();
     panel_Series = new javax.swing.JPanel();
-    imageLayerPanel = new javax.swing.JLayeredPane();
     scrollPane_series = new javax.swing.JScrollPane();
     table_series = new javax.swing.JTable();
+    imageLayerPanel = new javax.swing.JLayeredPane();
     panel_episodes = new javax.swing.JPanel();
     panel_nextEpisodes = new javax.swing.JPanel();
     label_NextEpisodeTitle = new javax.swing.JLabel();
@@ -550,8 +550,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       panel_SeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(panel_SeriesLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(imageLayerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 544, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(13, Short.MAX_VALUE))
+        .addComponent(imageLayerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 546, Short.MAX_VALUE)
+        .addContainerGap())
       .addGroup(panel_SeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(panel_SeriesLayout.createSequentialGroup()
           .addContainerGap()
@@ -1104,7 +1104,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       try {
         Series.getCurrentSerial(s, true);
         tabsPanel.setTitleAt(0, Series.getCurrentSerial().getFullTitle());
-        String imagePath = Options._USER_DIR_ + "/" + Options._SCREENSHOTS_PATH_+"lost.jpg";
+        String imagePath = Options._USER_DIR_ + "/" + Options._SCREENSHOTS_PATH_+"/"+Series.getCurrentSerial().getScreenshot();
         if(new File(imagePath).isFile()){
         Image image = new ImageIcon(imagePath).getImage();
         setImage(image);
@@ -1889,8 +1889,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
   private void updateEpisode(int row) {
     String rec[] = new String[7];
-
-
     for (int i = 0; i < 7; i++) {
       rec[i] = String.valueOf(tableModel_episodes.getValueAt(row, i));
     }
@@ -1944,6 +1942,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       int width = splitPane_main.getDividerLocation() - 26;
       int height = (int) (screenshot.getHeight(this) *  ((double)width/(double)screenshot.getWidth(this)));
       int yPos = (int) table_series.getPreferredSize().getHeight() + 20;
+      //imageLayerPanel.setBounds(0, yPos, width, height);
       imagePanel.setBounds(0, yPos, width, height);
       imagePanel.setImage(screenshot, width, height);
   }

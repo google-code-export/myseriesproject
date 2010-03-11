@@ -57,6 +57,7 @@ public class Series {
       s.setSeries_ID(rs.getInt("series_ID"));
       s.setTvrage_ID(rs.getInt("tvrage_ID"));
       s.setLocalDir(rs.getString("localDir"));
+      s.setScreenshot(rs.getString("screenshot"));
       hidden = rs.getBoolean("hidden");
       s.setHidden(rs.getInt("hidden"));
       update = rs.getBoolean("internetUpdate");
@@ -108,6 +109,7 @@ public class Series {
       currentSeries.setTitle("");
       currentSeries.setLink("");
       currentSeries.setLocalDir("");
+      currentSeries.setScreenshot("");
       currentSeries.setInternetUpdate(1);
       Series.setCurrentSerial(currentSeries);
       return;
@@ -123,6 +125,7 @@ public class Series {
       currentSeries.setSeason(rs.getInt("season"));
       currentSeries.setTitle(rs.getString("title").trim());
       currentSeries.setLocalDir(rs.getString("localDir").trim());
+      currentSeries.setScreenshot(rs.getString("screenshot").trim());
       currentSeries.setLink(rs.getString("link").trim());
       currentSeries.setInternetUpdate(rs.getInt("InternetUpdate"));
       currentSeries.setTvrage_ID(rs.getInt("tvrage_ID"));
@@ -135,6 +138,7 @@ public class Series {
       currentSeries.setSeason(0);
       currentSeries.setTitle("");
       currentSeries.setLocalDir("");
+      currentSeries.setScreenshot("");
       currentSeries.setLink("");
       currentSeries.setInternetUpdate(1);
       currentSeries.setTvrage_ID(0);
