@@ -1108,6 +1108,9 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
         if(new File(imagePath).isFile()){
         Image image = new ImageIcon(imagePath).getImage();
         setImage(image);
+        } else {
+          Image image = new ImageIcon(getClass().getResource("/images/logo.png")).getImage();
+          setImage(image);
         }
       } catch (SQLException ex) {
         MySeries.logger.log(Level.SEVERE, null, ex);
