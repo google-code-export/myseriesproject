@@ -391,6 +391,13 @@ public class MyUsefulFunctions {
     return p.getParent().replace("%20", " ") + "/";
   }
 
+  public static boolean hasBeenAired(String aired) {
+    if (aired.compareTo(getToday("yyyy-MM-dd")) < 0){
+      return true;
+    }
+    return false;
+  }
+
   private MyUsefulFunctions() {
   }
 }
