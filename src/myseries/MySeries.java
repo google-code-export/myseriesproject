@@ -1875,7 +1875,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
         }
       }else if(e.getType() == -1){
         //workaround to update the screenshot position when series are added /deleted
+        if(splitPane_main.getDividerLocation()%2==0){
         splitPane_main.setDividerLocation(splitPane_main.getDividerLocation()+1);
+        } else {
+          splitPane_main.setDividerLocation(splitPane_main.getDividerLocation()-1);
+        }
       }
     }
 
