@@ -1853,11 +1853,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
           rec[i] = String.valueOf(model.getValueAt(row, i));
         }
         updateEpisode(rec);
-        try {
-          Episodes.updateEpisodesTable();
-        } catch (SQLException ex) {
-          MySeries.logger.log(Level.SEVERE, null, ex);
-        }
+        //try {
+          //Episodes.updateEpisodesTable();
+        //} catch (SQLException ex) {
+        //  MySeries.logger.log(Level.SEVERE, null, ex);
+       // }
       }
     } else if (e.getSource() instanceof MySeriesTableModel) {
       if (e.getType() == 0) {
