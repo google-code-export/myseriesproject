@@ -18,6 +18,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import myComponents.MyEpisodesTableModel;
 import myComponents.MyUsefulFunctions;
+import myComponents.SubtitlesFilter;
 import myComponents.VideoFilter;
 
 /**
@@ -129,13 +130,20 @@ public class Episodes {
       download = rs.getBoolean("downloaded");
       e.setDownloaded(rs.getInt("downloaded"));
       if (!download && MyUsefulFunctions.hasBeenAired(e.getAired())) {
-        System.out.println("check");
         if (checkDownloads(Series.getCurrentSerial().getSeason(), e.getEpisode())) {
           e.setDownloaded(1);
           updated.add(e);
         }
       }
       e.setSubs(rs.getInt("subs"));
+      if (rs.getInt("subs")==0 && MyUsefulFunctions.hasBeenAired(e.getAired())) {
+        System.out.println("check Subs");
+        int cSubs = checkSubs(Series.getCurrentSerial().getSeason(), e.getEpisode()) ;
+        if (cSubs != 0) {
+          e.setSubs(cSubs);
+          updated.add(e);
+        }
+      }
       subs = e.getSubs() == 0 ? "None" : e.getSubs() == 1 ? "English" : e.getSubs() == 2 ? "Greek" : "Both";
       seen = rs.getBoolean("seen");
       Object[] data = {episode, e.getTitle(), e.getAired(), download, subs, seen, e.getEpisode_ID()};
@@ -170,6 +178,37 @@ public class Episodes {
       }
     }
     return false;
+  }
+
+  private static int checkSubs(int season, int episode) throws SQLException {
+    int subs = 0;
+    boolean hasEn = false, hasGr = false;
+    File directory = new File(Series.getCurrentSerial().getLocalDir());
+    if (!directory.isDirectory()) {
+      return subs;
+    }
+    File[] files = directory.listFiles(new SubtitlesFilter());
+    String regex = "[\\D]" + season + "[Xx[eE(ep)(EP)]]0*" + episode + "\\D";
+    Pattern p = Pattern.compile(regex);
+    for (int j = 0; j < files.length; j++) {
+      File file = files[j];
+      Matcher matcher = p.matcher(file.getName());
+      if (matcher.find()) {
+        if(file.getName().indexOf(".en.") > 0){
+          hasEn = true;
+        } else {
+          hasGr = true;
+        }
+      }
+    }
+    if(hasEn && hasGr){
+      return 3;
+    } else if (hasEn){
+      return 1;
+    } else if(hasGr){
+      return 2;
+    }
+    return subs;
   }
 
   /**
