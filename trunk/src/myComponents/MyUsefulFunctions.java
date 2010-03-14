@@ -27,7 +27,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
 import javax.swing.JOptionPane;
-import myseries.StartPanel;
 import tools.options.Options;
 
 /**
@@ -42,6 +41,9 @@ public class MyUsefulFunctions {
    * @return
    */
   public static String convertDateForRendering(String date) {
+    if(date.equals("")) {
+      return "";
+    }
     String[] d = date.split("-", -1);
     if(d[1].equals("00") || d[2].equals("00")){
       return "";

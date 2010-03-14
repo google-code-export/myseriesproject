@@ -40,6 +40,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -48,6 +49,7 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -1633,7 +1635,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     File localDir = new File(Series.getCurrentSerial().getLocalDir().trim());
     int season = Series.getCurrentSerial().getSeason();
     int episode = Episodes.getCurrentEpisode().getEpisode();
-    String regex = "[\\D]" + season + "[Xx[eE(ep)(EP)]]0*" + episode + "\\D";
+    String regex = "\\D0*" + season + Options._EPISODE_REGEX_ + episode + "\\D";
     getFiles(localDir, regex);
   }//GEN-LAST:event_popUpItem_viewEpisodeActionPerformed
 
@@ -1705,8 +1707,24 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       } else {
         getFiles(video, regex);
       }
+    } else if(videos.size() == 0) {
+      MyUsefulFunctions.message("No file found", "Episode was not found");
     } else {
-      System.out.println("multiple files found");
+      String[] videosArray = new String[videos.size()];
+      int z = 0 ;
+      for (Iterator<File> it = videos.iterator(); it.hasNext();) {
+        File video = it.next();
+        videosArray[z] = video.getName();
+        z++;
+      }
+      String choice = (String) JOptionPane.showInputDialog(
+              null,
+              "Multiple files found. Select the one you want to view.",
+              "Multiple files found",
+              JOptionPane.QUESTION_MESSAGE,
+              null,
+              videosArray,videosArray[0]);
+      playVideo(new File(directory + "/" + choice));
     }
 
   }
@@ -2002,11 +2020,15 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   }
 
   private void relocateImage() {
+    try{
     int width = splitPane_main.getDividerLocation() - 26;
     int height = (int) (screenshot.getHeight(this) * ((double) width / (double) screenshot.getWidth(this)));
     int yPos = (int) table_series.getPreferredSize().getHeight() + 20;
     //imageLayerPanel.setBounds(0, yPos, width, height);
     imagePanel.setBounds(0, yPos, width, height);
     imagePanel.setImage(screenshot, width, height);
+    }catch(NullPointerException ex){
+      
+    }
   }
 }

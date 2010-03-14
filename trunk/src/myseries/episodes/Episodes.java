@@ -20,6 +20,7 @@ import myComponents.MyEpisodesTableModel;
 import myComponents.MyUsefulFunctions;
 import myComponents.SubtitlesFilter;
 import myComponents.VideoFilter;
+import tools.options.Options;
 
 /**
  *
@@ -168,7 +169,7 @@ public class Episodes {
       return false;
     }
     File[] files = directory.listFiles(new VideoFilter());
-    String regex = "[\\D]" + season + "[Xx[eE(ep)(EP)]]0*" + episode + "\\D";
+    String regex = "\\D0*" + season + Options._EPISODE_REGEX_ + episode + "\\D";
     Pattern p = Pattern.compile(regex);
     for (int j = 0; j < files.length; j++) {
       File file = files[j];
@@ -188,7 +189,7 @@ public class Episodes {
       return subs;
     }
     File[] files = directory.listFiles(new SubtitlesFilter());
-    String regex = "[\\D]" + season + "[Xx[eE(ep)(EP)]]0*" + episode + "\\D";
+    String regex = "\\D0*" + season + Options._EPISODE_REGEX_ + episode + "\\D";
     Pattern p = Pattern.compile(regex);
     for (int j = 0; j < files.length; j++) {
       File file = files[j];
