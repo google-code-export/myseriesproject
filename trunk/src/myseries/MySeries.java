@@ -11,6 +11,7 @@
 package myseries;
 
 import java.net.URISyntaxException;
+import java.util.Vector;
 import javax.swing.ComboBoxModel;
 import javax.swing.table.TableColumnModel;
 import myseries.episodes.NextEpisodes;
@@ -149,7 +150,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     imageLayerPanel.add(imagePanel);
     Image image = new ImageIcon(getClass().getResource("/images/logo.png")).getImage();
     setImage(image);
-    
+
     //Create the episodes data
     MySeries.logger.log(Level.INFO, "Creating episodes data");
     Episodes.setTableModel_episodes(tableModel_episodes);
@@ -743,6 +744,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     table_FilteredlSeriesEpisodesList.setOpaque(false);
     table_FilteredlSeriesEpisodesList.setSelectionBackground(table_series.getSelectionBackground());
     table_FilteredlSeriesEpisodesList.setSelectionForeground(table_series.getSelectionForeground());
+    table_FilteredlSeriesEpisodesList.addMouseListener(new java.awt.event.MouseAdapter() {
+      public void mouseClicked(java.awt.event.MouseEvent evt) {
+        table_FilteredlSeriesEpisodesListMouseClicked(evt);
+      }
+    });
     panel_allSeriesEpisodes.setViewportView(table_FilteredlSeriesEpisodesList);
 
     panel_filters.setBackground(new java.awt.Color(255, 255, 255));
@@ -1106,10 +1112,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       try {
         Series.getCurrentSerial(s, true);
         tabsPanel.setTitleAt(0, Series.getCurrentSerial().getFullTitle());
-        String imagePath = Options._USER_DIR_ + "/" + Options._SCREENSHOTS_PATH_+"/"+Series.getCurrentSerial().getScreenshot();
-        if(new File(imagePath).isFile()){
-        Image image = new ImageIcon(imagePath).getImage();
-        setImage(image);
+        String imagePath = Options._USER_DIR_ + "/" + Options._SCREENSHOTS_PATH_ + "/" + Series.getCurrentSerial().getScreenshot();
+        if (new File(imagePath).isFile()) {
+          Image image = new ImageIcon(imagePath).getImage();
+          setImage(image);
         } else {
           Image image = new ImageIcon(getClass().getResource("/images/logo.png")).getImage();
           setImage(image);
@@ -1143,11 +1149,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       popUpItem_exportEpisodes.setText("Export episodes of " + ser);
       popUpItem_internetUpdate.setText("Update " + ser + " episodes list");
       if (Series.getCurrentSerial().getLink().equals("")
-          || !DesktopSupport.isDesktopSupport() || !DesktopSupport.isBrowseSupport()) {
+              || !DesktopSupport.isDesktopSupport() || !DesktopSupport.isBrowseSupport()) {
         popUpItem_DownloadSubs.setEnabled(false);
       }
       if (Series.getCurrentSerial().getLocalDir().equals("")
-          || !DesktopSupport.isDesktopSupport()) {
+              || !DesktopSupport.isDesktopSupport()) {
         popUpItem_GoToLocalDir.setEnabled(false);
       }
       if (Series.getCurrentSerial().getInternetUpdate() == 0) {
@@ -1239,7 +1245,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     int season = Series.getCurrentSerial().getSeason();
     int series_ID = Series.getCurrentSerial().getSeries_ID();
     int answ = MyUsefulFunctions.question("Delete Serial?", "Really delete the series "
-        + title + " season " + season + "?");
+            + title + " season " + season + "?");
     if (answ == 0) {
       try {
         String sql = "DELETE FROM series WHERE series_ID = " + series_ID;
@@ -1400,6 +1406,13 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   private void tabsPanelStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabsPanelStateChanged
     try {
       FilteredSeries.getFilteredSeries();
+      String title = tabsPanel.getTitleAt(0).substring(0, tabsPanel.getTitleAt(0).length() - 3).trim();
+      Vector<SeriesRecord> series = SeriesRecord.getSeriesBySql("SELECT * FROM series WHERE title = '" + title + "'");
+      if (series.size() > 0){
+      Series.setCurrentSerial(series.get(0));
+      } else {
+        
+      }
     } catch (SQLException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);
     } catch (IOException ex) {
@@ -1456,6 +1469,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
         int s = Integer.parseInt(String.valueOf(table_episodesList.getValueAt(rowSelected, 0)));
         Episodes.setCurrentEpisode(s);
         PopUpItem_AddEpisodeInEpisodes.setEnabled(true);
+        PopUpItem_AddEpisodeInEpisodes.setVisible(true);
+        popUpItem_deleteEpisode.setVisible(true);
         popUpItem_viewEpisode.setEnabled(!Series.getCurrentSerial().getLocalDir().equals(""));
         popUpItem_viewEpisode.setText("View episode " + Episodes.getCurrentEpisode().getTitle());
         PopUpItem_AddEpisodeInEpisodes.setText("Add new episode");
@@ -1487,7 +1502,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     String title = Episodes.getCurrentEpisode().getTitle();
     int episode_ID = Episodes.getCurrentEpisode().getEpisode_ID();
     int answ = MyUsefulFunctions.question("Delete Episode?", "Really delete the episode "
-        + title + "?");
+            + title + "?");
     if (answ == 0) {
       try {
         String sql = "DELETE FROM episodes WHERE episode_ID = " + episode_ID;
@@ -1568,7 +1583,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     glassPane.activate(null);
     SeriesRecord cSeries = Series.getCurrentSerial();
     if (Options.toString(Options.INTERNET_UPDATE_DB).equals(Options.TV_RAGE)
-        && cSeries.getTvrage_ID() == 0) {
+            && cSeries.getTvrage_ID() == 0) {
       try {
         TrGetId g = new TrGetId(this, cSeries.getSeries_ID(), cSeries.getTitle());
         cSeries.setTvrage_ID(g.tvRageID);
@@ -1630,6 +1645,45 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       Logger.getLogger(MySeries.class.getName()).log(Level.SEVERE, null, ex);
     }
   }//GEN-LAST:event_panel_SeriesComponentResized
+
+  private void table_FilteredlSeriesEpisodesListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_FilteredlSeriesEpisodesListMouseClicked
+    Point p = evt.getPoint();
+    int rowSelected = table_FilteredlSeriesEpisodesList.rowAtPoint(p);
+    SeriesRecord thisSer;
+    if (evt.getButton() == MouseEvent.BUTTON3) {
+      try {
+        int s = Integer.parseInt(String.valueOf(tableModel_filterSeries.getValueAt(rowSelected, 1)));
+        String title = String.valueOf(tableModel_filterSeries.getValueAt(rowSelected, 0));
+        title = title.substring(0, title.length() - 3).trim();
+        Vector<SeriesRecord> series = SeriesRecord.getSeriesBySql("SELECT * FROM Series WHERE title = '" + title + "'");
+        if (series.get(0) != null) {
+          thisSer = series.get(0);
+          PopUpItem_AddEpisodeInEpisodes.setEnabled(true);
+          popUpItem_viewEpisode.setEnabled(!thisSer.getLocalDir().equals(""));
+          popUpItem_viewEpisode.setText("View episode " + String.valueOf(tableModel_filterSeries.getValueAt(rowSelected, 2)));
+          PopUpItem_AddEpisodeInEpisodes.setVisible(false);
+          popUpItem_deleteEpisode.setVisible(false);
+          Series.setCurrentSerial(thisSer);
+          Episodes.setCurrentEpisode(s);
+        }
+
+
+//        popUpItem_viewEpisode.setEnabled(!Series.getCurrentSerial().getLocalDir().equals(""));
+//        popUpItem_viewEpisode.setText("View episode " + Episodes.getCurrentEpisode().getTitle());
+//        PopUpItem_AddEpisodeInEpisodes.setVisible(false);
+//        popUpItem_deleteEpisode.setEnabled(rowSelected > -1);
+//        popUpItem_deleteEpisode.setVisible(false);
+//        popUpItem_viewEpisode.validate();
+        episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
+      } catch (SQLException ex) {
+        MySeries.logger.log(Level.SEVERE, null, ex);
+      } catch (IndexOutOfBoundsException ex) {
+      }
+
+    } else {
+    }
+
+  }//GEN-LAST:event_table_FilteredlSeriesEpisodesListMouseClicked
 
   private void getFiles(File directory, String regex) {
     ArrayList<File> videos = new ArrayList<File>();
@@ -1851,15 +1905,15 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
         int row = e.getFirstRow();
         TableModel model = (TableModel) e.getSource();
 
-        for (int i = 0; i< 7; i++) {
+        for (int i = 0; i < 7; i++) {
           rec[i] = String.valueOf(model.getValueAt(row, i));
         }
         updateEpisode(rec);
         //try {
-          //Episodes.updateEpisodesTable();
+        //Episodes.updateEpisodesTable();
         //} catch (SQLException ex) {
         //  MySeries.logger.log(Level.SEVERE, null, ex);
-       // }
+        // }
       }
     } else if (e.getSource() instanceof MySeriesTableModel) {
       if (e.getType() == 0) {
@@ -1875,12 +1929,12 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
         } catch (SQLException ex) {
           MySeries.logger.log(Level.SEVERE, null, ex);
         }
-      }else if(e.getType() == -1){
+      } else if (e.getType() == -1) {
         //workaround to update the screenshot position when series are added /deleted
-        if(splitPane_main.getDividerLocation()%2==0){
-        splitPane_main.setDividerLocation(splitPane_main.getDividerLocation()+1);
+        if (splitPane_main.getDividerLocation() % 2 == 0) {
+          splitPane_main.setDividerLocation(splitPane_main.getDividerLocation() + 1);
         } else {
-          splitPane_main.setDividerLocation(splitPane_main.getDividerLocation()-1);
+          splitPane_main.setDividerLocation(splitPane_main.getDividerLocation() - 1);
         }
       }
     }
@@ -1940,19 +1994,19 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
   private void setImage(Image image) {
     screenshot = image;
-    int width = splitPane_main.getDividerLocation() -26;
-    int height = (int) (image.getHeight(this) *((double)width/(double)image.getWidth(this)));
-    imagePanel.setBounds(0,(int) table_series.getPreferredSize().getHeight() + 20,
-        width , height);
-    imagePanel.setImage(image,width,height);
+    int width = splitPane_main.getDividerLocation() - 26;
+    int height = (int) (image.getHeight(this) * ((double) width / (double) image.getWidth(this)));
+    imagePanel.setBounds(0, (int) table_series.getPreferredSize().getHeight() + 20,
+            width, height);
+    imagePanel.setImage(image, width, height);
   }
 
   private void relocateImage() {
-      int width = splitPane_main.getDividerLocation() - 26;
-      int height = (int) (screenshot.getHeight(this) *  ((double)width/(double)screenshot.getWidth(this)));
-      int yPos = (int) table_series.getPreferredSize().getHeight() + 20;
-      //imageLayerPanel.setBounds(0, yPos, width, height);
-      imagePanel.setBounds(0, yPos, width, height);
-      imagePanel.setImage(screenshot, width, height);
+    int width = splitPane_main.getDividerLocation() - 26;
+    int height = (int) (screenshot.getHeight(this) * ((double) width / (double) screenshot.getWidth(this)));
+    int yPos = (int) table_series.getPreferredSize().getHeight() + 20;
+    //imageLayerPanel.setBounds(0, yPos, width, height);
+    imagePanel.setBounds(0, yPos, width, height);
+    imagePanel.setImage(screenshot, width, height);
   }
 }
