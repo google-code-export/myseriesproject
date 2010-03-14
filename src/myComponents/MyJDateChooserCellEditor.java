@@ -6,8 +6,11 @@ package myComponents;
 
 import com.toedter.calendar.JDateChooser;
 import java.awt.Component;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.AbstractCellEditor;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
@@ -43,6 +46,18 @@ public class MyJDateChooserCellEditor extends AbstractCellEditor implements Tabl
     Date date = null;
     if (value instanceof Date) {
       date = (Date) value;
+    }else if(value instanceof String){
+      SimpleDateFormat sdf = new SimpleDateFormat(Options._MYSQL_DATE_FORMAT_);
+      try {
+        date = sdf.parse((String) value);
+      } catch (ParseException ex) {
+        sdf = new SimpleDateFormat(Options.toString(Options.DATE_FORMAT));
+        try {
+          date = sdf.parse((String) value);
+        } catch (ParseException ex1) {
+          date = null;
+        }
+      }
     }
 
     dateChooser.setDate(date);

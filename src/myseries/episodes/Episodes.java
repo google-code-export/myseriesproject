@@ -138,7 +138,6 @@ public class Episodes {
       }
       e.setSubs(rs.getInt("subs"));
       if (rs.getInt("subs")==0 && MyUsefulFunctions.hasBeenAired(e.getAired())) {
-        System.out.println("check Subs");
         int cSubs = checkSubs(Series.getCurrentSerial().getSeason(), e.getEpisode()) ;
         if (cSubs != 0) {
           e.setSubs(cSubs);
