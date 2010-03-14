@@ -26,6 +26,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import tools.options.Options;
 
@@ -41,12 +43,24 @@ public class MyUsefulFunctions {
    * @return
    */
   public static String convertDateForRendering(String date) {
-    if(date.equals("")) {
+    SimpleDateFormat sdf = new SimpleDateFormat(Options.toString(Options.DATE_FORMAT));
+    try {
+      Date dateD = sdf.parse(date);
+      sdf = new SimpleDateFormat(Options._MYSQL_DATE_FORMAT_);
+      date = sdf.format(dateD);
+    } catch (ParseException ex) {
+
+    }
+    if (date.equals("")) {
       return "";
     }
-    String[] d = date.split("-", -1);
-    if(d[1].equals("00") || d[2].equals("00")){
-      return "";
+    try {
+      String[] d = date.split("-", -1);
+
+      if (d[1].equals("00") || d[2].equals("00")) {
+        return "";
+      }
+    } catch (ArrayIndexOutOfBoundsException ex) {
     }
     try {
       DateFormat df = new SimpleDateFormat(Options._MYSQL_DATE_FORMAT_);
@@ -93,7 +107,7 @@ public class MyUsefulFunctions {
       return true;
     } catch (IOException ex) {
       return false;
-    } 
+    }
   }
 
   /**
@@ -194,9 +208,9 @@ public class MyUsefulFunctions {
    */
   public static void message(String title, String message) {
     JOptionPane.showMessageDialog(null,
-        message,
-        title,
-        JOptionPane.INFORMATION_MESSAGE);
+            message,
+            title,
+            JOptionPane.INFORMATION_MESSAGE);
   }
 
   /**
@@ -239,9 +253,9 @@ public class MyUsefulFunctions {
    */
   public static void error(String title, String message) {
     JOptionPane.showMessageDialog(null,
-        message,
-        title,
-        JOptionPane.ERROR_MESSAGE);
+            message,
+            title,
+            JOptionPane.ERROR_MESSAGE);
   }
 
   /**
@@ -252,10 +266,10 @@ public class MyUsefulFunctions {
    */
   public static int question(String title, String message) {
     return JOptionPane.showConfirmDialog(null,
-        message,
-        title,
-        JOptionPane.YES_NO_OPTION,
-        JOptionPane.QUESTION_MESSAGE);
+            message,
+            title,
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE);
   }
 
   /**
@@ -305,8 +319,8 @@ public class MyUsefulFunctions {
 
         @Override
         public boolean accept(File dir, String name) {
-          for (int i = 0; i <
-              fileFilter.length; i++) {
+          for (int i = 0; i
+                  < fileFilter.length; i++) {
             if (name.endsWith(fileFilter[i])) {
               return true;
             }
@@ -321,11 +335,11 @@ public class MyUsefulFunctions {
         System.exit(0);
       } else {
         name = JOptionPane.showInputDialog(null,
-            message,
-            title,
-            JOptionPane.PLAIN_MESSAGE,
-            null,
-            files, files[0]);
+                message,
+                title,
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                files, files[0]);
 
         return String.valueOf(name);
       }
@@ -360,18 +374,18 @@ public class MyUsefulFunctions {
   /**
    * Initializes internet connection settings
    */
-  public static void initInternetConnection(){
+  public static void initInternetConnection() {
     if (Options.toBoolean(Options.USE_PROXY)) {
-        Properties props = System.getProperties();
-        props.put("http.proxyHost", Options.toString(Options.PROXY_HOST));
-        props.put("http.proxyPort", Options.toString(Options.PROXY_PORT));
-        System.setProperties(props);
-      } else {
-        Properties props = System.getProperties();
-        props.put("http.proxyHost", "");
-        props.put("http.proxyPort", "80");
-        System.setProperties(props);
-      }
+      Properties props = System.getProperties();
+      props.put("http.proxyHost", Options.toString(Options.PROXY_HOST));
+      props.put("http.proxyPort", Options.toString(Options.PROXY_PORT));
+      System.setProperties(props);
+    } else {
+      Properties props = System.getProperties();
+      props.put("http.proxyHost", "");
+      props.put("http.proxyPort", "80");
+      System.setProperties(props);
+    }
   }
 
   /**
@@ -379,7 +393,7 @@ public class MyUsefulFunctions {
    * @param str The string to strip
    * @return
    */
-  public static String stripHTML(String str){
+  public static String stripHTML(String str) {
     return str.replaceAll("\\<.*?>", "");
 
   }
@@ -394,7 +408,7 @@ public class MyUsefulFunctions {
   }
 
   public static boolean hasBeenAired(String aired) {
-    if (aired.compareTo(getToday("yyyy-MM-dd")) < 0){
+    if (aired.compareTo(getToday("yyyy-MM-dd")) < 0) {
       return true;
     }
     return false;
