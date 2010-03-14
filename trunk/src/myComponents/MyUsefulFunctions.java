@@ -414,6 +414,18 @@ public class MyUsefulFunctions {
     return false;
   }
 
+  public static int getSubsId(String subs) {
+    if(subs.equals("None")){
+      return 0;
+    } else if(subs.equals("English")){
+      return 1;
+    } else if(subs.equals("Greek")){
+      return 2;
+    } else {
+      return 3;
+    }
+  }
+
   private MyUsefulFunctions() {
   }
 }

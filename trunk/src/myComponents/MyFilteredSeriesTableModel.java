@@ -27,6 +27,9 @@ public class MyFilteredSeriesTableModel extends DefaultTableModel {
 
   @Override
   public boolean isCellEditable(int row, int col) {
+    if(col == 4 || col == 5 || col ==6){
+      return true;
+    }
     return false;
   }
 }
