@@ -43,6 +43,8 @@ public class Options {
    * The total columns in all tables
    */
   public static final int _TOTAL_COLUMNS_ = 16;
+
+  public static final String _EPISODE_REGEX_ = "([ XxeE]|(ep)|(EP))0*";
   /**
    * The options map
    */
