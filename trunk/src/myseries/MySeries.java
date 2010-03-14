@@ -56,6 +56,7 @@ import myComponents.ImagePanel;
 import myComponents.MyJDateChooserCellRenderer;
 import myComponents.MyDisabledGlassPane;
 import myComponents.MySeriesTableModel;
+import myComponents.MyTitleCellRenderer;
 import myComponents.MyUsefulFunctions;
 import myComponents.VideoFilter;
 import myseries.filters.FilteredSeries;
@@ -251,6 +252,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     table_episodesList.getColumn("Subs").setCellEditor(new DefaultCellEditor(subs));
     table_episodesList.getColumn("Aired").setCellEditor(new myComponents.MyJDateChooserCellEditor());
     table_episodesList.getColumn("Aired").setCellRenderer(new MyJDateChooserCellRenderer());
+    table_episodesList.getColumn("Title").setCellRenderer(new MyTitleCellRenderer());
     table_FilteredlSeriesEpisodesList.getColumn("Subs").setCellEditor(new DefaultCellEditor(subs));
     table_FilteredlSeriesEpisodesList.getColumn("Aired").setCellEditor(new myComponents.MyJDateChooserCellEditor());
     table_FilteredlSeriesEpisodesList.getColumn("Aired").setCellRenderer(new MyJDateChooserCellRenderer());
