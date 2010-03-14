@@ -1410,10 +1410,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       FilteredSeries.getFilteredSeries();
       String title = tabsPanel.getTitleAt(0).substring(0, tabsPanel.getTitleAt(0).length() - 3).trim();
       Vector<SeriesRecord> series = SeriesRecord.getSeriesBySql("SELECT * FROM series WHERE title = '" + title + "'");
-      if (series.size() > 0){
-      Series.setCurrentSerial(series.get(0));
+      if (series.size() > 0) {
+        Series.setCurrentSerial(series.get(0));
+        Episodes.updateEpisodesTable();
       } else {
-        
       }
     } catch (SQLException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);
@@ -1707,11 +1707,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       } else {
         getFiles(video, regex);
       }
-    } else if(videos.size() == 0) {
+    } else if (videos.size() == 0) {
       MyUsefulFunctions.message("No file found", "Episode was not found");
     } else {
       String[] videosArray = new String[videos.size()];
-      int z = 0 ;
+      int z = 0;
       for (Iterator<File> it = videos.iterator(); it.hasNext();) {
         File video = it.next();
         videosArray[z] = video.getName();
@@ -1723,7 +1723,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
               "Multiple files found",
               JOptionPane.QUESTION_MESSAGE,
               null,
-              videosArray,videosArray[0]);
+              videosArray, videosArray[0]);
       playVideo(new File(directory + "/" + choice));
     }
 
@@ -1919,7 +1919,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     if (e.getSource() instanceof MyEpisodesTableModel) {
       String rec[] = new String[7];
 
-      if (e.getType() == 0) {
+      if (e.getType() == TableModelEvent.UPDATE) {
         int row = e.getFirstRow();
         TableModel model = (TableModel) e.getSource();
 
@@ -1953,6 +1953,28 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
           splitPane_main.setDividerLocation(splitPane_main.getDividerLocation() + 1);
         } else {
           splitPane_main.setDividerLocation(splitPane_main.getDividerLocation() - 1);
+        }
+      }
+    } else if (e.getSource() instanceof MyFilteredSeriesTableModel) {
+      if (e.getType() == TableModelEvent.UPDATE) {
+        int row = e.getFirstRow();
+        if (tableModel_filterSeries.getRowCount() > row) {
+          int id = (Integer) tableModel_filterSeries.getValueAt(row, 7);
+          String title = (String)tableModel_filterSeries.getValueAt(row, 2);
+          Boolean downloaded = (Boolean) tableModel_filterSeries.getValueAt(row, 4);
+          String subs = (String) tableModel_filterSeries.getValueAt(row, 5);
+          Boolean seen = (Boolean) tableModel_filterSeries.getValueAt(row, 6);
+          try {
+            EpisodesRecord ep = EpisodesRecord.getEpisodeByID(id);
+            ep.setTitle(title);
+            ep.setDownloaded(downloaded ? 1 : 0);
+            ep.setSeen(seen ? 1 : 0);
+            ep.setSubs(MyUsefulFunctions.getSubsId(subs));
+            ep.save();
+          } catch (SQLException ex) {
+            logger.log(Level.WARNING, null, ex);
+          }
+
         }
       }
     }
@@ -2020,15 +2042,14 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   }
 
   private void relocateImage() {
-    try{
-    int width = splitPane_main.getDividerLocation() - 26;
-    int height = (int) (screenshot.getHeight(this) * ((double) width / (double) screenshot.getWidth(this)));
-    int yPos = (int) table_series.getPreferredSize().getHeight() + 20;
-    //imageLayerPanel.setBounds(0, yPos, width, height);
-    imagePanel.setBounds(0, yPos, width, height);
-    imagePanel.setImage(screenshot, width, height);
-    }catch(NullPointerException ex){
-      
+    try {
+      int width = splitPane_main.getDividerLocation() - 26;
+      int height = (int) (screenshot.getHeight(this) * ((double) width / (double) screenshot.getWidth(this)));
+      int yPos = (int) table_series.getPreferredSize().getHeight() + 20;
+      //imageLayerPanel.setBounds(0, yPos, width, height);
+      imagePanel.setBounds(0, yPos, width, height);
+      imagePanel.setImage(screenshot, width, height);
+    } catch (NullPointerException ex) {
     }
   }
 }
