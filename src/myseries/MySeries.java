@@ -1975,7 +1975,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     }
     updateEpisode(rec);
     try {
-      Episodes.updateEpisodesTable();
+      //Episodes.updateEpisodesTable();
       NextEpisodes.createNextEpisodes();
       NextEpisodes.show();
     } catch (SQLException ex) {
