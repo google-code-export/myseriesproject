@@ -85,17 +85,18 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="tabbedPane_options" alignment="0" min="-2" pref="499" max="32767" attributes="0"/>
                       <Component id="jLabel1" alignment="1" pref="499" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="button_ok" min="-2" pref="62" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="button_cancel" min="-2" max="-2" attributes="0"/>
+                          <Component id="button_ok" pref="62" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Component id="button_cancel" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="366" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -104,9 +105,9 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                   <Component id="jLabel1" pref="16" max="32767" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="tabbedPane_options" min="-2" pref="242" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <Component id="tabbedPane_options" pref="242" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="button_ok" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="button_cancel" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -161,41 +162,68 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel12" alignment="1" pref="126" max="32767" attributes="0"/>
-                              <Component id="jLabel10" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="checkbox_dontUseSkin" alignment="1" pref="126" max="32767" attributes="1"/>
-                              <Component id="jLabel5" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel4" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel6" alignment="1" min="-2" pref="99" max="-2" attributes="0"/>
-                              <Component id="jLabel3" alignment="1" pref="126" max="32767" attributes="1"/>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace min="94" pref="94" max="94" attributes="0"/>
+                                  <Component id="jLabel10" max="32767" attributes="0"/>
+                              </Group>
+                              <Component id="checkbox_dontUseSkin" alignment="1" pref="126" max="32767" attributes="2"/>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace min="52" pref="52" max="52" attributes="0"/>
+                                  <Component id="jLabel5" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace min="59" pref="59" max="59" attributes="0"/>
+                                  <Component id="jLabel4" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace min="27" pref="27" max="27" attributes="0"/>
+                                  <Component id="jLabel6" pref="99" max="32767" attributes="0"/>
+                              </Group>
+                              <Component id="jLabel3" alignment="1" pref="126" max="32767" attributes="2"/>
                           </Group>
                           <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="combobox_debugMode" alignment="0" min="-2" pref="121" max="-2" attributes="0"/>
-                                      <Component id="checkBox_modal" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
-                                      <Component id="combobox_dateFormat" alignment="0" pref="158" max="32767" attributes="1"/>
-                                      <Component id="combobox_laf" alignment="0" pref="158" max="32767" attributes="1"/>
-                                      <Component id="button_BGColor" alignment="0" min="-2" pref="99" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="combobox_debugMode" pref="121" max="32767" attributes="0"/>
+                                          <EmptySpace min="37" pref="37" max="37" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="checkBox_modal" pref="20" max="32767" attributes="0"/>
+                                          <EmptySpace min="138" pref="138" max="138" attributes="0"/>
+                                      </Group>
+                                      <Component id="combobox_dateFormat" alignment="0" pref="158" max="32767" attributes="2"/>
+                                      <Component id="combobox_laf" alignment="0" pref="158" max="32767" attributes="2"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="button_BGColor" pref="99" max="32767" attributes="0"/>
+                                          <EmptySpace min="59" pref="59" max="59" attributes="0"/>
+                                      </Group>
                                       <Component id="combobox_fonts" alignment="0" pref="158" max="32767" attributes="0"/>
                                   </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="button_dateFormatHelp" min="-2" pref="44" max="-2" attributes="0"/>
-                                      <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel7" max="32767" attributes="0"/>
+                                          <EmptySpace min="90" pref="90" max="90" attributes="0"/>
+                                      </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="spinner_fontSize" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="label_preview" min="-2" pref="137" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                                          <Component id="label_preview" pref="137" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
-                              <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jCheckBox1" max="32767" attributes="0"/>
+                                  <EmptySpace min="323" pref="323" max="323" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -233,7 +261,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace min="6" pref="6" max="6" attributes="0"/>
-                                  <Component id="jLabel10" max="32767" attributes="0"/>
+                                  <Component id="jLabel10" pref="21" max="32767" attributes="0"/>
                               </Group>
                               <Component id="combobox_fonts" alignment="1" min="-2" max="-2" attributes="0"/>
                               <Component id="spinner_fontSize" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -243,7 +271,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace min="7" pref="7" max="7" attributes="0"/>
-                                  <Component id="jLabel12" max="32767" attributes="0"/>
+                                  <Component id="jLabel12" pref="20" max="32767" attributes="0"/>
                               </Group>
                               <Component id="jCheckBox1" alignment="1" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -506,16 +534,22 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                                  <Component id="jLabel2" min="-2" pref="179" max="-2" attributes="1"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="spinner_maxNextEpisodes" min="-2" pref="42" max="-2" attributes="0"/>
+                                  <Component id="jLabel2" pref="179" max="32767" attributes="2"/>
+                                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                                  <Component id="spinner_maxNextEpisodes" pref="42" max="32767" attributes="0"/>
                               </Group>
-                              <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                  <Component id="checkbox_showUnseen" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="checkbox_showNotDownloaded" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="checkbox_showUnseen" alignment="1" max="32767" attributes="0"/>
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <EmptySpace min="64" pref="64" max="64" attributes="0"/>
+                                          <Component id="checkbox_showNotDownloaded" max="32767" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="238" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="238" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -604,21 +638,24 @@
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel9" alignment="1" min="-2" pref="96" max="-2" attributes="0"/>
-                              <Component id="jLabel8" alignment="1" min="-2" pref="96" max="-2" attributes="0"/>
-                              <Component id="jLabel11" alignment="1" min="-2" pref="88" max="-2" attributes="0"/>
+                              <Component id="jLabel9" alignment="1" pref="96" max="32767" attributes="0"/>
+                              <Component id="jLabel8" alignment="1" pref="96" max="32767" attributes="0"/>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace min="8" pref="8" max="8" attributes="0"/>
+                                  <Component id="jLabel11" pref="88" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="combo_updateDb" pref="157" max="32767" attributes="0"/>
                               <Component id="textfield_port" alignment="0" pref="157" max="32767" attributes="0"/>
-                              <Component id="textfield_proxy" alignment="0" pref="157" max="32767" attributes="1"/>
+                              <Component id="textfield_proxy" alignment="0" pref="157" max="32767" attributes="2"/>
                           </Group>
                           <EmptySpace min="-2" pref="210" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="checkbox_useProxy" min="-2" pref="144" max="-2" attributes="0"/>
-                          <EmptySpace pref="350" max="32767" attributes="0"/>
+                          <Component id="checkbox_useProxy" pref="144" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="350" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
