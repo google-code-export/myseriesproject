@@ -165,7 +165,7 @@ public class AdminEpisodes extends MyDraggable {
     label_Date.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     label_Date.setText("Date:");
 
-    spinner_episode.setModel(new javax.swing.SpinnerNumberModel(1, 1, 99, 1));
+    spinner_episode.setModel(new javax.swing.SpinnerNumberModel(1, 0, 99, 1));
     spinner_episode.setValue(episodeNo);
 
     javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
