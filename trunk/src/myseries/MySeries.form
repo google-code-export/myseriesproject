@@ -637,7 +637,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" max="-2" attributes="0"/>
-                          <Component id="label_NextEpisodeTitle" min="-2" pref="113" max="-2" attributes="0"/>
+                          <Component id="label_NextEpisodeTitle" pref="113" max="32767" attributes="0"/>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Component id="label_NextEpisode" pref="496" max="32767" attributes="0"/>
                           <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
@@ -678,6 +678,7 @@
                         <Font bold="true" component="label_NextEpisode" property="font" relativeSize="true" size="1"/>
                       </FontInfo>
                     </Property>
+                    <Property name="horizontalAlignment" type="int" value="2"/>
                   </Properties>
                 </Component>
                 <Container class="javax.swing.JPanel" name="panel_NextEpisodesbuttons">
