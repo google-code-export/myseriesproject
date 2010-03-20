@@ -426,6 +426,15 @@ public class MyUsefulFunctions {
     }
   }
 
+  public static String createSeasonRegex(int season){
+    return "\\D0*" + season +"\\D";
+  }
+
+  public static String createEpisodeRegex(int episode){
+    return "([ XxeE]|(ep)|(EP))0*" + episode + "\\D";
+  }
+
+
   private MyUsefulFunctions() {
   }
 }

@@ -1636,8 +1636,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     File localDir = new File(Series.getCurrentSerial().getLocalDir().trim());
     int season = Series.getCurrentSerial().getSeason();
     int episode = Episodes.getCurrentEpisode().getEpisode();
-    String seasonRegex = "\\D0*" + season +"\\D";
-    String episodeRegex = "([ XxeE]|(ep)|(EP))0*" + episode + "\\D";
+    String seasonRegex = MyUsefulFunctions.createSeasonRegex(season);
+    String episodeRegex = MyUsefulFunctions.createEpisodeRegex(episode);
     getFiles(localDir, seasonRegex, episodeRegex);
   }//GEN-LAST:event_popUpItem_viewEpisodeActionPerformed
 
