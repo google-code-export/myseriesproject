@@ -44,8 +44,7 @@ public class Options {
    */
   public static final int _TOTAL_COLUMNS_ = 16;
 
-  public static final String _EPISODE_REGEX_ = "([ XxeE]|(ep)|(EP))0*";
-  /**
+   /**
    * The options map
    */
   private static Map<String,Object> options;

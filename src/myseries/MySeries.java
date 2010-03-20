@@ -82,8 +82,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   private MyEpisodesTableModel tableModel_episodes;
   private MyFilteredSeriesTableModel tableModel_filterSeries;
   private ComboBoxModel comboBoxModel_filters;
-  public static String version = "1.1(rev33)";
-  public String date = "2010-03-06";
+  public static String version = "1.1(rev64)";
+  public String date = "2010-03-15";
   public static MyDisabledGlassPane glassPane;
   public static Logger logger;
   public static final long serialVersionUID = 1L;
@@ -576,6 +576,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     label_NextEpisodeTitle.setText("Next Episodes:");
 
     label_NextEpisode.setFont(label_NextEpisode.getFont().deriveFont(label_NextEpisode.getFont().getStyle() | java.awt.Font.BOLD, label_NextEpisode.getFont().getSize()+1));
+    label_NextEpisode.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 
     panel_NextEpisodesbuttons.setOpaque(false);
 
@@ -646,7 +647,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       panel_nextEpisodesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(panel_nextEpisodesLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(label_NextEpisodeTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(label_NextEpisodeTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(label_NextEpisode, javax.swing.GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE)
         .addGap(18, 18, 18)
@@ -1635,8 +1636,9 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     File localDir = new File(Series.getCurrentSerial().getLocalDir().trim());
     int season = Series.getCurrentSerial().getSeason();
     int episode = Episodes.getCurrentEpisode().getEpisode();
-    String regex = "\\D0*" + season + Options._EPISODE_REGEX_ + episode + "\\D";
-    getFiles(localDir, regex);
+    String seasonRegex = "\\D0*" + season +"\\D";
+    String episodeRegex = "([ XxeE]|(ep)|(EP))0*" + episode + "\\D";
+    getFiles(localDir, seasonRegex, episodeRegex);
   }//GEN-LAST:event_popUpItem_viewEpisodeActionPerformed
 
   private void panel_SeriesComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_panel_SeriesComponentResized
@@ -1687,15 +1689,17 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
   }//GEN-LAST:event_table_FilteredlSeriesEpisodesListMouseClicked
 
-  private void getFiles(File directory, String regex) {
+  private void getFiles(File directory, String seasonRegex, String episodeRegex) {
     ArrayList<File> videos = new ArrayList<File>();
     File[] files = directory.listFiles(new VideoFilter());
 
-    Pattern p = Pattern.compile(regex);
+    Pattern sPattern = Pattern.compile(seasonRegex);
+    Pattern ePattern = Pattern.compile(episodeRegex);
     for (int i = 0; i < files.length; i++) {
       File file = files[i];
-      Matcher matcher = p.matcher(file.getName());
-      if (matcher.find()) {
+      Matcher sMatcher = sPattern.matcher(file.getName());
+      Matcher eMatcher = ePattern.matcher(file.getName());
+      if (eMatcher.find() && sMatcher.find()) {
         videos.add(file);
       }
     }
@@ -1705,7 +1709,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       if (!video.isDirectory()) {
         playVideo(video);
       } else {
-        getFiles(video, regex);
+        getFiles(video, seasonRegex, episodeRegex);
       }
     } else if (videos.size() == 0) {
       MyUsefulFunctions.message("No file found", "Episode was not found");

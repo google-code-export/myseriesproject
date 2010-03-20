@@ -137,8 +137,8 @@ public class Episodes {
         }
       }
       e.setSubs(rs.getInt("subs"));
-      if (rs.getInt("subs")==0 && MyUsefulFunctions.hasBeenAired(e.getAired())) {
-        int cSubs = checkSubs(Series.getCurrentSerial().getSeason(), e.getEpisode()) ;
+      if (rs.getInt("subs") == 0 && MyUsefulFunctions.hasBeenAired(e.getAired())) {
+        int cSubs = checkSubs(Series.getCurrentSerial().getSeason(), e.getEpisode());
         if (cSubs != 0) {
           e.setSubs(cSubs);
           updated.add(e);
@@ -154,7 +154,7 @@ public class Episodes {
     for (Iterator<EpisodesRecord> it = updated.iterator(); it.hasNext();) {
       EpisodesRecord episodesRecord = it.next();
       episodesRecord.save();
-      
+
     }
 
     table_episodesList.setModel(getTableModel_episodes());
@@ -168,12 +168,15 @@ public class Episodes {
       return false;
     }
     File[] files = directory.listFiles(new VideoFilter());
-    String regex = "\\D0*" + season + Options._EPISODE_REGEX_ + episode + "\\D";
-    Pattern p = Pattern.compile(regex);
+    String seasonRegex = "\\D0*" + season + "\\D";
+    String episodeRegex = "([ XxeE]|(ep)|(EP))0*" + episode + "\\D";
+    Pattern sPattern = Pattern.compile(seasonRegex);
+    Pattern ePattern = Pattern.compile(episodeRegex);
     for (int j = 0; j < files.length; j++) {
       File file = files[j];
-      Matcher matcher = p.matcher(file.getName());
-      if (matcher.find()) {
+      Matcher sMatcher = sPattern.matcher(file.getName());
+      Matcher eMatcher = ePattern.matcher(file.getName());
+      if (eMatcher.find() && sMatcher.find()) {
         return true;
       }
     }
@@ -188,24 +191,27 @@ public class Episodes {
       return subs;
     }
     File[] files = directory.listFiles(new SubtitlesFilter());
-    String regex = "\\D0*" + season + Options._EPISODE_REGEX_ + episode + "\\D";
-    Pattern p = Pattern.compile(regex);
+    String seasonRegex = "\\D0*" + season + "\\D";
+    String episodeRegex = "([ XxeE]|(ep)|(EP))0*" + episode + "\\D";
+    Pattern sPattern = Pattern.compile(seasonRegex);
+    Pattern ePattern = Pattern.compile(episodeRegex);
     for (int j = 0; j < files.length; j++) {
       File file = files[j];
-      Matcher matcher = p.matcher(file.getName());
-      if (matcher.find()) {
-        if(file.getName().indexOf(".en.") > 0){
+      Matcher sMatcher = sPattern.matcher(file.getName());
+      Matcher eMatcher = ePattern.matcher(file.getName());
+      if (eMatcher.find() && sMatcher.find()) {
+        if (file.getName().indexOf(".en.") > 0) {
           hasEn = true;
         } else {
           hasGr = true;
         }
       }
     }
-    if(hasEn && hasGr){
+    if (hasEn && hasGr) {
       return 3;
-    } else if (hasEn){
+    } else if (hasEn) {
       return 1;
-    } else if(hasGr){
+    } else if (hasGr) {
       return 2;
     }
     return subs;
