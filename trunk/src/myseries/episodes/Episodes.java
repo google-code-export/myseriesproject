@@ -168,8 +168,8 @@ public class Episodes {
       return false;
     }
     File[] files = directory.listFiles(new VideoFilter());
-    String seasonRegex = "\\D0*" + season + "\\D";
-    String episodeRegex = "([ XxeE]|(ep)|(EP))0*" + episode + "\\D";
+    String seasonRegex = MyUsefulFunctions.createSeasonRegex(season);
+    String episodeRegex = MyUsefulFunctions.createEpisodeRegex(episode);
     Pattern sPattern = Pattern.compile(seasonRegex);
     Pattern ePattern = Pattern.compile(episodeRegex);
     for (int j = 0; j < files.length; j++) {
@@ -191,8 +191,8 @@ public class Episodes {
       return subs;
     }
     File[] files = directory.listFiles(new SubtitlesFilter());
-    String seasonRegex = "\\D0*" + season + "\\D";
-    String episodeRegex = "([ XxeE]|(ep)|(EP))0*" + episode + "\\D";
+    String seasonRegex = MyUsefulFunctions.createSeasonRegex(season);
+    String episodeRegex = MyUsefulFunctions.createEpisodeRegex(episode);
     Pattern sPattern = Pattern.compile(seasonRegex);
     Pattern ePattern = Pattern.compile(episodeRegex);
     for (int j = 0; j < files.length; j++) {
