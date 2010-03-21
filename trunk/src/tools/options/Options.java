@@ -49,6 +49,10 @@ public class Options {
    */
   private static Map<String,Object> options;
 
+  public static String SEASON_SEPARATOR = " - ";
+  public static String TITLE_SEPARATOR = " - ";
+  public static String EPISODE_SEPARATOR = "x";
+
   /**
    * The screenshots path
    */
