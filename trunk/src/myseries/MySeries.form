@@ -52,6 +52,17 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="popUpItem_internetUpdateActionPerformed"/>
           </Events>
         </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="popUpItem_renameEpisodes">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/images/rename.png"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Rename Episodes"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="popUpItem_renameEpisodesActionPerformed"/>
+          </Events>
+        </MenuItem>
         <Component class="javax.swing.JSeparator" name="jSeparator1">
         </Component>
         <MenuItem class="javax.swing.JMenuItem" name="PopUpItem_AddEpisode">
