@@ -209,9 +209,11 @@ public class OptionsPanel extends MyDraggable {
     checkBox_modal.setSelected(Options.toBoolean(Options.MODAL));
     checkBox_modal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     checkBox_modal.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+    checkBox_modal.setMargin(new java.awt.Insets(0, 0, 0, 0));
     checkBox_modal.setName(Options.MODAL);
     checkBox_modal.setOpaque(false);
 
+    jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     jLabel4.setText("Date Format :");
     jLabel4.setName("noname"); // NOI18N
 
@@ -234,6 +236,7 @@ public class OptionsPanel extends MyDraggable {
       }
     });
 
+    jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     jLabel5.setText("Look And Feel :");
     jLabel5.setName("noname"); // NOI18N
 
@@ -264,6 +267,7 @@ public class OptionsPanel extends MyDraggable {
     jLabel6.setText("Modal Windows :");
     jLabel6.setName("noname"); // NOI18N
 
+    jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     jLabel10.setText("Font : ");
     jLabel10.setName("noname"); // NOI18N
 
@@ -298,6 +302,7 @@ public class OptionsPanel extends MyDraggable {
     jCheckBox1.setSelected(Options.toBoolean(Options.CHECK_VERSION));
     jCheckBox1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     jCheckBox1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+    jCheckBox1.setMargin(new java.awt.Insets(0, 0, 0, 0));
     jCheckBox1.setName(Options.CHECK_VERSION);
     jCheckBox1.setOpaque(false);
 
@@ -309,53 +314,35 @@ public class OptionsPanel extends MyDraggable {
     panel_general.setLayout(panel_generalLayout);
     panel_generalLayout.setHorizontalGroup(
       panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_generalLayout.createSequentialGroup()
+      .addGroup(panel_generalLayout.createSequentialGroup()
         .addContainerGap()
         .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_generalLayout.createSequentialGroup()
-            .addGap(94, 94, 94)
-            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+          .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+          .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+          .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+          .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
           .addComponent(checkbox_dontUseSkin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_generalLayout.createSequentialGroup()
-            .addGap(52, 52, 52)
-            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_generalLayout.createSequentialGroup()
-            .addGap(59, 59, 59)
-            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_generalLayout.createSequentialGroup()
-            .addGap(27, 27, 27)
-            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE))
-          .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
+          .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+          .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
         .addGap(4, 4, 4)
         .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(jCheckBox1)
+          .addComponent(combobox_fonts, 0, 158, Short.MAX_VALUE)
+          .addComponent(button_BGColor, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+          .addComponent(combobox_laf, 0, 158, Short.MAX_VALUE)
+          .addComponent(combobox_dateFormat, 0, 158, Short.MAX_VALUE)
+          .addComponent(combobox_debugMode, 0, 158, Short.MAX_VALUE)
+          .addComponent(checkBox_modal))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(button_dateFormatHelp, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addGroup(panel_generalLayout.createSequentialGroup()
-            .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addGroup(panel_generalLayout.createSequentialGroup()
-                .addComponent(combobox_debugMode, 0, 121, Short.MAX_VALUE)
-                .addGap(37, 37, 37))
-              .addGroup(panel_generalLayout.createSequentialGroup()
-                .addComponent(checkBox_modal, javax.swing.GroupLayout.PREFERRED_SIZE, 20, Short.MAX_VALUE)
-                .addGap(138, 138, 138))
-              .addComponent(combobox_dateFormat, 0, 158, Short.MAX_VALUE)
-              .addComponent(combobox_laf, 0, 158, Short.MAX_VALUE)
-              .addGroup(panel_generalLayout.createSequentialGroup()
-                .addComponent(button_BGColor, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
-                .addGap(59, 59, 59))
-              .addComponent(combobox_fonts, 0, 158, Short.MAX_VALUE))
+            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(90, 90, 90))
+          .addGroup(panel_generalLayout.createSequentialGroup()
+            .addComponent(spinner_fontSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(button_dateFormatHelp, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addGroup(panel_generalLayout.createSequentialGroup()
-                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(90, 90, 90))
-              .addGroup(panel_generalLayout.createSequentialGroup()
-                .addComponent(spinner_fontSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(label_preview, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE))))
-          .addGroup(panel_generalLayout.createSequentialGroup()
-            .addComponent(jCheckBox1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGap(323, 323, 323)))
+            .addComponent(label_preview, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)))
         .addContainerGap())
     );
     panel_generalLayout.setVerticalGroup(
@@ -366,9 +353,9 @@ public class OptionsPanel extends MyDraggable {
           .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
           .addComponent(combobox_debugMode, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addGap(3, 3, 3)
-        .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
-          .addComponent(checkBox_modal, javax.swing.GroupLayout.Alignment.TRAILING))
+        .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+          .addComponent(jLabel6)
+          .addComponent(checkBox_modal))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -387,16 +374,17 @@ public class OptionsPanel extends MyDraggable {
         .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_generalLayout.createSequentialGroup()
             .addGap(6, 6, 6)
-            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE))
+            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE))
           .addComponent(combobox_fonts, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(spinner_fontSize, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(label_preview, javax.swing.GroupLayout.Alignment.TRAILING))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_generalLayout.createSequentialGroup()
-            .addGap(7, 7, 7)
+        .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+          .addGroup(panel_generalLayout.createSequentialGroup()
+            .addGap(8, 8, 8)
             .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE))
-          .addComponent(jCheckBox1, javax.swing.GroupLayout.Alignment.TRAILING))
+          .addGroup(panel_generalLayout.createSequentialGroup()
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jCheckBox1)))
         .addGap(13, 13, 13))
     );
 
