@@ -1673,28 +1673,21 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     SeriesRecord thisSer;
     if (evt.getButton() == MouseEvent.BUTTON3) {
       try {
-        int s = Integer.parseInt(String.valueOf(tableModel_filterSeries.getValueAt(rowSelected, 1)));
-        String title = String.valueOf(tableModel_filterSeries.getValueAt(rowSelected, 0));
-        title = title.substring(0, title.length() - 3).trim();
-        Vector<SeriesRecord> series = SeriesRecord.getSeriesBySql("SELECT * FROM Series WHERE title = '" + title + "'");
-        if (series.get(0) != null) {
-          thisSer = series.get(0);
+        int s = Integer.parseInt(String.valueOf(tableModel_filterSeries.getValueAt(rowSelected, 7)));
+        System.out.println(s);
+        EpisodesRecord ep = EpisodesRecord.getEpisodeByID(s);
+        String title = ep.getTitle();
+        int series_ID = ep.getSeries_ID();
+        SeriesRecord seriesRec = SeriesRecord.getSeriesByID(series_ID);
+        if (seriesRec != null) {
           PopUpItem_AddEpisodeInEpisodes.setEnabled(true);
-          popUpItem_viewEpisode.setEnabled(!thisSer.getLocalDir().equals(""));
-          popUpItem_viewEpisode.setText("View episode " + String.valueOf(tableModel_filterSeries.getValueAt(rowSelected, 2)));
+          popUpItem_viewEpisode.setEnabled(!seriesRec.getLocalDir().equals(""));
+          popUpItem_viewEpisode.setText("View episode " + title);
           PopUpItem_AddEpisodeInEpisodes.setVisible(false);
           popUpItem_deleteEpisode.setVisible(false);
-          Series.setCurrentSerial(thisSer);
-          Episodes.setCurrentEpisode(s);
+          Series.setCurrentSerial(seriesRec);
+          Episodes.setCurrentEpisode(ep.getEpisode());
         }
-
-
-//        popUpItem_viewEpisode.setEnabled(!Series.getCurrentSerial().getLocalDir().equals(""));
-//        popUpItem_viewEpisode.setText("View episode " + Episodes.getCurrentEpisode().getTitle());
-//        PopUpItem_AddEpisodeInEpisodes.setVisible(false);
-//        popUpItem_deleteEpisode.setEnabled(rowSelected > -1);
-//        popUpItem_deleteEpisode.setVisible(false);
-//        popUpItem_viewEpisode.validate();
         episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
       } catch (SQLException ex) {
         MySeries.logger.log(Level.SEVERE, null, ex);
