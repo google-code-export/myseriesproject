@@ -71,6 +71,7 @@ import tools.internetUpdate.InternetUpdate;
 import tools.options.OptionsPanel;
 import tools.Skin;
 import tools.myLogger;
+import tools.renaming.RenameEpisodes;
 
 /**
  *
@@ -327,6 +328,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     popUpItem_DownloadSubs = new javax.swing.JMenuItem();
     popUpItem_GoToLocalDir = new javax.swing.JMenuItem();
     popUpItem_internetUpdate = new javax.swing.JMenuItem();
+    popUpItem_renameEpisodes = new javax.swing.JMenuItem();
     jSeparator1 = new javax.swing.JSeparator();
     PopUpItem_AddEpisode = new javax.swing.JMenuItem();
     PopUpItem_DeleteSerial = new javax.swing.JMenuItem();
@@ -423,6 +425,15 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       }
     });
     seriesPopUp.add(popUpItem_internetUpdate);
+
+    popUpItem_renameEpisodes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/rename.png"))); // NOI18N
+    popUpItem_renameEpisodes.setText("Rename Episodes");
+    popUpItem_renameEpisodes.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        popUpItem_renameEpisodesActionPerformed(evt);
+      }
+    });
+    seriesPopUp.add(popUpItem_renameEpisodes);
     seriesPopUp.add(jSeparator1);
 
     PopUpItem_AddEpisode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add_episode.png"))); // NOI18N
@@ -1139,6 +1150,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     PopUpItem_EditSerial.setEnabled(state);
     popUpItem_DownloadSubs.setEnabled(state);
     popUpItem_GoToLocalDir.setEnabled(state);
+    popUpItem_renameEpisodes.setEnabled(state);
     menuItem_exportEpisodes.setEnabled(state);
     popUpItem_exportEpisodes.setEnabled(state);
     popUpItem_internetUpdate.setEnabled(state);
@@ -1148,6 +1160,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       PopUpItem_EditSerial.setText("Edit series " + ser);
       popUpItem_DownloadSubs.setText("Download Subtitles for " + ser);
       popUpItem_GoToLocalDir.setText("Open " + ser + " directory");
+      popUpItem_renameEpisodes.setText("Rename " + ser + " directory");
       menuItem_exportEpisodes.setText("Export episodes of " + ser);
       popUpItem_exportEpisodes.setText("Export episodes of " + ser);
       popUpItem_internetUpdate.setText("Update " + ser + " episodes list");
@@ -1159,6 +1172,9 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
               || !DesktopSupport.isDesktopSupport()) {
         popUpItem_GoToLocalDir.setEnabled(false);
       }
+      if (Series.getCurrentSerial().getLocalDir().equals("")) {
+        popUpItem_renameEpisodes.setEnabled(false);
+      }
       if (Series.getCurrentSerial().getInternetUpdate() == 0) {
         popUpItem_internetUpdate.setEnabled(false);
       }
@@ -1169,6 +1185,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       PopUpItem_EditSerial.setText("Edit series");
       popUpItem_DownloadSubs.setText("Download Subtitles");
       popUpItem_GoToLocalDir.setText("Open Directory");
+      popUpItem_renameEpisodes.setText("Rename episodes");
       popUpItem_exportEpisodes.setText("Export episodes");
       popUpItem_internetUpdate.setText("Update episodes list");
     }
@@ -1689,6 +1706,70 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
   }//GEN-LAST:event_table_FilteredlSeriesEpisodesListMouseClicked
 
+  private void popUpItem_renameEpisodesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_renameEpisodesActionPerformed
+    try {
+      ArrayList<File>oldNames = new ArrayList<File>();
+      ArrayList<EpisodesRecord>newNames = new ArrayList<EpisodesRecord>();
+      SeriesRecord series = Series.getCurrentSerial();
+      int season = series.getSeason();
+      String seasonRegex = MyUsefulFunctions.createSeasonRegex(season);
+      Pattern sPattern = Pattern.compile(seasonRegex);
+
+
+      File dir = new File(series.getLocalDir());
+      File[] files = dir.listFiles();
+      String path;
+
+      ArrayList<EpisodesRecord> episodes = Episodes.getCurrentSeriesEpisodes();
+      for (Iterator<EpisodesRecord> it = episodes.iterator(); it.hasNext();) {
+        EpisodesRecord episodesRecord = it.next();
+        String episodeRegex = MyUsefulFunctions.createEpisodeRegex(episodesRecord.getEpisode());
+        Pattern ePattern = Pattern.compile(episodeRegex);
+        for (int i = 0; i < files.length; i++) {
+          File file = files[i];
+          if (file != null && file.isFile()) {
+            path = file.getParent();
+            String name = file.getName();
+            Matcher sMatcher = sPattern.matcher(name);
+            Matcher eMatcher = ePattern.matcher(name);
+            if (eMatcher.find() && sMatcher.find()) {
+
+              String[] tokens = name.split("\\.", -1);
+              String ext = tokens[tokens.length - 1];
+              if (ext.equals("srt") || ext.equals("sub")) {
+                if (tokens[tokens.length - 2].equals("gr") || tokens[tokens.length - 2].equals("en")) {
+                  ext = tokens[tokens.length - 2] + "." + tokens[tokens.length - 1];
+                }
+              }
+
+              String newFilename = series.getTitle() + Options.SEASON_SEPARATOR
+                      + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0")
+                      + Options.EPISODE_SEPARATOR + MyUsefulFunctions.padLeft(episodesRecord.getEpisode(), 2, "0")
+                      + Options.TITLE_SEPARATOR + episodesRecord.getTitle();
+
+              String newName = path + "/" + newFilename +  "."  +ext;
+              File newFile = new File(newName);
+              //if (!newFile.exists()) {
+               oldNames.add(files[i]);
+               newNames.add(episodesRecord);
+               //if(files[i].renameTo(newFile)){
+               //   logger.log(Level.INFO,"Renamed " + name + " to " + newFilename + "." + ext);
+               // } else {
+               //   logger.log(Level.WARNING,"Could not rename " + name + " to " + newFilename + "." + ext);
+               // }
+              //}
+              files[i] = null;
+            }
+          }
+        }
+      }
+      RenameEpisodes r = new RenameEpisodes(oldNames, newNames,series);
+    } catch (SQLException ex) {
+      logger.log(Level.SEVERE, null, ex);
+    }
+
+  }//GEN-LAST:event_popUpItem_renameEpisodesActionPerformed
+
   private void getFiles(File directory, String seasonRegex, String episodeRegex) {
     ArrayList<File> videos = new ArrayList<File>();
     File[] files = directory.listFiles(new VideoFilter());
@@ -1905,6 +1986,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static javax.swing.JMenuItem popUpItem_deleteEpisode;
   public static javax.swing.JMenuItem popUpItem_exportEpisodes;
   public static javax.swing.JMenuItem popUpItem_internetUpdate;
+  public static javax.swing.JMenuItem popUpItem_renameEpisodes;
   public static javax.swing.JMenuItem popUpItem_viewEpisode;
   public static javax.swing.JScrollPane scrollPane_series;
   public static javax.swing.JPopupMenu seriesPopUp;
@@ -1964,7 +2046,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
         int row = e.getFirstRow();
         if (tableModel_filterSeries.getRowCount() > row) {
           int id = (Integer) tableModel_filterSeries.getValueAt(row, 7);
-          String title = (String)tableModel_filterSeries.getValueAt(row, 2);
+          String title = (String) tableModel_filterSeries.getValueAt(row, 2);
           Boolean downloaded = (Boolean) tableModel_filterSeries.getValueAt(row, 4);
           String subs = (String) tableModel_filterSeries.getValueAt(row, 5);
           Boolean seen = (Boolean) tableModel_filterSeries.getValueAt(row, 6);
