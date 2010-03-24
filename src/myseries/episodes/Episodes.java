@@ -168,15 +168,12 @@ public class Episodes {
       return false;
     }
     File[] files = directory.listFiles(new VideoFilter());
-    String seasonRegex = MyUsefulFunctions.createSeasonRegex(season);
-    String episodeRegex = MyUsefulFunctions.createEpisodeRegex(episode);
-    Pattern sPattern = Pattern.compile(seasonRegex);
-    Pattern ePattern = Pattern.compile(episodeRegex);
+    String regex = MyUsefulFunctions.createRegex(season, episode);
+    Pattern pattern = Pattern.compile(regex);
     for (int j = 0; j < files.length; j++) {
       File file = files[j];
-      Matcher sMatcher = sPattern.matcher(file.getName());
-      Matcher eMatcher = ePattern.matcher(file.getName());
-      if (eMatcher.find() && sMatcher.find()) {
+      Matcher matcher = pattern.matcher(file.getName());
+      if (matcher.find()) {
         return true;
       }
     }
@@ -191,15 +188,12 @@ public class Episodes {
       return subs;
     }
     File[] files = directory.listFiles(new SubtitlesFilter());
-    String seasonRegex = MyUsefulFunctions.createSeasonRegex(season);
-    String episodeRegex = MyUsefulFunctions.createEpisodeRegex(episode);
-    Pattern sPattern = Pattern.compile(seasonRegex);
-    Pattern ePattern = Pattern.compile(episodeRegex);
+    String regex = MyUsefulFunctions.createRegex(season, episode);
+    Pattern pattern = Pattern.compile(regex);
     for (int j = 0; j < files.length; j++) {
       File file = files[j];
-      Matcher sMatcher = sPattern.matcher(file.getName());
-      Matcher eMatcher = ePattern.matcher(file.getName());
-      if (eMatcher.find() && sMatcher.find()) {
+      Matcher matcher = pattern.matcher(file.getName());
+      if (matcher.find()) {
         if (file.getName().indexOf(".en.") > 0) {
           hasEn = true;
         } else {
