@@ -83,8 +83,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   private MyEpisodesTableModel tableModel_episodes;
   private MyFilteredSeriesTableModel tableModel_filterSeries;
   private ComboBoxModel comboBoxModel_filters;
-  public static String version = "1.1(rev64)";
-  public String date = "2010-03-15";
+  public static String version = "1.1(rev86)";
+  public String date = "2010-03-21";
   public static MyDisabledGlassPane glassPane;
   public static Logger logger;
   public static final long serialVersionUID = 1L;
@@ -1342,8 +1342,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     try {
       FilteredSeries.setSubtitles(comboBox_subtitles.getSelectedIndex());
       FilteredSeries.getFilteredSeries();
-    } catch (IOException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
     } catch (SQLException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);
     }
@@ -1353,8 +1351,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     try {
       FilteredSeries.setSeen(comboBox_seen.getSelectedIndex());
       FilteredSeries.getFilteredSeries();
-    } catch (IOException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
     } catch (SQLException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);
     }
@@ -1401,8 +1397,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     try {
       FilteredSeries.setDownloaded(combobox_downloaded.getSelectedIndex());
       FilteredSeries.getFilteredSeries();
-    } catch (IOException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
     } catch (SQLException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);
     }
@@ -1434,8 +1428,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       } else {
       }
     } catch (SQLException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
-    } catch (IOException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);
     }
   }//GEN-LAST:event_tabsPanelStateChanged
@@ -1653,9 +1645,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     File localDir = new File(Series.getCurrentSerial().getLocalDir().trim());
     int season = Series.getCurrentSerial().getSeason();
     int episode = Episodes.getCurrentEpisode().getEpisode();
-    String seasonRegex = MyUsefulFunctions.createSeasonRegex(season);
-    String episodeRegex = MyUsefulFunctions.createEpisodeRegex(episode);
-    getFiles(localDir, seasonRegex, episodeRegex);
+    String regex = MyUsefulFunctions.createRegex(season, episode);
+    getFiles(localDir, regex);
   }//GEN-LAST:event_popUpItem_viewEpisodeActionPerformed
 
   private void panel_SeriesComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_panel_SeriesComponentResized
@@ -1701,14 +1692,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
   private void popUpItem_renameEpisodesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_renameEpisodesActionPerformed
     try {
-      ArrayList<File>oldNames = new ArrayList<File>();
-      ArrayList<EpisodesRecord>newNames = new ArrayList<EpisodesRecord>();
+      ArrayList<File> oldNames = new ArrayList<File>();
+      ArrayList<EpisodesRecord> newNames = new ArrayList<EpisodesRecord>();
       SeriesRecord series = Series.getCurrentSerial();
       int season = series.getSeason();
-      String seasonRegex = MyUsefulFunctions.createSeasonRegex(season);
-      Pattern sPattern = Pattern.compile(seasonRegex);
-
-
       File dir = new File(series.getLocalDir());
       File[] files = dir.listFiles();
       String path;
@@ -1716,17 +1703,16 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       ArrayList<EpisodesRecord> episodes = Episodes.getCurrentSeriesEpisodes();
       for (Iterator<EpisodesRecord> it = episodes.iterator(); it.hasNext();) {
         EpisodesRecord episodesRecord = it.next();
-        String episodeRegex = MyUsefulFunctions.createEpisodeRegex(episodesRecord.getEpisode());
-        Pattern ePattern = Pattern.compile(episodeRegex);
+        int episode = episodesRecord.getEpisode();
+        String regex = MyUsefulFunctions.createRegex(season, episode);
+        Pattern pattern = Pattern.compile(regex);
         for (int i = 0; i < files.length; i++) {
           File file = files[i];
           if (file != null && file.isFile()) {
             path = file.getParent();
             String name = file.getName();
-            Matcher sMatcher = sPattern.matcher(name);
-            Matcher eMatcher = ePattern.matcher(name);
-            if (eMatcher.find() && sMatcher.find()) {
-
+            Matcher matcher = pattern.matcher(name);
+            if (matcher.find()) {
               String[] tokens = name.split("\\.", -1);
               String ext = tokens[tokens.length - 1];
               if (ext.equals("srt") || ext.equals("sub")) {
@@ -1740,40 +1726,37 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
                       + Options.EPISODE_SEPARATOR + MyUsefulFunctions.padLeft(episodesRecord.getEpisode(), 2, "0")
                       + Options.TITLE_SEPARATOR + episodesRecord.getTitle();
 
-              String newName = path + "/" + newFilename +  "."  +ext;
+              String newName = path + "/" + newFilename + "." + ext;
               File newFile = new File(newName);
               //if (!newFile.exists()) {
-               oldNames.add(files[i]);
-               newNames.add(episodesRecord);
-               //if(files[i].renameTo(newFile)){
-               //   logger.log(Level.INFO,"Renamed " + name + " to " + newFilename + "." + ext);
-               // } else {
-               //   logger.log(Level.WARNING,"Could not rename " + name + " to " + newFilename + "." + ext);
-               // }
+              oldNames.add(files[i]);
+              newNames.add(episodesRecord);
+              //if(files[i].renameTo(newFile)){
+              //   logger.log(Level.INFO,"Renamed " + name + " to " + newFilename + "." + ext);
+              // } else {
+              //   logger.log(Level.WARNING,"Could not rename " + name + " to " + newFilename + "." + ext);
+              // }
               //}
               files[i] = null;
             }
           }
         }
       }
-      RenameEpisodes r = new RenameEpisodes(oldNames, newNames,series);
+      RenameEpisodes r = new RenameEpisodes(oldNames, newNames, series);
     } catch (SQLException ex) {
       logger.log(Level.SEVERE, null, ex);
     }
 
   }//GEN-LAST:event_popUpItem_renameEpisodesActionPerformed
 
-  private void getFiles(File directory, String seasonRegex, String episodeRegex) {
+  private void getFiles(File directory, String regex) {
     ArrayList<File> videos = new ArrayList<File>();
     File[] files = directory.listFiles(new VideoFilter());
-
-    Pattern sPattern = Pattern.compile(seasonRegex);
-    Pattern ePattern = Pattern.compile(episodeRegex);
+    Pattern sPattern = Pattern.compile(regex);
     for (int i = 0; i < files.length; i++) {
       File file = files[i];
       Matcher sMatcher = sPattern.matcher(file.getName());
-      Matcher eMatcher = ePattern.matcher(file.getName());
-      if (eMatcher.find() && sMatcher.find()) {
+      if (sMatcher.find()) {
         videos.add(file);
       }
     }
@@ -1783,7 +1766,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       if (!video.isDirectory()) {
         playVideo(video);
       } else {
-        getFiles(video, seasonRegex, episodeRegex);
+        getFiles(video, regex);
       }
     } else if (videos.size() == 0) {
       MyUsefulFunctions.message("No file found", "Episode was not found");
@@ -1802,15 +1785,20 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
               JOptionPane.QUESTION_MESSAGE,
               null,
               videosArray, videosArray[0]);
-      playVideo(new File(directory + "/" + choice));
+      if(choice!= null){
+        playVideo(new File(directory + "/" + choice));
+      }
     }
 
   }
 
   private void playVideo(File video) {
-
     try {
       Desktop.getDesktop().open(video);
+      EpisodesRecord ep = Episodes.getCurrentEpisode();
+      ep.setSeen(1);
+      ep.save();
+      Episodes.updateEpisodesTable();
     } catch (Exception ex) {
       MySeries.logger.log(Level.WARNING, "Playing videos is not supported", ex);
       MyUsefulFunctions.error("Not supported", "Playing videos is not supported by your OS");
@@ -2050,8 +2038,12 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
             ep.setSeen(seen ? 1 : 0);
             ep.setSubs(MyUsefulFunctions.getSubsId(subs));
             ep.save();
+            Thread.sleep(100);
+            FilteredSeries.getFilteredSeries();
           } catch (SQLException ex) {
             logger.log(Level.WARNING, null, ex);
+          } catch (InterruptedException ex) {
+            Logger.getLogger(MySeries.class.getName()).log(Level.SEVERE, null, ex);
           }
 
         }
