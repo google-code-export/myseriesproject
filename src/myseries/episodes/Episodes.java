@@ -88,6 +88,7 @@ public class Episodes {
     if (rs.next()) {
       currentEpisode = new EpisodesRecord();
       getCurrentEpisode().setEpisode_ID(rs.getInt("episode_ID"));
+      getCurrentEpisode().setSeries_ID(rs.getInt("series_ID"));
       getCurrentEpisode().setEpisode(rs.getInt("episode"));
       getCurrentEpisode().setTitle(rs.getString("title").trim());
       getCurrentEpisode().setAired(rs.getString("aired").trim());
@@ -267,7 +268,5 @@ public class Episodes {
    */
   public static EpisodesRecord getCurrentEpisode() {
     return currentEpisode;
-
-
   }
 }
