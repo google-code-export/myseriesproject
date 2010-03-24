@@ -43,12 +43,17 @@ public class Options {
    * The total columns in all tables
    */
   public static final int _TOTAL_COLUMNS_ = 16;
+  /**
+   * The regex to use for finding episodes
+   */
+  public static String _REGEX_ = "(([ xeEX]|(ep)|(EP))|(([ xeEX]|(ep)|(EP))\\d*([- &])))0*";
 
    /**
    * The options map
    */
   private static Map<String,Object> options;
 
+  
   public static String SEASON_SEPARATOR = " - ";
   public static String TITLE_SEPARATOR = " - ";
   public static String EPISODE_SEPARATOR = "x";
