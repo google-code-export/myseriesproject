@@ -48,7 +48,7 @@ public class FilteredSeries {
    * @throws java.sql.SQLException
    * @throws java.io.IOException
    */
-  public static void getFilteredSeries() throws SQLException, IOException {
+  public static void getFilteredSeries() throws SQLException {
     int id, subsInt, series_ID, episode;
     Boolean boolDownloaded, boolSeen;
     String title, aired, subs;
@@ -90,7 +90,7 @@ public class FilteredSeries {
    * Empty the filtered series table
    * @throws java.io.IOException
    */
-  private static void emptyFilteredSeries() throws IOException {
+  private static void emptyFilteredSeries() {
     if (getTableModel_filterSeries() != null) {
       getTableModel_filterSeries().setRowCount(0);
     }
