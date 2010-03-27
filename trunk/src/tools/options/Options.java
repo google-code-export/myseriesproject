@@ -65,8 +65,11 @@ public class Options {
 
   public static String TV_RAGE = "TvRage";
   public static String EP_GUIDES = "EpGuides";
+  public static String GREEK = "Greek";
+  public static String ENGLISH = "English";
 
   public static Vector<String> DB_UPDATERS = new Vector<String>();
+  public static Vector<String> SUBTITLES = new Vector<String>();
 
   public static String NEXT_EPISODES_LIMIT = "NEXT_EPISODES_LIMIT";
   public static String SHOW_UNSEEN = "SHOW_UNSEEN";
@@ -90,11 +93,14 @@ public class Options {
   public static String HEIGHT = "HEIGHT";
   public static String INTERNET_UPDATE_DB = "INTERNET_UPDATE_DB";
   public static String CHECK_VERSION = "CHECK_VERSION";
+  public static String PRIMARY_SUB = "PRIMARY_SUB";
 
 
   static {
     DB_UPDATERS.add(Options.EP_GUIDES);
     DB_UPDATERS.add(Options.TV_RAGE);
+    SUBTITLES.add(Options.GREEK);
+    SUBTITLES.add(Options.ENGLISH);
   }
 
   /**
@@ -304,6 +310,7 @@ public class Options {
     out.println(Options.HEIGHT + " = 600");
     out.println(Options.INTERNET_UPDATE_DB + "= TvRage");
     out.println(Options.CHECK_VERSION + " = true");
+    out.println(Options.PRIMARY_SUB + " = gr");
     out.close();
   }
 
