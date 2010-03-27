@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JProgressBar;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -31,13 +32,17 @@ import org.xml.sax.SAXException;
 public class EzTv implements Runnable {
 
   private final URI uri;
+  private JProgressBar progress;
 
-  EzTv(URI uri) {
+  EzTv(URI uri, JProgressBar progress) {
     this.uri = uri;
+    this.progress = progress;
   }
 
   public void run() {
     if (MyUsefulFunctions.hasInternetConnection()) {
+      progress.setIndeterminate(true);
+      progress.setString("Getting rss feeds from eztv");
       getRss();
     }
   }
@@ -48,6 +53,8 @@ public class EzTv implements Runnable {
       URL rss = uri.toURL();
       in = rss.openStream();
       ArrayList<Torrent> torrents = readXML(in);
+      progress.setString(torrents.size()+ " torrents found");
+      progress.setIndeterminate(false);
       if (torrents.size() == 0) {
         MyUsefulFunctions.message("No Torrents", "No torrent was found");
       } else if (torrents.size() == 1) {
@@ -77,6 +84,7 @@ public class EzTv implements Runnable {
     String link = "";
     ArrayList<Torrent> torrents = new ArrayList<Torrent>();
     try {
+      progress.setString("Reading the rss data");
       myseries.MySeries.logger.log(Level.INFO, "Parsing XML");
       DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
       DocumentBuilder db = dbf.newDocumentBuilder();
