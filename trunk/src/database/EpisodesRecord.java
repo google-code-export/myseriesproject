@@ -204,4 +204,11 @@ public class EpisodesRecord extends Record {
   public void setDownloaded(int downloaded) {
     this.downloaded = downloaded;
   }
+
+  @Override
+  public String toString() {
+   return title;
+  }
+
+
 }
