@@ -57,6 +57,7 @@ public class OptionsPanel extends MyDraggable {
   private Color oldColor;
   private boolean oldUseSkin;
   private ComboBoxModel updateDbModel = new DefaultComboBoxModel(Options.DB_UPDATERS);
+  private ComboBoxModel subtitlesModel = new DefaultComboBoxModel(Options.SUBTITLES);
 
   /** Creates new form OptionsPanel
    * @param m MySeries main form
@@ -124,8 +125,6 @@ public class OptionsPanel extends MyDraggable {
     spinner_fontSize = new javax.swing.JSpinner();
     combobox_fonts = new javax.swing.JComboBox();
     label_preview = new javax.swing.JLabel();
-    jCheckBox1 = new javax.swing.JCheckBox();
-    jLabel12 = new javax.swing.JLabel();
     panel_nextepisodes = new javax.swing.JPanel();
     jLabel2 = new javax.swing.JLabel();
     checkbox_showUnseen = new javax.swing.JCheckBox();
@@ -136,9 +135,13 @@ public class OptionsPanel extends MyDraggable {
     jLabel8 = new javax.swing.JLabel();
     jLabel9 = new javax.swing.JLabel();
     textfield_proxy = new javax.swing.JTextField();
+    jCheckBox1 = new javax.swing.JCheckBox();
+    jLabel12 = new javax.swing.JLabel();
     textfield_port = new javax.swing.JTextField();
     jLabel11 = new javax.swing.JLabel();
     combo_updateDb = new javax.swing.JComboBox();
+    jLabel13 = new javax.swing.JLabel();
+    combo_updateDb1 = new javax.swing.JComboBox();
 
     javax.swing.GroupLayout panel_DateFormatHelpLayout = new javax.swing.GroupLayout(panel_DateFormatHelp);
     panel_DateFormatHelp.setLayout(panel_DateFormatHelpLayout);
@@ -299,17 +302,6 @@ public class OptionsPanel extends MyDraggable {
     label_preview.setText(String.valueOf(combobox_fonts.getSelectedItem()));
     label_preview.setName("noname"); // NOI18N
 
-    jCheckBox1.setSelected(Options.toBoolean(Options.CHECK_VERSION));
-    jCheckBox1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-    jCheckBox1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-    jCheckBox1.setMargin(new java.awt.Insets(0, 0, 0, 0));
-    jCheckBox1.setName(Options.CHECK_VERSION);
-    jCheckBox1.setOpaque(false);
-
-    jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-    jLabel12.setText("Check for updates :");
-    jLabel12.setName("noname"); // NOI18N
-
     javax.swing.GroupLayout panel_generalLayout = new javax.swing.GroupLayout(panel_general);
     panel_general.setLayout(panel_generalLayout);
     panel_generalLayout.setHorizontalGroup(
@@ -322,11 +314,9 @@ public class OptionsPanel extends MyDraggable {
           .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
           .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
           .addComponent(checkbox_dontUseSkin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-          .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-          .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
+          .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
         .addGap(4, 4, 4)
         .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jCheckBox1)
           .addComponent(combobox_fonts, 0, 158, Short.MAX_VALUE)
           .addComponent(button_BGColor, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
           .addComponent(combobox_laf, 0, 158, Short.MAX_VALUE)
@@ -378,14 +368,7 @@ public class OptionsPanel extends MyDraggable {
           .addComponent(combobox_fonts, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(spinner_fontSize, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(label_preview, javax.swing.GroupLayout.Alignment.TRAILING))
-        .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addGroup(panel_generalLayout.createSequentialGroup()
-            .addGap(8, 8, 8)
-            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE))
-          .addGroup(panel_generalLayout.createSequentialGroup()
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jCheckBox1)))
-        .addGap(13, 13, 13))
+        .addGap(41, 41, 41))
     );
 
     panel_generalLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {button_dateFormatHelp, combobox_dateFormat});
@@ -485,6 +468,17 @@ public class OptionsPanel extends MyDraggable {
     binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, checkbox_useProxy, org.jdesktop.beansbinding.ELProperty.create("${selected}"), textfield_proxy, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
     bindingGroup.addBinding(binding);
 
+    jCheckBox1.setSelected(Options.toBoolean(Options.CHECK_VERSION));
+    jCheckBox1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    jCheckBox1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+    jCheckBox1.setMargin(new java.awt.Insets(0, 0, 0, 0));
+    jCheckBox1.setName(Options.CHECK_VERSION);
+    jCheckBox1.setOpaque(false);
+
+    jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    jLabel12.setText("Check for updates :");
+    jLabel12.setName("noname"); // NOI18N
+
     textfield_port.setText(Options.toString(Options.PROXY_PORT));
     textfield_port.setName(Options.PROXY_PORT);
 
@@ -500,49 +494,85 @@ public class OptionsPanel extends MyDraggable {
     combo_updateDb.setName(Options.INTERNET_UPDATE_DB);
     combo_updateDb.setOpaque(false);
 
+    jLabel13.setText("Primary subtitles lang. :");
+    jLabel13.setToolTipText("When downloading subtitles this language will be queried first.");
+    jLabel13.setName("noname"); // NOI18N
+
+    combo_updateDb1.setModel(subtitlesModel);
+    combo_updateDb1.setSelectedItem(Options.toString(Options.PRIMARY_SUB));
+    combo_updateDb1.setName(Options.PRIMARY_SUB);
+    combo_updateDb1.setOpaque(false);
+
     javax.swing.GroupLayout panel_internetLayout = new javax.swing.GroupLayout(panel_internet);
     panel_internet.setLayout(panel_internetLayout);
     panel_internetLayout.setHorizontalGroup(
       panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(panel_internetLayout.createSequentialGroup()
-        .addGap(27, 27, 27)
-        .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
-          .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
-          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_internetLayout.createSequentialGroup()
-            .addGap(8, 8, 8)
-            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(combo_updateDb, 0, 157, Short.MAX_VALUE)
-          .addComponent(textfield_port, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
-          .addComponent(textfield_proxy, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE))
+      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_internetLayout.createSequentialGroup()
+        .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+          .addGroup(panel_internetLayout.createSequentialGroup()
+            .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+              .addGroup(panel_internetLayout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE))
+              .addGroup(panel_internetLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(textfield_port, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+              .addComponent(textfield_proxy, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)))
+          .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel_internetLayout.createSequentialGroup()
+            .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+              .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel_internetLayout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))
+              .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel_internetLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                  .addGroup(panel_internetLayout.createSequentialGroup()
+                    .addGap(10, 10, 10)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                  .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE))))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(combo_updateDb1, 0, 147, Short.MAX_VALUE)
+              .addComponent(combo_updateDb, 0, 147, Short.MAX_VALUE)
+              .addComponent(jCheckBox1))))
         .addGap(210, 210, 210))
       .addGroup(panel_internetLayout.createSequentialGroup()
-        .addComponent(checkbox_useProxy, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
+        .addContainerGap()
+        .addComponent(checkbox_useProxy, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
         .addGap(350, 350, 350))
     );
     panel_internetLayout.setVerticalGroup(
       panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(panel_internetLayout.createSequentialGroup()
-        .addContainerGap()
+        .addGap(11, 11, 11)
         .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jLabel11)
           .addComponent(combo_updateDb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addComponent(checkbox_useProxy)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+          .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 17, Short.MAX_VALUE)
+          .addComponent(jCheckBox1))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jLabel8)
-          .addComponent(textfield_proxy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addComponent(jLabel13)
+          .addComponent(combo_updateDb1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addGap(10, 10, 10)
+        .addComponent(checkbox_useProxy)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(textfield_proxy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(jLabel8))
         .addGap(4, 4, 4)
         .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jLabel9)
           .addComponent(textfield_port, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addContainerGap(107, Short.MAX_VALUE))
+        .addGap(52, 52, 52))
     );
 
-    tabbedPane_options.addTab("Internet Update", panel_internet);
+    tabbedPane_options.addTab("Internet", panel_internet);
 
     javax.swing.GroupLayout panel_optionsLayout = new javax.swing.GroupLayout(panel_options);
     panel_options.setLayout(panel_optionsLayout);
@@ -712,6 +742,7 @@ public class OptionsPanel extends MyDraggable {
   private javax.swing.JCheckBox checkbox_showUnseen;
   private javax.swing.JCheckBox checkbox_useProxy;
   private javax.swing.JComboBox combo_updateDb;
+  private javax.swing.JComboBox combo_updateDb1;
   private javax.swing.JComboBox combobox_dateFormat;
   private javax.swing.JComboBox combobox_debugMode;
   private javax.swing.JComboBox combobox_fonts;
@@ -721,6 +752,7 @@ public class OptionsPanel extends MyDraggable {
   private javax.swing.JLabel jLabel10;
   private javax.swing.JLabel jLabel11;
   private javax.swing.JLabel jLabel12;
+  private javax.swing.JLabel jLabel13;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JLabel jLabel3;
   private javax.swing.JLabel jLabel4;
@@ -796,7 +828,8 @@ public class OptionsPanel extends MyDraggable {
               name.equals(Options.DEBUG_MODE) ||
               name.equals(Options.LOOK_AND_FEEL) ||
               name.equals(Options.FONT_FACE) ||
-              name.equals(Options.INTERNET_UPDATE_DB)) {
+              name.equals(Options.INTERNET_UPDATE_DB)||
+              name.equals(Options.PRIMARY_SUB)) {
         return String.valueOf(combo.getSelectedItem());
       }
       return combo.getSelectedIndex();
