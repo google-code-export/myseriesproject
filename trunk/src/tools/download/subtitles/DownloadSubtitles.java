@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package tools.download;
+package tools.download.subtitles;
 
 import java.awt.Desktop;
 import java.io.BufferedOutputStream;
