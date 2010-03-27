@@ -7,6 +7,8 @@ package tools.download;
 import java.awt.Desktop;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,6 +25,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import myComponents.MyUsefulFunctions;
@@ -56,22 +59,24 @@ public class DownloadSubtitles implements Runnable {
     getSubtitle();
     progress.setIndeterminate(false);
     if (subs.size() == 0) {
-       form.dispose();
+      form.dispose();
       MyUsefulFunctions.message("Subtitle not found", "The subtitle was not found");
     } else if (subs.size() == 1) {
       download(subs.get(0));
-       form.dispose();
+      form.dispose();
     } else {
       Subtitle sub = (Subtitle) JOptionPane.showInputDialog(null, "Choose the subtitle to download", "Choose subtitle", JOptionPane.QUESTION_MESSAGE, null, subs.toArray(), 0);
       if (sub != null) {
         String newPath = sub.url.getPath().replace("subtitle", "download");
         try {
-          sub.url = new URL("http://www.tvsubtitles.net"  + newPath);
+          sub.url = new URL("http://www.tvsubtitles.net" + newPath);
         } catch (MalformedURLException ex) {
+          MyUsefulFunctions.message("Error occured!!!", "Wrong url : " + sub.url);
           myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+          form.dispose();
         }
         download(sub);
-         form.dispose();
+        form.dispose();
       }
     }
   }
@@ -85,18 +90,22 @@ public class DownloadSubtitles implements Runnable {
           if (subsLink != null) {
             getDownloadLinks(subsLink);
           } else {
-             form.dispose();
+            form.dispose();
           }
-        }else {
-           form.dispose();
+        } else {
+          form.dispose();
         }
       } else {
-         form.dispose();
+        form.dispose();
       }
     } catch (MalformedURLException ex) {
       myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.message("Error occured!!!", "Wrong url");
+      form.dispose();
     } catch (IOException ex) {
       myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.message("Error occured!!!", "Could not read input stream");
+      form.dispose();
     }
   }
 
@@ -125,7 +134,7 @@ public class DownloadSubtitles implements Runnable {
 
   private String getLink(String buff) {
     String lang = Options.toString(Options.PRIMARY_SUB).equals("Greek") ? "gr" : "en";
-    int pos = buff.indexOf("<img src=\"images/flags/"+lang+".gif\"");
+    int pos = buff.indexOf("<img src=\"images/flags/" + lang + ".gif\"");
     int i = pos;
     String subLink = null;
     while (i > 0) {
@@ -178,12 +187,17 @@ public class DownloadSubtitles implements Runnable {
       try {
         try {
           progress.setIndeterminate(false);
+          MyUsefulFunctions.message("No local dir", "Local dir for series is not provided.Opening browser");
           Desktop.getDesktop().browse(new URI(sub.url.toString()));
         } catch (IOException ex) {
-          Logger.getLogger(DownloadSubtitles.class.getName()).log(Level.SEVERE, null, ex);
+          myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+          MyUsefulFunctions.message("Error occured!!!", "Could not read input stream");
+          form.dispose();
         }
       } catch (URISyntaxException ex) {
-        Logger.getLogger(DownloadSubtitles.class.getName()).log(Level.SEVERE, null, ex);
+        myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+          MyUsefulFunctions.message("Error occured!!!", "Wrong url");
+          form.dispose();
       }
     } else {
       progress.setIndeterminate(true);
@@ -197,7 +211,7 @@ public class DownloadSubtitles implements Runnable {
         is = uCon.getInputStream();
         buf = new byte[1024];
         int ByteRead, ByteWritten = 0;
-        String filename = localDir +"/s"+season+"x"+episode+".zip";
+        String filename = localDir + "/s" + season + "x" + episode + "_" + MyUsefulFunctions.createRandomString(8) + ".zip";
         outStream = new BufferedOutputStream(new FileOutputStream(filename));
         while ((ByteRead = is.read(buf)) != -1) {
           outStream.write(buf, 0, ByteRead);
@@ -206,27 +220,23 @@ public class DownloadSubtitles implements Runnable {
         is.close();
         outStream.close();
         progress.setString("Opening zip File");
-        ZipFile zip = new ZipFile(filename);
-        if(zip.entries().hasMoreElements()){
-          ZipEntry el = zip.entries().nextElement();
-          if(el.getName().endsWith(".srt")){
-            form.label_message.setText(el.getName());
-            MyUsefulFunctions.message("Subtitle downloaded", "The subtitle \n"+ el.getName()+ "\n is downloaded");
-          }
-        }
-        
+        openZip(filename);
       } catch (IOException ex) {
-
         try {
-          if(ex.getMessage().indexOf("code: 403") > -1){
-            Desktop.getDesktop().browse(new URI(sub.url.toString()));
+          if (ex.getMessage().indexOf("code: 403") > -1) {
+          MyUsefulFunctions.message("Access denied", "Direct access to subtitle is denied.Opening browser");
+          Desktop.getDesktop().browse(new URI(sub.url.toString()));
           }
         } catch (URISyntaxException ex1) {
-          Logger.getLogger(DownloadSubtitles.class.getName()).log(Level.SEVERE, null, ex1);
-        } catch(IOException ex1){
-          Logger.getLogger(DownloadSubtitles.class.getName()).log(Level.SEVERE, null, ex1);
+          myseries.MySeries.logger.log(Level.SEVERE, null, ex1);
+          MyUsefulFunctions.message("Error occured!!!", "Wrong url");
+          form.dispose();
+        } catch (IOException ex1) {
+          myseries.MySeries.logger.log(Level.SEVERE, null, ex1);
+          MyUsefulFunctions.message("Error occured!!!", "Could not read input stream");
+          form.dispose();
         }
-      } 
+      }
     }
   }
 
@@ -242,5 +252,31 @@ public class DownloadSubtitles implements Runnable {
    */
   public void setLocalDir(String localDir) {
     this.localDir = localDir;
+  }
+
+  private void openZip(String filename) throws IOException {
+    ZipFile zip = new ZipFile(filename);
+    ZipInputStream zipinputstream = new ZipInputStream(new FileInputStream(filename));
+    byte[] buf = new byte[1024];
+    if (zip.entries().hasMoreElements()) {
+      ZipEntry el = zip.entries().nextElement();
+      if (el.getName().endsWith(".srt")) {
+        int n;
+        FileOutputStream fileoutputstream;
+        File newFile = new File(el.getName());
+        String directory = newFile.getParent();
+        fileoutputstream = new FileOutputStream(localDir + "/" + el.getName());
+        while ((n = zipinputstream.read(buf, 0, 1024)) > -1) {
+          fileoutputstream.write(buf, 0, n);
+        }
+        fileoutputstream.close();
+        zipinputstream.closeEntry();
+      }
+      form.label_message.setText(el.getName());
+      MyUsefulFunctions.message("Subtitle downloaded", "The subtitle \n" + el.getName() + "\n is downloaded");
+    }
+    zipinputstream.close();
+    zip.close();
+    new File(filename).delete();
   }
 }

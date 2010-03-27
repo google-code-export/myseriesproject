@@ -22,7 +22,7 @@ public class DownloadSubtitlesForm extends MyDraggable {
   /** Creates new form DownloadSubtitlesForm */
   public DownloadSubtitlesForm(String link, int season, int episode, String localDir, String title) {
     initComponents();
-    label_title.setText("Downloading subtitles for "+ title);
+    label_subtitle.setText(title);
     setLocationRelativeTo(null);
     DownloadSubtitles d = new DownloadSubtitles(link, season, episode, this);
     d.setLocalDir(localDir);
@@ -44,6 +44,8 @@ public class DownloadSubtitlesForm extends MyDraggable {
     label_title = new javax.swing.JLabel();
     progress = new javax.swing.JProgressBar();
     label_message = new javax.swing.JLabel();
+    label_subtitle = new javax.swing.JLabel();
+    button_close = new javax.swing.JButton();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
@@ -51,20 +53,31 @@ public class DownloadSubtitlesForm extends MyDraggable {
 
     label_title.setFont(label_title.getFont().deriveFont(label_title.getFont().getStyle() | java.awt.Font.BOLD, label_title.getFont().getSize()+2));
     label_title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-    label_title.setText("Title");
+    label_title.setText("Downloading Subtitles");
 
     progress.setStringPainted(true);
+
+    label_subtitle.setFont(label_subtitle.getFont().deriveFont(label_subtitle.getFont().getSize()+2f));
+
+    button_close.setText("Close");
+    button_close.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_closeActionPerformed(evt);
+      }
+    });
 
     javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     jPanel1.setLayout(jPanel1Layout);
     jPanel1Layout.setHorizontalGroup(
       jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+      .addGroup(jPanel1Layout.createSequentialGroup()
         .addContainerGap()
-        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addComponent(label_message, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
-          .addComponent(progress, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
-          .addComponent(label_title, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE))
+        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(label_subtitle, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
+          .addComponent(progress, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
+          .addComponent(label_title, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
+          .addComponent(label_message, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
+          .addComponent(button_close))
         .addContainerGap())
     );
     jPanel1Layout.setVerticalGroup(
@@ -72,11 +85,15 @@ public class DownloadSubtitlesForm extends MyDraggable {
       .addGroup(jPanel1Layout.createSequentialGroup()
         .addContainerGap()
         .addComponent(label_title)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(label_subtitle, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(label_message, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(32, 32, 32)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(progress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(40, Short.MAX_VALUE))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addComponent(button_close)
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -93,10 +110,17 @@ public class DownloadSubtitlesForm extends MyDraggable {
     pack();
   }// </editor-fold>//GEN-END:initComponents
 
+  private void button_closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_closeActionPerformed
+    myseries.MySeries.glassPane.deactivate();
+    dispose();
+  }//GEN-LAST:event_button_closeActionPerformed
+
   
   // Variables declaration - do not modify//GEN-BEGIN:variables
+  private javax.swing.JButton button_close;
   private javax.swing.JPanel jPanel1;
   public javax.swing.JLabel label_message;
+  public javax.swing.JLabel label_subtitle;
   private javax.swing.JLabel label_title;
   public javax.swing.JProgressBar progress;
   // End of variables declaration//GEN-END:variables
