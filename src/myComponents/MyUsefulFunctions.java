@@ -25,6 +25,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Properties;
 import java.util.Random;
 import javax.swing.JOptionPane;
@@ -48,7 +49,6 @@ public class MyUsefulFunctions {
       sdf = new SimpleDateFormat(Options._MYSQL_DATE_FORMAT_);
       date = sdf.format(dateD);
     } catch (ParseException ex) {
-
     }
     if (date.equals("")) {
       return "";
@@ -414,11 +414,11 @@ public class MyUsefulFunctions {
   }
 
   public static int getSubsId(String subs) {
-    if(subs.equals("None")){
+    if (subs.equals("None")) {
       return 0;
-    } else if(subs.equals("English")){
+    } else if (subs.equals("English")) {
       return 1;
-    } else if(subs.equals("Greek")){
+    } else if (subs.equals("Greek")) {
       return 2;
     } else {
       return 3;
@@ -426,18 +426,29 @@ public class MyUsefulFunctions {
   }
 
   public static String createRegex(int season, int episode) {
-    return "\\D*"+season+ Options._REGEX_ + episode + "\\D";
+    return "\\D*" + season + Options._REGEX_ + episode + "\\D";
   }
 
   public static String createRandomString(int length) {
     Random random = new Random();
     StringBuilder sb = new StringBuilder();
     while (sb.length() < length) {
-        sb.append(Integer.toHexString(random.nextInt()));
+      sb.append(Integer.toHexString(random.nextInt()));
     }
     return sb.toString();
-}
+  }
 
+  public static String join(Iterable<? extends Object> pColl, String separator) {
+    Iterator<? extends Object> oIter;
+    if (pColl == null || (!(oIter = pColl.iterator()).hasNext())) {
+      return "";
+    }
+    StringBuilder oBuilder = new StringBuilder(String.valueOf(oIter.next()));
+    while (oIter.hasNext()) {
+      oBuilder.append(separator).append(oIter.next());
+    }
+    return oBuilder.toString();
+  }
 
   private MyUsefulFunctions() {
   }
