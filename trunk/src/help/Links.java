@@ -33,6 +33,8 @@ public class Links {
     links.put("Add new Series Panel","series_administration");
     links.put("Add new episode Panel","episodes_administration");
     links.put("Renaming episodes Panel","episodes_renaming");
+    links.put("Internet","internet_update");
+    links.put("Episodes pop up menu","episodes_popup");
   }
 
   private Links() {
