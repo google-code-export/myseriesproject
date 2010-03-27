@@ -5,6 +5,7 @@
 package myseries.filters;
 
 import database.DBConnection;
+import database.EpisodesRecord;
 import database.SeriesRecord;
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -74,7 +75,7 @@ public class FilteredSeries {
       Vector<SeriesRecord> seriesV = SeriesRecord.getSeriesBySql("SELECT * FROM series WHERE hidden = 0 AND series_ID = " + series_ID);
       ser = seriesV.get(0);
 
-      Object[] data = {ser.getFullTitle(), episode, title, aired, boolDownloaded, subs, boolSeen, id};
+      Object[] data = {ser.getFullTitle(), episode, EpisodesRecord.getEpisodeByID(id), aired, boolDownloaded, subs, boolSeen};
       if (getTableModel_filterSeries() != null) {
         getTableModel_filterSeries().addRow(data);
       }
