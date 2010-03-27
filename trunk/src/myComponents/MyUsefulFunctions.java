@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
+import java.util.Random;
 import javax.swing.JOptionPane;
 import tools.options.Options;
 
@@ -427,6 +428,16 @@ public class MyUsefulFunctions {
   public static String createRegex(int season, int episode) {
     return "\\D*"+season+ Options._REGEX_ + episode + "\\D";
   }
+
+  public static String createRandomString(int length) {
+    Random random = new Random();
+    StringBuilder sb = new StringBuilder();
+    while (sb.length() < length) {
+        sb.append(Integer.toHexString(random.nextInt()));
+    }
+    return sb.toString();
+}
+
 
   private MyUsefulFunctions() {
   }
