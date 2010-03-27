@@ -8,7 +8,7 @@
  *
  * Created on 26 Μαρ 2010, 9:44:53 μμ
  */
-package tools.download;
+package tools.download.subtitles;
 
 import myComponents.MyDraggable;
 import myComponents.MyUsefulFunctions;
