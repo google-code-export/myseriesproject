@@ -54,6 +54,7 @@ public class TrUpdate extends AbstractUpdate implements Runnable {
       URL tvRage = new URL(url);
       in = tvRage.openStream();
       readXML(in);
+      in.close();
       append("<span style='color:green'>(" + series.getFullTitle() + ") - OK</span>");
       return true;
     } catch (ParserConfigurationException ex) {
