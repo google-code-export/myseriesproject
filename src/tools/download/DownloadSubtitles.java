@@ -86,7 +86,7 @@ public class DownloadSubtitles implements Runnable {
       if (MyUsefulFunctions.hasInternetConnection()) {
         String buff = parseWebPage();
         if (!buff.equals("")) {
-          String subsLink = getLink(buff);
+          String subsLink = getLink(buff, true);
           if (subsLink != null) {
             getDownloadLinks(subsLink);
           } else {
@@ -132,8 +132,13 @@ public class DownloadSubtitles implements Runnable {
     return buff;
   }
 
-  private String getLink(String buff) {
-    String lang = Options.toString(Options.PRIMARY_SUB).equals("Greek") ? "gr" : "en";
+  private String getLink(String buff, boolean getPrimarySub) {
+    String lang = "";
+    if(getPrimarySub){
+      lang = Options.toString(Options.PRIMARY_SUB).equals("Greek") ? "gr" : "en";
+    } else {
+      lang = Options.toString(Options.PRIMARY_SUB).equals("Greek") ? "en" : "gr";
+    }
     int pos = buff.indexOf("<img src=\"images/flags/" + lang + ".gif\"");
     int i = pos;
     String subLink = null;
@@ -145,7 +150,11 @@ public class DownloadSubtitles implements Runnable {
       }
       i--;
     }
+    if(subLink!=null){
     return subLink;
+    } else {
+      return getLink(buff, false);
+    }
   }
 
   private void getDownloadLinks(String subsLink) throws MalformedURLException, IOException {
