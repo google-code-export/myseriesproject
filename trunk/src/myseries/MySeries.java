@@ -70,9 +70,7 @@ import tools.importExport.ImportEpisodes;
 import tools.internetUpdate.InternetUpdate;
 import tools.options.OptionsPanel;
 import tools.Skin;
-import tools.download.DownloadSubtitles;
 import tools.download.DownloadSubtitlesForm;
-import tools.download.Subtitle;
 import tools.myLogger;
 import tools.renaming.RenameEpisodes;
 
@@ -86,8 +84,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   private MyEpisodesTableModel tableModel_episodes;
   private MyFilteredSeriesTableModel tableModel_filterSeries;
   private ComboBoxModel comboBoxModel_filters;
-  public static String version = "1.1(rev86)";
-  public String date = "2010-03-21";
+  public static String version = "1.2(rev100)";
+  public String date = "2010-03-28";
   public static MyDisabledGlassPane glassPane;
   public static Logger logger;
   public static final long serialVersionUID = 1L;
@@ -1066,7 +1064,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
     menu_Help.setText("Help");
 
-    menuItem_help.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
+    menuItem_help.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
     menuItem_help.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"))); // NOI18N
     menuItem_help.setText("Help");
     menuItem_help.addActionListener(new java.awt.event.ActionListener() {
@@ -1076,6 +1074,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     });
     menu_Help.add(menuItem_help);
 
+    menuItem_checkUpdate.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
     menuItem_checkUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/checkUpdates.png"))); // NOI18N
     menuItem_checkUpdate.setText("Check For Updates");
     menuItem_checkUpdate.addActionListener(new java.awt.event.ActionListener() {
@@ -1085,6 +1084,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     });
     menu_Help.add(menuItem_checkUpdate);
 
+    menuItem_viewLogs.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F12, 0));
     menuItem_viewLogs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/viewLogs.png"))); // NOI18N
     menuItem_viewLogs.setText("View Log File");
     menuItem_viewLogs.addActionListener(new java.awt.event.ActionListener() {
@@ -1095,7 +1095,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     menu_Help.add(menuItem_viewLogs);
     menu_Help.add(jSeparator3);
 
-    menuItem_About.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_MASK));
+    menuItem_About.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F11, 0));
     menuItem_About.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/info.png"))); // NOI18N
     menuItem_About.setText("About");
     menuItem_About.addActionListener(new java.awt.event.ActionListener() {
