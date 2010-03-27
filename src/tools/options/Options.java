@@ -70,7 +70,7 @@ public class Options {
 
   public static Vector<String> DB_UPDATERS = new Vector<String>();
   public static Vector<String> SUBTITLES = new Vector<String>();
-  public static String[] QUALITIES = {"All","HDTV","720p","1080i","1080p","DSRip","DVBRip","DVDR","DVDRip","DVDScr","HR.HDTV","HR.PDTV","PDTV","SatRip","SVCD","TVRip","WebRip"};
+  public static String[] QUALITIES = {"","HDTV","720p","1080i","1080p","DSRip","DVBRip","DVDR","DVDRip","DVDScr","HR.HDTV","HR.PDTV","PDTV","SatRip","SVCD","TVRip","WebRip"};
 
   public static String NEXT_EPISODES_LIMIT = "NEXT_EPISODES_LIMIT";
   public static String SHOW_UNSEEN = "SHOW_UNSEEN";
