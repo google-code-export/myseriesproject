@@ -11,12 +11,14 @@
 package tools.download;
 
 import myComponents.MyDraggable;
+import myComponents.MyUsefulFunctions;
 
 /**
  *
  * @author lordovol
  */
 public class DownloadSubtitlesForm extends MyDraggable {
+
   private static final long serialVersionUID = 25436476L;
 
   /** Creates new form DownloadSubtitlesForm */
@@ -24,11 +26,16 @@ public class DownloadSubtitlesForm extends MyDraggable {
     initComponents();
     label_subtitle.setText(title);
     setLocationRelativeTo(null);
-    DownloadSubtitles d = new DownloadSubtitles(link, season, episode, this);
-    d.setLocalDir(localDir);
-    Thread t = new Thread(d);
-    t.start();
-    setVisible(true);
+    if (link.indexOf("www.tvsubtitles.net/") == -1) {
+      MyUsefulFunctions.message("Wrong subtitles webpage", "The subtitles webpage should be in http://www.subtitles.net");
+      dispose();
+    } else {
+      DownloadSubtitles d = new DownloadSubtitles(link, season, episode, this);
+      d.setLocalDir(localDir);
+      Thread t = new Thread(d);
+      t.start();
+      setVisible(true);
+    }
   }
 
   /** This method is called from within the constructor to
@@ -114,8 +121,6 @@ public class DownloadSubtitlesForm extends MyDraggable {
     myseries.MySeries.glassPane.deactivate();
     dispose();
   }//GEN-LAST:event_button_closeActionPerformed
-
-  
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton button_close;
   private javax.swing.JPanel jPanel1;
