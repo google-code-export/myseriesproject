@@ -19,6 +19,14 @@
            <li><b>Delete Episode:</b>Deletes the current episode from the database.</li>
            <li><b>View Episode:</b>Opens the selected episode in the default media player application. The path to the local folder
            that contains the episodes must be provided in [<span class="link">Add/Edit Series Panel</span>]</li>
+           <li><b>Download Episode subtitles</b>If the www.tvsubtitles.net webpage address is provided
+             (in [<span class="link">Add/Edit Series Panel</span>]) the application connects and downloads the subtitles
+           of the episode.The language depends on the selected option in [<span class="link">Internet Options</span>].<br />
+           If the primary language is not found the application will try to download the secondary one. If it's found and the local directory
+           of the series is provided the srt file will be extracted there. If multiple subtitles are found you will prompt to choose which subtitle to
+           download.<br />
+           If the local directory is not provided or direct access to subtitle file is denied by the tvsubtitles.net server the default internet browser
+           will open and download the file.</li>
         </ol>
   </td></tr>
 </table>
