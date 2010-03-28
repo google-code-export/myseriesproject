@@ -402,6 +402,7 @@ public class StartPanel extends myComponents.MyDraggable {
       MySeries.logger.log(Level.INFO, "Checking directories");
       checkDir(Options._USER_DIR_ + "/" + Options._DB_PATH_);
       checkDir(Options._USER_DIR_ + "/" + Options._SCREENSHOTS_PATH_);
+      checkDir(Options._USER_DIR_ + "/" + Options._TORRENTS_PATH_);
       // Create the default db if not exists and create the conn, stmt
 
       if (Options.toString(Options.DB_NAME).equals("") ||
