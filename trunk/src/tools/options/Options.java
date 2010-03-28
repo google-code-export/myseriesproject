@@ -62,6 +62,7 @@ public class Options {
    * The screenshots path
    */
   public static final String _SCREENSHOTS_PATH_ = "images/";
+  public static final String _TORRENTS_PATH_ = "torrents/";
 
   public static String TV_RAGE = "TvRage";
   public static String EP_GUIDES = "EpGuides";
