@@ -146,6 +146,8 @@ public class Help extends JFrame {
     treeNode2.add(treeNode3);
     treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Internet Update");
     treeNode2.add(treeNode3);
+    treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Download Torrent");
+    treeNode2.add(treeNode3);
     treeNode1.add(treeNode2);
     treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Options");
     treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("General Options");
