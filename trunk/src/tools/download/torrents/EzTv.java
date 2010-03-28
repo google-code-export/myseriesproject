@@ -5,11 +5,16 @@
 package tools.download.torrents;
 
 import java.awt.Desktop;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +29,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import tools.options.Options;
 
 /**
  *
@@ -33,10 +39,12 @@ public class EzTv implements Runnable {
 
   private final URI uri;
   private JProgressBar progress;
+  private EzTvForm form;
 
-  EzTv(URI uri, JProgressBar progress) {
+  EzTv(URI uri, EzTvForm form) {
     this.uri = uri;
-    this.progress = progress;
+    this.form = form;
+    this.progress = form.progress;
   }
 
   public void run() {
@@ -53,26 +61,68 @@ public class EzTv implements Runnable {
       URL rss = uri.toURL();
       in = rss.openStream();
       ArrayList<Torrent> torrents = readXML(in);
-      progress.setString(torrents.size()+ " torrents found");
+      progress.setString(torrents.size() + " torrents found");
       progress.setIndeterminate(false);
       if (torrents.size() == 0) {
         MyUsefulFunctions.message("No Torrents", "No torrent was found");
       } else if (torrents.size() == 1) {
-        URI uri = torrents.get(0).getUri();
-        if (uri != null) {
-          Desktop.getDesktop().browse(uri);
-        }
+        getTorrent(torrents.get(0));
       } else {
         Torrent tor = (Torrent) JOptionPane.showInputDialog(null, "Choose the torrent to download", "Choose torrent", JOptionPane.QUESTION_MESSAGE, null, torrents.toArray(), 0);
         if (tor != null) {
-          URI uri = tor.getUri();
-          if (uri != null) {
-            Desktop.getDesktop().browse(uri);
-          }
+          getTorrent(tor);
         }
       }
     } catch (IOException ex) {
       myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+    }
+  }
+
+  private void downloadTorrent(Torrent torrent) {
+    try {
+      InputStream is = null;
+      BufferedOutputStream outStream = null;
+      byte[] buf;
+      URLConnection uCon = torrent.getUri().toURL().openConnection();
+      is = uCon.getInputStream();
+      buf = new byte[1024];
+      int ByteRead;
+      int ByteWritten = 0;
+      String[] t = torrent.link.split("/",-1);
+      String torrentName = t[t.length-1];
+
+      String filename = Options._USER_DIR_ + "/"+ Options._TORRENTS_PATH_ + torrentName;
+      outStream = new BufferedOutputStream(new FileOutputStream(filename));
+      while ((ByteRead = is.read(buf)) != -1) {
+        outStream.write(buf, 0, ByteRead);
+        ByteWritten += ByteRead;
+      }
+      is.close();
+      outStream.close();
+      Desktop.getDesktop().open(new File(filename));
+      form.dispose();
+    } catch (IOException ex) {
+      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+    }
+  }
+
+  private void getTorrent(Torrent torrent) throws IOException {
+    if (true) {
+      downloadTorrent(torrent);
+      return;
+    }
+    URI uri = torrent.getUri();
+    if (uri != null) {
+      BufferedReader in = new BufferedReader(new InputStreamReader(uri.toURL().openStream()));
+      String line;
+      while ((line = in.readLine()) != null) {
+        if (line.indexOf("Follow the Swarm") > -1) {
+          MyUsefulFunctions.message("No Torrents", "Torrent is not available anymore");
+          return;
+        }
+      }
+      Desktop.getDesktop().browse(uri);
+      form.dispose();
     }
   }
 

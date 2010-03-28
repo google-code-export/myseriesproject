@@ -29,10 +29,10 @@ public class Torrent {
   }
 
   public URI getUri() {
-    link = link.replaceAll("\\[", "%5B");
-    link = link.replaceAll("\\]", "%5D");
+   String encodedLink = link.replaceAll("\\[", "%5B");
+    encodedLink = encodedLink.replaceAll("\\]", "%5D");
     try {
-      return new URI(link);
+      return new URI(encodedLink);
     } catch (URISyntaxException ex) {
       return null;
     }

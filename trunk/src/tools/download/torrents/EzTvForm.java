@@ -231,7 +231,7 @@ public class EzTvForm extends MyDraggable {
       
     URI uri = createUri();
     if(uri != null){
-      EzTv e = new EzTv(uri, progress);
+      EzTv e = new EzTv(uri, this);
       Thread t = new Thread(e);
       t.start();
     }
