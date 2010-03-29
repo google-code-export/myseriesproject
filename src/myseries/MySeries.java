@@ -181,7 +181,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
   public static void createLogger() {
     //Create the JVM logger
-    logger = myLogger.createHtmlLogger("MYSERIES", Options._USER_DIR_ + "/MySeriesLogs");
+    logger = myLogger.createHtmlLogger("MYSERIES", Options._USER_DIR_ + "/MySeriesLogs",262144,true,1);
     logger.setLevel(Level.parse(Options.toString(Options.DEBUG_MODE)));
   }
 
