@@ -83,6 +83,7 @@ public class DownloadSubtitles implements Runnable {
 
   public void getSubtitle() {
     try {
+      MyUsefulFunctions.initInternetConnection();
       if (MyUsefulFunctions.hasInternetConnection()) {
         String buff = parseWebPage();
         if (!buff.equals("")) {
