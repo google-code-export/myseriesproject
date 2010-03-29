@@ -34,6 +34,7 @@ import tools.options.Options;
  * @author lordovol
  */
 public class EzTvForm extends MyDraggable {
+  private static final long serialVersionUID = 235353163L;
 
   private SeriesRecord series = null;
   private EpisodesRecord episode = null;
