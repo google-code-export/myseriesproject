@@ -105,7 +105,13 @@ public class MyUsefulFunctions {
       in = new BufferedReader(new InputStreamReader(google.openStream()));
       return true;
     } catch (IOException ex) {
-      return false;
+      try {
+        URL msn = new URL("http://www.msn.com/");
+        in = new BufferedReader(new InputStreamReader(msn.openStream()));
+        return true;
+      } catch (IOException ex1) {
+        return false;
+      }
     }
   }
 
@@ -207,9 +213,9 @@ public class MyUsefulFunctions {
    */
   public static void message(String title, String message) {
     JOptionPane.showMessageDialog(null,
-            message,
-            title,
-            JOptionPane.INFORMATION_MESSAGE);
+        message,
+        title,
+        JOptionPane.INFORMATION_MESSAGE);
   }
 
   /**
@@ -252,9 +258,9 @@ public class MyUsefulFunctions {
    */
   public static void error(String title, String message) {
     JOptionPane.showMessageDialog(null,
-            message,
-            title,
-            JOptionPane.ERROR_MESSAGE);
+        message,
+        title,
+        JOptionPane.ERROR_MESSAGE);
   }
 
   /**
@@ -265,10 +271,10 @@ public class MyUsefulFunctions {
    */
   public static int question(String title, String message) {
     return JOptionPane.showConfirmDialog(null,
-            message,
-            title,
-            JOptionPane.YES_NO_OPTION,
-            JOptionPane.QUESTION_MESSAGE);
+        message,
+        title,
+        JOptionPane.YES_NO_OPTION,
+        JOptionPane.QUESTION_MESSAGE);
   }
 
   /**
@@ -319,7 +325,7 @@ public class MyUsefulFunctions {
         @Override
         public boolean accept(File dir, String name) {
           for (int i = 0; i
-                  < fileFilter.length; i++) {
+              < fileFilter.length; i++) {
             if (name.endsWith(fileFilter[i])) {
               return true;
             }
@@ -334,11 +340,11 @@ public class MyUsefulFunctions {
         System.exit(0);
       } else {
         name = JOptionPane.showInputDialog(null,
-                message,
-                title,
-                JOptionPane.PLAIN_MESSAGE,
-                null,
-                files, files[0]);
+            message,
+            title,
+            JOptionPane.PLAIN_MESSAGE,
+            null,
+            files, files[0]);
 
         return String.valueOf(name);
       }
