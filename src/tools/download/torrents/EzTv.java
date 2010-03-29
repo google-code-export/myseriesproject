@@ -12,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
@@ -79,8 +80,27 @@ public class EzTv implements Runnable {
     }
   }
 
+  private boolean isTorrent(Torrent torrent) throws MalformedURLException, IOException {
+    URI u = torrent.getUri();
+    if (uri != null) {
+      BufferedReader in = new BufferedReader(new InputStreamReader(u.toURL().openStream()));
+      String line;
+      while ((line = in.readLine()) != null) {
+        if (line.indexOf("Follow the Swarm") > -1) {
+          MyUsefulFunctions.message("No Torrents", "Torrent is not available anymore");
+          return false;
+        }
+      }
+      return true;
+    }
+    return false;
+  }
+
   private void downloadTorrent(Torrent torrent) {
     try {
+      if (!isTorrent(torrent)) {
+        return;
+      }
       InputStream is = null;
       BufferedOutputStream outStream = null;
       byte[] buf;
@@ -89,10 +109,10 @@ public class EzTv implements Runnable {
       buf = new byte[1024];
       int ByteRead;
       int ByteWritten = 0;
-      String[] t = torrent.link.split("/",-1);
-      String torrentName = t[t.length-1];
-
-      String filename = Options._USER_DIR_ + "/"+ Options._TORRENTS_PATH_ + torrentName;
+      String torrentName;
+      String[] t = torrent.link.split("/", -1);
+      torrentName = t[t.length - 1];
+      String filename = Options._USER_DIR_ + "/" + Options._TORRENTS_PATH_ + torrentName;
       outStream = new BufferedOutputStream(new FileOutputStream(filename));
       while ((ByteRead = is.read(buf)) != -1) {
         outStream.write(buf, 0, ByteRead);
@@ -112,18 +132,12 @@ public class EzTv implements Runnable {
       downloadTorrent(torrent);
       return;
     }
-    URI uri = torrent.getUri();
-    if (uri != null) {
-      BufferedReader in = new BufferedReader(new InputStreamReader(uri.toURL().openStream()));
-      String line;
-      while ((line = in.readLine()) != null) {
-        if (line.indexOf("Follow the Swarm") > -1) {
-          MyUsefulFunctions.message("No Torrents", "Torrent is not available anymore");
-          return;
-        }
+    URI u = torrent.getUri();
+    if (u != null) {
+      if (isTorrent(torrent)) {
+        Desktop.getDesktop().browse(uri);
+        form.dispose();
       }
-      Desktop.getDesktop().browse(uri);
-      form.dispose();
     }
   }
 
