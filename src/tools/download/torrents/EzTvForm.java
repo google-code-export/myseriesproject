@@ -245,7 +245,7 @@ public class EzTvForm extends MyDraggable {
       Thread t = new Thread(e);
       t.start();
     }
-    myseries.MySeries.glassPane.deactivate();
+    //myseries.MySeries.glassPane.deactivate();
     //dispose();
 
   }//GEN-LAST:event_button_searchActionPerformed
