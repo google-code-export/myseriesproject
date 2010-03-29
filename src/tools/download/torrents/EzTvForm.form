@@ -70,7 +70,7 @@
                                   <EmptySpace min="-2" pref="242" max="-2" attributes="0"/>
                               </Group>
                               <Component id="checkbox_exact" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="combo_series" alignment="0" min="-2" pref="206" max="-2" attributes="0"/>
+                              <Component id="combo_series" alignment="0" min="-2" pref="173" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
