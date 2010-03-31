@@ -70,7 +70,7 @@ import tools.importExport.ImportEpisodes;
 import tools.internetUpdate.InternetUpdate;
 import tools.options.OptionsPanel;
 import tools.Skin;
-import tools.download.subtitles.DownloadSubtitlesForm;
+import tools.download.subtitles.tvsubtitles.TvSubtitlesForm;
 import tools.download.torrents.EzTv;
 import tools.download.torrents.EzTvForm;
 import tools.myLogger;
@@ -181,7 +181,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
   public static void createLogger() {
     //Create the JVM logger
-    logger = myLogger.createHtmlLogger("MYSERIES", Options._USER_DIR_ + "/MySeriesLogs",262144,true,1);
+    logger = myLogger.createHtmlLogger("MYSERIES", Options._USER_DIR_ + "/MySeriesLogs", 262144, true, 1);
     logger.setLevel(Level.parse(Options.toString(Options.DEBUG_MODE)));
   }
 
@@ -1499,7 +1499,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
 }//GEN-LAST:event_PopUpItem_AddEpisodeInEpisodesActionPerformed
 
-  private void initEpisodesPopUp(){
+  private void initEpisodesPopUp() {
     PopUpItem_AddEpisodeInEpisodes.setText("Add episode");
     PopUpItem_AddEpisodeInEpisodes.setEnabled(false);
     popUpItem_deleteEpisode.setText("Delete episode");
@@ -1513,7 +1513,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   }
 
   private void table_episodesListMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_episodesListMouseReleased
-    
+
     if (evt.getButton() == MouseEvent.BUTTON3) {
       Point p = evt.getPoint();
       int rowSelected = table_episodesList.rowAtPoint(p);
@@ -1692,10 +1692,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     PopUpItem_AddEpisodeInEpisodes.setEnabled(true);
     PopUpItem_AddEpisodeInEpisodes.setVisible(true);
     popUpItem_deleteEpisode.setVisible(true);
-    popUpItem_viewEpisode.setEnabled(!Series.getCurrentSerial().getLocalDir().equals("")); 
+    popUpItem_viewEpisode.setEnabled(!Series.getCurrentSerial().getLocalDir().equals(""));
     popUpItem_viewEpisode.setText("View episode " + Episodes.getCurrentEpisode().getTitle());
     PopUpItem_AddEpisodeInEpisodes.setText("Add new episode");
-    if(episodePanel){
+    if (episodePanel) {
       popUpItem_deleteEpisode.setEnabled(rowSelected > -1);
       popUpItem_deleteEpisode.setText("Delete episode " + Episodes.getCurrentEpisode().getTitle());
     }
@@ -1767,13 +1767,20 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
   private void popUpItem_downloadSubtitlesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_downloadSubtitlesActionPerformed
     String link = Series.getCurrentSerial().getLink().trim();
-    if (!link.equals("")) {
-      DownloadSubtitlesForm d = new DownloadSubtitlesForm(
-              link,
-              Series.getCurrentSerial().getSeason(),
-              Episodes.getCurrentEpisode().getEpisode(),
-              Series.getCurrentSerial().getLocalDir(),
-              Episodes.getCurrentEpisode().getTitle());
+    String sonline = Series.getCurrentSerial().getSonline().trim();
+    if (Options.toString(Options.SUBTITLE_SITE).equals("TvSubtitles.net")) {
+      if (!link.equals("")) {
+        TvSubtitlesForm d = new TvSubtitlesForm(
+                link,
+                Series.getCurrentSerial().getSeason(),
+                Episodes.getCurrentEpisode().getEpisode(),
+                Series.getCurrentSerial().getLocalDir(),
+                Episodes.getCurrentEpisode().getTitle());
+      }
+    } else {
+      if(!sonline.equals("")) {
+
+      }
     }
   }//GEN-LAST:event_popUpItem_downloadSubtitlesActionPerformed
 
@@ -1788,7 +1795,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       Point p = evt.getPoint();
       int rowSelected = table_FilteredlSeriesEpisodesList.rowAtPoint(p);
       try {
-        EpisodesRecord ep = (EpisodesRecord)table_FilteredlSeriesEpisodesList.getValueAt(rowSelected, 2);
+        EpisodesRecord ep = (EpisodesRecord) table_FilteredlSeriesEpisodesList.getValueAt(rowSelected, 2);
         SeriesRecord seriesRec = SeriesRecord.getSeriesByID(ep.getSeries_ID());
         Series.setCurrentSerial(seriesRec);
         Episodes.setCurrentEpisode(ep.getEpisode());
@@ -1853,7 +1860,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
               JOptionPane.QUESTION_MESSAGE,
               null,
               videosArray, videosArray[0]);
-      if(choice!= null){
+      if (choice != null) {
         playVideo(new File(directory + "/" + choice));
       }
     }
