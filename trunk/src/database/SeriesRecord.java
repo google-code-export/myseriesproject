@@ -27,6 +27,7 @@ public class SeriesRecord extends Record {
   private int tvrage_ID = 0;
   private String localDir = "";
   private String screenshot = "";
+  private String sonline = "";
 
   public SeriesRecord() {
     super();
@@ -63,6 +64,7 @@ public class SeriesRecord extends Record {
         s.setTvrage_ID(rs.getInt("tvrage_ID"));
         s.setLocalDir(rs.getString("localDir"));
         s.setScreenshot(rs.getString("screenshot"));
+        s.setSonline(rs.getString("sonline"));
         a.add(s);
       }
       rs.close();
@@ -81,16 +83,16 @@ public class SeriesRecord extends Record {
       sql = "UPDATE series SET title = '" + this.title + "', season = " + this.getSeason()
               + ", hidden = " + this.getHidden() + ", link ='" + this.getLink() + "', internetUpdate  ="
               + this.getInternetUpdate() + ", tvrage_ID = " + this.getTvrage_ID()
-              + ", localDir = '" + this.localDir + "', screenshot = '" + this.screenshot + "' WHERE series_ID = " + this.getSeries_ID();
+              + ", localDir = '" + this.localDir + "', screenshot = '" + this.screenshot + "', sonline = '" + this.sonline + "' WHERE series_ID = " + this.getSeries_ID();
     } else {
-      sql = "INSERT INTO series (title, season, hidden, link, internetUpdate, tvrage_ID, localDir, screenshot) VALUES('" + this.getTitle() + "', "
+      sql = "INSERT INTO series (title, season, hidden, link, internetUpdate, tvrage_ID, localDir, screenshot, sonline) VALUES('" + this.getTitle() + "', "
               + this.getSeason() + ", " + this.getHidden() + ", '" + this.getLink() + "',"
-              + this.getInternetUpdate() + ", " + this.getTvrage_ID() + ", '" + this.getLocalDir() + "','" + this.getScreenshot() + "' )";
+              + this.getInternetUpdate() + ", " + this.getTvrage_ID() + ", '" + this.getLocalDir() + "','" + this.getScreenshot() + "','" + this.sonline + "' )";
     }
     return queryUpdate(sql);
   }
 
-   /**
+  /**
    * @return the series_ID
    */
   public int getSeries_ID() {
@@ -232,5 +234,19 @@ public class SeriesRecord extends Record {
    */
   public void setScreenshot(String screenshot) {
     this.screenshot = screenshot;
+  }
+
+  /**
+   * @return the sonline
+   */
+  public String getSonline() {
+    return sonline;
+  }
+
+  /**
+   * @param sonline the sonline to set
+   */
+  public void setSonline(String sonline) {
+    this.sonline = sonline;
   }
 }
