@@ -6,13 +6,13 @@
 package tools.download.subtitles.tvsubtitles;
 
 import myComponents.MyUsefulFunctions;
-import tools.download.subtitles.DownloadTvSubtitlesForm;
+import tools.download.subtitles.DownloadForm;
 
 /**
  *
  * @author lordovol
  */
-public class TvSubtitlesForm extends DownloadTvSubtitlesForm {
+public class TvSubtitlesForm extends DownloadForm {
   private static final long serialVersionUID = 2353636L;
 
   /** Creates new form DownloadSubtitlesForm */

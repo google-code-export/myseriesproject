@@ -16,7 +16,7 @@ import myComponents.MyDraggable;
  *
  * @author lordovol
  */
-public class DownloadTvSubtitlesForm extends MyDraggable {
+public class DownloadForm extends MyDraggable {
 
   private static final long serialVersionUID = 25436476L;
 
@@ -24,7 +24,7 @@ public class DownloadTvSubtitlesForm extends MyDraggable {
     initComponents();
   }
 
-  public DownloadTvSubtitlesForm() {
+  public DownloadForm() {
   }
 
   /** This method is called from within the constructor to
