@@ -34,6 +34,7 @@ public class DBConnection {
     boolean tvRageID = false;
     boolean localDir = false;
     boolean screenshot = false;
+    boolean sonline = false;
 
     try {
       rs = stmt.executeQuery(sql);
@@ -50,8 +51,11 @@ public class DBConnection {
         if (rs.getString(2).equals("screenshot")) {
           screenshot = true;
         }
+        if (rs.getString(2).equals("sonline")) {
+          sonline = true;
+        }
       }
-      if(tvRageID && internetUpdate && localDir && screenshot){
+      if(tvRageID && internetUpdate && localDir && screenshot && sonline){
         return true;
       }
       MyUsefulFunctions.message("Old Database version", "Database is of an older version and needs update\nA back Up is taken first!!");
@@ -71,6 +75,10 @@ public class DBConnection {
         }
         if(!screenshot){
         sql = "ALTER TABLE series ADD COLUMN screenshot VARCHAR DEFAULT ''";
+        stmt.execute(sql);
+        }
+        if(!sonline){
+        sql = "ALTER TABLE series ADD COLUMN sonline VARCHAR DEFAULT ''";
         stmt.execute(sql);
         }
         MyUsefulFunctions.message("Database Update", "Database Update done!!!");
