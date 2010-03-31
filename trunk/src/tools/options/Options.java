@@ -68,9 +68,13 @@ public class Options {
   public static String EP_GUIDES = "EpGuides";
   public static String GREEK = "Greek";
   public static String ENGLISH = "English";
+  public static String TV_SUBTITLES = "TvSubtitles.net";
+  public static String SONLINE = "SubtitleOnline.com";
+
 
   public static Vector<String> DB_UPDATERS = new Vector<String>();
-  public static Vector<String> SUBTITLES = new Vector<String>();
+  public static Vector<String> SUBTITLE_SITES = new Vector<String>();
+  public static Vector<String> SUBTITLE_LANG = new Vector<String>();
   public static String[] QUALITIES = {"","HDTV","720p","1080i","1080p","DSRip","DVBRip","DVDR","DVDRip","DVDScr","HR.HDTV","HR.PDTV","PDTV","SatRip","SVCD","TVRip","WebRip"};
 
   public static String NEXT_EPISODES_LIMIT = "NEXT_EPISODES_LIMIT";
@@ -96,13 +100,17 @@ public class Options {
   public static String INTERNET_UPDATE_DB = "INTERNET_UPDATE_DB";
   public static String CHECK_VERSION = "CHECK_VERSION";
   public static String PRIMARY_SUB = "PRIMARY_SUB";
+  public static String SUBTITLE_SITE = "SUBTITLE_SITE";
+
 
 
   static {
-    DB_UPDATERS.add(Options.EP_GUIDES);
-    DB_UPDATERS.add(Options.TV_RAGE);
-    SUBTITLES.add(Options.GREEK);
-    SUBTITLES.add(Options.ENGLISH);
+    DB_UPDATERS.add(EP_GUIDES);
+    DB_UPDATERS.add(TV_RAGE);
+    SUBTITLE_LANG.add(GREEK);
+    SUBTITLE_LANG.add(ENGLISH);
+    SUBTITLE_SITES.add(TV_SUBTITLES);
+    SUBTITLE_SITES.add(SONLINE);
   }
 
   /**
@@ -313,6 +321,7 @@ public class Options {
     out.println(Options.INTERNET_UPDATE_DB + "= TvRage");
     out.println(Options.CHECK_VERSION + " = true");
     out.println(Options.PRIMARY_SUB + " = gr");
+    out.println(Options.SUBTITLE_SITE + " = TvSubtitles.net");
     out.close();
   }
 
