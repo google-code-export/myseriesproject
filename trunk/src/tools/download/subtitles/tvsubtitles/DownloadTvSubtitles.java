@@ -44,9 +44,9 @@ public class DownloadTvSubtitles implements Runnable {
   private String localDir;
   public ArrayList<Subtitle> subs = new ArrayList<Subtitle>();
   private final JProgressBar progress;
-  private final DownloadTvSubtitlesForm form;
+  private final TvSubtitlesForm form;
 
-  public DownloadTvSubtitles(String link, int season, int episode, DownloadTvSubtitlesForm form) {
+  public DownloadTvSubtitles(String link, int season, int episode, TvSubtitlesForm form) {
     this.link = link;
     this.season = season;
     this.episode = episode;
