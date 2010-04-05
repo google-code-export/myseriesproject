@@ -24,6 +24,7 @@ import java.util.logging.Level;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import myComponents.MyDraggable;
+import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myseries.MySeries;
 import myseries.series.Series;
@@ -305,16 +306,16 @@ public class ImportEpisodes extends MyDraggable {
       try {
         importEpisodes();
       } catch (FileNotFoundException ex) {
-        MyUsefulFunctions.error("Error!!!", "Could not find episodes file");
+        MyMessages.error("Error!!!", "Could not find episodes file");
         MySeries.logger.log(Level.SEVERE, "Could not find episodes file", ex);
       } catch (EpisodeImportFormatException ex) {
-        MyUsefulFunctions.error("Error!!!", ex.getMessage());
+        MyMessages.error("Error!!!", ex.getMessage());
         MySeries.logger.log(Level.SEVERE, ex.getMessage(), ex);
       } catch (SQLException ex) {
-        MyUsefulFunctions.error("Error!!!", "Could not insert episodes in Database");
+        MyMessages.error("Error!!!", "Could not insert episodes in Database");
         MySeries.logger.log(Level.SEVERE, "Could not insert episodes in Database", ex);
       } catch (IOException ex) {
-        MyUsefulFunctions.error("Error!!!", "Could not read from file");
+        MyMessages.error("Error!!!", "Could not read from file");
         MySeries.logger.log(Level.SEVERE, "Could not read from file", ex);
       }
 
@@ -343,7 +344,7 @@ public class ImportEpisodes extends MyDraggable {
         t.start();
       } else {
         MySeries.logger.log(Level.WARNING, "No fiel selected");
-        MyUsefulFunctions.error("No file!!!", "No File selected!!!");
+        MyMessages.error("No file!!!", "No File selected!!!");
       }
     } else {
       throw new EpisodeImportFormatException("No Series ID for importing the episodes.");

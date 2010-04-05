@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import myseries.*;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
+import myComponents.MyMessages;
 import myseries.episodes.Episodes;
 import myseries.series.Series;
 
@@ -71,7 +72,7 @@ public class ExportEpisodes {
               ep.getAired());
     }
     out.close();
-    myComponents.MyUsefulFunctions.message("Export completed", "Export of " + Series.getCurrentSerial().getFullTitle() + " is completed");
+    MyMessages.message("Export completed", "Export of " + Series.getCurrentSerial().getFullTitle() + " is completed");
   }
 
   /**
