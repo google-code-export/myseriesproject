@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import javax.swing.table.TableModel;
 import myComponents.MyDraggable;
+import myComponents.MyMessages;
 import myComponents.MyRenameEpisodesTableModel;
 import myComponents.MyUsefulFunctions;
 import tools.options.Options;
@@ -257,7 +258,7 @@ public class RenameEpisodes extends MyDraggable {
       }
     }
     dispose();
-    MyUsefulFunctions.message("Renaming episodes", renames + " episodes renamed and " + fails + " episodes failed");
+    MyMessages.message("Renaming episodes", renames + " episodes renamed and " + fails + " episodes failed");
   }//GEN-LAST:event_button_renameActionPerformed
 
   private void checkBox_checkAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBox_checkAllActionPerformed
@@ -298,7 +299,7 @@ public class RenameEpisodes extends MyDraggable {
     table_rename.getColumn("Rename").setPreferredWidth(60);
     if (oldNames.size() != newNames.size()) {
       myseries.MySeries.logger.log(Level.WARNING, "An error occured, old names size != new names size");
-      MyUsefulFunctions.error("Error", "An error occured, old names size != new names size");
+      MyMessages.error("Error", "An error occured, old names size != new names size");
       dispose();
     }
     for (int i = 0; i < oldNames.size(); i++) {
