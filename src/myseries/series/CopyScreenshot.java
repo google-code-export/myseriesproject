@@ -10,11 +10,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import tools.options.Options;
 import myseries.MySeries;
@@ -38,10 +36,10 @@ public class CopyScreenshot implements Runnable {
       start();
     } catch (FileNotFoundException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);
-      MyUsefulFunctions.error("I/O error", "Screenshot could not be found");
+      MyMessages.error("I/O error", "Screenshot could not be found");
     } catch (IOException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);
-      MyUsefulFunctions.error("I/O error", "Screenshot could not be read or written");
+      MyMessages.error("I/O error", "Screenshot could not be read or written");
     }
   }
 
