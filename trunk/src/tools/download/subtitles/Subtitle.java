@@ -6,6 +6,7 @@
 package tools.download.subtitles;
 
 import java.net.URL;
+import myComponents.MyUsefulFunctions;
 
 /**
  *
@@ -17,7 +18,7 @@ public class Subtitle {
   public URL url;
 
   public Subtitle(String title, URL url) {
-    this.title = title;
+    this.title = MyUsefulFunctions.deleteDoubleSpaces(title);
     this.url = url;
   }
 
