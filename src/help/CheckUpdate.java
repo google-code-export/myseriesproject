@@ -21,6 +21,7 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import myComponents.MyDraggable;
+import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myseries.*;
 import tools.DesktopSupport;
@@ -117,7 +118,7 @@ public class CheckUpdate extends MyDraggable {
     isConected = MyUsefulFunctions.hasInternetConnection();
     if (!isConected) {
       MySeries.logger.log(Level.WARNING, "Could not connect to internet");
-      MyUsefulFunctions.error("No Internet Connection!!!", "Could not connect to internet\nIf you are behind a proxy check your proxy settings in options");
+      MyMessages.internetError();
       return false;
     }
     return true;
@@ -291,7 +292,7 @@ public class CheckUpdate extends MyDraggable {
           Logger.getLogger(CheckUpdate.class.getName()).log(Level.SEVERE, null, ex);
         }
       } else {
-        MyUsefulFunctions.error("Browsing not supported", "Opening a browser window is not supported in your OS");
+        MyMessages.error("Browsing not supported", "Opening a browser window is not supported in your OS");
         MySeries.logger.log(Level.WARNING, "Opening a browser window is not supported in your OS");
       }
     } catch (URISyntaxException ex) {
