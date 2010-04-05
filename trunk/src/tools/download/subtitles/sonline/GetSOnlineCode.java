@@ -9,6 +9,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,10 +43,8 @@ public class GetSOnlineCode {
   private void getCode() throws IOException {
     MyUsefulFunctions.initInternetConnection();
     if (MyUsefulFunctions.hasInternetConnection()) {
-    } else {
-      MyMessages.internetError();
-      File f = new File(Options._SUBTITLE_ONLINE_URL_ + "search_query=" + series.getTitle() + ".htm");
-      BufferedReader in = MyUsefulFunctions.createInputStream(f);
+      URL subsUrl = new URL(Options._SUBTITLE_ONLINE_URL_ + "search?query=" + URLEncoder.encode(series.getTitle(),"UTF-8"));
+      BufferedReader in = new BufferedReader(new InputStreamReader(subsUrl.openStream()));
       parseSearchResult(in);
       in.close();
       if (sLinks.size() == 0) {
@@ -56,6 +57,8 @@ public class GetSOnlineCode {
           this.sOnlineCode = sl.sOnlineCode;
         }
       }
+    } else {
+      MyMessages.internetError();
     }
   }
 
@@ -74,9 +77,9 @@ public class GetSOnlineCode {
       }
       if (inResults) {
         if (line.indexOf("<a href") > -1) {
-          curTitle = line.replaceAll("(<a href=\"/)|(\">)|(-subtitles.html)", "");
+          curSOnlineCode = line.replaceAll("(<a href=\"/)|(\">)|(-subtitles.html)", "");
           line = in.readLine();
-          curSOnlineCode = line.replaceAll("</a></td>", "");
+          curTitle = line.replaceAll("</a></td>", "");
           if (!curTitle.equals("") && !curSOnlineCode.equals("")) {
             sLinks.add(new SLink(curTitle, curSOnlineCode));
           }
