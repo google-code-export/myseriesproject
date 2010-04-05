@@ -6,7 +6,6 @@
 package tools.download.subtitles.tvsubtitles;
 
 import myComponents.MyMessages;
-import myComponents.MyUsefulFunctions;
 import tools.download.subtitles.AbstractDownloadForm;
 
 /**

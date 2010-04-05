@@ -75,6 +75,9 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
         form.dispose();
       }
     }
+    if(!srtFilename.equals("")){
+      MyMessages.message("Subtitle downloaded", "Subtitle\n" + srtFilename + "\nwas downloaded and extracted succesfully");
+    }
   }
 
   public void getSubtitle() {
