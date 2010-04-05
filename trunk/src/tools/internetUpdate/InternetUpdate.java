@@ -15,6 +15,7 @@ import tools.internetUpdate.tvrage.TrUpdate;
 import database.SeriesRecord;
 import java.util.logging.Level;
 import myComponents.MyDraggable;
+import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myseries.MySeries;
 import tools.options.Options;
@@ -136,9 +137,9 @@ public class InternetUpdate extends MyDraggable {
 
   private void startUpdate() {
     Runnable task = null;
-    if (Options.toString(Options.INTERNET_UPDATE_DB).equals(Options.EP_GUIDES)) {
+    if (Options.toString(Options.INTERNET_UPDATE_DB).equals(Options._EP_GUIDES_NAME_)) {
       task = new EgUpdate(this);
-    } else if (Options.toString(Options.INTERNET_UPDATE_DB).equals(Options.TV_RAGE)) {
+    } else if (Options.toString(Options.INTERNET_UPDATE_DB).equals(Options._TV_RAGE_NAME_)) {
       task = new TrUpdate(this);
     } else {
       return;
@@ -158,7 +159,7 @@ public class InternetUpdate extends MyDraggable {
         MySeries.glassPane.deactivate();
         dispose();
       } else {
-        int i = MyUsefulFunctions.question("Abort?", "Do you want to cancel the update?");
+        int i = MyMessages.question("Abort?", "Do you want to cancel the update?");
         if (i == 0) {
           t.interrupt();
           MySeries.glassPane.deactivate();

@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
+import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myseries.episodes.Episodes;
 import myseries.MySeries;
@@ -48,7 +49,7 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
     StringBuffer buf = new StringBuffer();
     if (!isConected) {
       MySeries.logger.log(Level.WARNING, "Could not connect to internet");
-      MyUsefulFunctions.error("No Internet Connection!!!", "Could not connect to internet\nIf you are behind a proxy check your proxy settings in options");
+      MyMessages.internetError();
       return false;
     }
     try {
