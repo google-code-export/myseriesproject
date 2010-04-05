@@ -94,8 +94,7 @@ public class Options {
   /**
    * The subtitle online url : "http://www.subtitleonline.com/"
    */
-  //public static String SONLINE_URL = "http://www.subtitleonline.com/";
-  public static final String _SUBTITLE_ONLINE_URL_ = "C:/spyros/develop/myseriesproject/soonline/";
+  public static String _SUBTITLE_ONLINE_URL_ = "http://www.subtitleonline.com/";
   /**
    * The eztv rss link
    */
@@ -275,7 +274,6 @@ public class Options {
    */
   public static void getOptions() throws FileNotFoundException, IOException {
     Options._USER_DIR_ = System.getProperties().getProperty("user.dir");
-    System.out.println(_USER_DIR_);
     options = new HashMap<String, Object>();
     if (!new File(Options._USER_DIR_ + "/MySeries.ini").isFile()) {
       writeDefaultIniFile();
