@@ -105,13 +105,7 @@ public class MyUsefulFunctions {
       in = new BufferedReader(new InputStreamReader(google.openStream()));
       return true;
     } catch (IOException ex) {
-      try {
-        URL msn = new URL("http://www.msn.com/");
-        in = new BufferedReader(new InputStreamReader(msn.openStream()));
-        return true;
-      } catch (IOException ex1) {
-        return false;
-      }
+      return false;
     }
   }
 
@@ -207,18 +201,6 @@ public class MyUsefulFunctions {
   }
 
   /**
-   * Display a message to the user
-   * @param title The message title
-   * @param message The message text
-   */
-  public static void message(String title, String message) {
-    JOptionPane.showMessageDialog(null,
-        message,
-        title,
-        JOptionPane.INFORMATION_MESSAGE);
-  }
-
-  /**
    * Left pads a string
    * @param str The string to pad
    * @param length The desired length of the string
@@ -249,32 +231,6 @@ public class MyUsefulFunctions {
     String str = String.valueOf(i);
 
     return padLeft(str, length, padStr);
-  }
-
-  /**
-   * Displays an error dialog
-   * @param title The title
-   * @param message The message
-   */
-  public static void error(String title, String message) {
-    JOptionPane.showMessageDialog(null,
-        message,
-        title,
-        JOptionPane.ERROR_MESSAGE);
-  }
-
-  /**
-   * Displays a YES NO dialog
-   * @param title The title
-   * @param message The message
-   * @return The users decision
-   */
-  public static int question(String title, String message) {
-    return JOptionPane.showConfirmDialog(null,
-        message,
-        title,
-        JOptionPane.YES_NO_OPTION,
-        JOptionPane.QUESTION_MESSAGE);
   }
 
   /**
@@ -324,8 +280,7 @@ public class MyUsefulFunctions {
 
         @Override
         public boolean accept(File dir, String name) {
-          for (int i = 0; i
-              < fileFilter.length; i++) {
+          for (int i = 0; i < fileFilter.length; i++) {
             if (name.endsWith(fileFilter[i])) {
               return true;
             }
@@ -336,15 +291,15 @@ public class MyUsefulFunctions {
       });
 
       if (files.length == 0) {
-        error("Select File", "No files to select");
+        MyMessages.error("Select File", "No files to select");
         System.exit(0);
       } else {
         name = JOptionPane.showInputDialog(null,
-            message,
-            title,
-            JOptionPane.PLAIN_MESSAGE,
-            null,
-            files, files[0]);
+                message,
+                title,
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                files, files[0]);
 
         return String.valueOf(name);
       }
@@ -413,7 +368,7 @@ public class MyUsefulFunctions {
   }
 
   public static boolean hasBeenAired(String aired) {
-    if (aired.compareTo(getToday("yyyy-MM-dd")) < 0) {
+    if (aired.compareTo(getToday("yyyy-MM-dd")) <= 0) {
       return true;
     }
     return false;
@@ -454,6 +409,18 @@ public class MyUsefulFunctions {
       oBuilder.append(separator).append(oIter.next());
     }
     return oBuilder.toString();
+  }
+
+  /**
+   * Deletes double spaces from a string
+   * @param title The string to delete double spaces
+   * @return The string without double spaces
+   */
+  public static String deleteDoubleSpaces(String title) {
+    while (title.indexOf("  ") > -1) {
+      title = title.replaceAll("  ", " ");
+    }
+    return title.trim();
   }
 
   private MyUsefulFunctions() {
