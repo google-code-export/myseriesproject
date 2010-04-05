@@ -35,6 +35,7 @@ public abstract class AbstractDownloadSubtitle {
   public ArrayList<Subtitle> subs = new ArrayList<Subtitle>();
   protected JProgressBar progress;
   protected AbstractDownloadForm form;
+  protected String srtFilename;
 
   protected void download(Subtitle sub) {
     if (localDir.equals("")) {
@@ -96,29 +97,39 @@ public abstract class AbstractDownloadSubtitle {
   }
 
   private void openZip(String filename) throws IOException {
-    ZipFile zip = new ZipFile(filename);
-    ZipInputStream zipinputstream = new ZipInputStream(new FileInputStream(filename));
-    byte[] buf = new byte[1024];
-    if (zip.entries().hasMoreElements()) {
-      ZipEntry el = zip.entries().nextElement();
-      if (el.getName().endsWith(".srt")) {
-        int n;
-        FileOutputStream fileoutputstream;
-        File newFile = new File(el.getName());
-        String directory = newFile.getParent();
-        fileoutputstream = new FileOutputStream(localDir + "/" + el.getName());
-        while ((n = zipinputstream.read(buf, 0, 1024)) > -1) {
-          fileoutputstream.write(buf, 0, n);
+    try {
+      byte[] buf = new byte[1024];
+      ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(filename));
+      ZipEntry zipEntry = zipInputStream.getNextEntry();
+      while (zipEntry != null) {
+        //for each entry to be extracted
+        String entryName = zipEntry.getName();
+        if (entryName.endsWith(".srt")) {
+          int n;
+          FileOutputStream fileoutputstream;
+          File newFile = new File(entryName);
+          String directory = newFile.getParent();
+          if (directory == null) {
+            if (newFile.isDirectory()) {
+              break;
+            }
+          }
+          fileoutputstream = new FileOutputStream(getLocalDir() + "/" + entryName);
+          while ((n = zipInputStream.read(buf, 0, 1024)) > -1) {
+            fileoutputstream.write(buf, 0, n);
+          }
+          fileoutputstream.close();
+          zipInputStream.closeEntry();
+          srtFilename = entryName;
+          form.label_message.setText("Subtitle downloaded and extracted");
         }
-        fileoutputstream.close();
-        zipinputstream.closeEntry();
-      }
-      form.label_message.setText(el.getName());
-      MyMessages.message("Subtitle downloaded", "The subtitle \n" + el.getName() + "\n is downloaded");
+        zipEntry = zipInputStream.getNextEntry();
+      }//while
+      zipInputStream.close();
+      new File(filename).delete();
+    } catch (Exception ex) {
+      myseries.MySeries.logger.log(Level.WARNING, "Could not extract srt file", ex);
     }
-    zipinputstream.close();
-    zip.close();
-    new File(filename).delete();
   }
 
   /**
