@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 import database.EpisodesRecord;
 import database.SeriesRecord;
 import java.util.Calendar;
+import myComponents.MyMessages;
 import tools.options.Options;
 
 /**
@@ -288,12 +289,12 @@ public class AdminEpisodes extends MyDraggable {
       episodeRecord.setEpisode(Integer.parseInt(spinner_episode.getValue().toString()));
     } catch (NumberFormatException ex) {
       MySeries.logger.log(Level.WARNING, "Episode must be an integer");
-      MyUsefulFunctions.error("Not an integer", "Episode must be an integer");
+      MyMessages.error("Not an integer", "Episode must be an integer");
       return;
     }
     if (textfield_title.getText().trim().equals("")) {
       MySeries.logger.log(Level.WARNING, "Episode title must not be blank");
-      MyUsefulFunctions.error("No Title!!!", "The episode title must not be blank");
+      MyMessages.error("No Title!!!", "The episode title must not be blank");
       return;
     }
     episodeRecord.setSubs(combobox_subtitles.getSelectedIndex());
@@ -317,10 +318,10 @@ public class AdminEpisodes extends MyDraggable {
       MySeries.logger.log(Level.INFO, "Episode added");
     } catch (SQLException ex) {
       MySeries.logger.log(Level.SEVERE, "There was an error while writting the episode to the database", ex);
-      MyUsefulFunctions.error("SQL Error!!!", "There was an error while writting the episode to the database");
+      MyMessages.error("SQL Error!!!", "There was an error while writting the episode to the database");
     } catch (NullPointerException ex) {
       MySeries.logger.log(Level.WARNING, "The date is not in the right format");
-      MyUsefulFunctions.error("Date Error!!!", "The date is not in the right format");
+      MyMessages.error("Date Error!!!", "The date is not in the right format");
     }
   }
 
