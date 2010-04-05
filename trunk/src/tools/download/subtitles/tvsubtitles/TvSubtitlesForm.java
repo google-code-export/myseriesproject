@@ -5,6 +5,7 @@
 
 package tools.download.subtitles.tvsubtitles;
 
+import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import tools.download.subtitles.DownloadForm;
 
@@ -18,10 +19,11 @@ public class TvSubtitlesForm extends DownloadForm {
   /** Creates new form DownloadSubtitlesForm */
   public TvSubtitlesForm(String link, int season, int episode, String localDir, String title) {
     super.init();
+    label_title.setText("Download from TVSubtitles.net");
     label_subtitle.setText(title);
     setLocationRelativeTo(null);
     if (link.indexOf("www.tvsubtitles.net/") == -1) {
-      MyUsefulFunctions.message("Wrong subtitles webpage", "The subtitles webpage should be in http://www.subtitles.net");
+      MyMessages.error("Wrong subtitles webpage", "The subtitles webpage should be in http://www.subtitles.net");
       dispose();
     } else {
       DownloadTvSubtitles d = new DownloadTvSubtitles(link, season, episode, this);
