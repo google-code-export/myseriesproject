@@ -20,6 +20,7 @@ import java.util.logging.Level;
 import javax.swing.JFileChooser;
 import javax.swing.SpinnerNumberModel;
 import myComponents.MyDraggable;
+import myComponents.MyMessages;
 import myComponents.ScreenshotFilter;
 import myseries.MySeries;
 import tools.internetUpdate.tvrage.TrGetId;
@@ -345,13 +346,13 @@ public class AdminSeries extends MyDraggable {
   private void addSeries() {
     if (textField_Serial.getText().trim().equals("")) {
       MySeries.logger.log(Level.WARNING, "You must type the title");
-      MyUsefulFunctions.error("No Title!!!", "You must type the title");
+      MyMessages.error("No Title!!!", "You must type the title");
     } else if (String.valueOf(spinner_season.getValue()).trim().equals("")) {
       MySeries.logger.log(Level.WARNING, "You must type the season");
-      MyUsefulFunctions.error("No Season!!!", "You must type the season");
+      MyMessages.error("No Season!!!", "You must type the season");
     } else if (!MyUsefulFunctions.isLink(textfield_link.getText()) && !textfield_link.getText().trim().equals("")) {
       MySeries.logger.log(Level.WARNING, "The link is not in the right format");
-      MyUsefulFunctions.error("Wrong link format", "The link is not in the right format");
+      MyMessages.error("Wrong link format", "The link is not in the right format");
     } else {
       try {
         int tvRageID = 0;
@@ -388,7 +389,7 @@ public class AdminSeries extends MyDraggable {
         }
       } catch (NumberFormatException ex) {
         MySeries.logger.log(Level.WARNING, "Season must be a number", ex);
-        MyUsefulFunctions.error("Season not a number!!!", "Season must be a number");
+        MyMessages.error("Season not a number!!!", "Season must be a number");
       }
     }
   }
