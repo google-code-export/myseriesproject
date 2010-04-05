@@ -156,6 +156,9 @@ public class DownloadTvSubtitles implements Runnable {
     if(subLink!=null){
     return subLink;
     } else {
+      if(!getPrimarySub){
+        return null;
+      }
       return getLink(buff, false);
     }
   }
