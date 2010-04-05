@@ -33,7 +33,7 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import myComponents.MyDraggable;
-import myComponents.MyUsefulFunctions;
+import myComponents.MyMessages;
 import myseries.MySeries;
 import myseries.StartPanel;
 import myseries.episodes.NextEpisodes;
@@ -669,7 +669,7 @@ public class OptionsPanel extends MyDraggable {
     } catch (SQLException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);
     } catch (IllegalArgumentException ex) {
-      MyUsefulFunctions.error("Wrong Arguments", "The date format pattern you provided is invalid");
+      MyMessages.error("Wrong Arguments", "The date format pattern you provided is invalid");
       MySeries.logger.log(Level.WARNING, "The date format " +
               String.valueOf(combobox_dateFormat.getSelectedItem()) +
               " pattern you provided is invalid", ex);
@@ -694,7 +694,7 @@ public class OptionsPanel extends MyDraggable {
         mess += "Skin using has changed\n";
       }
       if(!mess.equals("")){
-        int ans = MyUsefulFunctions.question("Restart?",
+        int ans = MyMessages.question("Restart?",
                 mess+"\nRestart The application?");
         if(ans == 0){
           m.dispose();
