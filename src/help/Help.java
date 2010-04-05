@@ -160,6 +160,8 @@ public class Help extends JFrame {
     treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Help");
     treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Check For Updates");
     treeNode2.add(treeNode3);
+    treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("View Log File");
+    treeNode2.add(treeNode3);
     treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("About");
     treeNode2.add(treeNode3);
     treeNode1.add(treeNode2);
