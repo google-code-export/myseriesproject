@@ -58,6 +58,8 @@ import javax.swing.table.TableModel;
 import myComponents.ImagePanel;
 import myComponents.MyJDateChooserCellRenderer;
 import myComponents.MyDisabledGlassPane;
+import myComponents.MyMessages;
+import myComponents.MyMessages;
 import myComponents.MySeriesTableModel;
 import myComponents.MyTitleCellRenderer;
 import myComponents.MyUsefulFunctions;
@@ -70,6 +72,8 @@ import tools.importExport.ImportEpisodes;
 import tools.internetUpdate.InternetUpdate;
 import tools.options.OptionsPanel;
 import tools.Skin;
+import tools.download.subtitles.sonline.GetSOnlineCode;
+import tools.download.subtitles.sonline.SOnlineForm;
 import tools.download.subtitles.tvsubtitles.TvSubtitlesForm;
 import tools.download.torrents.EzTv;
 import tools.download.torrents.EzTvForm;
@@ -286,7 +290,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   }
 
   private void createDatabase() throws SQLException, IOException {
-    int a = myComponents.MyUsefulFunctions.question("Clear Database?", "Are you sure tha you want to clear the Database?");
+    int a = MyMessages.question("Clear Database?", "Are you sure tha you want to clear the Database?");
     if (a == 0) {
       DBConnection.stmt.executeUpdate("DELETE FROM episodes");
       DBConnection.stmt.executeUpdate("DELETE FROM series");
@@ -386,7 +390,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     menuItem_exportEpisodes = new javax.swing.JMenuItem();
     menuItem_importEpisodes = new javax.swing.JMenuItem();
     menuItem_internetUpdate = new javax.swing.JMenuItem();
-    menuItem_downloadTorrent = new javax.swing.JMenuItem();
     jSeparator2 = new javax.swing.JSeparator();
     menuItem_options = new javax.swing.JMenuItem();
     menu_Help = new javax.swing.JMenu();
@@ -530,7 +533,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setTitle("MySerieS v" + version+ " - Database: " + Options.toString(Options.DB_NAME).replace(".db", ""));
     setIconImages(null);
-    setMinimumSize(new java.awt.Dimension(1000, 600));
+    setMinimumSize(new java.awt.Dimension(1000, 500));
     addWindowListener(new java.awt.event.WindowAdapter() {
       public void windowClosing(java.awt.event.WindowEvent evt) {
         formWindowClosing(evt);
@@ -590,8 +593,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       panel_SeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(panel_SeriesLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(imageLayerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 546, Short.MAX_VALUE)
-        .addContainerGap())
+        .addComponent(imageLayerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 504, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(14, Short.MAX_VALUE))
       .addGroup(panel_SeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(panel_SeriesLayout.createSequentialGroup()
           .addContainerGap()
@@ -752,11 +755,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     );
     tabpanel_episodesListLayout.setVerticalGroup(
       tabpanel_episodesListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 442, Short.MAX_VALUE)
+      .addGap(0, 404, Short.MAX_VALUE)
       .addGroup(tabpanel_episodesListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(tabpanel_episodesListLayout.createSequentialGroup()
           .addContainerGap()
-          .addComponent(panel_episodesList, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+          .addComponent(panel_episodesList, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
           .addGap(31, 31, 31)))
     );
 
@@ -889,7 +892,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
         .addContainerGap()
         .addComponent(panel_filters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(panel_allSeriesEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
+        .addComponent(panel_allSeriesEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
         .addContainerGap())
     );
 
@@ -912,8 +915,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
         .addContainerGap()
         .addComponent(panel_nextEpisodes, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addGap(18, 18, 18)
-        .addComponent(tabsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
-        .addContainerGap())
+        .addComponent(tabsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
     tabsPanel.getAccessibleContext().setAccessibleName("");
@@ -1058,16 +1061,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       }
     });
     menu_Tools.add(menuItem_internetUpdate);
-
-    menuItem_downloadTorrent.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_MASK));
-    menuItem_downloadTorrent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/torrent.png"))); // NOI18N
-    menuItem_downloadTorrent.setText("Download Torrent");
-    menuItem_downloadTorrent.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        menuItem_downloadTorrentActionPerformed(evt);
-      }
-    });
-    menu_Tools.add(menuItem_downloadTorrent);
     menu_Tools.add(jSeparator2);
 
     menuItem_options.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
@@ -1137,7 +1130,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(splitPane_main, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE)
+      .addComponent(splitPane_main, javax.swing.GroupLayout.PREFERRED_SIZE, 531, javax.swing.GroupLayout.PREFERRED_SIZE)
     );
 
     bindingGroup.bind();
@@ -1197,12 +1190,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       menuItem_exportEpisodes.setText("Export episodes of " + ser);
       popUpItem_exportEpisodes.setText("Export episodes of " + ser);
       popUpItem_internetUpdate.setText("Update " + ser + " episodes list");
-      if (Series.getCurrentSerial().getLink().equals("")
-              || !DesktopSupport.isDesktopSupport() || !DesktopSupport.isBrowseSupport()) {
+      if (Series.getCurrentSerial().getLink().equals("") || !DesktopSupport.isDesktopSupport() || !DesktopSupport.isBrowseSupport()) {
         popUpItem_DownloadSubs.setEnabled(false);
       }
-      if (Series.getCurrentSerial().getLocalDir().equals("")
-              || !DesktopSupport.isDesktopSupport()) {
+      if (Series.getCurrentSerial().getLocalDir().equals("") || !DesktopSupport.isDesktopSupport()) {
         popUpItem_GoToLocalDir.setEnabled(false);
       }
       if (Series.getCurrentSerial().getLocalDir().equals("")) {
@@ -1297,8 +1288,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     String title = Series.getCurrentSerial().getTitle();
     int season = Series.getCurrentSerial().getSeason();
     int series_ID = Series.getCurrentSerial().getSeries_ID();
-    int answ = MyUsefulFunctions.question("Delete Serial?", "Really delete the series "
-            + title + " season " + season + "?");
+    int answ = MyMessages.question("Delete Serial?", "Really delete the series " + title + " season " + season + "?");
     if (answ == 0) {
       try {
         String sql = "DELETE FROM series WHERE series_ID = " + series_ID;
@@ -1399,7 +1389,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
           MySeries m = new MySeries();
         } else {
           MySeries.logger.log(Level.WARNING, "Selected database is invlid.Not loading...");
-          MyUsefulFunctions.error("Invalid Database", "The database you selected is invalid");
+          MyMessages.error("Invalid Database", "The database you selected is invalid");
           menuItem_loadDatabaseActionPerformed(evt);
         }
       } else {
@@ -1543,8 +1533,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   private void popUpItem_deleteEpisodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_deleteEpisodeActionPerformed
     String title = Episodes.getCurrentEpisode().getTitle();
     int episode_ID = Episodes.getCurrentEpisode().getEpisode_ID();
-    int answ = MyUsefulFunctions.question("Delete Episode?", "Really delete the episode "
-            + title + "?");
+    int answ = MyMessages.question("Delete Episode?", "Really delete the episode " + title + "?");
     if (answ == 0) {
       try {
         String sql = "DELETE FROM episodes WHERE episode_ID = " + episode_ID;
@@ -1624,8 +1613,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   private void popUpItem_internetUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_internetUpdateActionPerformed
     glassPane.activate(null);
     SeriesRecord cSeries = Series.getCurrentSerial();
-    if (Options.toString(Options.INTERNET_UPDATE_DB).equals(Options.TV_RAGE)
-            && cSeries.getTvrage_ID() == 0) {
+    if (Options.toString(Options.INTERNET_UPDATE_DB).equals(Options._TV_RAGE_NAME_) && cSeries.getTvrage_ID() == 0) {
       try {
         TrGetId g = new TrGetId(this, cSeries.getSeries_ID(), cSeries.getTitle());
         cSeries.setTvrage_ID(g.tvRageID);
@@ -1647,10 +1635,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   private void menuItem_viewLogsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_viewLogsActionPerformed
     Desktop d = Desktop.getDesktop();
     if (!Desktop.isDesktopSupported()) {
-      MyUsefulFunctions.error("Sorry!!!", "Your OS does not support this function");
+      MyMessages.error("Sorry!!!", "Your OS does not support this function");
     } else {
       if (!d.isSupported(Desktop.Action.OPEN)) {
-        MyUsefulFunctions.error("Sorry!!!", "Your OS does not support this function");
+        MyMessages.error("Sorry!!!", "Your OS does not support this function");
       } else {
         try {
           d.open(new File(Options._USER_DIR_ + "/MySeriesLogs_0.html"));
@@ -1663,10 +1651,17 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
   private void popUpItem_GoToLocalDirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_GoToLocalDirActionPerformed
     try {
-      DesktopSupport.getDesktop().open(new File(Series.getCurrentSerial().getLocalDir()));
+      File f = new File(Series.getCurrentSerial().getLocalDir());
+      if(f.isDirectory()){
+      DesktopSupport.getDesktop().open(f);
+      } else {
+        MySeries.logger.log(Level.WARNING, f.getCanonicalPath()+" is not a directory");
+      MyMessages.error("Directory error", f.getCanonicalPath()+" is not a directory");
+      return;
+      }
     } catch (Exception ex) {
       MySeries.logger.log(Level.WARNING, "Browse is not supported in the current OS");
-      MyUsefulFunctions.error("Browse Error!!!", "Browse is not supported");
+      MyMessages.error("Browse Error!!!", "Browse is not supported");
       return;
     }
   }//GEN-LAST:event_popUpItem_GoToLocalDirActionPerformed
@@ -1699,7 +1694,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       popUpItem_deleteEpisode.setEnabled(rowSelected > -1);
       popUpItem_deleteEpisode.setText("Delete episode " + Episodes.getCurrentEpisode().getTitle());
     }
-    popUpItem_downloadSubtitles.setEnabled(!Series.getCurrentSerial().getLink().equals(""));
+    popUpItem_downloadSubtitles.setEnabled(true);
     popUpItem_downloadSubtitles.setText("Downlod subtitles for " + Episodes.getCurrentEpisode().getTitle());
     popUpItem_downloadTorrent.setText("Download torrent for " + Episodes.getCurrentEpisode().getTitle());
     popUpItem_downloadTorrent.setEnabled(true);
@@ -1737,10 +1732,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
                 }
               }
 
-              String newFilename = series.getTitle() + Options.SEASON_SEPARATOR
-                      + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0")
-                      + Options.EPISODE_SEPARATOR + MyUsefulFunctions.padLeft(episodesRecord.getEpisode(), 2, "0")
-                      + Options.TITLE_SEPARATOR + episodesRecord.getTitle();
+              String newFilename = series.getTitle() + Options.SEASON_SEPARATOR + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0") + Options.EPISODE_SEPARATOR + MyUsefulFunctions.padLeft(episodesRecord.getEpisode(), 2, "0") + Options.TITLE_SEPARATOR + episodesRecord.getTitle();
 
               String newName = path + "/" + newFilename + "." + ext;
               File newFile = new File(newName);
@@ -1766,10 +1758,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   }//GEN-LAST:event_popUpItem_renameEpisodesActionPerformed
 
   private void popUpItem_downloadSubtitlesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_downloadSubtitlesActionPerformed
-    String link = Series.getCurrentSerial().getLink().trim();
-    String sonline = Series.getCurrentSerial().getSonline().trim();
-    if (Options.toString(Options.SUBTITLE_SITE).equals("TvSubtitles.net")) {
-      if (!link.equals("")) {
+
+    if (Options.toString(Options.SUBTITLE_SITE).equals(Options._TV_SUBTITLES_NAME_)) {
+      String link = Series.getCurrentSerial().getLink().trim();
+      if (link.equals("")) {
+      } else {
         TvSubtitlesForm d = new TvSubtitlesForm(
                 link,
                 Series.getCurrentSerial().getSeason(),
@@ -1777,12 +1770,43 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
                 Series.getCurrentSerial().getLocalDir(),
                 Episodes.getCurrentEpisode().getTitle());
       }
-    } else {
-      if(!sonline.equals("")) {
-
+    } else if (Options.toString(Options.SUBTITLE_SITE).equals(Options._SUBTITLE_ONLINE_NAME_)) {
+//       SeriesRecord ser1 = Series.getCurrentSerial();
+//          ser1.setSOnline("");
+//          try{
+//          ser1.save();
+//          } catch(SQLException ex){
+//            myseries.MySeries.logger.log(Level.WARNING, "Could not save sOnlineCode", ex);
+//          }
+      String sOnlineCode = Series.getCurrentSerial().getSOnline().trim();
+      if (sOnlineCode.equals("")) {
+        GetSOnlineCode s = new GetSOnlineCode(Series.getCurrentSerial());
+        sOnlineCode = s.sOnlineCode;
+        if (!sOnlineCode.equals("")) {
+          SeriesRecord ser = Series.getCurrentSerial();
+          ser.setSOnline(sOnlineCode);
+          try{
+          ser.save();
+          } catch(SQLException ex){
+            myseries.MySeries.logger.log(Level.WARNING, "Could not save sOnlineCode", ex);
+          }
+          getSOnlineSubtitle(sOnlineCode);
+        }
+      } else {
+        getSOnlineSubtitle(sOnlineCode);
       }
     }
   }//GEN-LAST:event_popUpItem_downloadSubtitlesActionPerformed
+
+  private void getSOnlineSubtitle(String sOnlineCode){
+    SOnlineForm d = new SOnlineForm(
+                sOnlineCode,
+                Series.getCurrentSerial().getSeason(),
+                Episodes.getCurrentEpisode().getEpisode(),
+                Series.getCurrentSerial().getLocalDir(),
+                Episodes.getCurrentEpisode().getTitle());
+  }
+
 
   private void popUpItem_downloadTorrentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_downloadTorrentActionPerformed
     SeriesRecord series = Series.getCurrentSerial();
@@ -1844,7 +1868,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
         getFiles(video, regex);
       }
     } else if (videos.size() == 0) {
-      MyUsefulFunctions.message("No file found", "Episode was not found");
+      MyMessages.error("No file found", "Episode was not found");
     } else {
       String[] videosArray = new String[videos.size()];
       int z = 0;
@@ -1876,7 +1900,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       Episodes.updateEpisodesTable();
     } catch (Exception ex) {
       MySeries.logger.log(Level.WARNING, "Playing videos is not supported", ex);
-      MyUsefulFunctions.error("Not supported", "Playing videos is not supported by your OS");
+      MyMessages.error("Not supported", "Playing videos is not supported by your OS");
     }
   }
 
@@ -1896,7 +1920,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   private void downloadSubs() throws IOException, URISyntaxException {
     if (!DesktopSupport.isBrowseSupport()) {
       MySeries.logger.log(Level.WARNING, "Browse is not supported in the current OS");
-      MyUsefulFunctions.error("Browse Error!!!", "Browse is not supported");
+      MyMessages.error("Browse Error!!!", "Browse is not supported");
 
 
       return;
@@ -1930,7 +1954,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     SavedFilterRecord f;
 
 
-    int answ = MyUsefulFunctions.question("Delete Filter?", "Are you sure that you want to delete the filter?");
+    int answ = MyMessages.question("Delete Filter?", "Are you sure that you want to delete the filter?");
 
 
     if (answ == 0) {
@@ -1939,14 +1963,9 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
       if (f != null) {
         f.delete();
-        MyUsefulFunctions.message("Filter deleted", "Filter was deleted");
-
-
-
+        MyMessages.message("Filter deleted", "Filter was deleted");
       } else {
-        MyUsefulFunctions.error("Error", "Filter could not be deleted");
-
-
+        MyMessages.error("Error", "Filter could not be deleted");
       }
       comboBoxModel_filters = new DefaultComboBoxModel(SavedFilterRecord.getFiltersList());
       combobox_filters.setModel(comboBoxModel_filters);
@@ -1962,7 +1981,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
 
     if (title.trim().equals("") || title.equals("null")) {
-      MyUsefulFunctions.error("Empty title", "Please specify a save name");
+      MyMessages.error("Empty title", "Please specify a save name");
 
 
     } else {
@@ -1979,7 +1998,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       f.setSubtitles(comboBox_subtitles.getSelectedIndex());
       f.setTitle(title);
       f.save();
-      MyUsefulFunctions.message("Filter saved", "Filter was saved");
+      MyMessages.message("Filter saved", "Filter was saved");
       comboBoxModel_filters = new DefaultComboBoxModel(SavedFilterRecord.getFiltersList());
       combobox_filters.setModel(comboBoxModel_filters);
 
@@ -2016,7 +2035,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static javax.swing.JMenuItem menuItem_checkUpdate;
   public static javax.swing.JMenuItem menuItem_createDB;
   public static javax.swing.JMenuItem menuItem_deleteSeries;
-  public static javax.swing.JMenuItem menuItem_downloadTorrent;
   public static javax.swing.JMenuItem menuItem_editEpisode;
   public static javax.swing.JMenuItem menuItem_editSeries;
   public static javax.swing.JMenuItem menuItem_exit;
@@ -2104,13 +2122,12 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       if (e.getType() == TableModelEvent.UPDATE) {
         int row = e.getFirstRow();
         if (tableModel_filterSeries.getRowCount() > row) {
-          int id = (Integer) tableModel_filterSeries.getValueAt(row, 7);
-          String title = (String) tableModel_filterSeries.getValueAt(row, 2);
+          EpisodesRecord ep = (EpisodesRecord) tableModel_filterSeries.getValueAt(row, 2);
+          String title = ep.getTitle();
           Boolean downloaded = (Boolean) tableModel_filterSeries.getValueAt(row, 4);
           String subs = (String) tableModel_filterSeries.getValueAt(row, 5);
           Boolean seen = (Boolean) tableModel_filterSeries.getValueAt(row, 6);
           try {
-            EpisodesRecord ep = EpisodesRecord.getEpisodeByID(id);
             ep.setTitle(title);
             ep.setDownloaded(downloaded ? 1 : 0);
             ep.setSeen(seen ? 1 : 0);
@@ -2175,7 +2192,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
 
     } catch (NumberFormatException ex) {
-      MyUsefulFunctions.error("Not a number", "The value you entered is not a number");
+      MyMessages.error("Not a number", "The value you entered is not a number");
 
     }
 
