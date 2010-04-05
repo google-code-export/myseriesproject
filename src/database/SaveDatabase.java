@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myseries.MySeries;
 import tools.options.Options;
@@ -29,10 +30,10 @@ public class SaveDatabase {
       showSavePane();
     } catch (FileNotFoundException ex) {
       MySeries.logger.log(Level.SEVERE, "Could not save database", ex);
-      MyUsefulFunctions.error("Database not saved!!!", "The database could not be saved (" + ex.getMessage() + ")");
+      MyMessages.error("Database not saved!!!", "The database could not be saved (" + ex.getMessage() + ")");
     } catch (IOException ex) {
       MySeries.logger.log(Level.SEVERE, "Could not save database", ex);
-      MyUsefulFunctions.error("Database not saved!!!", "The database could not be saved (" + ex.getMessage() + ")");
+      MyMessages.error("Database not saved!!!", "The database could not be saved (" + ex.getMessage() + ")");
     }
   }
 
@@ -42,7 +43,7 @@ public class SaveDatabase {
       String dest = Options._USER_DIR_ + "/" + Options._DB_PATH_ + dbName + ".bak";
       if (MyUsefulFunctions.copyfile(source, dest)) {
         MySeries.logger.log(Level.INFO, "Database backed up!!!");
-        MyUsefulFunctions.message("Database backed up", "A back up of the older database was taken");
+        MyMessages.message("Database backed up", "A back up of the older database was taken");
         backUp = true;
         return;
       } else {
@@ -57,7 +58,7 @@ public class SaveDatabase {
   private boolean checkIfAlreadyExists() {
     File db = new File(Options._USER_DIR_ + "/" + Options._DB_PATH_ + name + ".db");
     if (db.isFile()) {
-      return MyUsefulFunctions.question("File Exists", "File already exists.\nOverwrite it?") == 1 ? true : false;
+      return MyMessages.question("File Exists", "File already exists.\nOverwrite it?") == 1 ? true : false;
     } else {
       return false;
     }
@@ -69,16 +70,16 @@ public class SaveDatabase {
       String dest = Options._USER_DIR_ + "/" + Options._DB_PATH_ + name + ".db";
       if (MyUsefulFunctions.copyfile(source, dest)) {
         MySeries.logger.log(Level.INFO, "Database saved");
-        MyUsefulFunctions.message("Database saved", "The database was saved with the name " + name + ".db");
+        MyMessages.message("Database saved", "The database was saved with the name " + name + ".db");
         return;
       } else {
       }
     } catch (FileNotFoundException ex) {
       MySeries.logger.log(Level.SEVERE, "The database could not be saved", ex);
-      MyUsefulFunctions.error("Database not saved!!!", "The database could not be saved (" + ex.getMessage() + ")");
+      MyMessages.error("Database not saved!!!", "The database could not be saved (" + ex.getMessage() + ")");
     } catch (IOException ex) {
       MySeries.logger.log(Level.SEVERE, "The database could not be saved", ex);
-      MyUsefulFunctions.error("Database not saved!!!", "The database could not be saved (" + ex.getMessage() + ")");
+      MyMessages.error("Database not saved!!!", "The database could not be saved (" + ex.getMessage() + ")");
     }
 
   }
@@ -90,7 +91,7 @@ public class SaveDatabase {
     } else {
       if (!checkIfAlreadyExists()) {
         if ((name).equals(Options.toString(Options.DB_NAME).replace(".db", ""))) {
-          MyUsefulFunctions.error("Error", "Cannot save the database on itself!!!");
+          MyMessages.error("Error", "Cannot save the database on itself!!!");
           MySeries.logger.log(Level.WARNING, "Cannot save the database on itself!!!");
         } else {
           commitSave();
