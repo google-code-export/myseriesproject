@@ -24,6 +24,7 @@ import javax.swing.JProgressBar;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -54,6 +55,8 @@ public class EzTv implements Runnable {
       progress.setIndeterminate(true);
       progress.setString("Getting rss feeds from eztv");
       getRss();
+    } else {
+      MyMessages.internetError();
     }
   }
 
@@ -66,7 +69,7 @@ public class EzTv implements Runnable {
       progress.setString(torrents.size() + " torrents found");
       progress.setIndeterminate(false);
       if (torrents.size() == 0) {
-        MyUsefulFunctions.message("No Torrents", "No torrent was found");
+        MyMessages.message("No Torrents", "No torrent was found");
       } else if (torrents.size() == 1) {
         getTorrent(torrents.get(0));
       } else {
@@ -87,7 +90,7 @@ public class EzTv implements Runnable {
       String line;
       while ((line = in.readLine()) != null) {
         if (line.indexOf("Follow the Swarm") > -1) {
-          MyUsefulFunctions.message("No Torrents", "Torrent is not available anymore");
+          MyMessages.error("No Torrents", "Torrent is not available anymore");
           return false;
         }
       }

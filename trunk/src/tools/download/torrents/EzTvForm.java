@@ -25,6 +25,7 @@ import java.util.logging.Level;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import myComponents.MyDraggable;
+import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myseries.series.Series;
 import tools.options.Options;
@@ -295,7 +296,7 @@ public class EzTvForm extends MyDraggable {
   }
 
   private URI createUri() {
-    String address = "http://ezrss.it/search/index.php?";
+    String address = Options._EZTV_RSS_;
     String query = "";
     ArrayList<String> q = new ArrayList<String>();
     try {
@@ -315,7 +316,7 @@ public class EzTvForm extends MyDraggable {
       query = MyUsefulFunctions.join(q, "&");
       return new URI(address + query);
     } catch (URISyntaxException ex) {
-      MyUsefulFunctions.message("Wrong url", "Wrong url " + address + query);
+      MyMessages.error("Wrong url", "Wrong url " + address + query);
       myseries.MySeries.logger.log(Level.SEVERE, null, ex);
       return null;
     } catch (UnsupportedEncodingException ex) {
