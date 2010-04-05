@@ -4,20 +4,20 @@
  */
 package tools.download.subtitles.sonline;
 
-import tools.download.subtitles.DownloadForm;
+import tools.download.subtitles.AbstractDownloadForm;
 
 /**
  *
  * @author lordovol
  */
-public class SOnlineForm extends DownloadForm {
+public class SOnlineForm extends AbstractDownloadForm {
 
   private static final long serialVersionUID = 2353636L;
 
   /** Creates new form DownloadSubtitlesForm */
   public SOnlineForm(String sOnlineCode, int season, int episode, String localDir, String title) {
     super.init();
-    label_title.setText("Download from SubtitlesOnline.com");
+    label_title.setText("Download from SubtitleOnline.com");
     label_subtitle.setText(title);
     setLocationRelativeTo(null);
     DownloadSOnline d = new DownloadSOnline(sOnlineCode, season, episode, this);
