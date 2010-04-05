@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myseries.*;
 import myseries.episodes.Episodes;
@@ -45,6 +46,10 @@ public class TrUpdate extends AbstractUpdate implements Runnable {
     try {
       MyUsefulFunctions.initInternetConnection();
       isConected = MyUsefulFunctions.hasInternetConnection();
+      if(!isConected){
+        MyMessages.error("No Internet Connection", "Could not connect to the Internet");
+        return false;
+      }
       this.series = series;
       list.add(new TrSeriesToUpdate(series));
       InputStream in = null;

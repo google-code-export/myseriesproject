@@ -25,6 +25,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import myComponents.MyDraggable;
+import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myseries.MySeries;
 import myseries.series.AdminSeries;
@@ -84,7 +85,7 @@ public class TrGetId extends MyDraggable {
   private void getID() {
     if (!isConected) {
       MySeries.logger.log(Level.WARNING, "Could not connect to internet");
-      MyUsefulFunctions.error("No Internet Connection!!!", "Could not connect to internet\nIf you are behind a proxy check your proxy settings in options");
+      MyMessages.internetError();
       button_cancelActionPerformed(null);
       return;
     }
@@ -233,7 +234,7 @@ public class TrGetId extends MyDraggable {
         Series.getCurrentSerial().setTvrage_ID(tvRageID);
       } catch (SQLException ex) {
         MySeries.logger.log(Level.SEVERE, null, ex);
-        MyUsefulFunctions.error("SQL Error", "TvRage ID could not be saved in database");
+        MyMessages.error("SQL Error", "TvRage ID could not be saved in database");
       }
     }
     button_cancelActionPerformed(evt);

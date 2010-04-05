@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
+import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myseries.*;
 import tools.options.Options;
@@ -84,7 +85,7 @@ public abstract class AbstractUpdate {
       }
       iu.progress_bar.setIndeterminate(true);
       iu.progress_bar.setString("Getting data from " +
-              (Options.toString(Options.INTERNET_UPDATE_DB).equals(Options.EP_GUIDES) ?
+              (Options.toString(Options.INTERNET_UPDATE_DB).equals(Options._EP_GUIDES_NAME_) ?
                 "http://www.epguides.com" : "http://www.tvrage.com")
               );
       append("<span style='font-weight:bold;font-size:12px'>Step 1 : Getting data</span>");
@@ -100,14 +101,14 @@ public abstract class AbstractUpdate {
         updateEpisodes();
       } else {
         MySeries.logger.log(Level.WARNING, "Nothing to update");
-        MyUsefulFunctions.error("No Update!!!", "Nothing to update");
+        MyMessages.error("No Update!!!", "Nothing to update");
         MySeries.glassPane.deactivate();
         iu.dispose();
       }
 
     } catch (SQLException ex) {
       MySeries.logger.log(Level.WARNING, "Could not get the series from the database", ex.getMessage());
-      MyUsefulFunctions.error("SQL Error!!!", "Could not get the series from the database");
+      MyMessages.error("SQL Error!!!", "Could not get the series from the database");
     }
   }
 
