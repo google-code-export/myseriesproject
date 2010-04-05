@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
+import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import tools.options.Options;
 import myseries.MySeries;
@@ -58,7 +59,7 @@ public class DBConnection {
       if(tvRageID && internetUpdate && localDir && screenshot && sonline){
         return true;
       }
-      MyUsefulFunctions.message("Old Database version", "Database is of an older version and needs update\nA back Up is taken first!!");
+      MyMessages.message("Old Database version", "Database is of an older version and needs update\nA back Up is taken first!!");
       SaveDatabase s = new SaveDatabase(db);
       if (s.backUp) {
         if(!internetUpdate){
@@ -81,11 +82,11 @@ public class DBConnection {
         sql = "ALTER TABLE series ADD COLUMN sonline VARCHAR DEFAULT ''";
         stmt.execute(sql);
         }
-        MyUsefulFunctions.message("Database Update", "Database Update done!!!");
+        MyMessages.message("Database Update", "Database Update done!!!");
         CheckDatabase(db);
         return true;
       } else {
-        MyUsefulFunctions.message("No Update", "Could not update the database");
+        MyMessages.error("No Update", "Could not update the database");
         MySeries.logger.log(Level.SEVERE, "Could not update the database.Exiting...");
         System.exit(1);
         return false;
