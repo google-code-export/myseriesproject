@@ -1130,7 +1130,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(splitPane_main, javax.swing.GroupLayout.PREFERRED_SIZE, 531, javax.swing.GroupLayout.PREFERRED_SIZE)
+      .addComponent(splitPane_main, javax.swing.GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
     );
 
     bindingGroup.bind();
