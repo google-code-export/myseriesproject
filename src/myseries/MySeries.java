@@ -1771,13 +1771,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
                 Episodes.getCurrentEpisode().getTitle());
       }
     } else if (Options.toString(Options.SUBTITLE_SITE).equals(Options._SUBTITLE_ONLINE_NAME_)) {
-//       SeriesRecord ser1 = Series.getCurrentSerial();
-//          ser1.setSOnline("");
-//          try{
-//          ser1.save();
-//          } catch(SQLException ex){
-//            myseries.MySeries.logger.log(Level.WARNING, "Could not save sOnlineCode", ex);
-//          }
       String sOnlineCode = Series.getCurrentSerial().getSOnline().trim();
       if (sOnlineCode.equals("")) {
         GetSOnlineCode s = new GetSOnlineCode(Series.getCurrentSerial());
