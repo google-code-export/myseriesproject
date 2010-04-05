@@ -24,6 +24,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import myComponents.MyFont;
+import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import tools.DesktopSupport;
 import tools.options.Options;
@@ -50,7 +51,7 @@ public class StartPanel extends myComponents.MyDraggable {
     getRootPane().setDefaultButton(button_create);
     setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/subtitles.png")).getImage());
     getDatabases();
-    progress.setVisible(false);
+    //progress.setVisible(false);
     setLocationRelativeTo(null);
     setVisible(true);
   }
@@ -64,7 +65,7 @@ public class StartPanel extends myComponents.MyDraggable {
     initComponents();
     getRootPane().setDefaultButton(button_create);
     setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/subtitles.png")).getImage());
-    progress.setVisible(false);
+    //progress.setVisible(false);
     label_title.setText("Create database");
     setLocationRelativeTo(null);
     setVisible(true);
@@ -75,7 +76,7 @@ public class StartPanel extends myComponents.MyDraggable {
     this.createNewDB = createNewDB;
     initComponents();
     getRootPane().setDefaultButton(button_create);
-    progress.setVisible(false);
+    //progress.setVisible(false);
     label_title.setText("Create database");
     setLocationRelativeTo(null);
     panel_loadDatabase.setVisible(false);
@@ -109,8 +110,6 @@ public class StartPanel extends myComponents.MyDraggable {
 
     panel = new javax.swing.JPanel();
     panel_newDB = new javax.swing.JPanel();
-    progress = new javax.swing.JProgressBar();
-    checkBox_demo = new javax.swing.JCheckBox();
     jLabel1 = new javax.swing.JLabel();
     textbox_name = new javax.swing.JTextField();
     button_exit = new javax.swing.JButton();
@@ -128,13 +127,6 @@ public class StartPanel extends myComponents.MyDraggable {
 
     panel_newDB.setOpaque(false);
 
-    progress.setStringPainted(true);
-
-    checkBox_demo.setFont(checkBox_demo.getFont().deriveFont(checkBox_demo.getFont().getStyle() | java.awt.Font.BOLD));
-    checkBox_demo.setText(" Populate with demo data");
-    checkBox_demo.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-    checkBox_demo.setOpaque(false);
-
     jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getStyle() | java.awt.Font.BOLD));
     jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     jLabel1.setText("Create new database:");
@@ -145,16 +137,10 @@ public class StartPanel extends myComponents.MyDraggable {
       panel_newDBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(panel_newDBLayout.createSequentialGroup()
         .addContainerGap()
-        .addGroup(panel_newDBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-          .addGroup(panel_newDBLayout.createSequentialGroup()
-            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(textbox_name, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
-          .addGroup(panel_newDBLayout.createSequentialGroup()
-            .addComponent(checkBox_demo)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(progress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        .addContainerGap(81, Short.MAX_VALUE))
+        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(textbox_name, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(85, Short.MAX_VALUE))
     );
     panel_newDBLayout.setVerticalGroup(
       panel_newDBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,10 +149,7 @@ public class StartPanel extends myComponents.MyDraggable {
         .addGroup(panel_newDBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jLabel1)
           .addComponent(textbox_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(panel_newDBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(checkBox_demo)
-          .addComponent(progress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        .addGap(25, 25, 25))
     );
 
     button_exit.setText("Exit");
@@ -209,7 +192,7 @@ public class StartPanel extends myComponents.MyDraggable {
         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(combobox_databases, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(86, Short.MAX_VALUE))
+        .addContainerGap(90, Short.MAX_VALUE))
     );
     panel_loadDatabaseLayout.setVerticalGroup(
       panel_loadDatabaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -233,10 +216,11 @@ public class StartPanel extends myComponents.MyDraggable {
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(button_exit, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
           .addGroup(panelLayout.createSequentialGroup()
-            .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-              .addComponent(panel_loadDatabase, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-              .addComponent(panel_newDB, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-              .addComponent(label_title, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE))
+            .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(panel_newDB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+              .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addComponent(panel_loadDatabase, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(label_title, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)))
             .addGap(136, 136, 136)
             .addComponent(label_wait, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))))
     );
@@ -250,7 +234,7 @@ public class StartPanel extends myComponents.MyDraggable {
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addComponent(label_wait, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(panel_newDB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addComponent(panel_newDB, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(button_exit)
@@ -296,7 +280,7 @@ public class StartPanel extends myComponents.MyDraggable {
       } else {
         // Create database
         dbName = textbox_name.getText().trim();
-        loadDemoData = checkBox_demo.isSelected();
+        loadDemoData = false;
         createNewDB = true;
       }
 
@@ -314,7 +298,7 @@ public class StartPanel extends myComponents.MyDraggable {
         }
       } else {
         MySeries.logger.log(Level.WARNING, "The database name should not be empty");
-        MyUsefulFunctions.error("Empty name", "The database name should not be empty");
+        MyMessages.error("Empty name", "The database name should not be empty");
       }
     }//GEN-LAST:event_button_createActionPerformed
 
@@ -415,7 +399,7 @@ public class StartPanel extends myComponents.MyDraggable {
           MySeries.logger.log(Level.INFO, "MySerieS loading...");
           MySeries m = new MySeries();
         } else {
-          MyUsefulFunctions.error("Invalid Database", "The selected database seems to be invalid.\nPlease select another one or create a new one.");
+          MyMessages.error("Invalid Database", "The selected database seems to be invalid.\nPlease select another one or create a new one.");
           StartPanel s = new StartPanel();
         }
       }
@@ -438,7 +422,6 @@ public class StartPanel extends myComponents.MyDraggable {
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton button_create;
   private javax.swing.JButton button_exit;
-  private javax.swing.JCheckBox checkBox_demo;
   private javax.swing.JComboBox combobox_databases;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
@@ -447,7 +430,6 @@ public class StartPanel extends myComponents.MyDraggable {
   private javax.swing.JPanel panel;
   private javax.swing.JPanel panel_loadDatabase;
   private javax.swing.JPanel panel_newDB;
-  public javax.swing.JProgressBar progress;
   public javax.swing.JTextField textbox_name;
   // End of variables declaration//GEN-END:variables
 
