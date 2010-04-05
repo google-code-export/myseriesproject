@@ -29,6 +29,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
+import tools.download.subtitles.AbstractDownloadSubtitle;
 import tools.download.subtitles.Subtitle;
 import tools.options.Options;
 
@@ -36,15 +37,9 @@ import tools.options.Options;
  *
  * @author lordovol
  */
-public class DownloadTvSubtitles implements Runnable {
+public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Runnable {
 
   private final String link;
-  private final int season;
-  private final int episode;
-  private String localDir;
-  public ArrayList<Subtitle> subs = new ArrayList<Subtitle>();
-  private final JProgressBar progress;
-  private final TvSubtitlesForm form;
 
   public DownloadTvSubtitles(String link, int season, int episode, TvSubtitlesForm form) {
     this.link = link;
@@ -197,100 +192,5 @@ public class DownloadTvSubtitles implements Runnable {
     }
   }
 
-  private void download(Subtitle sub) {
-    if (localDir.equals("")) {
-      try {
-        try {
-          progress.setIndeterminate(false);
-          MyMessages.error("No local dir", "Local dir for series is not provided.Opening browser");
-          Desktop.getDesktop().browse(new URI(sub.url.toString()));
-        } catch (IOException ex) {
-          myseries.MySeries.logger.log(Level.SEVERE, null, ex);
-          MyMessages.error("Error occured!!!", "Could not read input stream");
-          form.dispose();
-        }
-      } catch (URISyntaxException ex) {
-        myseries.MySeries.logger.log(Level.SEVERE, null, ex);
-          MyMessages.error("Error occured!!!", "Wrong url");
-          form.dispose();
-      }
-    } else {
-      progress.setIndeterminate(true);
-      progress.setString("Downloading subtitles");
-      form.label_message.setText("Downloading file from " + sub.url);
-      InputStream is = null;
-      BufferedOutputStream outStream = null;
-      try {
-        byte[] buf;
-        URLConnection uCon = sub.url.openConnection();
-        is = uCon.getInputStream();
-        buf = new byte[1024];
-        int ByteRead, ByteWritten = 0;
-        String filename = localDir + "/s" + season + "x" + episode + "_" + MyUsefulFunctions.createRandomString(8) + ".zip";
-        outStream = new BufferedOutputStream(new FileOutputStream(filename));
-        while ((ByteRead = is.read(buf)) != -1) {
-          outStream.write(buf, 0, ByteRead);
-          ByteWritten += ByteRead;
-        }
-        is.close();
-        outStream.close();
-        progress.setString("Opening zip File");
-        openZip(filename);
-      } catch (IOException ex) {
-        try {
-          if (ex.getMessage().indexOf("code: 403") > -1) {
-          MyMessages.error("Access denied", "Direct access to subtitle is denied.Opening browser");
-          Desktop.getDesktop().browse(new URI(sub.url.toString()));
-          }
-        } catch (URISyntaxException ex1) {
-          myseries.MySeries.logger.log(Level.SEVERE, null, ex1);
-          MyMessages.error("Error occured!!!", "Wrong url");
-          form.dispose();
-        } catch (IOException ex1) {
-          myseries.MySeries.logger.log(Level.SEVERE, null, ex1);
-          MyMessages.error("Error occured!!!", "Could not read input stream");
-          form.dispose();
-        }
-      }
-    }
-  }
-
-  /**
-   * @return the localDir
-   */
-  public String getLocalDir() {
-    return localDir;
-  }
-
-  /**
-   * @param localDir the localDir to set
-   */
-  public void setLocalDir(String localDir) {
-    this.localDir = localDir;
-  }
-
-  private void openZip(String filename) throws IOException {
-    ZipFile zip = new ZipFile(filename);
-    ZipInputStream zipinputstream = new ZipInputStream(new FileInputStream(filename));
-    byte[] buf = new byte[1024];
-    if (zip.entries().hasMoreElements()) {
-      ZipEntry el = zip.entries().nextElement();
-      if (el.getName().endsWith(".srt")) {
-        int n;
-        FileOutputStream fileoutputstream;
-        File newFile = new File(el.getName());
-        fileoutputstream = new FileOutputStream(localDir + "/" + el.getName());
-        while ((n = zipinputstream.read(buf, 0, 1024)) > -1) {
-          fileoutputstream.write(buf, 0, n);
-        }
-        fileoutputstream.close();
-        zipinputstream.closeEntry();
-      }
-      form.label_message.setText(el.getName());
-      MyMessages.message("Subtitle downloaded", "The subtitle \n" + el.getName() + "\n is downloaded");
-    }
-    zipinputstream.close();
-    zip.close();
-    new File(filename).delete();
-  }
+  
 }
