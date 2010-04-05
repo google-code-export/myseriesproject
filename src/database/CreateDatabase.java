@@ -16,6 +16,7 @@ import java.sql.Statement;
 import java.text.ParseException;
 import java.util.logging.Level;
 import javax.swing.UnsupportedLookAndFeelException;
+import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myseries.MySeries;
 import myseries.StartPanel;
@@ -37,7 +38,7 @@ public class CreateDatabase implements Runnable {
     try {
       File dbFile = new File(Options._USER_DIR_ + "/" + Options._DB_PATH_ + DBConnection.db);
       if(dbFile.exists() && dbFile.length() >0 && createNewDb){
-        MyUsefulFunctions.error("DB Exists!!!", "DB File " + DBConnection.db + " already exists\nAborting...");
+        MyMessages.error("DB Exists!!!", "DB File " + DBConnection.db + " already exists\nAborting...");
         MySeries.logger.log(Level.WARNING, "DB File already exists");
       } else {
       commit();
@@ -64,7 +65,7 @@ public class CreateDatabase implements Runnable {
     MySeries.logger.log(Level.INFO, "Loading the Database");
     loadDatabases();
     if (demo) {
-      s.progress.setVisible(true);
+      //s.progress.setVisible(true);
       MySeries.logger.log(Level.INFO, "Loading demo data");
       loadDemoData();
     }
@@ -111,9 +112,9 @@ public class CreateDatabase implements Runnable {
       curLength += line.length() + 2;
       stmt.executeUpdate(line.trim());
       int perc = (int) ((curLength * 100) / length);
-      s.progress.setValue(perc);
+      //s.progress.setValue(perc);
     }
-    s.progress.setValue(0);
+    //s.progress.setValue(0);
     in.close();
     MySeries.logger.log(Level.INFO, "Demo data was imported");
   }
