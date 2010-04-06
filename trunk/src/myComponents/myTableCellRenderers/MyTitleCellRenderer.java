@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package myComponents.myTableCellRenderers;
 
 import database.EpisodesRecord;
@@ -18,31 +17,35 @@ import tools.Skin;
  * @author lordovol
  */
 public class MyTitleCellRenderer extends DefaultTableCellRenderer {
-private static final long serialVersionUID = 3456463456344572L;
+
+  private static final long serialVersionUID = 3456463456344572L;
 
   @Override
   public Component getTableCellRendererComponent(JTable table,
-      Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+          Object value, boolean isSelected, boolean hasFocus, int row, int column) {
     super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
     ArrayList<EpisodesRecord> ep;
     if (value instanceof String) {
-      Boolean downloaded =(Boolean) table.getModel().getValueAt(row, 3);
-      Boolean seen =(Boolean) table.getModel().getValueAt(row, 5);
-      String sub = (String)table.getModel().getValueAt(row, 4);
-      if(seen){
+      Boolean downloaded = (Boolean) table.getModel().getValueAt(row, 3);
+      Boolean seen = (Boolean) table.getModel().getValueAt(row, 5);
+      String sub = (String) table.getModel().getValueAt(row, 4);
+      if (seen) {
         this.setFont(this.getFont().deriveFont(Font.ITALIC));
-        this.setForeground(Skin.getColor_4());
       }
-      if(downloaded && !seen && !sub.equals("None")){
+      if (downloaded && !seen && !sub.equals("None")) {
         this.setFont(this.getFont().deriveFont(Font.BOLD));
-        this.setForeground(Skin.getColor_5());
       }
-      if(isSelected){
+      if (isSelected) {
         this.setForeground(Skin.getColor_1());
       } else {
-        this.setForeground(Skin.getColor_5());
+        if (seen) {
+          this.setForeground(Skin.getColor_4());
+        }
+        if (downloaded && !seen && !sub.equals("None")) {
+          this.setForeground(Skin.getColor_5());
+        }
       }
-      this.setText((String)value);
+      this.setText((String) value);
     }
 
     return this;
