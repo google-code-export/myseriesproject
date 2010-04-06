@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -165,7 +166,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
     for (int i = 0; i < fields.length; i++) {
       String field = fields[i];
       if ((field.startsWith("subtitle") || (field.startsWith("download"))) && field.endsWith("html")) {
-        curLink = Options._TV_SUBTITLES_URL_ + field;
+        curLink = Options._TV_SUBTITLES_URL_ + URLEncoder.encode(field,"UTF-8");
         if (field.startsWith("download")) {
           curTitle = "dummy";
         }

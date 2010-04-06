@@ -16,6 +16,7 @@ import java.net.URISyntaxException;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import javax.swing.JProgressBar;
@@ -38,21 +39,9 @@ public abstract class AbstractDownloadSubtitle {
 
   protected void download(Subtitle sub) {
     if (localDir.equals("")) {
-      try {
-        try {
-          progress.setIndeterminate(false);
-          MyMessages.error("No local dir", "Local dir for series is not provided.Opening browser");
-          Desktop.getDesktop().browse(new URI(sub.url.toString()));
-        } catch (IOException ex) {
-          myseries.MySeries.logger.log(Level.SEVERE, null, ex);
-          MyMessages.error("Error occured!!!", "Could not read input stream");
-          form.dispose();
-        }
-      } catch (URISyntaxException ex) {
-        myseries.MySeries.logger.log(Level.SEVERE, null, ex);
-        MyMessages.error("Error occured!!!", "Wrong url");
-        form.dispose();
-      }
+      progress.setIndeterminate(false);
+      MyMessages.error("No local dir", "Local dir for series is not provided.Opening browser");
+      openInBrowser(sub);
     } else {
       //System.out.println(sub.url);
       progress.setIndeterminate(true);
@@ -68,30 +57,42 @@ public abstract class AbstractDownloadSubtitle {
         int ByteRead, ByteWritten = 0;
         String filename = localDir + "/s" + season + "x" + episode + "_" + MyUsefulFunctions.createRandomString(8) + ".zip";
         outStream = new BufferedOutputStream(new FileOutputStream(filename));
-        while ((ByteRead = is.read(buf)) != -1) {
-          outStream.write(buf, 0, ByteRead);
-          ByteWritten += ByteRead;
+        if (is.available() > 200) {
+          while ((ByteRead = is.read(buf)) > -1) {
+            outStream.write(buf, 0, ByteRead);
+            ByteWritten += ByteRead;
+          }
+        } else {
+          is.close();
+          outStream.close();
+          MyMessages.error("Access denied", "Direct access to subtitle is denied.Opening browser");
+          openInBrowser(sub);
         }
         is.close();
         outStream.close();
         progress.setString("Opening zip File");
         openZip(filename);
       } catch (IOException ex) {
-        try {
-          if (ex.getMessage().indexOf("code: 403") > -1) {
-            MyMessages.error("Access denied", "Direct access to subtitle is denied.Opening browser");
-            Desktop.getDesktop().browse(new URI(sub.url.toString()));
-          }
-        } catch (URISyntaxException ex1) {
-          myseries.MySeries.logger.log(Level.SEVERE, null, ex1);
-          MyMessages.error("Error occured!!!", "Wrong url");
-          form.dispose();
-        } catch (IOException ex1) {
-          myseries.MySeries.logger.log(Level.SEVERE, null, ex1);
-          MyMessages.error("Error occured!!!", "Could not read input stream");
-          form.dispose();
-        }
+        MyMessages.error("Access denied", "Direct access to subtitle is denied.Opening browser");
+        openInBrowser(sub);
       }
+    }
+  }
+
+  private void openInBrowser(Subtitle sub) {
+    try {
+      Desktop.getDesktop().browse(new URI(sub.url.toString()));
+      form.dispose();
+    } catch (IOException ex) {
+      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      MyMessages.error("Error occured!!!", "Could not read input stream");
+      form.dispose();
+    } catch (URISyntaxException ex) {
+      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      MyMessages.error("Error occured!!!", "Wrong url");
+      form.dispose();
+    } finally {
+      myseries.MySeries.glassPane.deactivate();
     }
   }
 
