@@ -17,7 +17,6 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import javax.swing.JProgressBar;
 import myComponents.MyMessages;
@@ -35,7 +34,7 @@ public abstract class AbstractDownloadSubtitle {
   public ArrayList<Subtitle> subs = new ArrayList<Subtitle>();
   protected JProgressBar progress;
   protected AbstractDownloadForm form;
-  protected String srtFilename;
+  protected String srtFilename = "";
 
   protected void download(Subtitle sub) {
     if (localDir.equals("")) {
