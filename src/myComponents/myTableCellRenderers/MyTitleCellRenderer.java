@@ -3,22 +3,14 @@
  * and open the template in the editor.
  */
 
-package myComponents;
+package myComponents.myTableCellRenderers;
 
 import database.EpisodesRecord;
-import database.SeriesRecord;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
-import myseries.episodes.Episodes;
-import myseries.series.Series;
 import tools.Skin;
 
 /**
@@ -47,6 +39,8 @@ private static final long serialVersionUID = 3456463456344572L;
       }
       if(isSelected){
         this.setForeground(Skin.getColor_1());
+      } else {
+        this.setForeground(Skin.getColor_5());
       }
       this.setText((String)value);
     }
