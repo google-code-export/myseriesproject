@@ -7,6 +7,7 @@ package myComponents;
 
 import database.EpisodesRecord;
 import database.SeriesRecord;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.sql.SQLException;
@@ -18,6 +19,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import myseries.episodes.Episodes;
 import myseries.series.Series;
+import tools.Skin;
 
 /**
  *
@@ -32,26 +34,19 @@ private static final long serialVersionUID = 3456463456344572L;
     super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
     ArrayList<EpisodesRecord> ep;
     if (value instanceof String) {
-     // SeriesRecord s = Series.getCurrentSerial();
-      //try {
-//        ep =  Episodes.getCurrentSeriesEpisodes();
-//        for (Iterator<EpisodesRecord> it = ep.iterator(); it.hasNext();) {
-//          EpisodesRecord episodesRecord = it.next();
-//          if(episodesRecord.getTitle().equals((String) value) &&
-//                  episodesRecord.getDownloaded() == 1 &&
-//                  episodesRecord.getSubs() != 0 &&
-//                  episodesRecord.getSeen() == 0){
-//            this.setFont(this.getFont().deriveFont(Font.BOLD));
-//          }
-//        }
-   //   } catch (SQLException ex) {
-    //    Logger.getLogger(MyTitleCellRenderer.class.getName()).log(Level.SEVERE, null, ex);
-    //  }
-      Boolean d =(Boolean) table.getModel().getValueAt(row, 3);
-      Boolean s =(Boolean) table.getModel().getValueAt(row, 5);
+      Boolean downloaded =(Boolean) table.getModel().getValueAt(row, 3);
+      Boolean seen =(Boolean) table.getModel().getValueAt(row, 5);
       String sub = (String)table.getModel().getValueAt(row, 4);
-      if(d && !s && !sub.equals("None")){
+      if(seen){
+        this.setFont(this.getFont().deriveFont(Font.ITALIC));
+        this.setForeground(Skin.getColor_4());
+      }
+      if(downloaded && !seen && !sub.equals("None")){
         this.setFont(this.getFont().deriveFont(Font.BOLD));
+        this.setForeground(Skin.getColor_5());
+      }
+      if(isSelected){
+        this.setForeground(Skin.getColor_1());
       }
       this.setText((String)value);
     }
