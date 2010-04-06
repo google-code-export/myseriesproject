@@ -59,11 +59,10 @@ import myComponents.ImagePanel;
 import myComponents.MyJDateChooserCellRenderer;
 import myComponents.MyDisabledGlassPane;
 import myComponents.MyMessages;
-import myComponents.MyMessages;
 import myComponents.MySeriesTableModel;
-import myComponents.MyTitleCellRenderer;
 import myComponents.MyUsefulFunctions;
 import myComponents.VideoFilter;
+import myComponents.myTableCellRenderers.MyTitleCellRenderer;
 import myseries.filters.FilteredSeries;
 import tools.DesktopSupport;
 import tools.importExport.ExportEpisodes;
@@ -75,7 +74,6 @@ import tools.Skin;
 import tools.download.subtitles.sonline.GetSOnlineCode;
 import tools.download.subtitles.sonline.SOnlineForm;
 import tools.download.subtitles.tvsubtitles.TvSubtitlesForm;
-import tools.download.torrents.EzTv;
 import tools.download.torrents.EzTvForm;
 import tools.myLogger;
 import tools.renaming.RenameEpisodes;
@@ -755,11 +753,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     );
     tabpanel_episodesListLayout.setVerticalGroup(
       tabpanel_episodesListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 404, Short.MAX_VALUE)
+      .addGap(0, 405, Short.MAX_VALUE)
       .addGroup(tabpanel_episodesListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(tabpanel_episodesListLayout.createSequentialGroup()
           .addContainerGap()
-          .addComponent(panel_episodesList, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
+          .addComponent(panel_episodesList, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
           .addGap(31, 31, 31)))
     );
 
@@ -892,7 +890,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
         .addContainerGap()
         .addComponent(panel_filters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(panel_allSeriesEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
+        .addComponent(panel_allSeriesEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
         .addContainerGap())
     );
 
@@ -915,8 +913,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
         .addContainerGap()
         .addComponent(panel_nextEpisodes, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addGap(18, 18, 18)
-        .addComponent(tabsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addComponent(tabsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 441, Short.MAX_VALUE)
+        .addGap(10, 10, 10))
     );
 
     tabsPanel.getAccessibleContext().setAccessibleName("");
@@ -1914,16 +1912,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     if (!DesktopSupport.isBrowseSupport()) {
       MySeries.logger.log(Level.WARNING, "Browse is not supported in the current OS");
       MyMessages.error("Browse Error!!!", "Browse is not supported");
-
-
       return;
-
-
     }
     java.net.URI uri = new java.net.URI(Series.getCurrentSerial().getLink());
     DesktopSupport.getDesktop().browse(uri);
-
-
   }
 
   private void applyFilter() throws SQLException {
