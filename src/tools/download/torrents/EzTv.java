@@ -80,6 +80,8 @@ public class EzTv implements Runnable {
       }
     } catch (IOException ex) {
       myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+    } finally {
+      myseries.MySeries.glassPane.deactivate();
     }
   }
 
@@ -127,6 +129,8 @@ public class EzTv implements Runnable {
       form.dispose();
     } catch (IOException ex) {
       myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+    } finally {
+      myseries.MySeries.glassPane.deactivate();
     }
   }
 
@@ -140,6 +144,7 @@ public class EzTv implements Runnable {
       if (isTorrent(torrent)) {
         Desktop.getDesktop().browse(uri);
         form.dispose();
+        myseries.MySeries.glassPane.deactivate();
       }
     }
   }
