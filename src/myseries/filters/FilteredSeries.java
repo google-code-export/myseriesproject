@@ -12,7 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 import javax.swing.JTable;
-import myComponents.MyFilteredSeriesTableModel;
+import myComponents.MyTableModels.MyFilteredSeriesTableModel;
 
 /**
  * Creates the filtered series object used to filter the series according to the
@@ -21,6 +21,23 @@ import myComponents.MyFilteredSeriesTableModel;
  */
 public class FilteredSeries {
 
+  public static final int FULLTITLE_COLUMN = 0;
+  public static final int EPISODE_NUMBER_COLUMN = 1;
+  public static final int EPISODERECORD_COLUMN = 2;
+  public static final int AIRED_COLUMN = 3;
+  public static final int DOWNLOADED_COLUMN = 4;
+  public static final int SUBS_COLUMN = 5;
+  public static final int SEEN_COLUMN = 6;
+  public static final int SUBS_NONE = 0;
+  public static final int SUBS_SEC = 1;
+  public static final int SUBS_PRIM = 2;
+  public static final int SUBS_BOTH = 3;
+  public static final int SUBS_PRIM_OR_SEC = 4;
+  public static final int SUBS_NOT_PRIM = 5;
+  public static final int SUBS_UNAWARE = 6;
+
+
+
   /**
    * The model of the filteredSeries table
    */
@@ -28,16 +45,16 @@ public class FilteredSeries {
   /**
    * Seen state of the episode 0:Not seen, 1:Seen , 2:Unaware , default = 0
    */
-  private static int seen = 0;
+  private static int seen = EpisodesRecord.NOT_SEEN;
   /**
    * Download state of the episode 0:Not downloaded, 1:downloaded, 2:Unaware
    */
-  private static int downloaded = 1;
+  private static int downloaded = EpisodesRecord.NOT_DOWNLOADED;
   /**
    * Which subtitles are available 0:None, 1:English, 2:Greek, 3:Both, 4:English or Greek,
    * 5: Not Greek , 6:Unaware , defautlt :4
    */
-  private static int subtitles = 4;
+  private static int subtitles = SUBS_PRIM_OR_SEC;
   /**
    * The filtered episodes table
    */
@@ -47,7 +64,6 @@ public class FilteredSeries {
    * Gets the filtered episodes
    * First empty the table, create the new model and set it tot he filtered series table
    * @throws java.sql.SQLException
-   * @throws java.io.IOException
    */
   public static void getFilteredSeries() throws SQLException {
     int id, subsInt, series_ID, episode;
@@ -56,10 +72,11 @@ public class FilteredSeries {
 
     emptyFilteredSeries();
     String where = "";
-    where += getSeen() == 0 || getSeen() == 1 ? " AND seen = " + getSeen() : "";
-    where += getDownloaded() == 0 || getDownloaded() == 1 ? " AND downloaded = " + getDownloaded() : "";
-    where += getSubtitles() < 4 ? " AND subs =  " + getSubtitles() : getSubtitles() == 4 ? " AND  (subs = 1 OR subs =2 )" : getSubtitles() == 5 ? " AND  (subs = 0 OR subs = 1 )" : "";
-    String sql = "SELECT e.* FROM episodes e JOIN series s on e.series_ID = s.series_ID WHERE s.hidden = 0 " + where + " ORDER BY aired ASC";
+    where += getSeen() == EpisodesRecord.NOT_SEEN || getSeen() == EpisodesRecord.SEEN ? " AND seen = " + getSeen() : "";
+    where += getDownloaded() == EpisodesRecord.NOT_DOWNLOADED || getDownloaded() == EpisodesRecord.DOWNLOADED ? " AND downloaded = " + getDownloaded() : "";
+    where += getSubtitles() < SUBS_PRIM_OR_SEC ? " AND subs =  " + getSubtitles() : getSubtitles() == SUBS_PRIM_OR_SEC ?
+      " AND  (subs = "+SUBS_SEC+" OR subs ="+SUBS_PRIM+" )" : getSubtitles() == SUBS_NOT_PRIM ? " AND  (subs = "+SUBS_NONE+" OR subs = "+SUBS_SEC+" )" : "";
+    String sql = "SELECT e.* FROM episodes e JOIN series s on e.series_ID = s.series_ID WHERE s.hidden = "+SeriesRecord.NOT_HIDDEN+" " + where + " ORDER BY aired ASC";
     ResultSet rs = DBConnection.stmt.executeQuery(sql);
     SeriesRecord ser;
     while (rs.next()) {
@@ -70,9 +87,9 @@ public class FilteredSeries {
       episode = rs.getInt("episode");
       boolDownloaded = rs.getBoolean("downloaded");
       subsInt = rs.getInt("subs");
-      subs = subsInt == 0 ? "None" : subsInt == 1 ? "English" : subsInt == 2 ? "Greek" : "Both";
+      subs = subsInt == SUBS_NONE ? "None" : subsInt == SUBS_SEC ? "English" : subsInt == SUBS_PRIM ? "Greek" : "Both";
       boolSeen = rs.getBoolean("seen");
-      Vector<SeriesRecord> seriesV = SeriesRecord.getSeriesBySql("SELECT * FROM series WHERE hidden = 0 AND series_ID = " + series_ID);
+      Vector<SeriesRecord> seriesV = SeriesRecord.getSeriesBySql("SELECT * FROM series WHERE hidden = "+SeriesRecord.NOT_HIDDEN+" AND series_ID = " + series_ID);
       ser = seriesV.get(0);
 
       Object[] data = {ser.getFullTitle(), episode, EpisodesRecord.getEpisodeByID(id), aired, boolDownloaded, subs, boolSeen};
