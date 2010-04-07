@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package myComponents;
+package myComponents.myFileFilters;
 
 import java.io.File;
 import javax.swing.filechooser.FileFilter;
