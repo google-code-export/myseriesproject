@@ -16,11 +16,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-import myComponents.MyEpisodesTableModel;
+import myComponents.MyTableModels.MyEpisodesTableModel;
 import myComponents.MyUsefulFunctions;
 import myComponents.SubtitlesFilter;
 import myComponents.VideoFilter;
-import tools.options.Options;
 
 /**
  *
@@ -28,6 +27,13 @@ import tools.options.Options;
  */
 public class Episodes {
 
+  public static final int EPISODE_NUM_COLUMN = 0;
+  public static final int TITLE_COLUMN = 1;
+  public static final int AIRED_COLUMN = 2;
+  public static final int DOWNLOADED_COLUMN = 3;
+  public static final int SUBS_COLUMN = 4;
+  public static final int SEEN_COLUMN = 5;
+  public static final int EPISODE_ID_COLUMN = 6;
   /**
    * The episodes table model
    */
@@ -110,7 +116,7 @@ public class Episodes {
   public static ArrayList<EpisodesRecord> getCurrentSeriesEpisodes() throws SQLException {
     ArrayList<EpisodesRecord> eps = new ArrayList<EpisodesRecord>();
     ArrayList<EpisodesRecord> updated = new ArrayList<EpisodesRecord>();
-    int id, subsInt, episode;
+    int episode;
     Boolean download, seen;
     String title, aired, subs;
 
@@ -133,19 +139,19 @@ public class Episodes {
       e.setDownloaded(rs.getInt("downloaded"));
       if (!download && MyUsefulFunctions.hasBeenAired(e.getAired())) {
         if (checkDownloads(Series.getCurrentSerial().getSeason(), e.getEpisode())) {
-          e.setDownloaded(1);
+          e.setDownloaded(EpisodesRecord.DOWNLOADED);
           updated.add(e);
         }
       }
       e.setSubs(rs.getInt("subs"));
-      if (rs.getInt("subs") == 0 && MyUsefulFunctions.hasBeenAired(e.getAired())) {
+      if (rs.getInt("subs") == EpisodesRecord.NO_SUBS && MyUsefulFunctions.hasBeenAired(e.getAired())) {
         int cSubs = checkSubs(Series.getCurrentSerial().getSeason(), e.getEpisode());
-        if (cSubs != 0) {
+        if (cSubs != EpisodesRecord.NO_SUBS) {
           e.setSubs(cSubs);
           updated.add(e);
         }
       }
-      subs = e.getSubs() == 0 ? "None" : e.getSubs() == 1 ? "English" : e.getSubs() == 2 ? "Greek" : "Both";
+      subs = e.getSubs() == EpisodesRecord.NO_SUBS ? "None" : e.getSubs() == EpisodesRecord.SEC_SUB ? "English" : e.getSubs() == EpisodesRecord.PRIM_SUB ? "Greek" : "Both";
       seen = rs.getBoolean("seen");
       Object[] data = {episode, e.getTitle(), e.getAired(), download, subs, seen, e.getEpisode_ID()};
       getTableModel_episodes().addRow(data);
@@ -182,7 +188,7 @@ public class Episodes {
   }
 
   private static int checkSubs(int season, int episode) throws SQLException {
-    int subs = 0;
+    int subs = EpisodesRecord.NO_SUBS;
     boolean hasEn = false, hasGr = false;
     File directory = new File(Series.getCurrentSerial().getLocalDir());
     if (!directory.isDirectory()) {
@@ -203,11 +209,11 @@ public class Episodes {
       }
     }
     if (hasEn && hasGr) {
-      return 3;
+      return EpisodesRecord.BOTH_SUBS;
     } else if (hasEn) {
-      return 1;
+      return EpisodesRecord.SEC_SUB;
     } else if (hasGr) {
-      return 2;
+      return EpisodesRecord.PRIM_SUB;
     }
     return subs;
   }
@@ -234,11 +240,6 @@ public class Episodes {
   public static void emptyEpisodes() {
     getTableModel_episodes().setRowCount(0);
     getTabsPanel().setTitleAt(0, "");
-
-
-
-
-
   }
 
   /**
@@ -246,10 +247,6 @@ public class Episodes {
    */
   public static JTabbedPane getTabsPanel() {
     return tabsPanel;
-
-
-
-
   }
 
   /**
@@ -257,10 +254,6 @@ public class Episodes {
    */
   public static void setTabsPanel(JTabbedPane tabsPanel) {
     Episodes.tabsPanel = tabsPanel;
-
-
-
-
   }
 
   /**
