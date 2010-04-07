@@ -4,20 +4,15 @@
  */
 package database;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.util.logging.Level;
 import javax.swing.UnsupportedLookAndFeelException;
 import myComponents.MyMessages;
-import myComponents.MyUsefulFunctions;
 import myseries.MySeries;
 import myseries.StartPanel;
 import tools.options.Options;
@@ -28,9 +23,7 @@ import tools.options.Options;
  */
 public class CreateDatabase implements Runnable {
 
-  private Connection conn;
   private Statement stmt;
-  private boolean demo;
   private StartPanel s;
   private boolean createNewDb = false;
 
@@ -64,11 +57,6 @@ public class CreateDatabase implements Runnable {
 
     MySeries.logger.log(Level.INFO, "Loading the Database");
     loadDatabases();
-    if (demo) {
-      //s.progress.setVisible(true);
-      MySeries.logger.log(Level.INFO, "Loading demo data");
-      loadDemoData();
-    }
     if (s.m == null) {
       s.startMySeries();
     } else {
@@ -79,11 +67,11 @@ public class CreateDatabase implements Runnable {
       s.dispose();
       s.m.dispose();
       MySeries.logger.log(Level.INFO, "Loading MySerieS");
-      MySeries mNew = new MySeries();
+      new MySeries();
     }
   }
 
-  public CreateDatabase(StartPanel s, String db, boolean demo, boolean createNewDB) throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
+  public CreateDatabase(StartPanel s, String db, boolean createNewDB) throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
     if (!db.endsWith(".db")) {
       DBConnection.db = db + ".db";
     } else {
@@ -91,32 +79,8 @@ public class CreateDatabase implements Runnable {
     }
     DBConnection.createConnection(db);
     this.stmt = DBConnection.stmt;
-    this.demo = demo;
     this.s = s;
     this.createNewDb = createNewDB;
-  }
-
-  private void loadDemoData() throws FileNotFoundException, IOException, SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
-    MySeries.logger.log(Level.INFO, "Importing demo data");
-    //File data = new File("database/demoData.sql");
-    //BufferedReader in = MyUsefulFunctions.createInputStream(data);
-    InputStream is = CreateDatabase.class.getResourceAsStream("demoData.sql");
-    BufferedReader in = new BufferedReader(new InputStreamReader(is));
-
-    
-    long length = 6432;
-    long curLength = 0;
-    String line;
-
-    while ((line = in.readLine()) != null) {
-      curLength += line.length() + 2;
-      stmt.executeUpdate(line.trim());
-      int perc = (int) ((curLength * 100) / length);
-      //s.progress.setValue(perc);
-    }
-    //s.progress.setValue(0);
-    in.close();
-    MySeries.logger.log(Level.INFO, "Demo data was imported");
   }
 
   public void loadDatabases() throws SQLException, IOException {

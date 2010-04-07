@@ -12,7 +12,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import myComponents.MyMessages;
-import myComponents.MyUsefulFunctions;
 import tools.options.Options;
 import myseries.MySeries;
 
