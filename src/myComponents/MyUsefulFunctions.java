@@ -4,6 +4,8 @@
  */
 package myComponents;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -29,6 +31,7 @@ import java.util.Iterator;
 import java.util.Properties;
 import java.util.Random;
 import javax.swing.JOptionPane;
+import tools.Skin;
 import tools.options.Options;
 
 /**
@@ -421,6 +424,28 @@ public class MyUsefulFunctions {
       title = title.replaceAll("  ", " ");
     }
     return title.trim();
+  }
+
+  public static Font getCellFont(Font defaultFont, boolean downloaded, boolean seen, String sub) {
+    Font font = defaultFont;
+    if (seen) {
+      font = font.deriveFont(Font.ITALIC, defaultFont.getSize());
+    } else if (!seen && downloaded && !sub.equals("None")) {
+      font = font.deriveFont(Font.BOLD, defaultFont.getSize() + 0.5F);
+    }
+    return font;
+  }
+
+  public static Color getCellColor(boolean isSelected, boolean seen) {
+    if (isSelected) {
+        return Skin.getColor_1();
+    } else {
+      if (seen) {
+        return Skin.getColor_4();
+      } else {
+        return Skin.getColor_5();
+      }
+    }
   }
 
   private MyUsefulFunctions() {
