@@ -18,9 +18,9 @@ public class SavedFilterRecord extends Record {
   String table = "filters";
   private int filter_ID = 0;
   private String title = "";
-  private int downloaded = 0;
-  private int seen = 0;
-  private int subtitles = 0;
+  private int downloaded = EpisodesRecord.NOT_DOWNLOADED;
+  private int seen = EpisodesRecord.NOT_SEEN;
+  private int subtitles = EpisodesRecord.NO_SUBS;
 
   public SavedFilterRecord() {
     super();
