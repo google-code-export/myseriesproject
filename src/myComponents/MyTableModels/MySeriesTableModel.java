@@ -2,9 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package myComponents;
+package myComponents.MyTableModels;
 
 import javax.swing.table.DefaultTableModel;
+import myseries.series.Series;
 
 /**
  * The tablemodel for the series table
@@ -16,7 +17,7 @@ public class MySeriesTableModel extends DefaultTableModel {
 
   @Override
   public Class<?> getColumnClass(int columnIndex) {
-    if (columnIndex == 2 || columnIndex == 3) {
+    if (columnIndex == Series.HIDDEN_COLUMN || columnIndex == Series.UPDATE_COLUMN) {
       return Boolean.class;
     } else {
       return super.getColumnClass(columnIndex);
@@ -25,7 +26,7 @@ public class MySeriesTableModel extends DefaultTableModel {
 
   @Override
   public boolean isCellEditable(int row, int col) {
-    if (col == 2 || col == 3) {
+    if (col == Series.HIDDEN_COLUMN || col == Series.UPDATE_COLUMN) {
       return true;
     } else {
       return false;
