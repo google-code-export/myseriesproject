@@ -17,7 +17,6 @@ import java.net.URISyntaxException;
 import java.util.Enumeration;
 import java.util.Properties;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import myComponents.MyDraggable;
 import myseries.MySeries;
 import tools.DesktopSupport;

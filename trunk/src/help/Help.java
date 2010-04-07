@@ -265,8 +265,8 @@ public class Help extends JFrame {
     int pos = mainContent.getCaretPosition();
     if (isLink(pos)) {
       String link = getLink(pos);
-      if ((String) Links.links.get(link) != null) {
-        setMainContent((String) Links.links.get(link));
+      if (Links.links.get(link) != null) {
+        setMainContent(Links.links.get(link));
       } else {
         setMainContent(link);
       }
@@ -276,8 +276,8 @@ public class Help extends JFrame {
 
   private void followHyperLink(String link) {
 
-    if ((String) Links.links.get(link) != null) {
-      setMainContent((String) Links.links.get(link));
+    if (Links.links.get(link) != null) {
+      setMainContent(Links.links.get(link));
     } else {
       setMainContent(link);
     }
