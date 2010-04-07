@@ -4,6 +4,7 @@
  */
 package myComponents;
 
+import database.EpisodesRecord;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.BufferedReader;
@@ -31,6 +32,7 @@ import java.util.Iterator;
 import java.util.Properties;
 import java.util.Random;
 import javax.swing.JOptionPane;
+import myComponents.myGUI.MyFont;
 import tools.Skin;
 import tools.options.Options;
 
@@ -108,7 +110,13 @@ public class MyUsefulFunctions {
       in = new BufferedReader(new InputStreamReader(google.openStream()));
       return true;
     } catch (IOException ex) {
-      return false;
+      try {
+        URL msn = new URL("http://www.msn.com/");
+        in = new BufferedReader(new InputStreamReader(msn.openStream()));
+        return true;
+      } catch (IOException ex1) {
+        return false;
+      }
     }
   }
 
@@ -379,13 +387,13 @@ public class MyUsefulFunctions {
 
   public static int getSubsId(String subs) {
     if (subs.equals("None")) {
-      return 0;
+      return EpisodesRecord.NO_SUBS;
     } else if (subs.equals("English")) {
-      return 1;
+      return EpisodesRecord.SEC_SUB;
     } else if (subs.equals("Greek")) {
-      return 2;
+      return EpisodesRecord.PRIM_SUB;
     } else {
-      return 3;
+      return EpisodesRecord.BOTH_SUBS;
     }
   }
 
@@ -431,14 +439,14 @@ public class MyUsefulFunctions {
     if (seen) {
       font = font.deriveFont(Font.ITALIC, defaultFont.getSize());
     } else if (!seen && downloaded && !sub.equals("None")) {
-      font = font.deriveFont(Font.BOLD, defaultFont.getSize() + 0.5F);
+      font = font.deriveFont(Font.BOLD, defaultFont.getSize() + MyFont.SIZE_STEP);
     }
     return font;
   }
 
   public static Color getCellColor(boolean isSelected, boolean seen) {
     if (isSelected) {
-        return Skin.getColor_1();
+      return Skin.getColor_1();
     } else {
       if (seen) {
         return Skin.getColor_4();

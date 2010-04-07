@@ -10,7 +10,7 @@
  */
 package tools.download.subtitles;
 
-import myComponents.MyDraggable;
+import myComponents.myGUI.MyDraggable;
 
 /**
  *

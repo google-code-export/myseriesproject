@@ -14,7 +14,13 @@ public class SOnlineForm extends AbstractDownloadForm {
 
   private static final long serialVersionUID = 2353636L;
 
-  /** Creates new form DownloadSubtitlesForm */
+  /** Creates new form DownloadSubtitlesForm
+   * @param sOnlineCode 
+   * @param episode
+   * @param season
+   * @param localDir
+   * @param title
+   */
   public SOnlineForm(String sOnlineCode, int season, int episode, String localDir, String title) {
     super.init();
     label_title.setText("Download from SubtitleOnline.com");

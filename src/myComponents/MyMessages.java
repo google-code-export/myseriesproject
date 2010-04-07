@@ -53,4 +53,7 @@ public class MyMessages {
             JOptionPane.YES_NO_OPTION,
             JOptionPane.QUESTION_MESSAGE);
   }
+
+  private MyMessages() {
+  }
 }

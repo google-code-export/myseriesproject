@@ -24,6 +24,11 @@ public class Series {
   public static final int SERIES_ID_COLUMN = 1;
   public static final int HIDDEN_COLUMN = 2;
   public static final int UPDATE_COLUMN = 3;
+  public static final int DEFAULT_SEASON = 1;
+  public static final int MINIMUM_SEASON = 1;
+  public static final int MAXIMUM_SEASON = 100;
+  public static final int SEASON_STEP = 1;
+
   /**
    * The model of the Series table
    */

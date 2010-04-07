@@ -24,9 +24,9 @@ import java.util.Vector;
 import java.util.logging.Level;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
-import myComponents.MyDraggable;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
+import myComponents.myGUI.MyDraggable;
 import myseries.series.Series;
 import tools.options.Options;
 

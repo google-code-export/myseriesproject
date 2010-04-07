@@ -15,7 +15,13 @@ import tools.download.subtitles.AbstractDownloadForm;
 public class TvSubtitlesForm extends AbstractDownloadForm {
   private static final long serialVersionUID = 2353636L;
 
-  /** Creates new form DownloadSubtitlesForm */
+  /** Creates new form DownloadSubtitlesForm
+   * @param link
+   * @param season
+   * @param episode
+   * @param localDir
+   * @param title
+   */
   public TvSubtitlesForm(String link, int season, int episode, String localDir, String title) {
     super.init();
     label_title.setText("Download from TVSubtitles.net");

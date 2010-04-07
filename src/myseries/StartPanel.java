@@ -23,9 +23,9 @@ import java.util.logging.Level;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import myComponents.MyFont;
 import myComponents.MyMessages;
-import myComponents.MyUsefulFunctions;
+import myComponents.myGUI.MyDraggable;
+import myComponents.myGUI.MyFont;
 import tools.DesktopSupport;
 import tools.options.Options;
 import tools.Skin;
@@ -34,7 +34,7 @@ import tools.Skin;
  * The start up panel
  * @author lordovol
  */
-public class StartPanel extends myComponents.MyDraggable {
+public class StartPanel extends MyDraggable {
 
   private final static long serialVersionUID = 45346793847632L;
   public MySeries m = null;

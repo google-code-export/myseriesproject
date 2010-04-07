@@ -13,7 +13,6 @@ package myseries.episodes;
 import java.io.IOException;
 import java.text.ParseException;
 import myseries.*;
-import myComponents.MyDraggable;
 import myComponents.MyUsefulFunctions;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -24,6 +23,7 @@ import database.EpisodesRecord;
 import database.SeriesRecord;
 import java.util.Calendar;
 import myComponents.MyMessages;
+import myComponents.myGUI.MyDraggable;
 import tools.options.Options;
 
 /**
