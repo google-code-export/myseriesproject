@@ -2,21 +2,22 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
-package myComponents;
+package myComponents.MyTableModels;
 
 import javax.swing.table.DefaultTableModel;
+import tools.renaming.RenameEpisodes;
 
 /**
  *
  * @author lordovol
  */
 public class MyRenameEpisodesTableModel extends DefaultTableModel {
- private static final long serialVersionUID = 434532375687L;
+
+  private static final long serialVersionUID = 434532375687L;
 
   @Override
   public Class<?> getColumnClass(int columnIndex) {
-    if (columnIndex == 3) {
+    if (columnIndex == RenameEpisodes.EDIT_COLUMN) {
       return Boolean.class;
     } else {
       return super.getColumnClass(columnIndex);
@@ -25,14 +26,12 @@ public class MyRenameEpisodesTableModel extends DefaultTableModel {
 
   @Override
   public boolean isCellEditable(int row, int col) {
-    if(col==3){
-    if(this.getValueAt(row, 1).equals(this.getValueAt(row, 2))){
-      return false;
-    }
-    return true;
+    if (col == RenameEpisodes.EDIT_COLUMN) {
+      if (this.getValueAt(row, RenameEpisodes.ORIGINAL_NAME_COLUMN).equals(this.getValueAt(row, RenameEpisodes.NEW_NAME_COLUMN))) {
+        return false;
+      }
+      return true;
     }
     return false;
   }
-
-
 }
