@@ -11,7 +11,7 @@
 package tools.options;
 
 import java.io.IOException;
-import myComponents.MyDraggable;
+import myComponents.myGUI.MyDraggable;
 
 /**
  *

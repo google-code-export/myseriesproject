@@ -15,8 +15,6 @@ import tools.internetUpdate.AbstractSeriesToUpdate;
  */
 public class EgSeriesToUpdate extends AbstractSeriesToUpdate {
   public ArrayList<EgEpisode> episodes = new ArrayList<EgEpisode>();
-  
-
 
   public EgSeriesToUpdate(SeriesRecord series) {
     this.series = series;

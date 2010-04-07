@@ -21,8 +21,7 @@ import myseries.series.AdminSeries;
 import myseries.series.Series;
 import database.DBConnection;
 import tools.options.Options;
-import myComponents.MyEpisodesTableModel;
-import myComponents.MyFilteredSeriesTableModel;
+import myComponents.MyTableModels.MyEpisodesTableModel;
 import javax.swing.event.TableModelEvent;
 import database.EpisodesRecord;
 import database.SaveDatabase;
@@ -55,13 +54,14 @@ import javax.swing.SwingUtilities;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
-import myComponents.ImagePanel;
-import myComponents.MyJDateChooserCellRenderer;
-import myComponents.MyDisabledGlassPane;
 import myComponents.MyMessages;
-import myComponents.MySeriesTableModel;
+import myComponents.MyTableModels.MyFilteredSeriesTableModel;
+import myComponents.MyTableModels.MySeriesTableModel;
 import myComponents.MyUsefulFunctions;
-import myComponents.VideoFilter;
+import myComponents.myFileFilters.VideoFilter;
+import myComponents.myGUI.ImagePanel;
+import myComponents.myGUI.MyDisabledGlassPane;
+import myComponents.myTableCellRenderers.MyJDateChooserCellRenderer;
 import myComponents.myTableCellRenderers.MyTitleCellRenderer;
 import myseries.filters.FilteredSeries;
 import tools.DesktopSupport;
@@ -260,11 +260,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
     JComboBox subs = new JComboBox(new String[]{"None", "English", "Greek", "Both"});
     table_episodesList.getColumn("Subs").setCellEditor(new DefaultCellEditor(subs));
-    table_episodesList.getColumn("Aired").setCellEditor(new myComponents.MyJDateChooserCellEditor());
+    table_episodesList.getColumn("Aired").setCellEditor(new myComponents.myTableCellEditors.MyJDateChooserCellEditor());
     table_episodesList.getColumn("Aired").setCellRenderer(new MyJDateChooserCellRenderer());
     table_episodesList.getColumn("Title").setCellRenderer(new MyTitleCellRenderer());
     table_FilteredlSeriesEpisodesList.getColumn("Subs").setCellEditor(new DefaultCellEditor(subs));
-    table_FilteredlSeriesEpisodesList.getColumn("Aired").setCellEditor(new myComponents.MyJDateChooserCellEditor());
+    table_FilteredlSeriesEpisodesList.getColumn("Aired").setCellEditor(new myComponents.myTableCellEditors.MyJDateChooserCellEditor());
     table_FilteredlSeriesEpisodesList.getColumn("Aired").setCellRenderer(new MyJDateChooserCellRenderer());
 
     // Set column widths

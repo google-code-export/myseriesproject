@@ -2,11 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package myComponents;
+package myComponents.myTableCellRenderers;
 
 import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
+import myComponents.MyUsefulFunctions;
 
 /**
  *

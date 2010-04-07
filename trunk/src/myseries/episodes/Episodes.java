@@ -18,8 +18,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import myComponents.MyTableModels.MyEpisodesTableModel;
 import myComponents.MyUsefulFunctions;
-import myComponents.SubtitlesFilter;
-import myComponents.VideoFilter;
+import myComponents.myFileFilters.SubtitlesFilter;
+import myComponents.myFileFilters.VideoFilter;
 
 /**
  *

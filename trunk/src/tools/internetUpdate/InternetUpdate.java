@@ -14,9 +14,9 @@ import tools.internetUpdate.epguides.EgUpdate;
 import tools.internetUpdate.tvrage.TrUpdate;
 import database.SeriesRecord;
 import java.util.logging.Level;
-import myComponents.MyDraggable;
+import javax.swing.JOptionPane;
 import myComponents.MyMessages;
-import myComponents.MyUsefulFunctions;
+import myComponents.myGUI.MyDraggable;
 import myseries.MySeries;
 import tools.options.Options;
 
@@ -160,7 +160,7 @@ public class InternetUpdate extends MyDraggable {
         dispose();
       } else {
         int i = MyMessages.question("Abort?", "Do you want to cancel the update?");
-        if (i == 0) {
+        if (i == JOptionPane.OK_OPTION) {
           t.interrupt();
           MySeries.glassPane.deactivate();
           dispose();

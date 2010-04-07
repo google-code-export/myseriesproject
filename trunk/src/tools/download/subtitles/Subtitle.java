@@ -17,6 +17,11 @@ public class Subtitle {
   public String title;
   public URL url;
 
+  /**
+   *
+   * @param title
+   * @param url
+   */
   public Subtitle(String title, URL url) {
     this.title = MyUsefulFunctions.deleteDoubleSpaces(title);
     this.url = url;

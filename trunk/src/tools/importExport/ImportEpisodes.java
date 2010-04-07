@@ -13,7 +13,6 @@ package tools.importExport;
 import Exceptions.EpisodeImportFormatException;
 import database.EpisodesRecord;
 import database.SeriesRecord;
-import java.awt.Dimension;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -23,9 +22,9 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
-import myComponents.MyDraggable;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
+import myComponents.myGUI.MyDraggable;
 import myseries.MySeries;
 import myseries.series.Series;
 

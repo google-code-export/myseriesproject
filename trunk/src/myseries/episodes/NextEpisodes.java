@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import database.EpisodesRecord;
+import database.SeriesRecord;
 
 /**
  * Cretates the next episodes object
@@ -55,14 +56,14 @@ public class NextEpisodes {
     buttons[2] = false;
     buttons[3] = false;
     if (Options.toBoolean(Options.SHOW_UNSEEN)) {
-      where = " OR seen = 0";
+      where = " OR seen = "+EpisodesRecord.NOT_SEEN;
     } 
     if (Options.toBoolean(Options.SHOW_UNDOWNLOADED)) {
-      where += " OR downloaded = 0";
+      where += " OR downloaded = "+EpisodesRecord.NOT_DOWNLOADED;
     }
     String sql = "SELECT e.title AS epTitle, e.aired AS aired, s.title AS serial FROM episodes e " +
         "LEFT JOIN series s ON e.series_ID = s.series_ID WHERE (aired >= current_date " + where +
-        ") AND hidden = 0 AND aired != '' AND substr(aired,6) <> '00-00' ORDER BY aired ASC LIMIT " + Options.toInt("NEXT_EPISODES_LIMIT");
+        ") AND hidden = "+SeriesRecord.NOT_HIDDEN+" AND aired != '' AND substr(aired,6) <> '00-00' ORDER BY aired ASC LIMIT " + Options.toInt("NEXT_EPISODES_LIMIT");
     EpisodesRecord e = new EpisodesRecord();
     ResultSet rs = EpisodesRecord.query(sql);
     while (rs.next()) {

@@ -24,7 +24,7 @@ import tools.options.Options;
 public class CreateDatabase implements Runnable {
 
   private Statement stmt;
-  private StartPanel s;
+  private StartPanel startPanel;
   private boolean createNewDb = false;
 
   public void run() {
@@ -57,15 +57,15 @@ public class CreateDatabase implements Runnable {
 
     MySeries.logger.log(Level.INFO, "Loading the Database");
     loadDatabases();
-    if (s.m == null) {
-      s.startMySeries();
+    if (startPanel.m == null) {
+      startPanel.startMySeries();
     } else {
       MySeries.logger.log(Level.INFO, "Setting database");
-      Options.setOption(Options.DB_NAME, s.textbox_name.getText().trim());
+      Options.setOption(Options.DB_NAME, startPanel.textbox_name.getText().trim());
       MySeries.logger.log(Level.INFO, "Saving options");
       Options.save();
-      s.dispose();
-      s.m.dispose();
+      startPanel.dispose();
+      startPanel.m.dispose();
       MySeries.logger.log(Level.INFO, "Loading MySerieS");
       new MySeries();
     }
@@ -79,7 +79,7 @@ public class CreateDatabase implements Runnable {
     }
     DBConnection.createConnection(db);
     this.stmt = DBConnection.stmt;
-    this.s = s;
+    this.startPanel = s;
     this.createNewDb = createNewDB;
   }
 

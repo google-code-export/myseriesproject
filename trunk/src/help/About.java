@@ -17,7 +17,7 @@ import java.net.URISyntaxException;
 import java.util.Enumeration;
 import java.util.Properties;
 import java.util.logging.Level;
-import myComponents.MyDraggable;
+import myComponents.myGUI.MyDraggable;
 import myseries.MySeries;
 import tools.DesktopSupport;
 import tools.Skin;

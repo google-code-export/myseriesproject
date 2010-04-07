@@ -11,6 +11,7 @@
 package tools.internetUpdate.tvrage;
 
 import database.SeriesRecord;
+import java.awt.Dialog.ModalityType;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -24,9 +25,9 @@ import javax.swing.DefaultComboBoxModel;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import myComponents.MyDraggable;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
+import myComponents.myGUI.MyDraggable;
 import myseries.MySeries;
 import myseries.series.AdminSeries;
 import myseries.series.Series;

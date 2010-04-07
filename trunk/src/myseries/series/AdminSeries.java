@@ -14,14 +14,15 @@ import java.io.IOException;
 import myComponents.MyUsefulFunctions;
 import database.SeriesRecord;
 import java.awt.Cursor;
+import java.awt.Dialog.ModalityType;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import javax.swing.JFileChooser;
 import javax.swing.SpinnerNumberModel;
-import myComponents.MyDraggable;
 import myComponents.MyMessages;
-import myComponents.ScreenshotFilter;
+import myComponents.myFileFilters.ScreenshotFilter;
+import myComponents.myGUI.MyDraggable;
 import myseries.MySeries;
 import tools.internetUpdate.tvrage.TrGetId;
 
@@ -77,7 +78,7 @@ public class AdminSeries extends MyDraggable {
     this.seriesRecord = seriesRecord;
     initComponents();
     setLocationRelativeTo(m);
-    spinner_season.setModel(new SpinnerNumberModel(1, 1, 100, 1));
+    spinner_season.setModel(new SpinnerNumberModel(Series.DEFAULT_SEASON, Series.MINIMUM_SEASON, Series.MAXIMUM_SEASON, Series.SEASON_STEP));
     if (seriesRecord != null) {
       spinner_season.setValue(seriesRecord.getSeason());
       textField_Serial.setText(seriesRecord.getTitle());
@@ -433,8 +434,8 @@ public class AdminSeries extends MyDraggable {
       fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
       fc.setFileFilter(new ScreenshotFilter());
       fc.showOpenDialog(this);
-      File screenshot = fc.getSelectedFile();
-      textfield_screenshot.setText(screenshot.getAbsolutePath());
+      File fScreenshot = fc.getSelectedFile();
+      textfield_screenshot.setText(fScreenshot.getAbsolutePath());
     }//GEN-LAST:event_button_browseScreenshotActionPerformed
 
   // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -16,10 +16,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import javax.swing.table.TableModel;
-import myComponents.MyDraggable;
 import myComponents.MyMessages;
 import myComponents.MyTableModels.MyRenameEpisodesTableModel;
 import myComponents.MyUsefulFunctions;
+import myComponents.myGUI.MyDraggable;
 import tools.options.Options;
 
 /**
