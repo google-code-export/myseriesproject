@@ -7,7 +7,6 @@ package database;
 import myComponents.MyUsefulFunctions;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Vector;
 
 /**
@@ -16,11 +15,16 @@ import java.util.Vector;
  */
 public class SeriesRecord extends Record {
 
+  public static final int NO_INTERNET_UPDATE = 0;
+  public static final int INTERNET_UPDATE = 1;
+  public static final int NOT_HIDDEN = 0;
+  public static final int HIDDEN = 1;
+
+
   String table = "series";
   private int series_ID = 0;
   private String title = "";
   private int season = 0;
-  private String fullTitle = "";
   private int hidden = 0;
   private String link = "";
   private int internetUpdate = 1;
@@ -44,7 +48,7 @@ public class SeriesRecord extends Record {
   }
 
   public static Vector<SeriesRecord> getAllSeries() throws SQLException {
-    return getSeriesBySql("SELECT * FROM series WHERE hidden = 0");
+    return getSeriesBySql("SELECT * FROM series WHERE hidden = " + NOT_HIDDEN);
 
   }
 
