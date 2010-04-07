@@ -4,13 +4,10 @@
  */
 package myComponents.myTableCellRenderers;
 
-import database.EpisodesRecord;
 import java.awt.Component;
-import java.awt.Font;
-import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
-import tools.Skin;
+import myComponents.MyUsefulFunctions;
 
 /**
  *
@@ -24,27 +21,12 @@ public class MyTitleCellRenderer extends DefaultTableCellRenderer {
   public Component getTableCellRendererComponent(JTable table,
           Object value, boolean isSelected, boolean hasFocus, int row, int column) {
     super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-    ArrayList<EpisodesRecord> ep;
     if (value instanceof String) {
       Boolean downloaded = (Boolean) table.getModel().getValueAt(row, 3);
       Boolean seen = (Boolean) table.getModel().getValueAt(row, 5);
       String sub = (String) table.getModel().getValueAt(row, 4);
-      if (seen) {
-        this.setFont(this.getFont().deriveFont(Font.ITALIC));
-      }
-      if (downloaded && !seen && !sub.equals("None")) {
-        this.setFont(this.getFont().deriveFont(Font.BOLD));
-      }
-      if (isSelected) {
-        this.setForeground(Skin.getColor_1());
-      } else {
-        if (seen) {
-          this.setForeground(Skin.getColor_4());
-        }
-        if (downloaded && !seen && !sub.equals("None")) {
-          this.setForeground(Skin.getColor_5());
-        }
-      }
+      this.setFont(MyUsefulFunctions.getCellFont(this.getFont(),downloaded,seen,sub));
+      this.setForeground(MyUsefulFunctions.getCellColor(isSelected,seen));
       this.setText((String) value);
     }
 
