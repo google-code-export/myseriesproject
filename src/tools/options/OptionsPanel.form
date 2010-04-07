@@ -426,7 +426,7 @@
                     </Property>
                     <Property name="opaque" type="boolean" value="false"/>
                     <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection code="Options.toInt(Options.FONT_SIZE)" type="code"/>
+                      <Connection code="Options.toFloat(Options.FONT_SIZE)" type="code"/>
                     </Property>
                   </Properties>
                   <Events>

@@ -373,9 +373,9 @@ public class Options {
    */
   public static int toInt(String key) {
     int val = 0;
-
+    String s;
     try {
-      String s = String.valueOf(options.get(key)).trim();
+       s = String.valueOf(options.get(key)).trim();
       if (s != null) {
         val = Integer.parseInt(s);
       } else {
@@ -383,12 +383,40 @@ public class Options {
       }
     } catch (NumberFormatException ex) {
       try {
-        throw new OptionFormatException(key + " is not an integer, setting it to 0");
+        throw new OptionFormatException("value " + String.valueOf(options.get(key)).trim() + " of " + key + " is not an integer, setting it to 0");
       } catch (OptionFormatException ex1) {
         MySeries.logger.log(Level.WARNING, ex1.getMessage(), ex1);
         Options.setOption(key, 0);
         Options.save();
         return 0;
+      }
+    }
+    return val;
+  }
+
+  /**
+   * Get an option of a float type
+   * @param key The option to get
+   * @return
+   */
+  public static float toFloat(String key) {
+    float val = 0.0F;
+    String s;
+    try {
+       s = String.valueOf(options.get(key)).trim();
+      if (s != null) {
+        val = Float.parseFloat(s);
+      } else {
+        val = 0;
+      }
+    } catch (NumberFormatException ex) {
+      try {
+        throw new OptionFormatException("value " + String.valueOf(options.get(key)).trim() + " of " + key + " is not a float, setting it to 0.0");
+      } catch (OptionFormatException ex1) {
+        MySeries.logger.log(Level.WARNING, ex1.getMessage(), ex1);
+        Options.setOption(key, 0.0F);
+        Options.save();
+        return 0.0F;
       }
     }
     return val;
