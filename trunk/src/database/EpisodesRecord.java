@@ -15,15 +15,25 @@ import java.util.Vector;
  */
 public class EpisodesRecord extends Record {
 
+  public static final int DOWNLOADED = 1;
+  public static final int NOT_DOWNLOADED = 0;
+  public static final int SEEN = 1;
+  public static final int NOT_SEEN = 0;
+  public static final int NO_SUBS = 0;
+  public static final int PRIM_SUB = 1;
+  public static final int SEC_SUB = 2;
+  public static final int BOTH_SUBS = 3;
+
+
   public static final String table = "episodes";
   private int episode_ID = 0;
   private int episode = 0;
   private String title = "";
   private int series_ID = 0;
   private String aired;
-  private int downloaded = 0;
-  private int subs = 0;
-  private int seen = 0;
+  private int downloaded = NOT_DOWNLOADED;
+  private int subs = NO_SUBS;
+  private int seen = NOT_SEEN;
 
   public EpisodesRecord() {
     super();
