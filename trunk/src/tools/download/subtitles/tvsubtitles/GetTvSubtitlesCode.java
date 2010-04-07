@@ -2,16 +2,20 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package tools.download.subtitles.sonline;
+
+package tools.download.subtitles.tvsubtitles;
 
 import database.SeriesRecord;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
@@ -19,15 +23,14 @@ import tools.options.Options;
 
 /**
  *
- * @author ΔΙΟΝΥΣΗΣ
+ * @author lordovol
  */
-public class GetSOnlineCode {
-
+public class GetTvSubtitlesCode {
+  public String tSubCode;
   private SeriesRecord series;
-  private ArrayList<SLink> sLinks;
-  public String sOnlineCode = "";
+  private ArrayList<TLink> sLinks;
 
-  public GetSOnlineCode(SeriesRecord series) {
+  public GetTvSubtitlesCode(SeriesRecord series) {
     try {
       this.series = series;
       getCode();
@@ -37,21 +40,21 @@ public class GetSOnlineCode {
     }
   }
 
-  private void getCode() throws IOException {
+  private void getCode() throws IOException{
     MyUsefulFunctions.initInternetConnection();
     if (MyUsefulFunctions.hasInternetConnection()) {
-      URL subsUrl = new URL(Options._SUBTITLE_ONLINE_URL_ + "search?query=" + URLEncoder.encode(series.getTitle(),"UTF-8"));
+      URL subsUrl = new URL(Options._TV_SUBTITLES_URL_ + "search.php?q=" + URLEncoder.encode(series.getTitle(),"UTF-8"));
       BufferedReader in = new BufferedReader(new InputStreamReader(subsUrl.openStream()));
       parseSearchResult(in);
       in.close();
       if (sLinks.size() == 0) {
         MyMessages.message("Series not found", "The series " + series.getFullTitle() + " is not found in SubtitleOnline");
       } else if (sLinks.size() == 1) {
-        this.sOnlineCode = sLinks.get(0).sOnlineCode;
+        this.tSubCode = sLinks.get(0).tSubCode;
       } else {
-        SLink sl = (SLink) JOptionPane.showInputDialog(null, "Multiple series found", "Choose the right series", JOptionPane.QUESTION_MESSAGE, null, sLinks.toArray(), 0);
-        if (sl != null) {
-          this.sOnlineCode = sl.sOnlineCode;
+        TLink tl = (TLink) JOptionPane.showInputDialog(null, "Multiple series found", "Choose the right series", JOptionPane.QUESTION_MESSAGE, null, sLinks.toArray(), 0);
+        if (tl != null) {
+          this.tSubCode = tl.tSubCode;
         }
       }
     } else {
@@ -60,39 +63,35 @@ public class GetSOnlineCode {
   }
 
   private void parseSearchResult(BufferedReader in) throws IOException {
-    sLinks = new ArrayList<SLink>();
+    sLinks = new ArrayList<TLink>();
     String line = "";
     boolean inResults = false;
     String curTitle = "";
     String curSOnlineCode = "";
     while ((line = in.readLine()) != null) {
-      if (line.indexOf("<h2>Following TV Shows Were Found:</h2>") > -1) {
-        inResults = true;
-      }
-      if (inResults && line.indexOf("</table>") > -1) {
-        inResults = false;
-      }
-      if (inResults) {
-        if (line.indexOf("<a href") > -1) {
-          curSOnlineCode = line.replaceAll("(<a href=\"/)|(\">)|(-subtitles.html)", "");
-          line = in.readLine();
-          curTitle = line.replaceAll("</a></td>", "");
-          if (!curTitle.equals("") && !curSOnlineCode.equals("")) {
-            sLinks.add(new SLink(curTitle, curSOnlineCode));
+      if (line.indexOf("<p class=\"description\">Search results") > -1) {
+        String[] results = line.split("(<a href=\"/)|(</a>)", -1);
+        for (int i =0 ; i < results.length ; i++ ){
+          String r = results[i];
+          if(r.startsWith("tvshow")){
+            String code = r.replaceAll("(tvshow-)|(\\.html.++)", "");
+            String title = r.replaceAll("(tvshow-\\d*\\.html\">)", "");
+            sLinks.add(new TLink(title, code));
           }
         }
       }
     }
+
   }
 
-  class SLink {
+   class TLink {
 
     String title;
-    String sOnlineCode;
+    String tSubCode;
 
-    private SLink(String title, String sOnlineCode) {
+    private TLink(String title, String tSCode) {
       this.title = title.trim();
-      this.sOnlineCode = sOnlineCode.trim();
+      this.tSubCode = tSCode.trim()+"-"+series.getSeason();
     }
 
     @Override
@@ -100,4 +99,5 @@ public class GetSOnlineCode {
       return title;
     }
   }
+
 }
