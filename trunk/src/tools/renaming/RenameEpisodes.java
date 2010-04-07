@@ -18,7 +18,7 @@ import java.util.logging.Level;
 import javax.swing.table.TableModel;
 import myComponents.MyDraggable;
 import myComponents.MyMessages;
-import myComponents.MyRenameEpisodesTableModel;
+import myComponents.MyTableModels.MyRenameEpisodesTableModel;
 import myComponents.MyUsefulFunctions;
 import tools.options.Options;
 
@@ -28,6 +28,10 @@ import tools.options.Options;
  */
 public class RenameEpisodes extends MyDraggable {
 
+  public static final int ID_COLUMN = 0;
+  public static final int ORIGINAL_NAME_COLUMN = 1;
+  public static final int NEW_NAME_COLUMN = 2;
+  public static final int EDIT_COLUMN = 3;
   private static final long serialVersionUID = 35546363456L;
   MyRenameEpisodesTableModel renameEpisodesModel = new MyRenameEpisodesTableModel();
   private ArrayList<File> oldNames;
@@ -303,7 +307,6 @@ public class RenameEpisodes extends MyDraggable {
       dispose();
     }
     for (int i = 0; i < oldNames.size(); i++) {
-
       File oldFile = oldNames.get(i);
       File newFile = createFile(newNames.get(i), oldFile);
       if (oldFile.equals(newFile)) {
@@ -313,9 +316,7 @@ public class RenameEpisodes extends MyDraggable {
         Object[] data = {i, oldFile.getName(), newFile.getName(), checkAll};
         renameEpisodesModel.addRow(data);
       }
-      
     }
-
   }
 
   private File createFile(EpisodesRecord episode, File oldFile) {
