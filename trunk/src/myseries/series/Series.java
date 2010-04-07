@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JTable;
-import myComponents.MySeriesTableModel;
+import myComponents.MyTableModels.MySeriesTableModel;
 import myComponents.MyUsefulFunctions;
 import myseries.episodes.Episodes;
 
@@ -20,6 +20,10 @@ import myseries.episodes.Episodes;
  */
 public class Series {
 
+  public static final int FULLTITLE_COLUMN = 0;
+  public static final int SERIES_ID_COLUMN = 1;
+  public static final int HIDDEN_COLUMN = 2;
+  public static final int UPDATE_COLUMN = 3;
   /**
    * The model of the Series table
    */
@@ -64,14 +68,13 @@ public class Series {
       update = rs.getBoolean("internetUpdate");
       s.setInternetUpdate(rs.getInt("internetUpdate"));
       String seasonStr = MyUsefulFunctions.padLeft(s.getSeason(), 2, "0");
-      Object[] data = {"  " + s.getTitle() + " S" + seasonStr, s.getSeries_ID(), hidden,update};
+      Object[] data = {"  " + s.getTitle() + " S" + seasonStr, s.getSeries_ID(), hidden, update};
       getTableModel_series().addRow(data);
       series.add(s);
     }
     rs.close();
     getTable_series().setModel(getTableModel_series());
     return series;
-
   }
 
   /**
@@ -101,7 +104,7 @@ public class Series {
    * @param showEpisodes update episodes or not (deprecated - always update)
    * @throws java.sql.SQLException
    */
-   public static void getCurrentSerial(int s, boolean showEpisodes) throws SQLException {
+  public static void getCurrentSerial(int s, boolean showEpisodes) throws SQLException {
     if (s == -1) {
       currentSeries = new SeriesRecord();
       currentSeries.setSeries_ID(0);
@@ -111,8 +114,9 @@ public class Series {
       currentSeries.setLink("");
       currentSeries.setLocalDir("");
       currentSeries.setScreenshot("");
-      currentSeries.setInternetUpdate(1);
+      currentSeries.setInternetUpdate(SeriesRecord.INTERNET_UPDATE);
       currentSeries.setSOnline("");
+      currentSeries.setHidden(SeriesRecord.NOT_HIDDEN);
       Series.setCurrentSerial(currentSeries);
       return;
     }
@@ -132,9 +136,7 @@ public class Series {
       currentSeries.setSOnline(rs.getString("sonline").trim());
       currentSeries.setInternetUpdate(rs.getInt("InternetUpdate"));
       currentSeries.setTvrage_ID(rs.getInt("tvrage_ID"));
-
-      //if (showEpisodes) {
-    //}
+      currentSeries.setHidden(rs.getInt("hidden"));
     } else {
       currentSeries.setSeries_ID(0);
       currentSeries.setTvrage_ID(0);
@@ -144,8 +146,9 @@ public class Series {
       currentSeries.setScreenshot("");
       currentSeries.setLink("");
       currentSeries.setSOnline("");
-      currentSeries.setInternetUpdate(1);
+      currentSeries.setInternetUpdate(SeriesRecord.INTERNET_UPDATE);
       currentSeries.setTvrage_ID(0);
+      currentSeries.setHidden(SeriesRecord.NOT_HIDDEN);
     }
     rs.close();
     Series.setCurrentSerial(currentSeries);
@@ -154,10 +157,9 @@ public class Series {
 
   }
 
-
-   /**
-    * Empty the series table
-    */
+  /**
+   * Empty the series table
+   */
   private static void emptySeries() {
     getTableModel_series().setRowCount(0);
   }
@@ -195,10 +197,10 @@ public class Series {
    * @return the currentSerial
    */
   public static SeriesRecord getCurrentSerial() {
-    if(currentSeries != null){
-    return currentSeries;
+    if (currentSeries != null) {
+      return currentSeries;
     } else {
-       return new SeriesRecord();
+      return new SeriesRecord();
     }
   }
 
