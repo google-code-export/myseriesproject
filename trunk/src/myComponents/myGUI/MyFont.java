@@ -15,7 +15,7 @@ import tools.options.Options;
 public class MyFont {
 
   public static final String DEFAULT_FONT = "SansSerif";
-  public static final float DEFAULT_SIZE = 12F;
+  public static final float DEFAULT_SIZE = 12.0F;
   public static final float SIZE_STEP = 0.5F;
   public static Font myFont;
   public static Font myBoldFont;
@@ -29,7 +29,7 @@ public class MyFont {
   public static void  SetMyFont(){
 
     String fontFace = Options.toString(Options.FONT_FACE).equals("null") ? DEFAULT_FONT : Options.toString(Options.FONT_FACE);
-    float fontSize = Options.toInt(Options.FONT_SIZE) == 0 ? DEFAULT_SIZE : Options.toInt(Options.FONT_SIZE);
+    float fontSize = Options.toFloat(Options.FONT_SIZE) == 0 ? DEFAULT_SIZE : Options.toFloat(Options.FONT_SIZE);
     Options.setOption(Options.FONT_FACE, fontFace);
     Options.setOption(Options.FONT_SIZE, fontSize);
     Options.save();

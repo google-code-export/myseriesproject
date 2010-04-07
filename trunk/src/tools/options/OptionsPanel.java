@@ -280,7 +280,7 @@ public class OptionsPanel extends MyDraggable {
     spinner_fontSize.setModel(new javax.swing.SpinnerNumberModel(1, 1, 36, 1));
     spinner_fontSize.setName(Options.FONT_SIZE);
     spinner_fontSize.setOpaque(false);
-    spinner_fontSize.setValue(Options.toInt(Options.FONT_SIZE));
+    spinner_fontSize.setValue(Options.toFloat(Options.FONT_SIZE));
     spinner_fontSize.addAncestorListener(new javax.swing.event.AncestorListener() {
       public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
       }
@@ -526,16 +526,14 @@ public class OptionsPanel extends MyDraggable {
             .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
               .addGroup(panel_internetLayout.createSequentialGroup()
                 .addGap(27, 27, 27)
-                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE))
-              .addGroup(panel_internetLayout.createSequentialGroup()
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)))
+                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE))
+              .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE))
             .addGap(18, 18, 18)
             .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(textfield_port, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
-              .addComponent(textfield_proxy, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)))
+              .addComponent(textfield_port, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+              .addComponent(textfield_proxy, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)))
           .addGroup(panel_internetLayout.createSequentialGroup()
-            .addComponent(checkbox_useProxy, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+            .addComponent(checkbox_useProxy, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
             .addGap(140, 140, 140)))
         .addGap(210, 210, 210))
       .addGroup(panel_internetLayout.createSequentialGroup()
@@ -748,8 +746,7 @@ public class OptionsPanel extends MyDraggable {
   }//GEN-LAST:event_spinner_fontSizeAncestorAdded
 
   private Font getSelectedFont(){
-    Font font = new Font((String)combobox_fonts.getSelectedItem(),Font.PLAIN,
-            Integer.parseInt(String.valueOf(spinner_fontSize.getValue())));
+    Font font = new Font((String)combobox_fonts.getSelectedItem(),Font.PLAIN, (int) Float.parseFloat(String.valueOf(spinner_fontSize.getValue())));
     return font;
   }
 
