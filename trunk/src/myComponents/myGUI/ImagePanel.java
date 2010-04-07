@@ -2,8 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
-package myComponents;
+package myComponents.myGUI;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -11,13 +10,13 @@ import java.awt.Image;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-import tools.options.Options;
 
 /**
  *
  * @author ssoldatos
  */
 public class ImagePanel extends JPanel {
+
   private static final long serialVersionUID = 356475743574387L;
   private Image image;
 
@@ -26,14 +25,14 @@ public class ImagePanel extends JPanel {
     this.setBorder(BorderFactory.createLineBorder(Color.black));
   }
 
-  public ImagePanel(Image image){
+  public ImagePanel(Image image) {
     this.image = image;
   }
 
   @Override
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
-    g.drawImage(getImage(), 0, 0, getWidth(),getHeight(), this);
+    g.drawImage(getImage(), 0, 0, getWidth(), getHeight(), this);
   }
 
   /**
@@ -45,12 +44,12 @@ public class ImagePanel extends JPanel {
 
   /**
    * @param image the image to set
+   * @param width
+   * @param height 
    */
-  public void setImage(Image image,int width, int height) {
+  public void setImage(Image image, int width, int height) {
     this.image = image;
     this.setSize(width, height);
     repaint();
   }
-
-  
 }

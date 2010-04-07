@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package myComponents;
+package myComponents.myGUI;
 
 import java.awt.Font;
 import javax.swing.UIManager;
@@ -16,7 +16,7 @@ public class MyUIManager {
   
   
   public static void  SetMyFont(){
-    Font myFont = new Font(Font.DIALOG,Font.PLAIN,12);
+    Font myFont = new Font(Font.DIALOG,Font.PLAIN,(int)MyFont.DEFAULT_SIZE);
     Font myBoldFont = myFont.deriveFont(Font.BOLD);
     UIManager.put("Button.font", myBoldFont);
     UIManager.put("CheckBox.font", myFont);
