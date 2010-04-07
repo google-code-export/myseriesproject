@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package myComponents;
+package myComponents.myGUI;
 
 import java.awt.Font;
 import javax.swing.UIManager;
@@ -14,23 +14,33 @@ import tools.options.Options;
  */
 public class MyFont {
 
+  public static final String DEFAULT_FONT = "SansSerif";
+  public static final float DEFAULT_SIZE = 12F;
+  public static final float SIZE_STEP = 0.5F;
+  public static Font myFont;
+  public static Font myBoldFont;
+  public static Font mySmallerFont;
+  public static Font myBiggerFont;
+  public static Font myBiggerBoldFont;
+  public static Font myBiggestFont;
+
   
   
   public static void  SetMyFont(){
 
-    String fontFace = Options.toString(Options.FONT_FACE).equals("null") ? "SansSerif" : Options.toString(Options.FONT_FACE);
-    int fontSize = Options.toInt(Options.FONT_SIZE) == 0 ? 12 : Options.toInt(Options.FONT_SIZE);
+    String fontFace = Options.toString(Options.FONT_FACE).equals("null") ? DEFAULT_FONT : Options.toString(Options.FONT_FACE);
+    float fontSize = Options.toInt(Options.FONT_SIZE) == 0 ? DEFAULT_SIZE : Options.toInt(Options.FONT_SIZE);
     Options.setOption(Options.FONT_FACE, fontFace);
     Options.setOption(Options.FONT_SIZE, fontSize);
     Options.save();
     int plain = Font.PLAIN;
     int bold = Font.BOLD;
-    Font myFont = new Font(fontFace,plain,fontSize);
-    Font myBoldFont = myFont.deriveFont(bold);
-    Font mySmallerFont = myFont.deriveFont((float)(fontSize -1));
-    Font myBiggerFont = myFont.deriveFont((float)(fontSize +1));
-    Font myBiggerBoldFont = myBiggerFont.deriveFont(bold);
-    Font myBiggestFont = myFont.deriveFont((float)(fontSize +4));
+    myFont = new Font(fontFace,plain,(int)fontSize);
+    myBoldFont = myFont.deriveFont(bold);
+    mySmallerFont = myFont.deriveFont(fontSize - SIZE_STEP);
+    myBiggerFont = myFont.deriveFont(fontSize + SIZE_STEP);
+    myBiggerBoldFont = myBiggerFont.deriveFont(bold);
+    myBiggestFont = myFont.deriveFont(fontSize + (2*SIZE_STEP));
     UIManager.put("Button.font", myBoldFont);
     UIManager.put("CheckBox.font", myFont);
     UIManager.put("CheckBoxMenuItem.accelerator.font", mySmallerFont);
