@@ -286,7 +286,7 @@ public class StartPanel extends myComponents.MyDraggable {
 
       if (!dbName.equals("")) {
         try {
-          CreateDatabase d = new CreateDatabase(this, dbName, loadDemoData, createNewDB);
+          CreateDatabase d = new CreateDatabase(this, dbName, createNewDB);
           Thread t = new Thread(d);
           t.start();
         } catch (ClassNotFoundException ex) {
