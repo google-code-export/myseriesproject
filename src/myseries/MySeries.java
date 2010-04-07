@@ -73,6 +73,7 @@ import tools.options.OptionsPanel;
 import tools.Skin;
 import tools.download.subtitles.sonline.GetSOnlineCode;
 import tools.download.subtitles.sonline.SOnlineForm;
+import tools.download.subtitles.tvsubtitles.GetTvSubtitlesCode;
 import tools.download.subtitles.tvsubtitles.TvSubtitlesForm;
 import tools.download.torrents.EzTvForm;
 import tools.myLogger;
@@ -1758,11 +1759,38 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   private void popUpItem_downloadSubtitlesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_downloadSubtitlesActionPerformed
 
     if (Options.toString(Options.SUBTITLE_SITE).equals(Options._TV_SUBTITLES_NAME_)) {
-      String link = Series.getCurrentSerial().getLink().trim();
+      SeriesRecord series = Series.getCurrentSerial();
+      String link = series.getLink().trim();
+      boolean updateLink = false;
+      if(link.startsWith("http://www.tvsubtitles.net")){
+        link = link.replaceAll("(http://www.tvsubtitles.net/tvshow-)|(.html)","");
+        updateLink = true;
+      }
+      if(MyUsefulFunctions.isNumeric(link)){
+          link = link+"-"+series.getSeason();
+          updateLink = true;
+        }
+      if(!MyUsefulFunctions.isNumeric(link.replace("-",""))){
+          link = "";
+          updateLink = true;
+        }
       if (link.equals("")) {
-      } else {
+      GetTvSubtitlesCode s = new GetTvSubtitlesCode(Series.getCurrentSerial());
+        link = s.tSubCode;
+        updateLink = true;
+      }
+      if(updateLink){
+      series.setLink(link);
+        try {
+          series.save();
+        } catch (SQLException ex) {
+          MyMessages.error("SQL Error", "Could not update series link");
+          logger.log(Level.WARNING, "Could not update series link", ex);
+        }
+      }
+      if(!link.equals("")){
         TvSubtitlesForm d = new TvSubtitlesForm(
-                link,
+                "http://www.tvsubtitles.net/tvshow-"+link +".html",
                 Series.getCurrentSerial().getSeason(),
                 Episodes.getCurrentEpisode().getEpisode(),
                 Series.getCurrentSerial().getLocalDir(),
