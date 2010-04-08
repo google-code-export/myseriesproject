@@ -100,8 +100,8 @@ public class DBConnection {
   public static void createConnection(String db) {
     try {
       MySeries.logger.log(Level.INFO, "Creating database connection");
-      if (!db.endsWith(".db")) {
-        DBConnection.db = db + ".db";
+      if (!db.endsWith(Database.EXT)) {
+        DBConnection.db = db + Database.EXT;
       } else {
         DBConnection.db = db;
       }
