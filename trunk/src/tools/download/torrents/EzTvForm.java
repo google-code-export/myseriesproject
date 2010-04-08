@@ -279,7 +279,7 @@ public class EzTvForm extends MyDraggable {
         v.add(seriesRecord.getTitle());
       }
       seriesModel = new DefaultComboBoxModel(v);
-      qualityModel = new DefaultComboBoxModel(Options.QUALITIES);
+      qualityModel = new DefaultComboBoxModel(Torrent.QUALITIES);
     } catch (SQLException ex) {
       myseries.MySeries.logger.log(Level.SEVERE, null, ex);
     }

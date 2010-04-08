@@ -1733,7 +1733,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
                 }
               }
 
-              String newFilename = series.getTitle() + Options.SEASON_SEPARATOR + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0") + Options.EPISODE_SEPARATOR + MyUsefulFunctions.padLeft(episodesRecord.getEpisode(), 2, "0") + Options.TITLE_SEPARATOR + episodesRecord.getTitle();
+              String newFilename = series.getTitle() +
+                      RenameEpisodes.SEASON_SEPARATOR + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0") +
+                      RenameEpisodes.EPISODE_SEPARATOR + MyUsefulFunctions.padLeft(episodesRecord.getEpisode(), 2, "0") +
+                      RenameEpisodes.TITLE_SEPARATOR + episodesRecord.getTitle();
 
               String newName = path + "/" + newFilename + "." + ext;
               File newFile = new File(newName);

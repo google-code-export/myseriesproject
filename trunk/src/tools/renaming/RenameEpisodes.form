@@ -216,21 +216,21 @@
             <Component class="javax.swing.JTextField" name="textfield_season">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="Options.SEASON_SEPARATOR" type="code"/>
+                  <Connection code="SEASON_SEPARATOR" type="code"/>
                 </Property>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="textfield_episode">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="Options.EPISODE_SEPARATOR" type="code"/>
+                  <Connection code="EPISODE_SEPARATOR" type="code"/>
                 </Property>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="textfield_title">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="Options.TITLE_SEPARATOR" type="code"/>
+                  <Connection code="TITLE_SEPARATOR" type="code"/>
                 </Property>
               </Properties>
             </Component>
