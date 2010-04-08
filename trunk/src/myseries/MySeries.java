@@ -26,7 +26,7 @@ import myComponents.MyTableModels.MyEpisodesTableModel;
 import javax.swing.event.TableModelEvent;
 import database.EpisodesRecord;
 import database.SaveDatabase;
-import database.SavedFilterRecord;
+import database.FilterRecord;
 import database.SeriesRecord;
 import help.About;
 import help.CheckUpdate;
@@ -240,7 +240,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tableModel_series.addColumn("Hide");
     tableModel_series.addColumn("Update");
     // Get saved filters
-    comboBoxModel_filters = new DefaultComboBoxModel(SavedFilterRecord.getFiltersList());
+    comboBoxModel_filters = new DefaultComboBoxModel(FilterRecord.getFiltersTitlesList());
 
 
 
@@ -1603,7 +1603,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 }//GEN-LAST:event_menuItem_helpActionPerformed
 
   private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-    SaveDatabase sd = new SaveDatabase(this);
+    new SaveDatabase();
   }//GEN-LAST:event_jMenuItem2ActionPerformed
 
   private void menuItem_internetUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_internetUpdateActionPerformed
@@ -1954,7 +1954,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   private void applyFilter() throws SQLException {
     String title = "";
     title = String.valueOf(combobox_filters.getSelectedItem());
-    SavedFilterRecord f = SavedFilterRecord.getSavedFilterByTitle(title);
+    FilterRecord f = FilterRecord.getFilterByTitle(title);
 
 
     if (f != null) {
@@ -1969,14 +1969,14 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   private void deleteFilter() throws SQLException {
     String title = "";
     title = String.valueOf(combobox_filters.getSelectedItem());
-    SavedFilterRecord f;
+    FilterRecord f;
 
 
     int answ = MyMessages.question("Delete Filter?", "Are you sure that you want to delete the filter?");
 
 
     if (answ == 0) {
-      f = SavedFilterRecord.getSavedFilterByTitle(title);
+      f = FilterRecord.getFilterByTitle(title);
 
 
       if (f != null) {
@@ -1985,7 +1985,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       } else {
         MyMessages.error("Error", "Filter could not be deleted");
       }
-      comboBoxModel_filters = new DefaultComboBoxModel(SavedFilterRecord.getFiltersList());
+      comboBoxModel_filters = new DefaultComboBoxModel(FilterRecord.getFiltersTitlesList());
       combobox_filters.setModel(comboBoxModel_filters);
 
 
@@ -1995,7 +1995,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   private void saveFilter() throws SQLException {
     String title = "";
     title = String.valueOf(combobox_filters.getSelectedItem());
-    SavedFilterRecord f;
+    FilterRecord f;
 
 
     if (title.trim().equals("") || title.equals("null")) {
@@ -2003,11 +2003,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
 
     } else {
-      f = SavedFilterRecord.getSavedFilterByTitle(title);
+      f = FilterRecord.getFilterByTitle(title);
 
 
       if (f == null) {
-        f = new SavedFilterRecord();
+        f = new FilterRecord();
 
 
       }
@@ -2017,7 +2017,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       f.setTitle(title);
       f.save();
       MyMessages.message("Filter saved", "Filter was saved");
-      comboBoxModel_filters = new DefaultComboBoxModel(SavedFilterRecord.getFiltersList());
+      comboBoxModel_filters = new DefaultComboBoxModel(FilterRecord.getFiltersTitlesList());
       combobox_filters.setModel(comboBoxModel_filters);
 
 

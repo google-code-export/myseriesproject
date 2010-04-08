@@ -12,7 +12,7 @@ import java.util.logging.Level;
 import myseries.MySeries;
 
 /**
- *
+ * The base class for SQLite Records
  * @author lordovol
  */
 public class Record {
@@ -20,6 +20,9 @@ public class Record {
   private Connection conn;
   public static Statement stmt;
 
+  /**
+   * The default constructor
+   */
   Record() {
     try {
       this.conn = DBConnection.conn;
@@ -30,6 +33,13 @@ public class Record {
 
   }
 
+  /**
+   * Executes a query
+   * @param sql The query to execute
+   * @return either (1) the row count for SQL Data Manipulation Language (DML) statements
+   *         or (2) 0 for SQL statements that return nothing
+   * @throws SQLException
+   */
   public static ResultSet query(String sql) throws SQLException {
     return stmt.executeQuery(sql);
   }

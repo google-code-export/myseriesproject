@@ -6,7 +6,7 @@
 package database;
 
 /**
- *
+ * Database constants
  * @author ssoldatos
  */
 public class Database {
