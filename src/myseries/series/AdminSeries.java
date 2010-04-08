@@ -351,9 +351,6 @@ public class AdminSeries extends MyDraggable {
     } else if (String.valueOf(spinner_season.getValue()).trim().equals("")) {
       MySeries.logger.log(Level.WARNING, "You must type the season");
       MyMessages.error("No Season!!!", "You must type the season");
-    } else if (!MyUsefulFunctions.isLink(textfield_link.getText()) && !textfield_link.getText().trim().equals("")) {
-      MySeries.logger.log(Level.WARNING, "The link is not in the right format");
-      MyMessages.error("Wrong link format", "The link is not in the right format");
     } else {
       try {
         int tvRageID = 0;
