@@ -1788,7 +1788,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
           logger.log(Level.WARNING, "Could not update series link", ex);
         }
       }
-      if(!link.equals("")){
+      if(link != null && !link.equals("")){
         TvSubtitlesForm d = new TvSubtitlesForm(
                 "http://www.tvsubtitles.net/tvshow-"+link +".html",
                 Series.getCurrentSerial().getSeason(),
