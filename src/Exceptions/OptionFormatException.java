@@ -5,13 +5,12 @@
 package Exceptions;
 
 /**
- *
+ * Error when accessing / creating options
  * @author lordovol
  */
 public class OptionFormatException extends CustomException {
 
-  private static final long serialVersionUID = 534654756723L;
-
+  public static final long serialVersionUID = 235354745632L;
   public OptionFormatException() {
     super();
   }

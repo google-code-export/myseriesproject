@@ -25,6 +25,12 @@ public class DBConnection {
   public static Connection conn;
   public static Statement stmt;
 
+/**
+ * Check if database needs updating
+ * @param db The database to check
+ * @return true if update is done or does not need update. False if update is
+ * needed but an error occured
+ */
   public static boolean CheckDatabase(String db) {
     //try {
     createConnection(db);
@@ -97,6 +103,10 @@ public class DBConnection {
     }
   }
 
+  /**
+   * Creates a connection to the database
+   * @param db The database name
+   */
   public static void createConnection(String db) {
     try {
       MySeries.logger.log(Level.INFO, "Creating database connection");
@@ -115,6 +125,11 @@ public class DBConnection {
     }
   }
 
+  /**
+   * Checks if database exists
+   * @param dbName The database name
+   * @return
+   */
   public static boolean databaseExists(String dbName) {
     if (new File(Options._USER_DIR_ + "/" + Database.PATH + dbName).isFile()) {
       return true;

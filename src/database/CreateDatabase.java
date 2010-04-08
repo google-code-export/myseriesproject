@@ -27,6 +27,31 @@ public class CreateDatabase implements Runnable {
   private StartPanel startPanel;
   private boolean createNewDb = false;
 
+  /**
+   * Constructor for creating a new database
+   * @param startPanelForm The form from which the constructor is invoked
+   * @param db The database name
+   * @param createNewDB Create a new db or ovewrite it if exists
+   * @throws ClassNotFoundException
+   * @throws SQLException
+   * @throws FileNotFoundException
+   * @throws IOException
+   */
+  public CreateDatabase(StartPanel startPanelForm, String db, boolean createNewDB) throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
+    if (!db.endsWith(Database.EXT)) {
+      DBConnection.db = db + Database.EXT;
+    } else {
+      DBConnection.db = db;
+    }
+    DBConnection.createConnection(db);
+    this.stmt = DBConnection.stmt;
+    this.startPanel = startPanelForm;
+    this.createNewDb = createNewDB;
+  }
+
+  /**
+   * Starts the runnable
+   */
   public void run() {
     try {
       File dbFile = new File(Options._USER_DIR_ + "/" + Database.PATH + DBConnection.db);
@@ -56,7 +81,7 @@ public class CreateDatabase implements Runnable {
   private void commit() throws IOException, SQLException, FileNotFoundException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, ParseException {
 
     MySeries.logger.log(Level.INFO, "Loading the Database");
-    loadDatabases();
+    createTables();
     if (startPanel.m == null) {
       startPanel.startMySeries();
     } else {
@@ -71,19 +96,12 @@ public class CreateDatabase implements Runnable {
     }
   }
 
-  public CreateDatabase(StartPanel s, String db, boolean createNewDB) throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
-    if (!db.endsWith(Database.EXT)) {
-      DBConnection.db = db + Database.EXT;
-    } else {
-      DBConnection.db = db;
-    }
-    DBConnection.createConnection(db);
-    this.stmt = DBConnection.stmt;
-    this.startPanel = s;
-    this.createNewDb = createNewDB;
-  }
-
-  public void loadDatabases() throws SQLException, IOException {
+  /**
+   * Create the database tables
+   * @throws SQLException
+   * @throws IOException
+   */
+  public void createTables() throws SQLException, IOException {
     MySeries.logger.log(Level.INFO, "Creating table episodes");
     stmt.executeUpdate("CREATE TABLE IF NOT EXISTS [episodes] " +
             "([episode_ID] INTEGER NOT NULL PRIMARY KEY UNIQUE," +

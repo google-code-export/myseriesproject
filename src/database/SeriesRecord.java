@@ -10,18 +10,35 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 /**
- *
+ * The series database record
  * @author lordovol
  */
 public class SeriesRecord extends Record {
 
+  /**
+   * No internet update : 0
+   */
   public static final int NO_INTERNET_UPDATE = 0;
+  /**
+   * Internet update : 1
+   */
   public static final int INTERNET_UPDATE = 1;
+  /**
+   * Not hidden : 0
+   */
   public static final int NOT_HIDDEN = 0;
+  /**
+   * Hidden : 1
+   */
   public static final int HIDDEN = 1;
 
-
+  /**
+   * The table name
+   */
   String table = "series";
+  /**
+   * The default values for the record attributes
+   */
   private int series_ID = 0;
   private String title = "";
   private int season = 0;
@@ -33,25 +50,41 @@ public class SeriesRecord extends Record {
   private String screenshot = "";
   private String sOnline = "";
 
+  /**
+   * The default constructor
+   */
   public SeriesRecord() {
     super();
   }
 
+  /**
+   * Gets a series by its id
+   * @param series_ID The id
+   * @return The series or null if it's not found
+   * @throws SQLException
+   */
   public static SeriesRecord getSeriesByID(int series_ID) throws SQLException {
-    Vector<SeriesRecord> a = new Vector<SeriesRecord>();
-    a = getSeriesBySql("SELECT * FROM series WHERE series_ID = " + series_ID);
-    if (a.size() == 1) {
-      return a.get(0);
-    } else {
-      return null;
-    }
+    Vector<SeriesRecord> series = new Vector<SeriesRecord>();
+    series = getSeriesBySql("SELECT * FROM series WHERE series_ID = " + series_ID);
+    return series.size()==1 ? series.get(0) : null;
   }
 
+  /**
+   * Gets all series
+   * @return a vector of series records
+   * @throws SQLException
+   */
   public static Vector<SeriesRecord> getAllSeries() throws SQLException {
     return getSeriesBySql("SELECT * FROM series WHERE hidden = " + NOT_HIDDEN);
 
   }
 
+  /**
+   * Gets series by executing a query
+   * @param sql The query to execute
+   * @return a vector of series records
+   * @throws SQLException
+   */
   public static Vector<SeriesRecord> getSeriesBySql(String sql) throws SQLException {
     ResultSet rs = null;
     SeriesRecord s = new SeriesRecord();
@@ -80,6 +113,11 @@ public class SeriesRecord extends Record {
     }
   }
 
+  /**
+   * Inserts a new series record or updates an existing one
+   * @return The id of the new record or -1 if it's an update
+   * @throws SQLException
+   */
   public int save() throws SQLException {
     int result = 0;
     String sql;

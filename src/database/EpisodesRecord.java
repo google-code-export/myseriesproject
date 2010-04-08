@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 /**
- *
+ * The episode record
  * @author lordovol
  */
 public class EpisodesRecord extends Record {
@@ -51,9 +51,13 @@ public class EpisodesRecord extends Record {
    * MySQL date format : "yyyy-MM-dd"
    */
   public static final String MYSQL_DATE_FORMAT = "yyyy-MM-dd";
-
-
+ /**
+  * The database table
+  */
   public static final String table = "episodes";
+  /**
+   * Default values for episode record attributes
+   */
   private int episode_ID = 0;
   private int episode = 0;
   private String title = "";
@@ -63,20 +67,41 @@ public class EpisodesRecord extends Record {
   private int subs = NO_SUBS;
   private int seen = NOT_SEEN;
 
+  /**
+   * Default constructor
+   */
   public EpisodesRecord() {
     super();
   }
 
+  /**
+   * Gets an episode by the primary key (episode_ID)
+   * @param episode_ID The episode id
+   * @return The episode record or null if it's not found
+   * @throws SQLException
+   */
   public static EpisodesRecord getEpisodeByID(int episode_ID) throws SQLException {
     String sql = "SELECT * FROM episodes WHERE episode_ID = " + episode_ID;
-    return getEpisodesBySql(sql).get(0);
+    Vector<EpisodesRecord> episodes  = getEpisodesBySql(sql);
+    return episodes.size()==1 ? episodes.get(0) : null;
   }
 
+/**
+ * Gets all episodes from the database
+ * @return a Vector of episodesRecords
+ * @throws SQLException
+ */
   public static Vector<EpisodesRecord> getAllEpisodes() throws SQLException {
     String sql = "SELECT * FROM episodes ";
     return getEpisodesBySql(sql);
   }
 
+  /**
+   * Gets episodes by executing an sql quey
+   * @param sql The query to execute
+   * @return a vector of episodesRecords
+   * @throws SQLException
+   */
   public static Vector<EpisodesRecord> getEpisodesBySql(String sql) throws SQLException {
     EpisodesRecord er = new EpisodesRecord();
     ResultSet rs = query(sql);
@@ -103,8 +128,8 @@ public class EpisodesRecord extends Record {
   }
 
   /**
-   * Saves a record
-   * @return
+   * Inserts a record in the database if it doesn't exist, or updates it if it exists
+   * @return The id of the inserted record or -1 if it's an update
    * @throws java.sql.SQLException
    */
   public int save() throws SQLException {
@@ -194,8 +219,6 @@ public class EpisodesRecord extends Record {
    */
   public void setAired(String aired) {
     if(aired.equals("")) {
-      //SimpleDateFormat f = new SimpleDateFormat(Options._MYSQL_DATE_FORMAT_);
-      //aired = f.format(Calendar.getInstance().getTime());
       aired = "";
     }
     this.aired = MyUsefulFunctions.convertDateForMySQL(aired);

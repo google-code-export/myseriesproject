@@ -10,7 +10,7 @@ package Exceptions;
  */
 public class EpisodeImportFormatException extends CustomException {
 
-  private static final long serialVersionUID = 23535658687989L;
+  public static final long serialVersionUID = 23535658687989L;
 
   public EpisodeImportFormatException() {
     super();

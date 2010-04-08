@@ -10,8 +10,8 @@ package Exceptions;
  * @author ssoldatos
  */
 public class CustomException extends Exception{
- String message;
-  private static final long serialVersionUID = 34647586897L;
+  String message;
+  protected  static final long serialVersionUID = 34647586897L;
 
  /**
   * New exception

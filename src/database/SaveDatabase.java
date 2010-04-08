@@ -16,18 +16,20 @@ import myseries.MySeries;
 import tools.options.Options;
 
 /**
- *
+ * Save database class
  * @author lordovol
  */
 public class SaveDatabase {
 
-  private MySeries m;
+  
   private String name;
   public boolean backUp;
 
-  public SaveDatabase(MySeries m) {
+  /**
+   * Brings up the panel for saving a database
+   */
+  public SaveDatabase() {
     try {
-      this.m = m;
       showSavePane();
     } catch (FileNotFoundException ex) {
       MySeries.logger.log(Level.SEVERE, "Could not save database", ex);
@@ -38,6 +40,10 @@ public class SaveDatabase {
     }
   }
 
+  /**
+   * Saves a database
+   * @param dbName The database name
+   */
   public SaveDatabase(String dbName) {
     try {
       String source = Options._USER_DIR_ + "/" + Database.PATH + dbName;
@@ -56,7 +62,7 @@ public class SaveDatabase {
     }
   }
 
-  private boolean checkIfAlreadyExists() {
+  private boolean overwriteDatabase() {
     File db = new File(Options._USER_DIR_ + "/" + Database.PATH + name + Database.EXT);
     if (db.isFile()) {
       return MyMessages.question("File Exists",
@@ -91,7 +97,7 @@ public class SaveDatabase {
     if (name == null) {
       MySeries.logger.log(Level.INFO, "Save Database aborted");
     } else {
-      if (!checkIfAlreadyExists()) {
+      if (!overwriteDatabase()) {
         if ((name).equals(Options.toString(Options.DB_NAME).replace(Database.EXT, ""))) {
           MyMessages.error("Error", "Cannot save the database on itself!!!");
           MySeries.logger.log(Level.WARNING, "Cannot save the database on itself!!!");
