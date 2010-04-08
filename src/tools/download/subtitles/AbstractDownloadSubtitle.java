@@ -11,6 +11,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLConnection;
@@ -50,27 +51,26 @@ public abstract class AbstractDownloadSubtitle {
       BufferedOutputStream outStream = null;
       try {
         byte[] buf;
-        URLConnection uCon = sub.url.openConnection();
-        is = uCon.getInputStream();
-        buf = new byte[1024];
-        int ByteRead, ByteWritten = 0;
-        String filename = localDir + "/s" + season + "x" + episode + "_" + MyUsefulFunctions.createRandomString(8) + ".zip";
-        outStream = new BufferedOutputStream(new FileOutputStream(filename));
-        if (is.available() > 200) {
+        HttpURLConnection uCon = (HttpURLConnection) sub.url.openConnection();
+        String header = uCon.getHeaderField(0);
+        if (header.equals("HTTP/1.0 400 Bad Request")) {
+          MyMessages.error("Access denied", "Direct access to subtitle is denied.Opening browser");
+          openInBrowser(sub);
+        } else {
+          is = uCon.getInputStream();
+          buf = new byte[1024];
+          int ByteRead, ByteWritten = 0;
+          String filename = localDir + "/s" + season + "x" + episode + "_" + MyUsefulFunctions.createRandomString(8) + ".zip";
+          outStream = new BufferedOutputStream(new FileOutputStream(filename));
           while ((ByteRead = is.read(buf)) > -1) {
             outStream.write(buf, 0, ByteRead);
             ByteWritten += ByteRead;
           }
-        } else {
           is.close();
           outStream.close();
-          MyMessages.error("Access denied", "Direct access to subtitle is denied.Opening browser");
-          openInBrowser(sub);
+          progress.setString("Opening zip File");
+          openZip(filename);
         }
-        is.close();
-        outStream.close();
-        progress.setString("Opening zip File");
-        openZip(filename);
       } catch (IOException ex) {
         MyMessages.error("Access denied", "Direct access to subtitle is denied.Opening browser");
         openInBrowser(sub);

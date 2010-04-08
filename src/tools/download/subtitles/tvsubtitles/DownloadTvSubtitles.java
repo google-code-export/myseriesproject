@@ -50,7 +50,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
     } else {
       Subtitle sub = (Subtitle) JOptionPane.showInputDialog(null, "Choose the subtitle to download", "Choose subtitle", JOptionPane.QUESTION_MESSAGE, null, subs.toArray(), 0);
       if (sub != null) {
-        String newPath = sub.url.getPath().replace("subtitle", "download");
+        String newPath = sub.url.getPath().replace("/subtitle", "download");
         try {
           sub.url = new URL(Options._TV_SUBTITLES_URL_ + newPath);
         } catch (MalformedURLException ex) {
