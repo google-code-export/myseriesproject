@@ -15,6 +15,14 @@ import java.util.logging.Logger;
  * @author lordovol
  */
 public class Torrent {
+  /**
+   * The torrents path : "torrents/"
+   */
+  public static final String TORRENTS_PATH = "torrents/";
+  /**
+   * The eztv rss link
+   */
+  public static String EZTV_RSS = "http://ezrss.it/search/index.php?";
   public String title;
   public String link;
 

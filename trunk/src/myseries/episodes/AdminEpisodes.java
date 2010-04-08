@@ -300,7 +300,7 @@ public class AdminEpisodes extends MyDraggable {
     episodeRecord.setSubs(combobox_subtitles.getSelectedIndex());
     episodeRecord.setSeen(checkbox_seen.isSelected() ? 1 : 0);
     episodeRecord.setDownloaded(checkbox_downloaded.isSelected() ? 1 : 0);
-    SimpleDateFormat f = new SimpleDateFormat(Options._MYSQL_DATE_FORMAT_);
+    SimpleDateFormat f = new SimpleDateFormat(EpisodesRecord.MYSQL_DATE_FORMAT);
     String aired;
     try {
       MySeries.logger.log(Level.INFO, "Adding episode " + episodeRecord.getTitle());

@@ -26,6 +26,15 @@ import tools.options.Options;
  */
 public class InternetUpdate extends MyDraggable {
 
+   /**
+   * Tv rage name : "TvRage"
+   */
+  public static final String TV_RAGE_NAME = "TvRage";
+  /**
+   * EpGuides name : "EpGuides"
+   */
+  public static final String EP_GUIDES_NAME = "EpGuides";
+
   private MySeries m;
   private Thread t;
   private SeriesRecord currentSeries = null;
@@ -137,9 +146,9 @@ public class InternetUpdate extends MyDraggable {
 
   private void startUpdate() {
     Runnable task = null;
-    if (Options.toString(Options.INTERNET_UPDATE_DB).equals(Options._EP_GUIDES_NAME_)) {
+    if (Options.toString(Options.INTERNET_UPDATE_DB).equals(EP_GUIDES_NAME)) {
       task = new EgUpdate(this);
-    } else if (Options.toString(Options.INTERNET_UPDATE_DB).equals(Options._TV_RAGE_NAME_)) {
+    } else if (Options.toString(Options.INTERNET_UPDATE_DB).equals(TV_RAGE_NAME)) {
       task = new TrUpdate(this);
     } else {
       return;

@@ -85,7 +85,7 @@ public abstract class AbstractUpdate {
       }
       iu.progress_bar.setIndeterminate(true);
       iu.progress_bar.setString("Getting data from " +
-              (Options.toString(Options.INTERNET_UPDATE_DB).equals(Options._EP_GUIDES_NAME_) ?
+              (Options.toString(Options.INTERNET_UPDATE_DB).equals(InternetUpdate.EP_GUIDES_NAME) ?
                 "http://www.epguides.com" : "http://www.tvrage.com")
               );
       append("<span style='font-weight:bold;font-size:12px'>Step 1 : Getting data</span>");

@@ -52,7 +52,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
       if (sub != null) {
         String newPath = sub.url.getPath().replace("/subtitle", "download");
         try {
-          sub.url = new URL(Options._TV_SUBTITLES_URL_ + newPath);
+          sub.url = new URL(Subtitle.TV_SUBTITLES_URL + newPath);
         } catch (MalformedURLException ex) {
           MyMessages.error("Error occured!!!", "Wrong url : " + sub.url);
           myseries.MySeries.logger.log(Level.SEVERE, null, ex);
@@ -149,7 +149,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
   }
 
   private void getDownloadLinks(String subsLink) throws MalformedURLException, IOException {
-    URL subsUrl = new URL(Options._TV_SUBTITLES_URL_ + subsLink);
+    URL subsUrl = new URL(Subtitle.TV_SUBTITLES_URL + subsLink);
     BufferedReader in = new BufferedReader(new InputStreamReader(subsUrl.openStream()));
     String inputLine, line = "";
     while ((inputLine = in.readLine()) != null) {
@@ -166,7 +166,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
     for (int i = 0; i < fields.length; i++) {
       String field = fields[i];
       if ((field.startsWith("subtitle") || (field.startsWith("download"))) && field.endsWith("html")) {
-        curLink = Options._TV_SUBTITLES_URL_ + URLEncoder.encode(field,"UTF-8");
+        curLink = Subtitle.TV_SUBTITLES_URL + URLEncoder.encode(field,"UTF-8");
         if (field.startsWith("download")) {
           curTitle = "dummy";
         }

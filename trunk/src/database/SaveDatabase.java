@@ -40,8 +40,8 @@ public class SaveDatabase {
 
   public SaveDatabase(String dbName) {
     try {
-      String source = Options._USER_DIR_ + "/" + Options._DB_PATH_ + dbName;
-      String dest = Options._USER_DIR_ + "/" + Options._DB_PATH_ + dbName + Database.BACK_UP_EXT;
+      String source = Options._USER_DIR_ + "/" + Database.PATH + dbName;
+      String dest = Options._USER_DIR_ + "/" + Database.PATH + dbName + Database.BACK_UP_EXT;
       if (MyUsefulFunctions.copyfile(source, dest)) {
         MySeries.logger.log(Level.INFO, "Database backed up!!!");
         MyMessages.message("Database backed up", "A back up of the older database was taken");
@@ -57,7 +57,7 @@ public class SaveDatabase {
   }
 
   private boolean checkIfAlreadyExists() {
-    File db = new File(Options._USER_DIR_ + "/" + Options._DB_PATH_ + name + Database.EXT);
+    File db = new File(Options._USER_DIR_ + "/" + Database.PATH + name + Database.EXT);
     if (db.isFile()) {
       return MyMessages.question("File Exists",
           "File already exists.\nOverwrite it?") == JOptionPane.NO_OPTION ? true : false;
@@ -68,8 +68,8 @@ public class SaveDatabase {
 
   private void commitSave() {
     try {
-      String source = Options._USER_DIR_ + "/" + Options._DB_PATH_ + Options.toString(Options.DB_NAME);
-      String dest = Options._USER_DIR_ + "/" + Options._DB_PATH_ + name + Database.EXT;
+      String source = Options._USER_DIR_ + "/" + Database.PATH + Options.toString(Options.DB_NAME);
+      String dest = Options._USER_DIR_ + "/" + Database.PATH + name + Database.EXT;
       if (MyUsefulFunctions.copyfile(source, dest)) {
         MySeries.logger.log(Level.INFO, "Database saved");
         MyMessages.message("Database saved", "The database was saved with the name " + name + Database.EXT);

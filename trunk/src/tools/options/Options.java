@@ -20,6 +20,8 @@ import java.util.logging.Level;
 import javax.swing.JFrame;
 import myComponents.MyUsefulFunctions;
 import myseries.*;
+import tools.download.subtitles.Subtitle;
+import tools.internetUpdate.InternetUpdate;
 
 /**
  *
@@ -39,14 +41,6 @@ public class Options {
    */
   public static String _USER_DIR_;
   /**
-   * The databases path : "databases/"
-   */
-  public static final String _DB_PATH_ = "databases/";
-  /**
-   * MySQL date format : "yyyy-MM-dd"
-   */
-  public static final String _MYSQL_DATE_FORMAT_ = "yyyy-MM-dd";
-  /**
    * The total columns in all tables : 16
    */
   public static final int _TOTAL_COLUMNS_ = 16;
@@ -55,50 +49,6 @@ public class Options {
    * "(([ xeEX]|(ep)|(EP))|(([ xeEX]|(ep)|(EP))\\d*([- &])))0*"
    */
   public static String _REGEX_ = "(([ xeEX]|(ep)|(EP))|(([ xeEX]|(ep)|(EP))\\d*([- &])))0*";
-  /**
-   * The screenshots path : "images/"
-   */
-  public static final String _SCREENSHOTS_PATH_ = "images/";
-  /**
-   * The torrents path : "torrents/"
-   */
-  public static final String _TORRENTS_PATH_ = "torrents/";
-  /**
-   * Tv rage name : "TvRage"
-   */
-  public static final String _TV_RAGE_NAME_ = "TvRage";
-  /**
-   * EpGuides name : "EpGuides"
-   */
-  public static final String _EP_GUIDES_NAME_ = "EpGuides";
-  /**
-   * The greek subtitles language : "Greek"
-   */
-  public static final String _GREEK_ = "Greek";
-  /**
-   * The english subtitles language : "English"
-   */
-  public static final String _ENGLISH_ = "English";
-  /**
-   * The tv subtitles name : "Tvsubtitles.net"
-   */
-  public static final String _TV_SUBTITLES_NAME_ = "TvSubtitles.net";
-  /**
-   * The tv subtitles url : "http://www.tvsubtitles.net/"
-   */
-  public static final String _TV_SUBTITLES_URL_ = "http://www.tvsubtitles.net/";
-  /**
-   * The subtitle online name : "SubtitleOnline.com"
-   */
-  public static final String _SUBTITLE_ONLINE_NAME_ = "SubtitleOnline.com";
-  /**
-   * The subtitle online url : "http://www.subtitleonline.com/"
-   */
-  public static String _SUBTITLE_ONLINE_URL_ = "http://www.subtitleonline.com/";
-  /**
-   * The eztv rss link
-   */
-  public static String _EZTV_RSS_ = "http://ezrss.it/search/index.php?";
   /**************************************************
    * Lists
    **************************************************/
@@ -258,12 +208,12 @@ public class Options {
   public static String SUBTITLE_SITE = "SUBTITLE_SITE";
 
   static {
-    DB_UPDATERS.add(_EP_GUIDES_NAME_);
-    DB_UPDATERS.add(_TV_RAGE_NAME_);
-    SUBTITLE_LANG.add(_GREEK_);
-    SUBTITLE_LANG.add(_ENGLISH_);
-    SUBTITLE_SITES.add(_TV_SUBTITLES_NAME_);
-    SUBTITLE_SITES.add(_SUBTITLE_ONLINE_NAME_);
+    DB_UPDATERS.add(InternetUpdate.EP_GUIDES_NAME);
+    DB_UPDATERS.add(InternetUpdate.TV_RAGE_NAME);
+    SUBTITLE_LANG.add(Subtitle.GREEK);
+    SUBTITLE_LANG.add(Subtitle.ENGLISH);
+    SUBTITLE_SITES.add(Subtitle.TV_SUBTITLES_NAME);
+    SUBTITLE_SITES.add(Subtitle.SUBTITLE_ONLINE_NAME);
   }
 
   /**
@@ -498,10 +448,10 @@ public class Options {
     out.println(Options.WINDOW_STATE + " = " + JFrame.NORMAL);
     out.println(Options.WIDTH + " = 1000");
     out.println(Options.HEIGHT + " = 600");
-    out.println(Options.INTERNET_UPDATE_DB + "=" + Options._TV_RAGE_NAME_);
+    out.println(Options.INTERNET_UPDATE_DB + "=" + InternetUpdate.TV_RAGE_NAME);
     out.println(Options.CHECK_VERSION + " = true");
     out.println(Options.PRIMARY_SUB + " = gr");
-    out.println(Options.SUBTITLE_SITE + " = " + Options._SUBTITLE_ONLINE_NAME_);
+    out.println(Options.SUBTITLE_SITE + " = " + Subtitle.SUBTITLE_ONLINE_NAME);
     out.close();
   }
 

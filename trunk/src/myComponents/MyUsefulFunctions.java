@@ -51,7 +51,7 @@ public class MyUsefulFunctions {
     SimpleDateFormat sdf = new SimpleDateFormat(Options.toString(Options.DATE_FORMAT));
     try {
       Date dateD = sdf.parse(date);
-      sdf = new SimpleDateFormat(Options._MYSQL_DATE_FORMAT_);
+      sdf = new SimpleDateFormat(EpisodesRecord.MYSQL_DATE_FORMAT);
       date = sdf.format(dateD);
     } catch (ParseException ex) {
     }
@@ -67,7 +67,7 @@ public class MyUsefulFunctions {
     } catch (ArrayIndexOutOfBoundsException ex) {
     }
     try {
-      DateFormat df = new SimpleDateFormat(Options._MYSQL_DATE_FORMAT_);
+      DateFormat df = new SimpleDateFormat(EpisodesRecord.MYSQL_DATE_FORMAT);
       Date sDate = df.parse(date);
       SimpleDateFormat f = new SimpleDateFormat(Options.toString(Options.DATE_FORMAT));
       return f.format(sDate);
@@ -85,7 +85,7 @@ public class MyUsefulFunctions {
     try {
       DateFormat df = new SimpleDateFormat(Options.toString(Options.DATE_FORMAT));
       Date sDate = df.parse(date);
-      SimpleDateFormat f = new SimpleDateFormat(Options._MYSQL_DATE_FORMAT_);
+      SimpleDateFormat f = new SimpleDateFormat(EpisodesRecord.MYSQL_DATE_FORMAT);
       return f.format(sDate);
     } catch (ParseException ex) {
       return date;

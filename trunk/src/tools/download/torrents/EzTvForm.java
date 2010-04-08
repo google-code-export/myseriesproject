@@ -296,7 +296,7 @@ public class EzTvForm extends MyDraggable {
   }
 
   private URI createUri() {
-    String address = Options._EZTV_RSS_;
+    String address = Torrent.EZTV_RSS;
     String query = "";
     ArrayList<String> q = new ArrayList<String>();
     try {
