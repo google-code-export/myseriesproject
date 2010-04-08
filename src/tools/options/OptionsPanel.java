@@ -39,6 +39,8 @@ import myseries.StartPanel;
 import myseries.episodes.NextEpisodes;
 import tools.LookAndFeels;
 import tools.Skin;
+import tools.download.subtitles.Subtitle;
+import tools.internetUpdate.InternetUpdate;
 
 /**
  *
@@ -46,7 +48,7 @@ import tools.Skin;
  */
 public class OptionsPanel extends MyDraggable {
 
-  private static final long serialVersionUID = 5676235253653L;
+  public static final long serialVersionUID = 5676235253653L;
   private MySeries m;
   private DefaultComboBoxModel model_laf = new DefaultComboBoxModel();
   private HashMap<String,LookAndFeelInfo> lafMap;
@@ -56,9 +58,9 @@ public class OptionsPanel extends MyDraggable {
   private String oldFontFace;
   private Color oldColor;
   private boolean oldUseSkin;
-  private ComboBoxModel updateDbModel = new DefaultComboBoxModel(Options.DB_UPDATERS);
-  private ComboBoxModel subtitlesModel = new DefaultComboBoxModel(Options.SUBTITLE_LANG);
-  private ComboBoxModel subtitleSitesModel = new DefaultComboBoxModel(Options.SUBTITLE_SITES);
+  private ComboBoxModel updateDbModel = new DefaultComboBoxModel(InternetUpdate.DB_UPDATERS);
+  private ComboBoxModel subtitlesModel = new DefaultComboBoxModel(Subtitle.SUBTITLE_LANG);
+  private ComboBoxModel subtitleSitesModel = new DefaultComboBoxModel(Subtitle.SUBTITLE_SITES);
 
   /** Creates new form OptionsPanel
    * @param m MySeries main form

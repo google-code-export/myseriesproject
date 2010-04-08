@@ -6,6 +6,7 @@
 package tools.download.subtitles;
 
 import java.net.URL;
+import java.util.Vector;
 import myComponents.MyUsefulFunctions;
 
 /**
@@ -13,6 +14,15 @@ import myComponents.MyUsefulFunctions;
  * @author lordovol
  */
 public class Subtitle {
+
+  /**
+   * List of web subtitle sites
+   */
+  public static Vector<String> SUBTITLE_SITES = new Vector<String>();
+  /**
+   * List of available languages
+   */
+  public static Vector<String> SUBTITLE_LANG = new Vector<String>();
 
    /**
    * The greek subtitles language : "Greek"

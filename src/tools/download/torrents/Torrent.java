@@ -7,8 +7,6 @@ package tools.download.torrents;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -23,6 +21,10 @@ public class Torrent {
    * The eztv rss link
    */
   public static String EZTV_RSS = "http://ezrss.it/search/index.php?";
+  /**
+   * List of qualities
+   */
+  public static String[] QUALITIES = {"", "HDTV", "720p", "1080i", "1080p", "DSRip", "DVBRip", "DVDR", "DVDRip", "DVDScr", "HR.HDTV", "HR.PDTV", "PDTV", "SatRip", "SVCD", "TVRip", "WebRip"};
   public String title;
   public String link;
 

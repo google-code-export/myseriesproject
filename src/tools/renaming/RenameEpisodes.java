@@ -28,6 +28,19 @@ import tools.options.Options;
  */
 public class RenameEpisodes extends MyDraggable {
 
+  /**
+   * The season seperator in renaming episodes (default : " - ")
+   */
+  public static String SEASON_SEPARATOR = " - ";
+  /**
+   * The title seperator in renaming episodes (default : " - ")
+   */
+  public static String TITLE_SEPARATOR = " - ";
+  /**
+   * The episodes seperator in renaming episodes (default : "x")
+   */
+  public static String EPISODE_SEPARATOR = "x";
+
   public static final int ID_COLUMN = 0;
   public static final int ORIGINAL_NAME_COLUMN = 1;
   public static final int NEW_NAME_COLUMN = 2;
@@ -114,11 +127,11 @@ public class RenameEpisodes extends MyDraggable {
 
     jLabel5.setText("Title");
 
-    textfield_season.setText(Options.SEASON_SEPARATOR);
+    textfield_season.setText(SEASON_SEPARATOR);
 
-    textfield_episode.setText(Options.EPISODE_SEPARATOR);
+    textfield_episode.setText(EPISODE_SEPARATOR);
 
-    textfield_title.setText(Options.TITLE_SEPARATOR);
+    textfield_title.setText(TITLE_SEPARATOR);
 
     button_apply.setText("Apply");
     button_apply.addActionListener(new java.awt.event.ActionListener() {

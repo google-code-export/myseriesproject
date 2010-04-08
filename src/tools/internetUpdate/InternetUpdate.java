@@ -13,6 +13,7 @@ package tools.internetUpdate;
 import tools.internetUpdate.epguides.EgUpdate;
 import tools.internetUpdate.tvrage.TrUpdate;
 import database.SeriesRecord;
+import java.util.Vector;
 import java.util.logging.Level;
 import javax.swing.JOptionPane;
 import myComponents.MyMessages;
@@ -34,6 +35,11 @@ public class InternetUpdate extends MyDraggable {
    * EpGuides name : "EpGuides"
    */
   public static final String EP_GUIDES_NAME = "EpGuides";
+
+  /**
+   * List of web series databases
+   */
+  public static Vector<String> DB_UPDATERS = new Vector<String>();
 
   private MySeries m;
   private Thread t;

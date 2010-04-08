@@ -52,37 +52,7 @@ public class Options {
   /**************************************************
    * Lists
    **************************************************/
-  /**
-   * List of web series databases
-   */
-  public static Vector<String> DB_UPDATERS = new Vector<String>();
-  /**
-   * List of web subtitle sites
-   */
-  public static Vector<String> SUBTITLE_SITES = new Vector<String>();
-  /**
-   * List of available languages
-   */
-  public static Vector<String> SUBTITLE_LANG = new Vector<String>();
-  /**
-   * List of qualities
-   */
-  public static String[] QUALITIES = {"", "HDTV", "720p", "1080i", "1080p", "DSRip", "DVBRip", "DVDR", "DVDRip", "DVDScr", "HR.HDTV", "HR.PDTV", "PDTV", "SatRip", "SVCD", "TVRip", "WebRip"};
-  /*************************************************
-   *  List of Misc options
-   *************************************************/
-  /**
-   * The season seperator in renaming episodes (default : " - ")
-   */
-  public static String SEASON_SEPARATOR = " - ";
-  /**
-   * The title seperator in renaming episodes (default : " - ")
-   */
-  public static String TITLE_SEPARATOR = " - ";
-  /**
-   * The episodes seperator in renaming episodes (default : "x")
-   */
-  public static String EPISODE_SEPARATOR = "x";
+  
   /************************************************
    * User Options
    ************************************************/
@@ -208,12 +178,12 @@ public class Options {
   public static String SUBTITLE_SITE = "SUBTITLE_SITE";
 
   static {
-    DB_UPDATERS.add(InternetUpdate.EP_GUIDES_NAME);
-    DB_UPDATERS.add(InternetUpdate.TV_RAGE_NAME);
-    SUBTITLE_LANG.add(Subtitle.GREEK);
-    SUBTITLE_LANG.add(Subtitle.ENGLISH);
-    SUBTITLE_SITES.add(Subtitle.TV_SUBTITLES_NAME);
-    SUBTITLE_SITES.add(Subtitle.SUBTITLE_ONLINE_NAME);
+    InternetUpdate.DB_UPDATERS.add(InternetUpdate.EP_GUIDES_NAME);
+    InternetUpdate.DB_UPDATERS.add(InternetUpdate.TV_RAGE_NAME);
+    Subtitle.SUBTITLE_LANG.add(Subtitle.GREEK);
+    Subtitle.SUBTITLE_LANG.add(Subtitle.ENGLISH);
+    Subtitle.SUBTITLE_SITES.add(Subtitle.TV_SUBTITLES_NAME);
+    Subtitle.SUBTITLE_SITES.add(Subtitle.SUBTITLE_ONLINE_NAME);
   }
 
   /**
