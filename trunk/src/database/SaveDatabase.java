@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myseries.MySeries;
@@ -40,7 +41,7 @@ public class SaveDatabase {
   public SaveDatabase(String dbName) {
     try {
       String source = Options._USER_DIR_ + "/" + Options._DB_PATH_ + dbName;
-      String dest = Options._USER_DIR_ + "/" + Options._DB_PATH_ + dbName + ".bak";
+      String dest = Options._USER_DIR_ + "/" + Options._DB_PATH_ + dbName + Database.BACK_UP_EXT;
       if (MyUsefulFunctions.copyfile(source, dest)) {
         MySeries.logger.log(Level.INFO, "Database backed up!!!");
         MyMessages.message("Database backed up", "A back up of the older database was taken");
@@ -56,9 +57,10 @@ public class SaveDatabase {
   }
 
   private boolean checkIfAlreadyExists() {
-    File db = new File(Options._USER_DIR_ + "/" + Options._DB_PATH_ + name + ".db");
+    File db = new File(Options._USER_DIR_ + "/" + Options._DB_PATH_ + name + Database.EXT);
     if (db.isFile()) {
-      return MyMessages.question("File Exists", "File already exists.\nOverwrite it?") == 1 ? true : false;
+      return MyMessages.question("File Exists",
+          "File already exists.\nOverwrite it?") == JOptionPane.NO_OPTION ? true : false;
     } else {
       return false;
     }
@@ -67,10 +69,10 @@ public class SaveDatabase {
   private void commitSave() {
     try {
       String source = Options._USER_DIR_ + "/" + Options._DB_PATH_ + Options.toString(Options.DB_NAME);
-      String dest = Options._USER_DIR_ + "/" + Options._DB_PATH_ + name + ".db";
+      String dest = Options._USER_DIR_ + "/" + Options._DB_PATH_ + name + Database.EXT;
       if (MyUsefulFunctions.copyfile(source, dest)) {
         MySeries.logger.log(Level.INFO, "Database saved");
-        MyMessages.message("Database saved", "The database was saved with the name " + name + ".db");
+        MyMessages.message("Database saved", "The database was saved with the name " + name + Database.EXT);
         return;
       } else {
       }
@@ -90,7 +92,7 @@ public class SaveDatabase {
       MySeries.logger.log(Level.INFO, "Save Database aborted");
     } else {
       if (!checkIfAlreadyExists()) {
-        if ((name).equals(Options.toString(Options.DB_NAME).replace(".db", ""))) {
+        if ((name).equals(Options.toString(Options.DB_NAME).replace(Database.EXT, ""))) {
           MyMessages.error("Error", "Cannot save the database on itself!!!");
           MySeries.logger.log(Level.WARNING, "Cannot save the database on itself!!!");
         } else {

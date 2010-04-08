@@ -72,8 +72,8 @@ public class CreateDatabase implements Runnable {
   }
 
   public CreateDatabase(StartPanel s, String db, boolean createNewDB) throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
-    if (!db.endsWith(".db")) {
-      DBConnection.db = db + ".db";
+    if (!db.endsWith(Database.EXT)) {
+      DBConnection.db = db + Database.EXT;
     } else {
       DBConnection.db = db;
     }
