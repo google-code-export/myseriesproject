@@ -12,6 +12,7 @@ package myseries;
 
 import database.CreateDatabase;
 import database.DBConnection;
+import database.Database;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.io.File;
@@ -26,9 +27,11 @@ import javax.swing.UnsupportedLookAndFeelException;
 import myComponents.MyMessages;
 import myComponents.myGUI.MyDraggable;
 import myComponents.myGUI.MyFont;
+import myComponents.myGUI.Screenshot;
 import tools.DesktopSupport;
 import tools.options.Options;
 import tools.Skin;
+import tools.download.torrents.Torrent;
 
 /**
  * The start up panel
@@ -85,7 +88,7 @@ public class StartPanel extends MyDraggable {
   }
 
   private void getDatabases() {
-    File dir = new File(Options._USER_DIR_ + "/" + Options._DB_PATH_);
+    File dir = new File(Options._USER_DIR_ + "/" + Database.PATH);
     File[] files = dir.listFiles(new FilenameFilter() {
 
       public boolean accept(File dir, String name) {
@@ -384,9 +387,9 @@ public class StartPanel extends MyDraggable {
       
       //create dirs
       MySeries.logger.log(Level.INFO, "Checking directories");
-      checkDir(Options._USER_DIR_ + "/" + Options._DB_PATH_);
-      checkDir(Options._USER_DIR_ + "/" + Options._SCREENSHOTS_PATH_);
-      checkDir(Options._USER_DIR_ + "/" + Options._TORRENTS_PATH_);
+      checkDir(Options._USER_DIR_ + "/" + Database.PATH);
+      checkDir(Options._USER_DIR_ + "/" + Screenshot.PATH);
+      checkDir(Options._USER_DIR_ + "/" + Torrent.TORRENTS_PATH);
       // Create the default db if not exists and create the conn, stmt
 
       if (Options.toString(Options.DB_NAME).equals("") ||

@@ -15,14 +15,42 @@ import java.util.Vector;
  */
 public class EpisodesRecord extends Record {
 
+  /**
+   * downloaded : 1
+   */
   public static final int DOWNLOADED = 1;
+  /**
+   * Not downloaded : 0
+   */
   public static final int NOT_DOWNLOADED = 0;
+  /**
+   * Seen : 1
+   */
   public static final int SEEN = 1;
+  /**
+   * Not seen : 0
+   */
   public static final int NOT_SEEN = 0;
+  /**
+   * No Subs : 0
+   */
   public static final int NO_SUBS = 0;
+  /**
+   * Primary Sub : 1
+   */
   public static final int PRIM_SUB = 1;
+  /**
+   * Secondary Sub : 2
+   */
   public static final int SEC_SUB = 2;
+  /**
+   * Both subs : 3
+   */
   public static final int BOTH_SUBS = 3;
+  /**
+   * MySQL date format : "yyyy-MM-dd"
+   */
+  public static final String MYSQL_DATE_FORMAT = "yyyy-MM-dd";
 
 
   public static final String table = "episodes";

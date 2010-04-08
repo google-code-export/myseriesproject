@@ -20,6 +20,7 @@ import myseries.episodes.Episodes;
 import myseries.series.AdminSeries;
 import myseries.series.Series;
 import database.DBConnection;
+import database.Database;
 import tools.options.Options;
 import myComponents.MyTableModels.MyEpisodesTableModel;
 import javax.swing.event.TableModelEvent;
@@ -59,7 +60,7 @@ import myComponents.MyTableModels.MyFilteredSeriesTableModel;
 import myComponents.MyTableModels.MySeriesTableModel;
 import myComponents.MyUsefulFunctions;
 import myComponents.myFileFilters.VideoFilter;
-import myComponents.myGUI.ImagePanel;
+import myComponents.myGUI.Screenshot;
 import myComponents.myGUI.MyDisabledGlassPane;
 import myComponents.myTableCellRenderers.MyJDateChooserCellRenderer;
 import myComponents.myTableCellRenderers.MyTitleCellRenderer;
@@ -71,6 +72,7 @@ import tools.importExport.ImportEpisodes;
 import tools.internetUpdate.InternetUpdate;
 import tools.options.OptionsPanel;
 import tools.Skin;
+import tools.download.subtitles.Subtitle;
 import tools.download.subtitles.sonline.GetSOnlineCode;
 import tools.download.subtitles.sonline.SOnlineForm;
 import tools.download.subtitles.tvsubtitles.GetTvSubtitlesCode;
@@ -94,7 +96,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static MyDisabledGlassPane glassPane;
   public static Logger logger;
   public static final long serialVersionUID = 1L;
-  private ImagePanel imagePanel = new ImagePanel();
+  private Screenshot imagePanel = new Screenshot();
   private Image screenshot;
 
   /**
@@ -1151,7 +1153,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       try {
         Series.getCurrentSerial(s, true);
         tabsPanel.setTitleAt(0, Series.getCurrentSerial().getFullTitle());
-        String imagePath = Options._USER_DIR_ + "/" + Options._SCREENSHOTS_PATH_ + "/" + Series.getCurrentSerial().getScreenshot();
+        String imagePath = Options._USER_DIR_ + "/" + Screenshot.PATH + "/" + Series.getCurrentSerial().getScreenshot();
         if (new File(imagePath).isFile()) {
           Image image = new ImageIcon(imagePath).getImage();
           setImage(image);
@@ -1379,7 +1381,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   private void menuItem_loadDatabaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_loadDatabaseActionPerformed
     try {
       String[] filter = {".db"};
-      String load = MyUsefulFunctions.getSelectedFile(Options._DB_PATH_, filter, "Load Database", "Select the database to load");
+      String load = MyUsefulFunctions.getSelectedFile(Database.PATH, filter, "Load Database", "Select the database to load");
       if (!load.equals("null")) {
         if (DBConnection.CheckDatabase(load)) {
           Options.setOption(Options.DB_NAME, load);
@@ -1612,7 +1614,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   private void popUpItem_internetUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_internetUpdateActionPerformed
     glassPane.activate(null);
     SeriesRecord cSeries = Series.getCurrentSerial();
-    if (Options.toString(Options.INTERNET_UPDATE_DB).equals(Options._TV_RAGE_NAME_) && cSeries.getTvrage_ID() == 0) {
+    if (Options.toString(Options.INTERNET_UPDATE_DB).equals(InternetUpdate.TV_RAGE_NAME) && cSeries.getTvrage_ID() == 0) {
       try {
         TrGetId g = new TrGetId(this, cSeries.getSeries_ID(), cSeries.getTitle());
         cSeries.setTvrage_ID(g.tvRageID);
@@ -1758,7 +1760,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
   private void popUpItem_downloadSubtitlesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_downloadSubtitlesActionPerformed
 
-    if (Options.toString(Options.SUBTITLE_SITE).equals(Options._TV_SUBTITLES_NAME_)) {
+    if (Options.toString(Options.SUBTITLE_SITE).equals(Subtitle.TV_SUBTITLES_NAME)) {
       SeriesRecord series = Series.getCurrentSerial();
       String link = series.getLink().trim();
       boolean updateLink = false;
@@ -1796,7 +1798,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
                 Series.getCurrentSerial().getLocalDir(),
                 Episodes.getCurrentEpisode().getTitle());
       }
-    } else if (Options.toString(Options.SUBTITLE_SITE).equals(Options._SUBTITLE_ONLINE_NAME_)) {
+    } else if (Options.toString(Options.SUBTITLE_SITE).equals(Subtitle.SUBTITLE_ONLINE_NAME)) {
       String sOnlineCode = Series.getCurrentSerial().getSOnline().trim();
       if (sOnlineCode.equals("")) {
         GetSOnlineCode s = new GetSOnlineCode(Series.getCurrentSerial());

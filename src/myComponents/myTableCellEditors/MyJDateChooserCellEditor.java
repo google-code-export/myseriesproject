@@ -5,6 +5,7 @@
 package myComponents.myTableCellEditors;
 
 import com.toedter.calendar.JDateChooser;
+import database.EpisodesRecord;
 import java.awt.Component;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -45,7 +46,7 @@ public class MyJDateChooserCellEditor extends AbstractCellEditor implements Tabl
     if (value instanceof Date) {
       date = (Date) value;
     }else if(value instanceof String){
-      SimpleDateFormat sdf = new SimpleDateFormat(Options._MYSQL_DATE_FORMAT_);
+      SimpleDateFormat sdf = new SimpleDateFormat(EpisodesRecord.MYSQL_DATE_FORMAT);
       try {
         date = sdf.parse((String) value);
       } catch (ParseException ex) {

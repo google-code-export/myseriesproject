@@ -117,7 +117,7 @@ public class EzTv implements Runnable {
       String torrentName;
       String[] t = torrent.link.split("/", -1);
       torrentName = t[t.length - 1];
-      String filename = Options._USER_DIR_ + "/" + Options._TORRENTS_PATH_ + torrentName;
+      String filename = Options._USER_DIR_ + "/" + Torrent.TORRENTS_PATH + torrentName;
       outStream = new BufferedOutputStream(new FileOutputStream(filename));
       while ((ByteRead = is.read(buf)) != -1) {
         outStream.write(buf, 0, ByteRead);

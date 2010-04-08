@@ -15,17 +15,22 @@ import javax.swing.JPanel;
  *
  * @author ssoldatos
  */
-public class ImagePanel extends JPanel {
+public class Screenshot extends JPanel {
+
+   /**
+   * The screenshots path : "images/"
+   */
+  public static final String PATH ="images/";
 
   private static final long serialVersionUID = 356475743574387L;
   private Image image;
 
-  public ImagePanel() {
+  public Screenshot() {
     this.image = new ImageIcon(getClass().getResource("/images/logo.png")).getImage();
     this.setBorder(BorderFactory.createLineBorder(Color.black));
   }
 
-  public ImagePanel(Image image) {
+  public Screenshot(Image image) {
     this.image = image;
   }
 

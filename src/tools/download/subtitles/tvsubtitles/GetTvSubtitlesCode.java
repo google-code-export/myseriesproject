@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import javax.swing.JOptionPane;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
+import tools.download.subtitles.Subtitle;
 import tools.options.Options;
 
 /**
@@ -40,7 +41,7 @@ public class GetTvSubtitlesCode {
   private void getCode() throws IOException{
     MyUsefulFunctions.initInternetConnection();
     if (MyUsefulFunctions.hasInternetConnection()) {
-      URL subsUrl = new URL(Options._TV_SUBTITLES_URL_ + "search.php?q=" + URLEncoder.encode(series.getTitle(),"UTF-8"));
+      URL subsUrl = new URL(Subtitle.TV_SUBTITLES_URL + "search.php?q=" + URLEncoder.encode(series.getTitle(),"UTF-8"));
       BufferedReader in = new BufferedReader(new InputStreamReader(subsUrl.openStream()));
       parseSearchResult(in);
       in.close();
