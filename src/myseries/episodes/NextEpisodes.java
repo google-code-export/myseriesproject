@@ -32,6 +32,22 @@ public class NextEpisodes {
    */
   public static Boolean[] buttons = new Boolean[4];
   /**
+   * The first episode button : 0
+   */
+  public static final int FIRST_BUTTON  = 0;
+  /**
+   * The previous episode button : 1
+   */
+  public static final int PREVIOUS_BUTTON  = 1;
+  /**
+   * The next episode button : 2
+   */
+  public static final int NEXT_BUTTON  = 2;
+  /**
+   * The last episode button : 3
+   */
+  public static final int LAST_BUTTON  = 3;
+  /**
    * The current next episode title
    */
   public static String currentepisodeTitle = "";
@@ -51,10 +67,10 @@ public class NextEpisodes {
   public static void createNextEpisodes() throws SQLException {
     String where = "";
     nextEpisodes.clear();
-    buttons[0] = false;
-    buttons[1] = false;
-    buttons[2] = false;
-    buttons[3] = false;
+    buttons[FIRST_BUTTON] = false;
+    buttons[PREVIOUS_BUTTON] = false;
+    buttons[NEXT_BUTTON] = false;
+    buttons[LAST_BUTTON] = false;
     if (Options.toBoolean(Options.SHOW_UNSEEN)) {
       where = " OR seen = "+EpisodesRecord.NOT_SEEN;
     } 
@@ -75,8 +91,8 @@ public class NextEpisodes {
     }
     rs.close();
     if (nextEpisodes.size() > 1) {
-      buttons[2] = true;
-      buttons[3] = true;
+      buttons[NEXT_BUTTON] = true;
+      buttons[LAST_BUTTON] = true;
     }
   }
 
@@ -101,17 +117,17 @@ public class NextEpisodes {
    */
   public static void setNextEpisode_id(int nextEpisode_id) {
     currentEpisode_id = nextEpisode_id;
-    buttons[0] = true;
-    buttons[1] = true;
-    buttons[2] = true;
-    buttons[3] = true;
+    buttons[FIRST_BUTTON] = true;
+    buttons[PREVIOUS_BUTTON] = true;
+    buttons[NEXT_BUTTON] = true;
+    buttons[LAST_BUTTON] = true;
     if (nextEpisode_id == 0) {
-      buttons[0] = false;
-      buttons[1] = false;
+      buttons[FIRST_BUTTON] = false;
+      buttons[PREVIOUS_BUTTON] = false;
     }
     if (nextEpisode_id == nextEpisodes.size() - 1) {
-      buttons[2] = false;
-      buttons[3] = false;
+      buttons[NEXT_BUTTON] = false;
+      buttons[LAST_BUTTON] = false;
     }
   }
 
@@ -121,25 +137,25 @@ public class NextEpisodes {
   public static void show() {
     if (NextEpisodes.nextEpisodes.size() > 0) {
       label_NextEpisode.setText(NextEpisodes.getCurrentTitle());
-      button_first.setEnabled(NextEpisodes.buttons[0]);
-      button_previous.setEnabled(NextEpisodes.buttons[1]);
-      button_next.setEnabled(NextEpisodes.buttons[2]);
-      button_last.setEnabled(NextEpisodes.buttons[3]);
+      button_first.setEnabled(NextEpisodes.buttons[FIRST_BUTTON]);
+      button_previous.setEnabled(NextEpisodes.buttons[PREVIOUS_BUTTON]);
+      button_next.setEnabled(NextEpisodes.buttons[NEXT_BUTTON]);
+      button_last.setEnabled(NextEpisodes.buttons[LAST_BUTTON]);
     }
   }
 
   /**
    * Update the label depending of the button clicked
-   * @param ep The button that was clicked
+   * @param button The button clicked
    */
-  public static void showNextEpisodes(String ep) {
-    if (ep.equals("first")) {
+  public static void showNextEpisodes(int button) {
+    if (button == FIRST_BUTTON) {
       NextEpisodes.setNextEpisode_id(0);
-    } else if (ep.equals("last")) {
+    } else if (button == LAST_BUTTON) {
       NextEpisodes.setNextEpisode_id(NextEpisodes.nextEpisodes.size() - 1);
-    } else if (ep.equals("previous")) {
+    } else if (button == PREVIOUS_BUTTON) {
       NextEpisodes.setNextEpisode_id(NextEpisodes.getNextEpisode_id() - 1);
-    } else if (ep.equals("next")) {
+    } else if (button == NEXT_BUTTON) {
       NextEpisodes.setNextEpisode_id(NextEpisodes.getNextEpisode_id() + 1);
     }
     show();
