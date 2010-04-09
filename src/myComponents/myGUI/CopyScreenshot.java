@@ -13,8 +13,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.logging.Level;
 import myComponents.MyMessages;
-import myComponents.MyUsefulFunctions;
-import myComponents.myGUI.Screenshot;
 import tools.options.Options;
 import myseries.MySeries;
 
@@ -29,7 +27,7 @@ public class CopyScreenshot implements Runnable {
 
   public CopyScreenshot(String screenshot) {
     this.screenshot = screenshot;
-    destination = Options._USER_DIR_ + "/" + Screenshot.PATH;
+    destination = Options._USER_DIR_ + "/" + MyImagePanel.PATH;
   }
 
   public void run() {
