@@ -9,18 +9,18 @@ import myComponents.MyMessages;
 import tools.download.subtitles.AbstractDownloadForm;
 
 /**
- *
+ * The tvSubtitles message form
  * @author lordovol
  */
 public class TvSubtitlesForm extends AbstractDownloadForm {
   private static final long serialVersionUID = 2353636L;
 
   /** Creates new form DownloadSubtitlesForm
-   * @param link
-   * @param season
-   * @param episode
-   * @param localDir
-   * @param title
+   * @param link The link to the subtitle
+   * @param season The series season
+   * @param episode The episode number
+   * @param localDir The series local directory
+   * @param title The episode's title
    */
   public TvSubtitlesForm(String link, int season, int episode, String localDir, String title) {
     super.init();

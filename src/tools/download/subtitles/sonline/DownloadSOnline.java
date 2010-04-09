@@ -24,7 +24,14 @@ import tools.options.Options;
 public class DownloadSOnline extends AbstractDownloadSubtitle implements Runnable {
 
   private String sOnlineCode;
-  
+
+  /**
+   * Download subtitle from subtitleOnline
+   * @param sOnlineCode The series subtitleonline code
+   * @param season The series season
+   * @param episode The episode to download subtitles for
+   * @param form The messages form
+   */
   public DownloadSOnline(String sOnlineCode, int season, int episode, SOnlineForm form) {
     this.sOnlineCode = sOnlineCode;
     this.season = season;
@@ -61,7 +68,7 @@ public class DownloadSOnline extends AbstractDownloadSubtitle implements Runnabl
     }
   }
 
-  public void getSubtitle() throws FileNotFoundException, IOException {
+  private void getSubtitle() throws FileNotFoundException, IOException {
     if (MyUsefulFunctions.hasInternetConnection()) {
       URL url = new URL(Subtitle.SUBTITLE_ONLINE_URL+sOnlineCode+"-season-" + season + "-episode-" + episode + "-subtitles.html");
       BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));

@@ -21,13 +21,20 @@ import tools.download.subtitles.Subtitle;
 import tools.options.Options;
 
 /**
- *
+ * Download from tvSubtitles
  * @author lordovol
  */
 public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Runnable {
 
   private final String link;
 
+  /**
+   * Download the subtitles from tvSubtitles
+   * @param link The link to the subtitles page
+   * @param season The series season
+   * @param episode The episode number
+   * @param form The messages form
+   */
   public DownloadTvSubtitles(String link, int season, int episode, TvSubtitlesForm form) {
     this.link = link;
     this.season = season;
@@ -67,7 +74,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
     }
   }
 
-  public void getSubtitle() {
+  private void getSubtitle() {
     try {
       MyUsefulFunctions.initInternetConnection();
       if (MyUsefulFunctions.hasInternetConnection()) {
@@ -181,6 +188,4 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
       }
     }
   }
-
-  
 }
