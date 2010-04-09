@@ -23,7 +23,7 @@ import tools.internetUpdate.AbstractUpdate;
 import tools.internetUpdate.InternetUpdate;
 
 /**
- *
+ * Update series from epGuides
  * @author ssoldatos
  */
 public class EgUpdate extends AbstractUpdate implements Runnable {
@@ -31,16 +31,15 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
   private boolean rightSeason;
   private boolean newFormat;
 
+  /**
+   * Update series
+   * @param iu The update series form
+   */
   public EgUpdate(InternetUpdate iu) {
     this.iu = iu;
     this.list = new ArrayList<AbstractSeriesToUpdate>();
   }
 
-  /**
-   *
-   * @param series
-   * @return
-   */
   protected boolean read(SeriesRecord series) {
     MyUsefulFunctions.initInternetConnection();
     isConected = MyUsefulFunctions.hasInternetConnection();
@@ -141,10 +140,6 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
     return false;
   }
 
-  /**
-   *
-   * @throws SQLException
-   */
   protected void updateEpisodes() throws SQLException {
     append("<span style='font-weight:bold;font-size:12px'>Step 2 : Importing data</span>");
     EgEpisodeOld curData;

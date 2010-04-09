@@ -19,6 +19,10 @@ public class EgEpisode {
   public String airDate;
   private String[] months = {"", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 
+  /**
+   * Construct an epGuide episode
+   * @param data The episodes data
+   */
   public EgEpisode(String data) {
     number = getNumber(data);
     title = getTitle(data);
