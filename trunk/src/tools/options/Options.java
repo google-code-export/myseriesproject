@@ -49,10 +49,6 @@ public class Options {
    * "(([ xeEX]|(ep)|(EP))|(([ xeEX]|(ep)|(EP))\\d*([- &])))0*"
    */
   public static String _REGEX_ = "(([ xeEX]|(ep)|(EP))|(([ xeEX]|(ep)|(EP))\\d*([- &])))0*";
-  /**************************************************
-   * Lists
-   **************************************************/
-  
   /************************************************
    * User Options
    ************************************************/
@@ -176,6 +172,11 @@ public class Options {
    * String default Options._SUBTITLE_ONLINE_NAME_
    */
   public static String SUBTITLE_SITE = "SUBTITLE_SITE";
+  /**
+   * An array of the options that are selected in combo boxes
+   */
+  public static String[] _COMBO_OPTIONS_ = {DATE_FORMAT, DEBUG_MODE, LOOK_AND_FEEL,
+    FONT_FACE, INTERNET_UPDATE_DB, SUBTITLE_SITE, PRIMARY_SUB};
 
   static {
     InternetUpdate.DB_UPDATERS.add(InternetUpdate.EP_GUIDES_NAME);
@@ -295,7 +296,7 @@ public class Options {
     int val = 0;
     String s;
     try {
-       s = String.valueOf(options.get(key)).trim();
+      s = String.valueOf(options.get(key)).trim();
       if (s != null) {
         val = Integer.parseInt(s);
       } else {
@@ -323,7 +324,7 @@ public class Options {
     float val = 0.0F;
     String s;
     try {
-       s = String.valueOf(options.get(key)).trim();
+      s = String.valueOf(options.get(key)).trim();
       if (s != null) {
         val = Float.parseFloat(s);
       } else {
