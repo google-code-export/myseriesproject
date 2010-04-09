@@ -12,40 +12,26 @@ package tools.internetUpdate.tvrage;
 
 import database.SeriesRecord;
 import java.awt.Dialog.ModalityType;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.sql.SQLException;
-import java.util.Vector;
 import java.util.logging.Level;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyDraggable;
 import myseries.MySeries;
 import myseries.series.AdminSeries;
 import myseries.series.Series;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 import tools.internetUpdate.InternetUpdate;
-import tools.internetUpdate.tvrage.TrGetId.SearchSeries.TvRageSeries;
+import tools.internetUpdate.tvrage.SearchTvRage.TvRageSeries;
 
 /**
- *
+ * Get TvRage id form
  * @author lordovol
  */
 public class TrGetId extends MyDraggable {
-  private MySeries myS;
 
+  private MySeries myS;
   private int series_ID = 0;
   private AdminSeries adminSeries;
   String title;
@@ -64,10 +50,10 @@ public class TrGetId extends MyDraggable {
   }
 
   /**
-   * 
-   * @param myS 
-   * @param series_ID
-   * @param title
+   * Creates a tvrage get id from My series form
+   * @param myS MySeries form
+   * @param series_ID The series ID
+   * @param title The series title
    */
   public TrGetId(MySeries myS, int series_ID, String title) {
     this.myS = myS;
@@ -77,6 +63,11 @@ public class TrGetId extends MyDraggable {
 
   }
 
+  /**
+   * Creates a TvRage get id from admin series form
+   * @param adminSeries The ad
+   * @param title
+   */
   public TrGetId(AdminSeries adminSeries, String title) {
     this.adminSeries = adminSeries;
     this.title = title;
@@ -98,7 +89,7 @@ public class TrGetId extends MyDraggable {
     pack();
     setVisible(true);
     MySeries.logger.log(Level.INFO, "Searching for series " + title);
-    SearchSeries s = new SearchSeries(title);
+    SearchTvRage s = new SearchTvRage(title, this);
     Thread t = new Thread(s);
     t.start();
   }
@@ -218,10 +209,10 @@ public class TrGetId extends MyDraggable {
         adminSeries.textfield_tvRageID.setText(String.valueOf(tvRageID));
       }
       adminSeries.setVisible(true);
-    }else {
+    } else {
       InternetUpdate iu = new InternetUpdate(myS, Series.getCurrentSerial());
     }
-    
+
   }//GEN-LAST:event_button_cancelActionPerformed
 
   private void button_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_okActionPerformed
@@ -244,96 +235,13 @@ public class TrGetId extends MyDraggable {
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton button_cancel;
   private javax.swing.JButton button_ok;
-  private javax.swing.JComboBox combo_results;
+  protected javax.swing.JComboBox combo_results;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JPanel jPanel1;
   private javax.swing.JLabel label_title;
-  private javax.swing.JProgressBar progress;
+  protected javax.swing.JProgressBar progress;
   // End of variables declaration//GEN-END:variables
 
-  class SearchSeries implements Runnable {
-
-    private final String title;
-    Vector<TvRageSeries> results = new Vector<TvRageSeries>();
-
-    SearchSeries(String title) {
-      MySeries.logger.log(Level.INFO, "Search");
-      this.title = title;
-      // run();
-    }
-
-    public void run() {
-      try {
-        progress.setString("Searching for " + this.title);
-        progress.setIndeterminate(true);
-        search();
-        progress.setIndeterminate(false);
-        progress.setString("Found  " + results.size() + " results");
-      } catch (SAXException ex) {
-        MySeries.logger.log(Level.WARNING, "Could not parse XML file", ex);
-      } catch (ParserConfigurationException ex) {
-        MySeries.logger.log(Level.WARNING, "Could not parse XML file", ex);
-      } catch (IOException ex) {
-        MySeries.logger.log(Level.WARNING, "Could not find the url for " + title, ex);
-      }
-    }
-
-    private void search() throws MalformedURLException, IOException, ParserConfigurationException, SAXException {
-      InputStream in = null;
-      MySeries.logger.log(Level.INFO, "Getting the url");
-      String url = "http://services.tvrage.com/feeds/search.php?show=";
-      url = url + URLEncoder.encode(title, "UTF-8");
-      MySeries.logger.log(Level.INFO, "Reading URL: " + url);
-      URL tvRage = new URL(url);
-      in = tvRage.openStream();
-      readXML(in);
-
-    }
-
-    private void readXML(InputStream in) throws ParserConfigurationException, SAXException, IOException {
-
-      MySeries.logger.log(Level.INFO, "Parsing XML");
-      DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-      DocumentBuilder db = dbf.newDocumentBuilder();
-      Document doc = db.parse(in);
-      doc.getDocumentElement().normalize();
-      NodeList nodeLst = doc.getElementsByTagName("show");
-      if (nodeLst.getLength() == 0) {
-        return;
-      }
-      for (int s = 0; s < nodeLst.getLength(); s++) {
-        Node node = nodeLst.item(s);
-        Element el = (Element) node;
-        String id = el.getElementsByTagName("showid").item(0).getFirstChild().getNodeValue();
-        String name = el.getElementsByTagName("name").item(0).getFirstChild().getNodeValue();
-        String year = el.getElementsByTagName("started").item(0).getFirstChild().getNodeValue();
-        results.add(new TvRageSeries(id, name, year));
-      }
-      if (results.size() > 0) {
-        resultsModel = new DefaultComboBoxModel(results);
-      }
-      combo_results.setModel(resultsModel);
-      validate();
-    }
-
-    class TvRageSeries {
-
-      final String id;
-      final String name;
-      final String year;
-
-      private TvRageSeries(String id, String name, String year) {
-        this.id = id;
-        this.name = name;
-        this.year = year;
-
-      }
-
-      @Override
-      public String toString() {
-        return name + " (" + year + ")";
-      }
-    }
-  }
+  
 }

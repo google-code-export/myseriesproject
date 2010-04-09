@@ -18,6 +18,10 @@ public class TrEpisode {
     public String title;
     public String airDate;
 
+    /**
+     * Create a TrEpisode by the xml node
+     * @param epNode The node to use
+     */
     public TrEpisode(Node epNode) {
       Element episodeElement = (Element) epNode;
       number = Integer.parseInt(episodeElement.getElementsByTagName("seasonnum").item(0).getFirstChild().getNodeValue());

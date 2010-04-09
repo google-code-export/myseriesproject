@@ -35,6 +35,10 @@ import tools.internetUpdate.InternetUpdate;
  */
 public class TrUpdate extends AbstractUpdate implements Runnable {
 
+  /**
+   * Construct a tr sereis updater
+   * @param iu
+   */
   public TrUpdate(InternetUpdate iu) {
     this.iu = iu;
     this.list = new ArrayList<AbstractSeriesToUpdate>();

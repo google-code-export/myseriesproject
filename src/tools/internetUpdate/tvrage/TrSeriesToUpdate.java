@@ -18,6 +18,10 @@ public class TrSeriesToUpdate extends AbstractSeriesToUpdate {
   private Node epNode;
   public ArrayList<TrEpisode> episodes = new ArrayList<TrEpisode>();
 
+  /**
+   * Sets the series to update
+   * @param series
+   */
   TrSeriesToUpdate(SeriesRecord series) {
     this.series = series;
   }

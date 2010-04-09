@@ -7,12 +7,18 @@ package tools.internetUpdate;
 import database.SeriesRecord;
 
 /**
- *
+ * Abstract class for the series to update
  * @author ssoldatos
  */
 public abstract class AbstractSeriesToUpdate {
 
+  /**
+   * The series to update
+   */
   public SeriesRecord series;
+  /**
+   * If the sereis are updated
+   */
   public boolean update = false;
 
   @Override

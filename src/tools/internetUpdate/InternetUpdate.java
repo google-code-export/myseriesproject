@@ -22,12 +22,12 @@ import myseries.MySeries;
 import tools.options.Options;
 
 /**
- *
+ * The internet update form
  * @author lordovol
  */
 public class InternetUpdate extends MyDraggable {
 
-   /**
+  /**
    * Tv rage name : "TvRage"
    */
   public static final String TV_RAGE_NAME = "TvRage";
@@ -35,21 +35,21 @@ public class InternetUpdate extends MyDraggable {
    * EpGuides name : "EpGuides"
    */
   public static final String EP_GUIDES_NAME = "EpGuides";
-
   /**
    * List of web series databases
    */
   public static Vector<String> DB_UPDATERS = new Vector<String>();
-
+  /**
+   * If proccess is finished
+   */
+  public boolean finished = false;
   private MySeries m;
   private Thread t;
   private SeriesRecord currentSeries = null;
   private static final long serialVersionUID = 4364575758658L;
-  public boolean finished = false;
 
-
-  /** Creates new form InternetUpdate
-   * @param m
+  /** Creates new form InternetUpdate from MySeries Form
+   * @param m The myseries form
    */
   public InternetUpdate(MySeries m) {
     this.m = m;
@@ -60,6 +60,11 @@ public class InternetUpdate extends MyDraggable {
 
   }
 
+  /**
+   * Constructs an internet update for a specific series
+   * @param m The mySeries form
+   * @param currentSeries The series to update
+   */
   public InternetUpdate(MySeries m, SeriesRecord currentSeries) {
     this.m = m;
     this.currentSeries = currentSeries;
