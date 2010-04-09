@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.Random;
+import java.util.logging.Level;
 import javax.swing.JOptionPane;
 import myComponents.myGUI.MyFont;
 import tools.Skin;
@@ -497,6 +498,20 @@ public class MyUsefulFunctions {
         return Skin.getColor_4();
       } else {
         return Skin.getColor_5();
+      }
+    }
+  }
+
+  /**
+   * Check if needed directories exist and if not create them
+   * @throws java.io.IOException
+   */
+  public static void checkDir(String dirPath) {
+    if (!new File(dirPath).isDirectory()) {
+      if (new File(dirPath).mkdir()) {
+       myseries.MySeries.logger.log(Level.INFO, "Created directory " + dirPath);
+      } else {
+       myseries.MySeries.logger.log(Level.SEVERE, "Could not create directory " + dirPath);
       }
     }
   }
