@@ -25,7 +25,13 @@ public class Torrent {
    * List of qualities
    */
   public static String[] QUALITIES = {"", "HDTV", "720p", "1080i", "1080p", "DSRip", "DVBRip", "DVDR", "DVDRip", "DVDScr", "HR.HDTV", "HR.PDTV", "PDTV", "SatRip", "SVCD", "TVRip", "WebRip"};
+  /**
+   * The torrents title
+   */
   public String title;
+  /**
+   * The torrents link
+   */
   public String link;
 
   Torrent(String title, String link) {
@@ -38,6 +44,10 @@ public class Torrent {
     return title;
   }
 
+  /**
+   * Gets the torrents URI
+   * @return The torrents URI or null if there's a syntax error
+   */
   public URI getUri() {
    String encodedLink = link.replaceAll("\\[", "%5B");
     encodedLink = encodedLink.replaceAll("\\]", "%5D");

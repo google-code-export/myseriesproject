@@ -28,10 +28,9 @@ import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyDraggable;
 import myseries.series.Series;
-import tools.options.Options;
 
 /**
- *
+ * The form to submit a torrent search to EzTv
  * @author lordovol
  */
 public class EzTvForm extends MyDraggable {
@@ -42,15 +41,20 @@ public class EzTvForm extends MyDraggable {
   private ComboBoxModel seriesModel = new DefaultComboBoxModel();
   private ComboBoxModel qualityModel = new DefaultComboBoxModel();
 
-  {
-    createModels();
-  }
+  { createModels(); }
 
-  /** Creates new form EzTvForm */
+  /**
+   * Creates a default blank search form
+   */
   public EzTvForm() {
     showUp();
   }
 
+  /**
+   * Creates a form for an episode search
+   * @param series The series to search
+   * @param episode The episode to search
+   */
   public EzTvForm(SeriesRecord series, EpisodesRecord episode) {
     myseries.MySeries.glassPane.activate(null);
     this.series = series;
