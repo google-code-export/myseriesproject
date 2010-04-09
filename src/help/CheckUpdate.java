@@ -27,7 +27,7 @@ import myseries.*;
 import tools.DesktopSupport;
 
 /**
- *
+ * Checking for updates of the application
  * @author ssoldatos
  */
 public class CheckUpdate extends MyDraggable {

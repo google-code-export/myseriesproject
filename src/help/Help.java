@@ -17,7 +17,7 @@ import javax.swing.text.BadLocationException;
 import myseries.MySeries;
 
 /**
- *
+ * Help
  * @author ssoldatos
  */
 public class Help extends JFrame {
