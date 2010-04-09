@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import myseries.*;
 
 /**
- *
+ * Desktop support for the OS
  * @author lordovol
  */
 public class DesktopSupport {
@@ -19,8 +19,9 @@ public class DesktopSupport {
   private static boolean desktopSupport;
   private static boolean mailSupport;
 
-  
-
+  /**
+   * Creates the DesktopSupport object
+   */
   public DesktopSupport(){
     try {
         desktop = Desktop.getDesktop();

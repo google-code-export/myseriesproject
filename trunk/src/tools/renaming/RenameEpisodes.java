@@ -20,7 +20,6 @@ import myComponents.MyMessages;
 import myComponents.MyTableModels.MyRenameEpisodesTableModel;
 import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyDraggable;
-import tools.options.Options;
 
 /**
  *
@@ -41,17 +40,35 @@ public class RenameEpisodes extends MyDraggable {
    */
   public static String EPISODE_SEPARATOR = "x";
 
+  /**
+   * RenameEpisodes table id column : 0
+   */
   public static final int ID_COLUMN = 0;
+  /**
+   * RenameEpisodes table original name column : 1
+   */
   public static final int ORIGINAL_NAME_COLUMN = 1;
+  /**
+   * RenameEpisodes table new name column : 2
+   */
   public static final int NEW_NAME_COLUMN = 2;
+  /**
+   * RenameEpisodes table edit column : 3
+   */
   public static final int EDIT_COLUMN = 3;
   private static final long serialVersionUID = 35546363456L;
-  MyRenameEpisodesTableModel renameEpisodesModel = new MyRenameEpisodesTableModel();
   private ArrayList<File> oldNames;
+  private MyRenameEpisodesTableModel renameEpisodesModel = new MyRenameEpisodesTableModel();
   private ArrayList<EpisodesRecord> newNames;
   private SeriesRecord series;
   private boolean checkAll = false;
 
+  /**
+   * Create rename episodes form
+   * @param oldNames The oldnames arraylist
+   * @param newNames The newnames arraylist
+   * @param series The series record
+   */
   public RenameEpisodes(ArrayList<File> oldNames,
           ArrayList<EpisodesRecord> newNames, SeriesRecord series) {
     this.oldNames = oldNames;

@@ -17,12 +17,17 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
 /**
- *
+ * Html log formatter
  * @author ssoldatos
  */
 public class HTMLFormatter extends Formatter {
   // This method is called for every log records
 
+  /**
+   * Create formatter for the log record
+   * @param rec The log Record
+   * @return
+   */
   public String format(LogRecord rec) {
     StringBuffer buf = new StringBuffer(1000);
     // Bold any levels >= WARNING
@@ -40,8 +45,6 @@ public class HTMLFormatter extends Formatter {
     SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss SSS",Locale.ENGLISH);
     Date d = new Date(rec.getMillis());
     String thrown;
-
-    
     buf.append("<td>&nbsp;"+sdf.format(d)+"</td>");
     buf.append("<td>&nbsp;"+rec.getThreadID()+"</td>");
     buf.append("<td>&nbsp;"+rec.getSourceClassName()+"</td>");
