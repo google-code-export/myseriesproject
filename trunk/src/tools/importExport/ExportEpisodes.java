@@ -14,7 +14,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import myseries.*;
 import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileFilter;
 import myComponents.MyMessages;
 import myComponents.myFileFilters.EpisodesExportFilter;
 import myseries.episodes.Episodes;
