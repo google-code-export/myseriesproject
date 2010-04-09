@@ -16,28 +16,30 @@ import myseries.*;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 import myComponents.MyMessages;
+import myComponents.myFileFilters.EpisodesExportFilter;
 import myseries.episodes.Episodes;
 import myseries.series.Series;
 
 /**
- *
+ * Export episodes to a file
  * @author lordovol
  */
 public class ExportEpisodes {
 
+  public static final String EXT = ".eef";
   private File file;
 
   /**
    * Exports the episodes of the current Series<br />
    * It exports the episode number, the episode title and the date when the episodes was aired
    */
-  public ExportEpisodes()  {
+  public ExportEpisodes() {
     MySeries.logger.log(Level.INFO, "Exporting episodes of " + Series.getCurrentSerial().getFullTitle());
     JFileChooser f = new JFileChooser();
     f.setApproveButtonText("Export");
     f.setDialogTitle("Export episodes of " + Series.getCurrentSerial().getFullTitle());
-    f.setFileFilter(new exportFilter());
-    f.setSelectedFile(new File(Series.getCurrentSerial().getFullTitle() + ".eef"));
+    f.setFileFilter(new EpisodesExportFilter());
+    f.setSelectedFile(new File(Series.getCurrentSerial().getFullTitle() + EXT));
     int returnVal = f.showDialog(null, "Export");
     f.setApproveButtonText("Export");
     if (returnVal == JFileChooser.CANCEL_OPTION) {
@@ -67,34 +69,12 @@ public class ExportEpisodes {
     for (int i = 0; i < episodes.size(); i++) {
       EpisodesRecord ep = episodes.get(i);
       out.println(
-              ep.getEpisode() + "\t" +
-              ep.getTitle() + "\t" +
-              ep.getAired());
+          ep.getEpisode() + "\t"
+          + ep.getTitle() + "\t"
+          + ep.getAired());
     }
     out.close();
     MyMessages.message("Export completed", "Export of " + Series.getCurrentSerial().getFullTitle() + " is completed");
   }
 
-  /**
-   * The export file filter (*.eef)
-   */
-  public static class exportFilter extends FileFilter {
-
-    /**
-     * The file filter extensions
-     * @param f
-     * @return
-     */
-    public boolean accept(File f) {
-      return f.isDirectory() || f.getName().toLowerCase().endsWith(".eef");
-    }
-
-    /**
-     * The file filter description
-     * @return
-     */
-    public String getDescription() {
-      return "My Series episodes export file (*.eef)";
-    }
-  }
 }

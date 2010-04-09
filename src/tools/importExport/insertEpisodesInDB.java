@@ -16,11 +16,13 @@ import myseries.*;
 class insertEpisodesInDB implements Runnable {
 
   private ImportEpisodes im;
-  private boolean update;
 
+  /**
+   * Import episodes
+   * @param im The import episodes form
+   */
   insertEpisodesInDB(ImportEpisodes im) {
     this.im = im;
-    this.update = im.update;
   }
 
   public void run() {

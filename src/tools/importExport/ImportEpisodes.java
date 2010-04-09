@@ -24,6 +24,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
+import myComponents.myFileFilters.EpisodesExportFilter;
 import myComponents.myGUI.MyDraggable;
 import myseries.MySeries;
 import myseries.series.Series;
@@ -342,7 +343,7 @@ public class ImportEpisodes extends MyDraggable {
         Thread t = new Thread(i);
         t.start();
       } else {
-        MySeries.logger.log(Level.WARNING, "No fiel selected");
+        MySeries.logger.log(Level.WARNING, "No file selected");
         MyMessages.error("No file!!!", "No File selected!!!");
       }
     } else {
@@ -397,7 +398,7 @@ public class ImportEpisodes extends MyDraggable {
     f.setMultiSelectionEnabled(false);
     f.setApproveButtonText("Import");
     f.setDialogTitle("Import episodes");
-    f.setFileFilter(new ExportEpisodes.exportFilter());
+    f.setFileFilter(new EpisodesExportFilter());
 
     int returnVal = f.showOpenDialog(null);
     if (returnVal == JFileChooser.CANCEL_OPTION) {
