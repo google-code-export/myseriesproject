@@ -11,7 +11,7 @@ import myComponents.MyUsefulFunctions;
 import myseries.episodes.Episodes;
 
 /**
- *
+ * The cell renderer for the tile field
  * @author lordovol
  */
 public class MyTitleCellRenderer extends DefaultTableCellRenderer {

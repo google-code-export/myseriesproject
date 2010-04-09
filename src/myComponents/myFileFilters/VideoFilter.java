@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 
 /**
- *
+ * The video filter
  * @author lordovol
  */
 public class VideoFilter implements FilenameFilter {

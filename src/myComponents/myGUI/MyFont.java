@@ -25,7 +25,9 @@ public class MyFont {
   public static Font myBiggestFont;
 
   
-  
+  /**
+   * Sets the font for the application elements
+   */
   public static void  SetMyFont(){
 
     String fontFace = Options.toString(Options.FONT_FACE).equals("null") ? DEFAULT_FONT : Options.toString(Options.FONT_FACE);

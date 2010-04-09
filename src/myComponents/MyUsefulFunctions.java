@@ -37,7 +37,7 @@ import tools.Skin;
 import tools.options.Options;
 
 /**
- * Useful functions
+ * Useful functions helper class
  * @author lordovol
  */
 public class MyUsefulFunctions {
@@ -369,15 +369,24 @@ public class MyUsefulFunctions {
 
   }
 
+  /**
+   * Gets the directory of the jar file
+   * @param main The applications main method
+   * @return The path to the jar file
+   */
   public static String getJarDir(Object main) {
     File p = new File(main.getClass().getProtectionDomain().getCodeSource().getLocation().getFile());
     if (p.getParent().endsWith("build")) {
-
       return p.getParent().replace("build", "").replace("%20", " ");
     }
     return p.getParent().replace("%20", " ") + "/";
   }
 
+  /**
+   * Checks if an episode has been eired
+   * @param aired The date that the episode is aired
+   * @return True if it's aired or false
+   */
   public static boolean hasBeenAired(String aired) {
     if (aired.compareTo(getToday("yyyy-MM-dd")) <= 0) {
       return true;
@@ -385,6 +394,11 @@ public class MyUsefulFunctions {
     return false;
   }
 
+  /**
+   * Gets the subtitles status by it's name
+   * @param subs
+   * @return
+   */
   public static int getSubsId(String subs) {
     if (subs.equals("None")) {
       return EpisodesRecord.NO_SUBS;
@@ -397,10 +411,21 @@ public class MyUsefulFunctions {
     }
   }
 
+  /**
+   * Creates the regex for finding episodes
+   * @param season The episode's season
+   * @param episode The episode's number
+   * @return The regular expression
+   */
   public static String createRegex(int season, int episode) {
     return "\\D*" + season + Options._REGEX_ + episode + "\\D";
   }
 
+  /**
+   * Creates a random string
+   * @param length The length of the string
+   * @return The random string
+   */
   public static String createRandomString(int length) {
     Random random = new Random();
     StringBuilder sb = new StringBuilder();
@@ -410,9 +435,15 @@ public class MyUsefulFunctions {
     return sb.toString();
   }
 
-  public static String join(Iterable<? extends Object> pColl, String separator) {
+  /**
+   * Joins an iterable with a seperator
+   * @param iter The iterable object
+   * @param separator The separator to use
+   * @return The joined String
+   */
+  public static String join(Iterable<? extends Object> iter, String separator) {
     Iterator<? extends Object> oIter;
-    if (pColl == null || (!(oIter = pColl.iterator()).hasNext())) {
+    if (iter == null || (!(oIter = iter.iterator()).hasNext())) {
       return "";
     }
     StringBuilder oBuilder = new StringBuilder(String.valueOf(oIter.next()));
@@ -434,6 +465,14 @@ public class MyUsefulFunctions {
     return title.trim();
   }
 
+  /**
+   * Gets the font to use in the title field of the episodes table
+   * @param defaultFont The default font
+   * @param downloaded If the episode is downloaded
+   * @param seen If the episode is seen
+   * @param sub The sub status of the episode
+   * @return The font to use
+   */
   public static Font getCellFont(Font defaultFont, boolean downloaded, boolean seen, String sub) {
     Font font = defaultFont;
     if (seen) {
@@ -444,6 +483,12 @@ public class MyUsefulFunctions {
     return font;
   }
 
+  /**
+   * Gets the font color to use in the title field of the episodes table
+   * @param isSelected If the row of the cell is selected
+   * @param seen If the episode is seen
+   * @return The color to use
+   */
   public static Color getCellColor(boolean isSelected, boolean seen) {
     if (isSelected) {
       return Skin.getColor_1();

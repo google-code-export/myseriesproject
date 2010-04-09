@@ -7,8 +7,8 @@ package myComponents;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author ΔΙΟΝΥΣΗΣ
+ * The messages helper class
+ * @author 
  */
 public class MyMessages {
 
@@ -36,6 +36,9 @@ public class MyMessages {
             JOptionPane.ERROR_MESSAGE);
   }
 
+  /**
+   * Displays an internet connection error
+   */
   public static void internetError() {
     error("No Internet Connection!!!", "Could not connect to internet\nIf you are behind a proxy check your proxy settings in options");
   }
