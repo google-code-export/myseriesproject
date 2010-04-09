@@ -15,9 +15,7 @@ import database.DBConnection;
 import database.Database;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -28,7 +26,7 @@ import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyDraggable;
 import myComponents.myGUI.MyFont;
-import myComponents.myGUI.Screenshot;
+import myComponents.myGUI.MyImagePanel;
 import tools.DesktopSupport;
 import tools.options.Options;
 import tools.Skin;
@@ -80,7 +78,7 @@ public class StartPanel extends MyDraggable {
    * @param m The myseries form
    * @param createNewDB Create a database or not
    */
-  StartPanel(MySeries m, boolean createNewDB) {
+  public StartPanel(MySeries m, boolean createNewDB) {
     this.m = m;
     this.createNewDB = createNewDB;
     initComponents();
@@ -364,7 +362,7 @@ public class StartPanel extends MyDraggable {
       //create dirs
       MySeries.logger.log(Level.INFO, "Checking directories");
       MyUsefulFunctions.checkDir(Options._USER_DIR_ + "/" + Database.PATH);
-      MyUsefulFunctions.checkDir(Options._USER_DIR_ + "/" + Screenshot.PATH);
+      MyUsefulFunctions.checkDir(Options._USER_DIR_ + "/" + MyImagePanel.PATH);
       MyUsefulFunctions.checkDir(Options._USER_DIR_ + "/" + Torrent.TORRENTS_PATH);
       // Create the default db if not exists and create the conn, stmt
 
