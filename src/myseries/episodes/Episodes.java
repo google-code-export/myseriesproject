@@ -22,17 +22,38 @@ import myComponents.myFileFilters.SubtitlesFilter;
 import myComponents.myFileFilters.VideoFilter;
 
 /**
- *
+ * The episodes table class
  * @author ssoldatos
  */
 public class Episodes {
 
+  /**
+   * The episodes number table column : 0
+   */
   public static final int EPISODE_NUM_COLUMN = 0;
+  /**
+   * The episodes title table column : 1
+   */
   public static final int TITLE_COLUMN = 1;
+  /**
+   * The episodes aired table column : 2
+   */
   public static final int AIRED_COLUMN = 2;
+  /**
+   * The episodes downloaded table column : 3
+   */
   public static final int DOWNLOADED_COLUMN = 3;
+  /**
+   * The episodes sub status table column : 4
+   */
   public static final int SUBS_COLUMN = 4;
+  /**
+   * The episodes seen table column : 5
+   */
   public static final int SEEN_COLUMN = 5;
+  /**
+   * The episodes id table column : 6
+   */
   public static final int EPISODE_ID_COLUMN = 6;
   /**
    * The episodes table model
@@ -59,6 +80,7 @@ public class Episodes {
   }
 
   /**
+   * Sets the model for the episodes table
    * @param aTableModel_episodes the tableModel_episodes to set
    */
   public static void setTableModel_episodes(MyEpisodesTableModel aTableModel_episodes) {
@@ -228,10 +250,6 @@ public class Episodes {
     Episodes.getCurrentSeriesEpisodes();
     tableModel_episodes = Episodes.getTableModel_episodes();
     tabsPanel = Episodes.getTabsPanel();
-
-
-
-
   }
 
   /**

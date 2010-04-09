@@ -15,20 +15,43 @@ import myComponents.MyUsefulFunctions;
 import myseries.episodes.Episodes;
 
 /**
- *
+ * The series table
  * @author lordovol
  */
 public class Series {
 
+  /**
+   * The fulltitle field : 0
+   */
   public static final int FULLTITLE_COLUMN = 0;
+  /**
+   * The series id field : 1
+   */
   public static final int SERIES_ID_COLUMN = 1;
+  /**
+   * The hidden field : 2
+   */
   public static final int HIDDEN_COLUMN = 2;
+  /**
+   * The update field : 3
+   */
   public static final int UPDATE_COLUMN = 3;
+  /**
+   * The default season : 1
+   */
   public static final int DEFAULT_SEASON = 1;
+  /**
+   * The minimum season : 1
+   */
   public static final int MINIMUM_SEASON = 1;
+  /**
+   * The maximum season : 100
+   */
   public static final int MAXIMUM_SEASON = 100;
+  /**
+   * The season step : 1
+   */
   public static final int SEASON_STEP = 1;
-
   /**
    * The model of the Series table
    */

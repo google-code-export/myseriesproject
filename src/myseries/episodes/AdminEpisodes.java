@@ -27,7 +27,7 @@ import myComponents.myGUI.MyDraggable;
 import tools.options.Options;
 
 /**
- *
+ * The admin episodes panel
  * @author lordovol
  */
 public class AdminEpisodes extends MyDraggable {
@@ -54,7 +54,7 @@ public class AdminEpisodes extends MyDraggable {
   /**
    * Administrate an episodes record
    * @param m Myseries main form
-   * @param currentSerial The current serieal of the episode to admin
+   * @param currentSerial The current series of the episode to admin
    * @param currentEpisode The episode to admin
    * @throws java.sql.SQLException
    * @throws java.io.IOException
