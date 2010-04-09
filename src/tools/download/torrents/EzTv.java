@@ -34,7 +34,7 @@ import org.xml.sax.SAXException;
 import tools.options.Options;
 
 /**
- *
+ * Downloads a torrent from EzTv
  * @author lordovol
  */
 public class EzTv implements Runnable {
@@ -43,7 +43,12 @@ public class EzTv implements Runnable {
   private JProgressBar progress;
   private EzTvForm form;
 
-  EzTv(URI uri, EzTvForm form) {
+  /**
+   * Seacrhes EZTv
+   * @param uri
+   * @param form
+   */
+  public EzTv(URI uri, EzTvForm form) {
     this.uri = uri;
     this.form = form;
     this.progress = form.progress;
