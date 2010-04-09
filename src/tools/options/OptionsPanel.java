@@ -33,6 +33,7 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import myComponents.MyMessages;
+import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyDraggable;
 import myseries.MySeries;
 import myseries.StartPanel;
@@ -847,13 +848,7 @@ public class OptionsPanel extends MyDraggable {
       JComboBox combo = (JComboBox) c;
       // In some combos get the item instead of index
       String name = combo.getName();
-      if (name.equals(Options.DATE_FORMAT) || 
-              name.equals(Options.DEBUG_MODE) ||
-              name.equals(Options.LOOK_AND_FEEL) ||
-              name.equals(Options.FONT_FACE) ||
-              name.equals(Options.INTERNET_UPDATE_DB)||
-              name.equals(Options.SUBTITLE_SITE)||
-              name.equals(Options.PRIMARY_SUB)) {
+      if (MyUsefulFunctions.isInArray(Options._COMBO_OPTIONS_,name)) {
         return String.valueOf(combo.getSelectedItem());
       }
       return combo.getSelectedIndex();
