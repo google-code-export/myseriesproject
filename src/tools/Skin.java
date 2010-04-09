@@ -11,13 +11,13 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 
 /**
- *
+ * Skin class
  * @author lordovol
  */
 public class Skin {
 
   private static final long limit = -4289918;
-  private static Color skinColor ;
+  private static Color skinColor;
   private static Color color_1;
   private static Color color_2;
   private static Color color_4;
@@ -27,17 +27,25 @@ public class Skin {
   private static int skinBlue;
   private static float brightness;
 
+  /**
+   * Create the default skin
+   */
   public Skin() {
-    skinColor = new Color(240,240,240);
-     brightness = getBrightness();
+    skinColor = new Color(240, 240, 240);
+    brightness = getBrightness();
     skinColor = fixColor(skinColor);
-   
+
   }
+
+  /**
+   * Create a skin of the specific color
+   * @param color The color to use
+   */
   public Skin(Color color) {
     skinColor = color;
     brightness = getBrightness();
     skinColor = fixColor(skinColor);
-    
+
   }
 
   private Color fixColor(Color color) {
@@ -69,7 +77,7 @@ public class Skin {
   }
 
   /**
-   * 
+   * The brightness of the main Skin
    * @return the brightness of the main skin color
    */
   public float getBrightness() {
@@ -150,6 +158,9 @@ public class Skin {
     return Color.white;
   }
 
+  /**
+   * Apply the skin
+   */
   public static void applySkin() {
     UIManager.put("TableHeader.background", getColor_5());
     UIManager.put("TableHeader.foreground", getForeGroundColor(getColor_5()));

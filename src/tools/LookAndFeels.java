@@ -15,12 +15,17 @@ import javax.swing.UnsupportedLookAndFeelException;
 import myseries.MySeries;
 
 /**
- *
+ * Looks and Feels
  * @author lordovol
  */
 public class LookAndFeels {
   static Map<String,LookAndFeelInfo> lafMap;
 
+  /**
+   * Sets the look and feel for the application form
+   * @param m The application form
+   * @param strLaf The lookAndFeel
+   */
   public static void setLookAndFeel(MySeries m, String strLaf) {
     getLookAndFeels();
     setLookAndFeel(m, lafMap.get(strLaf));
@@ -31,6 +36,10 @@ public class LookAndFeels {
         
     }
 
+  /**
+   * Gets the supported look and feels info
+   * @return a n array of LookAndFeels info
+   */
   public static LookAndFeelInfo[] getLookAndFeels(){
     UIManager.LookAndFeelInfo[] lookAndFeelInfos = UIManager.getInstalledLookAndFeels();
     LookAndFeelInfo laf[] = new LookAndFeelInfo[lookAndFeelInfos.length];
@@ -44,6 +53,11 @@ public class LookAndFeels {
    return laf;
   }
 
+  /**
+   * Sets the look and feel for the form
+   * @param m The form
+   * @param laf The lookandfeel info
+   */
   public static void setLookAndFeel(MySeries m, LookAndFeelInfo laf) {
     try {
       UIManager.setLookAndFeel(laf.getClassName());

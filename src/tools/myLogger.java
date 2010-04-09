@@ -22,7 +22,7 @@ public class myLogger {
    * Cretates a default HTML logger
    * @param logName The name of the logger
    * @param logFile The fileneame of the logger
-   * @return
+   * @return The html logger
    */
   public static Logger createHtmlLogger(String logName, String logFile) {
     return createHtmlLogger(logName, logFile,
