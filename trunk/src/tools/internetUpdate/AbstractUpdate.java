@@ -15,7 +15,7 @@ import myseries.*;
 import tools.options.Options;
 
 /**
- *
+ * The series updater abstract class
  * @author ssoldatos
  */
 public abstract class AbstractUpdate {
@@ -24,28 +24,53 @@ public abstract class AbstractUpdate {
    * The series to update
    */
   protected Vector<SeriesRecord> serVector = new Vector<SeriesRecord>();
- /**
-  * The list of series to update
-  */
+  /**
+   * The list of series to update
+   */
   protected ArrayList<AbstractSeriesToUpdate> list = new ArrayList<AbstractSeriesToUpdate>();
+  /**
+   * The internet update form
+   */
   protected InternetUpdate iu = null;
+  /**
+   * The current messages
+   */
   protected String currentMessages = "";
+  /**
+   * The data lines that are parsed
+   */
   protected int totalLinesParsed = 0;
+  /**
+   * Start time in msecs
+   */
   protected long start;
+  /**
+   * End time in msecs
+   */
   protected long end;
+  /**
+   * If connected to internet
+   */
   protected boolean isConected = false;
+  /**
+   * The current updated series
+   */
   protected SeriesRecord series;
 
   public void run() {
-      start = System.currentTimeMillis();
-      MySeries.logger.log(Level.INFO, "Updating...");
-      update();
-      if (!isConected) {
-        MySeries.glassPane.deactivate();
-        iu.dispose();
-      }
+    start = System.currentTimeMillis();
+    MySeries.logger.log(Level.INFO, "Updating...");
+    update();
+    if (!isConected) {
+      MySeries.glassPane.deactivate();
+      iu.dispose();
     }
+  }
 
+  /**
+   * Calculates the execution time
+   * @return The updating time in mm::ss::ms
+   */
   protected String calcExecTime() {
     String execTime = "";
     int hours, mins, secs, mill;
@@ -64,6 +89,10 @@ public abstract class AbstractUpdate {
     return execTime;
   }
 
+  /**
+   * Appends a message to the current messages
+   * @param str The message to append
+   */
   protected void append(String str) {
     try {
       currentMessages += str + "<br />";
@@ -75,7 +104,9 @@ public abstract class AbstractUpdate {
     }
   }
 
-
+  /**
+   * Starts the updating
+   */
   protected void update() {
     try {
       if (iu.getCurrentSeries() == null) {
@@ -84,10 +115,9 @@ public abstract class AbstractUpdate {
         serVector.add(iu.getCurrentSeries());
       }
       iu.progress_bar.setIndeterminate(true);
-      iu.progress_bar.setString("Getting data from " +
-              (Options.toString(Options.INTERNET_UPDATE_DB).equals(InternetUpdate.EP_GUIDES_NAME) ?
-                "http://www.epguides.com" : "http://www.tvrage.com")
-              );
+      iu.progress_bar.setString("Getting data from "
+          + (Options.toString(Options.INTERNET_UPDATE_DB).equals(InternetUpdate.EP_GUIDES_NAME)
+          ? "http://www.epguides.com" : "http://www.tvrage.com"));
       append("<span style='font-weight:bold;font-size:12px'>Step 1 : Getting data</span>");
       for (int i = 0; i < serVector.size(); i++) {
         series = serVector.get(i);
@@ -119,6 +149,9 @@ public abstract class AbstractUpdate {
    */
   protected abstract boolean read(SeriesRecord series);
 
+  /**
+   * Updates the database
+   * @throws SQLException
+   */
   protected abstract void updateEpisodes() throws SQLException;
-
 }
