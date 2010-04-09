@@ -10,6 +10,7 @@
  */
 package myseries.series;
 
+import myComponents.myGUI.CopyScreenshot;
 import java.io.IOException;
 import myComponents.MyUsefulFunctions;
 import database.SeriesRecord;

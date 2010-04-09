@@ -1324,19 +1324,19 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 }//GEN-LAST:event_PopUpItem_AddEpisodeActionPerformed
 
   private void button_firstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_firstActionPerformed
-    NextEpisodes.showNextEpisodes("first");
+    NextEpisodes.showNextEpisodes(NextEpisodes.FIRST_BUTTON);
   }//GEN-LAST:event_button_firstActionPerformed
 
   private void button_previousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_previousActionPerformed
-    NextEpisodes.showNextEpisodes("previous");
+    NextEpisodes.showNextEpisodes(NextEpisodes.PREVIOUS_BUTTON);
   }//GEN-LAST:event_button_previousActionPerformed
 
   private void button_nextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_nextActionPerformed
-    NextEpisodes.showNextEpisodes("next");
+    NextEpisodes.showNextEpisodes(NextEpisodes.NEXT_BUTTON);
   }//GEN-LAST:event_button_nextActionPerformed
 
   private void button_lastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_lastActionPerformed
-    NextEpisodes.showNextEpisodes("last");
+    NextEpisodes.showNextEpisodes(NextEpisodes.LAST_BUTTON);
   }//GEN-LAST:event_button_lastActionPerformed
 
   private void menuItem_addSeriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_addSeriesActionPerformed

@@ -25,6 +25,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import myComponents.MyMessages;
+import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyDraggable;
 import myComponents.myGUI.MyFont;
 import myComponents.myGUI.Screenshot;
@@ -53,7 +54,7 @@ public class StartPanel extends MyDraggable {
     initComponents();
     getRootPane().setDefaultButton(button_create);
     setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/subtitles.png")).getImage());
-    getDatabases();
+    databasesModel = new DefaultComboBoxModel(Database.getDatabases());
     //progress.setVisible(false);
     setLocationRelativeTo(null);
     setVisible(true);
@@ -74,6 +75,11 @@ public class StartPanel extends MyDraggable {
     setVisible(true);
   }
 
+  /**
+   * The start panel to create a database
+   * @param m The myseries form
+   * @param createNewDB Create a database or not
+   */
   StartPanel(MySeries m, boolean createNewDB) {
     this.m = m;
     this.createNewDB = createNewDB;
@@ -85,21 +91,6 @@ public class StartPanel extends MyDraggable {
     panel_loadDatabase.setVisible(false);
     setSize(smaller);
     setVisible(true);
-  }
-
-  private void getDatabases() {
-    File dir = new File(Options._USER_DIR_ + "/" + Database.PATH);
-    File[] files = dir.listFiles(new FilenameFilter() {
-
-      public boolean accept(File dir, String name) {
-        return name.endsWith(".db");
-      }
-    });
-    databasesModel.addElement("");
-    for (int i = 0; i < files.length; i++) {
-      databasesModel.addElement(files[i].getName().replace(".db", ""));
-    }
-    combobox_databases.setModel(databasesModel);
   }
 
   /** This method is called from within the constructor to
@@ -335,21 +326,6 @@ public class StartPanel extends MyDraggable {
   }
 
   /**
-   * Check if needed directories exist and if not create them
-   * @throws java.io.IOException
-   */
-  private static void checkDir(String dirPath) {
-    if (!new File(dirPath).isDirectory()) {
-      if (new File(dirPath).mkdir()) {
-        MySeries.logger.log(Level.INFO, "Created directory " + dirPath);
-      } else {
-        MySeries.logger.log(Level.SEVERE, "Could not create directory " + dirPath);
-      }
-    }
-  }
-
-  
-  /**
    * Start the application
    * Gets options, and starts logging
    * Create Dirs and if datatbase exists start MySeries else prompts for creating a new DB
@@ -387,9 +363,9 @@ public class StartPanel extends MyDraggable {
       
       //create dirs
       MySeries.logger.log(Level.INFO, "Checking directories");
-      checkDir(Options._USER_DIR_ + "/" + Database.PATH);
-      checkDir(Options._USER_DIR_ + "/" + Screenshot.PATH);
-      checkDir(Options._USER_DIR_ + "/" + Torrent.TORRENTS_PATH);
+      MyUsefulFunctions.checkDir(Options._USER_DIR_ + "/" + Database.PATH);
+      MyUsefulFunctions.checkDir(Options._USER_DIR_ + "/" + Screenshot.PATH);
+      MyUsefulFunctions.checkDir(Options._USER_DIR_ + "/" + Torrent.TORRENTS_PATH);
       // Create the default db if not exists and create the conn, stmt
 
       if (Options.toString(Options.DB_NAME).equals("") ||
