@@ -16,18 +16,26 @@ import javax.swing.JOptionPane;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import tools.download.subtitles.Subtitle;
+import tools.download.subtitles.SubtitleCode;
 import tools.options.Options;
 
 /**
- *
- * @author ΔΙΟΝΥΣΗΣ
+ * Gets the subtitleOnline code for the series
+ * @author 
  */
 public class GetSOnlineCode {
 
   private SeriesRecord series;
-  private ArrayList<SLink> sLinks;
+  private ArrayList<SCode> sLinks;
+  /**
+   * The sonline code
+   */
   public String sOnlineCode = "";
 
+  /**
+   * Gets the subtitleOnline code for a series
+   * @param series The series
+   */
   public GetSOnlineCode(SeriesRecord series) {
     try {
       this.series = series;
@@ -48,11 +56,11 @@ public class GetSOnlineCode {
       if (sLinks.size() == 0) {
         MyMessages.message("Series not found", "The series " + series.getFullTitle() + " is not found in SubtitleOnline");
       } else if (sLinks.size() == 1) {
-        this.sOnlineCode = sLinks.get(0).sOnlineCode;
+        this.sOnlineCode = sLinks.get(0).getCode();
       } else {
-        SLink sl = (SLink) JOptionPane.showInputDialog(null, "Multiple series found", "Choose the right series", JOptionPane.QUESTION_MESSAGE, null, sLinks.toArray(), 0);
+        SCode sl = (SCode) JOptionPane.showInputDialog(null, "Multiple series found", "Choose the right series", JOptionPane.QUESTION_MESSAGE, null, sLinks.toArray(), 0);
         if (sl != null) {
-          this.sOnlineCode = sl.sOnlineCode;
+          this.sOnlineCode = sl.getCode();
         }
       }
     } else {
@@ -61,7 +69,7 @@ public class GetSOnlineCode {
   }
 
   private void parseSearchResult(BufferedReader in) throws IOException {
-    sLinks = new ArrayList<SLink>();
+    sLinks = new ArrayList<SCode>();
     String line = "";
     boolean inResults = false;
     String curTitle = "";
@@ -79,26 +87,25 @@ public class GetSOnlineCode {
           line = in.readLine();
           curTitle = line.replaceAll("</a></td>", "");
           if (!curTitle.equals("") && !curSOnlineCode.equals("")) {
-            sLinks.add(new SLink(curTitle, curSOnlineCode));
+            SCode link = new SCode();
+            link.setTitle(curTitle);
+            link.setCode(curSOnlineCode);
+            sLinks.add(link);
           }
         }
       }
     }
   }
 
-  class SLink {
-
-    String title;
-    String sOnlineCode;
-
-    private SLink(String title, String sOnlineCode) {
-      this.title = title.trim();
-      this.sOnlineCode = sOnlineCode.trim();
-    }
+  /**
+   * A subtitleOnline link
+   */
+  class SCode extends SubtitleCode{
 
     @Override
-    public String toString() {
-      return title;
+    public void setCode(String code) {
+      this.code = code;
     }
+
   }
 }

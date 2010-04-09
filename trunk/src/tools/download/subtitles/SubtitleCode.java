@@ -8,7 +8,7 @@ package tools.download.subtitles;
  *
  * @author ssoldatos
  */
-public abstract class SubtitleLink {
+public abstract class SubtitleCode {
 
   protected String title;
   protected String code;

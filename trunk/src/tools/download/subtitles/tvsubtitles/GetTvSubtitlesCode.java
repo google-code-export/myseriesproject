@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package tools.download.subtitles.tvsubtitles;
 
 import database.SeriesRecord;
@@ -17,17 +16,23 @@ import javax.swing.JOptionPane;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import tools.download.subtitles.Subtitle;
+import tools.download.subtitles.SubtitleCode;
 import tools.options.Options;
 
 /**
- *
+ * Gets the tvSubtitles code for a series
  * @author lordovol
  */
 public class GetTvSubtitlesCode {
+
   public String tSubCode;
   private SeriesRecord series;
-  private ArrayList<TLink> sLinks;
+  private ArrayList<TCode> sLinks;
 
+  /**
+   * Gets the code for a seires
+   * @param series The series
+   */
   public GetTvSubtitlesCode(SeriesRecord series) {
     try {
       this.series = series;
@@ -38,21 +43,21 @@ public class GetTvSubtitlesCode {
     }
   }
 
-  private void getCode() throws IOException{
+  private void getCode() throws IOException {
     MyUsefulFunctions.initInternetConnection();
     if (MyUsefulFunctions.hasInternetConnection()) {
-      URL subsUrl = new URL(Subtitle.TV_SUBTITLES_URL + "search.php?q=" + URLEncoder.encode(series.getTitle(),"UTF-8"));
+      URL subsUrl = new URL(Subtitle.TV_SUBTITLES_URL + "search.php?q=" + URLEncoder.encode(series.getTitle(), "UTF-8"));
       BufferedReader in = new BufferedReader(new InputStreamReader(subsUrl.openStream()));
       parseSearchResult(in);
       in.close();
       if (sLinks.size() == 0) {
         MyMessages.message("Series not found", "The series " + series.getFullTitle() + " is not found in SubtitleOnline");
       } else if (sLinks.size() == 1) {
-        this.tSubCode = sLinks.get(0).tSubCode;
+        this.tSubCode = sLinks.get(0).getCode();
       } else {
-        TLink tl = (TLink) JOptionPane.showInputDialog(null, "Multiple series found", "Choose the right series", JOptionPane.QUESTION_MESSAGE, null, sLinks.toArray(), 0);
+        TCode tl = (TCode) JOptionPane.showInputDialog(null, "Multiple series found", "Choose the right series", JOptionPane.QUESTION_MESSAGE, null, sLinks.toArray(), 0);
         if (tl != null) {
-          this.tSubCode = tl.tSubCode;
+          this.tSubCode = tl.getCode();
         }
       }
     } else {
@@ -61,7 +66,7 @@ public class GetTvSubtitlesCode {
   }
 
   private void parseSearchResult(BufferedReader in) throws IOException {
-    sLinks = new ArrayList<TLink>();
+    sLinks = new ArrayList<TCode>();
     String line = "";
     boolean inResults = false;
     String curTitle = "";
@@ -69,12 +74,15 @@ public class GetTvSubtitlesCode {
     while ((line = in.readLine()) != null) {
       if (line.indexOf("<p class=\"description\">Search results") > -1) {
         String[] results = line.split("(<a href=\"/)|(</a>)", -1);
-        for (int i =0 ; i < results.length ; i++ ){
+        for (int i = 0; i < results.length; i++) {
           String r = results[i];
-          if(r.startsWith("tvshow")){
+          if (r.startsWith("tvshow")) {
             String code = r.replaceAll("(tvshow-)|(\\.html.++)", "");
             String title = r.replaceAll("(tvshow-\\d*\\.html\">)", "");
-            sLinks.add(new TLink(title, code));
+            TCode link = new TCode();
+            link.setTitle(title);
+            link.setCode(code);
+            sLinks.add(link);
           }
         }
       }
@@ -82,20 +90,12 @@ public class GetTvSubtitlesCode {
 
   }
 
-   class TLink {
-
-    String title;
-    String tSubCode;
-
-    private TLink(String title, String tSCode) {
-      this.title = title.trim();
-      this.tSubCode = tSCode.trim()+"-"+series.getSeason();
-    }
-
+  class TCode extends SubtitleCode {
+   
     @Override
-    public String toString() {
-      return title;
+    public void setCode(String code) {
+      this.code = code.trim() +"-"+series.getSeason();
     }
-  }
 
+  }
 }
