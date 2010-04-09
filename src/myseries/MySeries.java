@@ -91,8 +91,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   private MyEpisodesTableModel tableModel_episodes;
   private MyFilteredSeriesTableModel tableModel_filterSeries;
   private ComboBoxModel comboBoxModel_filters;
-  public static String version = "1.2(rev100)";
-  public String date = "2010-03-28";
+  public static String version = "1.2(rev206)";
+  public String date = "2010-04-09";
   public static MyDisabledGlassPane glassPane;
   public static Logger logger;
   public static final long serialVersionUID = 1L;
@@ -594,8 +594,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       panel_SeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(panel_SeriesLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(imageLayerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 504, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(14, Short.MAX_VALUE))
+        .addComponent(imageLayerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE)
+        .addGap(53, 53, 53))
       .addGroup(panel_SeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(panel_SeriesLayout.createSequentialGroup()
           .addContainerGap()
