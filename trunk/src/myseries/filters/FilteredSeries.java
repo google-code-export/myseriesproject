@@ -21,23 +21,86 @@ import myComponents.MyTableModels.MyFilteredSeriesTableModel;
  */
 public class FilteredSeries {
 
+  /**
+   * The fulltitle field of the table : 0
+   */
   public static final int FULLTITLE_COLUMN = 0;
+  /**
+   * The episode number field of the table : 1
+   */
   public static final int EPISODE_NUMBER_COLUMN = 1;
+  /**
+   * The episode record field of the table : 2
+   */
   public static final int EPISODERECORD_COLUMN = 2;
+  /**
+   * The aired field of the table : 3
+   */
   public static final int AIRED_COLUMN = 3;
+  /**
+   * The downloaded field of the table : 4
+   */
   public static final int DOWNLOADED_COLUMN = 4;
+  /**
+   * The sub status field of the table : 5
+   */
   public static final int SUBS_COLUMN = 5;
+  /**
+   * The seen field of the table : 6
+   */
   public static final int SEEN_COLUMN = 6;
+  /**
+   * The no subs status : 0
+   */
   public static final int SUBS_NONE = 0;
+  /**
+   * The secondary subs status : 1
+   */
   public static final int SUBS_SEC = 1;
+  /**
+   * The primary subs status : 2
+   */
   public static final int SUBS_PRIM = 2;
+  /**
+   * The both subs status : 3
+   */
   public static final int SUBS_BOTH = 3;
+  /**
+   * The primary or secondary subs status : 4
+   */
   public static final int SUBS_PRIM_OR_SEC = 4;
+  /**
+   * The not primary subs status : 5
+   */
   public static final int SUBS_NOT_PRIM = 5;
+  /**
+   * The unaware subs status : 6
+   */
   public static final int SUBS_UNAWARE = 6;
-
-
-
+  /**
+   * The not seen status : 0
+   */
+  public static final int SEEN_NO = 0;
+  /**
+   * The seen status : 1
+   */
+  public static final int SEEN_YES = 1;
+  /**
+   * The unaware seen status : 2
+   */
+  public static final int SEEN_UNAWARE = 2;
+/**
+   * The not downloaded status : 0
+   */
+  public static final int DOWNLOADED_NO = 0;
+  /**
+   * The downloaded status : 1
+   */
+  public static final int DOWNLOADED_YES = 1;
+  /**
+   * The unaware downloaded status : 2
+   */
+  public static final int DOWNLOADED_UNAWARE = 2;
   /**
    * The model of the filteredSeries table
    */
@@ -74,9 +137,9 @@ public class FilteredSeries {
     String where = "";
     where += getSeen() == EpisodesRecord.NOT_SEEN || getSeen() == EpisodesRecord.SEEN ? " AND seen = " + getSeen() : "";
     where += getDownloaded() == EpisodesRecord.NOT_DOWNLOADED || getDownloaded() == EpisodesRecord.DOWNLOADED ? " AND downloaded = " + getDownloaded() : "";
-    where += getSubtitles() < SUBS_PRIM_OR_SEC ? " AND subs =  " + getSubtitles() : getSubtitles() == SUBS_PRIM_OR_SEC ?
-      " AND  (subs = "+SUBS_SEC+" OR subs ="+SUBS_PRIM+" )" : getSubtitles() == SUBS_NOT_PRIM ? " AND  (subs = "+SUBS_NONE+" OR subs = "+SUBS_SEC+" )" : "";
-    String sql = "SELECT e.* FROM episodes e JOIN series s on e.series_ID = s.series_ID WHERE s.hidden = "+SeriesRecord.NOT_HIDDEN+" " + where + " ORDER BY aired ASC";
+    where += getSubtitles() < SUBS_PRIM_OR_SEC ? " AND subs =  " + getSubtitles() : getSubtitles() == SUBS_PRIM_OR_SEC
+        ? " AND  (subs = " + SUBS_SEC + " OR subs =" + SUBS_PRIM + " )" : getSubtitles() == SUBS_NOT_PRIM ? " AND  (subs = " + SUBS_NONE + " OR subs = " + SUBS_SEC + " )" : "";
+    String sql = "SELECT e.* FROM episodes e JOIN series s on e.series_ID = s.series_ID WHERE s.hidden = " + SeriesRecord.NOT_HIDDEN + " " + where + " ORDER BY aired ASC";
     ResultSet rs = DBConnection.stmt.executeQuery(sql);
     SeriesRecord ser;
     while (rs.next()) {
@@ -89,7 +152,7 @@ public class FilteredSeries {
       subsInt = rs.getInt("subs");
       subs = subsInt == SUBS_NONE ? "None" : subsInt == SUBS_SEC ? "English" : subsInt == SUBS_PRIM ? "Greek" : "Both";
       boolSeen = rs.getBoolean("seen");
-      Vector<SeriesRecord> seriesV = SeriesRecord.getSeriesBySql("SELECT * FROM series WHERE hidden = "+SeriesRecord.NOT_HIDDEN+" AND series_ID = " + series_ID);
+      Vector<SeriesRecord> seriesV = SeriesRecord.getSeriesBySql("SELECT * FROM series WHERE hidden = " + SeriesRecord.NOT_HIDDEN + " AND series_ID = " + series_ID);
       ser = seriesV.get(0);
 
       Object[] data = {ser.getFullTitle(), episode, EpisodesRecord.getEpisodeByID(id), aired, boolDownloaded, subs, boolSeen};
