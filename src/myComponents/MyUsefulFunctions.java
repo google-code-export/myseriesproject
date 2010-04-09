@@ -307,11 +307,11 @@ public class MyUsefulFunctions {
         System.exit(0);
       } else {
         name = JOptionPane.showInputDialog(null,
-                message,
-                title,
-                JOptionPane.PLAIN_MESSAGE,
-                null,
-                files, files[0]);
+            message,
+            title,
+            JOptionPane.PLAIN_MESSAGE,
+            null,
+            files, files[0]);
 
         return String.valueOf(name);
       }
@@ -504,16 +504,31 @@ public class MyUsefulFunctions {
 
   /**
    * Check if needed directories exist and if not create them
-   * @throws java.io.IOException
+   * @param dirPath The directory to check
    */
   public static void checkDir(String dirPath) {
     if (!new File(dirPath).isDirectory()) {
       if (new File(dirPath).mkdir()) {
-       myseries.MySeries.logger.log(Level.INFO, "Created directory " + dirPath);
+        myseries.MySeries.logger.log(Level.INFO, "Created directory " + dirPath);
       } else {
-       myseries.MySeries.logger.log(Level.SEVERE, "Could not create directory " + dirPath);
+        myseries.MySeries.logger.log(Level.SEVERE, "Could not create directory " + dirPath);
       }
     }
+  }
+
+  /**
+   * Checks if a value is in an array
+   * @param array The array to check against
+   * @param value The value to search
+   * @return True if value is in array else false
+   */
+  public static boolean isInArray(Object[] array, Object value) {
+    for (int i = 0; i < array.length; i++) {
+      if (array[i].equals(value)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   private MyUsefulFunctions() {
