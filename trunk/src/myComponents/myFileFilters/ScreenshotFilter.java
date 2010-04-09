@@ -9,7 +9,7 @@ import java.io.File;
 import javax.swing.filechooser.FileFilter;
 
 /**
- *
+ * Screenshot filter
  * @author lordovol
  */
 public class ScreenshotFilter extends FileFilter {

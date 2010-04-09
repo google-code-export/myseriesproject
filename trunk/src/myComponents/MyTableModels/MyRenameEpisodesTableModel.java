@@ -8,7 +8,7 @@ import javax.swing.table.DefaultTableModel;
 import tools.renaming.RenameEpisodes;
 
 /**
- *
+ * The table model for the rename episodes table
  * @author lordovol
  */
 public class MyRenameEpisodesTableModel extends DefaultTableModel {

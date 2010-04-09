@@ -10,7 +10,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import myComponents.MyUsefulFunctions;
 
 /**
- *
+ * The cell renderer for the date field
  * @author lordovol
  */
 public class MyJDateChooserCellRenderer extends DefaultTableCellRenderer {

@@ -12,7 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 /**
- *
+ * The screenshot panel
  * @author ssoldatos
  */
 public class Screenshot extends JPanel {
@@ -25,11 +25,18 @@ public class Screenshot extends JPanel {
   private static final long serialVersionUID = 356475743574387L;
   private Image image;
 
+  /**
+   * Creates the default screenshot of the application's logo
+   */
   public Screenshot() {
     this.image = new ImageIcon(getClass().getResource("/images/logo.png")).getImage();
     this.setBorder(BorderFactory.createLineBorder(Color.black));
   }
 
+  /**
+   * Sets a screenshot
+   * @param image The screenshot image
+   */
   public Screenshot(Image image) {
     this.image = image;
   }
@@ -48,6 +55,7 @@ public class Screenshot extends JPanel {
   }
 
   /**
+   * Sets an image and it's size
    * @param image the image to set
    * @param width
    * @param height 

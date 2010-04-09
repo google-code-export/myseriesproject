@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 
 /**
- *
+ * The subtitles filter
  * @author lordovol
  */
 public class SubtitlesFilter implements FilenameFilter {
