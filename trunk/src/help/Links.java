@@ -9,7 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
+ * A map of Help textt => Help links for opening the help html files by clicking on
+ * the text
  * @author ssoldatos
  */
 public class Links {

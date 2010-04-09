@@ -56,12 +56,10 @@ public class About extends MyDraggable {
     Properties props = System.getProperties();
 
     // Enumerate all system properties
-    Enumeration enumer = props.propertyNames();
+    Enumeration<?> enumer = props.propertyNames();
     propertyString = "<table width=\"100\" cellspacing=\"0\" cellpadding=\"0\">";
     for (; enumer.hasMoreElements();) {
-
       String propName = (String) enumer.nextElement();
-
       // Get property value
       String propValue = (String) props.get(propName);
       propertyString += "<tr valign=\"top\"><td><b>" + propName + "</b>:</td><td> " + propValue.replaceAll(";", "; ") + "</td></tr>";
