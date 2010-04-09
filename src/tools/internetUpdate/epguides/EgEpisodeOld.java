@@ -17,6 +17,11 @@ public class EgEpisodeOld {
     String data;
     private int episodes;
 
+    /**
+     * Constructor for oldEpGuidesEpisodes format
+     * @param series The seires
+     * @param data The series Data
+     */
     public EgEpisodeOld(SeriesRecord series, String data) {
       this.series = series;
       this.data = data;
