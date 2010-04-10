@@ -76,11 +76,12 @@ public class NextEpisodes {
     } 
     if (Options.toBoolean(Options.SHOW_UNDOWNLOADED)) {
       where += " OR downloaded = "+EpisodesRecord.NOT_DOWNLOADED;
+    } else {
+      where += " AND downloaded = "+EpisodesRecord.NOT_DOWNLOADED;
     }
     String sql = "SELECT e.title AS epTitle, e.aired AS aired, s.title AS serial FROM episodes e " +
         "LEFT JOIN series s ON e.series_ID = s.series_ID WHERE (aired >= current_date " + where +
         ") AND hidden = "+SeriesRecord.NOT_HIDDEN+" AND aired != '' AND substr(aired,6) <> '00-00' ORDER BY aired ASC LIMIT " + Options.toInt("NEXT_EPISODES_LIMIT");
-    EpisodesRecord e = new EpisodesRecord();
     ResultSet rs = EpisodesRecord.query(sql);
     while (rs.next()) {
       String aired = myComponents.MyUsefulFunctions.convertDateForRendering(rs.getString("aired"));

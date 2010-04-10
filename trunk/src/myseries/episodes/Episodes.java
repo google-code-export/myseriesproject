@@ -28,6 +28,10 @@ import myComponents.myFileFilters.VideoFilter;
 public class Episodes {
 
   /**
+   * The number of columns
+   */
+  public static final int NUMBER_OF_COLUMS = 7;
+  /**
    * The episodes number table column : 0
    */
   public static final int EPISODE_NUM_COLUMN = 0;
