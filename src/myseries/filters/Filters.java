@@ -19,8 +19,12 @@ import myComponents.MyTableModels.MyFilteredSeriesTableModel;
  * user's filters
  * @author lordovol
  */
-public class FilteredSeries {
+public class Filters {
 
+  /**
+   * The number of columns : 7
+   */
+  public static final int NUMBER_OF_COLUMNS = 7;
   /**
    * The fulltitle field of the table : 0
    */
@@ -188,7 +192,7 @@ public class FilteredSeries {
    * @param tableModel_filterSeries the tableModel_filterSeries to set
    */
   public static void setTableModel_filterSeries(MyFilteredSeriesTableModel tableModel_filterSeries) {
-    FilteredSeries.tableModel_filterSeries = tableModel_filterSeries;
+    Filters.tableModel_filterSeries = tableModel_filterSeries;
   }
 
   /**
@@ -202,7 +206,7 @@ public class FilteredSeries {
    * @param seen the seen to set
    */
   public static void setSeen(int seen) {
-    FilteredSeries.seen = seen;
+    Filters.seen = seen;
   }
 
   /**
@@ -216,7 +220,7 @@ public class FilteredSeries {
    * @param downloaded the downloaded to set
    */
   public static void setDownloaded(int downloaded) {
-    FilteredSeries.downloaded = downloaded;
+    Filters.downloaded = downloaded;
   }
 
   /**
@@ -230,9 +234,9 @@ public class FilteredSeries {
    * @param subtitles the subtitles to set
    */
   public static void setSubtitles(int subtitles) {
-    FilteredSeries.subtitles = subtitles;
+    Filters.subtitles = subtitles;
   }
 
-  private FilteredSeries() {
+  private Filters() {
   }
 }

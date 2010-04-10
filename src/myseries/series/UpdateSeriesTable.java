@@ -19,12 +19,12 @@ import myseries.episodes.NextEpisodes;
 public class UpdateSeriesTable {
 
   private TableModel model;
+  private String rec[] = new String[Series.NUMBER_OF_COLUMS];
 
   public UpdateSeriesTable(TableModelEvent e) {
     if (e.getType() == TableModelEvent.UPDATE) {
       int row = e.getFirstRow();
       model = (TableModel) e.getSource();
-      String rec[] = new String[Series.NUMBER_OF_COLUMS];
       for (int i = 0; i < Series.NUMBER_OF_COLUMS; i++) {
         rec[i] = String.valueOf(model.getValueAt(row, i));
       }

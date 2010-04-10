@@ -5,7 +5,7 @@
 package myComponents.MyTableModels;
 
 import javax.swing.table.DefaultTableModel;
-import myseries.filters.FilteredSeries;
+import myseries.filters.Filters;
 
 /**
  * The tablemodel for filtered series table
@@ -17,9 +17,9 @@ public class MyFilteredSeriesTableModel extends DefaultTableModel {
 
   @Override
   public Class<?> getColumnClass(int columnIndex) {
-    if (columnIndex == FilteredSeries.DOWNLOADED_COLUMN || columnIndex == FilteredSeries.SEEN_COLUMN) {
+    if (columnIndex == Filters.DOWNLOADED_COLUMN || columnIndex == Filters.SEEN_COLUMN) {
       return Boolean.class;
-    } else if (columnIndex == FilteredSeries.EPISODE_NUMBER_COLUMN) {
+    } else if (columnIndex == Filters.EPISODE_NUMBER_COLUMN) {
       return Integer.class;
     } else {
       return super.getColumnClass(columnIndex);
@@ -28,7 +28,7 @@ public class MyFilteredSeriesTableModel extends DefaultTableModel {
 
   @Override
   public boolean isCellEditable(int row, int col) {
-    if (col == FilteredSeries.DOWNLOADED_COLUMN || col == FilteredSeries.SEEN_COLUMN || col == FilteredSeries.SUBS_COLUMN) {
+    if (col == Filters.DOWNLOADED_COLUMN || col == Filters.SEEN_COLUMN || col == Filters.SUBS_COLUMN) {
       return true;
     }
     return false;
