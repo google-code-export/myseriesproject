@@ -52,6 +52,7 @@ import myComponents.myGUI.MyDisabledGlassPane;
 import myComponents.myTableCellRenderers.MyJDateChooserCellRenderer;
 import myComponents.myTableCellRenderers.MyTitleCellRenderer;
 import myseries.actions.Actions;
+import myseries.episodes.UpdateEpisodesTable;
 import myseries.filters.FilteredSeries;
 import tools.DesktopSupport;
 import tools.Skin;
@@ -64,10 +65,10 @@ import tools.myLogger;
 public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
   private MySeriesTableModel tableModel_series;
-  private MyEpisodesTableModel tableModel_episodes;
+  public MyEpisodesTableModel tableModel_episodes;
   private MyFilteredSeriesTableModel tableModel_filterSeries;
   public ComboBoxModel comboBoxModel_filters;
-  public static String version = "1.2(rev206)";
+  public static String version = "1.2(rev234)";
   public String date = "2010-04-09";
   public static MyDisabledGlassPane glassPane;
   public static Logger logger;
@@ -1538,22 +1539,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   @Override
   public void tableChanged(TableModelEvent e) {
     if (e.getSource() instanceof MyEpisodesTableModel) {
-      String rec[] = new String[7];
-
-      if (e.getType() == TableModelEvent.UPDATE) {
-        int row = e.getFirstRow();
-        TableModel model = (TableModel) e.getSource();
-
-        for (int i = 0; i < 7; i++) {
-          rec[i] = String.valueOf(model.getValueAt(row, i));
-        }
-        updateEpisode(rec);
-        //try {
-        //Episodes.updateEpisodesTable();
-        //} catch (SQLException ex) {
-        //  MySeries.logger.log(Level.SEVERE, null, ex);
-        // }
-      }
+      new UpdateEpisodesTable(e);
+      
     } else if (e.getSource() instanceof MySeriesTableModel) {
       if (e.getType() == 0) {
         int row = e.getFirstRow();
@@ -1612,47 +1599,5 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     ser.save();
     NextEpisodes.createNextEpisodes();
     NextEpisodes.show();
-  }
-
-  private void updateEpisode(int row) {
-    String rec[] = new String[7];
-    for (int i = 0; i < 7; i++) {
-      rec[i] = String.valueOf(tableModel_episodes.getValueAt(row, i));
-    }
-    updateEpisode(rec);
-    try {
-      //Episodes.updateEpisodesTable();
-      NextEpisodes.createNextEpisodes();
-      NextEpisodes.show();
-    } catch (SQLException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
-    }
-  }
-
-  private void updateEpisode(String[] rec) {
-    try {
-      EpisodesRecord er = EpisodesRecord.getEpisodeByID(Integer.parseInt(rec[6]));
-      er.setEpisode(Integer.parseInt(rec[0]));
-      er.setTitle(rec[1]);
-      if (!rec[2].equals("")) {
-        er.setAired(rec[2]);
-      }
-      er.setDownloaded(rec[3].equals("true") ? 1 : 0);
-      er.setSubs(rec[4].equals("None") ? 0 : rec[4].equals("English") ? 1 : rec[4].equals("Greek") ? 2 : rec[4].equals("Both") ? 3 : 4);
-      er.setSeen(rec[5].equals("true") ? 1 : 0);
-      er.save();
-      NextEpisodes.createNextEpisodes();
-      NextEpisodes.show();
-
-
-    } catch (SQLException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
-
-
-    } catch (NumberFormatException ex) {
-      MyMessages.error("Not a number", "The value you entered is not a number");
-
-    }
-
   }
 }
