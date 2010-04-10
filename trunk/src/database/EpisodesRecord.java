@@ -48,6 +48,10 @@ public class EpisodesRecord extends Record {
    */
   public static final int BOTH_SUBS = 3;
   /**
+   * Unknown state of subs , used in EpdateEpisodesTable : 4
+   */
+  public static final int UNKNOWN_SUB = 4;
+   /**
    * MySQL date format : "yyyy-MM-dd"
    */
   public static final String MYSQL_DATE_FORMAT = "yyyy-MM-dd";
