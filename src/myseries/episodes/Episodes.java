@@ -30,7 +30,7 @@ public class Episodes {
   /**
    * The number of columns
    */
-  public static final int NUMBER_OF_COLUMS = 7;
+  public static final int NUMBER_OF_COLUMS = 6;
   /**
    * The episodes number table column : 0
    */
@@ -38,7 +38,7 @@ public class Episodes {
   /**
    * The episodes title table column : 1
    */
-  public static final int TITLE_COLUMN = 1;
+  public static final int EPISODERECORD_COLUMN = 1;
   /**
    * The episodes aired table column : 2
    */
@@ -56,17 +56,13 @@ public class Episodes {
    */
   public static final int SEEN_COLUMN = 5;
   /**
-   * The episodes id table column : 6
-   */
-  public static final int EPISODE_ID_COLUMN = 6;
-  /**
    * The Episodes number column title : Episode Number
    */
    public static final String EPISODE_NUM_COLUMN_TITLE = "Episode";
   /**
    * The episodes title table column title : Title
    */
-  public static final String TITLE_COLUMN_TITLE = "Title";
+  public static final String EPISODERECORD_COLUMN_TITLE = "Title";
   /**
    * The episodes aired table column title : Aired
    */
@@ -83,10 +79,6 @@ public class Episodes {
    * The episodes seen table column title : Seen
    */
   public static final String SEEN_COLUMN_TITLE = "Seen";
-  /**
-   * The episodes id table column title : Episode_id - hidden
-   */
-  public static final String EPISODE_ID_COLUMN_TITLE = "Episode ID";
   /**
    * The episodes table model
    */
@@ -207,7 +199,7 @@ public class Episodes {
       }
       subs = e.getSubs() == EpisodesRecord.NO_SUBS ? "None" : e.getSubs() == EpisodesRecord.SEC_SUB ? "English" : e.getSubs() == EpisodesRecord.PRIM_SUB ? "Greek" : "Both";
       seen = rs.getBoolean("seen");
-      Object[] data = {episode, e.getTitle(), e.getAired(), download, subs, seen, e.getEpisode_ID()};
+      Object[] data = {episode, e, e.getAired(), download, subs, seen};
       getTableModel_episodes().addRow(data);
       eps.add(e);
     }

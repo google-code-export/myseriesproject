@@ -18,7 +18,7 @@ import myseries.MySeries;
  */
 public class UpdateEpisodesTable {
 
-  String rec[] = new String[Episodes.NUMBER_OF_COLUMS];
+  Object rec[] = new Object[Episodes.NUMBER_OF_COLUMS];
   private TableModel model;
 
   public UpdateEpisodesTable(TableModelEvent e) {
@@ -26,7 +26,7 @@ public class UpdateEpisodesTable {
       int row = e.getFirstRow();
       model = (TableModel) e.getSource();
       for (int i = 0; i < Episodes.NUMBER_OF_COLUMS; i++) {
-        rec[i] = String.valueOf(model.getValueAt(row, i));
+        rec[i] = model.getValueAt(row, i);
       }
       updateEpisode(rec);
     }
@@ -34,7 +34,7 @@ public class UpdateEpisodesTable {
 
   private void updateEpisode(int row) {
     for (int i = 0; i < model.getColumnCount(); i++) {
-      rec[i] = String.valueOf(model.getValueAt(row, i));
+      rec[i] = model.getValueAt(row, i);
     }
     updateEpisode(rec);
     try {
@@ -46,21 +46,21 @@ public class UpdateEpisodesTable {
     }
   }
 
-  private void updateEpisode(String[] rec) {
+  private void updateEpisode(Object[] rec) {
     try {
-      EpisodesRecord er = EpisodesRecord.getEpisodeByID(Integer.parseInt(rec[6]));
-      er.setEpisode(Integer.parseInt(rec[Episodes.EPISODE_NUM_COLUMN]));
-      er.setTitle(rec[Episodes.TITLE_COLUMN]);
+      EpisodesRecord er = (EpisodesRecord) rec[Episodes.EPISODERECORD_COLUMN];
+      er.setEpisode((Integer)rec[Episodes.EPISODE_NUM_COLUMN]);
+      er.setTitle(((EpisodesRecord)rec[Episodes.EPISODERECORD_COLUMN]).getTitle());
       if (!rec[Episodes.AIRED_COLUMN].equals("")) {
-        er.setAired(rec[Episodes.AIRED_COLUMN]);
+        er.setAired((String)rec[Episodes.AIRED_COLUMN]);
       }
-      er.setDownloaded(rec[Episodes.DOWNLOADED_COLUMN].equals("true") ? EpisodesRecord.DOWNLOADED : EpisodesRecord.NOT_DOWNLOADED);
+      er.setDownloaded((Boolean)rec[Episodes.DOWNLOADED_COLUMN] ? EpisodesRecord.DOWNLOADED : EpisodesRecord.NOT_DOWNLOADED);
       er.setSubs(rec[Episodes.SUBS_COLUMN].equals("None") ? EpisodesRecord.NO_SUBS
               : rec[Episodes.SUBS_COLUMN].equals("English") ? EpisodesRecord.PRIM_SUB
               : rec[Episodes.SUBS_COLUMN].equals("Greek") ? EpisodesRecord.SEC_SUB
               : rec[Episodes.SUBS_COLUMN].equals("Both") ? EpisodesRecord.BOTH_SUBS
               : EpisodesRecord.UNKNOWN_SUB);
-      er.setSeen(rec[Episodes.SEEN_COLUMN].equals("true") ? EpisodesRecord.SEEN : EpisodesRecord.NOT_SEEN);
+      er.setSeen((Boolean)rec[Episodes.SEEN_COLUMN]? EpisodesRecord.SEEN : EpisodesRecord.NOT_SEEN);
       er.save();
      // NextEpisodes.createNextEpisodes();
      // NextEpisodes.show();

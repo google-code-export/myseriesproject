@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 import javax.swing.JTable;
+import javax.swing.table.TableColumnModel;
 import myComponents.MyTableModels.MyFilteredSeriesTableModel;
 
 /**
@@ -153,7 +154,7 @@ public class Filters {
   /**
    * The filtered episodes table
    */
-  private static JTable table_FilteredSeriesEpisodesList;
+  public static JTable table_filters;
 
   /**
    * Gets the filtered episodes
@@ -194,8 +195,8 @@ public class Filters {
     }
     rs.close();
 
-    if (getTableModel_filterSeries() != null && table_FilteredSeriesEpisodesList != null) {
-      table_FilteredSeriesEpisodesList.setModel(getTableModel_filterSeries());
+    if (getTableModel_filterSeries() != null && table_filters != null) {
+      table_filters.setModel(getTableModel_filterSeries());
     }
   }
 
@@ -263,6 +264,18 @@ public class Filters {
    */
   public static void setSubtitles(int subtitles) {
     Filters.subtitles = subtitles;
+  }
+
+  public static void setTableFilters(JTable table) {
+    Filters.table_filters = table;
+  }
+
+  public static void setTableWidths(Integer[] filtersTableWidths) {
+    TableColumnModel model = Filters.table_filters.getColumnModel();
+    for (int i = 0; i < filtersTableWidths.length; i++) {
+      Integer width = filtersTableWidths[i];
+      model.getColumn(i).setPreferredWidth(width);
+    }
   }
 
   private Filters() {
