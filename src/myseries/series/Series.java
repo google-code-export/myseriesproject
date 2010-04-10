@@ -40,6 +40,22 @@ public class Series {
    * The update field : 3
    */
   public static final int UPDATE_COLUMN = 3;
+   /**
+   * The fulltitle field title : Title
+   */
+  public static final String FULLTITLE_COLUMN_TITLE = "Title";
+  /**
+   * The series id field title : Series_ID - Hidden
+   */
+  public static final String SERIES_ID_COLUMN_TITLE = "Series_ID";
+  /**
+   * The hidden field title : Hidden
+   */
+  public static final String HIDDEN_COLUMN_TITLE = "Hidden";
+  /**
+   * The update field title : Update
+   */
+  public static final String UPDATE_COLUMN_TITLE = "Update";
   /**
    * The default season : 1
    */

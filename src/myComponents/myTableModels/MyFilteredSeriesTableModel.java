@@ -15,6 +15,16 @@ public class MyFilteredSeriesTableModel extends DefaultTableModel {
 
   private static final long serialVersionUID = 325756637473L;
 
+  public MyFilteredSeriesTableModel() {
+    addColumn(Filters.FULLTITLE_COLUMN_TITLE);
+    addColumn(Filters.EPISODE_NUMBER_COLUMN_TITLE);
+    addColumn(Filters.EPISODERECORD_COLUMN_TITLE);
+    addColumn(Filters.AIRED_COLUMN_TITLE);
+    addColumn(Filters.DOWNLOADED_COLUMN_TITLE);
+    addColumn(Filters.SUBS_COLUMN_TITLE);
+    addColumn(Filters.SEEN_COLUMN_TITLE);
+  }
+
   @Override
   public Class<?> getColumnClass(int columnIndex) {
     if (columnIndex == Filters.DOWNLOADED_COLUMN || columnIndex == Filters.SEEN_COLUMN) {

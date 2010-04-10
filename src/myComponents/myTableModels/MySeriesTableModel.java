@@ -15,6 +15,13 @@ public class MySeriesTableModel extends DefaultTableModel {
 
   private static final long serialVersionUID = 567264312632462L;
 
+  public MySeriesTableModel() {
+    addColumn(Series.FULLTITLE_COLUMN_TITLE);
+    addColumn(Series.SERIES_ID_COLUMN_TITLE);
+    addColumn(Series.HIDDEN_COLUMN_TITLE);
+    addColumn(Series.UPDATE_COLUMN_TITLE);
+  }
+
   @Override
   public Class<?> getColumnClass(int columnIndex) {
     if (columnIndex == Series.HIDDEN_COLUMN || columnIndex == Series.UPDATE_COLUMN) {
