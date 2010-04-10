@@ -16,8 +16,7 @@ public class MySeriesTableModel extends DefaultTableModel {
   private static final long serialVersionUID = 567264312632462L;
 
   public MySeriesTableModel() {
-    addColumn(Series.FULLTITLE_COLUMN_TITLE);
-    addColumn(Series.SERIES_ID_COLUMN_TITLE);
+    addColumn(Series.SERIES_RECORD_COLUMN_TITLE);
     addColumn(Series.HIDDEN_COLUMN_TITLE);
     addColumn(Series.UPDATE_COLUMN_TITLE);
   }

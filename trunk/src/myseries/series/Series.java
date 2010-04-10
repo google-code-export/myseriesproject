@@ -10,8 +10,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JTable;
+import javax.swing.table.TableColumnModel;
 import myComponents.MyTableModels.MySeriesTableModel;
-import myComponents.MyUsefulFunctions;
 import myseries.episodes.Episodes;
 
 /**
@@ -21,33 +21,25 @@ import myseries.episodes.Episodes;
 public class Series {
 
   /**
-   * The number of columns in Series table : 4
+   * The number of columns in Series table : 3
    */
-  public static final int NUMBER_OF_COLUMS = 4 ;
+  public static final int NUMBER_OF_COLUMS = 3 ;
   /**
    * The fulltitle field : 0
    */
-  public static final int FULLTITLE_COLUMN = 0;
+  public static final int SERIES_RECORD_COLUMN = 0;
   /**
-   * The series id field : 1
+   * The hidden field : 1
    */
-  public static final int SERIES_ID_COLUMN = 1;
+  public static final int HIDDEN_COLUMN = 1;
   /**
-   * The hidden field : 2
+   * The update field : 2
    */
-  public static final int HIDDEN_COLUMN = 2;
-  /**
-   * The update field : 3
-   */
-  public static final int UPDATE_COLUMN = 3;
+  public static final int UPDATE_COLUMN = 2;
    /**
    * The fulltitle field title : Title
    */
-  public static final String FULLTITLE_COLUMN_TITLE = "Title";
-  /**
-   * The series id field title : Series_ID - Hidden
-   */
-  public static final String SERIES_ID_COLUMN_TITLE = "Series_ID";
+  public static final String SERIES_RECORD_COLUMN_TITLE = "Title";
   /**
    * The hidden field title : Hidden
    */
@@ -85,6 +77,7 @@ public class Series {
    */
   private static SeriesRecord currentSeries;
 
+
   private Series() {
   }
 
@@ -115,8 +108,7 @@ public class Series {
       s.setHidden(rs.getInt("hidden"));
       update = rs.getBoolean("internetUpdate");
       s.setInternetUpdate(rs.getInt("internetUpdate"));
-      String seasonStr = MyUsefulFunctions.padLeft(s.getSeason(), 2, "0");
-      Object[] data = {"  " + s.getTitle() + " S" + seasonStr, s.getSeries_ID(), hidden, update};
+      Object[] data = { s , hidden, update};
       getTableModel_series().addRow(data);
       series.add(s);
     }
@@ -145,6 +137,15 @@ public class Series {
     }
   }
 
+  public static void setTableWidths(Integer[] seriesTableWidths) {
+    TableColumnModel model = Series.table_series.getColumnModel();
+    for (int i = 0; i < seriesTableWidths.length; i++) {
+      Integer width = seriesTableWidths[i];
+      model.getColumn(i).setPreferredWidth(width);
+    }
+  }
+
+
   /**
    * Gets the serial of the selected row in the series table
    * Then sets the current serial and updates the episodes list
@@ -168,41 +169,9 @@ public class Series {
       Series.setCurrentSerial(currentSeries);
       return;
     }
-    int series_ID = Integer.parseInt(String.valueOf(table_series.getModel().getValueAt(s, 1)));
-    currentSeries = new SeriesRecord();
-
-    String sql = "SELECT * FROM series WHERE series_ID = " + series_ID;
-    ResultSet rs = SeriesRecord.query(sql);
-    if (rs.next()) {
-      currentSeries.setSeries_ID(rs.getInt("series_ID"));
-      currentSeries.setTvrage_ID(rs.getInt("tvrage_ID"));
-      currentSeries.setSeason(rs.getInt("season"));
-      currentSeries.setTitle(rs.getString("title").trim());
-      currentSeries.setLocalDir(rs.getString("localDir").trim());
-      currentSeries.setScreenshot(rs.getString("screenshot").trim());
-      currentSeries.setLink(rs.getString("link").trim());
-      currentSeries.setSOnline(rs.getString("sonline").trim());
-      currentSeries.setInternetUpdate(rs.getInt("InternetUpdate"));
-      currentSeries.setTvrage_ID(rs.getInt("tvrage_ID"));
-      currentSeries.setHidden(rs.getInt("hidden"));
-    } else {
-      currentSeries.setSeries_ID(0);
-      currentSeries.setTvrage_ID(0);
-      currentSeries.setSeason(0);
-      currentSeries.setTitle("");
-      currentSeries.setLocalDir("");
-      currentSeries.setScreenshot("");
-      currentSeries.setLink("");
-      currentSeries.setSOnline("");
-      currentSeries.setInternetUpdate(SeriesRecord.INTERNET_UPDATE);
-      currentSeries.setTvrage_ID(0);
-      currentSeries.setHidden(SeriesRecord.NOT_HIDDEN);
-    }
-    rs.close();
+    currentSeries = (SeriesRecord) table_series.getModel().getValueAt(s, Series.SERIES_RECORD_COLUMN);
     Series.setCurrentSerial(currentSeries);
     Episodes.updateEpisodesTable();
-
-
   }
 
   /**

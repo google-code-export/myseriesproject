@@ -204,15 +204,15 @@ public class Actions {
 
   private static ArrayList<Integer> getTablesWidths(MySeries m) {
     ArrayList<Integer> widths = new ArrayList<Integer>();
-    TableColumnModel ts = MySeries.table_series.getColumnModel();
+    TableColumnModel ts = MySeries.tableSeries.getColumnModel();
     for (int i = 0; i < ts.getColumnCount(); i++) {
       widths.add(ts.getColumn(i).getWidth());
     }
-    ts = MySeries.table_episodesList.getColumnModel();
+    ts = MySeries.tableEpisodes.getColumnModel();
     for (int i = 0; i < ts.getColumnCount(); i++) {
       widths.add(ts.getColumn(i).getWidth());
     }
-    ts = MySeries.table_FilteredlSeriesEpisodesList.getColumnModel();
+    ts = MySeries.tableFiltels.getColumnModel();
     for (int i = 0; i < ts.getColumnCount(); i++) {
       widths.add(ts.getColumn(i).getWidth());
     }

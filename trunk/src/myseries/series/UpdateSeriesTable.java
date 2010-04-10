@@ -10,7 +10,6 @@ import java.util.logging.Level;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.TableModel;
 import myseries.MySeries;
-import myseries.episodes.NextEpisodes;
 
 /**
  *
@@ -19,14 +18,14 @@ import myseries.episodes.NextEpisodes;
 public class UpdateSeriesTable {
 
   private TableModel model;
-  private String rec[] = new String[Series.NUMBER_OF_COLUMS];
+  private Object rec[] = new Object[Series.NUMBER_OF_COLUMS];
 
   public UpdateSeriesTable(TableModelEvent e) {
     if (e.getType() == TableModelEvent.UPDATE) {
       int row = e.getFirstRow();
       model = (TableModel) e.getSource();
       for (int i = 0; i < Series.NUMBER_OF_COLUMS; i++) {
-        rec[i] = String.valueOf(model.getValueAt(row, i));
+        rec[i] = model.getValueAt(row, i);
       }
       try {
         updateSeries(rec);
@@ -43,10 +42,10 @@ public class UpdateSeriesTable {
     }
   }
 
-  private void updateSeries(String[] rec) throws SQLException {
-    SeriesRecord ser = SeriesRecord.getSeriesByID(Integer.parseInt(rec[1]));
-    ser.setHidden(rec[Series.HIDDEN_COLUMN].equals("true") ? SeriesRecord.HIDDEN : SeriesRecord.NOT_HIDDEN);
-    ser.setInternetUpdate(rec[Series.UPDATE_COLUMN].equals("true") ? SeriesRecord.INTERNET_UPDATE : SeriesRecord.NO_INTERNET_UPDATE);
+  private void updateSeries(Object[] rec) throws SQLException {
+    SeriesRecord ser = (SeriesRecord) rec[Series.SERIES_RECORD_COLUMN];
+    ser.setHidden((Boolean)rec[Series.HIDDEN_COLUMN] ? SeriesRecord.HIDDEN : SeriesRecord.NOT_HIDDEN);
+    ser.setInternetUpdate((Boolean)rec[Series.UPDATE_COLUMN] ? SeriesRecord.INTERNET_UPDATE : SeriesRecord.NO_INTERNET_UPDATE);
     ser.save();
     //NextEpisodes.createNextEpisodes();
     //NextEpisodes.show();
