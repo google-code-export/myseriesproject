@@ -48,7 +48,7 @@ public class UpdateSeriesTable {
     ser.setHidden(rec[Series.HIDDEN_COLUMN].equals("true") ? SeriesRecord.HIDDEN : SeriesRecord.NOT_HIDDEN);
     ser.setInternetUpdate(rec[Series.UPDATE_COLUMN].equals("true") ? SeriesRecord.INTERNET_UPDATE : SeriesRecord.NO_INTERNET_UPDATE);
     ser.save();
-    NextEpisodes.createNextEpisodes();
-    NextEpisodes.show();
+    //NextEpisodes.createNextEpisodes();
+    //NextEpisodes.show();
   }
 }

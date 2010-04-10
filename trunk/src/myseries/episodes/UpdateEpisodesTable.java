@@ -62,8 +62,8 @@ public class UpdateEpisodesTable {
               : EpisodesRecord.UNKNOWN_SUB);
       er.setSeen(rec[Episodes.SEEN_COLUMN].equals("true") ? EpisodesRecord.SEEN : EpisodesRecord.NOT_SEEN);
       er.save();
-      NextEpisodes.createNextEpisodes();
-      NextEpisodes.show();
+     // NextEpisodes.createNextEpisodes();
+     // NextEpisodes.show();
     } catch (SQLException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);
 

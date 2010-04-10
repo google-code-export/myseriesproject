@@ -42,11 +42,8 @@ import javax.swing.JRootPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
-import myComponents.MyMessages;
 import myComponents.MyTableModels.MyFilteredSeriesTableModel;
 import myComponents.MyTableModels.MySeriesTableModel;
-import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyImagePanel;
 import myComponents.myGUI.MyDisabledGlassPane;
 import myComponents.myTableCellRenderers.MyJDateChooserCellRenderer;
@@ -58,6 +55,7 @@ import myseries.filters.UpdateFiltersTable;
 import myseries.series.UpdateSeriesTable;
 import tools.DesktopSupport;
 import tools.Skin;
+import tools.download.subtitles.Subtitle;
 import tools.myLogger;
 
 /**
@@ -159,7 +157,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     root.setGlassPane(glassPane);
     //Check for updates
     if (Options.toBoolean(Options.CHECK_VERSION)) {
-      CheckUpdate c = new CheckUpdate(true);
+      new CheckUpdate(true);
     }
   }
 
@@ -180,59 +178,38 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   }
 
   private void createGUI() throws SQLException {
+    String[] subStatuses = {Subtitle.NONE, Subtitle.ENGLISH, Subtitle.GREEK, Subtitle.BOTH};
+    JComboBox subs = new JComboBox(subStatuses);
+    //Create table models
     tableModel_episodes = new MyEpisodesTableModel();
-    tableModel_episodes.addColumn("Episode");
-    tableModel_episodes.addColumn("Title");
-    tableModel_episodes.addColumn("Aired");
-    tableModel_episodes.addColumn("Downloaded");
-    tableModel_episodes.addColumn("Subs");
-    tableModel_episodes.addColumn("Seen");
-    tableModel_episodes.addColumn("ID");
-
     tableModel_filterSeries = new MyFilteredSeriesTableModel();
-    tableModel_filterSeries.addColumn("Series");
-    tableModel_filterSeries.addColumn("Episode");
-    tableModel_filterSeries.addColumn("Title");
-    tableModel_filterSeries.addColumn("Aired");
-    tableModel_filterSeries.addColumn("Downloaded");
-    tableModel_filterSeries.addColumn("Subs");
-    tableModel_filterSeries.addColumn("Seen");
-    //tableModel_filterSeries.addColumn("ID");
-
     tableModel_series = new MySeriesTableModel();
-    tableModel_series.addColumn("Series");
-    tableModel_series.addColumn("ID");
-    tableModel_series.addColumn("Hide");
-    tableModel_series.addColumn("Update");
     // Get saved filters
     comboBoxModel_filters = new DefaultComboBoxModel(FilterRecord.getFiltersTitlesList());
-
-
-
+    //Init gui components
     initComponents();
     tabsPanel.setSelectedComponent(tabpanel_FilteredSeries);
+    //EPISODES TABLE
     table_episodesList.removeColumn(table_episodesList.getColumnModel().getColumn(6));
     table_episodesList.getModel().addTableModelListener(this);
     table_episodesList.getTableHeader().setReorderingAllowed(false);
+    table_episodesList.getColumn(Episodes.SUBS_COLUMN_TITLE).setCellEditor(new DefaultCellEditor(subs));
+    table_episodesList.getColumn(Episodes.AIRED_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MyJDateChooserCellEditor());
+    table_episodesList.getColumn(Episodes.AIRED_COLUMN_TITLE).setCellRenderer(new MyJDateChooserCellRenderer());
+    table_episodesList.getColumn(Episodes.TITLE_COLUMN_TITLE).setCellRenderer(new MyTitleCellRenderer());
 
-    //table_FilteredlSeriesEpisodesList.removeColumn(table_FilteredlSeriesEpisodesList.getColumnModel().getColumn(7));
+    //FILTERS TABLE
     table_FilteredlSeriesEpisodesList.getModel().addTableModelListener(this);
     table_FilteredlSeriesEpisodesList.getTableHeader().setReorderingAllowed(false);
+    table_FilteredlSeriesEpisodesList.getColumn(Filters.SUBS_COLUMN_TITLE).setCellEditor(new DefaultCellEditor(subs));
+    table_FilteredlSeriesEpisodesList.getColumn(Filters.AIRED_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MyJDateChooserCellEditor());
+    table_FilteredlSeriesEpisodesList.getColumn(Filters.AIRED_COLUMN_TITLE).setCellRenderer(new MyJDateChooserCellRenderer());
 
-
+    //SERIES TABLE
     table_series.removeColumn(table_series.getColumnModel().getColumn(1));
     table_series.getModel().addTableModelListener(this);
 
     setLocationRelativeTo(null);
-
-    JComboBox subs = new JComboBox(new String[]{"None", "English", "Greek", "Both"});
-    table_episodesList.getColumn("Subs").setCellEditor(new DefaultCellEditor(subs));
-    table_episodesList.getColumn("Aired").setCellEditor(new myComponents.myTableCellEditors.MyJDateChooserCellEditor());
-    table_episodesList.getColumn("Aired").setCellRenderer(new MyJDateChooserCellRenderer());
-    table_episodesList.getColumn("Title").setCellRenderer(new MyTitleCellRenderer());
-    table_FilteredlSeriesEpisodesList.getColumn("Subs").setCellEditor(new DefaultCellEditor(subs));
-    table_FilteredlSeriesEpisodesList.getColumn("Aired").setCellEditor(new myComponents.myTableCellEditors.MyJDateChooserCellEditor());
-    table_FilteredlSeriesEpisodesList.getColumn("Aired").setCellRenderer(new MyJDateChooserCellRenderer());
 
     // Set column widths
     ArrayList<Integer> widths = Options.toIntegerArrayList(Options.TABLE_WIDTHS);

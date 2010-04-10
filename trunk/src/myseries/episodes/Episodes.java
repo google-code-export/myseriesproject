@@ -60,6 +60,34 @@ public class Episodes {
    */
   public static final int EPISODE_ID_COLUMN = 6;
   /**
+   * The Episodes number column title : Episode Number
+   */
+   public static final String EPISODE_NUM_COLUMN_TITLE = "Episode";
+  /**
+   * The episodes title table column title : Title
+   */
+  public static final String TITLE_COLUMN_TITLE = "Title";
+  /**
+   * The episodes aired table column title : Aired
+   */
+  public static final String AIRED_COLUMN_TITLE = "Aired";
+  /**
+   * The episodes downloaded table column  title: Downloaded
+   */
+  public static final String DOWNLOADED_COLUMN_TITLE = "Downloaded";
+  /**
+   * The episodes sub status table column title : Subs
+   */
+  public static final String SUBS_COLUMN_TITLE = "Subs";
+  /**
+   * The episodes seen table column title : Seen
+   */
+  public static final String SEEN_COLUMN_TITLE = "Seen";
+  /**
+   * The episodes id table column title : Episode_id - hidden
+   */
+  public static final String EPISODE_ID_COLUMN_TITLE = "Episode ID";
+  /**
    * The episodes table model
    */
   private static MyEpisodesTableModel tableModel_episodes;

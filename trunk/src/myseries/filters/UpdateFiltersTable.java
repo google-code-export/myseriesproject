@@ -11,6 +11,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.table.TableModel;
 import myComponents.MyUsefulFunctions;
 import myseries.MySeries;
+import myseries.episodes.NextEpisodes;
 
 /**
  *
@@ -27,7 +28,6 @@ public class UpdateFiltersTable {
       model = (TableModel) e.getSource();
       if (model.getRowCount() > row) {
         EpisodesRecord ep = (EpisodesRecord) model.getValueAt(row, Filters.EPISODERECORD_COLUMN);
-        String title = ep.getTitle();
         Boolean downloaded = (Boolean) model.getValueAt(row, Filters.DOWNLOADED_COLUMN);
         String subs = (String) model.getValueAt(row, Filters.SUBS_COLUMN);
         Boolean seen = (Boolean) model.getValueAt(row, Filters.SEEN_COLUMN);
@@ -36,6 +36,8 @@ public class UpdateFiltersTable {
           ep.setSeen(seen ? EpisodesRecord.SEEN : EpisodesRecord.NOT_SEEN);
           ep.setSubs(MyUsefulFunctions.getSubsId(subs));
           ep.save();
+         // NextEpisodes.createNextEpisodes();
+         // NextEpisodes.show();
           Thread.sleep(100);
           Filters.getFilteredSeries();
         } catch (SQLException ex) {

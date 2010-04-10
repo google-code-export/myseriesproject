@@ -8,6 +8,7 @@ import myComponents.MyUsefulFunctions;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
+import myseries.episodes.NextEpisodes;
 
 /**
  * The episode record
@@ -137,7 +138,6 @@ public class EpisodesRecord extends Record {
    * @throws java.sql.SQLException
    */
   public int save() throws SQLException {
-    int result = 0;
     String sql;
 
     if (this.getEpisode_ID() != 0) {

@@ -33,6 +33,14 @@ public class Subtitle {
    */
   public static final String ENGLISH = "English";
   /**
+   * The Subtitle none
+   */
+  public static final String NONE = "None";
+  /**
+   * The subtitle both
+   */
+  public static final String BOTH = "Both";
+  /**
    * The tv subtitles name : "Tvsubtitles.net"
    */
   public static final String TV_SUBTITLES_NAME = "TvSubtitles.net";

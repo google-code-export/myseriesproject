@@ -8,6 +8,7 @@ import myComponents.MyUsefulFunctions;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
+import myseries.episodes.NextEpisodes;
 
 /**
  * The series database record
@@ -31,7 +32,6 @@ public class SeriesRecord extends Record {
    * Hidden : 1
    */
   public static final int HIDDEN = 1;
-
   /**
    * The table name
    */
@@ -66,7 +66,7 @@ public class SeriesRecord extends Record {
   public static SeriesRecord getSeriesByID(int series_ID) throws SQLException {
     Vector<SeriesRecord> series = new Vector<SeriesRecord>();
     series = getSeriesBySql("SELECT * FROM series WHERE series_ID = " + series_ID);
-    return series.size()==1 ? series.get(0) : null;
+    return series.size() == 1 ? series.get(0) : null;
   }
 
   /**
@@ -119,7 +119,6 @@ public class SeriesRecord extends Record {
    * @throws SQLException
    */
   public int save() throws SQLException {
-    int result = 0;
     String sql;
     if (this.series_ID != 0) {
       sql = "UPDATE series SET title = '" + this.title + "', season = " + this.getSeason()

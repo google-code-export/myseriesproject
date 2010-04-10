@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import myseries.MySeries;
+import myseries.episodes.NextEpisodes;
 
 /**
  * The base class for SQLite Records
@@ -62,6 +63,7 @@ public class Record {
         ai = -1;
       }
       rs.close();
+      NextEpisodes.update();
       return ai;
     } finally {
       if (rs != null) {

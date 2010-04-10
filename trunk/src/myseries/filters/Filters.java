@@ -53,6 +53,34 @@ public class Filters {
    * The seen field of the table : 6
    */
   public static final int SEEN_COLUMN = 6;
+   /**
+   * The fulltitle field of the table title: Series
+   */
+  public static final String FULLTITLE_COLUMN_TITLE = "Series";
+  /**
+   * The episode number field of the table title : Episode
+   */
+  public static final String EPISODE_NUMBER_COLUMN_TITLE = "Episode";
+  /**
+   * The episode record field of the table title : Title
+   */
+  public static final String EPISODERECORD_COLUMN_TITLE = "Title";
+  /**
+   * The aired field of the table title : Aired
+   */
+  public static final String AIRED_COLUMN_TITLE = "Aired";
+  /**
+   * The downloaded field of the table title : Downloaded
+   */
+  public static final String DOWNLOADED_COLUMN_TITLE = "Downloaded";
+  /**
+   * The sub status field of the table title : Subs
+   */
+  public static final String SUBS_COLUMN_TITLE = "Subs";
+  /**
+   * The seen field of the table title : Seen
+   */
+  public static final String SEEN_COLUMN_TITLE = "Seen";
   /**
    * The no subs status : 0
    */
