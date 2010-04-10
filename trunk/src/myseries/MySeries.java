@@ -53,7 +53,9 @@ import myComponents.myTableCellRenderers.MyJDateChooserCellRenderer;
 import myComponents.myTableCellRenderers.MyTitleCellRenderer;
 import myseries.actions.Actions;
 import myseries.episodes.UpdateEpisodesTable;
-import myseries.filters.FilteredSeries;
+import myseries.filters.Filters;
+import myseries.filters.UpdateFiltersTable;
+import myseries.series.UpdateSeriesTable;
 import tools.DesktopSupport;
 import tools.Skin;
 import tools.myLogger;
@@ -147,8 +149,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
     //Create the filteredSeries data
     MySeries.logger.log(Level.INFO, "Creating filters data");
-    FilteredSeries.setTableModel_filterSeries(tableModel_filterSeries);
-    FilteredSeries.getFilteredSeries();
+    Filters.setTableModel_filterSeries(tableModel_filterSeries);
+    Filters.getFilteredSeries();
 
     //Set the glass pane
     MySeries.logger.log(Level.INFO, "Creating the glass pane");
@@ -1540,64 +1542,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public void tableChanged(TableModelEvent e) {
     if (e.getSource() instanceof MyEpisodesTableModel) {
       new UpdateEpisodesTable(e);
-      
     } else if (e.getSource() instanceof MySeriesTableModel) {
-      if (e.getType() == 0) {
-        int row = e.getFirstRow();
-
-        TableModel model = (TableModel) e.getSource();
-        String rec[] = new String[model.getColumnCount()];
-        for (int i = 0; i < model.getColumnCount(); i++) {
-          rec[i] = String.valueOf(model.getValueAt(row, i));
-        }
-        try {
-          updateSeries(rec);
-        } catch (SQLException ex) {
-          MySeries.logger.log(Level.SEVERE, null, ex);
-        }
-      } else if (e.getType() == -1) {
-        //workaround to update the screenshot position when series are added /deleted
-        if (splitPane_main.getDividerLocation() % 2 == 0) {
-          splitPane_main.setDividerLocation(splitPane_main.getDividerLocation() + 1);
-        } else {
-          splitPane_main.setDividerLocation(splitPane_main.getDividerLocation() - 1);
-        }
-      }
+      new UpdateSeriesTable(e);
     } else if (e.getSource() instanceof MyFilteredSeriesTableModel) {
-      if (e.getType() == TableModelEvent.UPDATE) {
-        int row = e.getFirstRow();
-        if (tableModel_filterSeries.getRowCount() > row) {
-          EpisodesRecord ep = (EpisodesRecord) tableModel_filterSeries.getValueAt(row, 2);
-          String title = ep.getTitle();
-          Boolean downloaded = (Boolean) tableModel_filterSeries.getValueAt(row, 4);
-          String subs = (String) tableModel_filterSeries.getValueAt(row, 5);
-          Boolean seen = (Boolean) tableModel_filterSeries.getValueAt(row, 6);
-          try {
-            ep.setTitle(title);
-            ep.setDownloaded(downloaded ? 1 : 0);
-            ep.setSeen(seen ? 1 : 0);
-            ep.setSubs(MyUsefulFunctions.getSubsId(subs));
-            ep.save();
-            Thread.sleep(100);
-            FilteredSeries.getFilteredSeries();
-          } catch (SQLException ex) {
-            logger.log(Level.WARNING, null, ex);
-          } catch (InterruptedException ex) {
-            Logger.getLogger(MySeries.class.getName()).log(Level.SEVERE, null, ex);
-          }
-
-        }
-      }
+      new UpdateFiltersTable(e);
     }
 
-  }
-
-  private void updateSeries(String[] rec) throws SQLException {
-    SeriesRecord ser = SeriesRecord.getSeriesByID(Integer.parseInt(rec[1]));
-    ser.setHidden(rec[2].equals("true") ? 1 : 0);
-    ser.setInternetUpdate(rec[3].equals("true") ? 1 : 0);
-    ser.save();
-    NextEpisodes.createNextEpisodes();
-    NextEpisodes.show();
   }
 }

@@ -41,7 +41,7 @@ import myseries.episodes.AdminEpisodes;
 import myseries.episodes.Episodes;
 import myseries.episodes.NextEpisodes;
 import myseries.episodes.Video;
-import myseries.filters.FilteredSeries;
+import myseries.filters.Filters;
 import tools.DesktopSupport;
 import tools.download.subtitles.Subtitle;
 import tools.download.subtitles.sonline.GetSOnlineCode;
@@ -121,8 +121,8 @@ public class Actions {
 
   public static void filterSubtitles(JComboBox comboBox_subtitles) {
     try {
-      FilteredSeries.setSubtitles(comboBox_subtitles.getSelectedIndex());
-      FilteredSeries.getFilteredSeries();
+      Filters.setSubtitles(comboBox_subtitles.getSelectedIndex());
+      Filters.getFilteredSeries();
     } catch (SQLException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);
     }
@@ -130,8 +130,8 @@ public class Actions {
 
   public static void filterSeen(JComboBox comboBox_seen) {
     try {
-      FilteredSeries.setSeen(comboBox_seen.getSelectedIndex());
-      FilteredSeries.getFilteredSeries();
+      Filters.setSeen(comboBox_seen.getSelectedIndex());
+      Filters.getFilteredSeries();
     } catch (SQLException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);
     }
@@ -176,8 +176,8 @@ public class Actions {
 
   public static void filterDownloaded(JComboBox combobox_downloaded) {
     try {
-      FilteredSeries.setDownloaded(combobox_downloaded.getSelectedIndex());
-      FilteredSeries.getFilteredSeries();
+      Filters.setDownloaded(combobox_downloaded.getSelectedIndex());
+      Filters.getFilteredSeries();
     } catch (SQLException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);
     }
@@ -407,7 +407,7 @@ public class Actions {
 
   public static void changeTab() {
     try {
-      FilteredSeries.getFilteredSeries();
+      Filters.getFilteredSeries();
       String title = MySeries.tabsPanel.getTitleAt(0).substring(0, MySeries.tabsPanel.getTitleAt(0).length() - 3).trim();
       Vector<SeriesRecord> series = SeriesRecord.getSeriesBySql("SELECT * FROM series WHERE title = '" + title + "'");
       if (series.size() > 0) {
