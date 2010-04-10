@@ -21,6 +21,10 @@ import myseries.episodes.Episodes;
 public class Series {
 
   /**
+   * The number of columns in Series table : 4
+   */
+  public static final int NUMBER_OF_COLUMS = 4 ;
+  /**
    * The fulltitle field : 0
    */
   public static final int FULLTITLE_COLUMN = 0;
