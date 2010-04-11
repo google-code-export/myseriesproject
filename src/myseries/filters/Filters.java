@@ -228,7 +228,7 @@ public class Filters {
    * @return the seen
    */
   public static int getSeen() {
-    return seen;
+    return myseries.MySeries.comboBox_seen.getSelectedIndex();
   }
 
   /**
@@ -242,7 +242,7 @@ public class Filters {
    * @return the downloaded
    */
   public static int getDownloaded() {
-    return downloaded;
+    return myseries.MySeries.combobox_downloaded.getSelectedIndex();
   }
 
   /**
@@ -256,7 +256,7 @@ public class Filters {
    * @return the subtitles
    */
   public static int getSubtitles() {
-    return subtitles;
+   return myseries.MySeries.comboBox_subtitles.getSelectedIndex();
   }
 
   /**
