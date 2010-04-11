@@ -309,7 +309,7 @@ public class Actions {
         MyMessages.error("Browse Error!!!", "Browse is not supported");
         return;
       }
-      java.net.URI uri = new java.net.URI(Series.getCurrentSerial().getLink());
+      java.net.URI uri = new java.net.URI(Series.getCurrentSerial().getTvSubtitlesCode());
       DesktopSupport.getDesktop().browse(uri);
     } catch (IOException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);
@@ -491,7 +491,7 @@ public class Actions {
   public static void downloadSubtitles(MySeries aThis) {
     if (Options.toString(Options.SUBTITLE_SITE).equals(Subtitle.TV_SUBTITLES_NAME)) {
       SeriesRecord series = Series.getCurrentSerial();
-      String link = series.getLink().trim();
+      String link = series.getTvSubtitlesCode().trim();
       boolean updateLink = false;
       if (link.startsWith("http://www.tvsubtitles.net")) {
         link = link.replaceAll("(http://www.tvsubtitles.net/tvshow-)|(.html)", "");
@@ -511,7 +511,7 @@ public class Actions {
         updateLink = true;
       }
       if (updateLink) {
-        series.setLink(link);
+        series.setTvSubtitlesCode(link);
         try {
           series.save();
         } catch (SQLException ex) {
@@ -528,13 +528,13 @@ public class Actions {
                 Episodes.getCurrentEpisode().getTitle());
       }
     } else if (Options.toString(Options.SUBTITLE_SITE).equals(Subtitle.SUBTITLE_ONLINE_NAME)) {
-      String sOnlineCode = Series.getCurrentSerial().getSOnline().trim();
+      String sOnlineCode = Series.getCurrentSerial().getSOnlineCode().trim();
       if (sOnlineCode.equals("")) {
         GetSOnlineCode s = new GetSOnlineCode(Series.getCurrentSerial());
         sOnlineCode = s.sOnlineCode;
         if (!sOnlineCode.equals("")) {
           SeriesRecord ser = Series.getCurrentSerial();
-          ser.setSOnline(sOnlineCode);
+          ser.setSOnlineCode(sOnlineCode);
           try {
             ser.save();
           } catch (SQLException ex) {
