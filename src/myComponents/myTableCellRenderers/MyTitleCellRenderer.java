@@ -4,6 +4,7 @@
  */
 package myComponents.myTableCellRenderers;
 
+import database.EpisodesRecord;
 import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -22,13 +23,13 @@ public class MyTitleCellRenderer extends DefaultTableCellRenderer {
   public Component getTableCellRendererComponent(JTable table,
           Object value, boolean isSelected, boolean hasFocus, int row, int column) {
     super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-    if (value instanceof String) {
+    if (value instanceof EpisodesRecord) {
       Boolean downloaded = (Boolean) table.getModel().getValueAt(row, Episodes.DOWNLOADED_COLUMN);
       Boolean seen = (Boolean) table.getModel().getValueAt(row, Episodes.SEEN_COLUMN);
       String sub = (String) table.getModel().getValueAt(row, Episodes.SUBS_COLUMN);
       this.setFont(MyUsefulFunctions.getCellFont(this.getFont(),downloaded,seen,sub));
       this.setForeground(MyUsefulFunctions.getCellColor(isSelected,seen));
-      this.setText((String) value);
+      this.setText(value.toString());
     }
 
     return this;
