@@ -43,7 +43,7 @@ public class UpdateSeriesTable {
   }
 
   private void updateSeries(Object[] rec) throws SQLException {
-    SeriesRecord ser = (SeriesRecord) rec[Series.SERIES_RECORD_COLUMN];
+    SeriesRecord ser = (SeriesRecord) rec[Series.SERIESRECORD_COLUMN];
     ser.setHidden((Boolean)rec[Series.HIDDEN_COLUMN] ? SeriesRecord.HIDDEN : SeriesRecord.NOT_HIDDEN);
     ser.setInternetUpdate((Boolean)rec[Series.UPDATE_COLUMN] ? SeriesRecord.INTERNET_UPDATE : SeriesRecord.NO_INTERNET_UPDATE);
     ser.save();
