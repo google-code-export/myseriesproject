@@ -121,7 +121,7 @@ public class Actions {
 
   public static void filterSubtitles(JComboBox comboBox_subtitles) {
     try {
-      Filters.setSubtitles(comboBox_subtitles.getSelectedIndex());
+      //Filters.setSubtitles(comboBox_subtitles.getSelectedIndex());
       Filters.getFilteredSeries();
     } catch (SQLException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);
@@ -130,7 +130,7 @@ public class Actions {
 
   public static void filterSeen(JComboBox comboBox_seen) {
     try {
-      Filters.setSeen(comboBox_seen.getSelectedIndex());
+      //Filters.setSeen(comboBox_seen.getSelectedIndex());
       Filters.getFilteredSeries();
     } catch (SQLException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);
@@ -176,7 +176,7 @@ public class Actions {
 
   public static void filterDownloaded(JComboBox combobox_downloaded) {
     try {
-      Filters.setDownloaded(combobox_downloaded.getSelectedIndex());
+      //Filters.setDownloaded(combobox_downloaded.getSelectedIndex());
       Filters.getFilteredSeries();
     } catch (SQLException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);
