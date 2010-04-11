@@ -72,6 +72,7 @@ public class TrGetId extends MyDraggable {
     this.adminSeries = adminSeries;
     this.title = title;
     getID();
+    adminSeries.setModalityType(ModalityType.APPLICATION_MODAL);
   }
 
   private void getID() {
@@ -202,7 +203,7 @@ public class TrGetId extends MyDraggable {
 
   private void button_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_cancelActionPerformed
     dispose();
-    MySeries.glassPane.deactivate();
+    //MySeries.glassPane.deactivate();
     if (adminSeries != null) {
       adminSeries.setModalityType(ModalityType.APPLICATION_MODAL);
       if (tvRageID > 0) {
@@ -230,7 +231,7 @@ public class TrGetId extends MyDraggable {
       }
     }
     button_cancelActionPerformed(evt);
-    MySeries.glassPane.deactivate();
+    //MySeries.glassPane.deactivate();
   }//GEN-LAST:event_button_okActionPerformed
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton button_cancel;

@@ -27,7 +27,7 @@ public class Series {
   /**
    * The fulltitle field : 0
    */
-  public static final int SERIES_RECORD_COLUMN = 0;
+  public static final int SERIESRECORD_COLUMN = 0;
   /**
    * The hidden field : 1
    */
@@ -103,7 +103,8 @@ public class Series {
       s.setTvrage_ID(rs.getInt("tvrage_ID"));
       s.setLocalDir(rs.getString("localDir"));
       s.setScreenshot(rs.getString("screenshot"));
-      s.setSOnline(rs.getString("sonline"));
+      s.setSOnlineCode(rs.getString("sonline"));
+      s.setTvSubtitlesCode(rs.getString("link"));
       hidden = rs.getBoolean("hidden");
       s.setHidden(rs.getInt("hidden"));
       update = rs.getBoolean("internetUpdate");
@@ -160,16 +161,16 @@ public class Series {
       currentSeries.setTvrage_ID(0);
       currentSeries.setSeason(0);
       currentSeries.setTitle("");
-      currentSeries.setLink("");
+      currentSeries.setTvSubtitlesCode("");
       currentSeries.setLocalDir("");
       currentSeries.setScreenshot("");
       currentSeries.setInternetUpdate(SeriesRecord.INTERNET_UPDATE);
-      currentSeries.setSOnline("");
+      currentSeries.setSOnlineCode("");
       currentSeries.setHidden(SeriesRecord.NOT_HIDDEN);
       Series.setCurrentSerial(currentSeries);
       return;
     }
-    currentSeries = (SeriesRecord) table_series.getModel().getValueAt(s, Series.SERIES_RECORD_COLUMN);
+    currentSeries = (SeriesRecord) table_series.getModel().getValueAt(s, Series.SERIESRECORD_COLUMN);
     Series.setCurrentSerial(currentSeries);
     Episodes.updateEpisodesTable();
   }
@@ -222,9 +223,15 @@ public class Series {
   }
 
   /**
-   * @param aCurrentSerial the currentSerial to set
+   * @param series the currentSerial to set
    */
-  public static void setCurrentSerial(SeriesRecord aCurrentSerial) {
-    currentSeries = aCurrentSerial;
+  public static void setCurrentSerial(SeriesRecord series) {
+    try {
+      //Update data
+      int series_id = series.getSeries_ID();
+      currentSeries = SeriesRecord.getSeriesByID(series_id);
+    } catch (SQLException ex) {
+      currentSeries = new SeriesRecord();
+    }
   }
 }

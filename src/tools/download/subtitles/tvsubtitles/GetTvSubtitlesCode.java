@@ -17,7 +17,6 @@ import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import tools.download.subtitles.Subtitle;
 import tools.download.subtitles.SubtitleCode;
-import tools.options.Options;
 
 /**
  * Gets the tvSubtitles code for a series
@@ -91,11 +90,10 @@ public class GetTvSubtitlesCode {
   }
 
   class TCode extends SubtitleCode {
-   
+
     @Override
     public void setCode(String code) {
-      this.code = code.trim() +"-"+series.getSeason();
+      this.code = code.trim() + "-" + series.getSeason();
     }
-
   }
 }
