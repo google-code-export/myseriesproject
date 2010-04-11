@@ -16,6 +16,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.table.TableColumnModel;
 import myComponents.MyTableModels.MyEpisodesTableModel;
 import myComponents.MyUsefulFunctions;
 import myComponents.myFileFilters.SubtitlesFilter;
@@ -58,7 +59,7 @@ public class Episodes {
   /**
    * The Episodes number column title : Episode Number
    */
-   public static final String EPISODE_NUM_COLUMN_TITLE = "Episode";
+  public static final String EPISODE_NUM_COLUMN_TITLE = "Episode";
   /**
    * The episodes title table column title : Title
    */
@@ -123,6 +124,14 @@ public class Episodes {
    */
   public static void setTable_episodes(JTable aTable_episodes) {
     table_episodesList = aTable_episodes;
+  }
+
+  public static void setTableWidths(Integer[] EpisodesTableWidths) {
+    TableColumnModel model = Episodes.table_episodesList.getColumnModel();
+    for (int i = 0; i < EpisodesTableWidths.length; i++) {
+      Integer width = EpisodesTableWidths[i];
+      model.getColumn(i).setPreferredWidth(width);
+    }
   }
 
   private Episodes() {
