@@ -1101,7 +1101,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       menuItem_exportEpisodes.setText("Export episodes of " + ser);
       popUpItem_exportEpisodes.setText("Export episodes of " + ser);
       popUpItem_internetUpdate.setText("Update " + ser + " episodes list");
-      if (Series.getCurrentSerial().getLink().equals("") || !DesktopSupport.isDesktopSupport() || !DesktopSupport.isBrowseSupport()) {
+      if (Series.getCurrentSerial().getTvSubtitlesCode().equals("") || !DesktopSupport.isDesktopSupport() || !DesktopSupport.isBrowseSupport()) {
         popUpItem_DownloadSubs.setEnabled(false);
       }
       if (Series.getCurrentSerial().getLocalDir().equals("") || !DesktopSupport.isDesktopSupport()) {
