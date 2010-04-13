@@ -44,6 +44,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.TableModelListener;
 import myComponents.MyTableModels.MyFilteredSeriesTableModel;
 import myComponents.MyTableModels.MySeriesTableModel;
+import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyImagePanel;
 import myComponents.myGUI.MyDisabledGlassPane;
 import myComponents.myTableCellEditors.MyTitleCellEditor;
@@ -90,6 +91,12 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
    * @throws java.io.IOException
    */
   public MySeries() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, IOException {
+
+    //DEBUG DATABASE
+    if (Options._USER_DIR_.equals("D:\\JavaProjects\\myseriesproject")) {
+      System.out.println("Copy debug db");
+      MyUsefulFunctions.copyfile("G:\\TV Series\\MySeries\\databases\\Spyros2009.db", "D:\\JavaProjects\\myseriesproject\\databases\\develop.db");
+    }
 
     //Set look and feel
     if (Options.toString(Options.LOOK_AND_FEEL).equals("")) {
@@ -188,9 +195,9 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     ArrayList<Integer> widths = Options.toIntegerArrayList(Options.TABLE_WIDTHS);
     Integer widthsArr[] = new Integer[widths.size()];
     widthsArr = widths.toArray(widthsArr);
-    seriesTableWidths = Arrays.copyOfRange(widthsArr, 0,3);
-    episodesTableWidths = Arrays.copyOfRange(widthsArr, 3,9);
-    filtersTableWidths = Arrays.copyOfRange(widthsArr, 9,16);
+    seriesTableWidths = Arrays.copyOfRange(widthsArr, 0, 3);
+    episodesTableWidths = Arrays.copyOfRange(widthsArr, 3, 9);
+    filtersTableWidths = Arrays.copyOfRange(widthsArr, 9, 16);
     //Create tablemodels
     tableModel_episodes = new MyEpisodesTableModel();
     tableModel_filterSeries = new MyFilteredSeriesTableModel();
@@ -200,7 +207,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     //Init gui components
     initComponents();
     tabsPanel.setSelectedComponent(tabpanel_FilteredSeries);
-    
+
     //EPISODES TABLE
     //table_episodesList.removeColumn(table_episodesList.getColumnModel().getColumn(6));
     tableEpisodes.getModel().addTableModelListener(this);
@@ -211,7 +218,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tableEpisodes.getColumn(Episodes.EPISODERECORD_COLUMN_TITLE).setCellRenderer(new MyTitleCellRenderer());
     tableEpisodes.getColumn(Episodes.EPISODERECORD_COLUMN_TITLE).setCellEditor(new MyTitleCellEditor());
     Episodes.setTable_episodes(tableEpisodes);
-    //table_episodesList.setColumnModel(new MyEpisodesColumnModel(episodeWidths));
+    Episodes.setTableWidths(episodesTableWidths);
+    
 
     //FILTERS TABLE
     tableFiltels.getModel().addTableModelListener(this);
@@ -224,9 +232,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
     //SERIES TABLE
     tableSeries.getModel().addTableModelListener(this);
+    tableSeries.getTableHeader().setReorderingAllowed(false);
     Series.setTable_series(tableSeries);
     Series.setTableWidths(seriesTableWidths);
-    
+
 
     setLocationRelativeTo(null);
   }
@@ -1058,21 +1067,17 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 }//GEN-LAST:event_tableSeriesMouseClicked
 
   private void seriesMouseClicked() throws IOException {
-    int s = tableSeries.getSelectedRow();
-    if (s > -1) {
-      try {
-        Series.getCurrentSerial(s, true);
-        tabsPanel.setTitleAt(0, Series.getCurrentSerial().getFullTitle());
-        String imagePath = Options._USER_DIR_ + "/" + MyImagePanel.PATH + "/" + Series.getCurrentSerial().getScreenshot();
-        if (new File(imagePath).isFile()) {
-          Image image = new ImageIcon(imagePath).getImage();
-          imagePanel.setImage(image);
-        } else {
-          Image image = new ImageIcon(getClass().getResource("/images/logo.png")).getImage();
-          imagePanel.setImage(image);
-        }
-      } catch (SQLException ex) {
-        MySeries.logger.log(Level.SEVERE, null, ex);
+    int selectedRow = tableSeries.getSelectedRow();
+    if (selectedRow > -1) {
+      Series.setCurrentSerial((SeriesRecord) tableSeries.getValueAt(selectedRow, Series.SERIESRECORD_COLUMN));
+      tabsPanel.setTitleAt(0, Series.getCurrentSerial().getFullTitle());
+      String imagePath = Options._USER_DIR_ + "/" + MyImagePanel.PATH + "/" + Series.getCurrentSerial().getScreenshot();
+      if (new File(imagePath).isFile()) {
+        Image im = new ImageIcon(imagePath).getImage();
+        imagePanel.setImage(im);
+      } else {
+        Image image = new ImageIcon(getClass().getResource("/images/logo.png")).getImage();
+        imagePanel.setImage(image);
       }
       seriesPopUpItemsState(Series.getCurrentSerial().getFullTitle(), true);
       tabsPanel.setSelectedComponent(tabpanel_episodesList);
@@ -1375,7 +1380,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   }//GEN-LAST:event_popUpItem_viewEpisodeActionPerformed
 
   private void panel_SeriesComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_panel_SeriesComponentResized
-   imagePanel.relocate(this);
+    imagePanel.relocate(this);
   }//GEN-LAST:event_panel_SeriesComponentResized
 
   private void setEpisodePopUpMenu(int rowSelected, boolean episodePanel) {
