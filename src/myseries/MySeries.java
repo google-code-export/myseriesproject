@@ -1160,14 +1160,12 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       if (evt.getButton() == MouseEvent.BUTTON1) {
         try {
           tableSeries.removeRowSelectionInterval(0, tableSeries.getRowCount() - 1);
-          Series.setCurrentSerial(null);
-          Episodes.emptyEpisodes();
+          //Series.setCurrentSerial(null);
+          //Episodes.emptyEpisodes();
         } catch (IllegalArgumentException ex) {
         }
       } else if (evt.getButton() == MouseEvent.BUTTON3) {
-
         seriesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
-
       }
     }
   }
