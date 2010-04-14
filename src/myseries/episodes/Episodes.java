@@ -7,6 +7,7 @@ package myseries.episodes;
 import myseries.series.Series;
 import database.DBConnection;
 import database.EpisodesRecord;
+import database.SeriesRecord;
 import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,78 +29,42 @@ import myComponents.myFileFilters.VideoFilter;
  */
 public class Episodes {
 
-  /**
-   * The number of columns
-   */
+  /** The number of columns   */
   public static final int NUMBER_OF_COLUMS = 6;
-  /**
-   * The episodes number table column : 0
-   */
+  /** The episodes number table column : 0   */
   public static final int EPISODE_NUM_COLUMN = 0;
-  /**
-   * The episodes title table column : 1
-   */
+  /** The episodes title table column : 1   */
   public static final int EPISODERECORD_COLUMN = 1;
-  /**
-   * The episodes aired table column : 2
-   */
+  /** The episodes aired table column : 2   */
   public static final int AIRED_COLUMN = 2;
-  /**
-   * The episodes downloaded table column : 3
-   */
+  /** The episodes downloaded table column : 3   */
   public static final int DOWNLOADED_COLUMN = 3;
-  /**
-   * The episodes sub status table column : 4
-   */
+  /** The episodes sub status table column : 4   */
   public static final int SUBS_COLUMN = 4;
-  /**
-   * The episodes seen table column : 5
-   */
+  /** The episodes seen table column : 5   */
   public static final int SEEN_COLUMN = 5;
-  /**
-   * The Episodes number column title : Episode Number
-   */
+  /** The Episodes number column title : Episode Number   */
   public static final String EPISODE_NUM_COLUMN_TITLE = "Episode";
-  /**
-   * The episodes title table column title : Title
-   */
+  /** The episodes title table column title : Title   */
   public static final String EPISODERECORD_COLUMN_TITLE = "Title";
-  /**
-   * The episodes aired table column title : Aired
-   */
+  /** The episodes aired table column title : Aired   */
   public static final String AIRED_COLUMN_TITLE = "Aired";
-  /**
-   * The episodes downloaded table column  title: Downloaded
-   */
+  /** The episodes downloaded table column  title: Downloaded   */
   public static final String DOWNLOADED_COLUMN_TITLE = "Downloaded";
-  /**
-   * The episodes sub status table column title : Subs
-   */
+  /** The episodes sub status table column title : Subs   */
   public static final String SUBS_COLUMN_TITLE = "Subs";
-  /**
-   * The episodes seen table column title : Seen
-   */
+  /** The episodes seen table column title : Seen   */
   public static final String SEEN_COLUMN_TITLE = "Seen";
-  /**
-   * The episodes table model
-   */
+  /** The episodes table model   */
   private static MyEpisodesTableModel tableModel_episodes;
-  /**
-   * The episodes table
-   */
+  /** The episodes table   */
   private static JTable table_episodesList = new JTable();
-  /**
-   * The tabbed pane
-   */
+  /** The tabbed pane   */
   private static JTabbedPane tabsPanel = new JTabbedPane();
-  /**
-   * The current episode
-   */
+  /** The current episode   */
   private static EpisodesRecord currentEpisode;
 
-  /**
-   * @return the tableModel_episodes
-   */
+  /** @return the tableModel_episodes   */
   public static MyEpisodesTableModel getTableModel_episodes() {
     return tableModel_episodes;
   }
@@ -171,16 +136,17 @@ public class Episodes {
   public static ArrayList<EpisodesRecord> getCurrentSeriesEpisodes() throws SQLException {
     ArrayList<EpisodesRecord> eps = new ArrayList<EpisodesRecord>();
     ArrayList<EpisodesRecord> updated = new ArrayList<EpisodesRecord>();
-    ArrayList<File> subtitleFiles = new ArrayList<File>();
-    ArrayList<File> videoFiles = new ArrayList<File>();
+     File[] subtitleFiles = null;
+     File[] videoFiles = null;
     int episode;
     Boolean download, seen;
     String title, aired, subs;
 
     emptyEpisodes();
     String localDir = Series.getCurrentSerial().getLocalDir();
-    if(!localDir.equals("") && new File(localDir).isDirectory()){
-      //TODO get sub files and video files
+    if (!localDir.equals("") && new File(localDir).isDirectory()) {
+      subtitleFiles = Series.getSubtitleFiles();
+      videoFiles = Series.getVideoFiles();
     }
     if (Series.getCurrentSerial() == null) {
     }
@@ -198,15 +164,15 @@ public class Episodes {
       e.setEpisode(rs.getInt("episode"));
       download = rs.getBoolean("downloaded");
       e.setDownloaded(rs.getInt("downloaded"));
-      if (!download && MyUsefulFunctions.hasBeenAired(e.getAired())) {
-        if (checkDownloads(Series.getCurrentSerial().getSeason(), e.getEpisode())) {
+      if (!download && MyUsefulFunctions.hasBeenAired(e.getAired())){
+        if (checkDownloads(Series.getCurrentSerial().getSeason(), e.getEpisode(),videoFiles)) {
           e.setDownloaded(EpisodesRecord.DOWNLOADED);
           updated.add(e);
         }
       }
       e.setSubs(rs.getInt("subs"));
       if (rs.getInt("subs") == EpisodesRecord.NO_SUBS && MyUsefulFunctions.hasBeenAired(e.getAired())) {
-        int cSubs = checkSubs(Series.getCurrentSerial().getSeason(), e.getEpisode());
+        int cSubs = checkSubs(Series.getCurrentSerial().getSeason(), e.getEpisode(),subtitleFiles);
         if (cSubs != EpisodesRecord.NO_SUBS) {
           e.setSubs(cSubs);
           updated.add(e);
@@ -230,16 +196,11 @@ public class Episodes {
     return eps;
   }
 
-  private static boolean checkDownloads(int season, int episode) throws SQLException {
-    File directory = new File(Series.getCurrentSerial().getLocalDir());
-    if (!directory.isDirectory()) {
-      return false;
-    }
-    File[] files = directory.listFiles(new VideoFilter());
+  private static boolean checkDownloads(int season, int episode, File[] videoFiles) throws SQLException {
     String regex = MyUsefulFunctions.createRegex(season, episode);
     Pattern pattern = Pattern.compile(regex);
-    for (int j = 0; j < files.length; j++) {
-      File file = files[j];
+    for (int j = 0; j < videoFiles.length; j++) {
+      File file = videoFiles[j];
       Matcher matcher = pattern.matcher(file.getName());
       if (matcher.find()) {
         return true;
@@ -248,18 +209,13 @@ public class Episodes {
     return false;
   }
 
-  private static int checkSubs(int season, int episode) throws SQLException {
+  private static int checkSubs(int season, int episode, File[] subtitleFiles) throws SQLException {
     int subs = EpisodesRecord.NO_SUBS;
     boolean hasEn = false, hasGr = false;
-    File directory = new File(Series.getCurrentSerial().getLocalDir());
-    if (!directory.isDirectory()) {
-      return subs;
-    }
-    File[] files = directory.listFiles(new SubtitlesFilter());
-    String regex = MyUsefulFunctions.createRegex(season, episode);
+       String regex = MyUsefulFunctions.createRegex(season, episode);
     Pattern pattern = Pattern.compile(regex);
-    for (int j = 0; j < files.length; j++) {
-      File file = files[j];
+    for (int j = 0; j < subtitleFiles.length; j++) {
+      File file = subtitleFiles[j];
       Matcher matcher = pattern.matcher(file.getName());
       if (matcher.find()) {
         if (file.getName().indexOf(".en.") > 0) {

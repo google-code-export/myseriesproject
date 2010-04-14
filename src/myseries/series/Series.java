@@ -6,12 +6,17 @@ package myseries.series;
 
 import database.DBConnection;
 import database.SeriesRecord;
+import java.io.File;
+import java.io.FilenameFilter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 import myComponents.MyTableModels.MySeriesTableModel;
+import myComponents.myFileFilters.SubtitlesFilter;
+import myComponents.myFileFilters.VideoFilter;
 import myseries.episodes.Episodes;
 
 /**
@@ -20,63 +25,38 @@ import myseries.episodes.Episodes;
  */
 public class Series {
 
-  /**
-   * The number of columns in Series table : 3
-   */
-  public static final int NUMBER_OF_COLUMS = 3 ;
-  /**
-   * The fulltitle field : 0
-   */
+  /**  The number of columns in Series table : 3 */
+  public static final int NUMBER_OF_COLUMS = 3;
+  /**  The fulltitle field : 0  */
   public static final int SERIESRECORD_COLUMN = 0;
-  /**
-   * The hidden field : 1
-   */
+  /** The hidden field : 1   */
   public static final int HIDDEN_COLUMN = 1;
-  /**
-   * The update field : 2
-   */
+  /** The update field : 2  */
   public static final int UPDATE_COLUMN = 2;
-   /**
-   * The fulltitle field title : Title
-   */
+  /** The fulltitle field title : Title   */
   public static final String SERIES_RECORD_COLUMN_TITLE = "Title";
-  /**
-   * The hidden field title : Hidden
-   */
+  /** The hidden field title : Hidden   */
   public static final String HIDDEN_COLUMN_TITLE = "Hidden";
-  /**
-   * The update field title : Update
-   */
+  /** The update field title : Update   */
   public static final String UPDATE_COLUMN_TITLE = "Update";
-  /**
-   * The default season : 1
-   */
+  /** The default season : 1   */
   public static final int DEFAULT_SEASON = 1;
-  /**
-   * The minimum season : 1
-   */
+  /** The minimum season : 1   */
   public static final int MINIMUM_SEASON = 1;
-  /**
-   * The maximum season : 100
-   */
+  /** The maximum season : 100   */
   public static final int MAXIMUM_SEASON = 100;
-  /**
-   * The season step : 1
-   */
+  /** The season step : 1   */
   public static final int SEASON_STEP = 1;
-  /**
-   * The model of the Series table
-   */
+  /** The model of the Series table   */
   private static MySeriesTableModel tableModel_series;
-  /**
-   * The series table
-   */
+  /** The series table   */
   private static JTable table_series = new JTable();
-  /**
-   * The current series record
-   */
+  /** The current series record   */
   private static SeriesRecord currentSeries;
-
+  /** The series subtitle files */
+  private static File[] subtitleFiles;
+  /** The series video files */
+  private static File[] videoFiles;
 
   private Series() {
   }
@@ -109,7 +89,7 @@ public class Series {
       s.setHidden(rs.getInt("hidden"));
       update = rs.getBoolean("internetUpdate");
       s.setInternetUpdate(rs.getInt("internetUpdate"));
-      Object[] data = { s , hidden, update};
+      Object[] data = {s, hidden, update};
       getTableModel_series().addRow(data);
       series.add(s);
     }
@@ -145,7 +125,6 @@ public class Series {
       model.getColumn(i).setPreferredWidth(width);
     }
   }
-
 
   /**
    * Gets the serial of the selected row in the series table
@@ -233,5 +212,34 @@ public class Series {
     } catch (SQLException ex) {
       currentSeries = new SeriesRecord();
     }
+  }
+
+  /**
+   * @return the subtitleFiles
+   */
+  public static File[] getSubtitleFiles() {
+    if(subtitleFiles == null){
+     return getFiles(new SubtitlesFilter());
+    }
+    return subtitleFiles;
+  }
+
+  /**
+   * @return the videoFiles
+   */
+  public static File[] getVideoFiles() {
+    if(videoFiles == null){
+     return getFiles(new VideoFilter());
+    }
+    return videoFiles;
+  }
+
+  private static File[] getFiles(FilenameFilter filter) {
+    File directory = new File(Series.getCurrentSerial().getLocalDir());
+    if (!directory.isDirectory()) {
+      return null;
+    }
+    File[] files = directory.listFiles(filter);
+    return files;
   }
 }
