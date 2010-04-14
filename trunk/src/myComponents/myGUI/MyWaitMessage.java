@@ -15,7 +15,7 @@ package myComponents.myGUI;
  * @author lordovol
  */
 public class MyWaitMessage extends javax.swing.JDialog {
-
+  protected static final long serialVersionUID = 324556756L;
   private final String message;
 
   /** Creates new form MyWaitMessage */
