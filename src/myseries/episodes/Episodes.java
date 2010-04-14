@@ -171,11 +171,17 @@ public class Episodes {
   public static ArrayList<EpisodesRecord> getCurrentSeriesEpisodes() throws SQLException {
     ArrayList<EpisodesRecord> eps = new ArrayList<EpisodesRecord>();
     ArrayList<EpisodesRecord> updated = new ArrayList<EpisodesRecord>();
+    ArrayList<File> subtitleFiles = new ArrayList<File>();
+    ArrayList<File> videoFiles = new ArrayList<File>();
     int episode;
     Boolean download, seen;
     String title, aired, subs;
 
     emptyEpisodes();
+    String localDir = Series.getCurrentSerial().getLocalDir();
+    if(!localDir.equals("") && new File(localDir).isDirectory()){
+      //TODO get sub files and video files
+    }
     if (Series.getCurrentSerial() == null) {
     }
     String sql = "SELECT * FROM episodes WHERE series_ID = " + Series.getCurrentSerial().getSeries_ID()
@@ -206,7 +212,7 @@ public class Episodes {
           updated.add(e);
         }
       }
-      subs = e.getSubs() == EpisodesRecord.NO_SUBS ? "None" : e.getSubs() == EpisodesRecord.SEC_SUB ? "English" : e.getSubs() == EpisodesRecord.PRIM_SUB ? "Greek" : "Both";
+      subs = e.getSubs() == EpisodesRecord.NO_SUBS ? "None" : e.getSubs() == EpisodesRecord.SEC_SUB ? "Greek" : e.getSubs() == EpisodesRecord.PRIM_SUB ? "English" : "Both";
       seen = rs.getBoolean("seen");
       Object[] data = {episode, e, e.getAired(), download, subs, seen};
       getTableModel_episodes().addRow(data);
@@ -266,9 +272,9 @@ public class Episodes {
     if (hasEn && hasGr) {
       return EpisodesRecord.BOTH_SUBS;
     } else if (hasEn) {
-      return EpisodesRecord.SEC_SUB;
-    } else if (hasGr) {
       return EpisodesRecord.PRIM_SUB;
+    } else if (hasGr) {
+      return EpisodesRecord.SEC_SUB;
     }
     return subs;
   }
