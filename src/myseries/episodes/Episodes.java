@@ -11,6 +11,7 @@ import database.SeriesRecord;
 import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.regex.Matcher;
@@ -152,7 +153,8 @@ public class Episodes {
     }
     String sql = "SELECT * FROM episodes WHERE series_ID = " + Series.getCurrentSerial().getSeries_ID()
             + " ORDER BY CAST(episode AS UNSIGNED) ASC";
-    ResultSet rs = DBConnection.stmt.executeQuery(sql);
+    Statement stmt = DBConnection.conn.createStatement();
+    ResultSet rs = stmt.executeQuery(sql);
     while (rs.next()) {
       EpisodesRecord e = new EpisodesRecord();
       e.setSeries_ID(rs.getInt("series_ID"));
@@ -164,16 +166,17 @@ public class Episodes {
       e.setEpisode(rs.getInt("episode"));
       download = rs.getBoolean("downloaded");
       e.setDownloaded(rs.getInt("downloaded"));
-      if (!download && MyUsefulFunctions.hasBeenAired(e.getAired())){
-        if (checkDownloads(Series.getCurrentSerial().getSeason(), e.getEpisode(),videoFiles)) {
-          e.setDownloaded(EpisodesRecord.DOWNLOADED);
+      if (MyUsefulFunctions.hasBeenAired(e.getAired())){
+        boolean newDownloadedStatus = checkDownloads(Series.getCurrentSerial().getSeason(), e.getEpisode(),videoFiles);
+        if (download != newDownloadedStatus) {
+          e.setDownloaded(newDownloadedStatus ? EpisodesRecord.DOWNLOADED : EpisodesRecord.NOT_DOWNLOADED);
           updated.add(e);
         }
       }
       e.setSubs(rs.getInt("subs"));
-      if (rs.getInt("subs") == EpisodesRecord.NO_SUBS && MyUsefulFunctions.hasBeenAired(e.getAired())) {
+      if (rs.getInt("subs") != EpisodesRecord.BOTH_SUBS && MyUsefulFunctions.hasBeenAired(e.getAired())) {
         int cSubs = checkSubs(Series.getCurrentSerial().getSeason(), e.getEpisode(),subtitleFiles);
-        if (cSubs != EpisodesRecord.NO_SUBS) {
+        if (cSubs != e.getSubs()) {
           e.setSubs(cSubs);
           updated.add(e);
         }
