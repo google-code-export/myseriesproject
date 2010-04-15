@@ -68,7 +68,10 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
           append("<span style='color:red'>(" + series.getFullTitle() + ") could not  find webpage: " + "http://www.epguides.com/" + newTitle + "/" + " </span>");
           MySeries.logger.log(Level.WARNING, "(" + series.getTitle() + ") could not " + "http://www.epguides.com/" + newTitle + "/", ex);
           return false;
-        }
+        } catch (IllegalArgumentException ex1){
+      MySeries.logger.log(Level.SEVERE, "Illegal argument exception.Possibly the update was cancelled", ex);
+      return false;
+    }
       }
     }
     String inputLine;
@@ -110,6 +113,9 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
       append("<span style='color:red'>(" + series.getFullTitle() + ") could not  find webpage: " + "http://www.epguides.com/" + series.getTitle().replaceAll(" ", "") + "/" + " </span>");
       MySeries.logger.log(Level.WARNING, "(" + series.getTitle() + ") could not " + "http://www.epguides.com/" + series.getTitle().replaceAll(" ", "") + "/", ex);
     } catch (NullPointerException ex) {
+    } catch (IllegalArgumentException ex){
+      MySeries.logger.log(Level.SEVERE, "Illegal argument exception.Possibly the update was cancelled", ex);
+      return false;
     }
     return true;
   }
