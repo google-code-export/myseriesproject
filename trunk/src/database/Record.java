@@ -54,6 +54,7 @@ public class Record {
   public static int queryUpdate(String sql) throws SQLException {
     ResultSet rs = null;
     try {
+     // System.out.println("save " + sql);
       stmt.executeUpdate(sql);
       rs = stmt.executeQuery("SELECT last_insert_rowid() AS id");
       int ai;
@@ -65,6 +66,14 @@ public class Record {
       rs.close();
       NextEpisodes.update();
       return ai;
+    } catch (SQLException ex){
+      if(ex.getMessage().equals("cannot commit transaction - SQL statements in progress")){
+       // System.out.println("Retry " + sql);
+        return queryUpdate(sql);
+      } else {
+       // System.out.println("fail " + sql);
+        throw ex;
+      }
     } finally {
       if (rs != null) {
         rs.close();

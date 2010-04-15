@@ -79,60 +79,7 @@ public class EpisodesRecord extends Record {
     super();
   }
 
-  /**
-   * Gets an episode by the primary key (episode_ID)
-   * @param episode_ID The episode id
-   * @return The episode record or null if it's not found
-   * @throws SQLException
-   */
-  public static EpisodesRecord getEpisodeByID(int episode_ID) throws SQLException {
-    String sql = "SELECT * FROM episodes WHERE episode_ID = " + episode_ID;
-    Vector<EpisodesRecord> episodes  = getEpisodesBySql(sql);
-    return episodes.size()==1 ? episodes.get(0) : null;
-  }
-
-/**
- * Gets all episodes from the database
- * @return a Vector of episodesRecords
- * @throws SQLException
- */
-  public static Vector<EpisodesRecord> getAllEpisodes() throws SQLException {
-    String sql = "SELECT * FROM episodes ";
-    return getEpisodesBySql(sql);
-  }
-
-  /**
-   * Gets episodes by executing an sql quey
-   * @param sql The query to execute
-   * @return a vector of episodesRecords
-   * @throws SQLException
-   */
-  public static Vector<EpisodesRecord> getEpisodesBySql(String sql) throws SQLException {
-    EpisodesRecord er = new EpisodesRecord();
-    ResultSet rs = query(sql);
-    Vector<EpisodesRecord> a = new Vector<EpisodesRecord>();
-    try{
-    if (rs.next()) {
-      er.episode_ID = rs.getInt("episode_ID");
-      er.episode = rs.getInt("episode");
-      er.title = rs.getString("title");
-      er.series_ID = rs.getInt("series_ID");
-      er.aired = rs.getString("aired");
-      er.downloaded = rs.getInt("downloaded");
-      er.subs = rs.getInt("subs");
-      er.seen = rs.getInt("seen");
-      a.add(er);
-    }
-    rs.close();
-    return a;
-    } finally{
-      if (rs != null) {
-        rs.close();
-      }
-    }
-  }
-
-  /**
+   /**
    * Inserts a record in the database if it doesn't exist, or updates it if it exists
    * @return The id of the inserted record or -1 if it's an update
    * @throws java.sql.SQLException

@@ -10,6 +10,7 @@
  */
 package myseries.episodes;
 
+import database.EpisodesHelper;
 import java.io.IOException;
 import java.text.ParseException;
 import myseries.*;
@@ -79,7 +80,7 @@ public class AdminEpisodes extends MyDraggable {
    */
   private void getLatestEpisode() throws SQLException, IOException {
     MySeries.logger.log(Level.INFO, "Get the latest episode");
-    Vector<EpisodesRecord> episodes = EpisodesRecord.getEpisodesBySql(
+    Vector<EpisodesRecord> episodes = EpisodesHelper.getEpisodesBySql(
             "select * from episodes where series_ID = " +
             seriesRecord.getSeries_ID() + " order by CAST(episode AS INT) desc limit 1");
     if (episodes.size() > 0) {
