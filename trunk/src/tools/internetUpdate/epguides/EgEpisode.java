@@ -41,7 +41,9 @@ public class EgEpisode {
   }
 
   private String getTitle(String data) {
-    String link = data.substring(39).trim();
+    //TODO fix arrayindexoutofbounds
+    int pos = data.indexOf("<a");
+    String link = data.substring(pos).trim();
     return link.replaceAll("\\<.*?>", "");
   }
 

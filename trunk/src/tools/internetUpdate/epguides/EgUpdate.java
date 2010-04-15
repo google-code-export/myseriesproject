@@ -59,7 +59,7 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
       append("<span style='color:red'>(" + series.getFullTitle() + ") could not  find webpage: " + "http://www.epguides.com/" + series.getTitle().replaceAll(" ", "") + "/" + " </span>");
       MySeries.logger.log(Level.WARNING, "(" + series.getTitle() + ") could not " + "http://www.epguides.com/" + series.getTitle().replaceAll(" ", "") + "/", ex);
       if (series.getTitle().toLowerCase().startsWith("the")) {
-        String newTitle = series.getTitle().toLowerCase().replaceFirst(" ", "").replaceAll("the", "");
+        String newTitle = series.getTitle().toLowerCase().replaceFirst(" ", "").replaceAll("((?i)^the)|( )", "");
         try {
           append("<span> Trying for: " + newTitle + "</span>");
           epGuides = new URL("http://www.epguides.com/" + newTitle + "/");
@@ -101,7 +101,8 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
       }
       String[] lines = buf.toString().split("\n", -1);
       for (int i = 0; i < lines.length; i++) {
-        String line = lines[i];
+        String line = lines[i].trim();
+
         if (line.replaceAll("\\<.*?>", "").length() > 20) {
           egs.episodes.add(new EgEpisode(line));
         }
