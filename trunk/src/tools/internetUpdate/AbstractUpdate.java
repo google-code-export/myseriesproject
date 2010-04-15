@@ -84,24 +84,23 @@ public abstract class AbstractUpdate {
     hours = (int) t / 3600;
 
     execTime = MyUsefulFunctions.padLeft("" + mins, 2, "0") + ":"
-        + MyUsefulFunctions.padLeft("" + secs, 2, "0") + ","
-        + MyUsefulFunctions.padLeft("" + mill, 3, "0");
+            + MyUsefulFunctions.padLeft("" + secs, 2, "0") + ","
+            + MyUsefulFunctions.padLeft("" + mill, 3, "0");
     return execTime;
   }
 
   /**
    * Appends a message to the current messages
    * @param str The message to append
+   * @throws IllegalArgumentException 
    */
-  protected void append(String str) {
-    try {
-      currentMessages += str + "<br />";
-      iu.editor_messages.setText(currentMessages);
-      iu.editor_messages.setCaretPosition(iu.editor_messages.getDocument().getLength() - 1);
-    } catch (IllegalArgumentException ex) {
-      myseries.MySeries.logger.log(Level.WARNING, "wrong caret position", ex);
-    } finally {
-    }
+  protected void append(String str) throws IllegalArgumentException {
+
+    currentMessages += str + "<br />";
+    iu.editor_messages.setText(currentMessages);
+    int messagesLength = iu.editor_messages.getDocument().getLength();
+    iu.editor_messages.setCaretPosition(messagesLength - 1);
+
   }
 
   /**
@@ -116,8 +115,8 @@ public abstract class AbstractUpdate {
       }
       iu.progress_bar.setIndeterminate(true);
       iu.progress_bar.setString("Getting data from "
-          + (Options.toString(Options.INTERNET_UPDATE_DB).equals(InternetUpdate.EP_GUIDES_NAME)
-          ? "http://www.epguides.com" : "http://www.tvrage.com"));
+              + (Options.toString(Options.INTERNET_UPDATE_DB).equals(InternetUpdate.EP_GUIDES_NAME)
+              ? "http://www.epguides.com" : "http://www.tvrage.com"));
       append("<span style='font-weight:bold;font-size:12px'>Step 1 : Getting data</span>");
       for (int i = 0; i < serVector.size(); i++) {
         series = serVector.get(i);

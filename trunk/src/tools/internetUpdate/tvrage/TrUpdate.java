@@ -78,6 +78,9 @@ public class TrUpdate extends AbstractUpdate implements Runnable {
       MySeries.logger.log(Level.SEVERE, "Could not read from tvrage", ex);
       append("<span style='color:red'>(" + series.getFullTitle() + ") could not  get episodes </span>");
       return true;
+    } catch (IllegalArgumentException ex){
+      MySeries.logger.log(Level.SEVERE, "Illegal argument exception.Possibly the update was cancelled", ex);
+      return false;
     }
   }
 
