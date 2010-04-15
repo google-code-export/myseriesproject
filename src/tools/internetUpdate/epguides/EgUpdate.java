@@ -4,6 +4,7 @@
  */
 package tools.internetUpdate.epguides;
 
+import database.EpisodesHelper;
 import database.EpisodesRecord;
 import database.SeriesRecord;
 import java.io.BufferedReader;
@@ -175,7 +176,7 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
           int number = episode.number;
           String title = episode.title.trim();
           String airDate = episode.airDate;
-          Vector<EpisodesRecord> episodes = EpisodesRecord.getEpisodesBySql("SELECT * FROM episodes WHERE series_ID = " + series.getSeries_ID()
+          Vector<EpisodesRecord> episodes = EpisodesHelper.getEpisodesBySql("SELECT * FROM episodes WHERE series_ID = " + series.getSeries_ID()
               + " AND episode = " + number + " LIMIT 1");
           EpisodesRecord episodeRecord;
           if (episodes.size() == 0) {

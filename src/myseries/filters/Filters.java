@@ -5,7 +5,9 @@
 package myseries.filters;
 
 import database.DBConnection;
+import database.EpisodesHelper;
 import database.EpisodesRecord;
+import database.SeriesHelper;
 import database.SeriesRecord;
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -185,10 +187,10 @@ public class Filters {
       subsInt = rs.getInt("subs");
       subs = subsInt == SUBS_NONE ? "None" : subsInt == SUBS_SEC ? "English" : subsInt == SUBS_PRIM ? "Greek" : "Both";
       boolSeen = rs.getBoolean("seen");
-      Vector<SeriesRecord> seriesV = SeriesRecord.getSeriesBySql("SELECT * FROM series WHERE hidden = " + SeriesRecord.NOT_HIDDEN + " AND series_ID = " + series_ID);
+      Vector<SeriesRecord> seriesV = SeriesHelper.getSeriesBySql("SELECT * FROM series WHERE hidden = " + SeriesRecord.NOT_HIDDEN + " AND series_ID = " + series_ID);
       ser = seriesV.get(0);
 
-      Object[] data = {ser.getFullTitle(), episode, EpisodesRecord.getEpisodeByID(id), aired, boolDownloaded, subs, boolSeen};
+      Object[] data = {ser.getFullTitle(), episode, EpisodesHelper.getEpisodeByID(id), aired, boolDownloaded, subs, boolSeen};
       if (getTableModel_filterSeries() != null) {
         getTableModel_filterSeries().addRow(data);
       }

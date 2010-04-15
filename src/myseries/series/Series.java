@@ -5,6 +5,7 @@
 package myseries.series;
 
 import database.DBConnection;
+import database.SeriesHelper;
 import database.SeriesRecord;
 import java.io.File;
 import java.io.FilenameFilter;
@@ -208,7 +209,7 @@ public class Series {
     try {
       //Update data
       int series_id = series.getSeries_ID();
-      currentSeries = SeriesRecord.getSeriesByID(series_id);
+      currentSeries = SeriesHelper.getSeriesByID(series_id);
     } catch (SQLException ex) {
       currentSeries = new SeriesRecord();
     }
