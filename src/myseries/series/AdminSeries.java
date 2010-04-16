@@ -179,7 +179,7 @@ public class AdminSeries extends MyDraggable {
     textfield_tvRageID.setText("0");
 
     button_getTvRageID.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/internet_update_small.png"))); // NOI18N
-    button_getTvRageID.setToolTipText("Get ID from TvRage");
+    button_getTvRageID.setToolTipText("Get ID for TvRage.com");
     button_getTvRageID.setIconTextGap(2);
     button_getTvRageID.setMaximumSize(new java.awt.Dimension(31, 25));
     button_getTvRageID.setMinimumSize(new java.awt.Dimension(31, 25));
@@ -227,7 +227,7 @@ public class AdminSeries extends MyDraggable {
     label_subOnlineId.setText("SubtitleOnline ID :");
 
     button_getTvSubtitlesId.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/internet_update_small.png"))); // NOI18N
-    button_getTvSubtitlesId.setToolTipText("Get ID from TvRage");
+    button_getTvSubtitlesId.setToolTipText("Get ID for TvSubtitles.net");
     button_getTvSubtitlesId.setIconTextGap(2);
     button_getTvSubtitlesId.setMaximumSize(new java.awt.Dimension(31, 25));
     button_getTvSubtitlesId.setMinimumSize(new java.awt.Dimension(31, 25));
@@ -247,7 +247,7 @@ public class AdminSeries extends MyDraggable {
     });
 
     button_getSubOnlineId.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/internet_update_small.png"))); // NOI18N
-    button_getSubOnlineId.setToolTipText("Get ID from TvRage");
+    button_getSubOnlineId.setToolTipText("Get ID for SubtitleOnline.com");
     button_getSubOnlineId.setIconTextGap(2);
     button_getSubOnlineId.setMaximumSize(new java.awt.Dimension(31, 25));
     button_getSubOnlineId.setMinimumSize(new java.awt.Dimension(31, 25));
