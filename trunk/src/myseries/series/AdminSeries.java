@@ -31,6 +31,7 @@ import myComponents.myGUI.MyWaitMessage;
 import myseries.MySeries;
 import tools.download.subtitles.tvsubtitles.GetTvSubtitlesCode;
 import tools.internetUpdate.tvrage.TrGetId;
+import tools.options.Options;
 
 /**
  * Administrate series
