@@ -45,6 +45,9 @@ public class CopyScreenshot implements Runnable {
   private void start() throws FileNotFoundException, IOException {
     File inputFile = new File(screenshot);
     File outputFile = new File(destination + inputFile.getName());
+    if(inputFile.toString().equals(outputFile.toString())){
+      return;
+    }
     BufferedInputStream bis = new BufferedInputStream(new FileInputStream(inputFile), 4096);
     BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(outputFile), 4096);
     int theChar;
