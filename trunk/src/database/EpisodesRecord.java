@@ -219,7 +219,7 @@ public class EpisodesRecord extends Record {
 
   @Override
   public String toString() {
-   return title;
+   return getTitle();
   }
 
 
