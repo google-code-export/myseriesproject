@@ -207,8 +207,12 @@ public class Series {
   public static void setCurrentSerial(SeriesRecord series) {
     try {
       //Update data
+      if(series != null){
       int series_id = series.getSeries_ID();
       currentSeries = DBHelper.getSeriesByID(series_id);
+      } else {
+        currentSeries = new SeriesRecord();
+      }
     } catch (SQLException ex) {
       currentSeries = new SeriesRecord();
     }
