@@ -5,17 +5,15 @@
 package myseries.actions;
 
 import database.DBConnection;
+import database.DBHelper;
 import database.Database;
 import database.EpisodesRecord;
 import database.FilterRecord;
-import database.FiltersHelper;
 import database.SaveDatabase;
-import database.SeriesHelper;
 import database.SeriesRecord;
 import help.About;
 import help.CheckUpdate;
 import java.awt.Desktop;
-import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -24,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Vector;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.DefaultComboBoxModel;
@@ -34,7 +31,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.TableColumnModel;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
-import myComponents.myFileFilters.VideoFilter;
 import myseries.series.AdminSeries;
 import myseries.series.Series;
 import myseries.MySeries;
@@ -235,7 +231,7 @@ public class Actions {
       MyMessages.error("Empty title", "Please specify a save name");
     } else {
       try {
-        f = FiltersHelper.getFilterByTitle(title);
+        f = DBHelper.getFilterByTitle(title);
         if (f == null) {
           f = new FilterRecord();
         }
@@ -245,7 +241,7 @@ public class Actions {
         f.setTitle(title);
         f.save();
         MyMessages.message("Filter saved", "Filter was saved");
-        m.comboBoxModel_filters = new DefaultComboBoxModel(FiltersHelper.getFiltersTitlesList());
+        m.comboBoxModel_filters = new DefaultComboBoxModel(DBHelper.getFiltersTitlesList());
         MySeries.combobox_filters.setModel(m.comboBoxModel_filters);
       } catch (SQLException ex) {
         MySeries.logger.log(Level.WARNING, "Error while saving filter", ex);
@@ -261,14 +257,14 @@ public class Actions {
     int answ = MyMessages.question("Delete Filter?", "Are you sure that you want to delete the filter?");
     if (answ == 0) {
       try {
-        f = FiltersHelper.getFilterByTitle(title);
+        f = DBHelper.getFilterByTitle(title);
         if (f != null) {
           f.delete();
           MyMessages.message("Filter deleted", "Filter was deleted");
         } else {
           MyMessages.error("Error", "Filter could not be deleted");
         }
-        m.comboBoxModel_filters = new DefaultComboBoxModel(FiltersHelper.getFiltersTitlesList());
+        m.comboBoxModel_filters = new DefaultComboBoxModel(DBHelper.getFiltersTitlesList());
         MySeries.combobox_filters.setModel(m.comboBoxModel_filters);
       } catch (SQLException ex) {
         MySeries.logger.log(Level.WARNING, "Error while deleting filter", ex);
@@ -281,7 +277,7 @@ public class Actions {
     try {
       String title = "";
       title = String.valueOf(MySeries.combobox_filters.getSelectedItem());
-      FilterRecord f = FiltersHelper.getFilterByTitle(title);
+      FilterRecord f = DBHelper.getFilterByTitle(title);
       if (f != null) {
         MySeries.combobox_downloaded.setSelectedIndex(f.getDownloaded());
         MySeries.comboBox_seen.setSelectedIndex(f.getSeen());
@@ -411,7 +407,7 @@ public class Actions {
     try {
       Filters.getFilteredSeries();
       String title = MySeries.tabsPanel.getTitleAt(0).substring(0, MySeries.tabsPanel.getTitleAt(0).length() - 3).trim();
-      Vector<SeriesRecord> series = SeriesHelper.getSeriesBySql("SELECT * FROM series WHERE title = '" + title + "'");
+      Vector<SeriesRecord> series = DBHelper.getSeriesBySql("SELECT * FROM series WHERE title = '" + title + "'");
       if (series.size() > 0) {
         Series.setCurrentSerial(series.get(0));
         Episodes.updateEpisodesTable();

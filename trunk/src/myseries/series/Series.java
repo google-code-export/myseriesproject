@@ -5,14 +5,13 @@
 package myseries.series;
 
 import database.DBConnection;
-import database.SeriesHelper;
+import database.DBHelper;
 import database.SeriesRecord;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 import myComponents.MyTableModels.MySeriesTableModel;
@@ -209,7 +208,7 @@ public class Series {
     try {
       //Update data
       int series_id = series.getSeries_ID();
-      currentSeries = SeriesHelper.getSeriesByID(series_id);
+      currentSeries = DBHelper.getSeriesByID(series_id);
     } catch (SQLException ex) {
       currentSeries = new SeriesRecord();
     }

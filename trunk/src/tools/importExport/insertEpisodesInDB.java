@@ -1,6 +1,6 @@
 package tools.importExport;
 
-import database.EpisodesHelper;
+import database.DBHelper;
 import database.EpisodesRecord;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -60,7 +60,7 @@ class insertEpisodesInDB implements Runnable {
   private void save(EpisodesRecord e) throws SQLException {
     int episode = e.getEpisode();
     int series_ID = e.getSeries_ID();
-    Vector<EpisodesRecord> episodes = EpisodesHelper.getEpisodesBySql(
+    Vector<EpisodesRecord> episodes = DBHelper.getEpisodesBySql(
             "SELECT * from episodes WHERE episode = " + episode + " AND series_ID = " + series_ID);
     if (episodes.size() > 0) {
       e.setEpisode_ID(episodes.get(0).getEpisode_ID());
