@@ -79,7 +79,7 @@ public class EpisodesRecord extends Record {
     super();
   }
 
-   /**
+  /**
    * Inserts a record in the database if it doesn't exist, or updates it if it exists
    * @return The id of the inserted record or -1 if it's an update
    * @throws java.sql.SQLException
