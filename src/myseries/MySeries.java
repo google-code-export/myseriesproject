@@ -15,13 +15,11 @@ import myseries.episodes.NextEpisodes;
 import myseries.episodes.Episodes;
 import myseries.series.Series;
 import database.DBConnection;
+import database.DBHelper;
 import tools.options.Options;
 import myComponents.MyTableModels.MyEpisodesTableModel;
 import javax.swing.event.TableModelEvent;
 import database.EpisodesRecord;
-import database.FilterRecord;
-import database.FiltersHelper;
-import database.SeriesHelper;
 import database.SeriesRecord;
 import help.CheckUpdate;
 import help.Help;
@@ -205,7 +203,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tableModel_filterSeries = new MyFilteredSeriesTableModel();
     tableModel_series = new MySeriesTableModel();
     // Get saved filters
-    comboBoxModel_filters = new DefaultComboBoxModel(FiltersHelper.getFiltersTitlesList());
+    comboBoxModel_filters = new DefaultComboBoxModel(DBHelper.getFiltersTitlesList());
     //Init gui components
     initComponents();
     tabsPanel.setSelectedComponent(tabpanel_FilteredSeries);
@@ -1302,7 +1300,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
         int s = Integer.parseInt(String.valueOf(tableEpisodes.getValueAt(rowSelected, 0)));
         Episodes.setCurrentEpisode(s);
         int series_ID = Episodes.getCurrentEpisode().getSeries_ID();
-        Series.setCurrentSerial(SeriesHelper.getSeriesByID(series_ID));
+        Series.setCurrentSerial(DBHelper.getSeriesByID(series_ID));
         setEpisodePopUpMenu(rowSelected, true);
         episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
       } catch (SQLException ex) {
@@ -1420,7 +1418,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       int rowSelected = tableFiltels.rowAtPoint(p);
       try {
         EpisodesRecord ep = (EpisodesRecord) tableFiltels.getValueAt(rowSelected, 2);
-        SeriesRecord seriesRec = SeriesHelper.getSeriesByID(ep.getSeries_ID());
+        SeriesRecord seriesRec = DBHelper.getSeriesByID(ep.getSeries_ID());
         Series.setCurrentSerial(seriesRec);
         Episodes.setCurrentEpisode(ep.getEpisode());
         initEpisodesPopUp();

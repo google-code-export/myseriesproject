@@ -10,7 +10,7 @@
  */
 package tools.internetUpdate.tvrage;
 
-import database.SeriesHelper;
+import database.DBHelper;
 import database.SeriesRecord;
 import java.awt.Dialog.ModalityType;
 import java.sql.SQLException;
@@ -222,7 +222,7 @@ public class TrGetId extends MyDraggable {
     tvRageID = Integer.parseInt(sel.id);
     if (series_ID > 0) {
       try {
-        SeriesRecord cSeries = SeriesHelper.getSeriesByID(series_ID);
+        SeriesRecord cSeries = DBHelper.getSeriesByID(series_ID);
         cSeries.setTvrage_ID(tvRageID);
         cSeries.save();
         Series.getCurrentSerial().setTvrage_ID(tvRageID);

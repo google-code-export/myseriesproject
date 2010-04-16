@@ -4,7 +4,7 @@
  */
 package tools.internetUpdate;
 
-import database.SeriesHelper;
+import database.DBHelper;
 import database.SeriesRecord;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -110,7 +110,7 @@ public abstract class AbstractUpdate {
   protected void update() {
     try {
       if (iu.getCurrentSeries() == null) {
-        serVector = SeriesHelper.getSeriesBySql("SELECT * FROM series WHERE internetUpdate = 1");
+        serVector = DBHelper.getSeriesBySql("SELECT * FROM series WHERE internetUpdate = 1");
       } else {
         serVector.add(iu.getCurrentSeries());
       }
