@@ -174,7 +174,9 @@ public class EzTvForm extends MyDraggable {
                   .addComponent(jLabel6))
                 .addGap(242, 242, 242))
               .addComponent(checkbox_exact)
-              .addComponent(combo_series, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
+              .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(combo_series, 0, 173, Short.MAX_VALUE)
+                .addGap(192, 192, 192))))
           .addGroup(jPanel1Layout.createSequentialGroup()
             .addComponent(button_search)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -186,7 +188,7 @@ public class EzTvForm extends MyDraggable {
         .addContainerGap())
     );
 
-    jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel2, jLabel3, jLabel4, jLabel5});
+    jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel3, jLabel4, jLabel5});
 
     jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel6, jLabel7});
 
