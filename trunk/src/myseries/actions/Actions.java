@@ -486,7 +486,7 @@ public class Actions {
     }
   }
 
-  public static void downloadSubtitles(MySeries aThis) {
+  public static void downloadSubtitles() {
     if (Options.toString(Options.SUBTITLE_SITE).equals(Subtitle.TV_SUBTITLES_NAME)) {
       SeriesRecord series = Series.getCurrentSerial();
       String link = series.getTvSubtitlesCode().trim();

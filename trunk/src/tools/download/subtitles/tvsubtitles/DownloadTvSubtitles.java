@@ -69,7 +69,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
         form.dispose();
       }
     }
-    if(!srtFilename.equals("")){
+    if (!srtFilename.equals("")) {
       MyMessages.message("Subtitle downloaded", "Subtitle\n" + srtFilename + "\nwas downloaded and extracted succesfully");
     }
   }
@@ -129,7 +129,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
 
   private String getLink(String buff, boolean getPrimarySub) {
     String lang = "";
-    if(getPrimarySub){
+    if (getPrimarySub) {
       lang = Options.toString(Options.PRIMARY_SUB).equals("Greek") ? "gr" : "en";
     } else {
       lang = Options.toString(Options.PRIMARY_SUB).equals("Greek") ? "en" : "gr";
@@ -145,13 +145,18 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
       }
       i--;
     }
-    if(subLink!=null){
-    return subLink;
+    if (subLink != null) {
+      return subLink;
     } else {
-      if(!getPrimarySub){
+      if (!getPrimarySub) {
         return null;
       }
-      return getLink(buff, false);
+      if (MyMessages.question("Download secondary language", "Primary language subs not found.\nDownload secondary?") == JOptionPane.YES_OPTION) {
+        return getLink(buff, false);
+      } else {
+        return null;
+      }
+
     }
   }
 
@@ -173,7 +178,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
     for (int i = 0; i < fields.length; i++) {
       String field = fields[i];
       if ((field.startsWith("subtitle") || (field.startsWith("download"))) && field.endsWith("html")) {
-        curLink = Subtitle.TV_SUBTITLES_URL + URLEncoder.encode(field,"UTF-8");
+        curLink = Subtitle.TV_SUBTITLES_URL + URLEncoder.encode(field, "UTF-8");
         if (field.startsWith("download")) {
           curTitle = "dummy";
         }
