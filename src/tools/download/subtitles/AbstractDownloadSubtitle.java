@@ -53,7 +53,7 @@ public abstract class AbstractDownloadSubtitle {
         byte[] buf;
         HttpURLConnection uCon = (HttpURLConnection) sub.url.openConnection();
         String header = uCon.getHeaderField(0);
-        if (header.equals("HTTP/1.0 400 Bad Request")) {
+        if (!header.equals("HTTP/1.1 200 OK")) {
           MyMessages.error("Access denied", "Direct access to subtitle is denied.Opening browser");
           openInBrowser(sub);
         } else {

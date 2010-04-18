@@ -1406,7 +1406,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   }//GEN-LAST:event_popUpItem_renameEpisodesActionPerformed
 
   private void popUpItem_downloadSubtitlesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_downloadSubtitlesActionPerformed
-    Actions.downloadSubtitles(this);
+    Actions.downloadSubtitles();
 
   }//GEN-LAST:event_popUpItem_downloadSubtitlesActionPerformed
 

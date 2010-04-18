@@ -63,40 +63,50 @@ public class DownloadSOnline extends AbstractDownloadSubtitle implements Runnabl
         form.dispose();
       }
     }
-    if(!srtFilename.equals("")){
+    if (!srtFilename.equals("")) {
       MyMessages.message("Subtitle downloaded", "Subtitle\n" + srtFilename + "\nwas downloaded and extracted succesfully");
     }
   }
 
   private void getSubtitle() throws FileNotFoundException, IOException {
     if (MyUsefulFunctions.hasInternetConnection()) {
-      URL url = new URL(Subtitle.SUBTITLE_ONLINE_URL+sOnlineCode+"-season-" + season + "-episode-" + episode + "-subtitles.html");
+      URL url = new URL(Subtitle.SUBTITLE_ONLINE_URL + sOnlineCode + "-season-" + season + "-episode-" + episode + "-subtitles.html");
       BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-      parseWebpage(in);
+      parseWebpage(in, true);
     } else {
       MyMessages.internetError();
       form.dispose();
-      
+
     }
   }
 
-  private void parseWebpage(BufferedReader in) throws IOException {
+  private void parseWebpage(BufferedReader in, boolean primary) throws IOException {
     String line = "";
     URL curLink = null;
     String curtitle = "";
-    String search = "<a href=\"/" + sOnlineCode + "-s" + season + "e" + episode + "-greek-subtitles-download";
+    String lang;
+    if (primary) {
+      lang = Options.PRIMARY_SUB.equals("Greek") ? "greek" : "english";
+    } else {
+      lang = Options.PRIMARY_SUB.equals("Greek") ? "english" : "greek";
+    }
+    String search = "<a href=\"/" + sOnlineCode + "-s" + season + "e" + episode + "-" + lang + "-subtitles-download";
     while ((line = in.readLine()) != null) {
       if (line.indexOf(search.toLowerCase()) > -1) {
         line = line.replaceAll("(<a href=\"/)|(\">)", "").trim();
         String[] tokens = line.split("-");
-        String code = tokens[tokens.length-1].replaceAll(".html", "");
-        String url = Subtitle.SUBTITLE_ONLINE_URL+"download-subtitle-"+code+".html";
+        String code = tokens[tokens.length - 1].replaceAll(".html", "");
+        String url = Subtitle.SUBTITLE_ONLINE_URL + "download-subtitle-" + code + ".html";
         curLink = new URL(url);
         line = in.readLine();
         curtitle = line.replaceAll("</a>", "");
         subs.add(new Subtitle(curtitle, curLink));
       }
     }
+    if(subs.size()==0 && primary){
+      if (MyMessages.question("Download secondary language", "Primary language subs not found.\nDownload secondary?") == JOptionPane.YES_OPTION) {
+        parseWebpage(in, false);
+      }
+    }
   }
-
 }
