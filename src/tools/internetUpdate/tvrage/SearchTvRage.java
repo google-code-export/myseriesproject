@@ -22,6 +22,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import tools.internetUpdate.InternetUpdate;
 
 
 
@@ -61,7 +62,7 @@ class SearchTvRage implements Runnable {
     private void search() throws MalformedURLException, IOException, ParserConfigurationException, SAXException {
       InputStream in = null;
       MySeries.logger.log(Level.INFO, "Getting the url");
-      String url = "http://services.tvrage.com/feeds/search.php?show=";
+      String url = InternetUpdate.TV_RAGE_SEARCH_SHOW_URL;
       url = url + URLEncoder.encode(title, "UTF-8");
       MySeries.logger.log(Level.INFO, "Reading URL: " + url);
       URL tvRage = new URL(url);

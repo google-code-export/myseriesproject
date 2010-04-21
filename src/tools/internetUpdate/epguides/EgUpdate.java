@@ -53,20 +53,20 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
     }
     try {
       list.add(new EgSeriesToUpdate(series));
-      epGuides = new URL("http://www.epguides.com/" + series.getTitle().toLowerCase().replaceAll(" ", "") + "/");
+      epGuides = new URL(InternetUpdate.EP_GUIDES_URL + series.getTitle().toLowerCase().replaceAll(" ", "") + "/");
       in = new BufferedReader(new InputStreamReader(epGuides.openStream()));
     } catch (IOException ex) {
-      append("<span style='color:red'>(" + series.getFullTitle() + ") could not  find webpage: " + "http://www.epguides.com/" + series.getTitle().replaceAll(" ", "") + "/" + " </span>");
-      MySeries.logger.log(Level.WARNING, "(" + series.getTitle() + ") could not " + "http://www.epguides.com/" + series.getTitle().replaceAll(" ", "") + "/", ex);
+      append("<span style='color:red'>(" + series.getFullTitle() + ") could not  find webpage: " + InternetUpdate.EP_GUIDES_URL + series.getTitle().replaceAll(" ", "") + "/" + " </span>");
+      MySeries.logger.log(Level.WARNING, "(" + series.getTitle() + ") could not " +  InternetUpdate.EP_GUIDES_URL + series.getTitle().replaceAll(" ", "") + "/", ex);
       if (series.getTitle().toLowerCase().startsWith("the")) {
         String newTitle = series.getTitle().toLowerCase().replaceFirst(" ", "").replaceAll("((?i)^the)|( )", "");
         try {
           append("<span> Trying for: " + newTitle + "</span>");
-          epGuides = new URL("http://www.epguides.com/" + newTitle + "/");
+          epGuides = new URL( InternetUpdate.EP_GUIDES_URL + newTitle + "/");
           in = new BufferedReader(new InputStreamReader(epGuides.openStream()));
         } catch (IOException ex1) {
-          append("<span style='color:red'>(" + series.getFullTitle() + ") could not  find webpage: " + "http://www.epguides.com/" + newTitle + "/" + " </span>");
-          MySeries.logger.log(Level.WARNING, "(" + series.getTitle() + ") could not " + "http://www.epguides.com/" + newTitle + "/", ex);
+          append("<span style='color:red'>(" + series.getFullTitle() + ") could not  find webpage: " + InternetUpdate.EP_GUIDES_URL  + newTitle + "/" + " </span>");
+          MySeries.logger.log(Level.WARNING, "(" + series.getTitle() + ") could not " +  InternetUpdate.EP_GUIDES_URL + newTitle + "/", ex);
           return false;
         } catch (IllegalArgumentException ex1){
       MySeries.logger.log(Level.SEVERE, "Illegal argument exception.Possibly the update was cancelled", ex);
@@ -111,8 +111,8 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
       in.close();
       append("<span style='color:green'>(" + series.getFullTitle() + ") - OK</span>");
     } catch (IOException ex) {
-      append("<span style='color:red'>(" + series.getFullTitle() + ") could not  find webpage: " + "http://www.epguides.com/" + series.getTitle().replaceAll(" ", "") + "/" + " </span>");
-      MySeries.logger.log(Level.WARNING, "(" + series.getTitle() + ") could not " + "http://www.epguides.com/" + series.getTitle().replaceAll(" ", "") + "/", ex);
+      append("<span style='color:red'>(" + series.getFullTitle() + ") could not  find webpage: " +  InternetUpdate.EP_GUIDES_URL + series.getTitle().replaceAll(" ", "") + "/" + " </span>");
+      MySeries.logger.log(Level.WARNING, "(" + series.getTitle() + ") could not " +  InternetUpdate.EP_GUIDES_URL + series.getTitle().replaceAll(" ", "") + "/", ex);
     } catch (NullPointerException ex) {
     } catch (IllegalArgumentException ex){
       MySeries.logger.log(Level.SEVERE, "Illegal argument exception.Possibly the update was cancelled", ex);

@@ -58,7 +58,7 @@ public class TrUpdate extends AbstractUpdate implements Runnable {
       list.add(new TrSeriesToUpdate(series));
       InputStream in = null;
       MySeries.logger.log(Level.INFO, "Getting the url");
-      String url = "http://services.tvrage.com/feeds/episode_list.php?sid=" + series.getTvrage_ID();
+      String url = InternetUpdate.TV_RAGE_EPISODE_LIST_URL + series.getTvrage_ID();
       MySeries.logger.log(Level.INFO, "Reading URL: " + url);
       URL tvRage = new URL(url);
       in = tvRage.openStream();

@@ -32,11 +32,15 @@ public class InternetUpdate extends MyDraggable {
   /** EpGuides name : "EpGuides"   */
   public static final String EP_GUIDES_NAME = "EpGuides";
   /** List of web series databases   */
-   public static Vector<String> DB_UPDATERS = new Vector<String>();
-   /** The epguides url : "http://www.epguides.com/" **/
-   public static final String EP_GUIDES_URL = "http://www.epguides.com/";
-   /** The tvrage url : "http://www.tvrage.com **/
-   public static final String TV_RAGE_URL = "http://www.tvrage.com/";
+  public static Vector<String> DB_UPDATERS = new Vector<String>();
+  /** The epguides url : "http://www.epguides.com/" **/
+  public static final String EP_GUIDES_URL = "http://www.epguides.com/";
+  /** The tvrage url : "http://www.tvrage.com **/
+  public static final String TV_RAGE_URL = "http://www.tvrage.com/";
+  /** The search show rss url : "http://services.tvrage.com/feeds/search.php?show=" **/
+  public static final String TV_RAGE_SEARCH_SHOW_URL = "http://services.tvrage.com/feeds/search.php?show=";
+  /** The tvrage epoisodes list rss url : "http://services.tvrage.com/feeds/episode_list.php?sid=" **/
+  public static final String TV_RAGE_EPISODE_LIST_URL = "http://services.tvrage.com/feeds/episode_list.php?sid=";
 
   /**
    * If proccess is finished
