@@ -681,6 +681,7 @@ public class OptionsPanel extends MyDraggable {
     try {
       String mess = "";
       saveOptions();
+      MyUsefulFunctions.initInternetConnection();
       if(!oldFontFace.equals(Options.toString(Options.FONT_FACE))){
         mess = "Font face was changed\n";
       }

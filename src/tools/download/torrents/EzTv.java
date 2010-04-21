@@ -55,7 +55,6 @@ public class EzTv implements Runnable {
   }
 
   public void run() {
-    MyUsefulFunctions.initInternetConnection();
     if (MyUsefulFunctions.hasInternetConnection()) {
       progress.setIndeterminate(true);
       progress.setString("Getting rss feeds from eztv");

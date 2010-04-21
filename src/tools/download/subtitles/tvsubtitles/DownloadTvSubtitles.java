@@ -76,7 +76,6 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
 
   private void getSubtitle() {
     try {
-      MyUsefulFunctions.initInternetConnection();
       if (MyUsefulFunctions.hasInternetConnection()) {
         String buff = parseWebPage();
         if (!buff.equals("")) {

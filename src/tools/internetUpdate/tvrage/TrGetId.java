@@ -42,7 +42,6 @@ public class TrGetId extends MyDraggable {
   private static final long serialVersionUID = 345645747547L;
 
   {
-    MyUsefulFunctions.initInternetConnection();
     isConected = MyUsefulFunctions.hasInternetConnection();
   }
 

@@ -49,7 +49,6 @@ public class TrUpdate extends AbstractUpdate implements Runnable {
   @SuppressWarnings("unchecked")
   protected boolean read(SeriesRecord series) {
     try {
-      MyUsefulFunctions.initInternetConnection();
       isConected = MyUsefulFunctions.hasInternetConnection();
       if(!isConected){
         MyMessages.error("No Internet Connection", "Could not connect to the Internet");

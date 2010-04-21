@@ -114,7 +114,6 @@ public class CheckUpdate extends MyDraggable {
   }
 
   private boolean check() {
-    MyUsefulFunctions.initInternetConnection();
     isConected = MyUsefulFunctions.hasInternetConnection();
     if (!isConected) {
       MySeries.logger.log(Level.WARNING, "Could not connect to internet");

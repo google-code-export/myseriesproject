@@ -42,7 +42,6 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
   }
 
   protected boolean read(SeriesRecord series) {
-    MyUsefulFunctions.initInternetConnection();
     isConected = MyUsefulFunctions.hasInternetConnection();
     BufferedReader in = null;
     URL epGuides;

@@ -169,6 +169,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     JRootPane root = SwingUtilities.getRootPane(this);
     root.setGlassPane(glassPane);
     //Check for updates
+    MyUsefulFunctions.initInternetConnection();
     if (Options.toBoolean(Options.CHECK_VERSION)) {
       new CheckUpdate(true);
     }
