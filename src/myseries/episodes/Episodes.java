@@ -166,7 +166,7 @@ public class Episodes {
       e.setEpisode(rs.getInt("episode"));
       download = rs.getBoolean("downloaded");
       e.setDownloaded(rs.getInt("downloaded"));
-      if (MyUsefulFunctions.hasBeenAired(e.getAired())){
+      if (MyUsefulFunctions.hasBeenAired(e.getAired()) && videoFiles != null){
         boolean newDownloadedStatus = checkDownloads(Series.getCurrentSerial().getSeason(), e.getEpisode(),videoFiles);
         if (download != newDownloadedStatus) {
           e.setDownloaded(newDownloadedStatus ? EpisodesRecord.DOWNLOADED : EpisodesRecord.NOT_DOWNLOADED);
@@ -174,7 +174,7 @@ public class Episodes {
         }
       }
       e.setSubs(rs.getInt("subs"));
-      if (rs.getInt("subs") != EpisodesRecord.BOTH_SUBS && MyUsefulFunctions.hasBeenAired(e.getAired())) {
+      if (rs.getInt("subs") != EpisodesRecord.BOTH_SUBS && subtitleFiles!= null && MyUsefulFunctions.hasBeenAired(e.getAired())) {
         int cSubs = checkSubs(Series.getCurrentSerial().getSeason(), e.getEpisode(),subtitleFiles);
         if (cSubs != e.getSubs()) {
           e.setSubs(cSubs);
