@@ -75,7 +75,7 @@ public class NextEpisodes {
       where = " OR seen = "+EpisodesRecord.NOT_SEEN;
     } 
     if (Options.toBoolean(Options.SHOW_UNDOWNLOADED)) {
-      where += " OR downloaded = "+EpisodesRecord.NOT_DOWNLOADED;
+      where += " OR (downloaded = "+EpisodesRecord.NOT_DOWNLOADED +" AND seen = " + EpisodesRecord.NOT_SEEN + ")";
     }
     String sql = "SELECT e.title AS epTitle, e.aired AS aired, s.title AS serial FROM episodes e " +
         "LEFT JOIN series s ON e.series_ID = s.series_ID WHERE (aired >= current_date " + where +
