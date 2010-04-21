@@ -43,7 +43,6 @@ public class GetTvSubtitlesCode {
   }
 
   private void getCode() throws IOException {
-    MyUsefulFunctions.initInternetConnection();
     if (MyUsefulFunctions.hasInternetConnection()) {
       URL subsUrl = new URL(Subtitle.TV_SUBTITLES_URL + "search.php?q=" + URLEncoder.encode(series.getTitle(), "UTF-8"));
       BufferedReader in = new BufferedReader(new InputStreamReader(subsUrl.openStream()));
