@@ -18,7 +18,7 @@ public class Torrent {
    */
   public static final String TORRENTS_PATH = "torrents/";
   /**
-   * The eztv rss link
+   * The eztv rss link "http://ezrss.it/search/index.php?"
    */
   public static String EZTV_RSS = "http://ezrss.it/search/index.php?";
   /**

@@ -36,6 +36,10 @@ public class CheckUpdate extends MyDraggable {
   private Update up;
   private static final long serialVersionUID = 34646758678L;
   private boolean onStartUp;
+  /** The url to project on google code : "http://code.google.com/p/myseriesproject/" **/
+  public static final String MYSERIESPROJECT_URL = "http://code.google.com/p/myseriesproject/";
+  /** The url of the downloads list : "http://code.google.com/p/myseriesproject/downloads/list" **/
+  public static final String MYSERIESPROJECT_DOWNLOAD_LIST = "http://code.google.com/p/myseriesproject/downloads/list";
 
   /** Creates new form CheckUpdate
    * @param onStartUp 
@@ -92,7 +96,7 @@ public class CheckUpdate extends MyDraggable {
     }
 
     private String getLatestVersion() throws MalformedURLException, IOException {
-      URL v = new URL("http://code.google.com/p/myseriesproject/");
+      URL v = new URL(MYSERIESPROJECT_URL);
       BufferedReader in = new BufferedReader(new InputStreamReader(v.openStream()));
       label_needUpdate.setText("Connected to server!!!");
       String inputLine;
@@ -102,7 +106,7 @@ public class CheckUpdate extends MyDraggable {
           inputLine = inputLine.substring(pos + 17);
           inputLine = MyUsefulFunctions.stripHTML(inputLine).trim();
           String uri = inputLine.replaceAll("[\\(\\)]", "").replaceAll("rev", "r");
-          latestVersionUri = "http://code.google.com/p/myseriesproject/downloads/list";
+          latestVersionUri = MYSERIESPROJECT_DOWNLOAD_LIST;
           in.close();
           progressBar_checkUpdates.setIndeterminate(false);
           progressBar_checkUpdates.setString("");
@@ -114,7 +118,7 @@ public class CheckUpdate extends MyDraggable {
   }
 
   private boolean check() {
-    isConected = MyUsefulFunctions.hasInternetConnection();
+    isConected = MyUsefulFunctions.hasInternetConnection(MYSERIESPROJECT_URL);
     if (!isConected) {
       MySeries.logger.log(Level.WARNING, "Could not connect to internet");
       MyMessages.internetError();

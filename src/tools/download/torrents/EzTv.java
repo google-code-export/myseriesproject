@@ -55,7 +55,7 @@ public class EzTv implements Runnable {
   }
 
   public void run() {
-    if (MyUsefulFunctions.hasInternetConnection()) {
+    if (MyUsefulFunctions.hasInternetConnection(Torrent.EZTV_RSS)) {
       progress.setIndeterminate(true);
       progress.setString("Getting rss feeds from eztv");
       getRss();

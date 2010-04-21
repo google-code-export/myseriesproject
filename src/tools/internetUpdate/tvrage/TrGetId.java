@@ -42,7 +42,7 @@ public class TrGetId extends MyDraggable {
   private static final long serialVersionUID = 345645747547L;
 
   {
-    isConected = MyUsefulFunctions.hasInternetConnection();
+    isConected = MyUsefulFunctions.hasInternetConnection(InternetUpdate.TV_RAGE_URL);
   }
 
   /** Creates new form GetTvRageID */

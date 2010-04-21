@@ -47,7 +47,7 @@ public class GetSOnlineCode {
   }
 
   private void getCode() throws IOException {
-    if (MyUsefulFunctions.hasInternetConnection()) {
+    if (MyUsefulFunctions.hasInternetConnection(Subtitle.SUBTITLE_ONLINE_URL)) {
       URL subsUrl = new URL(Subtitle.SUBTITLE_ONLINE_URL + "search?query=" + URLEncoder.encode(series.getTitle(),"UTF-8"));
       BufferedReader in = new BufferedReader(new InputStreamReader(subsUrl.openStream()));
       parseSearchResult(in);

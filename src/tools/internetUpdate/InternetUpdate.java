@@ -27,18 +27,17 @@ import tools.options.Options;
  */
 public class InternetUpdate extends MyDraggable {
 
-  /**
-   * Tv rage name : "TvRage"
-   */
+  /** Tv rage name : "TvRage"   */
   public static final String TV_RAGE_NAME = "TvRage";
-  /**
-   * EpGuides name : "EpGuides"
-   */
+  /** EpGuides name : "EpGuides"   */
   public static final String EP_GUIDES_NAME = "EpGuides";
-  /**
-   * List of web series databases
-   */
-  public static Vector<String> DB_UPDATERS = new Vector<String>();
+  /** List of web series databases   */
+   public static Vector<String> DB_UPDATERS = new Vector<String>();
+   /** The epguides url : "http://www.epguides.com/" **/
+   public static final String EP_GUIDES_URL = "http://www.epguides.com/";
+   /** The tvrage url : "http://www.tvrage.com **/
+   public static final String TV_RAGE_URL = "http://www.tvrage.com/";
+
   /**
    * If proccess is finished
    */
