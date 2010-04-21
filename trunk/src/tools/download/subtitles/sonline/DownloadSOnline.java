@@ -69,7 +69,7 @@ public class DownloadSOnline extends AbstractDownloadSubtitle implements Runnabl
   }
 
   private void getSubtitle() throws FileNotFoundException, IOException {
-    if (MyUsefulFunctions.hasInternetConnection()) {
+    if (MyUsefulFunctions.hasInternetConnection(Subtitle.SUBTITLE_ONLINE_URL)) {
       URL url = new URL(Subtitle.SUBTITLE_ONLINE_URL + sOnlineCode + "-season-" + season + "-episode-" + episode + "-subtitles.html");
       BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
       parseWebpage(in, true);

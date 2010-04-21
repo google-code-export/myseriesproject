@@ -49,7 +49,7 @@ public class TrUpdate extends AbstractUpdate implements Runnable {
   @SuppressWarnings("unchecked")
   protected boolean read(SeriesRecord series) {
     try {
-      isConected = MyUsefulFunctions.hasInternetConnection();
+      isConected = MyUsefulFunctions.hasInternetConnection(InternetUpdate.TV_RAGE_URL);
       if(!isConected){
         MyMessages.error("No Internet Connection", "Could not connect to the Internet");
         return false;

@@ -104,20 +104,14 @@ public class MyUsefulFunctions {
     return str;
   }
 
-  public static boolean hasInternetConnection() {
+  public static boolean hasInternetConnection(String address) {
     BufferedReader in = null;
     try {
-      URL google = new URL("http://www.google.com/");
-      in = new BufferedReader(new InputStreamReader(google.openStream()));
+      URL url = new URL(address);
+      in = new BufferedReader(new InputStreamReader(url.openStream()));
       return true;
     } catch (IOException ex) {
-      try {
-        URL msn = new URL("http://www.msn.com/");
-        in = new BufferedReader(new InputStreamReader(msn.openStream()));
-        return true;
-      } catch (IOException ex1) {
-        return false;
-      }
+      return false;
     }
   }
 

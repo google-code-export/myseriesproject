@@ -42,7 +42,7 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
   }
 
   protected boolean read(SeriesRecord series) {
-    isConected = MyUsefulFunctions.hasInternetConnection();
+    isConected = MyUsefulFunctions.hasInternetConnection(InternetUpdate.EP_GUIDES_URL);
     BufferedReader in = null;
     URL epGuides;
     StringBuffer buf = new StringBuffer();
