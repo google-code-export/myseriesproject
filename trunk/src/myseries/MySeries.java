@@ -96,8 +96,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
     //DEBUG DATABASE
     if (Options._USER_DIR_.equals("D:\\JavaProjects\\myseriesproject")) {
-     // System.out.println("Copy debug db");
-     // MyUsefulFunctions.copyfile("G:\\TV Series\\MySeries\\databases\\Spyros2009.db", "D:\\JavaProjects\\myseriesproject\\databases\\develop.db");
+      System.out.println("Copy debug db");
+      MyUsefulFunctions.copyfile("G:\\TV Series\\MySeries\\databases\\Spyros2009.db", "D:\\JavaProjects\\myseriesproject\\databases\\develop.db");
     }
 
     //Set look and feel

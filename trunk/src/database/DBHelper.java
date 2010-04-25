@@ -143,11 +143,12 @@ public class DBHelper {
    */
   public static Vector<SeriesRecord> getSeriesBySql(String sql) throws SQLException {
     ResultSet rs = null;
-    SeriesRecord s = new SeriesRecord();
+    
     try {
-      rs = s.query(sql);
+      rs = DBConnection.stmt.executeQuery(sql);
       Vector<SeriesRecord> a = new Vector<SeriesRecord>();
       while (rs.next()) {
+        SeriesRecord s = new SeriesRecord();
         s.setSeason(rs.getInt("season"));
         s.setSeries_ID(rs.getInt("series_ID"));
         s.setTitle(rs.getString("title"));
