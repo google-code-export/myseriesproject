@@ -99,12 +99,12 @@ public class DBHelper {
    */
   public static Vector<FilterRecord> getFilterRecordBySql(String sql) throws SQLException {
     ResultSet rs = null;
-    FilterRecord s = null;
+    
     try {
-      s = new FilterRecord();
-      rs = s.query(sql);
+      rs = database.DBConnection.stmt.executeQuery(sql);
       Vector<FilterRecord> a = new Vector<FilterRecord>();
       while (rs.next()) {
+        FilterRecord s = new FilterRecord();
         s.setFilter_ID(rs.getInt("filter_ID"));
         s.setDownloaded(rs.getInt("downloaded"));
         s.setSeen(rs.getInt("seen"));
