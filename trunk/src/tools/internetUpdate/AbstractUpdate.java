@@ -5,6 +5,7 @@
 package tools.internetUpdate;
 
 import database.DBHelper;
+import database.EpisodesRecord;
 import database.SeriesRecord;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -118,7 +119,7 @@ public abstract class AbstractUpdate {
       iu.progress_bar.setString("Getting data from "
               + (Options.toString(Options.INTERNET_UPDATE_DB).equals(InternetUpdate.EP_GUIDES_NAME)
               ? InternetUpdate.EP_GUIDES_URL : InternetUpdate.TV_RAGE_URL));
-      append("<span style='font-weight:bold;font-size:12px'>Step 1 : Getting data</span>");
+      append("<span style='font-weight:bold;font-size:12px'>Getting data</span>");
       for (int i = 0; i < serVector.size(); i++) {
         series = serVector.get(i);
         iu.label_update_series.setText("Getting data for \"" + series.getFullTitle() + "\"");
@@ -154,4 +155,14 @@ public abstract class AbstractUpdate {
    * @throws SQLException
    */
   protected abstract void updateEpisodes() throws SQLException;
+
+  protected boolean shouldSaveEpisode(EpisodesRecord episodeRecord,String title,String airDate){
+    String oldTitle = episodeRecord.getTitle().trim().toLowerCase();
+    String oldDate = episodeRecord.getAired();
+   if(!oldTitle.equals(title.toLowerCase()) ||
+            (!oldDate.equals(airDate) && MyUsefulFunctions.isValidDate(airDate))){
+     return true;
+   }
+   return false;
+  }
 }
