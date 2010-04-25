@@ -72,7 +72,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public MyEpisodesTableModel tableModel_episodes;
   private MyFilteredSeriesTableModel tableModel_filterSeries;
   public ComboBoxModel comboBoxModel_filters;
-  public static String version = "1.0(rev14)";
+  public static String version = "1.2(rev285)";
   public String date = "2010-04-09";
   public static MyDisabledGlassPane glassPane;
   public static Logger logger;
