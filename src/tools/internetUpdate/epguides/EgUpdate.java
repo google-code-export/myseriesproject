@@ -148,7 +148,7 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
   }
 
   protected void updateEpisodes() throws SQLException {
-    append("<span style='font-weight:bold;font-size:12px'>Step 2 : Importing data</span>");
+    append("<span style='font-weight:bold;font-size:12px'>Importing data</span>");
     EgEpisodeOld curData;
     String[] arr;
     String line;
@@ -163,6 +163,7 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
       boolean header = true;
       EgSeriesToUpdate curSeries = (EgSeriesToUpdate) list.get(i);
       if (curSeries.update) {
+        series = curSeries.series;
         if (header) {
           iu.label_update_series.setText("Importing episodes of " + curSeries);
           append("<span><b>Importing episodes of " + curSeries + "</b></span>");
@@ -185,8 +186,7 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
             append("<b>&nbsp;&nbsp;&nbsp;&nbsp;New Episode: " + number + ". " + title + " (Inserted)</b>");
           } else {
             episodeRecord = episodes.get(0);
-            if (!episodeRecord.getTitle().trim().equals(title) || (!episodeRecord.getAired().equals(airDate)
-                && !airDate.trim().equals(""))) {
+            if (shouldSaveEpisode(episodeRecord, title, airDate)) {
               updEpisodes++;
               save = true;
               append("&nbsp;&nbsp;&nbsp;&nbsp;Episode: " + number + ". " + title + " (Updated)");
