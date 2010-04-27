@@ -86,9 +86,9 @@ public class DownloadSOnline extends AbstractDownloadSubtitle implements Runnabl
     String curtitle = "";
     String lang;
     if (primary) {
-      lang = Options.PRIMARY_SUB.equals("Greek") ? "greek" : "english";
+      lang = Options.toString(Options.PRIMARY_SUB).equals("Greek") ? "greek" : "english";
     } else {
-      lang = Options.PRIMARY_SUB.equals("Greek") ? "english" : "greek";
+      lang = Options.toString(Options.PRIMARY_SUB).equals("Greek") ? "english" : "greek";
     }
     String search = "<a href=\"/" + sOnlineCode + "-s" + season + "e" + episode + "-" + lang + "-subtitles-download";
     while ((line = in.readLine()) != null) {

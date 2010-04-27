@@ -29,6 +29,7 @@ import myComponents.myFileFilters.ScreenshotFilter;
 import myComponents.myGUI.MyDraggable;
 import myComponents.myGUI.MyWaitMessage;
 import myseries.MySeries;
+import tools.download.subtitles.sonline.GetSubtitleOnlineCode;
 import tools.download.subtitles.tvsubtitles.GetTvSubtitlesCode;
 import tools.internetUpdate.tvrage.TrGetId;
 import tools.options.Options;
@@ -507,9 +508,19 @@ public class AdminSeries extends MyDraggable {
     }//GEN-LAST:event_button_getTvSubtitlesIdMouseExited
 
     private void button_getTvSubtitlesIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_getTvSubtitlesIdActionPerformed
+      if(seriesRecord == null){
+        if(textField_Serial.getText().trim().equals("")){
+          MyMessages.error("Empty title", "The series title shouldn't be empty");
+          return;
+        } else {
+          seriesRecord = new SeriesRecord();
+          seriesRecord.setTitle(textField_Serial.getText().trim());
+          seriesRecord.setSeason(Integer.parseInt(String.valueOf(spinner_season.getValue())));
+        }
+      }
       setModalityType(ModalityType.MODELESS);
       setVisible(false);
-      MyWaitMessage message = new MyWaitMessage(null,false,"Please wait while searching for tvSubtitleCode");
+      MyWaitMessage message = new MyWaitMessage(null, false, "Please wait while searching for tvSubtitleCode");
       message.create();
       GetTvSubtitlesCode c = new GetTvSubtitlesCode(seriesRecord);
       message.destroy();
@@ -523,7 +534,6 @@ public class AdminSeries extends MyDraggable {
       setVisible(true);
     }//GEN-LAST:event_button_getTvSubtitlesIdActionPerformed
 
-  
     private void button_getSubOnlineIdMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button_getSubOnlineIdMouseEntered
       setCursor(new Cursor(Cursor.HAND_CURSOR));
     }//GEN-LAST:event_button_getSubOnlineIdMouseEntered
@@ -533,7 +543,20 @@ public class AdminSeries extends MyDraggable {
     }//GEN-LAST:event_button_getSubOnlineIdMouseExited
 
     private void button_getSubOnlineIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_getSubOnlineIdActionPerformed
-      // TODO add your handling code here:
+      setModalityType(ModalityType.MODELESS);
+      setVisible(false);
+      MyWaitMessage message = new MyWaitMessage(null, false, "Please wait while searching for SubtitleOnline");
+      message.create();
+      GetSubtitleOnlineCode c = new GetSubtitleOnlineCode(seriesRecord);
+      message.destroy();
+      String id = c.tSubCode;
+      if (id == null) {
+      } else {
+        textfield_subsOnline.setText(c.tSubCode);
+        label_message.setText("");
+        label_message.setText("");
+      }
+      setVisible(true);
     }//GEN-LAST:event_button_getSubOnlineIdActionPerformed
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton button_Add;
