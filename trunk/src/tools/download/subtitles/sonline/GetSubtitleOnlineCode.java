@@ -12,33 +12,26 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import tools.download.subtitles.Subtitle;
 import tools.download.subtitles.SubtitleCode;
-import tools.options.Options;
 
 /**
- * Gets the subtitleOnline code for the series
- * @author 
+ *
+ * @author lordovol
  */
-public class GetSOnlineCode {
+public class GetSubtitleOnlineCode {
 
+  public String tSubCode;
   private SeriesRecord series;
   private ArrayList<SCode> sLinks;
-  /**
-   * The sonline code
-   */
-  public String sOnlineCode = "";
 
-  /**
-   * Gets the subtitleOnline code for a series
-   * @param series The series
-   */
-  public GetSOnlineCode(SeriesRecord series) {
+  public GetSubtitleOnlineCode(SeriesRecord series) {
+    this.series = series;
     try {
-      this.series = series;
       getCode();
     } catch (IOException ex) {
       myseries.MySeries.logger.log(Level.SEVERE, null, ex);
@@ -48,18 +41,18 @@ public class GetSOnlineCode {
 
   private void getCode() throws IOException {
     if (MyUsefulFunctions.hasInternetConnection(Subtitle.SUBTITLE_ONLINE_URL)) {
-      URL subsUrl = new URL(Subtitle.SUBTITLE_ONLINE_URL + "search?query=" + URLEncoder.encode(series.getTitle(),"UTF-8"));
+      URL subsUrl = new URL(Subtitle.SUBTITLE_ONLINE_URL + "search?query=" + URLEncoder.encode(series.getTitle(), "UTF-8"));
       BufferedReader in = new BufferedReader(new InputStreamReader(subsUrl.openStream()));
       parseSearchResult(in);
       in.close();
       if (sLinks.size() == 0) {
         MyMessages.message("Series not found", "The series " + series.getFullTitle() + " is not found in SubtitleOnline");
       } else if (sLinks.size() == 1) {
-        this.sOnlineCode = sLinks.get(0).getCode();
+        this.tSubCode = sLinks.get(0).getCode();
       } else {
-        SCode sl = (SCode) JOptionPane.showInputDialog(null, "Multiple series found", "Choose the right series", JOptionPane.QUESTION_MESSAGE, null, sLinks.toArray(), 0);
-        if (sl != null) {
-          this.sOnlineCode = sl.getCode();
+        SCode tl = (SCode) JOptionPane.showInputDialog(null, "Multiple series found", "Choose the right series", JOptionPane.QUESTION_MESSAGE, null, sLinks.toArray(), 0);
+        if (tl != null) {
+          this.tSubCode = tl.getCode();
         }
       }
     } else {
@@ -77,34 +70,30 @@ public class GetSOnlineCode {
       if (line.indexOf("<h2>Following TV Shows Were Found:</h2>") > -1) {
         inResults = true;
       }
-      if (inResults && line.indexOf("</table>") > -1) {
+      if (line.indexOf("<h2>Following Episodes Were Found:</h2>") > -1) {
         inResults = false;
       }
       if (inResults) {
-        if (line.indexOf("<a href") > -1) {
-          curSOnlineCode = line.replaceAll("(<a href=\"/)|(\">)|(-subtitles.html)", "");
-          line = in.readLine();
-          curTitle = line.replaceAll("</a></td>", "");
-          if (!curTitle.equals("") && !curSOnlineCode.equals("")) {
-            SCode link = new SCode();
-            link.setTitle(curTitle.trim());
-            link.setCode(curSOnlineCode.trim());
-            sLinks.add(link);
-          }
+        if (line.indexOf("-subtitles.html\">") > -1) {
+          String code = line.replaceAll("(<a href=\"/)|(-subtitles.html\">)", "");
+          String title = in.readLine().replaceAll("</a></td>", "");
+          SCode s = new SCode();
+          s.setTitle(title.trim());
+          s.setCode(code.trim());
+          sLinks.add(s);
         }
       }
+      
+
     }
+
   }
 
-  /**
-   * A subtitleOnline link
-   */
-  class SCode extends SubtitleCode{
+  class SCode extends SubtitleCode {
 
     @Override
     public void setCode(String code) {
       this.code = code;
     }
-
   }
 }
