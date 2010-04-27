@@ -220,7 +220,7 @@ public class Episodes {
     for (int j = 0; j < subtitleFiles.length; j++) {
       File file = subtitleFiles[j];
       Matcher matcher = pattern.matcher(file.getName());
-      if (matcher.find()) {
+      if (matcher.find() && file.isFile()) {
         if (file.getName().indexOf(".en.") > 0) {
           hasEn = true;
         } else {
