@@ -188,7 +188,6 @@ public class Filters {
       boolSeen = rs.getBoolean("seen");
       Vector<SeriesRecord> seriesV = DBHelper.getSeriesBySql("SELECT * FROM series WHERE hidden = " + SeriesRecord.NOT_HIDDEN + " AND series_ID = " + series_ID);
       ser = seriesV.get(0);
-
       Object[] data = {ser.getFullTitle(), episode, DBHelper.getEpisodeByID(id), aired, boolDownloaded, subs, boolSeen};
       if (getTableModel_filterSeries() != null) {
         getTableModel_filterSeries().addRow(data);

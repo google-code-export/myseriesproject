@@ -43,11 +43,11 @@ public class DBHelper {
    * @throws SQLException
    */
   public static Vector<EpisodesRecord> getEpisodesBySql(String sql) throws SQLException {
-    EpisodesRecord er = new EpisodesRecord();
-    ResultSet rs = er.query(sql);
+    ResultSet rs = DBConnection.conn.createStatement().executeQuery(sql);
     Vector<EpisodesRecord> a = new Vector<EpisodesRecord>();
     try {
       if (rs.next()) {
+        EpisodesRecord er = new EpisodesRecord();
         er.setEpisode_ID(rs.getInt("episode_ID"));
         er.setEpisode(rs.getInt("episode"));
         er.setTitle(rs.getString("title"));
@@ -101,7 +101,7 @@ public class DBHelper {
     ResultSet rs = null;
     
     try {
-      rs = database.DBConnection.stmt.executeQuery(sql);
+      rs = database.DBConnection.conn.createStatement().executeQuery(sql);
       Vector<FilterRecord> a = new Vector<FilterRecord>();
       while (rs.next()) {
         FilterRecord s = new FilterRecord();
@@ -145,7 +145,7 @@ public class DBHelper {
     ResultSet rs = null;
     
     try {
-      rs = DBConnection.stmt.executeQuery(sql);
+      rs = DBConnection.conn.createStatement().executeQuery(sql);
       Vector<SeriesRecord> a = new Vector<SeriesRecord>();
       while (rs.next()) {
         SeriesRecord s = new SeriesRecord();
@@ -189,5 +189,8 @@ public class DBHelper {
   public static Vector<SeriesRecord> getAllSeries() throws SQLException {
     return getSeriesBySql("SELECT * FROM series WHERE hidden = " + SeriesRecord.NOT_HIDDEN);
 
+  }
+
+  private DBHelper() {
   }
 }
