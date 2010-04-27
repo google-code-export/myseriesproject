@@ -11,7 +11,6 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.table.TableModel;
 import myComponents.MyUsefulFunctions;
 import myseries.MySeries;
-import myseries.episodes.NextEpisodes;
 
 /**
  *
