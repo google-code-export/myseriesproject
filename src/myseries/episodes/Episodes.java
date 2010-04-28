@@ -166,7 +166,8 @@ public class Episodes {
       e.setEpisode(rs.getInt("episode"));
       download = rs.getBoolean("downloaded");
       e.setDownloaded(rs.getInt("downloaded"));
-      if (MyUsefulFunctions.hasBeenAired(e.getAired()) && videoFiles != null){
+      e.setSeen(rs.getInt("seen"));
+      if (MyUsefulFunctions.hasBeenAired(e.getAired()) && videoFiles != null && e.getSeen() == EpisodesRecord.NOT_SEEN){
         boolean newDownloadedStatus = checkDownloads(Series.getCurrentSerial().getSeason(), e.getEpisode(),videoFiles);
         if (download != newDownloadedStatus) {
           e.setDownloaded(newDownloadedStatus ? EpisodesRecord.DOWNLOADED : EpisodesRecord.NOT_DOWNLOADED);
