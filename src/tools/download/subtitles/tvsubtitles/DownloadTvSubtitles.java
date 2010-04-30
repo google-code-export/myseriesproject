@@ -50,7 +50,9 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
     progress.setIndeterminate(false);
     if (subs.size() == 0) {
       form.dispose();
-      MyMessages.error("Subtitle not found", "The subtitle was not found");
+      if (!cancel) {
+        MyMessages.error("Subtitle not found", "The subtitle was not found");
+      }
     } else if (subs.size() == 1) {
       download(subs.get(0));
       form.dispose();
@@ -150,9 +152,10 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
       if (!getPrimarySub) {
         return null;
       }
-      if (MyMessages.question("Download secondary language", "Primary language subs not found.\nDownload secondary?") == JOptionPane.YES_OPTION) {
+      if (MyMessages.question("Download secondary language", "Primary language subs not found.\nSearch for secondary?") == JOptionPane.YES_OPTION) {
         return getLink(buff, false);
       } else {
+        cancel = true;
         return null;
       }
 

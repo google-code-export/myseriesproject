@@ -36,7 +36,8 @@ public abstract class AbstractDownloadSubtitle {
   protected JProgressBar progress;
   protected AbstractDownloadForm form;
   protected String srtFilename = "";
-
+  protected boolean cancel = false;
+  
   protected void download(Subtitle sub) {
     if (localDir.equals("")) {
       progress.setIndeterminate(false);

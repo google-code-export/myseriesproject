@@ -52,7 +52,9 @@ public class DownloadSOnline extends AbstractDownloadSubtitle implements Runnabl
     progress.setIndeterminate(false);
     if (subs.size() == 0) {
       form.dispose();
-      MyMessages.message("Subtitle not found", "The subtitle was not found");
+      if (!cancel) {
+        MyMessages.message("Subtitle not found", "The subtitle was not found");
+      }
     } else if (subs.size() == 1) {
       download(subs.get(0));
       form.dispose();
@@ -103,9 +105,11 @@ public class DownloadSOnline extends AbstractDownloadSubtitle implements Runnabl
         subs.add(new Subtitle(curtitle, curLink));
       }
     }
-    if(subs.size()==0 && primary){
-      if (MyMessages.question("Download secondary language", "Primary language subs not found.\nDownload secondary?") == JOptionPane.YES_OPTION) {
+    if (subs.size() == 0 && primary) {
+      if (MyMessages.question("Download secondary language", "Primary language subs not found.\nSearch for secondary?") == JOptionPane.YES_OPTION) {
         parseWebpage(in, false);
+      } else {
+        cancel = true;
       }
     }
   }
