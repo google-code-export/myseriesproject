@@ -12,6 +12,8 @@ package tools.download.torrents;
 
 import database.EpisodesRecord;
 import database.SeriesRecord;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
@@ -28,20 +30,24 @@ import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyDraggable;
 import myseries.series.Series;
+import soldatos.sformcomponents.SComboBox;
+import soldatos.validators.RequiredValidator;
 
 /**
  * The form to submit a torrent search to EzTv
  * @author lordovol
  */
 public class EzTvForm extends MyDraggable {
-  private static final long serialVersionUID = 235353163L;
 
+  private static final long serialVersionUID = 235353163L;
   private SeriesRecord series = null;
   private EpisodesRecord episode = null;
   private ComboBoxModel seriesModel = new DefaultComboBoxModel();
   private ComboBoxModel qualityModel = new DefaultComboBoxModel();
 
-  { createModels(); }
+  {
+    createModels();
+  }
 
   /**
    * Creates a default blank search form
@@ -65,9 +71,21 @@ public class EzTvForm extends MyDraggable {
 
   private void showUp() {
     initComponents();
+    combo_series.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
+
+      @Override
+      public void keyReleased(KeyEvent e) {
+        combo_seriesKeyReleased(e);
+      }
+
+    });
     setData();
     setLocationRelativeTo(null);
     setVisible(true);
+  }
+
+  private void combo_seriesKeyReleased(KeyEvent e){
+    combo_series.validate(new RequiredValidator());
   }
 
   /** This method is called from within the constructor to
@@ -85,7 +103,6 @@ public class EzTvForm extends MyDraggable {
     jLabel3 = new javax.swing.JLabel();
     jLabel4 = new javax.swing.JLabel();
     jLabel5 = new javax.swing.JLabel();
-    combo_series = new javax.swing.JComboBox();
     spinner_season = new javax.swing.JSpinner();
     spinner_episode = new javax.swing.JSpinner();
     combo_quality = new javax.swing.JComboBox();
@@ -95,6 +112,7 @@ public class EzTvForm extends MyDraggable {
     jLabel6 = new javax.swing.JLabel();
     jLabel7 = new javax.swing.JLabel();
     checkbox_exact = new javax.swing.JCheckBox();
+    combo_series = new SComboBox(false);
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
@@ -115,9 +133,6 @@ public class EzTvForm extends MyDraggable {
 
     jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     jLabel5.setText("Quality :");
-
-    combo_series.setEditable(true);
-    combo_series.setModel(seriesModel);
 
     spinner_season.setModel(new javax.swing.SpinnerNumberModel(1, 0, 50, 1));
 
@@ -148,6 +163,15 @@ public class EzTvForm extends MyDraggable {
 
     checkbox_exact.setText("Exact name");
 
+    combo_series.setEditable(true);
+    combo_series.setModel(seriesModel);
+    combo_series.setOpaque(false);
+    combo_series.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        combo_seriesActionPerformed(evt);
+      }
+    });
+
     javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     jPanel1.setLayout(jPanel1Layout);
     jPanel1Layout.setHorizontalGroup(
@@ -163,6 +187,7 @@ public class EzTvForm extends MyDraggable {
               .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(combo_series, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
               .addComponent(combo_quality, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
               .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,10 +198,7 @@ public class EzTvForm extends MyDraggable {
                   .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                   .addComponent(jLabel6))
                 .addGap(242, 242, 242))
-              .addComponent(checkbox_exact)
-              .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(combo_series, 0, 173, Short.MAX_VALUE)
-                .addGap(192, 192, 192))))
+              .addComponent(checkbox_exact)))
           .addGroup(jPanel1Layout.createSequentialGroup()
             .addComponent(button_search)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -198,12 +220,12 @@ public class EzTvForm extends MyDraggable {
         .addContainerGap()
         .addComponent(jLabel1)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
           .addComponent(jLabel2)
           .addComponent(combo_series, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGap(0, 0, 0)
         .addComponent(checkbox_exact)
-        .addGap(1, 1, 1)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jLabel3)
           .addComponent(spinner_season, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -246,9 +268,9 @@ public class EzTvForm extends MyDraggable {
   }//GEN-LAST:event_button_cancelActionPerformed
 
   private void button_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_searchActionPerformed
-      
+
     URI uri = createUri();
-    if(uri != null){
+    if (uri != null) {
       EzTv e = new EzTv(uri, this);
       Thread t = new Thread(e);
       t.start();
@@ -257,12 +279,16 @@ public class EzTvForm extends MyDraggable {
     //dispose();
 
   }//GEN-LAST:event_button_searchActionPerformed
+
+  private void combo_seriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combo_seriesActionPerformed
+    combo_series.validate(new RequiredValidator());
+  }//GEN-LAST:event_combo_seriesActionPerformed
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton button_cancel;
   private javax.swing.JButton button_search;
   private javax.swing.JCheckBox checkbox_exact;
   private javax.swing.JComboBox combo_quality;
-  private javax.swing.JComboBox combo_series;
+  private soldatos.sformcomponents.SComboBox combo_series;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JLabel jLabel3;
@@ -308,7 +334,7 @@ public class EzTvForm extends MyDraggable {
     try {
       q.add("show_name=" + URLEncoder.encode(String.valueOf(combo_series.getSelectedItem()), "UTF-8"));
       q.add("date=");
-      q.add("show_name_exact=" + (checkbox_exact.isSelected() ? "true":""));
+      q.add("show_name_exact=" + (checkbox_exact.isSelected() ? "true" : ""));
       q.add("quality=" + URLEncoder.encode(String.valueOf(combo_quality.getSelectedItem()), "UTF-8"));
       q.add("release_group=");
       q.add("episode_title=");
