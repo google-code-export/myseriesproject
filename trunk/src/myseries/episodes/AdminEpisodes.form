@@ -84,7 +84,7 @@
                       <Component id="button_Cancel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="button_Add" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="23" max="32767" attributes="0"/>
+                  <EmptySpace pref="27" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -230,7 +230,13 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="textfield_title">
+            <Component class="soldatos.sformcomponents.STextField" name="textfield_title">
+              <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="textfield_titleKeyReleased"/>
+              </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new soldatos.sformcomponents.STextField(false)"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JCheckBox" name="checkbox_downloaded">
               <Properties>
@@ -249,6 +255,9 @@
               <Properties>
                 <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
                   <SpinnerModel initial="1" maximum="99" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
+                </Property>
+                <Property name="editor" type="javax.swing.JComponent" editor="org.netbeans.modules.form.editors.SpinnerEditorEditor">
+                  <SpinnerEditor format="" type="3"/>
                 </Property>
                 <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="episodeNo" type="code"/>

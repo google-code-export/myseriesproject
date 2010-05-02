@@ -10,8 +10,6 @@
  */
 package myseries.series;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.logging.Logger;
 import myComponents.myGUI.CopyScreenshot;
 import java.io.IOException;
 import myComponents.MyUsefulFunctions;
@@ -20,23 +18,22 @@ import java.awt.Cursor;
 import java.awt.Dialog.ModalityType;
 import java.io.File;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.logging.Level;
 import javax.swing.JFileChooser;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingUtilities;
 import myComponents.MyMessages;
 import myComponents.myFileFilters.ScreenshotFilter;
 import myComponents.myGUI.MyDraggable;
 import myComponents.myGUI.MyWaitMessage;
 import myseries.MySeries;
 import soldatos.sformcomponents.STextField;
-import soldatos.validators.IntegerValidator;
 import soldatos.validators.PositiveNumberValidator;
 import soldatos.validators.RequiredValidator;
 import tools.download.subtitles.sonline.GetSubtitleOnlineCode;
 import tools.download.subtitles.tvsubtitles.GetTvSubtitlesCode;
 import tools.internetUpdate.tvrage.TrGetId;
-import tools.options.Options;
 
 /**
  * Administrate series
@@ -473,6 +470,7 @@ public class AdminSeries extends MyDraggable {
 
     private void button_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_AddActionPerformed
       addSeries();
+
     }//GEN-LAST:event_button_AddActionPerformed
 
     private void button_getTvRageIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_getTvRageIDActionPerformed
@@ -523,8 +521,8 @@ public class AdminSeries extends MyDraggable {
     }//GEN-LAST:event_button_getTvSubtitlesIdMouseExited
 
     private void button_getTvSubtitlesIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_getTvSubtitlesIdActionPerformed
-      if(seriesRecord == null){
-        if(textField_Serial.getText().trim().equals("")){
+      if (seriesRecord == null) {
+        if (textField_Serial.getText().trim().equals("")) {
           MyMessages.error("Empty title", "The series title shouldn't be empty");
           return;
         } else {
@@ -575,13 +573,14 @@ public class AdminSeries extends MyDraggable {
     }//GEN-LAST:event_button_getSubOnlineIdActionPerformed
 
     private void textField_SerialKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textField_SerialKeyReleased
-      textField_Serial.validate(new RequiredValidator());
+      RequiredValidator validator = new RequiredValidator();
+      textField_Serial.validate(validator);
     }//GEN-LAST:event_textField_SerialKeyReleased
 
     private void textfield_tvRageIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textfield_tvRageIDKeyReleased
-      textfield_tvRageID.validate(new PositiveNumberValidator(true));
+      PositiveNumberValidator validator = new PositiveNumberValidator(true);
+      textfield_tvRageID.validate(validator);
     }//GEN-LAST:event_textfield_tvRageIDKeyReleased
-
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton button_Add;
   private javax.swing.JButton button_Cancel;
