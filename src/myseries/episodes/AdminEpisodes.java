@@ -25,6 +25,7 @@ import database.SeriesRecord;
 import java.util.Calendar;
 import myComponents.MyMessages;
 import myComponents.myGUI.MyDraggable;
+import soldatos.validators.RequiredValidator;
 import tools.options.Options;
 
 /**
@@ -110,7 +111,7 @@ public class AdminEpisodes extends MyDraggable {
     label_subtitles = new javax.swing.JLabel();
     label_EpisodeNumber = new javax.swing.JLabel();
     combobox_subtitles = new javax.swing.JComboBox();
-    textfield_title = new javax.swing.JTextField();
+    textfield_title = new soldatos.sformcomponents.STextField(false);
     checkbox_downloaded = new javax.swing.JCheckBox();
     label_Date = new javax.swing.JLabel();
     spinner_episode = new javax.swing.JSpinner();
@@ -160,6 +161,12 @@ public class AdminEpisodes extends MyDraggable {
 
     combobox_subtitles.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "None", "English", "Greek", "Both" }));
 
+    textfield_title.addKeyListener(new java.awt.event.KeyAdapter() {
+      public void keyReleased(java.awt.event.KeyEvent evt) {
+        textfield_titleKeyReleased(evt);
+      }
+    });
+
     checkbox_downloaded.setText("Downloaded");
     checkbox_downloaded.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
     checkbox_downloaded.setOpaque(false);
@@ -168,6 +175,7 @@ public class AdminEpisodes extends MyDraggable {
     label_Date.setText("Date:");
 
     spinner_episode.setModel(new javax.swing.SpinnerNumberModel(1, 0, 99, 1));
+    spinner_episode.setEditor(new javax.swing.JSpinner.NumberEditor(spinner_episode, ""));
     spinner_episode.setValue(episodeNo);
 
     javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -248,7 +256,7 @@ public class AdminEpisodes extends MyDraggable {
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(button_Cancel)
           .addComponent(button_Add))
-        .addContainerGap(23, Short.MAX_VALUE))
+        .addContainerGap(27, Short.MAX_VALUE))
     );
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -331,6 +339,10 @@ public class AdminEpisodes extends MyDraggable {
       MySeries.glassPane.deactivate();
 }//GEN-LAST:event_button_CancelActionPerformed
 
+    private void textfield_titleKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textfield_titleKeyReleased
+      textfield_title.validate(new RequiredValidator());
+    }//GEN-LAST:event_textfield_titleKeyReleased
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton button_Add;
   private javax.swing.JButton button_Cancel;
@@ -346,6 +358,6 @@ public class AdminEpisodes extends MyDraggable {
   private javax.swing.JLabel label_subtitles;
   private javax.swing.JLabel label_title;
   private javax.swing.JSpinner spinner_episode;
-  private javax.swing.JTextField textfield_title;
+  private soldatos.sformcomponents.STextField textfield_title;
   // End of variables declaration//GEN-END:variables
 }
