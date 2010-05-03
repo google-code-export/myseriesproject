@@ -196,10 +196,10 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel3" min="-2" pref="44" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="textfield_newSeriesTitle" min="-2" pref="312" max="-2" attributes="1"/>
+                              <Component id="textfield_newSeriesTitle" min="-2" pref="302" max="-2" attributes="1"/>
                           </Group>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -240,7 +240,13 @@
                 <Property name="text" type="java.lang.String" value="Season :"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="textfield_newSeriesTitle">
+            <Component class="soldatos.sformcomponents.STextField" name="textfield_newSeriesTitle">
+              <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="textfield_newSeriesTitleKeyReleased"/>
+              </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new soldatos.sformcomponents.STextField(true)"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>
@@ -263,10 +269,13 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="checkBox_newSeriesActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="textfield_file">
+        <Component class="soldatos.sformcomponents.STextField" name="textfield_file">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new soldatos.sformcomponents.STextField(fileValidator)"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JProgressBar" name="progress_import">
           <Properties>

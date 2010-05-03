@@ -19,6 +19,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
@@ -28,6 +30,9 @@ import myComponents.myFileFilters.EpisodesExportFilter;
 import myComponents.myGUI.MyDraggable;
 import myseries.MySeries;
 import myseries.series.Series;
+import soldatos.validators.FileValidator;
+import soldatos.validators.NullValidator;
+import soldatos.validators.RequiredValidator;
 
 /**
  * Imports previous exported episodes
@@ -45,6 +50,7 @@ public class ImportEpisodes extends MyDraggable {
   ArrayList<EpisodesRecord> newEpisodes;
   private int series_ID = 0;
   boolean update = false;
+  FileValidator fileValidator;
 
   /** Creates new form ImportEpisodes
    * @param m MySeries
@@ -55,6 +61,9 @@ public class ImportEpisodes extends MyDraggable {
     //big = new Dimension(485, 244);
     this.m = m;
     createSeries();
+    HashMap<String, Object> map = new HashMap<String, Object>();
+    map.put(FileValidator.ATTR_TYPE, FileValidator.FILE);
+    fileValidator = new FileValidator(null, map);
     initComponents();
     //panel_newSeries.setEnabled(false);
     textfield_newSeriesTitle.setEnabled(false);
@@ -94,10 +103,10 @@ public class ImportEpisodes extends MyDraggable {
     jLabel3 = new javax.swing.JLabel();
     spinner_newSeriesSeason = new javax.swing.JSpinner();
     jLabel4 = new javax.swing.JLabel();
-    textfield_newSeriesTitle = new javax.swing.JTextField();
+    textfield_newSeriesTitle = new soldatos.sformcomponents.STextField(true);
     button_browse = new javax.swing.JButton();
     checkBox_newSeries = new javax.swing.JCheckBox();
-    textfield_file = new javax.swing.JTextField();
+    textfield_file = new soldatos.sformcomponents.STextField(fileValidator);
     progress_import = new javax.swing.JProgressBar();
     jLabel5 = new javax.swing.JLabel();
 
@@ -146,6 +155,12 @@ public class ImportEpisodes extends MyDraggable {
 
     jLabel4.setText("Season :");
 
+    textfield_newSeriesTitle.addKeyListener(new java.awt.event.KeyAdapter() {
+      public void keyReleased(java.awt.event.KeyEvent evt) {
+        textfield_newSeriesTitleKeyReleased(evt);
+      }
+    });
+
     javax.swing.GroupLayout panel_newSeriesLayout = new javax.swing.GroupLayout(panel_newSeries);
     panel_newSeries.setLayout(panel_newSeriesLayout);
     panel_newSeriesLayout.setHorizontalGroup(
@@ -160,8 +175,8 @@ public class ImportEpisodes extends MyDraggable {
           .addGroup(panel_newSeriesLayout.createSequentialGroup()
             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(textfield_newSeriesTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        .addContainerGap())
+            .addComponent(textfield_newSeriesTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        .addGap(40, 40, 40))
     );
     panel_newSeriesLayout.setVerticalGroup(
       panel_newSeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -287,6 +302,13 @@ public class ImportEpisodes extends MyDraggable {
       //panel_newSeries.setEnabled(!panel_newSeries.isVisible());
       textfield_newSeriesTitle.setEnabled(!textfield_newSeriesTitle.isEnabled());
       spinner_newSeriesSeason.setEnabled(!spinner_newSeriesSeason.isEnabled());
+      if(checkBox_newSeries.isSelected()){
+        textfield_newSeriesTitle.setValidator(new RequiredValidator());
+        textfield_newSeriesTitle.validateValue();
+      } else {
+        textfield_newSeriesTitle.setValidator(new NullValidator());
+        textfield_newSeriesTitle.validateValue();
+      }
       if (!panel_newSeries.isVisible()) {
         //this.setSize(small);
       } else {
@@ -320,6 +342,10 @@ public class ImportEpisodes extends MyDraggable {
       }
 
     }//GEN-LAST:event_button_importActionPerformed
+
+    private void textfield_newSeriesTitleKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textfield_newSeriesTitleKeyReleased
+      textfield_newSeriesTitle.validateValue();
+    }//GEN-LAST:event_textfield_newSeriesTitleKeyReleased
 
   private void importEpisodes() throws FileNotFoundException, SQLException, IOException, EpisodeImportFormatException {
     String newSeriesTitle;
@@ -406,6 +432,7 @@ public class ImportEpisodes extends MyDraggable {
     } else {
       file = f.getSelectedFile();
       textfield_file.setText(file.getCanonicalPath());
+      textfield_file.validateValue();
       MySeries.logger.log(Level.INFO, "Importing episodes in file " + file.getName());
     }
   }
@@ -424,7 +451,7 @@ public class ImportEpisodes extends MyDraggable {
   private javax.swing.JPanel panel_newSeries;
   public javax.swing.JProgressBar progress_import;
   private javax.swing.JSpinner spinner_newSeriesSeason;
-  private javax.swing.JTextField textfield_file;
-  private javax.swing.JTextField textfield_newSeriesTitle;
+  private soldatos.sformcomponents.STextField textfield_file;
+  private soldatos.sformcomponents.STextField textfield_newSeriesTitle;
   // End of variables declaration//GEN-END:variables
 }
