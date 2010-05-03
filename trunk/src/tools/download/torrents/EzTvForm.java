@@ -85,7 +85,7 @@ public class EzTvForm extends MyDraggable {
   }
 
   private void combo_seriesKeyReleased(KeyEvent e){
-    combo_series.validate(new RequiredValidator());
+    combo_series.validateValue();
   }
 
   /** This method is called from within the constructor to
@@ -112,7 +112,7 @@ public class EzTvForm extends MyDraggable {
     jLabel6 = new javax.swing.JLabel();
     jLabel7 = new javax.swing.JLabel();
     checkbox_exact = new javax.swing.JCheckBox();
-    combo_series = new SComboBox(false);
+    combo_series = new SComboBox(new RequiredValidator(),false);
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
@@ -281,7 +281,7 @@ public class EzTvForm extends MyDraggable {
   }//GEN-LAST:event_button_searchActionPerformed
 
   private void combo_seriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combo_seriesActionPerformed
-    combo_series.validate(new RequiredValidator());
+    combo_series.validateValue();
   }//GEN-LAST:event_combo_seriesActionPerformed
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton button_cancel;

@@ -111,7 +111,7 @@ public class AdminEpisodes extends MyDraggable {
     label_subtitles = new javax.swing.JLabel();
     label_EpisodeNumber = new javax.swing.JLabel();
     combobox_subtitles = new javax.swing.JComboBox();
-    textfield_title = new soldatos.sformcomponents.STextField(false);
+    textfield_title = new soldatos.sformcomponents.STextField(new RequiredValidator(),false);
     checkbox_downloaded = new javax.swing.JCheckBox();
     label_Date = new javax.swing.JLabel();
     spinner_episode = new javax.swing.JSpinner();
@@ -340,7 +340,7 @@ public class AdminEpisodes extends MyDraggable {
 }//GEN-LAST:event_button_CancelActionPerformed
 
     private void textfield_titleKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textfield_titleKeyReleased
-      textfield_title.validate(new RequiredValidator());
+      textfield_title.validateValue();
     }//GEN-LAST:event_textfield_titleKeyReleased
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
