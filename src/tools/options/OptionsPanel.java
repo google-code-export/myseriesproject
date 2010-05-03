@@ -38,6 +38,10 @@ import myComponents.myGUI.MyDraggable;
 import myseries.MySeries;
 import myseries.StartPanel;
 import myseries.episodes.NextEpisodes;
+import soldatos.sformcomponents.STextField;
+import soldatos.validators.NoSpaceValidator;
+import soldatos.validators.NullValidator;
+import soldatos.validators.PositiveNumberValidator;
 import tools.LookAndFeels;
 import tools.Skin;
 import tools.download.subtitles.Subtitle;
@@ -138,10 +142,10 @@ public class OptionsPanel extends MyDraggable {
     checkbox_useProxy = new javax.swing.JCheckBox();
     jLabel8 = new javax.swing.JLabel();
     jLabel9 = new javax.swing.JLabel();
-    textfield_proxy = new javax.swing.JTextField();
+    textfield_proxy = new soldatos.sformcomponents.STextField(new NoSpaceValidator(false),false);
     jCheckBox1 = new javax.swing.JCheckBox();
     jLabel12 = new javax.swing.JLabel();
-    textfield_port = new javax.swing.JTextField();
+    textfield_port = new soldatos.sformcomponents.STextField(new PositiveNumberValidator(false),false);
     jLabel11 = new javax.swing.JLabel();
     combo_updateDb = new javax.swing.JComboBox();
     jLabel13 = new javax.swing.JLabel();
@@ -453,6 +457,11 @@ public class OptionsPanel extends MyDraggable {
     checkbox_useProxy.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
     checkbox_useProxy.setName(Options.USE_PROXY);
     checkbox_useProxy.setOpaque(false);
+    checkbox_useProxy.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        checkbox_useProxyActionPerformed(evt);
+      }
+    });
 
     jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     jLabel8.setText("Http proxy :");
@@ -474,6 +483,12 @@ public class OptionsPanel extends MyDraggable {
     binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, checkbox_useProxy, org.jdesktop.beansbinding.ELProperty.create("${selected}"), textfield_proxy, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
     bindingGroup.addBinding(binding);
 
+    textfield_proxy.addKeyListener(new java.awt.event.KeyAdapter() {
+      public void keyReleased(java.awt.event.KeyEvent evt) {
+        textfield_proxyKeyReleased(evt);
+      }
+    });
+
     jCheckBox1.setSelected(Options.toBoolean(Options.CHECK_VERSION));
     jCheckBox1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     jCheckBox1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -490,6 +505,12 @@ public class OptionsPanel extends MyDraggable {
 
     binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, checkbox_useProxy, org.jdesktop.beansbinding.ELProperty.create("${selected}"), textfield_port, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
     bindingGroup.addBinding(binding);
+
+    textfield_port.addKeyListener(new java.awt.event.KeyAdapter() {
+      public void keyReleased(java.awt.event.KeyEvent evt) {
+        textfield_portKeyReleased(evt);
+      }
+    });
 
     jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     jLabel11.setText("Update from:");
@@ -749,6 +770,26 @@ public class OptionsPanel extends MyDraggable {
     label_preview.setText(String.valueOf(combobox_fonts.getSelectedItem()));
   }//GEN-LAST:event_spinner_fontSizeAncestorAdded
 
+  private void textfield_proxyKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textfield_proxyKeyReleased
+    textfield_proxy.validateValue();
+  }//GEN-LAST:event_textfield_proxyKeyReleased
+
+  private void textfield_portKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textfield_portKeyReleased
+   textfield_port.validateValue();
+  }//GEN-LAST:event_textfield_portKeyReleased
+
+  private void checkbox_useProxyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkbox_useProxyActionPerformed
+    if(!checkbox_useProxy.isSelected()){
+      textfield_port.setValidator(new NullValidator());
+      textfield_proxy.setValidator(new NullValidator());
+    } else {
+      textfield_port.setValidator(new PositiveNumberValidator(false));
+      textfield_proxy.setValidator(new NoSpaceValidator(false));
+    }
+    textfield_port.validateValue();
+    textfield_proxy.validateValue();
+  }//GEN-LAST:event_checkbox_useProxyActionPerformed
+
   private Font getSelectedFont(){
     Font font = new Font((String)combobox_fonts.getSelectedItem(),Font.PLAIN, (int) Float.parseFloat(String.valueOf(spinner_fontSize.getValue())));
     return font;
@@ -798,8 +839,8 @@ public class OptionsPanel extends MyDraggable {
   private javax.swing.JSpinner spinner_fontSize;
   private javax.swing.JSpinner spinner_maxNextEpisodes;
   private javax.swing.JTabbedPane tabbedPane_options;
-  private javax.swing.JTextField textfield_port;
-  private javax.swing.JTextField textfield_proxy;
+  private soldatos.sformcomponents.STextField textfield_port;
+  private soldatos.sformcomponents.STextField textfield_proxy;
   private org.jdesktop.beansbinding.BindingGroup bindingGroup;
   // End of variables declaration//GEN-END:variables
 
@@ -863,4 +904,6 @@ public class OptionsPanel extends MyDraggable {
     }
     return "";
   }
+
+
 }
