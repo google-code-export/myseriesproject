@@ -119,13 +119,13 @@ public class AdminSeries extends MyDraggable {
     button_Add = new javax.swing.JButton();
     button_Cancel = new javax.swing.JButton();
     label_title = new javax.swing.JLabel();
-    textField_Serial = new STextField();
+    textField_Serial = new STextField(new RequiredValidator(),false);
     label_season = new javax.swing.JLabel();
     spinner_season = new javax.swing.JSpinner();
     label_tvsubsId = new javax.swing.JLabel();
     textfield_tvSubsId = new javax.swing.JTextField();
     label_tvrageId = new javax.swing.JLabel();
-    textfield_tvRageID = new STextField("0",true);
+    textfield_tvRageID = new STextField(new PositiveNumberValidator(true),"0",true);
     button_getTvRageID = new javax.swing.JButton();
     label_localDir = new javax.swing.JLabel();
     textfield_localDir = new javax.swing.JTextField();
@@ -573,13 +573,11 @@ public class AdminSeries extends MyDraggable {
     }//GEN-LAST:event_button_getSubOnlineIdActionPerformed
 
     private void textField_SerialKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textField_SerialKeyReleased
-      RequiredValidator validator = new RequiredValidator();
-      textField_Serial.validate(validator);
+      textField_Serial.validateValue();
     }//GEN-LAST:event_textField_SerialKeyReleased
 
     private void textfield_tvRageIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textfield_tvRageIDKeyReleased
-      PositiveNumberValidator validator = new PositiveNumberValidator(true);
-      textfield_tvRageID.validate(validator);
+      textfield_tvRageID.validateValue();
     }//GEN-LAST:event_textfield_tvRageIDKeyReleased
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton button_Add;
