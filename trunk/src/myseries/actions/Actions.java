@@ -307,7 +307,13 @@ public class Actions {
         MyMessages.error("Browse Error!!!", "Browse is not supported");
         return;
       }
-      java.net.URI uri = new java.net.URI(Series.getCurrentSerial().getTvSubtitlesCode());
+      java.net.URI uri = null;
+      if(Options.toString(Options.SUBTITLE_SITE).equals(Subtitle.TV_SUBTITLES_NAME)){
+        uri = new java.net.URI("http://www.tvsubtitles.net/tvshow-"+Series.getCurrentSerial().getTvSubtitlesCode()+".html");
+      }else if(Options.toString(Options.SUBTITLE_SITE).equals(Subtitle.SUBTITLE_ONLINE_NAME)){
+        uri = new java.net.URI("http://www.subtitleonline.com/"+Series.getCurrentSerial().getSOnlineCode()+"-season-"+Series.getCurrentSerial().getSeason()+"-subtitles.html");
+      }
+      System.out.println(uri);
       DesktopSupport.getDesktop().browse(uri);
     } catch (IOException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);
