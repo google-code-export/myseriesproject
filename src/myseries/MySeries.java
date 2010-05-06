@@ -332,7 +332,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     seriesPopUp.add(PopUpItem_AddSeries);
 
     popUpItem_DownloadSubs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/subtitles.png"))); // NOI18N
-    popUpItem_DownloadSubs.setText("Download Subtitles");
+    popUpItem_DownloadSubs.setText("Go to the subtitles page");
     popUpItem_DownloadSubs.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         popUpItem_DownloadSubsActionPerformed(evt);
@@ -1103,7 +1103,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       PopUpItem_AddEpisode.setText("Add new episode to " + ser);
       PopUpItem_DeleteSerial.setText("Delete series " + ser);
       PopUpItem_EditSerial.setText("Edit series " + ser);
-      popUpItem_DownloadSubs.setText("Download Subtitles for " + ser);
+      popUpItem_DownloadSubs.setText("Go to the subtitles page of  " + ser);
       popUpItem_GoToLocalDir.setText("Open " + ser + " directory");
       popUpItem_renameEpisodes.setText("Rename " + ser + " directory");
       menuItem_exportEpisodes.setText("Export episodes of " + ser);
@@ -1126,7 +1126,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       PopUpItem_AddEpisode.setText("Add new episode");
       PopUpItem_DeleteSerial.setText("Delete series");
       PopUpItem_EditSerial.setText("Edit series");
-      popUpItem_DownloadSubs.setText("Download Subtitles");
+      popUpItem_DownloadSubs.setText("Go to the subtitles page");
       popUpItem_GoToLocalDir.setText("Open Directory");
       popUpItem_renameEpisodes.setText("Rename episodes");
       popUpItem_exportEpisodes.setText("Export episodes");
