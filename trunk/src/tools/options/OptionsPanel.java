@@ -56,7 +56,7 @@ public class OptionsPanel extends MyDraggable {
   public static final long serialVersionUID = 5676235253653L;
   private MySeries m;
   private DefaultComboBoxModel model_laf = new DefaultComboBoxModel();
-  private HashMap<String,LookAndFeelInfo> lafMap;
+  private HashMap<String, LookAndFeelInfo> lafMap;
   private ComboBoxModel model_fonts;
   private boolean colorsChanged;
   private String oldFontSize;
@@ -73,6 +73,7 @@ public class OptionsPanel extends MyDraggable {
   public OptionsPanel(MySeries m) {
     this.m = m;
     initComponents();
+    checkbox_useProxyActionPerformed(null);
     setLocationRelativeTo(m);
     oldFontFace = Options.toString(Options.FONT_FACE);
     oldFontSize = Options.toString(Options.FONT_SIZE);
@@ -83,7 +84,7 @@ public class OptionsPanel extends MyDraggable {
 
   private void createLafModel() {
     LookAndFeelInfo[] laf = LookAndFeels.getLookAndFeels();
-    lafMap = new HashMap<String,LookAndFeelInfo>();
+    lafMap = new HashMap<String, LookAndFeelInfo>();
     String lafNames[] = new String[laf.length];
     for (int i = 0; i < laf.length; i++) {
       LookAndFeelInfo lookAndFeelInfo = laf[i];
@@ -142,10 +143,10 @@ public class OptionsPanel extends MyDraggable {
     checkbox_useProxy = new javax.swing.JCheckBox();
     jLabel8 = new javax.swing.JLabel();
     jLabel9 = new javax.swing.JLabel();
-    textfield_proxy = new soldatos.sformcomponents.STextField(new NoSpaceValidator(false),false);
+    textfield_proxy = new soldatos.sformcomponents.STextField(new NoSpaceValidator("",false),false);
     jCheckBox1 = new javax.swing.JCheckBox();
     jLabel12 = new javax.swing.JLabel();
-    textfield_port = new soldatos.sformcomponents.STextField(new PositiveNumberValidator(false),false);
+    textfield_port = new soldatos.sformcomponents.STextField(new PositiveNumberValidator("",false),false);
     jLabel11 = new javax.swing.JLabel();
     combo_updateDb = new javax.swing.JComboBox();
     jLabel13 = new javax.swing.JLabel();
@@ -692,9 +693,9 @@ public class OptionsPanel extends MyDraggable {
       MySeries.logger.log(Level.SEVERE, null, ex);
     } catch (IllegalArgumentException ex) {
       MyMessages.error("Wrong Arguments", "The date format pattern you provided is invalid");
-      MySeries.logger.log(Level.WARNING, "The date format " +
-              String.valueOf(combobox_dateFormat.getSelectedItem()) +
-              " pattern you provided is invalid", ex);
+      MySeries.logger.log(Level.WARNING, "The date format "
+              + String.valueOf(combobox_dateFormat.getSelectedItem())
+              + " pattern you provided is invalid", ex);
     }
   }
 
@@ -703,27 +704,26 @@ public class OptionsPanel extends MyDraggable {
       String mess = "";
       saveOptions();
       MyUsefulFunctions.initInternetConnection();
-      if(!oldFontFace.equals(Options.toString(Options.FONT_FACE))){
+      if (!oldFontFace.equals(Options.toString(Options.FONT_FACE))) {
         mess = "Font face was changed\n";
       }
-      if(!oldFontSize.equals(Options.toString(Options.FONT_SIZE))){
+      if (!oldFontSize.equals(Options.toString(Options.FONT_SIZE))) {
         mess += "Font size was changed\n";
       }
-      if(!oldColor.equals(Options.toColor(Options.SKIN_COLOR))){
+      if (!oldColor.equals(Options.toColor(Options.SKIN_COLOR))) {
         mess += "Skin color was changed\n";
       }
 
-      if((!oldUseSkin && checkbox_dontUseSkin.isSelected()) || (oldUseSkin && !checkbox_dontUseSkin.isSelected())){
+      if ((!oldUseSkin && checkbox_dontUseSkin.isSelected()) || (oldUseSkin && !checkbox_dontUseSkin.isSelected())) {
         mess += "Skin using has changed\n";
       }
-      if(!mess.equals("")){
+      if (!mess.equals("")) {
         int ans = MyMessages.question("Restart?",
-                mess+"\nRestart The application?");
-        if(ans == 0){
+                mess + "\nRestart The application?");
+        if (ans == 0) {
           m.dispose();
           StartPanel.main(null);
         } else {
-          
         }
       }
 
@@ -752,7 +752,7 @@ public class OptionsPanel extends MyDraggable {
     Color newColor = JColorChooser.showDialog(null, "Choose a background color", Options.toColor(Options.SKIN_COLOR));
     button_BGColor.setBackground(newColor);
     colorsChanged = true;
-    
+
 }//GEN-LAST:event_button_BGColorActionPerformed
 
   private void checkbox_dontUseSkinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkbox_dontUseSkinActionPerformed
@@ -775,26 +775,27 @@ public class OptionsPanel extends MyDraggable {
   }//GEN-LAST:event_textfield_proxyKeyReleased
 
   private void textfield_portKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textfield_portKeyReleased
-   textfield_port.validateValue();
+    textfield_port.validateValue();
   }//GEN-LAST:event_textfield_portKeyReleased
 
   private void checkbox_useProxyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkbox_useProxyActionPerformed
-    if(!checkbox_useProxy.isSelected()){
-      textfield_port.setValidator(new NullValidator());
-      textfield_proxy.setValidator(new NullValidator());
+    textfield_port.clearValidatorsList();
+    textfield_proxy.clearValidatorsList();
+    if (!checkbox_useProxy.isSelected()) {
+      textfield_port.addValidator(new NullValidator());
+      textfield_proxy.addValidator(new NullValidator());
     } else {
-      textfield_port.setValidator(new PositiveNumberValidator(false));
-      textfield_proxy.setValidator(new NoSpaceValidator(false));
+      textfield_port.addValidator(new PositiveNumberValidator(Options.toString(Options.PROXY_PORT), false));
+      textfield_proxy.addValidator(new NoSpaceValidator(Options.toString(Options.PROXY_HOST), false));
     }
     textfield_port.validateValue();
     textfield_proxy.validateValue();
   }//GEN-LAST:event_checkbox_useProxyActionPerformed
 
-  private Font getSelectedFont(){
-    Font font = new Font((String)combobox_fonts.getSelectedItem(),Font.PLAIN, (int) Float.parseFloat(String.valueOf(spinner_fontSize.getValue())));
+  private Font getSelectedFont() {
+    Font font = new Font((String) combobox_fonts.getSelectedItem(), Font.PLAIN, (int) Float.parseFloat(String.valueOf(spinner_fontSize.getValue())));
     return font;
   }
-
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton button_BGColor;
   private javax.swing.JButton button_cancel;
@@ -890,7 +891,7 @@ public class OptionsPanel extends MyDraggable {
       JComboBox combo = (JComboBox) c;
       // In some combos get the item instead of index
       String name = combo.getName();
-      if (MyUsefulFunctions.isInArray(Options._COMBO_OPTIONS_,name)) {
+      if (MyUsefulFunctions.isInArray(Options._COMBO_OPTIONS_, name)) {
         return String.valueOf(combo.getSelectedItem());
       }
       return combo.getSelectedIndex();
@@ -898,12 +899,10 @@ public class OptionsPanel extends MyDraggable {
     // Get color buttons
     if (c instanceof JButton) {
       JButton button = (JButton) c;
-      return button.getBackground().getRed() + ", " +
-              button.getBackground().getGreen() + ", " +
-              button.getBackground().getBlue();
+      return button.getBackground().getRed() + ", "
+              + button.getBackground().getGreen() + ", "
+              + button.getBackground().getBlue();
     }
     return "";
   }
-
-
 }

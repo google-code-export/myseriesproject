@@ -119,13 +119,13 @@ public class AdminSeries extends MyDraggable {
     button_Add = new javax.swing.JButton();
     button_Cancel = new javax.swing.JButton();
     label_title = new javax.swing.JLabel();
-    textField_Serial = new STextField(new RequiredValidator(),false);
+    textField_Serial = new STextField(new RequiredValidator());
     label_season = new javax.swing.JLabel();
     spinner_season = new javax.swing.JSpinner();
     label_tvsubsId = new javax.swing.JLabel();
     textfield_tvSubsId = new javax.swing.JTextField();
     label_tvrageId = new javax.swing.JLabel();
-    textfield_tvRageID = new STextField(new PositiveNumberValidator(true),"0",true);
+    textfield_tvRageID = new STextField(new PositiveNumberValidator(),"0",true);
     button_getTvRageID = new javax.swing.JButton();
     label_localDir = new javax.swing.JLabel();
     textfield_localDir = new javax.swing.JTextField();
