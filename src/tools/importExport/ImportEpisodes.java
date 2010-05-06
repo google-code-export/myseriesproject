@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import myComponents.MyMessages;
@@ -30,6 +31,7 @@ import myComponents.myFileFilters.EpisodesExportFilter;
 import myComponents.myGUI.MyDraggable;
 import myseries.MySeries;
 import myseries.series.Series;
+import soldatos.exceptions.AttributeException;
 import soldatos.validators.FileValidator;
 import soldatos.validators.NullValidator;
 import soldatos.validators.RequiredValidator;
@@ -63,7 +65,10 @@ public class ImportEpisodes extends MyDraggable {
     createSeries();
     HashMap<String, Object> map = new HashMap<String, Object>();
     map.put(FileValidator.ATTR_TYPE, FileValidator.FILE);
-    fileValidator = new FileValidator(null, map);
+    try {
+      fileValidator = new FileValidator("", map, false);
+    } catch (AttributeException ex) {
+    }
     initComponents();
     //panel_newSeries.setEnabled(false);
     textfield_newSeriesTitle.setEnabled(false);
@@ -303,10 +308,10 @@ public class ImportEpisodes extends MyDraggable {
       textfield_newSeriesTitle.setEnabled(!textfield_newSeriesTitle.isEnabled());
       spinner_newSeriesSeason.setEnabled(!spinner_newSeriesSeason.isEnabled());
       if(checkBox_newSeries.isSelected()){
-        textfield_newSeriesTitle.setValidator(new RequiredValidator());
+        textfield_newSeriesTitle.addValidator(new RequiredValidator());
         textfield_newSeriesTitle.validateValue();
       } else {
-        textfield_newSeriesTitle.setValidator(new NullValidator());
+        textfield_newSeriesTitle.addValidator(new NullValidator());
         textfield_newSeriesTitle.validateValue();
       }
       if (!panel_newSeries.isVisible()) {
