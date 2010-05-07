@@ -413,7 +413,7 @@ public class MyUsefulFunctions {
    * @return The regular expression
    */
   public static String createRegex(int season, int episode) {
-    return "\\D*" + season + Options._REGEX_ + episode + "\\D*";
+    return "\\D*" + season + Options._REGEX_ + episode + "\\D";
   }
 
   /**
