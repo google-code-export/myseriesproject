@@ -85,7 +85,7 @@ public class EzTv implements Runnable {
     } catch (IOException ex) {
       myseries.MySeries.logger.log(Level.SEVERE, null, ex);
     } finally {
-      myseries.MySeries.glassPane.deactivate();
+      //myseries.MySeries.glassPane.deactivate();
     }
   }
 
