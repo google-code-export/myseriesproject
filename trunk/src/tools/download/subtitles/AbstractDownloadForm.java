@@ -22,6 +22,7 @@ public abstract class AbstractDownloadForm extends MyDraggable {
 
   public void init() {
     initComponents();
+    myseries.MySeries.glassPane.activate(null);
   }
 
   public AbstractDownloadForm() {
@@ -44,6 +45,11 @@ public abstract class AbstractDownloadForm extends MyDraggable {
     button_close = new javax.swing.JButton();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+    addWindowListener(new java.awt.event.WindowAdapter() {
+      public void windowClosed(java.awt.event.WindowEvent evt) {
+        formWindowClosed(evt);
+      }
+    });
 
     jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -107,9 +113,14 @@ public abstract class AbstractDownloadForm extends MyDraggable {
   }// </editor-fold>//GEN-END:initComponents
 
   private void button_closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_closeActionPerformed
-    myseries.MySeries.glassPane.deactivate();
+    
     dispose();
   }//GEN-LAST:event_button_closeActionPerformed
+
+  private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+    myseries.MySeries.glassPane.deactivate();
+  }//GEN-LAST:event_formWindowClosed
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton button_close;
   private javax.swing.JPanel jPanel1;
