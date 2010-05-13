@@ -32,6 +32,7 @@ import myComponents.myGUI.MyDraggable;
 import myseries.MySeries;
 import myseries.series.Series;
 import soldatos.exceptions.AttributeException;
+import soldatos.sformcomponents.ValidationGroup;
 import soldatos.validators.FileValidator;
 import soldatos.validators.NullValidator;
 import soldatos.validators.RequiredValidator;
@@ -63,12 +64,7 @@ public class ImportEpisodes extends MyDraggable {
     //big = new Dimension(485, 244);
     this.m = m;
     createSeries();
-    HashMap<String, Object> map = new HashMap<String, Object>();
-    map.put(FileValidator.ATTR_TYPE, FileValidator.FILE);
-    try {
-      fileValidator = new FileValidator("", map, false);
-    } catch (AttributeException ex) {
-    }
+    fileValidator = new FileValidator("", FileValidator.FILE, false);
     initComponents();
     //panel_newSeries.setEnabled(false);
     textfield_newSeriesTitle.setEnabled(false);
@@ -108,7 +104,7 @@ public class ImportEpisodes extends MyDraggable {
     jLabel3 = new javax.swing.JLabel();
     spinner_newSeriesSeason = new javax.swing.JSpinner();
     jLabel4 = new javax.swing.JLabel();
-    textfield_newSeriesTitle = new soldatos.sformcomponents.STextField(true);
+    textfield_newSeriesTitle = new soldatos.sformcomponents.STextField();
     button_browse = new javax.swing.JButton();
     checkBox_newSeries = new javax.swing.JCheckBox();
     textfield_file = new soldatos.sformcomponents.STextField(fileValidator);
@@ -307,11 +303,11 @@ public class ImportEpisodes extends MyDraggable {
       //panel_newSeries.setEnabled(!panel_newSeries.isVisible());
       textfield_newSeriesTitle.setEnabled(!textfield_newSeriesTitle.isEnabled());
       spinner_newSeriesSeason.setEnabled(!spinner_newSeriesSeason.isEnabled());
-      if(checkBox_newSeries.isSelected()){
+      if (checkBox_newSeries.isSelected()) {
         textfield_newSeriesTitle.addValidator(new RequiredValidator());
         textfield_newSeriesTitle.validateValue();
       } else {
-        textfield_newSeriesTitle.addValidator(new NullValidator());
+        textfield_newSeriesTitle.clearValidatorsList();
         textfield_newSeriesTitle.validateValue();
       }
       if (!panel_newSeries.isVisible()) {
@@ -330,6 +326,13 @@ public class ImportEpisodes extends MyDraggable {
 }//GEN-LAST:event_button_browseActionPerformed
 
     private void button_importActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_importActionPerformed
+      ValidationGroup group = new ValidationGroup();
+      group.addComponent(textfield_file);
+      group.addComponent(textfield_newSeriesTitle);
+      if(!group.validate()){
+        MyMessages.validationError();
+        return;
+      }
       try {
         importEpisodes();
       } catch (FileNotFoundException ex) {

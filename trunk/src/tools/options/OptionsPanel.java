@@ -39,6 +39,7 @@ import myseries.MySeries;
 import myseries.StartPanel;
 import myseries.episodes.NextEpisodes;
 import soldatos.sformcomponents.STextField;
+import soldatos.sformcomponents.ValidationGroup;
 import soldatos.validators.NoSpaceValidator;
 import soldatos.validators.NullValidator;
 import soldatos.validators.PositiveNumberValidator;
@@ -146,7 +147,7 @@ public class OptionsPanel extends MyDraggable {
     textfield_proxy = new soldatos.sformcomponents.STextField(new NoSpaceValidator("",false),false);
     jCheckBox1 = new javax.swing.JCheckBox();
     jLabel12 = new javax.swing.JLabel();
-    textfield_port = new soldatos.sformcomponents.STextField(new PositiveNumberValidator("",false),false);
+    textfield_port = new soldatos.sformcomponents.STextField(new PositiveNumberValidator("",false,false));
     jLabel11 = new javax.swing.JLabel();
     combo_updateDb = new javax.swing.JComboBox();
     jLabel13 = new javax.swing.JLabel();
@@ -700,6 +701,13 @@ public class OptionsPanel extends MyDraggable {
   }
 
   private void button_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_okActionPerformed
+    ValidationGroup group = new ValidationGroup();
+    group.addComponent(textfield_port);
+    group.addComponent(textfield_proxy);
+    if(!group.validate()){
+      MyMessages.validationError();
+      return;
+    }
     try {
       String mess = "";
       saveOptions();
@@ -785,7 +793,7 @@ public class OptionsPanel extends MyDraggable {
       textfield_port.addValidator(new NullValidator());
       textfield_proxy.addValidator(new NullValidator());
     } else {
-      textfield_port.addValidator(new PositiveNumberValidator(Options.toString(Options.PROXY_PORT), false));
+      textfield_port.addValidator(new PositiveNumberValidator(Options.toString(Options.PROXY_PORT), false,false));
       textfield_proxy.addValidator(new NoSpaceValidator(Options.toString(Options.PROXY_HOST), false));
     }
     textfield_port.validateValue();

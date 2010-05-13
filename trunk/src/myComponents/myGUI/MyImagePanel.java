@@ -75,7 +75,11 @@ public class MyImagePanel extends JPanel {
       try {
         int width = MySeries.splitPane_main.getDividerLocation() - 26;
         int height = (int) (image.getHeight(this) * ((double) width / (double) image.getWidth(this)));
+
         int yPos = (int) MySeries.tableSeries.getPreferredSize().getHeight() + 20;
+        if(yPos ==20) {
+          yPos = 40;
+        }
         //imageLayerPanel.setBounds(0, yPos, width, height);
         m.imagePanel.setBounds(0, yPos, width, height);
         m.imagePanel.setImage(image, width, height);

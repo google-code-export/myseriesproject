@@ -245,7 +245,7 @@
                 <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="textfield_newSeriesTitleKeyReleased"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new soldatos.sformcomponents.STextField(true)"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new soldatos.sformcomponents.STextField()"/>
               </AuxValues>
             </Component>
           </SubComponents>
