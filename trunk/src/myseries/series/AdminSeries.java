@@ -16,11 +16,13 @@ import myComponents.MyUsefulFunctions;
 import database.SeriesRecord;
 import java.awt.Cursor;
 import java.awt.Dialog.ModalityType;
+import java.awt.Image;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.logging.Level;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.SpinnerNumberModel;
 import myComponents.MyMessages;
@@ -372,16 +374,14 @@ public class AdminSeries extends MyDraggable {
         .addComponent(button_browse, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-          .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-            .addComponent(label_localDir)
-            .addComponent(textfield_localDir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+          .addComponent(textfield_localDir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+          .addComponent(label_localDir)
           .addComponent(button_browseScreenshot1, 0, 0, Short.MAX_VALUE))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
           .addComponent(button_browseScreenshot, 0, 0, Short.MAX_VALUE)
-          .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-            .addComponent(label_screenshot, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(textfield_screenshot, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+          .addComponent(textfield_screenshot, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+          .addComponent(label_screenshot, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addComponent(label_message, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
@@ -473,6 +473,8 @@ public class AdminSeries extends MyDraggable {
           Series.getSeries();
           MySeries.glassPane.deactivate();
           dispose();
+          Image im = new ImageIcon(sc.getAbsolutePath()).getImage();
+          m.imagePanel.setImage(im);
         } catch (SQLException ex) {
           MySeries.logger.log(Level.SEVERE, "SQL error occured", ex);
         }

@@ -149,19 +149,15 @@
                   <Component id="button_browse" min="-2" pref="0" max="-2" attributes="1"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                          <Component id="label_localDir" alignment="3" min="-2" max="-2" attributes="1"/>
-                          <Component id="textfield_localDir" alignment="0" max="32767" attributes="1"/>
-                      </Group>
+                      <Component id="textfield_localDir" alignment="0" max="32767" attributes="1"/>
+                      <Component id="label_localDir" alignment="3" min="-2" max="-2" attributes="1"/>
                       <Component id="button_browseScreenshot1" alignment="0" min="0" pref="0" max="32767" attributes="1"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="button_browseScreenshot" min="0" pref="0" max="32767" attributes="1"/>
-                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                          <Component id="label_screenshot" alignment="3" min="-2" pref="16" max="-2" attributes="0"/>
-                          <Component id="textfield_screenshot" alignment="0" max="32767" attributes="1"/>
-                      </Group>
+                      <Component id="textfield_screenshot" alignment="0" max="32767" attributes="1"/>
+                      <Component id="label_screenshot" alignment="3" min="-2" pref="16" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
