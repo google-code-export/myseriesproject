@@ -57,6 +57,13 @@ public class MyMessages {
             JOptionPane.QUESTION_MESSAGE);
   }
 
+  /**
+   * Displays a form validation error
+   */
+  public static void validationError() {
+    error("Validation failed", "The form contains errors");
+  }
+
   private MyMessages() {
   }
 }

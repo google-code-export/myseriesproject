@@ -28,8 +28,6 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -72,7 +70,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public MyEpisodesTableModel tableModel_episodes;
   private MyFilteredSeriesTableModel tableModel_filterSeries;
   public ComboBoxModel comboBoxModel_filters;
-  public static String version = "1.2(rev285)";
+  public static String version = "1.2(rev307)";
   public String date = "2010-04-09";
   public static MyDisabledGlassPane glassPane;
   public static Logger logger;
