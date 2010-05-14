@@ -18,11 +18,16 @@ public class CompareValidator extends SValidator {
   /** The comparing type (lesser, equals, greater) **/
   private int compareType;
   /** The lesser constant : LESSER **/
-  public static int LESSER = -1;
+  public static int LESS = 0;
   /** the equals constant : EQUALS **/
-  public static int EQUALS = 0;
+  public static int EQUALS = 1;
   /** The greater constant : GREATER **/
-  public static int GREATER = 1;
+  public static int GREATER = 2;
+  /** The less or equals constant : LESS_OR_EQUALS **/
+  public static int LESS_OR_EQUALS = 3;
+  /** The greater or equals constant : GREATER_OR_EQUALS **/
+  public static int GREATER_OR_EQUALS = 4;
+
 
   /**
    * Creates a default CompareValidator
@@ -65,18 +70,26 @@ public class CompareValidator extends SValidator {
       double dValueToCompareWith = Double.parseDouble(valueToCompareWith);
       if (compareType == EQUALS) {
         return dValue == dValueToCompareWith;
-      } else if (compareType == LESSER) {
+      } else if (compareType == LESS) {
         return dValue < dValueToCompareWith;
       } else if (compareType == GREATER) {
         return dValue > dValueToCompareWith;
+      }else if (compareType == LESS_OR_EQUALS) {
+        return dValue <= dValueToCompareWith;
+      }else if (compareType == GREATER_OR_EQUALS) {
+        return dValue >= dValueToCompareWith;
       }
     } catch (NumberFormatException ex) {
       if (compareType == EQUALS) {
         return value.equals(valueToCompareWith);
-      } else if (compareType == LESSER) {
+      } else if (compareType == LESS) {
         return value.compareTo(valueToCompareWith) < 0;
       } else if (compareType == GREATER) {
         return value.compareTo(valueToCompareWith) > 0;
+      } else if (compareType == LESS_OR_EQUALS) {
+        return value.compareTo(valueToCompareWith) <= 0;
+      } else if (compareType == GREATER_OR_EQUALS) {
+        return value.compareTo(valueToCompareWith) >= 0;
       }
     }
     return false;
@@ -84,7 +97,11 @@ public class CompareValidator extends SValidator {
 
   @Override
   protected void setErrorMessage() {
-    errorMessage = "The value must be  " + getValueToCompareWith();
+    errorMessage = "The value must be  "
+        + (compareType == LESS ? " less than "
+        : compareType == EQUALS ? " equals to "
+        : compareType == GREATER ? " greater than " : "")
+        + getValueToCompareWith();
 
 
   }
@@ -101,8 +118,6 @@ public class CompareValidator extends SValidator {
    */
   public String getValueToCompareWith() {
     return valueToCompareWith;
-
-
   }
 
   /**
@@ -110,8 +125,7 @@ public class CompareValidator extends SValidator {
    */
   public void setValueToCompareWith(String valueToCompareWith) {
     this.valueToCompareWith = valueToCompareWith;
-
-
+    setErrorMessage();
   }
 
   /**
@@ -128,14 +142,13 @@ public class CompareValidator extends SValidator {
    * @throws AttributeException
    */
   public void setCompareType(int compareType) throws AttributeException {
-    if (compareType == LESSER || compareType == EQUALS || compareType == GREATER) {
+    if (compareType == LESS || compareType == EQUALS || compareType == GREATER
+        || compareType == LESS_OR_EQUALS || compareType == GREATER_OR_EQUALS) {
       this.compareType = compareType;
-
-
+      setErrorMessage();
     } else {
-      throw new AttributeException("Compare type must be :" + LESSER + " or " + EQUALS + " or " + GREATER);
-
-
+      throw new AttributeException("Compare type must be :" + LESS + " or " + 
+          EQUALS + " or " + GREATER + " or " + LESS_OR_EQUALS + " or " + GREATER_OR_EQUALS);
     }
   }
 }

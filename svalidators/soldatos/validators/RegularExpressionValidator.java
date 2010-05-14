@@ -89,6 +89,8 @@ public class RegularExpressionValidator extends SValidator {
   public void setRegex(String regex) throws AttributeException {
     try{
       Pattern.compile(regex);
+      this.regex = regex;
+      setErrorMessage();
     } catch(PatternSyntaxException ex){
       throw new AttributeException(regex + " is not a valid regular expression");
     }
@@ -106,5 +108,6 @@ public class RegularExpressionValidator extends SValidator {
    */
   public void setMatch(boolean match) {
     this.match = match;
+    setErrorMessage();
   }
 }

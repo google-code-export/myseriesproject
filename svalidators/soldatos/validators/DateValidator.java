@@ -85,5 +85,6 @@ public class DateValidator extends SValidator {
    */
   public void setDateFormat(String dateFormat) {
     this.dateFormat = dateFormat;
+    setErrorMessage();
   }
 }
