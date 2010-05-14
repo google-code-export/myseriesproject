@@ -80,6 +80,7 @@ public class FileValidator extends SValidator {
   public void setFileType(int fileType) throws AttributeException {
     if (fileType == FILE || fileType == DIR) {
       this.fileType = fileType;
+      setErrorMessage();
     } else {
       throw new AttributeException("The fileType must be " + FILE + " or " + DIR);
     }

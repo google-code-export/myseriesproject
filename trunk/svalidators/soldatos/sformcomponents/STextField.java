@@ -5,6 +5,7 @@
 package soldatos.sformcomponents;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.FocusEvent;
@@ -40,6 +41,7 @@ public class STextField extends JTextField implements FormComponentError, FormCo
    * Called before every constructor to get the errorImage
    */
   {
+    setPreferredSize(new Dimension(80, 20));
     URL url = FormComponentError.class.getResource(errorImageUrl);
     try {
       Image errorIm = ImageIO.read(url);
@@ -184,6 +186,9 @@ public class STextField extends JTextField implements FormComponentError, FormCo
   @Override
   public void addValidator(SValidator validator) {
     this.validators.addValidator(validator);
+    if(!validator.isAllowEmpty()){
+      this.validators.addValidator(new RequiredValidator());
+    }
     validateValue();
   }
 

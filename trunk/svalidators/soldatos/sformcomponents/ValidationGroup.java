@@ -7,6 +7,7 @@ package soldatos.sformcomponents;
 
 import java.util.ArrayList;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import soldatos.exceptions.ComponentException;
 
 /**
@@ -60,6 +61,14 @@ public class ValidationGroup {
       }
     }
     return true;
+  }
+
+  public void errorMessage() {
+    JOptionPane.showMessageDialog(null, "The form validation failed.\nCheck the errors displayed in the form.", "Validation failed", JOptionPane.ERROR_MESSAGE);
+  }
+
+  public void successMessage() {
+    JOptionPane.showMessageDialog(null, "Validation succeeded", "Success", JOptionPane.INFORMATION_MESSAGE);
   }
 
 }

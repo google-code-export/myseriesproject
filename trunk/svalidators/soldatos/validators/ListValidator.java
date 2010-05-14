@@ -79,6 +79,7 @@ public class ListValidator extends SValidator {
    */
   public void setList(Collection<Object> list) {
     this.list = list;
+    setErrorMessage();
   }
 
 }

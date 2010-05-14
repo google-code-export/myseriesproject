@@ -105,6 +105,8 @@ public class LengthValidator extends SValidator {
    */
   public void setMin(int min) {
     this.min = min;
+    this.length = 0;
+    setErrorMessage();
   }
 
   /**
@@ -119,6 +121,8 @@ public class LengthValidator extends SValidator {
    */
   public void setMax(int max) {
     this.max = max;
+    this.length = 0;
+    setErrorMessage();
   }
 
   /**
@@ -132,6 +136,9 @@ public class LengthValidator extends SValidator {
    * @param length the length to set
    */
   public void setLength(int length) {
+    this.max = 0;
+    this.min = 0;
     this.length = length;
+    setErrorMessage();
   }
 }
