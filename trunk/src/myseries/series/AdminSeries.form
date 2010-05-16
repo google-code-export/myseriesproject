@@ -55,7 +55,7 @@
               <Group type="102" attributes="0">
                   <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="label_Title" pref="506" max="32767" attributes="0"/>
+                      <Component id="label_Title" pref="562" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
@@ -78,35 +78,27 @@
                               </Group>
                           </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="textField_Serial" alignment="0" pref="261" max="32767" attributes="1"/>
+                              <Component id="textField_Serial" alignment="0" pref="317" max="32767" attributes="1"/>
                               <Component id="spinner_season" alignment="0" min="-2" pref="48" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="textfield_tvRageID" alignment="1" max="32767" attributes="1"/>
-                                      <Component id="textfield_subsOnline" alignment="1" max="32767" attributes="1"/>
-                                      <Component id="textfield_tvSubsId" alignment="1" pref="137" max="32767" attributes="1"/>
-                                  </Group>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="103" alignment="0" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="button_getTvSubtitlesId" min="-2" pref="39" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="button_getSubOnlineId" min="-2" pref="39" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="button_getTvRageID" linkSize="1" min="-2" pref="39" max="-2" attributes="0"/>
-                                      </Group>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="textfield_tvSubsId" alignment="0" pref="136" max="32767" attributes="1"/>
+                                      <Component id="textfield_subsOnline" alignment="0" max="32767" attributes="1"/>
+                                      <Component id="textfield_tvRageID" alignment="0" max="32767" attributes="1"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="label_message" pref="75" max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="103" alignment="0" groupAlignment="0" attributes="0">
+                                          <Component id="button_getTvSubtitlesId" alignment="0" min="-2" pref="39" max="-2" attributes="0"/>
+                                          <Component id="button_getSubOnlineId" alignment="1" min="-2" pref="39" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="button_getTvRageID" linkSize="1" alignment="1" min="-2" pref="39" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="label_message" pref="132" max="32767" attributes="0"/>
                               </Group>
-                              <Component id="textfield_localDir" alignment="0" pref="261" max="32767" attributes="0"/>
-                              <Component id="textfield_screenshot" alignment="0" pref="261" max="32767" attributes="0"/>
+                              <Component id="textfield_localDir" alignment="0" pref="317" max="32767" attributes="0"/>
+                              <Component id="textfield_screenshot" alignment="0" pref="317" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -150,8 +142,8 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="textfield_localDir" alignment="0" max="32767" attributes="1"/>
-                      <Component id="label_localDir" alignment="3" min="-2" max="-2" attributes="1"/>
                       <Component id="button_browseScreenshot1" alignment="0" min="0" pref="0" max="32767" attributes="1"/>
+                      <Component id="label_localDir" alignment="3" min="-2" max="-2" attributes="1"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -164,15 +156,15 @@
                       <Component id="label_message" alignment="1" pref="20" max="32767" attributes="0"/>
                       <Component id="button_getTvSubtitlesId" alignment="0" min="0" pref="0" max="32767" attributes="1"/>
                       <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                          <Component id="textfield_tvSubsId" alignment="3" min="-2" max="-2" attributes="1"/>
                           <Component id="label_tvsubsId" alignment="3" min="-2" max="-2" attributes="1"/>
+                          <Component id="textfield_tvSubsId" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="textfield_subsOnline" alignment="3" max="32767" attributes="1"/>
+                      <Group type="103" alignment="1" groupAlignment="3" attributes="0">
                           <Component id="label_subOnlineId" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="textfield_subsOnline" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="button_getSubOnlineId" min="0" pref="0" max="32767" attributes="1"/>
                   </Group>
@@ -233,10 +225,7 @@
             <Property name="text" type="java.lang.String" value="Title:"/>
           </Properties>
         </Component>
-        <Component class="soldatos.sformcomponents.STextField" name="textField_Serial">
-          <Events>
-            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="textField_SerialKeyReleased"/>
-          </Events>
+        <Component class="com.googlecode.svalidators.formcomponents.STextField" name="textField_Serial">
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new STextField(new RequiredValidator())"/>
           </AuxValues>
@@ -255,25 +244,15 @@
             <Property name="text" type="java.lang.String" value="TvSubtitles ID :"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="textfield_tvSubsId">
-        </Component>
         <Component class="javax.swing.JLabel" name="label_tvrageId">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="4"/>
             <Property name="text" type="java.lang.String" value="TvRage ID :"/>
           </Properties>
         </Component>
-        <Component class="soldatos.sformcomponents.STextField" name="textfield_tvRageID">
-          <Properties>
-            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="&quot;0&quot;" type="code"/>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="textfield_tvRageIDKeyReleased"/>
-          </Events>
+        <Component class="com.googlecode.svalidators.formcomponents.STextField" name="textfield_tvRageID">
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new STextField(new PositiveNumberValidator(&quot;0&quot;,true,false))"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new STextField(new PositiveNumberValidator(&quot;&quot;,true,true))"/>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
           </AuxValues>
         </Component>
@@ -351,8 +330,6 @@
             <Property name="text" type="java.lang.String" value="SubtitleOnline ID :"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="textfield_subsOnline">
-        </Component>
         <Component class="javax.swing.JButton" name="button_getTvSubtitlesId">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -397,9 +374,9 @@
         </Component>
         <Component class="javax.swing.JLabel" name="label_message">
         </Component>
-        <Component class="soldatos.sformcomponents.STextField" name="textfield_localDir">
+        <Component class="com.googlecode.svalidators.formcomponents.STextField" name="textfield_localDir">
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new soldatos.sformcomponents.STextField(new FileValidator(&quot;&quot;,FileValidator.DIR,true))"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new com.googlecode.svalidators.formcomponents.STextField(new FileValidator(&quot;&quot;,FileValidator.Type.DIR,true))"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="button_browseScreenshot1">
@@ -418,9 +395,19 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_browseScreenshot1ActionPerformed"/>
           </Events>
         </Component>
-        <Component class="soldatos.sformcomponents.STextField" name="textfield_screenshot">
+        <Component class="com.googlecode.svalidators.formcomponents.STextField" name="textfield_screenshot">
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new soldatos.sformcomponents.STextField(new FileValidator(&quot;&quot;, FileValidator.FILE, true))"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new com.googlecode.svalidators.formcomponents.STextField(new FileValidator(&quot;&quot;, FileValidator.Type.FILE, true))"/>
+          </AuxValues>
+        </Component>
+        <Component class="com.googlecode.svalidators.formcomponents.STextField" name="textfield_subsOnline">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new com.googlecode.svalidators.formcomponents.STextField(new NoSpaceValidator(&quot;&quot;,true))"/>
+          </AuxValues>
+        </Component>
+        <Component class="com.googlecode.svalidators.formcomponents.STextField" name="textfield_tvSubsId">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new com.googlecode.svalidators.formcomponents.STextField(new NoSpaceValidator(&quot;&quot;,true))"/>
           </AuxValues>
         </Component>
       </SubComponents>

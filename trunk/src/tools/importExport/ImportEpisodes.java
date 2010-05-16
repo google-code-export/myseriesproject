@@ -19,10 +19,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import myComponents.MyMessages;
@@ -31,11 +28,10 @@ import myComponents.myFileFilters.EpisodesExportFilter;
 import myComponents.myGUI.MyDraggable;
 import myseries.MySeries;
 import myseries.series.Series;
-import soldatos.exceptions.AttributeException;
-import soldatos.sformcomponents.ValidationGroup;
-import soldatos.validators.FileValidator;
-import soldatos.validators.NullValidator;
-import soldatos.validators.RequiredValidator;
+import com.googlecode.svalidators.formcomponents.ValidationGroup;
+import com.googlecode.svalidators.validators.FileValidator;
+import com.googlecode.svalidators.validators.NullValidator;
+import com.googlecode.svalidators.validators.RequiredValidator;
 
 /**
  * Imports previous exported episodes
@@ -64,7 +60,7 @@ public class ImportEpisodes extends MyDraggable {
     //big = new Dimension(485, 244);
     this.m = m;
     createSeries();
-    fileValidator = new FileValidator("", FileValidator.FILE, false);
+    fileValidator = new FileValidator("", FileValidator.Type.FILE, false);
     initComponents();
     //panel_newSeries.setEnabled(false);
     textfield_newSeriesTitle.setEnabled(false);
@@ -104,10 +100,10 @@ public class ImportEpisodes extends MyDraggable {
     jLabel3 = new javax.swing.JLabel();
     spinner_newSeriesSeason = new javax.swing.JSpinner();
     jLabel4 = new javax.swing.JLabel();
-    textfield_newSeriesTitle = new soldatos.sformcomponents.STextField();
+    textfield_newSeriesTitle = new com.googlecode.svalidators.formcomponents.STextField(new NullValidator());
     button_browse = new javax.swing.JButton();
     checkBox_newSeries = new javax.swing.JCheckBox();
-    textfield_file = new soldatos.sformcomponents.STextField(fileValidator);
+    textfield_file = new com.googlecode.svalidators.formcomponents.STextField(fileValidator);
     progress_import = new javax.swing.JProgressBar();
     jLabel5 = new javax.swing.JLabel();
 
@@ -155,12 +151,6 @@ public class ImportEpisodes extends MyDraggable {
     spinner_newSeriesSeason.setModel(new javax.swing.SpinnerNumberModel(1, 1, 99, 1));
 
     jLabel4.setText("Season :");
-
-    textfield_newSeriesTitle.addKeyListener(new java.awt.event.KeyAdapter() {
-      public void keyReleased(java.awt.event.KeyEvent evt) {
-        textfield_newSeriesTitleKeyReleased(evt);
-      }
-    });
 
     javax.swing.GroupLayout panel_newSeriesLayout = new javax.swing.GroupLayout(panel_newSeries);
     panel_newSeries.setLayout(panel_newSeriesLayout);
@@ -351,10 +341,6 @@ public class ImportEpisodes extends MyDraggable {
 
     }//GEN-LAST:event_button_importActionPerformed
 
-    private void textfield_newSeriesTitleKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textfield_newSeriesTitleKeyReleased
-      textfield_newSeriesTitle.validateValue();
-    }//GEN-LAST:event_textfield_newSeriesTitleKeyReleased
-
   private void importEpisodes() throws FileNotFoundException, SQLException, IOException, EpisodeImportFormatException {
     String newSeriesTitle;
     if (combobox_series.isEnabled()) {
@@ -459,7 +445,7 @@ public class ImportEpisodes extends MyDraggable {
   private javax.swing.JPanel panel_newSeries;
   public javax.swing.JProgressBar progress_import;
   private javax.swing.JSpinner spinner_newSeriesSeason;
-  private soldatos.sformcomponents.STextField textfield_file;
-  private soldatos.sformcomponents.STextField textfield_newSeriesTitle;
+  private com.googlecode.svalidators.formcomponents.STextField textfield_file;
+  private com.googlecode.svalidators.formcomponents.STextField textfield_newSeriesTitle;
   // End of variables declaration//GEN-END:variables
 }

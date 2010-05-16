@@ -84,7 +84,7 @@
                       <Component id="button_Cancel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="button_Add" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="27" max="32767" attributes="0"/>
+                  <EmptySpace pref="23" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -230,12 +230,12 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="soldatos.sformcomponents.STextField" name="textfield_title">
+            <Component class="com.googlecode.svalidators.formcomponents.STextField" name="textfield_title">
               <Events>
                 <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="textfield_titleKeyReleased"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new soldatos.sformcomponents.STextField(new RequiredValidator(),false)"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new com.googlecode.svalidators.formcomponents.STextField(new RequiredValidator())"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JCheckBox" name="checkbox_downloaded">

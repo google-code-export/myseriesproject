@@ -38,11 +38,10 @@ import myComponents.myGUI.MyDraggable;
 import myseries.MySeries;
 import myseries.StartPanel;
 import myseries.episodes.NextEpisodes;
-import soldatos.sformcomponents.STextField;
-import soldatos.sformcomponents.ValidationGroup;
-import soldatos.validators.NoSpaceValidator;
-import soldatos.validators.NullValidator;
-import soldatos.validators.PositiveNumberValidator;
+import com.googlecode.svalidators.formcomponents.ValidationGroup;
+import com.googlecode.svalidators.validators.NoSpaceValidator;
+import com.googlecode.svalidators.validators.NullValidator;
+import com.googlecode.svalidators.validators.PositiveNumberValidator;
 import tools.LookAndFeels;
 import tools.Skin;
 import tools.download.subtitles.Subtitle;
@@ -144,10 +143,10 @@ public class OptionsPanel extends MyDraggable {
     checkbox_useProxy = new javax.swing.JCheckBox();
     jLabel8 = new javax.swing.JLabel();
     jLabel9 = new javax.swing.JLabel();
-    textfield_proxy = new soldatos.sformcomponents.STextField(new NoSpaceValidator("",false),false);
+    textfield_proxy = new com.googlecode.svalidators.formcomponents.STextField(new NoSpaceValidator("",false));
     jCheckBox1 = new javax.swing.JCheckBox();
     jLabel12 = new javax.swing.JLabel();
-    textfield_port = new soldatos.sformcomponents.STextField(new PositiveNumberValidator("",false,false));
+    textfield_port = new com.googlecode.svalidators.formcomponents.STextField(new PositiveNumberValidator("",false,false));
     jLabel11 = new javax.swing.JLabel();
     combo_updateDb = new javax.swing.JComboBox();
     jLabel13 = new javax.swing.JLabel();
@@ -848,8 +847,8 @@ public class OptionsPanel extends MyDraggable {
   private javax.swing.JSpinner spinner_fontSize;
   private javax.swing.JSpinner spinner_maxNextEpisodes;
   private javax.swing.JTabbedPane tabbedPane_options;
-  private soldatos.sformcomponents.STextField textfield_port;
-  private soldatos.sformcomponents.STextField textfield_proxy;
+  private com.googlecode.svalidators.formcomponents.STextField textfield_port;
+  private com.googlecode.svalidators.formcomponents.STextField textfield_proxy;
   private org.jdesktop.beansbinding.BindingGroup bindingGroup;
   // End of variables declaration//GEN-END:variables
 
