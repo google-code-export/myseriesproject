@@ -311,6 +311,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     menuItem_exportEpisodes = new javax.swing.JMenuItem();
     menuItem_importEpisodes = new javax.swing.JMenuItem();
     menuItem_internetUpdate = new javax.swing.JMenuItem();
+    menuItem_downloadTorrent = new javax.swing.JMenuItem();
     jSeparator2 = new javax.swing.JSeparator();
     menuItem_options = new javax.swing.JMenuItem();
     menu_Help = new javax.swing.JMenu();
@@ -982,6 +983,16 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       }
     });
     menu_Tools.add(menuItem_internetUpdate);
+
+    menuItem_downloadTorrent.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_MASK));
+    menuItem_downloadTorrent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/torrent.png"))); // NOI18N
+    menuItem_downloadTorrent.setText("Download Torrent");
+    menuItem_downloadTorrent.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        menuItem_downloadTorrentActionPerformed(evt);
+      }
+    });
+    menu_Tools.add(menuItem_downloadTorrent);
     menu_Tools.add(jSeparator2);
 
     menuItem_options.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
@@ -1446,6 +1457,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   private void menuItem_downloadTorrentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_downloadTorrentActionPerformed
     Actions.downloadTorrent();
   }//GEN-LAST:event_menuItem_downloadTorrentActionPerformed
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
   public static javax.swing.JMenuItem PopUpItem_AddEpisode;
   public static javax.swing.JMenuItem PopUpItem_AddEpisodeInEpisodes;
@@ -1475,6 +1487,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static javax.swing.JMenuItem menuItem_checkUpdate;
   public static javax.swing.JMenuItem menuItem_createDB;
   public static javax.swing.JMenuItem menuItem_deleteSeries;
+  public static javax.swing.JMenuItem menuItem_downloadTorrent;
   public static javax.swing.JMenuItem menuItem_editEpisode;
   public static javax.swing.JMenuItem menuItem_editSeries;
   public static javax.swing.JMenuItem menuItem_exit;
