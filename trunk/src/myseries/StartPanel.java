@@ -281,6 +281,7 @@ public class StartPanel extends MyDraggable {
           CreateDatabase d = new CreateDatabase(this, dbName, createNewDB);
           Thread t = new Thread(d);
           t.start();
+          dispose();
         } catch (ClassNotFoundException ex) {
           MySeries.logger.log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
