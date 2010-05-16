@@ -226,7 +226,7 @@
             <Property name="text" type="java.lang.String" value="Exact name"/>
           </Properties>
         </Component>
-        <Component class="soldatos.sformcomponents.SComboBox" name="combo_series">
+        <Component class="com.googlecode.svalidators.formcomponents.SComboBox" name="combo_series">
           <Properties>
             <Property name="editable" type="boolean" value="true"/>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">

@@ -19,8 +19,6 @@ import java.awt.Dialog.ModalityType;
 import java.awt.Image;
 import java.io.File;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.logging.Level;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -30,11 +28,12 @@ import myComponents.myFileFilters.ScreenshotFilter;
 import myComponents.myGUI.MyDraggable;
 import myComponents.myGUI.MyWaitMessage;
 import myseries.MySeries;
-import soldatos.sformcomponents.STextField;
-import soldatos.sformcomponents.ValidationGroup;
-import soldatos.validators.FileValidator;
-import soldatos.validators.PositiveNumberValidator;
-import soldatos.validators.RequiredValidator;
+import com.googlecode.svalidators.formcomponents.STextField;
+import com.googlecode.svalidators.formcomponents.ValidationGroup;
+import com.googlecode.svalidators.validators.FileValidator;
+import com.googlecode.svalidators.validators.NoSpaceValidator;
+import com.googlecode.svalidators.validators.PositiveNumberValidator;
+import com.googlecode.svalidators.validators.RequiredValidator;
 import tools.download.subtitles.sonline.GetSubtitleOnlineCode;
 import tools.download.subtitles.tvsubtitles.GetTvSubtitlesCode;
 import tools.internetUpdate.tvrage.TrGetId;
@@ -99,7 +98,9 @@ public class AdminSeries extends MyDraggable {
       textfield_tvSubsId.setText(seriesRecord.getTvSubtitlesCode());
       textfield_tvRageID.setText(String.valueOf(seriesRecord.getTvrage_ID()));
       textfield_localDir.setText(seriesRecord.getLocalDir());
-      textfield_screenshot.setText("./images/"+seriesRecord.getScreenshot());
+
+      textfield_screenshot.setText(seriesRecord.getScreenshot().equals("")? "" : "./images/"+seriesRecord.getScreenshot());
+
       textfield_tvSubsId.setText(seriesRecord.getTvSubtitlesCode());
       textfield_subsOnline.setText(seriesRecord.getSOnlineCode());
       button_Add.setText("Edit");
@@ -127,22 +128,22 @@ public class AdminSeries extends MyDraggable {
     label_season = new javax.swing.JLabel();
     spinner_season = new javax.swing.JSpinner();
     label_tvsubsId = new javax.swing.JLabel();
-    textfield_tvSubsId = new javax.swing.JTextField();
     label_tvrageId = new javax.swing.JLabel();
-    textfield_tvRageID = new STextField(new PositiveNumberValidator("0",true,false));
+    textfield_tvRageID = new STextField(new PositiveNumberValidator("",true,true));
     button_getTvRageID = new javax.swing.JButton();
     label_localDir = new javax.swing.JLabel();
     button_browse = new javax.swing.JButton();
     label_screenshot = new javax.swing.JLabel();
     button_browseScreenshot = new javax.swing.JButton();
     label_subOnlineId = new javax.swing.JLabel();
-    textfield_subsOnline = new javax.swing.JTextField();
     button_getTvSubtitlesId = new javax.swing.JButton();
     button_getSubOnlineId = new javax.swing.JButton();
     label_message = new javax.swing.JLabel();
-    textfield_localDir = new soldatos.sformcomponents.STextField(new FileValidator("",FileValidator.DIR,true));
+    textfield_localDir = new com.googlecode.svalidators.formcomponents.STextField(new FileValidator("",FileValidator.Type.DIR,true));
     button_browseScreenshot1 = new javax.swing.JButton();
-    textfield_screenshot = new soldatos.sformcomponents.STextField(new FileValidator("", FileValidator.FILE, true));
+    textfield_screenshot = new com.googlecode.svalidators.formcomponents.STextField(new FileValidator("", FileValidator.Type.FILE, true));
+    textfield_subsOnline = new com.googlecode.svalidators.formcomponents.STextField(new NoSpaceValidator("",true));
+    textfield_tvSubsId = new com.googlecode.svalidators.formcomponents.STextField(new NoSpaceValidator("",true));
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
     setBackground(new java.awt.Color(102, 102, 102));
@@ -174,12 +175,6 @@ public class AdminSeries extends MyDraggable {
     label_title.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     label_title.setText("Title:");
 
-    textField_Serial.addKeyListener(new java.awt.event.KeyAdapter() {
-      public void keyReleased(java.awt.event.KeyEvent evt) {
-        textField_SerialKeyReleased(evt);
-      }
-    });
-
     label_season.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     label_season.setText("Season :");
 
@@ -188,13 +183,6 @@ public class AdminSeries extends MyDraggable {
 
     label_tvrageId.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     label_tvrageId.setText("TvRage ID :");
-
-    textfield_tvRageID.setText("0");
-    textfield_tvRageID.addKeyListener(new java.awt.event.KeyAdapter() {
-      public void keyReleased(java.awt.event.KeyEvent evt) {
-        textfield_tvRageIDKeyReleased(evt);
-      }
-    });
 
     button_getTvRageID.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/internet_update_small.png"))); // NOI18N
     button_getTvRageID.setToolTipText("Get ID for TvRage.com");
@@ -300,7 +288,7 @@ public class AdminSeries extends MyDraggable {
       .addGroup(jPanel1Layout.createSequentialGroup()
         .addContainerGap()
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(label_Title, javax.swing.GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE)
+          .addComponent(label_Title, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE)
           .addGroup(jPanel1Layout.createSequentialGroup()
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
               .addGroup(jPanel1Layout.createSequentialGroup()
@@ -319,28 +307,23 @@ public class AdminSeries extends MyDraggable {
                 .addComponent(button_Cancel)
                 .addGap(50, 50, 50)))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(textField_Serial, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
+              .addComponent(textField_Serial, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
               .addComponent(spinner_season, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
               .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                  .addComponent(textfield_tvRageID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                  .addComponent(textfield_subsOnline)
-                  .addComponent(textfield_tvSubsId, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                  .addComponent(textfield_tvSubsId, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                  .addComponent(textfield_subsOnline, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                  .addComponent(textfield_tvRageID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                   .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                      .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                      .addComponent(button_getTvSubtitlesId, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                      .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                      .addComponent(button_getSubOnlineId, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                  .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(button_getTvRageID, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(button_getTvSubtitlesId, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_getSubOnlineId, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                  .addComponent(button_getTvRageID, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(label_message, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE))
-              .addComponent(textfield_localDir, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
-              .addComponent(textfield_screenshot, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE))
+                .addComponent(label_message, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE))
+              .addComponent(textfield_localDir, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
+              .addComponent(textfield_screenshot, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
               .addGroup(jPanel1Layout.createSequentialGroup()
@@ -375,8 +358,8 @@ public class AdminSeries extends MyDraggable {
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
           .addComponent(textfield_localDir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-          .addComponent(label_localDir)
-          .addComponent(button_browseScreenshot1, 0, 0, Short.MAX_VALUE))
+          .addComponent(button_browseScreenshot1, 0, 0, Short.MAX_VALUE)
+          .addComponent(label_localDir))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
           .addComponent(button_browseScreenshot, 0, 0, Short.MAX_VALUE)
@@ -387,13 +370,13 @@ public class AdminSeries extends MyDraggable {
           .addComponent(label_message, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
           .addComponent(button_getTvSubtitlesId, 0, 0, Short.MAX_VALUE)
           .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-            .addComponent(textfield_tvSubsId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(label_tvsubsId)))
+            .addComponent(label_tvsubsId)
+            .addComponent(textfield_tvSubsId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
           .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-            .addComponent(textfield_subsOnline)
-            .addComponent(label_subOnlineId))
+            .addComponent(label_subOnlineId)
+            .addComponent(textfield_subsOnline, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
           .addComponent(button_getSubOnlineId, 0, 0, Short.MAX_VALUE))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -598,14 +581,6 @@ public class AdminSeries extends MyDraggable {
       setVisible(true);
     }//GEN-LAST:event_button_getSubOnlineIdActionPerformed
 
-    private void textField_SerialKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textField_SerialKeyReleased
-      textField_Serial.validateValue();
-    }//GEN-LAST:event_textField_SerialKeyReleased
-
-    private void textfield_tvRageIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textfield_tvRageIDKeyReleased
-      textfield_tvRageID.validateValue();
-    }//GEN-LAST:event_textfield_tvRageIDKeyReleased
-
     private void button_browseScreenshot1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_browseScreenshot1ActionPerformed
        JFileChooser fc = new JFileChooser();
       fc.setCurrentDirectory(new File(textfield_localDir.getText()));
@@ -637,11 +612,11 @@ public class AdminSeries extends MyDraggable {
   private javax.swing.JLabel label_tvrageId;
   private javax.swing.JLabel label_tvsubsId;
   private javax.swing.JSpinner spinner_season;
-  private soldatos.sformcomponents.STextField textField_Serial;
-  private soldatos.sformcomponents.STextField textfield_localDir;
-  private soldatos.sformcomponents.STextField textfield_screenshot;
-  private javax.swing.JTextField textfield_subsOnline;
-  public soldatos.sformcomponents.STextField textfield_tvRageID;
-  private javax.swing.JTextField textfield_tvSubsId;
+  private com.googlecode.svalidators.formcomponents.STextField textField_Serial;
+  private com.googlecode.svalidators.formcomponents.STextField textfield_localDir;
+  private com.googlecode.svalidators.formcomponents.STextField textfield_screenshot;
+  private com.googlecode.svalidators.formcomponents.STextField textfield_subsOnline;
+  public com.googlecode.svalidators.formcomponents.STextField textfield_tvRageID;
+  private com.googlecode.svalidators.formcomponents.STextField textfield_tvSubsId;
   // End of variables declaration//GEN-END:variables
 }

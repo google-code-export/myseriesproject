@@ -10,6 +10,7 @@
  */
 package myseries.episodes;
 
+import com.googlecode.svalidators.validators.RequiredValidator;
 import database.DBHelper;
 import java.io.IOException;
 import java.text.ParseException;
@@ -25,7 +26,6 @@ import database.SeriesRecord;
 import java.util.Calendar;
 import myComponents.MyMessages;
 import myComponents.myGUI.MyDraggable;
-import soldatos.validators.RequiredValidator;
 import tools.options.Options;
 
 /**
@@ -111,7 +111,7 @@ public class AdminEpisodes extends MyDraggable {
     label_subtitles = new javax.swing.JLabel();
     label_EpisodeNumber = new javax.swing.JLabel();
     combobox_subtitles = new javax.swing.JComboBox();
-    textfield_title = new soldatos.sformcomponents.STextField(new RequiredValidator(),false);
+    textfield_title = new com.googlecode.svalidators.formcomponents.STextField(new RequiredValidator());
     checkbox_downloaded = new javax.swing.JCheckBox();
     label_Date = new javax.swing.JLabel();
     spinner_episode = new javax.swing.JSpinner();
@@ -256,7 +256,7 @@ public class AdminEpisodes extends MyDraggable {
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(button_Cancel)
           .addComponent(button_Add))
-        .addContainerGap(27, Short.MAX_VALUE))
+        .addContainerGap(23, Short.MAX_VALUE))
     );
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -358,6 +358,6 @@ public class AdminEpisodes extends MyDraggable {
   private javax.swing.JLabel label_subtitles;
   private javax.swing.JLabel label_title;
   private javax.swing.JSpinner spinner_episode;
-  private soldatos.sformcomponents.STextField textfield_title;
+  private com.googlecode.svalidators.formcomponents.STextField textfield_title;
   // End of variables declaration//GEN-END:variables
 }

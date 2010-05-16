@@ -240,12 +240,9 @@
                 <Property name="text" type="java.lang.String" value="Season :"/>
               </Properties>
             </Component>
-            <Component class="soldatos.sformcomponents.STextField" name="textfield_newSeriesTitle">
-              <Events>
-                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="textfield_newSeriesTitleKeyReleased"/>
-              </Events>
+            <Component class="com.googlecode.svalidators.formcomponents.STextField" name="textfield_newSeriesTitle">
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new soldatos.sformcomponents.STextField()"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new com.googlecode.svalidators.formcomponents.STextField(new NullValidator())"/>
               </AuxValues>
             </Component>
           </SubComponents>
@@ -269,12 +266,12 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="checkBox_newSeriesActionPerformed"/>
           </Events>
         </Component>
-        <Component class="soldatos.sformcomponents.STextField" name="textfield_file">
+        <Component class="com.googlecode.svalidators.formcomponents.STextField" name="textfield_file">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new soldatos.sformcomponents.STextField(fileValidator)"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new com.googlecode.svalidators.formcomponents.STextField(fileValidator)"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JProgressBar" name="progress_import">

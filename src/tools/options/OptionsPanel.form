@@ -719,7 +719,7 @@
                     <BindingProperty name="enabled" source="checkbox_useProxy" sourcePath="${selected}" target="jLabel9" targetPath="enabled" updateStrategy="0" immediately="false"/>
                   </BindingProperties>
                 </Component>
-                <Component class="soldatos.sformcomponents.STextField" name="textfield_proxy">
+                <Component class="com.googlecode.svalidators.formcomponents.STextField" name="textfield_proxy">
                   <Properties>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="Options.toString(Options.PROXY_HOST)" type="code"/>
@@ -735,7 +735,7 @@
                     <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="textfield_proxyKeyReleased"/>
                   </Events>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new soldatos.sformcomponents.STextField(new NoSpaceValidator(&quot;&quot;,false),false)"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new com.googlecode.svalidators.formcomponents.STextField(new NoSpaceValidator(&quot;&quot;,false))"/>
                   </AuxValues>
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="jCheckBox1">
@@ -761,7 +761,7 @@
                     <Property name="name" type="java.lang.String" value="noname" noResource="true"/>
                   </Properties>
                 </Component>
-                <Component class="soldatos.sformcomponents.STextField" name="textfield_port">
+                <Component class="com.googlecode.svalidators.formcomponents.STextField" name="textfield_port">
                   <Properties>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="Options.toString(Options.PROXY_PORT)" type="code"/>
@@ -777,7 +777,7 @@
                     <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="textfield_portKeyReleased"/>
                   </Events>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new soldatos.sformcomponents.STextField(new PositiveNumberValidator(&quot;&quot;,false,false))"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new com.googlecode.svalidators.formcomponents.STextField(new PositiveNumberValidator(&quot;&quot;,false,false))"/>
                   </AuxValues>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel11">

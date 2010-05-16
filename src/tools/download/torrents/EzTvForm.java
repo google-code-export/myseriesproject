@@ -30,8 +30,8 @@ import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyDraggable;
 import myseries.series.Series;
-import soldatos.sformcomponents.SComboBox;
-import soldatos.validators.RequiredValidator;
+import com.googlecode.svalidators.formcomponents.SComboBox;
+import com.googlecode.svalidators.validators.RequiredValidator;
 
 /**
  * The form to submit a torrent search to EzTv
@@ -288,7 +288,7 @@ public class EzTvForm extends MyDraggable {
   private javax.swing.JButton button_search;
   private javax.swing.JCheckBox checkbox_exact;
   private javax.swing.JComboBox combo_quality;
-  private soldatos.sformcomponents.SComboBox combo_series;
+  private com.googlecode.svalidators.formcomponents.SComboBox combo_series;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JLabel jLabel3;
