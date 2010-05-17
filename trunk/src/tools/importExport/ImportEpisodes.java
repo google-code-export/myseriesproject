@@ -152,6 +152,8 @@ public class ImportEpisodes extends MyDraggable {
 
     jLabel4.setText("Season :");
 
+    textfield_newSeriesTitle.setName("Series title"); // NOI18N
+
     javax.swing.GroupLayout panel_newSeriesLayout = new javax.swing.GroupLayout(panel_newSeries);
     panel_newSeries.setLayout(panel_newSeriesLayout);
     panel_newSeriesLayout.setHorizontalGroup(
@@ -201,6 +203,7 @@ public class ImportEpisodes extends MyDraggable {
     });
 
     textfield_file.setEditable(false);
+    textfield_file.setName("Import file"); // NOI18N
 
     progress_import.setStringPainted(true);
 
@@ -320,7 +323,7 @@ public class ImportEpisodes extends MyDraggable {
       group.addComponent(textfield_file);
       group.addComponent(textfield_newSeriesTitle);
       if(!group.validate()){
-        MyMessages.validationError();
+        group.errorMessage(true);
         return;
       }
       try {

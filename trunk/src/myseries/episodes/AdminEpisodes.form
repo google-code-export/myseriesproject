@@ -231,6 +231,9 @@
               </Properties>
             </Component>
             <Component class="com.googlecode.svalidators.formcomponents.STextField" name="textfield_title">
+              <Properties>
+                <Property name="name" type="java.lang.String" value="Title" noResource="true"/>
+              </Properties>
               <Events>
                 <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="textfield_titleKeyReleased"/>
               </Events>
