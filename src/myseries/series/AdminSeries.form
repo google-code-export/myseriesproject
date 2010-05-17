@@ -226,6 +226,9 @@
           </Properties>
         </Component>
         <Component class="com.googlecode.svalidators.formcomponents.STextField" name="textField_Serial">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="Title" noResource="true"/>
+          </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new STextField(new RequiredValidator())"/>
           </AuxValues>
@@ -251,6 +254,9 @@
           </Properties>
         </Component>
         <Component class="com.googlecode.svalidators.formcomponents.STextField" name="textfield_tvRageID">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="TvRage ID" noResource="true"/>
+          </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new STextField(new PositiveNumberValidator(&quot;&quot;,true,true))"/>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
@@ -375,6 +381,9 @@
         <Component class="javax.swing.JLabel" name="label_message">
         </Component>
         <Component class="com.googlecode.svalidators.formcomponents.STextField" name="textfield_localDir">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="Local Directory" noResource="true"/>
+          </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new com.googlecode.svalidators.formcomponents.STextField(new FileValidator(&quot;&quot;,FileValidator.Type.DIR,true))"/>
           </AuxValues>
@@ -396,16 +405,25 @@
           </Events>
         </Component>
         <Component class="com.googlecode.svalidators.formcomponents.STextField" name="textfield_screenshot">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="Screenshot" noResource="true"/>
+          </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new com.googlecode.svalidators.formcomponents.STextField(new FileValidator(&quot;&quot;, FileValidator.Type.FILE, true))"/>
           </AuxValues>
         </Component>
         <Component class="com.googlecode.svalidators.formcomponents.STextField" name="textfield_subsOnline">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="SubtitleOnline ID" noResource="true"/>
+          </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new com.googlecode.svalidators.formcomponents.STextField(new NoSpaceValidator(&quot;&quot;,true))"/>
           </AuxValues>
         </Component>
         <Component class="com.googlecode.svalidators.formcomponents.STextField" name="textfield_tvSubsId">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="TvSubtitles ID" noResource="true"/>
+          </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new com.googlecode.svalidators.formcomponents.STextField(new NoSpaceValidator(&quot;&quot;,true))"/>
           </AuxValues>

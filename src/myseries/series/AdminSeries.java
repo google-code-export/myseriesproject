@@ -175,6 +175,8 @@ public class AdminSeries extends MyDraggable {
     label_title.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     label_title.setText("Title:");
 
+    textField_Serial.setName("Title"); // NOI18N
+
     label_season.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     label_season.setText("Season :");
 
@@ -183,6 +185,8 @@ public class AdminSeries extends MyDraggable {
 
     label_tvrageId.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     label_tvrageId.setText("TvRage ID :");
+
+    textfield_tvRageID.setName("TvRage ID"); // NOI18N
 
     button_getTvRageID.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/internet_update_small.png"))); // NOI18N
     button_getTvRageID.setToolTipText("Get ID for TvRage.com");
@@ -272,6 +276,8 @@ public class AdminSeries extends MyDraggable {
       }
     });
 
+    textfield_localDir.setName("Local Directory"); // NOI18N
+
     button_browseScreenshot1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/localDir_small.png"))); // NOI18N
     button_browseScreenshot1.setMaximumSize(new java.awt.Dimension(31, 25));
     button_browseScreenshot1.setMinimumSize(new java.awt.Dimension(31, 25));
@@ -280,6 +286,12 @@ public class AdminSeries extends MyDraggable {
         button_browseScreenshot1ActionPerformed(evt);
       }
     });
+
+    textfield_screenshot.setName("Screenshot"); // NOI18N
+
+    textfield_subsOnline.setName("SubtitleOnline ID"); // NOI18N
+
+    textfield_tvSubsId.setName("TvSubtitles ID"); // NOI18N
 
     javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     jPanel1.setLayout(jPanel1Layout);
@@ -471,11 +483,13 @@ public class AdminSeries extends MyDraggable {
     private void button_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_AddActionPerformed
       ValidationGroup group = new ValidationGroup();
       group.addComponent(textField_Serial);
+      group.addComponent(textfield_subsOnline);
+      group.addComponent(textfield_tvSubsId);
       group.addComponent(textfield_tvRageID);
       group.addComponent(textfield_localDir);
       group.addComponent(textfield_screenshot);
       if(!group.validate()){
-        MyMessages.validationError();
+        group.errorMessage(true);
         return;
       }
       addSeries();

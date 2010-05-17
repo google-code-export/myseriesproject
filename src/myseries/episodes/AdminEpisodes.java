@@ -10,6 +10,7 @@
  */
 package myseries.episodes;
 
+import com.googlecode.svalidators.formcomponents.ValidationGroup;
 import com.googlecode.svalidators.validators.RequiredValidator;
 import database.DBHelper;
 import java.io.IOException;
@@ -35,7 +36,6 @@ import tools.options.Options;
 public class AdminEpisodes extends MyDraggable {
 
   public static final long serialVersionUID = 243564578251L;
-
   /**
    * The main form of MySeries
    */
@@ -67,8 +67,8 @@ public class AdminEpisodes extends MyDraggable {
     this.episodeRecord = currentEpisode;
     initComponents();
     setLocationRelativeTo(m);
-    label_title.setText("Add Episode to " + seriesRecord.getTitle() +
-            " S" + MyUsefulFunctions.padLeft(seriesRecord.getSeason(), 2, "0"));
+    label_title.setText("Add Episode to " + seriesRecord.getTitle()
+            + " S" + MyUsefulFunctions.padLeft(seriesRecord.getSeason(), 2, "0"));
     getLatestEpisode();
     spinner_episode.setValue(episodeNo);
     setVisible(true);
@@ -82,8 +82,8 @@ public class AdminEpisodes extends MyDraggable {
   private void getLatestEpisode() throws SQLException, IOException {
     MySeries.logger.log(Level.INFO, "Get the latest episode");
     Vector<EpisodesRecord> episodes = DBHelper.getEpisodesBySql(
-            "select * from episodes where series_ID = " +
-            seriesRecord.getSeries_ID() + " order by CAST(episode AS INT) desc limit 1");
+            "select * from episodes where series_ID = "
+            + seriesRecord.getSeries_ID() + " order by CAST(episode AS INT) desc limit 1");
     if (episodes.size() > 0) {
       episodeNo = episodes.get(0).getEpisode() + 1;
     } else {
@@ -161,6 +161,7 @@ public class AdminEpisodes extends MyDraggable {
 
     combobox_subtitles.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "None", "English", "Greek", "Both" }));
 
+    textfield_title.setName("Title"); // NOI18N
     textfield_title.addKeyListener(new java.awt.event.KeyAdapter() {
       public void keyReleased(java.awt.event.KeyEvent evt) {
         textfield_titleKeyReleased(evt);
@@ -276,7 +277,13 @@ public class AdminEpisodes extends MyDraggable {
 
     private void button_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_AddActionPerformed
       try {
+        ValidationGroup group = new ValidationGroup();
+        group.addComponent(textfield_title);
+        if(group.validate()){
         addTheEpisode();
+        } else {
+          group.errorMessage(true);
+        }
       } catch (IOException ex) {
         MySeries.logger.log(Level.SEVERE, null, ex);
       } catch (ParseException ex) {
@@ -314,9 +321,9 @@ public class AdminEpisodes extends MyDraggable {
     try {
       MySeries.logger.log(Level.INFO, "Adding episode " + episodeRecord.getTitle());
       if (dateChooser.getDate() == null) {
-         aired = f.format(Calendar.getInstance().getTime());
+        aired = f.format(Calendar.getInstance().getTime());
       } else {
-         aired = f.format(dateChooser.getDate());
+        aired = f.format(dateChooser.getDate());
       }
       episodeRecord.setAired(aired);
       episodeRecord.save();
@@ -342,7 +349,6 @@ public class AdminEpisodes extends MyDraggable {
     private void textfield_titleKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textfield_titleKeyReleased
       textfield_title.validateValue();
     }//GEN-LAST:event_textfield_titleKeyReleased
-
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton button_Add;
   private javax.swing.JButton button_Cancel;

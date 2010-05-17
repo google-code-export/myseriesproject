@@ -31,7 +31,9 @@ import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyDraggable;
 import myseries.series.Series;
 import com.googlecode.svalidators.formcomponents.SComboBox;
+import com.googlecode.svalidators.formcomponents.ValidationGroup;
 import com.googlecode.svalidators.validators.RequiredValidator;
+import java.awt.TextField;
 
 /**
  * The form to submit a torrent search to EzTv
@@ -77,14 +79,13 @@ public class EzTvForm extends MyDraggable {
       public void keyReleased(KeyEvent e) {
         combo_seriesKeyReleased(e);
       }
-
     });
     setData();
     setLocationRelativeTo(null);
     setVisible(true);
   }
 
-  private void combo_seriesKeyReleased(KeyEvent e){
+  private void combo_seriesKeyReleased(KeyEvent e) {
     combo_series.validateValue();
   }
 
@@ -123,7 +124,7 @@ public class EzTvForm extends MyDraggable {
     jLabel1.setText("Download torrent from EzTv");
 
     jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-    jLabel2.setText("Series name:");
+    jLabel2.setText("Series title:");
 
     jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     jLabel3.setText("Season :");
@@ -165,6 +166,7 @@ public class EzTvForm extends MyDraggable {
 
     combo_series.setEditable(true);
     combo_series.setModel(seriesModel);
+    combo_series.setName("Series title"); // NOI18N
     combo_series.setOpaque(false);
     combo_series.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -268,12 +270,17 @@ public class EzTvForm extends MyDraggable {
   }//GEN-LAST:event_button_cancelActionPerformed
 
   private void button_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_searchActionPerformed
-
+    ValidationGroup group = new ValidationGroup();
+    group.addComponent(combo_series);
+    if(group.validate()){
     URI uri = createUri();
     if (uri != null) {
       EzTv e = new EzTv(uri, this);
       Thread t = new Thread(e);
       t.start();
+    }
+    }else {
+      group.errorMessage(true);
     }
     //myseries.MySeries.glassPane.deactivate();
     //dispose();
