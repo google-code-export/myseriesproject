@@ -53,6 +53,7 @@ public class StartPanel extends MyDraggable {
     getRootPane().setDefaultButton(button_create);
     setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/subtitles.png")).getImage());
     databasesModel = new DefaultComboBoxModel(Database.getDatabases());
+    combobox_databases.setModel(databasesModel);
     //progress.setVisible(false);
     setLocationRelativeTo(null);
     setVisible(true);
