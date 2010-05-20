@@ -14,6 +14,7 @@ import database.SeriesRecord;
 import help.About;
 import help.CheckUpdate;
 import java.awt.Desktop;
+import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -25,6 +26,7 @@ import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.SwingUtilities;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -88,6 +90,7 @@ public class Actions {
     String title = Series.getCurrentSerial().getTitle();
     int season = Series.getCurrentSerial().getSeason();
     int series_ID = Series.getCurrentSerial().getSeries_ID();
+    String screenshot = Series.getCurrentSerial().getScreenshot();
     int answ = MyMessages.question("Delete Serial?", "Really delete the series " + title + " season " + season + "?");
     if (answ == 0) {
       try {
@@ -95,6 +98,12 @@ public class Actions {
         DBConnection.stmt.execute(sql);
         sql = "DELETE FROM episodes WHERE series_ID = " + series_ID;
         DBConnection.stmt.execute(sql);
+        File screenshotFile = new File("./images/" + screenshot);
+        if (screenshotFile.isFile()) {
+          screenshotFile.delete();
+          Image image = new ImageIcon(MySeries.class.getResource("/images/logo.png")).getImage();
+          m.imagePanel.setImage(image);
+        }
         Series.getSeries();
         Series.setCurrentSerial(null);
         Episodes.updateEpisodesTable();
@@ -308,10 +317,10 @@ public class Actions {
         return;
       }
       java.net.URI uri = null;
-      if(Options.toString(Options.SUBTITLE_SITE).equals(Subtitle.TV_SUBTITLES_NAME)){
-        uri = new java.net.URI("http://www.tvsubtitles.net/tvshow-"+Series.getCurrentSerial().getTvSubtitlesCode()+".html");
-      }else if(Options.toString(Options.SUBTITLE_SITE).equals(Subtitle.SUBTITLE_ONLINE_NAME)){
-        uri = new java.net.URI("http://www.subtitleonline.com/"+Series.getCurrentSerial().getSOnlineCode()+"-season-"+Series.getCurrentSerial().getSeason()+"-subtitles.html");
+      if (Options.toString(Options.SUBTITLE_SITE).equals(Subtitle.TV_SUBTITLES_NAME)) {
+        uri = new java.net.URI("http://www.tvsubtitles.net/tvshow-" + Series.getCurrentSerial().getTvSubtitlesCode() + ".html");
+      } else if (Options.toString(Options.SUBTITLE_SITE).equals(Subtitle.SUBTITLE_ONLINE_NAME)) {
+        uri = new java.net.URI("http://www.subtitleonline.com/" + Series.getCurrentSerial().getSOnlineCode() + "-season-" + Series.getCurrentSerial().getSeason() + "-subtitles.html");
       }
       System.out.println(uri);
       DesktopSupport.getDesktop().browse(uri);
@@ -525,7 +534,7 @@ public class Actions {
       }
       if (link != null && !link.equals("")) {
         TvSubtitlesForm d = new TvSubtitlesForm(
-            Subtitle.TV_SUBTITLES_URL+"tvshow-" + link + ".html",
+            Subtitle.TV_SUBTITLES_URL + "tvshow-" + link + ".html",
             Series.getCurrentSerial().getSeason(),
             Episodes.getCurrentEpisode().getEpisode(),
             Series.getCurrentSerial().getLocalDir(),
