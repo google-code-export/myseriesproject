@@ -57,21 +57,21 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
       in = new BufferedReader(new InputStreamReader(epGuides.openStream()));
     } catch (IOException ex) {
       append("<span style='color:red'>(" + series.getFullTitle() + ") could not  find webpage: " + InternetUpdate.EP_GUIDES_URL + series.getTitle().replaceAll(" ", "") + "/" + " </span>");
-      MySeries.logger.log(Level.WARNING, "(" + series.getTitle() + ") could not " +  InternetUpdate.EP_GUIDES_URL + series.getTitle().replaceAll(" ", "") + "/", ex);
+      MySeries.logger.log(Level.WARNING, "(" + series.getTitle() + ") could not " + InternetUpdate.EP_GUIDES_URL + series.getTitle().replaceAll(" ", "") + "/", ex);
       if (series.getTitle().toLowerCase().startsWith("the")) {
         String newTitle = series.getTitle().toLowerCase().replaceFirst(" ", "").replaceAll("((?i)^the)|( )", "");
         try {
           append("<span> Trying for: " + newTitle + "</span>");
-          epGuides = new URL( InternetUpdate.EP_GUIDES_URL + newTitle + "/");
+          epGuides = new URL(InternetUpdate.EP_GUIDES_URL + newTitle + "/");
           in = new BufferedReader(new InputStreamReader(epGuides.openStream()));
         } catch (IOException ex1) {
-          append("<span style='color:red'>(" + series.getFullTitle() + ") could not  find webpage: " + InternetUpdate.EP_GUIDES_URL  + newTitle + "/" + " </span>");
-          MySeries.logger.log(Level.WARNING, "(" + series.getTitle() + ") could not " +  InternetUpdate.EP_GUIDES_URL + newTitle + "/", ex);
+          append("<span style='color:red'>(" + series.getFullTitle() + ") could not  find webpage: " + InternetUpdate.EP_GUIDES_URL + newTitle + "/" + " </span>");
+          MySeries.logger.log(Level.WARNING, "(" + series.getTitle() + ") could not " + InternetUpdate.EP_GUIDES_URL + newTitle + "/", ex);
           return false;
-        } catch (IllegalArgumentException ex1){
-      MySeries.logger.log(Level.SEVERE, "Illegal argument exception.Possibly the update was cancelled", ex);
-      return false;
-    }
+        } catch (IllegalArgumentException ex1) {
+          MySeries.logger.log(Level.SEVERE, "Illegal argument exception.Possibly the update was cancelled", ex);
+          return false;
+        }
       }
     }
     String inputLine;
@@ -80,7 +80,7 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
       EgSeriesToUpdate egs = (EgSeriesToUpdate) list.get(list.size() - 1);
       while ((inputLine = in.readLine()) != null) {
         if (inputLine.indexOf("<div id=\"eplist\">") > -1
-            || inputLine.indexOf("Episode #    Prod #    Air Date   Episode Title") > -1) {
+                || inputLine.indexOf("Episode #    Prod #    Air Date   Episode Title") > -1) {
           if (inputLine.indexOf("<div id=\"eplist\">") > -1) {
             newFormat = true;
           } else {
@@ -104,17 +104,19 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
         String line = lines[i].trim();
 
         if (line.replaceAll("\\<.*?>", "").length() > 20) {
-          egs.episodes.add(new EgEpisode(line));
+          if (MyUsefulFunctions.isNumeric(line.substring(0, 1))) {
+            egs.episodes.add(new EgEpisode(line));
+          }
         }
       }
       //list.add(new EgEpisodeOld(series, buf.toString()));
       in.close();
       append("<span style='color:green'>(" + series.getFullTitle() + ") - OK</span>");
     } catch (IOException ex) {
-      append("<span style='color:red'>(" + series.getFullTitle() + ") could not  find webpage: " +  InternetUpdate.EP_GUIDES_URL + series.getTitle().replaceAll(" ", "") + "/" + " </span>");
-      MySeries.logger.log(Level.WARNING, "(" + series.getTitle() + ") could not " +  InternetUpdate.EP_GUIDES_URL + series.getTitle().replaceAll(" ", "") + "/", ex);
+      append("<span style='color:red'>(" + series.getFullTitle() + ") could not  find webpage: " + InternetUpdate.EP_GUIDES_URL + series.getTitle().replaceAll(" ", "") + "/" + " </span>");
+      MySeries.logger.log(Level.WARNING, "(" + series.getTitle() + ") could not " + InternetUpdate.EP_GUIDES_URL + series.getTitle().replaceAll(" ", "") + "/", ex);
     } catch (NullPointerException ex) {
-    } catch (IllegalArgumentException ex){
+    } catch (IllegalArgumentException ex) {
       MySeries.logger.log(Level.SEVERE, "Illegal argument exception.Possibly the update was cancelled", ex);
       return false;
     }
@@ -177,7 +179,7 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
           String title = episode.title.trim();
           String airDate = episode.airDate;
           Vector<EpisodesRecord> episodes = DBHelper.getEpisodesBySql("SELECT * FROM episodes WHERE series_ID = " + series.getSeries_ID()
-              + " AND episode = " + number + " LIMIT 1");
+                  + " AND episode = " + number + " LIMIT 1");
           EpisodesRecord episodeRecord;
           if (episodes.size() == 0) {
             newEpisodes++;
