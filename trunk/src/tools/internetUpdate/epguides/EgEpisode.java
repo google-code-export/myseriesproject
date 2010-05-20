@@ -41,9 +41,13 @@ public class EgEpisode {
   }
 
   private String getTitle(String data) {
+    try{
     int pos = data.indexOf("<a");
     String link = data.substring(pos).trim();
     return link.replaceAll("\\<.*?>", "");
+    } catch (IndexOutOfBoundsException ex){
+      return "";
+    }
   }
 
   private String getAirDate(String data) {
