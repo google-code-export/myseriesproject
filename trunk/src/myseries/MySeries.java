@@ -494,6 +494,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
     tableSeries.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
     tableSeries.setModel(tableModel_series);
+    tableSeries.setOpaque(false);
     tableSeries.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
     tableSeries.addMouseListener(new java.awt.event.MouseAdapter() {
       public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1317,14 +1318,13 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
         popUpItem_deleteEpisode.setText("Delete selected episodes");
         popUpItem_deleteEpisode.setEnabled(true);
         episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
-
       } else{
         Point p = evt.getPoint();
         int rowSelected = tableEpisodes.rowAtPoint(p);
-        tableEpisodes.setRowSelectionInterval(rowSelected, rowSelected);
         //init menus
         initEpisodesPopUp();
          try {
+          tableEpisodes.setRowSelectionInterval(rowSelected, rowSelected);
           int s = Integer.parseInt(String.valueOf(tableEpisodes.getValueAt(rowSelected, 0)));
           Episodes.setCurrentEpisode(s);
           int series_ID = Episodes.getCurrentEpisode().getSeries_ID();
@@ -1333,7 +1333,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
           episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
         } catch (SQLException ex) {
           MySeries.logger.log(Level.SEVERE, null, ex);
-        } catch (IndexOutOfBoundsException ex) {
+        } catch (Exception ex) {
           if (Series.getCurrentSerial().getSeries_ID() > 0) {
             PopUpItem_AddEpisodeInEpisodes.setEnabled(true);
           } else {
