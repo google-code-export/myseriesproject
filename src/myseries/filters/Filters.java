@@ -15,6 +15,8 @@ import java.util.Vector;
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 import myComponents.MyTableModels.MyFilteredSeriesTableModel;
+import tools.download.subtitles.Subtitle;
+import tools.languages.LangsList;
 
 /**
  * Creates the filtered series object used to filter the series according to the
@@ -55,7 +57,7 @@ public class Filters {
    * The seen field of the table : 6
    */
   public static final int SEEN_COLUMN = 6;
-   /**
+  /**
    * The fulltitle field of the table title: Series
    */
   public static final String FULLTITLE_COLUMN_TITLE = "Series";
@@ -88,13 +90,13 @@ public class Filters {
    */
   public static final int SUBS_NONE = 0;
   /**
-   * The secondary subs status : 1
+   * The primary subs status : 1
    */
-  public static final int SUBS_SEC = 1;
+  public static final int SUBS_PRIM = 1;
   /**
-   * The primary subs status : 2
+   * The secondary subs status : 2
    */
-  public static final int SUBS_PRIM = 2;
+  public static final int SUBS_SEC = 2;
   /**
    * The both subs status : 3
    */
@@ -123,7 +125,7 @@ public class Filters {
    * The unaware seen status : 2
    */
   public static final int SEEN_UNAWARE = 2;
-/**
+  /**
    * The not downloaded status : 0
    */
   public static final int DOWNLOADED_NO = 0;
@@ -148,8 +150,8 @@ public class Filters {
    */
   private static int downloaded = EpisodesRecord.NOT_DOWNLOADED;
   /**
-   * Which subtitles are available 0:None, 1:English, 2:Greek, 3:Both, 4:English or Greek,
-   * 5: Not Greek , 6:Unaware , defautlt :4
+   * Which subtitles are available 0:None, 1:Primary, 2:Secondary, 3:Both, 4:Primary or Secondary,
+   * 5: Not Primary , 6:Unaware , defautlt :4
    */
   private static int subtitles = SUBS_PRIM_OR_SEC;
   /**
@@ -171,8 +173,11 @@ public class Filters {
     String where = "";
     where += getSeen() == EpisodesRecord.NOT_SEEN || getSeen() == EpisodesRecord.SEEN ? " AND seen = " + getSeen() : "";
     where += getDownloaded() == EpisodesRecord.NOT_DOWNLOADED || getDownloaded() == EpisodesRecord.DOWNLOADED ? " AND downloaded = " + getDownloaded() : "";
-    where += getSubtitles() < SUBS_PRIM_OR_SEC ? " AND subs =  " + getSubtitles() : getSubtitles() == SUBS_PRIM_OR_SEC
-        ? " AND  (subs = " + SUBS_SEC + " OR subs =" + SUBS_PRIM + " )" : getSubtitles() == SUBS_NOT_PRIM ? " AND  (subs = " + SUBS_NONE + " OR subs = " + SUBS_SEC + " )" : "";
+    where +=
+        getSubtitles() < SUBS_PRIM_OR_SEC ? " AND subs =  " + getSubtitles()
+        : getSubtitles() == SUBS_PRIM_OR_SEC ? " AND  (subs = " + SUBS_SEC + " OR subs =" + SUBS_PRIM + " )"
+        : getSubtitles() == SUBS_NOT_PRIM ? " AND  (subs = " + SUBS_NONE + " OR subs = " + SUBS_SEC + " )"
+        : "";
     String sql = "SELECT e.* FROM episodes e JOIN series s on e.series_ID = s.series_ID WHERE s.hidden = " + SeriesRecord.NOT_HIDDEN + " " + where + " ORDER BY aired ASC";
     ResultSet rs = DBConnection.stmt.executeQuery(sql);
     SeriesRecord ser;
@@ -184,7 +189,10 @@ public class Filters {
       episode = rs.getInt("episode");
       boolDownloaded = rs.getBoolean("downloaded");
       subsInt = rs.getInt("subs");
-      subs = subsInt == SUBS_NONE ? "None" : subsInt == SUBS_SEC ? "English" : subsInt == SUBS_PRIM ? "Greek" : "Both";
+      subs = subsInt == SUBS_NONE ? Subtitle.NONE
+          : subsInt == SUBS_PRIM ? myseries.MySeries.languages.getPrimary().getName()
+          : subsInt == SUBS_SEC ? myseries.MySeries.languages.getSecondary().getName()
+          : Subtitle.BOTH;
       boolSeen = rs.getBoolean("seen");
       Vector<SeriesRecord> seriesV = DBHelper.getSeriesBySql("SELECT * FROM series WHERE hidden = " + SeriesRecord.NOT_HIDDEN + " AND series_ID = " + series_ID);
       ser = seriesV.get(0);
@@ -256,7 +264,7 @@ public class Filters {
    * @return the subtitles
    */
   public static int getSubtitles() {
-   return myseries.MySeries.comboBox_subtitles.getSelectedIndex();
+    return myseries.MySeries.comboBox_subtitles.getSelectedIndex();
   }
 
   /**

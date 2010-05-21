@@ -16,6 +16,7 @@ import myseries.episodes.Episodes;
 import myseries.series.Series;
 import database.DBConnection;
 import database.DBHelper;
+import tools.languages.Language;
 import tools.options.Options;
 import myComponents.MyTableModels.MyEpisodesTableModel;
 import javax.swing.event.TableModelEvent;
@@ -35,6 +36,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
@@ -64,6 +66,7 @@ import myseries.series.UpdateSeriesTable;
 import tools.DesktopSupport;
 import tools.Skin;
 import tools.download.subtitles.Subtitle;
+import tools.languages.LangsList;
 import tools.myLogger;
 
 /**
@@ -86,6 +89,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   private Integer[] seriesTableWidths;
   private Integer[] episodesTableWidths;
   private Integer[] filtersTableWidths;
+  public static LangsList languages;
 
   /**
    *
@@ -111,6 +115,13 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       //LookAndFeels.setLookAndFeel(this, Options.toString(Options.LOOK_AND_FEEL));
     }
 
+    //Get language list
+    languages = new LangsList();
+     for (Iterator<Language> it = languages.getLangs().iterator(); it.hasNext();) {
+      Language language = it.next();
+      Subtitle.SUBTITLE_LANG.add(language.getName());
+    }
+
     // Create connection
     MySeries.logger.log(Level.INFO, "Creating database connection");
     DBConnection.createConnection(Options.toString(Options.DB_NAME));
@@ -120,7 +131,15 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/subtitles.png")).getImage());
     setSize(Options.toInt(Options.WIDTH), Options.toInt(Options.HEIGHT));
     setExtendedState(Options.toInt(Options.WINDOW_STATE));
-
+    comboBox_subtitles.setModel(new DefaultComboBoxModel(
+        new String[]{
+          Subtitle.NONE,
+          languages.getPrimary().getName(),
+          languages.getSecondary().getName(),
+          Subtitle.BOTH,
+          languages.getPrimary().getName() + " or " + languages.getSecondary().getName(),
+          "Not " + languages.getPrimary().getName()
+        }));
 
 //    this.getContentPane().setBackground(Options.getColor(Options.SKIN_COLOR));
     if (Options.toBoolean(Options.USE_SKIN)) {
@@ -198,7 +217,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   }
 
   private void createGUI() throws SQLException {
-    String[] subStatuses = {Subtitle.NONE, Subtitle.ENGLISH, Subtitle.GREEK, Subtitle.BOTH};
+    String[] subStatuses = {
+      Subtitle.NONE,
+      languages.getPrimary().getName(),
+      languages.getSecondary().getName(),
+      Subtitle.BOTH};
     JComboBox subs = new JComboBox(subStatuses);
     // Set column widths
     ArrayList<Integer> widths = Options.toIntegerArrayList(Options.TABLE_WIDTHS);
@@ -747,8 +770,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       }
     });
 
-    comboBox_subtitles.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "No Subs", "English", "Greek", "Both", "English or Greek", "Not Greek", "" }));
-    comboBox_subtitles.setSelectedIndex(4);
     comboBox_subtitles.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         comboBox_subtitlesActionPerformed(evt);
@@ -782,7 +803,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(comboBox_subtitles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(combobox_filters, 0, 322, Short.MAX_VALUE)
+        .addComponent(combobox_filters, 0, 396, Short.MAX_VALUE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(button_saveFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1313,17 +1334,17 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   private void tableEpisodesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableEpisodesMouseReleased
 
     if (evt.getButton() == MouseEvent.BUTTON3) {
-      if (tableEpisodes.getSelectedRowCount() >1) {
+      if (tableEpisodes.getSelectedRowCount() > 1) {
         initEpisodesPopUp();
         popUpItem_deleteEpisode.setText("Delete selected episodes");
         popUpItem_deleteEpisode.setEnabled(true);
         episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
-      } else{
+      } else {
         Point p = evt.getPoint();
         int rowSelected = tableEpisodes.rowAtPoint(p);
         //init menus
         initEpisodesPopUp();
-         try {
+        try {
           tableEpisodes.setRowSelectionInterval(rowSelected, rowSelected);
           int s = Integer.parseInt(String.valueOf(tableEpisodes.getValueAt(rowSelected, 0)));
           Episodes.setCurrentEpisode(s);
@@ -1346,12 +1367,12 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   }//GEN-LAST:event_tableEpisodesMouseReleased
 
   private void popUpItem_deleteEpisodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_deleteEpisodeActionPerformed
-    if(tableEpisodes.getSelectedRowCount() == 1){
+    if (tableEpisodes.getSelectedRowCount() == 1) {
       Actions.deleteEpisode();
     } else {
       ArrayList<EpisodesRecord> episodes = new ArrayList<EpisodesRecord>();
       int[] selRows = tableEpisodes.getSelectedRows();
-      for (int i = 0 ; i < selRows.length; i++){
+      for (int i = 0; i < selRows.length; i++) {
         EpisodesRecord ep = (EpisodesRecord) tableEpisodes.getValueAt(selRows[i], 1);
         episodes.add(ep);
       }

@@ -219,16 +219,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="combobox_subtitles">
-              <Properties>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
-                    <StringItem index="0" value="None"/>
-                    <StringItem index="1" value="English"/>
-                    <StringItem index="2" value="Greek"/>
-                    <StringItem index="3" value="Both"/>
-                  </StringArray>
-                </Property>
-              </Properties>
             </Component>
             <Component class="com.googlecode.svalidators.formcomponents.STextField" name="textfield_title">
               <Properties>

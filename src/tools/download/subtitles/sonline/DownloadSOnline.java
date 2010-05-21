@@ -15,6 +15,7 @@ import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import tools.download.subtitles.AbstractDownloadSubtitle;
 import tools.download.subtitles.Subtitle;
+import tools.languages.LangsList;
 import tools.options.Options;
 
 /**
@@ -87,11 +88,9 @@ public class DownloadSOnline extends AbstractDownloadSubtitle implements Runnabl
     URL curLink = null;
     String curtitle = "";
     String lang;
-    if (primary) {
-      lang = Options.toString(Options.PRIMARY_SUB).equals("Greek") ? "greek" : "english";
-    } else {
-      lang = Options.toString(Options.PRIMARY_SUB).equals("Greek") ? "english" : "greek";
-    }
+   lang = primary ? myseries.MySeries.languages.getPrimary().getCode() :
+     myseries.MySeries.languages.getSecondary().getCode();
+
     String search = "<a href=\"/" + sOnlineCode + "-s" + season + "e" + episode + "-" + lang + "-subtitles-download";
     while ((line = in.readLine()) != null) {
       if (line.indexOf(search.toLowerCase()) > -1) {

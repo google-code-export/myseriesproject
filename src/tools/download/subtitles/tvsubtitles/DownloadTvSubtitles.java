@@ -18,6 +18,7 @@ import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import tools.download.subtitles.AbstractDownloadSubtitle;
 import tools.download.subtitles.Subtitle;
+import tools.languages.LangsList;
 import tools.options.Options;
 
 /**
@@ -128,13 +129,11 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
     return buff;
   }
 
-  private String getLink(String buff, boolean getPrimarySub) {
+  private String getLink(String buff, boolean primary) {
     String lang = "";
-    if (getPrimarySub) {
-      lang = Options.toString(Options.PRIMARY_SUB).equals("Greek") ? "gr" : "en";
-    } else {
-      lang = Options.toString(Options.PRIMARY_SUB).equals("Greek") ? "en" : "gr";
-    }
+    lang = primary ? myseries.MySeries.languages.getPrimary().getCode() :
+      myseries.MySeries.languages.getSecondary().getCode();
+
     int pos = buff.indexOf("<img src=\"images/flags/" + lang + ".gif\"");
     int i = pos;
     String subLink = null;
@@ -149,7 +148,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
     if (subLink != null) {
       return subLink;
     } else {
-      if (!getPrimarySub) {
+      if (!primary) {
         return null;
       }
       if (MyMessages.question("Download secondary language", "Primary language subs not found.\nSearch for secondary?") == JOptionPane.YES_OPTION) {

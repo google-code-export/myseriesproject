@@ -22,6 +22,8 @@ import myComponents.MyUsefulFunctions;
 import myseries.*;
 import tools.download.subtitles.Subtitle;
 import tools.internetUpdate.InternetUpdate;
+import tools.languages.LangsList;
+import tools.languages.Language;
 
 /**
  *
@@ -181,8 +183,6 @@ public class Options {
   static {
     InternetUpdate.DB_UPDATERS.add(InternetUpdate.EP_GUIDES_NAME);
     InternetUpdate.DB_UPDATERS.add(InternetUpdate.TV_RAGE_NAME);
-    Subtitle.SUBTITLE_LANG.add(Subtitle.GREEK);
-    Subtitle.SUBTITLE_LANG.add(Subtitle.ENGLISH);
     Subtitle.SUBTITLE_SITES.add(Subtitle.TV_SUBTITLES_NAME);
     Subtitle.SUBTITLE_SITES.add(Subtitle.SUBTITLE_ONLINE_NAME);
   }

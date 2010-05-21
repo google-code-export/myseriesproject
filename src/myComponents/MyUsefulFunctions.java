@@ -35,6 +35,8 @@ import java.util.logging.Level;
 import javax.swing.JOptionPane;
 import myComponents.myGUI.MyFont;
 import tools.Skin;
+import tools.download.subtitles.Subtitle;
+import tools.languages.LangsList;
 import tools.options.Options;
 
 /**
@@ -395,12 +397,12 @@ public class MyUsefulFunctions {
    * @return
    */
   public static int getSubsId(String subs) {
-    if (subs.equals("None")) {
+    if (subs.equals(Subtitle.NONE)) {
       return EpisodesRecord.NO_SUBS;
-    } else if (subs.equals("English")) {
-      return EpisodesRecord.SEC_SUB;
-    } else if (subs.equals("Greek")) {
+    } else if (subs.equals(myseries.MySeries.languages.getPrimary().getName())) {
       return EpisodesRecord.PRIM_SUB;
+    } else if (subs.equals(myseries.MySeries.languages.getSecondary().getName())) {
+      return EpisodesRecord.SEC_SUB;
     } else {
       return EpisodesRecord.BOTH_SUBS;
     }
