@@ -26,6 +26,9 @@ import help.Help;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
@@ -39,9 +42,12 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JRootPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.TableModelListener;
+import javax.swing.plaf.basic.BasicTreeUI.SelectionModelPropertyChangeHandler;
 import myComponents.MyTableModels.MyFilteredSeriesTableModel;
 import myComponents.MyTableModels.MySeriesTableModel;
 import myComponents.MyUsefulFunctions;
@@ -147,14 +153,16 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
     //Create image pane
     imageLayerPanel.add(imagePanel);
-    Image image = new ImageIcon(getClass().getResource("/images/logo.png")).getImage();
-    imagePanel.setImage(image);
+    Image scrImage = new ImageIcon(getClass().getResource("/images/logo.png")).getImage();
+    imagePanel.setImage(scrImage);
 
     //Create the episodes data
     MySeries.logger.log(Level.INFO, "Creating episodes data");
     Episodes.setTableModel_episodes(tableModel_episodes);
     Episodes.setTabsPanel(tabsPanel);
     Series.selectSeries(0);
+
+    tableEpisodes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
     //Create the filteredSeries data
     MySeries.logger.log(Level.INFO, "Creating filters data");
@@ -220,7 +228,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tableEpisodes.getColumn(Episodes.EPISODERECORD_COLUMN_TITLE).setCellEditor(new MyTitleCellEditor());
     Episodes.setTable_episodes(tableEpisodes);
     Episodes.setTableWidths(episodesTableWidths);
-    
+
 
     //FILTERS TABLE
     tableFiltels.getModel().addTableModelListener(this);
@@ -1304,33 +1312,51 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   private void tableEpisodesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableEpisodesMouseReleased
 
     if (evt.getButton() == MouseEvent.BUTTON3) {
-      Point p = evt.getPoint();
-      int rowSelected = tableEpisodes.rowAtPoint(p);
-      //init menus
-      initEpisodesPopUp();
-      try {
-        int s = Integer.parseInt(String.valueOf(tableEpisodes.getValueAt(rowSelected, 0)));
-        Episodes.setCurrentEpisode(s);
-        int series_ID = Episodes.getCurrentEpisode().getSeries_ID();
-        Series.setCurrentSerial(DBHelper.getSeriesByID(series_ID));
-        setEpisodePopUpMenu(rowSelected, true);
+      if (tableEpisodes.getSelectedRowCount() >1) {
+        initEpisodesPopUp();
+        popUpItem_deleteEpisode.setText("Delete selected episodes");
+        popUpItem_deleteEpisode.setEnabled(true);
         episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
-      } catch (SQLException ex) {
-        MySeries.logger.log(Level.SEVERE, null, ex);
-      } catch (IndexOutOfBoundsException ex) {
-        if (Series.getCurrentSerial().getSeries_ID() > 0) {
-          PopUpItem_AddEpisodeInEpisodes.setEnabled(true);
-        } else {
-          PopUpItem_AddEpisodeInEpisodes.setEnabled(false);
-        }
-        episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
-      }
 
+      } else{
+        Point p = evt.getPoint();
+        int rowSelected = tableEpisodes.rowAtPoint(p);
+        tableEpisodes.setRowSelectionInterval(rowSelected, rowSelected);
+        //init menus
+        initEpisodesPopUp();
+         try {
+          int s = Integer.parseInt(String.valueOf(tableEpisodes.getValueAt(rowSelected, 0)));
+          Episodes.setCurrentEpisode(s);
+          int series_ID = Episodes.getCurrentEpisode().getSeries_ID();
+          Series.setCurrentSerial(DBHelper.getSeriesByID(series_ID));
+          setEpisodePopUpMenu(rowSelected, true);
+          episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
+        } catch (SQLException ex) {
+          MySeries.logger.log(Level.SEVERE, null, ex);
+        } catch (IndexOutOfBoundsException ex) {
+          if (Series.getCurrentSerial().getSeries_ID() > 0) {
+            PopUpItem_AddEpisodeInEpisodes.setEnabled(true);
+          } else {
+            PopUpItem_AddEpisodeInEpisodes.setEnabled(false);
+          }
+          episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
+        }
+      }
     }
   }//GEN-LAST:event_tableEpisodesMouseReleased
 
   private void popUpItem_deleteEpisodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_deleteEpisodeActionPerformed
-    Actions.deleteEpisode();
+    if(tableEpisodes.getSelectedRowCount() == 1){
+      Actions.deleteEpisode();
+    } else {
+      ArrayList<EpisodesRecord> episodes = new ArrayList<EpisodesRecord>();
+      int[] selRows = tableEpisodes.getSelectedRows();
+      for (int i = 0 ; i < selRows.length; i++){
+        EpisodesRecord ep = (EpisodesRecord) tableEpisodes.getValueAt(selRows[i], 1);
+        episodes.add(ep);
+      }
+      Actions.deleteEpisodes(episodes);
+    }
   }//GEN-LAST:event_popUpItem_deleteEpisodeActionPerformed
 
   private void panel_episodesListMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_episodesListMouseReleased
@@ -1457,7 +1483,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   private void menuItem_downloadTorrentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_downloadTorrentActionPerformed
     Actions.downloadTorrent();
   }//GEN-LAST:event_menuItem_downloadTorrentActionPerformed
-
   // Variables declaration - do not modify//GEN-BEGIN:variables
   public static javax.swing.JMenuItem PopUpItem_AddEpisode;
   public static javax.swing.JMenuItem PopUpItem_AddEpisodeInEpisodes;
