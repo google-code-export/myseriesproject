@@ -23,11 +23,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Vector;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.TableColumnModel;
@@ -437,7 +439,7 @@ public class Actions {
     String title = Episodes.getCurrentEpisode().getTitle();
     int episode_ID = Episodes.getCurrentEpisode().getEpisode_ID();
     int answ = MyMessages.question("Delete Episode?", "Really delete the episode " + title + "?");
-    if (answ == 0) {
+    if (answ == JOptionPane.YES_OPTION) {
       try {
         String sql = "DELETE FROM episodes WHERE episode_ID = " + episode_ID;
         DBConnection.stmt.execute(sql);
@@ -447,7 +449,26 @@ public class Actions {
       }
     } else {
     }
+  }
 
+  public static void deleteEpisodes(ArrayList<EpisodesRecord> episodes) {
+    int answ = MyMessages.question("Delete Episode?", "Really delete the selected episodes ?");
+    if (answ == JOptionPane.YES_OPTION) {
+      for (Iterator<EpisodesRecord> it = episodes.iterator(); it.hasNext();) {
+        EpisodesRecord e = it.next();
+        String sql = "DELETE FROM episodes WHERE episode_ID = " + e.getEpisode_ID();
+        try {
+          DBConnection.stmt.execute(sql);
+        } catch (SQLException ex) {
+          MySeries.logger.log(Level.SEVERE, null, ex);
+        }
+      }
+      try {
+        Episodes.updateEpisodesTable();
+      } catch (SQLException ex) {
+        MySeries.logger.log(Level.SEVERE, null, ex);
+      }
+    }
   }
 
   public static void renameEpisodes() {
