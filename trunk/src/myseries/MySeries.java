@@ -133,7 +133,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       scrollPane_series.setBackground(Skin.getSkinColor());
       panel_filters.setBackground(Skin.getColor_1());
     } else {
-      scrollPane_series.getViewport().setBackground(Color.white);
+      //scrollPane_series.getViewport().setBackground(Color.white);
       panel_episodesList.getViewport().setBackground(Color.white);
       panel_allSeriesEpisodes.getViewport().setBackground(Color.white);
 

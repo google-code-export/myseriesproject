@@ -28,12 +28,17 @@ public class MyImagePanel extends JPanel {
 
   private Image image;
 
+  {
+  setOpaque(false);
+  }
+
   /**
    * Creates the default screenshot of the application's logo
    */
   public MyImagePanel() {
     this.image = new ImageIcon(getClass().getResource("/images/logo.png")).getImage();
     this.setBorder(BorderFactory.createLineBorder(Color.black));
+    
   }
 
   /**
