@@ -25,8 +25,12 @@ import java.util.logging.Logger;
 import database.EpisodesRecord;
 import database.SeriesRecord;
 import java.util.Calendar;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
 import myComponents.MyMessages;
 import myComponents.myGUI.MyDraggable;
+import tools.download.subtitles.Subtitle;
+import tools.languages.LangsList;
 import tools.options.Options;
 
 /**
@@ -66,6 +70,12 @@ public class AdminEpisodes extends MyDraggable {
     this.seriesRecord = currentSerial;
     this.episodeRecord = currentEpisode;
     initComponents();
+    combobox_subtitles.setModel(new DefaultComboBoxModel(new String[]{
+    Subtitle.NONE,
+    myseries.MySeries.languages.getPrimary().getName(),
+    myseries.MySeries.languages.getSecondary().getName(),
+    Subtitle.BOTH
+    }));
     setLocationRelativeTo(m);
     label_title.setText("Add Episode to " + seriesRecord.getTitle()
             + " S" + MyUsefulFunctions.padLeft(seriesRecord.getSeason(), 2, "0"));
@@ -158,8 +168,6 @@ public class AdminEpisodes extends MyDraggable {
     label_subtitles.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
     label_EpisodeNumber.setText("Episode:");
-
-    combobox_subtitles.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "None", "English", "Greek", "Both" }));
 
     textfield_title.setName("Title"); // NOI18N
     textfield_title.addKeyListener(new java.awt.event.KeyAdapter() {

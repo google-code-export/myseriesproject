@@ -27,11 +27,11 @@ public class Subtitle {
    /**
    * The greek subtitles language : "Greek"
    */
-  public static final String GREEK = "Greek";
+  //public static final String GREEK = "Greek";
   /**
    * The english subtitles language : "English"
    */
-  public static final String ENGLISH = "English";
+  //public static final String ENGLISH = "English";
   /**
    * The Subtitle none
    */
