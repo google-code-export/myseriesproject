@@ -34,30 +34,33 @@ public class DBConnection {
   public static boolean CheckDatabase(String db) {
     //try {
     createConnection(db);
-    String sql = "PRAGMA table_info(series)";
-    ResultSet rs;
+    String sqlSeries = "PRAGMA table_info(series)";
+    
+    ResultSet rsSeries;
     boolean internetUpdate = false;
     boolean tvRageID = false;
     boolean localDir = false;
     boolean screenshot = false;
     boolean sonline = false;
+    boolean newSubs = false;
+    ResultSet rss;
 
     try {
-      rs = stmt.executeQuery(sql);
-      while (rs.next()) {
-        if (rs.getString(2).equals("internetUpdate")) {
+      rsSeries = stmt.executeQuery(sqlSeries);
+      while (rsSeries.next()) {
+        if (rsSeries.getString(2).equals("internetUpdate")) {
           internetUpdate = true;
         }
-        if (rs.getString(2).equals("tvrage_ID")) {
+        if (rsSeries.getString(2).equals("tvrage_ID")) {
           tvRageID = true;
         }
-        if (rs.getString(2).equals("localDir")) {
+        if (rsSeries.getString(2).equals("localDir")) {
           localDir = true;
         }
-        if (rs.getString(2).equals("screenshot")) {
+        if (rsSeries.getString(2).equals("screenshot")) {
           screenshot = true;
         }
-        if (rs.getString(2).equals("sonline")) {
+        if (rsSeries.getString(2).equals("sonline")) {
           sonline = true;
         }
       }
@@ -68,24 +71,24 @@ public class DBConnection {
       SaveDatabase s = new SaveDatabase(db);
       if (s.backUp) {
         if(!internetUpdate){
-        sql = "ALTER TABLE series ADD COLUMN internetUpdate INTEGER DEFAULT 1";
-        stmt.execute(sql);
+        sqlSeries = "ALTER TABLE series ADD COLUMN internetUpdate INTEGER DEFAULT 1";
+        stmt.execute(sqlSeries);
         }
         if(!tvRageID){
-        sql = "ALTER TABLE series ADD COLUMN tvrage_ID INTEGER DEFAULT 0";
-        stmt.execute(sql);
+        sqlSeries = "ALTER TABLE series ADD COLUMN tvrage_ID INTEGER DEFAULT 0";
+        stmt.execute(sqlSeries);
         }
         if(!localDir){
-        sql = "ALTER TABLE series ADD COLUMN localDir VARCHAR DEFAULT ''";
-        stmt.execute(sql);
+        sqlSeries = "ALTER TABLE series ADD COLUMN localDir VARCHAR DEFAULT ''";
+        stmt.execute(sqlSeries);
         }
         if(!screenshot){
-        sql = "ALTER TABLE series ADD COLUMN screenshot VARCHAR DEFAULT ''";
-        stmt.execute(sql);
+        sqlSeries = "ALTER TABLE series ADD COLUMN screenshot VARCHAR DEFAULT ''";
+        stmt.execute(sqlSeries);
         }
         if(!sonline){
-        sql = "ALTER TABLE series ADD COLUMN sonline VARCHAR DEFAULT ''";
-        stmt.execute(sql);
+        sqlSeries = "ALTER TABLE series ADD COLUMN sonline VARCHAR DEFAULT ''";
+        stmt.execute(sqlSeries);
         }
         MyMessages.message("Database Update", "Database Update done!!!");
         CheckDatabase(db);

@@ -31,6 +31,7 @@ import myComponents.MyMessages;
 import myComponents.myGUI.MyDraggable;
 import tools.download.subtitles.Subtitle;
 import tools.languages.LangsList;
+import tools.languages.Language;
 import tools.options.Options;
 
 /**
@@ -70,11 +71,11 @@ public class AdminEpisodes extends MyDraggable {
     this.seriesRecord = currentSerial;
     this.episodeRecord = currentEpisode;
     initComponents();
-    combobox_subtitles.setModel(new DefaultComboBoxModel(new String[]{
-    Subtitle.NONE,
-    myseries.MySeries.languages.getPrimary().getName(),
-    myseries.MySeries.languages.getSecondary().getName(),
-    Subtitle.BOTH
+    combobox_subtitles.setModel(new DefaultComboBoxModel(new Language[]{
+    LangsList.NONE,
+    myseries.MySeries.languages.getPrimary(),
+    myseries.MySeries.languages.getSecondary(),
+    LangsList.MULTIPLE
     }));
     setLocationRelativeTo(m);
     label_title.setText("Add Episode to " + seriesRecord.getTitle()
@@ -321,7 +322,7 @@ public class AdminEpisodes extends MyDraggable {
       MyMessages.error("No Title!!!", "The episode title must not be blank");
       return;
     }
-    episodeRecord.setSubs(combobox_subtitles.getSelectedIndex());
+    episodeRecord.setSubs((Language) combobox_subtitles.getSelectedItem());
     episodeRecord.setSeen(checkbox_seen.isSelected() ? 1 : 0);
     episodeRecord.setDownloaded(checkbox_downloaded.isSelected() ? 1 : 0);
     SimpleDateFormat f = new SimpleDateFormat(EpisodesRecord.MYSQL_DATE_FORMAT);

@@ -55,9 +55,10 @@ public class CreateDatabase implements Runnable {
   public void run() {
     try {
       File dbFile = new File(Options._USER_DIR_ + "/" + Database.PATH + DBConnection.db);
-      if(dbFile.exists() && dbFile.length() >0 && createNewDb){
+      if(dbFile.exists() && dbFile.length() > 1 && createNewDb){
         MyMessages.error("DB Exists!!!", "DB File " + DBConnection.db + " already exists\nAborting...");
         MySeries.logger.log(Level.WARNING, "DB File already exists");
+        //startProgram();
       } else {
       commit();
       }
@@ -82,7 +83,11 @@ public class CreateDatabase implements Runnable {
 
     MySeries.logger.log(Level.INFO, "Loading the Database");
     createTables();
-    if (startPanel.m == null) {
+    startProgram();
+  }
+
+  private void startProgram() throws IOException, ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException{
+     if (startPanel.m == null) {
       startPanel.startMySeries();
     } else {
       MySeries.logger.log(Level.INFO, "Setting database");

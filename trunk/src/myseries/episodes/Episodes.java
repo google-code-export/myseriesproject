@@ -25,6 +25,7 @@ import myComponents.myFileFilters.SubtitlesFilter;
 import myComponents.myFileFilters.VideoFilter;
 import tools.download.subtitles.Subtitle;
 import tools.languages.LangsList;
+import tools.languages.Language;
 
 /**
  * The episodes table class
@@ -122,7 +123,7 @@ public class Episodes {
       getCurrentEpisode().setTitle(rs.getString("title").trim());
       getCurrentEpisode().setAired(rs.getString("aired").trim());
       getCurrentEpisode().setDownloaded(rs.getInt("downloaded"));
-      getCurrentEpisode().setSubs(rs.getInt("subs"));
+      getCurrentEpisode().setSubs(LangsList.getLanguageById(rs.getInt("subs")));
       getCurrentEpisode().setSeen(rs.getInt("seen"));
 
     }
@@ -143,8 +144,8 @@ public class Episodes {
     File[] videoFiles = null;
     int episode;
     Boolean download, seen;
-    String title, aired, subs;
-
+    String title, aired;
+    Language subs;
     emptyEpisodes();
     String localDir = Series.getCurrentSerial().getLocalDir();
     if (!localDir.equals("") && new File(localDir).isDirectory()) {
@@ -169,26 +170,22 @@ public class Episodes {
       download = rs.getBoolean("downloaded");
       e.setDownloaded(rs.getInt("downloaded"));
       e.setSeen(rs.getInt("seen"));
-      if (MyUsefulFunctions.hasBeenAired(e.getAired()) && videoFiles != null && e.getSeen() == EpisodesRecord.NOT_SEEN) {
+      if (MyUsefulFunctions.hasBeenAired(e.getAired()) && videoFiles != null ) {
         boolean newDownloadedStatus = checkDownloads(Series.getCurrentSerial().getSeason(), e.getEpisode(), videoFiles);
         if (download != newDownloadedStatus) {
           e.setDownloaded(newDownloadedStatus ? EpisodesRecord.DOWNLOADED : EpisodesRecord.NOT_DOWNLOADED);
           updated.add(e);
         }
       }
-      e.setSubs(rs.getInt("subs"));
-      if (rs.getInt("subs") == EpisodesRecord.NO_SUBS && subtitleFiles != null && MyUsefulFunctions.hasBeenAired(e.getAired())) {
-        int cSubs = checkSubs(Series.getCurrentSerial().getSeason(), e.getEpisode(), subtitleFiles);
+      e.setSubs(LangsList.getLanguageById(rs.getInt("subs")));
+      if (subtitleFiles != null && MyUsefulFunctions.hasBeenAired(e.getAired())) {
+        Language cSubs = checkSubs(Series.getCurrentSerial().getSeason(), e.getEpisode(), subtitleFiles);
         if (cSubs != e.getSubs()) {
           e.setSubs(cSubs);
           updated.add(e);
         }
       }
-      subs =
-          e.getSubs() == EpisodesRecord.NO_SUBS ? Subtitle.NONE
-          : e.getSubs() == EpisodesRecord.PRIM_SUB ? myseries.MySeries.languages.getPrimary().getName()
-          : e.getSubs() == EpisodesRecord.SEC_SUB ? myseries.MySeries.languages.getSecondary().getName()
-          : Subtitle.BOTH;
+      subs = e.getSubs();
       seen = rs.getBoolean("seen");
       Object[] data = {episode, e, e.getAired(), download, subs, seen};
       getTableModel_episodes().addRow(data);
@@ -219,30 +216,29 @@ public class Episodes {
     return false;
   }
 
-  private static int checkSubs(int season, int episode, File[] subtitleFiles) throws SQLException {
-    int subs = EpisodesRecord.NO_SUBS;
-    boolean hasEn = false, hasGr = false;
+  private static Language checkSubs(int season, int episode, File[] subtitleFiles) throws SQLException {
+    boolean hasPrimary = false, hasSecondary = false;
     String regex = MyUsefulFunctions.createRegex(season, episode);
     Pattern pattern = Pattern.compile(regex);
     for (int j = 0; j < subtitleFiles.length; j++) {
       File file = subtitleFiles[j];
       Matcher matcher = pattern.matcher(file.getName());
       if (matcher.find() && file.isFile()) {
-        if (file.getName().indexOf(".en.") > 0) {
-          hasEn = true;
+        if (file.getName().indexOf("."+myseries.MySeries.languages.getSecondary().getCode()+".") > 0) {
+          hasSecondary = true;
         } else {
-          hasGr = true;
+          hasPrimary = true;
         }
       }
     }
-    if (hasEn && hasGr) {
-      return EpisodesRecord.BOTH_SUBS;
-    } else if (hasEn) {
-      return EpisodesRecord.PRIM_SUB;
-    } else if (hasGr) {
-      return EpisodesRecord.SEC_SUB;
+    if (hasPrimary && hasSecondary) {
+      return LangsList.MULTIPLE;
+    } else if (hasPrimary) {
+      return myseries.MySeries.languages.getPrimary();
+    } else if (hasSecondary) {
+      return myseries.MySeries.languages.getSecondary();
     }
-    return subs;
+    return LangsList.NONE;
   }
 
   /**

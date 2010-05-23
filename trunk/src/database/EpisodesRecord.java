@@ -5,10 +5,9 @@
 package database;
 
 import myComponents.MyUsefulFunctions;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Vector;
-import myseries.episodes.NextEpisodes;
+import tools.languages.LangsList;
+import tools.languages.Language;
 
 /**
  * The episode record
@@ -47,9 +46,9 @@ public class EpisodesRecord extends Record {
   /**
    * Both subs : 3
    */
-  public static final int BOTH_SUBS = 3;
+  public static final int MULTIPLE_SUBS = 3;
   /**
-   * Unknown state of subs , used in EpdateEpisodesTable : 4
+   * Unknown state of subs , used in UpdateEpisodesTable : 4
    */
   public static final int UNKNOWN_SUB = 4;
    /**
@@ -69,7 +68,7 @@ public class EpisodesRecord extends Record {
   private int series_ID = 0;
   private String aired;
   private int downloaded = NOT_DOWNLOADED;
-  private int subs = NO_SUBS;
+  private Language subs = LangsList.NONE;
   private int seen = NOT_SEEN;
 
   /**
@@ -90,14 +89,14 @@ public class EpisodesRecord extends Record {
     if (this.getEpisode_ID() != 0) {
       sql = "UPDATE episodes SET title = '" + this.title + "', episode = " + this.episode + ", series_ID = " +
               this.series_ID + ", aired = '" + this.aired + "' ," +
-              " subs = " + this.getSubs() + ", downloaded = " + this.getDownloaded() + ", " +
+              " subs = " + this.getSubs().getId() + ", downloaded = " + this.getDownloaded() + ", " +
               "seen = " + this.getSeen() +
               " WHERE episode_ID = " + this.getEpisode_ID();
     } else {
       sql = "INSERT INTO episodes (episode, title, series_ID,aired, downloaded, subs, seen) " +
               "VALUES(" + this.episode + ", '" + this.title +
               "', " + this.series_ID + ",'" + this.aired + "'," + this.getDownloaded() + "," +
-              this.getSubs() + "," + this.getSeen() + ")";
+              this.getSubs().getId() + "," + this.getSeen() + ")";
     }
     return queryUpdate(sql);
   }
@@ -178,14 +177,14 @@ public class EpisodesRecord extends Record {
   /**
    * @return the gr_subs
    */
-  public int getSubs() {
+  public Language getSubs() {
     return subs;
   }
 
   /**
    * @param subs 
    */
-  public void setSubs(int subs) {
+  public void setSubs(Language subs) {
     this.subs = subs;
   }
 

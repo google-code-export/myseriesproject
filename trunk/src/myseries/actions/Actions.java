@@ -421,10 +421,15 @@ public class Actions {
   }
 
   public static void changeTab() {
+    Vector<SeriesRecord> series = null;
     try {
       Filters.getFilteredSeries();
-      String title = MySeries.tabsPanel.getTitleAt(0).substring(0, MySeries.tabsPanel.getTitleAt(0).length() - 3).trim();
-      Vector<SeriesRecord> series = DBHelper.getSeriesBySql("SELECT * FROM series WHERE title = '" + title + "'");
+      if(!MySeries.tabsPanel.getTitleAt(0).equals("")){
+        String title = MySeries.tabsPanel.getTitleAt(0).substring(0, MySeries.tabsPanel.getTitleAt(0).length() - 3).trim();
+        series = DBHelper.getSeriesBySql("SELECT * FROM series WHERE title = '" + title + "'");
+      } else {
+        series = DBHelper.getSeriesBySql("SELECT * FROM series LIMIT 1");
+      }
       if (series.size() > 0) {
         Series.setCurrentSerial(series.get(0));
         Episodes.updateEpisodesTable();

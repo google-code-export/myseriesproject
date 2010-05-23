@@ -46,6 +46,7 @@ import tools.LookAndFeels;
 import tools.Skin;
 import tools.download.subtitles.Subtitle;
 import tools.internetUpdate.InternetUpdate;
+import tools.languages.Language;
 
 /**
  *
@@ -64,7 +65,8 @@ public class OptionsPanel extends MyDraggable {
   private Color oldColor;
   private boolean oldUseSkin;
   private ComboBoxModel updateDbModel = new DefaultComboBoxModel(InternetUpdate.DB_UPDATERS);
-  private ComboBoxModel subtitlesModel = new DefaultComboBoxModel(Subtitle.SUBTITLE_LANG);
+  private ComboBoxModel primarySubtitlesModel = new DefaultComboBoxModel(Subtitle.SUBTITLE_LANG);
+  private ComboBoxModel secondarySubtitlesModel = new DefaultComboBoxModel(Subtitle.SUBTITLE_LANG);
   private ComboBoxModel subtitleSitesModel = new DefaultComboBoxModel(Subtitle.SUBTITLE_SITES);
 
   /** Creates new form OptionsPanel
@@ -150,9 +152,11 @@ public class OptionsPanel extends MyDraggable {
     jLabel11 = new javax.swing.JLabel();
     combo_updateDb = new javax.swing.JComboBox();
     jLabel13 = new javax.swing.JLabel();
-    combo_updateDb1 = new javax.swing.JComboBox();
+    combo_primaryLang = new javax.swing.JComboBox();
     jLabel14 = new javax.swing.JLabel();
     jComboBox1 = new javax.swing.JComboBox();
+    jLabel15 = new javax.swing.JLabel();
+    combo_secondaryLang = new javax.swing.JComboBox();
 
     javax.swing.GroupLayout panel_DateFormatHelpLayout = new javax.swing.GroupLayout(panel_DateFormatHelp);
     panel_DateFormatHelp.setLayout(panel_DateFormatHelpLayout);
@@ -379,7 +383,7 @@ public class OptionsPanel extends MyDraggable {
           .addComponent(combobox_fonts, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(spinner_fontSize, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(label_preview, javax.swing.GroupLayout.Alignment.TRAILING))
-        .addGap(41, 41, 41))
+        .addGap(123, 123, 123))
     );
 
     panel_generalLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {button_dateFormatHelp, combobox_dateFormat});
@@ -447,7 +451,7 @@ public class OptionsPanel extends MyDraggable {
         .addComponent(checkbox_showUnseen)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(checkbox_showNotDownloaded)
-        .addContainerGap(135, Short.MAX_VALUE))
+        .addContainerGap(217, Short.MAX_VALUE))
     );
 
     tabbedPane_options.addTab("Next Episodes", panel_nextepisodes);
@@ -527,10 +531,15 @@ public class OptionsPanel extends MyDraggable {
     jLabel13.setToolTipText("When downloading subtitles this language will be queried first.");
     jLabel13.setName("noname"); // NOI18N
 
-    combo_updateDb1.setModel(subtitlesModel);
-    combo_updateDb1.setSelectedItem(Options.toString(Options.PRIMARY_SUB));
-    combo_updateDb1.setName(Options.PRIMARY_SUB);
-    combo_updateDb1.setOpaque(false);
+    combo_primaryLang.setModel(primarySubtitlesModel);
+    combo_primaryLang.setSelectedItem(MySeries.languages.getLanguageByName(Options.toString(Options.PRIMARY_SUB)));
+    combo_primaryLang.setName(Options.PRIMARY_SUB);
+    combo_primaryLang.setOpaque(false);
+    combo_primaryLang.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        combo_primaryLangActionPerformed(evt);
+      }
+    });
 
     jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     jLabel14.setText("Download Subtitles from :");
@@ -540,6 +549,21 @@ public class OptionsPanel extends MyDraggable {
     jComboBox1.setSelectedItem(Options.toString(Options.SUBTITLE_SITE));
     jComboBox1.setName(Options.SUBTITLE_SITE);
 
+    jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    jLabel15.setText("Secondary subtitles lang. :");
+    jLabel15.setToolTipText("When downloading subtitles this language will be queried first.");
+    jLabel15.setName("noname"); // NOI18N
+
+    combo_secondaryLang.setModel(secondarySubtitlesModel);
+    combo_secondaryLang.setSelectedItem(MySeries.languages.getLanguageByName(Options.toString(Options.SECONDARY_SUB)));
+    combo_secondaryLang.setName(Options.SECONDARY_SUB);
+    combo_secondaryLang.setOpaque(false);
+    combo_secondaryLang.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        combo_secondaryLangActionPerformed(evt);
+      }
+    });
+
     javax.swing.GroupLayout panel_internetLayout = new javax.swing.GroupLayout(panel_internet);
     panel_internet.setLayout(panel_internetLayout);
     panel_internetLayout.setHorizontalGroup(
@@ -547,46 +571,47 @@ public class OptionsPanel extends MyDraggable {
       .addGroup(panel_internetLayout.createSequentialGroup()
         .addContainerGap()
         .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_internetLayout.createSequentialGroup()
-            .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-              .addGroup(panel_internetLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE))
-              .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE))
-            .addGap(18, 18, 18)
-            .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(textfield_port, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
-              .addComponent(textfield_proxy, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)))
           .addGroup(panel_internetLayout.createSequentialGroup()
-            .addComponent(checkbox_useProxy, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
-            .addGap(140, 140, 140)))
-        .addGap(210, 210, 210))
-      .addGroup(panel_internetLayout.createSequentialGroup()
-        .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel_internetLayout.createSequentialGroup()
-            .addGap(35, 35, 35)
-            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE))
-          .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel_internetLayout.createSequentialGroup()
-            .addContainerGap()
             .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+              .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_internetLayout.createSequentialGroup()
+                .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                  .addGroup(panel_internetLayout.createSequentialGroup()
+                    .addGap(27, 27, 27)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE))
+                  .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                  .addComponent(textfield_port, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+                  .addComponent(textfield_proxy, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)))
               .addGroup(panel_internetLayout.createSequentialGroup()
+                .addComponent(checkbox_useProxy, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                .addGap(140, 140, 140)))
+            .addGap(68, 68, 68))
+          .addGroup(panel_internetLayout.createSequentialGroup()
+            .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+              .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+              .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel_internetLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE))
+              .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+              .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel_internetLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                   .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                  .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE))))))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jComboBox1, 0, 205, Short.MAX_VALUE)
-          .addComponent(combo_updateDb1, 0, 205, Short.MAX_VALUE)
-          .addComponent(jCheckBox1)
-          .addComponent(combo_updateDb, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
+                  .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE))))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(jComboBox1, 0, 205, Short.MAX_VALUE)
+              .addComponent(combo_primaryLang, 0, 205, Short.MAX_VALUE)
+              .addComponent(jCheckBox1)
+              .addComponent(combo_updateDb, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addComponent(combo_secondaryLang, 0, 205, Short.MAX_VALUE))))
         .addGap(142, 142, 142))
     );
     panel_internetLayout.setVerticalGroup(
       panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(panel_internetLayout.createSequentialGroup()
-        .addGap(17, 17, 17)
+        .addGap(21, 21, 21)
         .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jLabel11)
           .addComponent(combo_updateDb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -595,9 +620,14 @@ public class OptionsPanel extends MyDraggable {
           .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 17, Short.MAX_VALUE)
           .addComponent(jCheckBox1))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jLabel13)
-          .addComponent(combo_updateDb1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(panel_internetLayout.createSequentialGroup()
+            .addComponent(combo_primaryLang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+              .addComponent(combo_secondaryLang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addComponent(jLabel15)))
+          .addComponent(jLabel13))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
           .addGroup(panel_internetLayout.createSequentialGroup()
@@ -614,7 +644,7 @@ public class OptionsPanel extends MyDraggable {
             .addComponent(textfield_proxy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(4, 4, 4)
             .addComponent(textfield_port, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        .addContainerGap())
+        .addGap(83, 83, 83))
     );
 
     tabbedPane_options.addTab("Internet", panel_internet);
@@ -623,25 +653,25 @@ public class OptionsPanel extends MyDraggable {
     panel_options.setLayout(panel_optionsLayout);
     panel_optionsLayout.setHorizontalGroup(
       panel_optionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_optionsLayout.createSequentialGroup()
+      .addGroup(panel_optionsLayout.createSequentialGroup()
         .addContainerGap()
-        .addGroup(panel_optionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addComponent(tabbedPane_options, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 499, Short.MAX_VALUE)
-          .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
-          .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel_optionsLayout.createSequentialGroup()
+        .addGroup(panel_optionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(panel_optionsLayout.createSequentialGroup()
             .addComponent(button_ok, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(button_cancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGap(366, 366, 366)))
+            .addGap(366, 366, 366))
+          .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
+          .addComponent(tabbedPane_options, javax.swing.GroupLayout.PREFERRED_SIZE, 499, Short.MAX_VALUE))
         .addContainerGap())
     );
     panel_optionsLayout.setVerticalGroup(
       panel_optionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(panel_optionsLayout.createSequentialGroup()
-        .addGap(12, 12, 12)
+      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_optionsLayout.createSequentialGroup()
+        .addContainerGap()
         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 16, Short.MAX_VALUE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(tabbedPane_options, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+        .addGap(23, 23, 23)
+        .addComponent(tabbedPane_options, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(panel_optionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(button_ok)
@@ -710,6 +740,7 @@ public class OptionsPanel extends MyDraggable {
     try {
       String mess = "";
       saveOptions();
+      MySeries.languages.setPrimary((Language)combo_primaryLang.getSelectedItem());
       MyUsefulFunctions.initInternetConnection();
       if (!oldFontFace.equals(Options.toString(Options.FONT_FACE))) {
         mess = "Font face was changed\n";
@@ -799,6 +830,13 @@ public class OptionsPanel extends MyDraggable {
     textfield_proxy.validateValue();
   }//GEN-LAST:event_checkbox_useProxyActionPerformed
 
+  private void combo_primaryLangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combo_primaryLangActionPerformed
+  }//GEN-LAST:event_combo_primaryLangActionPerformed
+
+  private void combo_secondaryLangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combo_secondaryLangActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_combo_secondaryLangActionPerformed
+
   private Font getSelectedFont() {
     Font font = new Font((String) combobox_fonts.getSelectedItem(), Font.PLAIN, (int) Float.parseFloat(String.valueOf(spinner_fontSize.getValue())));
     return font;
@@ -813,8 +851,9 @@ public class OptionsPanel extends MyDraggable {
   private javax.swing.JCheckBox checkbox_showNotDownloaded;
   private javax.swing.JCheckBox checkbox_showUnseen;
   private javax.swing.JCheckBox checkbox_useProxy;
+  private javax.swing.JComboBox combo_primaryLang;
+  private javax.swing.JComboBox combo_secondaryLang;
   private javax.swing.JComboBox combo_updateDb;
-  private javax.swing.JComboBox combo_updateDb1;
   private javax.swing.JComboBox combobox_dateFormat;
   private javax.swing.JComboBox combobox_debugMode;
   private javax.swing.JComboBox combobox_fonts;
@@ -827,6 +866,7 @@ public class OptionsPanel extends MyDraggable {
   private javax.swing.JLabel jLabel12;
   private javax.swing.JLabel jLabel13;
   private javax.swing.JLabel jLabel14;
+  private javax.swing.JLabel jLabel15;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JLabel jLabel3;
   private javax.swing.JLabel jLabel4;

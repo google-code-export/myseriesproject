@@ -24,10 +24,13 @@ public class Language {
   private String name;
   /** The lang code in subtitle files **/
   private String code;
+  /** The language's id in the database */
+  private int id;
 
-  Language(String name, String code, int priority) {
+  Language(String name, String code, int priority, int id) {
     this.name = name;
     this.code = code;
+    this.id = id;
     if (priority == PRIMARY) {
       setIsPrimary(true);
       setIsSecondary(false);
@@ -52,7 +55,6 @@ public class Language {
    */
   public void setIsPrimary(boolean isPrimary) {
     this.isPrimary = isPrimary;
-    this.isSecondary = !isPrimary;
   }
 
   /**
@@ -67,7 +69,6 @@ public class Language {
    */
   public void setIsSecondary(boolean isSecondary) {
     this.isSecondary = isSecondary;
-    this.isPrimary = !isSecondary;
   }
 
   /**
@@ -100,7 +101,21 @@ public class Language {
 
   @Override
   public String toString() {
-    return name + " [" + code + "]";
+    return name;
+  }
+
+  /**
+   * @return the id
+   */
+  public int getId() {
+    return id;
+  }
+
+  /**
+   * @param id the id to set
+   */
+  public void setId(int id) {
+    this.id = id;
   }
 
 
