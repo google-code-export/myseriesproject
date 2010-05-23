@@ -248,7 +248,7 @@ public class Actions {
         }
         f.setDownloaded(MySeries.combobox_downloaded.getSelectedIndex());
         f.setSeen(MySeries.comboBox_seen.getSelectedIndex());
-        f.setSubtitles(MySeries.comboBox_subtitles.getSelectedIndex());
+        f.setSubtitles(MySeries.comboBox_filterSubtitles.getSelectedIndex());
         f.setTitle(title);
         f.save();
         MyMessages.message("Filter saved", "Filter was saved");
@@ -292,7 +292,7 @@ public class Actions {
       if (f != null) {
         MySeries.combobox_downloaded.setSelectedIndex(f.getDownloaded());
         MySeries.comboBox_seen.setSelectedIndex(f.getSeen());
-        MySeries.comboBox_subtitles.setSelectedIndex(f.getSubtitles());
+        MySeries.comboBox_filterSubtitles.setSelectedIndex(f.getSubtitles());
       }
     } catch (SQLException ex) {
       MySeries.logger.log(Level.WARNING, "Error while applying the  filter", ex);

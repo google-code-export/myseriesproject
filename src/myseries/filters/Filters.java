@@ -86,35 +86,7 @@ public class Filters {
    * The seen field of the table title : Seen
    */
   public static final String SEEN_COLUMN_TITLE = "Seen";
-  /**
-   * The no subs status : 0
-   */
-  public static final int SUBS_NONE = 0;
-  /**
-   * The primary subs status : 1
-   */
-  public static final int SUBS_PRIM = 1;
-  /**
-   * The secondary subs status : 2
-   */
-  public static final int SUBS_SEC = 2;
-  /**
-   * The both subs status : 3
-   */
-  public static final int SUBS_BOTH = 3;
-  /**
-   * The primary or secondary subs status : 4
-   */
-  public static final int SUBS_PRIM_OR_SEC = 4;
-  /**
-   * The not primary subs status : 5
-   */
-  public static final int SUBS_NOT_PRIM = 5;
-  /**
-   * The unaware subs status : 6
-   */
-  public static final int SUBS_UNAWARE = 6;
-  /**
+   /**
    * The not seen status : 0
    */
   public static final int SEEN_NO = 0;
@@ -154,7 +126,7 @@ public class Filters {
    * Which subtitles are available 0:None, 1:Primary, 2:Secondary, 3:Both, 4:Primary or Secondary,
    * 5: Not Primary , 6:Unaware , defautlt :4
    */
-  private static int subtitles = SUBS_PRIM_OR_SEC;
+  private static int subtitles;
   /**
    * The filtered episodes table
    */
@@ -258,7 +230,7 @@ public class Filters {
    * @return the subtitles
    */
   public static String getSubtitles() {
-    int sel = myseries.MySeries.comboBox_subtitles.getSelectedIndex();
+    int sel = myseries.MySeries.comboBox_filterSubtitles.getSelectedIndex();
     switch (sel){
       case 0 : return " AND subs = 0 ";
       case 1 : return " AND subs = " + myseries.MySeries.languages.getPrimary().getId();

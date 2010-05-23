@@ -392,24 +392,7 @@ public class MyUsefulFunctions {
     return false;
   }
 
-  /**
-   * Gets the subtitles status by it's name
-   * @param subs
-   * @return
-   */
-  public static int getSubsId(String subs) {
-    if (subs.equals(Subtitle.NONE)) {
-      return EpisodesRecord.NO_SUBS;
-    } else if (subs.equals(myseries.MySeries.languages.getPrimary().getName())) {
-      return EpisodesRecord.PRIM_SUB;
-    } else if (subs.equals(myseries.MySeries.languages.getSecondary().getName())) {
-      return EpisodesRecord.SEC_SUB;
-    } else {
-      return EpisodesRecord.MULTIPLE_SUBS;
-    }
-  }
-
-  /**
+   /**
    * Creates the regex for finding episodes
    * @param season The episode's season
    * @param episode The episode's number
