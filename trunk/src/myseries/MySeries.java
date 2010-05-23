@@ -220,6 +220,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       languages.getSecondary(),
       LangsList.MULTIPLE};
     JComboBox subs = new JComboBox(subStatuses);
+
     // Set column widths
     ArrayList<Integer> widths = Options.toIntegerArrayList(Options.TABLE_WIDTHS);
     Integer widthsArr[] = new Integer[widths.size()];

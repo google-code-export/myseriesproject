@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.TableModel;
 import myseries.MySeries;
-import tools.languages.LangsList;
+import tools.languages.Language;
 
 /**
  *
@@ -19,7 +19,6 @@ import tools.languages.LangsList;
 public class UpdateFiltersTable {
 
   private TableModel model;
-  private String rec[] = new String[Filters.NUMBER_OF_COLUMNS];
 
   public UpdateFiltersTable(TableModelEvent e) {
     if (e.getType() == TableModelEvent.UPDATE) {
@@ -28,12 +27,12 @@ public class UpdateFiltersTable {
       if (model.getRowCount() > row) {
         EpisodesRecord ep = (EpisodesRecord) model.getValueAt(row, Filters.EPISODERECORD_COLUMN);
         Boolean downloaded = (Boolean) model.getValueAt(row, Filters.DOWNLOADED_COLUMN);
-        String subs = (String) model.getValueAt(row, Filters.SUBS_COLUMN);
+        Language subs = (Language) model.getValueAt(row, Filters.SUBS_COLUMN);
         Boolean seen = (Boolean) model.getValueAt(row, Filters.SEEN_COLUMN);
         try {
           ep.setDownloaded(downloaded ? EpisodesRecord.DOWNLOADED : EpisodesRecord.NOT_DOWNLOADED);
           ep.setSeen(seen ? EpisodesRecord.SEEN : EpisodesRecord.NOT_SEEN);
-          ep.setSubs(LangsList.getLanguageByName(subs));
+          ep.setSubs(subs);
           ep.save();
          // NextEpisodes.createNextEpisodes();
          // NextEpisodes.show();
