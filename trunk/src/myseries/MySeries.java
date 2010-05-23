@@ -132,15 +132,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/subtitles.png")).getImage());
     setSize(Options.toInt(Options.WIDTH), Options.toInt(Options.HEIGHT));
     setExtendedState(Options.toInt(Options.WINDOW_STATE));
-    comboBox_subtitles.setModel(new DefaultComboBoxModel(
-        new String[]{
-          Subtitle.NONE,
-          languages.getPrimary().getName(),
-          languages.getSecondary().getName(),
-          Subtitle.BOTH,
-          languages.getPrimary().getName() + " or " + languages.getSecondary().getName(),
-          "Not " + languages.getPrimary().getName()
-        }));
+    createComboBox_filters();
 
 //    this.getContentPane().setBackground(Options.getColor(Options.SKIN_COLOR));
     if (Options.toBoolean(Options.USE_SKIN)) {
@@ -330,7 +322,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     combobox_filters = new javax.swing.JComboBox();
     button_saveFilter = new javax.swing.JButton();
     button_deleteFilter = new javax.swing.JButton();
-    comboBox_subtitles = new javax.swing.JComboBox();
+    comboBox_filterSubtitles = new javax.swing.JComboBox();
     combobox_downloaded = new javax.swing.JComboBox();
     comboBox_seen = new javax.swing.JComboBox();
     menuBar = new javax.swing.JMenuBar();
@@ -776,9 +768,9 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       }
     });
 
-    comboBox_subtitles.addActionListener(new java.awt.event.ActionListener() {
+    comboBox_filterSubtitles.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
-        comboBox_subtitlesActionPerformed(evt);
+        comboBox_filterSubtitlesActionPerformed(evt);
       }
     });
 
@@ -807,7 +799,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(comboBox_seen, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(comboBox_subtitles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(comboBox_filterSubtitles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(combobox_filters, 0, 396, Short.MAX_VALUE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -824,14 +816,14 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
           .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_filtersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
             .addComponent(combobox_downloaded, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(comboBox_seen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(comboBox_subtitles, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(comboBox_filterSubtitles, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(combobox_filters, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
           .addComponent(button_deleteFilter, javax.swing.GroupLayout.Alignment.TRAILING)
           .addComponent(button_saveFilter, javax.swing.GroupLayout.Alignment.TRAILING))
         .addContainerGap())
     );
 
-    panel_filtersLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {button_deleteFilter, button_saveFilter, comboBox_seen, comboBox_subtitles, combobox_downloaded, combobox_filters});
+    panel_filtersLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {button_deleteFilter, button_saveFilter, comboBox_filterSubtitles, comboBox_seen, combobox_downloaded, combobox_filters});
 
     javax.swing.GroupLayout tabpanel_FilteredSeriesLayout = new javax.swing.GroupLayout(tabpanel_FilteredSeries);
     tabpanel_FilteredSeries.setLayout(tabpanel_FilteredSeriesLayout);
@@ -1271,9 +1263,9 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     PopUpItem_AddEpisodeActionPerformed(evt);
 }//GEN-LAST:event_menuItem_editEpisodeActionPerformed
 
-  private void comboBox_subtitlesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBox_subtitlesActionPerformed
-    Actions.filterSubtitles(comboBox_subtitles);
-  }//GEN-LAST:event_comboBox_subtitlesActionPerformed
+  private void comboBox_filterSubtitlesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBox_filterSubtitlesActionPerformed
+    Actions.filterSubtitles(comboBox_filterSubtitles);
+  }//GEN-LAST:event_comboBox_filterSubtitlesActionPerformed
 
   private void comboBox_seenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBox_seenActionPerformed
     Actions.filterSeen(comboBox_seen);
@@ -1522,8 +1514,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static javax.swing.JButton button_next;
   public static javax.swing.JButton button_previous;
   public static javax.swing.JButton button_saveFilter;
+  public static javax.swing.JComboBox comboBox_filterSubtitles;
   public static javax.swing.JComboBox comboBox_seen;
-  public static javax.swing.JComboBox comboBox_subtitles;
   public static javax.swing.JComboBox combobox_downloaded;
   public static javax.swing.JComboBox combobox_filters;
   public static javax.swing.JPopupMenu episodesPopUp;
@@ -1593,5 +1585,17 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       new UpdateFiltersTable(e);
     }
 
+  }
+
+  public void createComboBox_filters() {
+     comboBox_filterSubtitles.setModel(new DefaultComboBoxModel(
+        new String[]{
+          Subtitle.NONE,
+          languages.getPrimary().getName(),
+          languages.getSecondary().getName(),
+          Subtitle.BOTH,
+          languages.getPrimary().getName() + " or " + languages.getSecondary().getName(),
+          "Not " + languages.getPrimary().getName()
+        }));
   }
 }

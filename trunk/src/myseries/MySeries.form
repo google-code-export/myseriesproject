@@ -1060,7 +1060,7 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="comboBox_seen" min="-2" pref="91" max="-2" attributes="1"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="comboBox_subtitles" min="-2" max="-2" attributes="1"/>
+                                  <Component id="comboBox_filterSubtitles" min="-2" max="-2" attributes="1"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="combobox_filters" pref="396" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -1079,7 +1079,7 @@
                                       <Group type="103" alignment="1" groupAlignment="3" attributes="0">
                                           <Component id="combobox_downloaded" linkSize="3" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="comboBox_seen" linkSize="3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="comboBox_subtitles" linkSize="3" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                                          <Component id="comboBox_filterSubtitles" linkSize="3" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
                                           <Component id="combobox_filters" linkSize="3" alignment="3" min="-2" pref="25" max="-2" attributes="1"/>
                                       </Group>
                                       <Component id="button_deleteFilter" linkSize="3" alignment="1" min="-2" max="-2" attributes="1"/>
@@ -1124,9 +1124,9 @@
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_deleteFilterActionPerformed"/>
                           </Events>
                         </Component>
-                        <Component class="javax.swing.JComboBox" name="comboBox_subtitles">
+                        <Component class="javax.swing.JComboBox" name="comboBox_filterSubtitles">
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboBox_subtitlesActionPerformed"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboBox_filterSubtitlesActionPerformed"/>
                           </Events>
                         </Component>
                         <Component class="javax.swing.JComboBox" name="combobox_downloaded">
