@@ -113,7 +113,7 @@ public class Episodes {
    */
   public static void setCurrentEpisode(int episode) throws SQLException {
     String sql = "SELECT * FROM episodes "
-        + "WHERE series_ID = " + Series.getCurrentSerial().getSeries_ID() + " AND episode = " + episode;
+            + "WHERE series_ID = " + Series.getCurrentSerial().getSeries_ID() + " AND episode = " + episode;
     ResultSet rs = EpisodesRecord.query(sql);
     if (rs.next()) {
       currentEpisode = new EpisodesRecord();
@@ -155,7 +155,7 @@ public class Episodes {
     if (Series.getCurrentSerial() == null) {
     }
     String sql = "SELECT * FROM episodes WHERE series_ID = " + Series.getCurrentSerial().getSeries_ID()
-        + " ORDER BY CAST(episode AS UNSIGNED) ASC";
+            + " ORDER BY CAST(episode AS UNSIGNED) ASC";
     Statement stmt = DBConnection.conn.createStatement();
     ResultSet rs = stmt.executeQuery(sql);
     while (rs.next()) {
@@ -170,7 +170,7 @@ public class Episodes {
       download = rs.getBoolean("downloaded");
       e.setDownloaded(rs.getInt("downloaded"));
       e.setSeen(rs.getInt("seen"));
-      if (MyUsefulFunctions.hasBeenAired(e.getAired()) && videoFiles != null ) {
+      if (MyUsefulFunctions.hasBeenAired(e.getAired()) && videoFiles != null) {
         boolean newDownloadedStatus = checkDownloads(Series.getCurrentSerial().getSeason(), e.getEpisode(), videoFiles);
         if (download != newDownloadedStatus) {
           e.setDownloaded(newDownloadedStatus ? EpisodesRecord.DOWNLOADED : EpisodesRecord.NOT_DOWNLOADED);
@@ -217,18 +217,28 @@ public class Episodes {
   }
 
   private static Language checkSubs(int season, int episode, File[] subtitleFiles) throws SQLException {
-    boolean hasPrimary = false, hasSecondary = false;
+    boolean hasPrimary = false, hasSecondary = false, hasOther = false;
+    Language other = LangsList.NONE;
     String regex = MyUsefulFunctions.createRegex(season, episode);
     Pattern pattern = Pattern.compile(regex);
     for (int j = 0; j < subtitleFiles.length; j++) {
       File file = subtitleFiles[j];
       Matcher matcher = pattern.matcher(file.getName());
       if (matcher.find() && file.isFile()) {
-        if (file.getName().indexOf("."+myseries.MySeries.languages.getSecondary().getCode()+".") > 0) {
-          hasSecondary = true;
-        } else {
-          hasPrimary = true;
+        for (Iterator it = myseries.MySeries.languages.getLangs().iterator(); it.hasNext();) {
+          Language lang = (Language) it.next();
+          if (file.getName().indexOf("." + lang.getCode() + ".") > 0) {
+            if (lang.isIsPrimary()) {
+              hasPrimary = true;
+            } else if (lang.isIsSecondary()) {
+              hasSecondary = true;
+            } else {
+              hasOther = true;
+              other = lang;
+            }
+          }
         }
+
       }
     }
     if (hasPrimary && hasSecondary) {
@@ -237,6 +247,8 @@ public class Episodes {
       return myseries.MySeries.languages.getPrimary();
     } else if (hasSecondary) {
       return myseries.MySeries.languages.getSecondary();
+    } else if (hasOther) {
+      return other;
     }
     return LangsList.NONE;
   }

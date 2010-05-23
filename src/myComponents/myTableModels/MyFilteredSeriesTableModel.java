@@ -6,6 +6,7 @@ package myComponents.MyTableModels;
 
 import javax.swing.table.DefaultTableModel;
 import myseries.filters.Filters;
+import tools.languages.Language;
 
 /**
  * The tablemodel for filtered series table
@@ -31,7 +32,9 @@ public class MyFilteredSeriesTableModel extends DefaultTableModel {
       return Boolean.class;
     } else if (columnIndex == Filters.EPISODE_NUMBER_COLUMN) {
       return Integer.class;
-    } else {
+    } else if (columnIndex == Filters.SUBS_COLUMN) {
+      return Language.class;
+    }  else {
       return super.getColumnClass(columnIndex);
     }
   }
