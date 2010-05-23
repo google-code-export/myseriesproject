@@ -17,6 +17,7 @@ import javax.swing.table.TableColumnModel;
 import myComponents.MyTableModels.MyFilteredSeriesTableModel;
 import tools.download.subtitles.Subtitle;
 import tools.languages.LangsList;
+import tools.languages.Language;
 
 /**
  * Creates the filtered series object used to filter the series according to the
@@ -167,17 +168,13 @@ public class Filters {
   public static void getFilteredSeries() throws SQLException {
     int id, subsInt, series_ID, episode;
     Boolean boolDownloaded, boolSeen;
-    String title, aired, subs;
-
+    String title, aired;
+    Language subs;
     emptyFilteredSeries();
     String where = "";
     where += getSeen() == EpisodesRecord.NOT_SEEN || getSeen() == EpisodesRecord.SEEN ? " AND seen = " + getSeen() : "";
     where += getDownloaded() == EpisodesRecord.NOT_DOWNLOADED || getDownloaded() == EpisodesRecord.DOWNLOADED ? " AND downloaded = " + getDownloaded() : "";
-    where +=
-        getSubtitles() < SUBS_PRIM_OR_SEC ? " AND subs =  " + getSubtitles()
-        : getSubtitles() == SUBS_PRIM_OR_SEC ? " AND  (subs = " + SUBS_SEC + " OR subs =" + SUBS_PRIM + " )"
-        : getSubtitles() == SUBS_NOT_PRIM ? " AND  (subs = " + SUBS_NONE + " OR subs = " + SUBS_SEC + " )"
-        : "";
+    where += getSubtitles();
     String sql = "SELECT e.* FROM episodes e JOIN series s on e.series_ID = s.series_ID WHERE s.hidden = " + SeriesRecord.NOT_HIDDEN + " " + where + " ORDER BY aired ASC";
     ResultSet rs = DBConnection.stmt.executeQuery(sql);
     SeriesRecord ser;
@@ -189,10 +186,7 @@ public class Filters {
       episode = rs.getInt("episode");
       boolDownloaded = rs.getBoolean("downloaded");
       subsInt = rs.getInt("subs");
-      subs = subsInt == SUBS_NONE ? Subtitle.NONE
-          : subsInt == SUBS_PRIM ? myseries.MySeries.languages.getPrimary().getName()
-          : subsInt == SUBS_SEC ? myseries.MySeries.languages.getSecondary().getName()
-          : Subtitle.BOTH;
+      subs = LangsList.getLanguageById(subsInt);
       boolSeen = rs.getBoolean("seen");
       Vector<SeriesRecord> seriesV = DBHelper.getSeriesBySql("SELECT * FROM series WHERE hidden = " + SeriesRecord.NOT_HIDDEN + " AND series_ID = " + series_ID);
       ser = seriesV.get(0);
@@ -263,8 +257,18 @@ public class Filters {
   /**
    * @return the subtitles
    */
-  public static int getSubtitles() {
-    return myseries.MySeries.comboBox_subtitles.getSelectedIndex();
+  public static String getSubtitles() {
+    int sel = myseries.MySeries.comboBox_subtitles.getSelectedIndex();
+    switch (sel){
+      case 0 : return " AND subs = 0 ";
+      case 1 : return " AND subs = " + myseries.MySeries.languages.getPrimary().getId();
+      case 2 : return " AND subs = " + myseries.MySeries.languages.getSecondary().getId();
+      case 3 : return " AND subs = 3";
+      case 4 : return " AND (subs = "+ myseries.MySeries.languages.getPrimary().getId() + " OR subs = " + myseries.MySeries.languages.getSecondary().getId() +")";
+      case 5 : return " AND subs <> " + myseries.MySeries.languages.getPrimary().getId();
+    }
+    return "";
+
   }
 
   /**
