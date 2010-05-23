@@ -10,6 +10,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import myComponents.MyUsefulFunctions;
 import myseries.episodes.Episodes;
+import tools.languages.Language;
 
 /**
  * The cell renderer for the tile field
@@ -26,7 +27,7 @@ public class MyTitleCellRenderer extends DefaultTableCellRenderer {
     if (value instanceof EpisodesRecord) {
       Boolean downloaded = (Boolean) table.getModel().getValueAt(row, Episodes.DOWNLOADED_COLUMN);
       Boolean seen = (Boolean) table.getModel().getValueAt(row, Episodes.SEEN_COLUMN);
-      String sub = (String) table.getModel().getValueAt(row, Episodes.SUBS_COLUMN);
+      Language sub = (Language) table.getModel().getValueAt(row, Episodes.SUBS_COLUMN);
       this.setFont(MyUsefulFunctions.getCellFont(this.getFont(),downloaded,seen,sub));
       this.setForeground(MyUsefulFunctions.getCellColor(isSelected,seen));
       this.setText(value.toString());

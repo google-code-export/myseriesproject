@@ -166,9 +166,14 @@ public class Options {
   public static String CHECK_VERSION = "CHECK_VERSION";
   /**
    * the primary subtitles language
-   * String default Options._GREEK_
+   * String default "Greek"
    */
   public static String PRIMARY_SUB = "PRIMARY_SUB";
+  /**
+   * the secondary subtitles language
+   * String default "English"
+   */
+  public static String SECONDARY_SUB = "SECONDARY_SUB";
   /**
    * The web page used for downloading subtitles
    * String default Options._SUBTITLE_ONLINE_NAME_
@@ -178,7 +183,7 @@ public class Options {
    * An array of the options that are selected in combo boxes
    */
   public static String[] _COMBO_OPTIONS_ = {DATE_FORMAT, DEBUG_MODE, LOOK_AND_FEEL,
-    FONT_FACE, INTERNET_UPDATE_DB, SUBTITLE_SITE, PRIMARY_SUB};
+    FONT_FACE, INTERNET_UPDATE_DB, SUBTITLE_SITE, PRIMARY_SUB, SECONDARY_SUB};
 
   static {
     InternetUpdate.DB_UPDATERS.add(InternetUpdate.EP_GUIDES_NAME);
@@ -194,7 +199,8 @@ public class Options {
    * @throws java.io.IOException
    */
   public static void getOptions() throws FileNotFoundException, IOException {
-    Options._USER_DIR_ = System.getProperties().getProperty("user.dir");
+    //Options._USER_DIR_ = System.getProperties().getProperty("user.dir");
+    Options._USER_DIR_ = "./";
     options = new HashMap<String, Object>();
     if (!new File(Options._USER_DIR_ + "/MySeries.ini").isFile()) {
       writeDefaultIniFile();
@@ -421,7 +427,8 @@ public class Options {
     out.println(Options.HEIGHT + " = 600");
     out.println(Options.INTERNET_UPDATE_DB + "=" + InternetUpdate.TV_RAGE_NAME);
     out.println(Options.CHECK_VERSION + " = true");
-    out.println(Options.PRIMARY_SUB + " = gr");
+    out.println(Options.PRIMARY_SUB + " = Greek");
+    out.println(Options.SECONDARY_SUB + " = English");
     out.println(Options.SUBTITLE_SITE + " = " + Subtitle.SUBTITLE_ONLINE_NAME);
     out.close();
   }

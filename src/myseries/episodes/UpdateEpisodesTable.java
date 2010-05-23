@@ -12,7 +12,7 @@ import javax.swing.table.TableModel;
 import myComponents.MyMessages;
 import myseries.MySeries;
 import tools.download.subtitles.Subtitle;
-import tools.languages.LangsList;
+import tools.languages.Language;
 
 /**
  * Updates the episodes table
@@ -57,11 +57,7 @@ public class UpdateEpisodesTable {
         er.setAired((String)rec[Episodes.AIRED_COLUMN]);
       }
       er.setDownloaded((Boolean)rec[Episodes.DOWNLOADED_COLUMN] ? EpisodesRecord.DOWNLOADED : EpisodesRecord.NOT_DOWNLOADED);
-      er.setSubs(rec[Episodes.SUBS_COLUMN].equals(Subtitle.NONE) ? EpisodesRecord.NO_SUBS
-              : rec[Episodes.SUBS_COLUMN].equals(myseries.MySeries.languages.getSecondary().getName()) ? EpisodesRecord.SEC_SUB
-              : rec[Episodes.SUBS_COLUMN].equals(myseries.MySeries.languages.getPrimary().getName()) ? EpisodesRecord.PRIM_SUB
-              : rec[Episodes.SUBS_COLUMN].equals(Subtitle.BOTH) ? EpisodesRecord.BOTH_SUBS
-              : EpisodesRecord.UNKNOWN_SUB);
+      er.setSubs((Language) rec[Episodes.SUBS_COLUMN]);
       er.setSeen((Boolean)rec[Episodes.SEEN_COLUMN]? EpisodesRecord.SEEN : EpisodesRecord.NOT_SEEN);
       er.save();
      // NextEpisodes.createNextEpisodes();

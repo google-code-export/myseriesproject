@@ -9,8 +9,8 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.TableModel;
-import myComponents.MyUsefulFunctions;
 import myseries.MySeries;
+import tools.languages.LangsList;
 
 /**
  *
@@ -33,7 +33,7 @@ public class UpdateFiltersTable {
         try {
           ep.setDownloaded(downloaded ? EpisodesRecord.DOWNLOADED : EpisodesRecord.NOT_DOWNLOADED);
           ep.setSeen(seen ? EpisodesRecord.SEEN : EpisodesRecord.NOT_SEEN);
-          ep.setSubs(MyUsefulFunctions.getSubsId(subs));
+          ep.setSubs(LangsList.getLanguageByName(subs));
           ep.save();
          // NextEpisodes.createNextEpisodes();
          // NextEpisodes.show();

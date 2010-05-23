@@ -88,8 +88,8 @@ public class DownloadSOnline extends AbstractDownloadSubtitle implements Runnabl
     URL curLink = null;
     String curtitle = "";
     String lang;
-   lang = primary ? myseries.MySeries.languages.getPrimary().getCode() :
-     myseries.MySeries.languages.getSecondary().getCode();
+   lang = primary ? myseries.MySeries.languages.getPrimary().getName().toLowerCase() :
+     myseries.MySeries.languages.getSecondary().getName().toLowerCase();
 
     String search = "<a href=\"/" + sOnlineCode + "-s" + season + "e" + episode + "-" + lang + "-subtitles-download";
     while ((line = in.readLine()) != null) {

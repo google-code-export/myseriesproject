@@ -37,6 +37,7 @@ import myComponents.myGUI.MyFont;
 import tools.Skin;
 import tools.download.subtitles.Subtitle;
 import tools.languages.LangsList;
+import tools.languages.Language;
 import tools.options.Options;
 
 /**
@@ -404,7 +405,7 @@ public class MyUsefulFunctions {
     } else if (subs.equals(myseries.MySeries.languages.getSecondary().getName())) {
       return EpisodesRecord.SEC_SUB;
     } else {
-      return EpisodesRecord.BOTH_SUBS;
+      return EpisodesRecord.MULTIPLE_SUBS;
     }
   }
 
@@ -467,14 +468,14 @@ public class MyUsefulFunctions {
    * @param defaultFont The default font
    * @param downloaded If the episode is downloaded
    * @param seen If the episode is seen
-   * @param sub The sub status of the episode
+   * @param sub The sub language of the episode
    * @return The font to use
    */
-  public static Font getCellFont(Font defaultFont, boolean downloaded, boolean seen, String sub) {
+  public static Font getCellFont(Font defaultFont, boolean downloaded, boolean seen, Language sub) {
     Font font = defaultFont;
     if (seen) {
       font = font.deriveFont(Font.ITALIC, defaultFont.getSize());
-    } else if (!seen && downloaded && !sub.equals("None")) {
+    } else if (!seen && downloaded && !sub.equals(LangsList.NONE)) {
       font = font.deriveFont(Font.BOLD, defaultFont.getSize() + MyFont.SIZE_STEP);
     }
     return font;

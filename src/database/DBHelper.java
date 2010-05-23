@@ -7,6 +7,7 @@ package database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
+import tools.languages.LangsList;
 
 /**
  *
@@ -54,7 +55,7 @@ public class DBHelper {
         er.setSeries_ID(rs.getInt("series_ID"));
         er.setAired(rs.getString("aired"));
         er.setDownloaded(rs.getInt("downloaded"));
-        er.setSubs(rs.getInt("subs"));
+        er.setSubs(LangsList.getLanguageById(rs.getInt("subs")));
         er.setSeen(rs.getInt("seen"));
         a.add(er);
       }

@@ -27,9 +27,6 @@ import help.Help;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Point;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
@@ -44,12 +41,10 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JRootPane;
-import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.TableModelListener;
-import javax.swing.plaf.basic.BasicTreeUI.SelectionModelPropertyChangeHandler;
 import myComponents.MyTableModels.MyFilteredSeriesTableModel;
 import myComponents.MyTableModels.MySeriesTableModel;
 import myComponents.MyUsefulFunctions;
@@ -79,7 +74,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public MyEpisodesTableModel tableModel_episodes;
   private MyFilteredSeriesTableModel tableModel_filterSeries;
   public ComboBoxModel comboBoxModel_filters;
-  public static String version = "1.2(rev324)";
+  public static String version = "1.3(dev)";
   public String date = "2010-05-17";
   public static MyDisabledGlassPane glassPane;
   public static Logger logger;
@@ -117,9 +112,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
     //Get language list
     languages = new LangsList();
+    languages.setPrimary(LangsList.getLanguageByName(Options.toString(Options.PRIMARY_SUB)));
+    languages.setSecondary(LangsList.getLanguageByName(Options.toString(Options.SECONDARY_SUB)));
      for (Iterator<Language> it = languages.getLangs().iterator(); it.hasNext();) {
       Language language = it.next();
-      Subtitle.SUBTITLE_LANG.add(language.getName());
+      Subtitle.SUBTITLE_LANG.add(language);
     }
 
     // Create connection
@@ -217,11 +214,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   }
 
   private void createGUI() throws SQLException {
-    String[] subStatuses = {
-      Subtitle.NONE,
-      languages.getPrimary().getName(),
-      languages.getSecondary().getName(),
-      Subtitle.BOTH};
+    Language[] subStatuses = {
+      LangsList.NONE,
+      languages.getPrimary(),
+      languages.getSecondary(),
+      LangsList.MULTIPLE};
     JComboBox subs = new JComboBox(subStatuses);
     // Set column widths
     ArrayList<Integer> widths = Options.toIntegerArrayList(Options.TABLE_WIDTHS);

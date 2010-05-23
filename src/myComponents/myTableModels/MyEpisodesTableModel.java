@@ -6,6 +6,7 @@ package myComponents.MyTableModels;
 
 import javax.swing.table.DefaultTableModel;
 import myseries.episodes.Episodes;
+import tools.languages.Language;
 
 /**
  * The table model for Episodes table
@@ -30,6 +31,8 @@ public class MyEpisodesTableModel extends DefaultTableModel {
       return Boolean.class;
     } else if (columnIndex == Episodes.EPISODE_NUM_COLUMN) {
       return Integer.class;
+    } else if (columnIndex == Episodes.SUBS_COLUMN) {
+      return Language.class;
     } else {
       return super.getColumnClass(columnIndex);
     }
