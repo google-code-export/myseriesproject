@@ -218,6 +218,7 @@ public class Episodes {
 
   private static Language checkSubs(int season, int episode, File[] subtitleFiles) throws SQLException {
     boolean hasPrimary = false, hasSecondary = false, hasOther = false;
+    int subsFound = 0;
     Language other = LangsList.NONE;
     String regex = MyUsefulFunctions.createRegex(season, episode);
     Pattern pattern = Pattern.compile(regex);
@@ -229,17 +230,22 @@ public class Episodes {
           Language lang = (Language) it.next();
           if (file.getName().indexOf("." + lang.getCode() + ".") > 0) {
             if (lang.isIsPrimary()) {
+              subsFound++;
               hasPrimary = true;
             } else if (lang.isIsSecondary()) {
               hasSecondary = true;
+              subsFound++;
             } else {
               hasOther = true;
               other = lang;
+              subsFound++;
             }
           }
         }
-
       }
+    }
+    if(subsFound < subtitleFiles.length){
+      hasPrimary = true;
     }
     if (hasPrimary && hasSecondary) {
       return LangsList.MULTIPLE;
