@@ -221,7 +221,7 @@ public class Actions {
     for (int i = 0; i < ts.getColumnCount(); i++) {
       widths.add(ts.getColumn(i).getWidth());
     }
-    ts = MySeries.tableFiltels.getColumnModel();
+    ts = MySeries.tableFilters.getColumnModel();
     for (int i = 0; i < ts.getColumnCount(); i++) {
       widths.add(ts.getColumn(i).getWidth());
     }
