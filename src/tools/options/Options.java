@@ -180,6 +180,11 @@ public class Options {
    */
   public static String SUBTITLE_SITE = "SUBTITLE_SITE";
   /**
+   * Auto updating video and subtitles from series local folder
+   * boolean default false;
+   */
+  public static String AUTO_FILE_UPDATING = "AUTO_FILE_UPDATING";
+  /**
    * An array of the options that are selected in combo boxes
    */
   public static String[] _COMBO_OPTIONS_ = {DATE_FORMAT, DEBUG_MODE, LOOK_AND_FEEL,
@@ -430,6 +435,7 @@ public class Options {
     out.println(Options.PRIMARY_SUB + " = Greek");
     out.println(Options.SECONDARY_SUB + " = English");
     out.println(Options.SUBTITLE_SITE + " = " + Subtitle.SUBTITLE_ONLINE_NAME);
+    out.println(Options.AUTO_FILE_UPDATING + " = false");
     out.close();
   }
 

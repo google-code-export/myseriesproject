@@ -164,7 +164,7 @@
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jLabel3" alignment="1" pref="101" max="32767" attributes="2"/>
                                       <Component id="jLabel6" alignment="1" pref="101" max="32767" attributes="0"/>
@@ -174,31 +174,40 @@
                                   </Group>
                                   <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" attributes="0">
-                                  <Component id="jLabel10" pref="96" max="32767" attributes="0"/>
-                                  <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="label_preview" alignment="0" pref="193" max="32767" attributes="0"/>
-                              <Component id="combobox_fonts" alignment="0" pref="193" max="32767" attributes="0"/>
-                              <Component id="button_BGColor" alignment="0" pref="193" max="32767" attributes="0"/>
-                              <Component id="combobox_laf" alignment="0" pref="193" max="32767" attributes="2"/>
-                              <Component id="combobox_dateFormat" alignment="0" pref="193" max="32767" attributes="2"/>
-                              <Component id="checkBox_modal" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="combobox_debugMode" alignment="0" pref="193" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="button_dateFormatHelp" min="-2" pref="44" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel7" max="32767" attributes="0"/>
-                                  <EmptySpace min="90" pref="90" max="90" attributes="0"/>
-                              </Group>
                               <Group type="102" alignment="1" attributes="0">
-                                  <Component id="spinner_fontSize" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="141" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="jLabel16" alignment="0" pref="99" max="32767" attributes="0"/>
+                                      <Component id="jLabel17" alignment="1" pref="99" max="32767" attributes="0"/>
+                                      <Component id="jLabel10" alignment="0" pref="99" max="32767" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" max="-2" attributes="0"/>
                               </Group>
+                          </Group>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="button_BGColor" alignment="0" pref="183" max="32767" attributes="0"/>
+                                      <Component id="combobox_laf" alignment="0" pref="183" max="32767" attributes="2"/>
+                                      <Component id="combobox_dateFormat" alignment="0" pref="183" max="32767" attributes="2"/>
+                                      <Component id="checkBox_modal" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="combobox_debugMode" alignment="0" pref="183" max="32767" attributes="0"/>
+                                      <Component id="combobox_fonts" alignment="1" min="-2" pref="183" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="button_dateFormatHelp" min="-2" pref="44" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel7" max="32767" attributes="0"/>
+                                          <EmptySpace min="90" pref="90" max="90" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Component id="spinner_fontSize" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="141" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <Component id="label_preview" pref="369" max="32767" attributes="0"/>
+                              <Component id="jCheckBox2" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -235,14 +244,22 @@
                               <Component id="button_BGColor" alignment="1" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel10" alignment="1" pref="20" max="32767" attributes="0"/>
-                              <Component id="combobox_fonts" linkSize="3" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="jLabel10" pref="20" max="32767" attributes="0"/>
                               <Component id="spinner_fontSize" linkSize="3" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="combobox_fonts" linkSize="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="label_preview" min="-2" pref="29" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel16" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="label_preview" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel17" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
+                              <Component id="jCheckBox2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -467,6 +484,34 @@
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="setFont(getSelectedFont());"/>
                   </AuxValues>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel16">
+                  <Properties>
+                    <Property name="horizontalAlignment" type="int" value="4"/>
+                    <Property name="text" type="java.lang.String" value="Font preview :"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel17">
+                  <Properties>
+                    <Property name="horizontalAlignment" type="int" value="4"/>
+                    <Property name="text" type="java.lang.String" value="Auto update :"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JCheckBox" name="jCheckBox2">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.editors2.FontEditor">
+                      <FontInfo relative="true">
+                        <Font component="jCheckBox2" italic="true" property="font" relativeSize="true" size="-1"/>
+                      </FontInfo>
+                    </Property>
+                    <Property name="selected" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="Options.toBoolean(Options.AUTO_FILE_UPDATING)" type="code"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="(Auto update of videos and subs from series folder)"/>
+                    <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="Options.AUTO_FILE_UPDATING" type="code"/>
+                    </Property>
+                  </Properties>
                 </Component>
               </SubComponents>
             </Container>
