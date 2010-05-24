@@ -185,6 +185,21 @@ public class Options {
    */
   public static String AUTO_FILE_UPDATING = "AUTO_FILE_UPDATING";
   /**
+   * The season separator when renaming episodes
+   * String default "SE"
+   */
+  public static String SEASON_SEPARATOR = "SEASON_SEPARATOR";
+  /**
+   * The Episode separator when renaming episodes
+   * String default "x"
+   */
+  public static String EPISODE_SEPARATOR = "EPISODE_SEPARATOR";
+  /**
+   * The title separator when renaming episodes
+   * String default " - "
+   */
+  public static String TITLE_SEPARATOR = "TITLE_SEPARATOR";
+  /**
    * An array of the options that are selected in combo boxes
    */
   public static String[] _COMBO_OPTIONS_ = {DATE_FORMAT, DEBUG_MODE, LOOK_AND_FEEL,
@@ -222,7 +237,7 @@ public class Options {
         } else if (MyUsefulFunctions.isNumeric(fields[1].trim())) {
           value = Long.parseLong(fields[1].trim());
         } else {
-          value = String.valueOf(fields[1].trim());
+          value = String.valueOf(fields[1]);
         }
         options.put(fields[0].trim(), value);
       }
@@ -383,9 +398,18 @@ public class Options {
    * @return
    */
   public static String toString(String key) {
-    String val = "";
+    return toString(key, true);
+  }
 
-    val = String.valueOf(options.get(key)).trim();
+  /**
+   * Get an option of a string type
+   * @param key The option to get
+   * @param trim Trim value or not
+   * @return
+   */
+  public static String toString(String key, boolean trim) {
+    String val = "";
+    val = trim ? String.valueOf(options.get(key)).trim():String.valueOf(options.get(key));
     return val;
   }
 
@@ -410,32 +434,35 @@ public class Options {
    */
   private static void writeDefaultIniFile() throws IOException {
     PrintWriter out = MyUsefulFunctions.createOutputStream(new File(Options._USER_DIR_ + "/MySeries.ini"), false);
-    out.println(Options.NEXT_EPISODES_LIMIT + "= 10");
-    out.println(Options.SHOW_UNDOWNLOADED + "= false");
-    out.println(Options.SHOW_UNSEEN + "= false");
+    out.println(Options.NEXT_EPISODES_LIMIT + "=10");
+    out.println(Options.SHOW_UNDOWNLOADED + "=false");
+    out.println(Options.SHOW_UNSEEN + "=false");
     out.println(Options.DB_NAME + "=");
     out.println(Options.DEBUG_MODE + "=0");
-    out.println(Options.MODAL + "= true");
-    out.println(Options.DATE_FORMAT + "= dd/MM/yyyy");
+    out.println(Options.MODAL + "=true");
+    out.println(Options.DATE_FORMAT + "=dd/MM/yyyy");
     out.println(Options.LOOK_AND_FEEL + "=");
-    out.println(Options.SKIN_COLOR + " = 240,240,240");
-    out.println(Options.USE_SKIN + " = true");
-    out.println(Options.USE_PROXY + " = false");
-    out.println(Options.PROXY_HOST + " = ");
-    out.println(Options.PROXY_PORT + " = ");
-    out.println(Options.DIVIDER_LOCATION + " = 250");
-    out.println(Options.FONT_FACE + " = Arial");
-    out.println(Options.FONT_SIZE + " = 12");
-    out.println(Options.TABLE_WIDTHS + " = " + getDefaultColumnWidths());
-    out.println(Options.WINDOW_STATE + " = " + JFrame.NORMAL);
-    out.println(Options.WIDTH + " = 1000");
-    out.println(Options.HEIGHT + " = 600");
+    out.println(Options.SKIN_COLOR + " =240,240,240");
+    out.println(Options.USE_SKIN + " =true");
+    out.println(Options.USE_PROXY + " =false");
+    out.println(Options.PROXY_HOST + " =");
+    out.println(Options.PROXY_PORT + " =");
+    out.println(Options.DIVIDER_LOCATION + " =250");
+    out.println(Options.FONT_FACE + " =Arial");
+    out.println(Options.FONT_SIZE + " =12");
+    out.println(Options.TABLE_WIDTHS + " =" + getDefaultColumnWidths());
+    out.println(Options.WINDOW_STATE + " =" + JFrame.NORMAL);
+    out.println(Options.WIDTH + " =1000");
+    out.println(Options.HEIGHT + " =600");
     out.println(Options.INTERNET_UPDATE_DB + "=" + InternetUpdate.TV_RAGE_NAME);
-    out.println(Options.CHECK_VERSION + " = true");
-    out.println(Options.PRIMARY_SUB + " = Greek");
-    out.println(Options.SECONDARY_SUB + " = English");
-    out.println(Options.SUBTITLE_SITE + " = " + Subtitle.SUBTITLE_ONLINE_NAME);
-    out.println(Options.AUTO_FILE_UPDATING + " = false");
+    out.println(Options.CHECK_VERSION + " =true");
+    out.println(Options.PRIMARY_SUB + " =Greek");
+    out.println(Options.SECONDARY_SUB + " =English");
+    out.println(Options.SUBTITLE_SITE + " =" + Subtitle.SUBTITLE_ONLINE_NAME);
+    out.println(Options.AUTO_FILE_UPDATING + " =false");
+    out.println(Options.SEASON_SEPARATOR + " =SE");
+    out.println(Options.TITLE_SEPARATOR + " = - ");
+    out.println(Options.EPISODE_SEPARATOR + " =x");
     out.close();
   }
 
@@ -457,7 +484,7 @@ public class Options {
             value = value + ".db";
           }
         }
-        out.println(key + " = " + value);
+        out.println(key + "=" + value);
       }
       out.close();
     } catch (IOException ex) {
