@@ -26,6 +26,7 @@ import myComponents.myFileFilters.VideoFilter;
 import tools.download.subtitles.Subtitle;
 import tools.languages.LangsList;
 import tools.languages.Language;
+import tools.options.Options;
 
 /**
  * The episodes table class
@@ -148,7 +149,7 @@ public class Episodes {
     Language subs;
     emptyEpisodes();
     String localDir = Series.getCurrentSerial().getLocalDir();
-    if (!localDir.equals("") && new File(localDir).isDirectory()) {
+    if (Options.toBoolean(Options.AUTO_FILE_UPDATING) && !localDir.equals("") && new File(localDir).isDirectory()) {
       subtitleFiles = Series.getSubtitleFiles();
       videoFiles = Series.getVideoFiles();
     }
