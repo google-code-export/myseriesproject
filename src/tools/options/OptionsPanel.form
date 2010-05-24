@@ -166,37 +166,38 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jLabel3" alignment="1" pref="126" max="32767" attributes="2"/>
-                                      <Component id="jLabel6" alignment="1" pref="126" max="32767" attributes="0"/>
-                                      <Component id="jLabel4" alignment="1" pref="126" max="32767" attributes="0"/>
-                                      <Component id="jLabel5" alignment="1" pref="126" max="32767" attributes="0"/>
-                                      <Component id="checkbox_dontUseSkin" alignment="1" pref="126" max="32767" attributes="2"/>
+                                      <Component id="jLabel3" alignment="1" pref="101" max="32767" attributes="2"/>
+                                      <Component id="jLabel6" alignment="1" pref="101" max="32767" attributes="0"/>
+                                      <Component id="jLabel4" alignment="1" pref="101" max="32767" attributes="0"/>
+                                      <Component id="jLabel5" alignment="1" pref="101" max="32767" attributes="0"/>
+                                      <Component id="checkbox_dontUseSkin" alignment="1" max="32767" attributes="2"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="button_BGColor" alignment="0" pref="158" max="32767" attributes="0"/>
-                                      <Component id="combobox_laf" alignment="0" pref="158" max="32767" attributes="2"/>
-                                      <Component id="combobox_dateFormat" alignment="0" pref="158" max="32767" attributes="2"/>
-                                      <Component id="combobox_debugMode" alignment="0" pref="158" max="32767" attributes="0"/>
-                                      <Component id="checkBox_modal" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="button_dateFormatHelp" min="-2" pref="44" max="-2" attributes="0"/>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jLabel7" max="32767" attributes="0"/>
-                                          <EmptySpace min="90" pref="90" max="90" attributes="0"/>
-                                      </Group>
-                                  </Group>
                               </Group>
+                              <Group type="102" attributes="0">
+                                  <Component id="jLabel10" pref="96" max="32767" attributes="0"/>
+                                  <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="label_preview" alignment="0" pref="193" max="32767" attributes="0"/>
+                              <Component id="combobox_fonts" alignment="0" pref="193" max="32767" attributes="0"/>
+                              <Component id="button_BGColor" alignment="0" pref="193" max="32767" attributes="0"/>
+                              <Component id="combobox_laf" alignment="0" pref="193" max="32767" attributes="2"/>
+                              <Component id="combobox_dateFormat" alignment="0" pref="193" max="32767" attributes="2"/>
+                              <Component id="checkBox_modal" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="combobox_debugMode" alignment="0" pref="193" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="button_dateFormatHelp" min="-2" pref="44" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel10" pref="126" max="32767" attributes="0"/>
-                                  <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
-                                  <Component id="combobox_fonts" pref="158" max="32767" attributes="0"/>
-                                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel7" max="32767" attributes="0"/>
+                                  <EmptySpace min="90" pref="90" max="90" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
                                   <Component id="spinner_fontSize" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" max="-2" attributes="0"/>
-                                  <Component id="label_preview" pref="137" max="32767" attributes="0"/>
+                                  <EmptySpace min="-2" pref="141" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -212,9 +213,9 @@
                               <Component id="combobox_debugMode" alignment="1" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="jLabel6" linkSize="2" min="-2" max="-2" attributes="0"/>
-                              <Component id="checkBox_modal" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="2" attributes="0">
+                              <Component id="jLabel6" linkSize="2" alignment="2" min="-2" max="-2" attributes="0"/>
+                              <Component id="checkBox_modal" alignment="2" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -236,11 +237,12 @@
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel10" alignment="1" pref="20" max="32767" attributes="0"/>
-                              <Component id="combobox_fonts" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="spinner_fontSize" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="label_preview" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="combobox_fonts" linkSize="3" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="spinner_fontSize" linkSize="3" alignment="1" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="118" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="label_preview" min="-2" pref="29" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -433,7 +435,7 @@
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="spinner_fontSizeAncestorAdded"/>
+                    <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="spinner_fontSizeStateChanged"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JComboBox" name="combobox_fonts">
