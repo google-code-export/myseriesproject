@@ -25,6 +25,7 @@ import database.SeriesRecord;
 import help.CheckUpdate;
 import help.Help;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FontMetrics;
 import java.awt.Image;
@@ -262,6 +263,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     //SERIES TABLE
     tableSeries.getModel().addTableModelListener(this);
     tableSeries.getTableHeader().setReorderingAllowed(false);
+    tableSeries.getTableHeader().setCursor(Cursor.getDefaultCursor());
     tableSeries.setRowHeight(fontHeight + CELL_MARGIN);
     Series.setTable_series(tableSeries);
     Series.setTableWidths(seriesTableWidths);
@@ -515,8 +517,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
     tableSeries.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
     tableSeries.setModel(tableModel_series);
+    tableSeries.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
     tableSeries.setOpaque(false);
-    tableSeries.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+    tableSeries.setSelectionBackground(tableSeries.getSelectionBackground());
+    tableSeries.setSelectionForeground(tableSeries.getSelectionForeground());
     tableSeries.addMouseListener(new java.awt.event.MouseAdapter() {
       public void mouseClicked(java.awt.event.MouseEvent evt) {
         tableSeriesMouseClicked(evt);
@@ -544,8 +548,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     panel_SeriesLayout.setVerticalGroup(
       panel_SeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(panel_SeriesLayout.createSequentialGroup()
-        .addContainerGap()
-        .addComponent(imageLayerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE)
+        .addGap(33, 33, 33)
+        .addComponent(imageLayerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
         .addGap(53, 53, 53))
       .addGroup(panel_SeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(panel_SeriesLayout.createSequentialGroup()
@@ -684,6 +688,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tableEpisodes.setBackground(tableSeries.getBackground());
     tableEpisodes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
     tableEpisodes.setModel(tableModel_episodes);
+    tableEpisodes.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
     tableEpisodes.setOpaque(false);
     tableEpisodes.setSelectionBackground(tableSeries.getSelectionBackground());
     tableEpisodes.setSelectionForeground(tableSeries.getSelectionForeground());
