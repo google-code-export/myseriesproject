@@ -43,6 +43,7 @@ import com.googlecode.svalidators.validators.CompareValidator;
 import com.googlecode.svalidators.validators.NoSpaceValidator;
 import com.googlecode.svalidators.validators.NullValidator;
 import com.googlecode.svalidators.validators.PositiveNumberValidator;
+import com.googlecode.svalidators.validators.RegularExpressionValidator;
 import com.googlecode.svalidators.validators.SValidator;
 import tools.LookAndFeels;
 import tools.Skin;
@@ -70,6 +71,7 @@ public class OptionsPanel extends MyDraggable {
   private ComboBoxModel primarySubtitlesModel = new DefaultComboBoxModel(Subtitle.SUBTITLE_LANG);
   private ComboBoxModel secondarySubtitlesModel = new DefaultComboBoxModel(Subtitle.SUBTITLE_LANG);
   private ComboBoxModel subtitleSitesModel = new DefaultComboBoxModel(Subtitle.SUBTITLE_SITES);
+  private String sepRegex = "^[^/\\\\?%*:|\\\"<>\\.]";
 
   /** Creates new form OptionsPanel
    * @param m MySeries main form
@@ -77,6 +79,12 @@ public class OptionsPanel extends MyDraggable {
   public OptionsPanel(MySeries m) {
     this.m = m;
     initComponents();
+    tf_episodeSep.addValidator(new RegularExpressionValidator("", sepRegex, false, false));
+    tf_seasonSep.addValidator(new RegularExpressionValidator("", sepRegex, false, false));
+    tf_titleSep.addValidator(new RegularExpressionValidator("", sepRegex, false, false));
+    tf_episodeSep.setTrimValue(false);
+    tf_seasonSep.setTrimValue(false);
+    tf_titleSep.setTrimValue(false);
     combobox_fonts.setRenderer(new MyOptionsFontRenderer());
     combo_secondaryLang.addValidator(
         new CompareValidator(combo_secondaryLang.getSelectedItem().toString(),
@@ -167,6 +175,13 @@ public class OptionsPanel extends MyDraggable {
     jComboBox1 = new javax.swing.JComboBox();
     jLabel15 = new javax.swing.JLabel();
     combo_secondaryLang = new com.googlecode.svalidators.formcomponents.SComboBox();
+    panel_renaming = new javax.swing.JPanel();
+    jLabel18 = new javax.swing.JLabel();
+    jLabel19 = new javax.swing.JLabel();
+    jLabel20 = new javax.swing.JLabel();
+    tf_seasonSep = new com.googlecode.svalidators.formcomponents.STextField();
+    tf_episodeSep = new com.googlecode.svalidators.formcomponents.STextField();
+    tf_titleSep = new com.googlecode.svalidators.formcomponents.STextField();
 
     javax.swing.GroupLayout panel_DateFormatHelpLayout = new javax.swing.GroupLayout(panel_DateFormatHelp);
     panel_DateFormatHelp.setLayout(panel_DateFormatHelpLayout);
@@ -683,6 +698,65 @@ public class OptionsPanel extends MyDraggable {
 
     tabbedPane_options.addTab("Internet", panel_internet);
 
+    jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    jLabel18.setText("Season separator :");
+
+    jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    jLabel19.setText("Episode separator :");
+
+    jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    jLabel20.setText("Title separator :");
+
+    tf_seasonSep.setText(Options.toString(Options.SEASON_SEPARATOR,false));
+    tf_seasonSep.setName(Options.SEASON_SEPARATOR);
+
+    tf_episodeSep.setText(Options.toString(Options.EPISODE_SEPARATOR,false));
+    tf_episodeSep.setName(Options.EPISODE_SEPARATOR);
+
+    tf_titleSep.setText(Options.toString(Options.TITLE_SEPARATOR,false));
+    tf_titleSep.setName(Options.TITLE_SEPARATOR);
+
+    javax.swing.GroupLayout panel_renamingLayout = new javax.swing.GroupLayout(panel_renaming);
+    panel_renaming.setLayout(panel_renamingLayout);
+    panel_renamingLayout.setHorizontalGroup(
+      panel_renamingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(panel_renamingLayout.createSequentialGroup()
+        .addContainerGap()
+        .addGroup(panel_renamingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(panel_renamingLayout.createSequentialGroup()
+            .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(tf_seasonSep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(panel_renamingLayout.createSequentialGroup()
+            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(tf_episodeSep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(panel_renamingLayout.createSequentialGroup()
+            .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(tf_titleSep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        .addContainerGap(281, Short.MAX_VALUE))
+    );
+    panel_renamingLayout.setVerticalGroup(
+      panel_renamingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(panel_renamingLayout.createSequentialGroup()
+        .addContainerGap()
+        .addGroup(panel_renamingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(jLabel18)
+          .addComponent(tf_seasonSep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGroup(panel_renamingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(jLabel19)
+          .addComponent(tf_episodeSep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGroup(panel_renamingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(jLabel20)
+          .addComponent(tf_titleSep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addContainerGap(213, Short.MAX_VALUE))
+    );
+
+    tabbedPane_options.addTab("Renaming", panel_renaming);
+
     javax.swing.GroupLayout panel_optionsLayout = new javax.swing.GroupLayout(panel_options);
     panel_options.setLayout(panel_optionsLayout);
     panel_optionsLayout.setHorizontalGroup(
@@ -730,14 +804,6 @@ public class OptionsPanel extends MyDraggable {
   }// </editor-fold>//GEN-END:initComponents
 
   private void button_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_cancelActionPerformed
-    ValidationGroup group = new ValidationGroup();
-    group.addComponent(textfield_port);
-    group.addComponent(textfield_proxy);
-    group.addComponent(combo_secondaryLang);
-    if (!group.validate()) {
-      group.errorMessage(true);
-      return;
-    }
     dispose();
     MySeries.glassPane.deactivate();
 }//GEN-LAST:event_button_cancelActionPerformed
@@ -776,6 +842,9 @@ public class OptionsPanel extends MyDraggable {
     group.addComponent(textfield_port);
     group.addComponent(textfield_proxy);
     group.addComponent(combo_secondaryLang);
+    group.addComponent(tf_episodeSep);
+    group.addComponent(tf_titleSep);
+    group.addComponent(tf_seasonSep);
     if (!group.validate()) {
       group.errorMessage(true);
       return;
@@ -920,7 +989,10 @@ public class OptionsPanel extends MyDraggable {
   private javax.swing.JLabel jLabel15;
   private javax.swing.JLabel jLabel16;
   private javax.swing.JLabel jLabel17;
+  private javax.swing.JLabel jLabel18;
+  private javax.swing.JLabel jLabel19;
   private javax.swing.JLabel jLabel2;
+  private javax.swing.JLabel jLabel20;
   private javax.swing.JLabel jLabel3;
   private javax.swing.JLabel jLabel4;
   private javax.swing.JLabel jLabel5;
@@ -937,11 +1009,15 @@ public class OptionsPanel extends MyDraggable {
   private javax.swing.JPanel panel_internet;
   private javax.swing.JPanel panel_nextepisodes;
   private javax.swing.JPanel panel_options;
+  private javax.swing.JPanel panel_renaming;
   private javax.swing.JSpinner spinner_fontSize;
   private javax.swing.JSpinner spinner_maxNextEpisodes;
   private javax.swing.JTabbedPane tabbedPane_options;
   private com.googlecode.svalidators.formcomponents.STextField textfield_port;
   private com.googlecode.svalidators.formcomponents.STextField textfield_proxy;
+  private com.googlecode.svalidators.formcomponents.STextField tf_episodeSep;
+  private com.googlecode.svalidators.formcomponents.STextField tf_seasonSep;
+  private com.googlecode.svalidators.formcomponents.STextField tf_titleSep;
   private org.jdesktop.beansbinding.BindingGroup bindingGroup;
   // End of variables declaration//GEN-END:variables
 
@@ -952,6 +1028,7 @@ public class OptionsPanel extends MyDraggable {
     parse(panel_nextepisodes);
     parse(panel_general);
     parse(panel_internet);
+    parse(panel_renaming);
   }
 
   /**
