@@ -10,6 +10,8 @@
  */
 package tools.renaming;
 
+import com.googlecode.svalidators.formcomponents.ValidationGroup;
+import com.googlecode.svalidators.validators.RegularExpressionValidator;
 import database.EpisodesRecord;
 import database.SeriesRecord;
 import java.io.File;
@@ -51,6 +53,7 @@ public class RenameEpisodes extends MyDraggable {
   private ArrayList<EpisodesRecord> newNames;
   private SeriesRecord series;
   private boolean checkAll = false;
+  private String sepRegex = "^[^/\\\\?%*:|\\\"<>\\.]*$";
 
   /**
    * Create rename episodes form
@@ -59,11 +62,17 @@ public class RenameEpisodes extends MyDraggable {
    * @param series The series record
    */
   public RenameEpisodes(ArrayList<File> oldNames,
-      ArrayList<EpisodesRecord> newNames, SeriesRecord series) {
+    ArrayList<EpisodesRecord> newNames, SeriesRecord series) {
     this.oldNames = oldNames;
     this.newNames = newNames;
     this.series = series;
     initComponents();
+    textfield_episode.addValidator(new RegularExpressionValidator("", sepRegex, false, false));
+    textfield_season.addValidator(new RegularExpressionValidator("", sepRegex, false, false));
+    textfield_title.addValidator(new RegularExpressionValidator("", sepRegex, false, false));
+    textfield_episode.setTrimValue(false);
+    textfield_season.setTrimValue(false);
+    textfield_title.setTrimValue(false);
     createTableModel();
     setLocationRelativeTo(null);
     setVisible(true);
@@ -90,9 +99,9 @@ public class RenameEpisodes extends MyDraggable {
     jLabel3 = new javax.swing.JLabel();
     jLabel4 = new javax.swing.JLabel();
     jLabel5 = new javax.swing.JLabel();
-    textfield_season = new javax.swing.JTextField();
-    textfield_episode = new javax.swing.JTextField();
-    textfield_title = new javax.swing.JTextField();
+    textfield_season = new com.googlecode.svalidators.formcomponents.STextField();
+    textfield_episode = new com.googlecode.svalidators.formcomponents.STextField();
+    textfield_title = new com.googlecode.svalidators.formcomponents.STextField();
     button_apply = new javax.swing.JButton();
     jLabel6 = new javax.swing.JLabel();
     checkBox_checkAll = new javax.swing.JCheckBox();
@@ -134,10 +143,13 @@ public class RenameEpisodes extends MyDraggable {
     jLabel5.setText("Title");
 
     textfield_season.setText(Options.toString(Options.SEASON_SEPARATOR, false));
+    textfield_season.setName("Season separator"); // NOI18N
 
     textfield_episode.setText(Options.toString(Options.EPISODE_SEPARATOR, false));
+    textfield_episode.setName("Episode separator"); // NOI18N
 
     textfield_title.setText(Options.toString(Options.TITLE_SEPARATOR, false));
+    textfield_title.setName("Title separator"); // NOI18N
 
     button_apply.setText("Apply");
     button_apply.addActionListener(new java.awt.event.ActionListener() {
@@ -180,7 +192,7 @@ public class RenameEpisodes extends MyDraggable {
             .addComponent(textfield_title, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(button_apply)))
-        .addGap(413, 413, 413))
+        .addGap(423, 423, 423))
     );
 
     jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {textfield_episode, textfield_season, textfield_title});
@@ -213,12 +225,12 @@ public class RenameEpisodes extends MyDraggable {
       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
         .addContainerGap()
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 819, Short.MAX_VALUE)
+          .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 829, Short.MAX_VALUE)
           .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
             .addComponent(button_rename)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(button_cancel))
-          .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 819, Short.MAX_VALUE)
+          .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 829, Short.MAX_VALUE)
           .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         .addContainerGap())
     );
@@ -242,9 +254,7 @@ public class RenameEpisodes extends MyDraggable {
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(layout.createSequentialGroup()
-        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+      .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -259,12 +269,30 @@ public class RenameEpisodes extends MyDraggable {
     dispose();
   }//GEN-LAST:event_button_cancelActionPerformed
 
-  private void button_applyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_applyActionPerformed
+  private boolean validateValues() {
+    ValidationGroup group = new ValidationGroup();
+    group.addComponent(textfield_episode);
+    group.addComponent(textfield_season);
+    group.addComponent(textfield_title);
+    if (group.validate()) {
+      return true;
+    } else {
+      group.errorMessage(true);
+      return false;
+    }
+  }
 
-    createTableModel();
+  private void button_applyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_applyActionPerformed
+    if (validateValues()) {
+      createTableModel();
+    }
+
   }//GEN-LAST:event_button_applyActionPerformed
 
   private void button_renameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_renameActionPerformed
+    if (!validateValues()) {
+      return;
+    }
     TableModel model = table_rename.getModel();
     int renames = 0;
     int fails = 0;
@@ -306,9 +334,9 @@ public class RenameEpisodes extends MyDraggable {
   private javax.swing.JScrollPane jScrollPane1;
   private javax.swing.JTextField jTextField4;
   private javax.swing.JTable table_rename;
-  private javax.swing.JTextField textfield_episode;
-  private javax.swing.JTextField textfield_season;
-  private javax.swing.JTextField textfield_title;
+  private com.googlecode.svalidators.formcomponents.STextField textfield_episode;
+  private com.googlecode.svalidators.formcomponents.STextField textfield_season;
+  private com.googlecode.svalidators.formcomponents.STextField textfield_title;
   // End of variables declaration//GEN-END:variables
 
   private void createTableModel() {

@@ -71,7 +71,7 @@ public class OptionsPanel extends MyDraggable {
   private ComboBoxModel primarySubtitlesModel = new DefaultComboBoxModel(Subtitle.SUBTITLE_LANG);
   private ComboBoxModel secondarySubtitlesModel = new DefaultComboBoxModel(Subtitle.SUBTITLE_LANG);
   private ComboBoxModel subtitleSitesModel = new DefaultComboBoxModel(Subtitle.SUBTITLE_SITES);
-  private String sepRegex = "^[^/\\\\?%*:|\\\"<>\\.]";
+  private String sepRegex = "^[^/\\\\?%*:|\\\"<>\\.]*$";
 
   /** Creates new form OptionsPanel
    * @param m MySeries main form
