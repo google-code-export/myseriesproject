@@ -29,10 +29,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
-          </Group>
+          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -57,13 +54,13 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="jLabel1" alignment="0" pref="819" max="32767" attributes="0"/>
+                      <Component id="jLabel1" alignment="0" pref="829" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="button_rename" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="button_cancel" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jScrollPane1" alignment="0" pref="819" max="32767" attributes="1"/>
+                      <Component id="jScrollPane1" alignment="0" pref="829" max="32767" attributes="1"/>
                       <Component id="jPanel2" alignment="0" max="32767" attributes="1"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -164,7 +161,7 @@
                               <Component id="button_apply" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="413" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="423" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -216,25 +213,28 @@
                 <Property name="text" type="java.lang.String" value="Title"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="textfield_season">
+            <Component class="com.googlecode.svalidators.formcomponents.STextField" name="textfield_season">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="Options.toString(Options.SEASON_SEPARATOR, false)" type="code"/>
                 </Property>
+                <Property name="name" type="java.lang.String" value="Season separator" noResource="true"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="textfield_episode">
+            <Component class="com.googlecode.svalidators.formcomponents.STextField" name="textfield_episode">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="Options.toString(Options.EPISODE_SEPARATOR, false)" type="code"/>
                 </Property>
+                <Property name="name" type="java.lang.String" value="Episode separator" noResource="true"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="textfield_title">
+            <Component class="com.googlecode.svalidators.formcomponents.STextField" name="textfield_title">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="Options.toString(Options.TITLE_SEPARATOR, false)" type="code"/>
                 </Property>
+                <Property name="name" type="java.lang.String" value="Title separator" noResource="true"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="button_apply">
