@@ -20,25 +20,14 @@ import myComponents.MyMessages;
 import myComponents.MyTableModels.MyRenameEpisodesTableModel;
 import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyDraggable;
+import tools.languages.LangsList;
+import tools.options.Options;
 
 /**
  *
  * @author lordovol
  */
 public class RenameEpisodes extends MyDraggable {
-
-  /**
-   * The season seperator in renaming episodes (default : " - ")
-   */
-  public static String SEASON_SEPARATOR = " - ";
-  /**
-   * The title seperator in renaming episodes (default : " - ")
-   */
-  public static String TITLE_SEPARATOR = " - ";
-  /**
-   * The episodes seperator in renaming episodes (default : "x")
-   */
-  public static String EPISODE_SEPARATOR = "x";
 
   /**
    * RenameEpisodes table id column : 0
@@ -70,7 +59,7 @@ public class RenameEpisodes extends MyDraggable {
    * @param series The series record
    */
   public RenameEpisodes(ArrayList<File> oldNames,
-          ArrayList<EpisodesRecord> newNames, SeriesRecord series) {
+      ArrayList<EpisodesRecord> newNames, SeriesRecord series) {
     this.oldNames = oldNames;
     this.newNames = newNames;
     this.series = series;
@@ -144,11 +133,11 @@ public class RenameEpisodes extends MyDraggable {
 
     jLabel5.setText("Title");
 
-    textfield_season.setText(SEASON_SEPARATOR);
+    textfield_season.setText(Options.toString(Options.SEASON_SEPARATOR, false));
 
-    textfield_episode.setText(EPISODE_SEPARATOR);
+    textfield_episode.setText(Options.toString(Options.EPISODE_SEPARATOR, false));
 
-    textfield_title.setText(TITLE_SEPARATOR);
+    textfield_title.setText(Options.toString(Options.TITLE_SEPARATOR, false));
 
     button_apply.setText("Apply");
     button_apply.addActionListener(new java.awt.event.ActionListener() {
@@ -355,16 +344,16 @@ public class RenameEpisodes extends MyDraggable {
     String[] tokens = oldFile.getName().split("\\.", -1);
     String ext = tokens[tokens.length - 1];
     if (ext.equals("srt") || ext.equals("sub")) {
-      if (tokens[tokens.length - 2].equals("gr") || tokens[tokens.length - 2].equals("en")) {
+      if (LangsList.isLanguageCode(tokens[tokens.length - 2])) {
         ext = tokens[tokens.length - 2] + "." + tokens[tokens.length - 1];
       }
     }
 
     String newFilename = series.getTitle() + textfield_season.getText()
-            + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0")
-            + textfield_episode.getText()
-            + MyUsefulFunctions.padLeft(episode.getEpisode(), 2, "0")
-            + textfield_title.getText() + episode.getTitle();
+        + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0")
+        + textfield_episode.getText()
+        + MyUsefulFunctions.padLeft(episode.getEpisode(), 2, "0")
+        + textfield_title.getText() + episode.getTitle();
 
     String newName = series.getLocalDir() + "/" + newFilename + "." + ext;
     return new File(newName);

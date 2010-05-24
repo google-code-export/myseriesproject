@@ -508,9 +508,9 @@ public class Actions {
               }
 
               String newFilename = series.getTitle()
-                  + RenameEpisodes.SEASON_SEPARATOR + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0")
-                  + RenameEpisodes.EPISODE_SEPARATOR + MyUsefulFunctions.padLeft(episodesRecord.getEpisode(), 2, "0")
-                  + RenameEpisodes.TITLE_SEPARATOR + episodesRecord.getTitle();
+                  + Options.toString(Options.SEASON_SEPARATOR, false) + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0")
+                  + Options.toString(Options.EPISODE_SEPARATOR, false) + MyUsefulFunctions.padLeft(episodesRecord.getEpisode(), 2, "0")
+                  + Options.toString(Options.TITLE_SEPARATOR, false) + episodesRecord.getTitle();
 
               String newName = path + "/" + newFilename + "." + ext;
               File newFile = new File(newName);
