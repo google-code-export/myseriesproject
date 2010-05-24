@@ -253,6 +253,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     //FILTERS TABLE
     tableFilters.getModel().addTableModelListener(this);
     tableFilters.getTableHeader().setReorderingAllowed(false);
+    tableSeries.getTableHeader().setCursor(Cursor.getDefaultCursor());
     tableFilters.getColumn(Filters.SUBS_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MySubtitleEditor(subs));
     tableFilters.getColumn(Filters.AIRED_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MyJDateChooserCellEditor());
     tableFilters.getColumn(Filters.AIRED_COLUMN_TITLE).setCellRenderer(new MyJDateChooserCellRenderer());
@@ -736,6 +737,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tableFilters.setBackground(tableSeries.getBackground());
     tableFilters.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
     tableFilters.setModel(tableModel_filterSeries);
+    tableFilters.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
     tableFilters.setOpaque(false);
     tableFilters.setSelectionBackground(tableSeries.getSelectionBackground());
     tableFilters.setSelectionForeground(tableSeries.getSelectionForeground());

@@ -4,14 +4,14 @@
  */
 package tools.options;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
-import tools.Skin;
 
 /**
  *
@@ -21,12 +21,11 @@ public class MyOptionsFontRenderer extends JLabel implements ListCellRenderer {
 
   public MyOptionsFontRenderer() {
     setOpaque(true);
+    setBorder(BorderFactory.createEmptyBorder());
     setHorizontalAlignment(LEFT);
-    setVerticalAlignment(CENTER);
     setPreferredSize(new Dimension(this.getWidth(), 20));
   }
 
-  
   @Override
   public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
     if (isSelected) {
@@ -35,13 +34,10 @@ public class MyOptionsFontRenderer extends JLabel implements ListCellRenderer {
     } else {
       setBackground(list.getBackground());
       setForeground(list.getForeground());
-    } 
-
-    //Set the icon and text.  If icon was null, say so.
-
+    }
     String val = (String) list.getModel().getElementAt(index);
     setText(val);
-    setFont(new Font(val, Font.PLAIN, 12));
+    setFont(new Font((String) value, Font.PLAIN, 12));
 
     return this;
   }
