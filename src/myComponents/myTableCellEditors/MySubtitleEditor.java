@@ -25,6 +25,7 @@ public class MySubtitleEditor extends AbstractCellEditor implements TableCellEdi
     this.combo = subs;
   }
 
+  @Override
   public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
     DefaultComboBoxModel model = (DefaultComboBoxModel) combo.getModel();
     if(model.getIndexOf(value) == -1){
@@ -34,6 +35,7 @@ public class MySubtitleEditor extends AbstractCellEditor implements TableCellEdi
     return combo;
   }
 
+  @Override
    public Language getCellEditorValue() {
     return (Language) combo.getSelectedItem();
   }
