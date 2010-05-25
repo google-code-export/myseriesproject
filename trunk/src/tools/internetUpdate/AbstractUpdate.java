@@ -58,6 +58,10 @@ public abstract class AbstractUpdate {
    * The current updated series
    */
   protected SeriesRecord series;
+  /**
+   * The site from which data is updated
+   */
+  protected String site;
 
   public void run() {
     start = System.currentTimeMillis();
@@ -116,9 +120,7 @@ public abstract class AbstractUpdate {
         serVector.add(iu.getCurrentSeries());
       }
       iu.progress_bar.setIndeterminate(true);
-      iu.progress_bar.setString("Getting data from "
-              + (Options.toString(Options.INTERNET_UPDATE_DB).equals(InternetUpdate.EP_GUIDES_NAME)
-              ? InternetUpdate.EP_GUIDES_URL : InternetUpdate.TV_RAGE_URL));
+      iu.progress_bar.setString("Getting data from " + site );
       append("<span style='font-weight:bold;font-size:12px'>Getting data</span>");
       for (int i = 0; i < serVector.size(); i++) {
         series = serVector.get(i);

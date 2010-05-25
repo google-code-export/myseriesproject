@@ -351,15 +351,15 @@ public class Actions {
     new SaveDatabase();
   }
 
-  public static void internetUpdate(MySeries m) {
+  public static void internetUpdate(MySeries m, String site) {
     MySeries.glassPane.activate(null);
-    new InternetUpdate(m);
+    new InternetUpdate(m, site);
   }
 
-  public static void internetUpdateSeries(MySeries m) {
+  public static void internetUpdateSeries(MySeries m,String site) {
     MySeries.glassPane.activate(null);
     SeriesRecord cSeries = Series.getCurrentSerial();
-    if (Options.toString(Options.INTERNET_UPDATE_DB).equals(InternetUpdate.TV_RAGE_NAME) && cSeries.getTvrage_ID() == 0) {
+    if (site.equals(InternetUpdate.TV_RAGE_NAME) && cSeries.getTvrage_ID() == 0) {
       try {
         TrGetId g = new TrGetId(m, cSeries.getSeries_ID(), cSeries.getTitle());
         cSeries.setTvrage_ID(g.tvRageID);
@@ -368,7 +368,7 @@ public class Actions {
         MySeries.logger.log(Level.SEVERE, null, ex);
       }
     } else {
-      InternetUpdate iu = new InternetUpdate(m, Series.getCurrentSerial());
+      InternetUpdate iu = new InternetUpdate(m, Series.getCurrentSerial(),site);
     }
     MySeries.glassPane.deactivate();
   }

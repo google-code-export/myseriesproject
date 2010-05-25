@@ -43,6 +43,7 @@ public class TrUpdate extends AbstractUpdate implements Runnable {
   public TrUpdate(InternetUpdate iu) {
     this.iu = iu;
     this.list = new ArrayList<AbstractSeriesToUpdate>();
+    this.site = InternetUpdate.TV_RAGE_NAME;
   }
 
   @Override

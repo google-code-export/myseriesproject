@@ -65,6 +65,7 @@ import myseries.series.UpdateSeriesTable;
 import tools.DesktopSupport;
 import tools.Skin;
 import tools.download.subtitles.Subtitle;
+import tools.internetUpdate.InternetUpdate;
 import tools.languages.LangsList;
 import tools.myLogger;
 
@@ -74,6 +75,36 @@ import tools.myLogger;
  */
 public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
+  /**
+   * Shortcuts
+   * MySeries
+   *    Create Database : Ctrl+C
+   *    Load Database : Ctrl+L
+   *    Save Database : Ctrl+S
+   *    Exit Database : Ctrl+Q
+   *
+   * Edit
+   *    Add Series    : Ctrl - A
+   *    Edit Series   : Ctrl - E
+   *    Delete Series : Ctrl - D
+   *    Add Episode   : Ctrl - P
+   *
+   * Tools
+   *    Export Episodes : Ctrl - X
+   *    Import Episodes : Ctrl - I
+   *    Download Torrent: Ctrl - T
+   *    IU TvRage       : Ctrl - R
+   *    IU EpGuides     : Ctrl - G
+   *    Options         : Ctrl - O
+   *
+   * Help
+   *    Help            : F1
+   *    Check Updates   : F5
+   *    View Log File   : F12
+   *    About           : F11
+   *
+   *
+   */
   private MySeriesTableModel tableModel_series;
   public MyEpisodesTableModel tableModel_episodes;
   private MyFilteredSeriesTableModel tableModel_filterSeries;
@@ -287,8 +318,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     PopUpItem_AddSeries = new javax.swing.JMenuItem();
     popUpItem_DownloadSubs = new javax.swing.JMenuItem();
     popUpItem_GoToLocalDir = new javax.swing.JMenuItem();
-    popUpItem_internetUpdate = new javax.swing.JMenuItem();
     popUpItem_renameEpisodes = new javax.swing.JMenuItem();
+    popUpMenu_internetUpdate = new javax.swing.JMenu();
+    popUpItem_IUTvrage = new javax.swing.JMenuItem();
+    popUpItem_IUEpguides = new javax.swing.JMenuItem();
     jSeparator1 = new javax.swing.JSeparator();
     PopUpItem_AddEpisode = new javax.swing.JMenuItem();
     PopUpItem_DeleteSerial = new javax.swing.JMenuItem();
@@ -342,8 +375,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     menu_Tools = new javax.swing.JMenu();
     menuItem_exportEpisodes = new javax.swing.JMenuItem();
     menuItem_importEpisodes = new javax.swing.JMenuItem();
-    menuItem_internetUpdate = new javax.swing.JMenuItem();
     menuItem_downloadTorrent = new javax.swing.JMenuItem();
+    menu_InternetUpdate = new javax.swing.JMenu();
+    menuItem_IUTvrage = new javax.swing.JMenuItem();
+    menuItem_IUEpguides = new javax.swing.JMenuItem();
     jSeparator2 = new javax.swing.JSeparator();
     menuItem_options = new javax.swing.JMenuItem();
     menu_Help = new javax.swing.JMenu();
@@ -380,15 +415,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     });
     seriesPopUp.add(popUpItem_GoToLocalDir);
 
-    popUpItem_internetUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/internet_update.png"))); // NOI18N
-    popUpItem_internetUpdate.setText("Update Episodes List");
-    popUpItem_internetUpdate.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        popUpItem_internetUpdateActionPerformed(evt);
-      }
-    });
-    seriesPopUp.add(popUpItem_internetUpdate);
-
     popUpItem_renameEpisodes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/rename.png"))); // NOI18N
     popUpItem_renameEpisodes.setText("Rename Episodes");
     popUpItem_renameEpisodes.addActionListener(new java.awt.event.ActionListener() {
@@ -397,6 +423,30 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       }
     });
     seriesPopUp.add(popUpItem_renameEpisodes);
+
+    popUpMenu_internetUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/internet_update.png"))); // NOI18N
+    popUpMenu_internetUpdate.setText("Update " + Series.getCurrentSerial() + " episodes list");
+    popUpMenu_internetUpdate.setFont(popUpMenu_internetUpdate.getFont());
+
+    popUpItem_IUTvrage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/tvrage.png"))); // NOI18N
+    popUpItem_IUTvrage.setText("Update from " + InternetUpdate.TV_RAGE_NAME);
+    popUpItem_IUTvrage.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        popUpItem_IUTvrageActionPerformed(evt);
+      }
+    });
+    popUpMenu_internetUpdate.add(popUpItem_IUTvrage);
+
+    popUpItem_IUEpguides.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/epguides.png"))); // NOI18N
+    popUpItem_IUEpguides.setText("Update from " + InternetUpdate.EP_GUIDES_NAME);
+    popUpItem_IUEpguides.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        popUpItem_IUEpguidesActionPerformed(evt);
+      }
+    });
+    popUpMenu_internetUpdate.add(popUpItem_IUEpguides);
+
+    seriesPopUp.add(popUpMenu_internetUpdate);
     seriesPopUp.add(jSeparator1);
 
     PopUpItem_AddEpisode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add_episode.png"))); // NOI18N
@@ -1009,16 +1059,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     });
     menu_Tools.add(menuItem_importEpisodes);
 
-    menuItem_internetUpdate.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
-    menuItem_internetUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/internet_update.png"))); // NOI18N
-    menuItem_internetUpdate.setText("Internet Update");
-    menuItem_internetUpdate.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        menuItem_internetUpdateActionPerformed(evt);
-      }
-    });
-    menu_Tools.add(menuItem_internetUpdate);
-
     menuItem_downloadTorrent.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_MASK));
     menuItem_downloadTorrent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/torrent.png"))); // NOI18N
     menuItem_downloadTorrent.setText("Download Torrent");
@@ -1028,6 +1068,31 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       }
     });
     menu_Tools.add(menuItem_downloadTorrent);
+
+    menu_InternetUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/internet_update.png"))); // NOI18N
+    menu_InternetUpdate.setText("Internet Update");
+
+    menuItem_IUTvrage.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+    menuItem_IUTvrage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/tvrage.png"))); // NOI18N
+    menuItem_IUTvrage.setText("Update from " + InternetUpdate.TV_RAGE_NAME);
+    menuItem_IUTvrage.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        menuItem_IUTvrageActionPerformed(evt);
+      }
+    });
+    menu_InternetUpdate.add(menuItem_IUTvrage);
+
+    menuItem_IUEpguides.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
+    menuItem_IUEpguides.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/epguides.png"))); // NOI18N
+    menuItem_IUEpguides.setText("Update from " + InternetUpdate.EP_GUIDES_NAME);
+    menuItem_IUEpguides.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        menuItem_IUEpguidesActionPerformed(evt);
+      }
+    });
+    menu_InternetUpdate.add(menuItem_IUEpguides);
+
+    menu_Tools.add(menu_InternetUpdate);
     menu_Tools.add(jSeparator2);
 
     menuItem_options.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
@@ -1142,7 +1207,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     popUpItem_renameEpisodes.setEnabled(state);
     menuItem_exportEpisodes.setEnabled(state);
     popUpItem_exportEpisodes.setEnabled(state);
-    popUpItem_internetUpdate.setEnabled(state);
+    popUpItem_IUTvrage.setEnabled(state);
     if (ser != null) {
       PopUpItem_AddEpisode.setText("Add new episode to " + ser);
       PopUpItem_DeleteSerial.setText("Delete series " + ser);
@@ -1152,7 +1217,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       popUpItem_renameEpisodes.setText("Rename " + ser + " directory");
       menuItem_exportEpisodes.setText("Export episodes of " + ser);
       popUpItem_exportEpisodes.setText("Export episodes of " + ser);
-      popUpItem_internetUpdate.setText("Update " + ser + " episodes list");
+      popUpMenu_internetUpdate.setText("Update " + ser + " episodes list");
       if (Series.getCurrentSerial().getTvSubtitlesCode().equals("") || !DesktopSupport.isDesktopSupport() || !DesktopSupport.isBrowseSupport()) {
         popUpItem_DownloadSubs.setEnabled(false);
       }
@@ -1163,7 +1228,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
         popUpItem_renameEpisodes.setEnabled(false);
       }
       if (Series.getCurrentSerial().getInternetUpdate() == 0) {
-        popUpItem_internetUpdate.setEnabled(false);
+        popUpItem_IUTvrage.setEnabled(false);
       }
 
     } else {
@@ -1174,7 +1239,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       popUpItem_GoToLocalDir.setText("Open Directory");
       popUpItem_renameEpisodes.setText("Rename episodes");
       popUpItem_exportEpisodes.setText("Export episodes");
-      popUpItem_internetUpdate.setText("Update episodes list");
+      popUpItem_IUTvrage.setText("Update episodes list");
     }
   }
 
@@ -1417,13 +1482,13 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     Actions.saveDatase();
   }//GEN-LAST:event_menuItem_saveDatabaseAsActionPerformed
 
-  private void menuItem_internetUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_internetUpdateActionPerformed
-    Actions.internetUpdate(this);
-}//GEN-LAST:event_menuItem_internetUpdateActionPerformed
+  private void menuItem_IUTvrageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_IUTvrageActionPerformed
+    Actions.internetUpdate(this,InternetUpdate.TV_RAGE_NAME);
+}//GEN-LAST:event_menuItem_IUTvrageActionPerformed
 
-  private void popUpItem_internetUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_internetUpdateActionPerformed
-    Actions.internetUpdateSeries(this);
-  }//GEN-LAST:event_popUpItem_internetUpdateActionPerformed
+  private void popUpItem_IUTvrageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_IUTvrageActionPerformed
+    Actions.internetUpdateSeries(this,InternetUpdate.TV_RAGE_NAME);
+  }//GEN-LAST:event_popUpItem_IUTvrageActionPerformed
 
   private void menuItem_checkUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_checkUpdateActionPerformed
     Actions.checkUpdates();
@@ -1509,6 +1574,15 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   private void menuItem_downloadTorrentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_downloadTorrentActionPerformed
     Actions.downloadTorrent();
   }//GEN-LAST:event_menuItem_downloadTorrentActionPerformed
+
+  private void popUpItem_IUEpguidesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_IUEpguidesActionPerformed
+    Actions.internetUpdateSeries(this,InternetUpdate.EP_GUIDES_NAME);
+  }//GEN-LAST:event_popUpItem_IUEpguidesActionPerformed
+
+  private void menuItem_IUEpguidesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_IUEpguidesActionPerformed
+    Actions.internetUpdate(this,InternetUpdate.EP_GUIDES_NAME);
+  }//GEN-LAST:event_menuItem_IUEpguidesActionPerformed
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
   public static javax.swing.JMenuItem PopUpItem_AddEpisode;
   public static javax.swing.JMenuItem PopUpItem_AddEpisodeInEpisodes;
@@ -1534,6 +1608,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static javax.swing.JLabel label_NextEpisodeTitle;
   public static javax.swing.JMenuBar menuBar;
   public static javax.swing.JMenuItem menuItem_About;
+  public static javax.swing.JMenuItem menuItem_IUEpguides;
+  public static javax.swing.JMenuItem menuItem_IUTvrage;
   public static javax.swing.JMenuItem menuItem_addSeries;
   public static javax.swing.JMenuItem menuItem_checkUpdate;
   public static javax.swing.JMenuItem menuItem_createDB;
@@ -1545,13 +1621,13 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static javax.swing.JMenuItem menuItem_exportEpisodes;
   public static javax.swing.JMenuItem menuItem_help;
   public static javax.swing.JMenuItem menuItem_importEpisodes;
-  public static javax.swing.JMenuItem menuItem_internetUpdate;
   public static javax.swing.JMenuItem menuItem_loadDatabase;
   public static javax.swing.JMenuItem menuItem_options;
   public static javax.swing.JMenuItem menuItem_saveDatabaseAs;
   public static javax.swing.JMenuItem menuItem_viewLogs;
   public static javax.swing.JMenu menu_Edit;
   public static javax.swing.JMenu menu_Help;
+  public static javax.swing.JMenu menu_InternetUpdate;
   public static javax.swing.JMenu menu_MySeries;
   public static javax.swing.JMenu menu_Tools;
   public static javax.swing.JPanel panel_NextEpisodesbuttons;
@@ -1563,13 +1639,15 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static javax.swing.JPanel panel_nextEpisodes;
   public static javax.swing.JMenuItem popUpItem_DownloadSubs;
   public static javax.swing.JMenuItem popUpItem_GoToLocalDir;
+  public static javax.swing.JMenuItem popUpItem_IUEpguides;
+  public static javax.swing.JMenuItem popUpItem_IUTvrage;
   public static javax.swing.JMenuItem popUpItem_deleteEpisode;
   public static javax.swing.JMenuItem popUpItem_downloadSubtitles;
   public static javax.swing.JMenuItem popUpItem_downloadTorrent;
   public static javax.swing.JMenuItem popUpItem_exportEpisodes;
-  public static javax.swing.JMenuItem popUpItem_internetUpdate;
   public static javax.swing.JMenuItem popUpItem_renameEpisodes;
   public static javax.swing.JMenuItem popUpItem_viewEpisode;
+  public static javax.swing.JMenu popUpMenu_internetUpdate;
   public static javax.swing.JScrollPane scrollPane_series;
   public static javax.swing.JPopupMenu seriesPopUp;
   public static javax.swing.JSplitPane splitPane_main;

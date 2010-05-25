@@ -211,7 +211,7 @@ public class TrGetId extends MyDraggable {
       }
       adminSeries.setVisible(true);
     } else {
-      InternetUpdate iu = new InternetUpdate(myS, Series.getCurrentSerial());
+      InternetUpdate iu = new InternetUpdate(myS, Series.getCurrentSerial(),InternetUpdate.TV_RAGE_NAME);
     }
 
   }//GEN-LAST:event_button_cancelActionPerformed

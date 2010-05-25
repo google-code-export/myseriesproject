@@ -50,12 +50,15 @@ public class InternetUpdate extends MyDraggable {
   private Thread t;
   private SeriesRecord currentSeries = null;
   private static final long serialVersionUID = 4364575758658L;
+  private String site = "";
 
   /** Creates new form InternetUpdate from MySeries Form
    * @param m The myseries form
+   * @param site From which site to update
    */
-  public InternetUpdate(MySeries m) {
+  public InternetUpdate(MySeries m, String site) {
     this.m = m;
+    this.site = site;
     initComponents();
     startUpdate();
     setLocationRelativeTo(m);
@@ -67,14 +70,17 @@ public class InternetUpdate extends MyDraggable {
    * Constructs an internet update for a specific series
    * @param m The mySeries form
    * @param currentSeries The series to update
+   * @param site From which site to update
    */
-  public InternetUpdate(MySeries m, SeriesRecord currentSeries) {
+  public InternetUpdate(MySeries m, SeriesRecord currentSeries, String site) {
     this.m = m;
     this.currentSeries = currentSeries;
+    this.site = site;
     initComponents();
     startUpdate();
     setLocationRelativeTo(m);
     setVisible(true);
+    
   }
 
   /** This method is called from within the constructor to
@@ -160,9 +166,9 @@ public class InternetUpdate extends MyDraggable {
 
   private void startUpdate() {
     Runnable task = null;
-    if (Options.toString(Options.INTERNET_UPDATE_DB).equals(EP_GUIDES_NAME)) {
+    if (site.equals(EP_GUIDES_NAME)) {
       task = new EgUpdate(this);
-    } else if (Options.toString(Options.INTERNET_UPDATE_DB).equals(TV_RAGE_NAME)) {
+    } else if (site.equals(TV_RAGE_NAME)) {
       task = new TrUpdate(this);
     } else {
       return;
