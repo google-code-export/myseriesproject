@@ -39,6 +39,7 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
   public EgUpdate(InternetUpdate iu) {
     this.iu = iu;
     this.list = new ArrayList<AbstractSeriesToUpdate>();
+    this.site = InternetUpdate.EP_GUIDES_NAME;
   }
 
   protected boolean read(SeriesRecord series) {

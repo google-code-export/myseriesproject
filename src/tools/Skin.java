@@ -226,6 +226,9 @@ public class Skin {
     UIManager.put("MenuItem.selectionForeground", getForeGroundColor(getColor_1()));
     UIManager.put("Menu.selectionBackground", getColor_1());
 
+    UIManager.put("PopupMenu.background", getColor_4());
+    UIManager.put("PopupMenu.foreground", getForeGroundColor(getColor_4()));
+
     UIManager.put("SplitPane.background", getColor_5());
     Border bord = BorderFactory.createBevelBorder(BevelBorder.RAISED, skinColor.brighter(), skinColor.darker());
     UIManager.put("SplitPane.dividerSize", 5);
