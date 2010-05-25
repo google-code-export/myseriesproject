@@ -14,7 +14,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
-import java.awt.event.KeyEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -41,12 +40,12 @@ import myseries.StartPanel;
 import myseries.episodes.NextEpisodes;
 import com.googlecode.svalidators.formcomponents.ValidationGroup;
 import com.googlecode.svalidators.validators.CompareValidator;
+import com.googlecode.svalidators.validators.ListValidator;
 import com.googlecode.svalidators.validators.NoSpaceValidator;
 import com.googlecode.svalidators.validators.NullValidator;
 import com.googlecode.svalidators.validators.PositiveNumberValidator;
 import com.googlecode.svalidators.validators.RegularExpressionValidator;
 import com.googlecode.svalidators.validators.SValidator;
-import java.awt.event.KeyAdapter;
 import tools.LookAndFeels;
 import tools.Skin;
 import tools.download.subtitles.Subtitle;
@@ -117,9 +116,11 @@ public class OptionsPanel extends MyDraggable {
 
   private void createModelFonts() {
     GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
-    model_fonts = new DefaultComboBoxModel(env.getAvailableFontFamilyNames());
+    String[] fonts = env.getAvailableFontFamilyNames();
+    model_fonts = new DefaultComboBoxModel(fonts);
     combobox_fonts.setModel(model_fonts);
     model_fonts.setSelectedItem(Options.toString(Options.FONT_FACE));
+    combobox_fonts.addValidator(new ListValidator("", fonts, false));
   }
 
   /** This method is called from within the constructor to
@@ -155,7 +156,7 @@ public class OptionsPanel extends MyDraggable {
     jLabel6 = new javax.swing.JLabel();
     jLabel10 = new javax.swing.JLabel();
     spinner_fontSize = new javax.swing.JSpinner();
-    combobox_fonts = new javax.swing.JComboBox();
+    combobox_fonts = new com.googlecode.svalidators.formcomponents.SComboBox();
     label_preview = new javax.swing.JLabel();
     jLabel16 = new javax.swing.JLabel();
     jLabel17 = new javax.swing.JLabel();
@@ -330,6 +331,7 @@ public class OptionsPanel extends MyDraggable {
       }
     });
 
+    combobox_fonts.setEditable(true);
     combobox_fonts.setName(Options.FONT_FACE);
     combobox_fonts.setRenderer(new MyOptionsFontRenderer());
     combobox_fonts.addActionListener(new java.awt.event.ActionListener() {
@@ -379,13 +381,16 @@ public class OptionsPanel extends MyDraggable {
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
         .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(panel_generalLayout.createSequentialGroup()
-            .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(button_BGColor, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
-              .addComponent(combobox_laf, 0, 183, Short.MAX_VALUE)
-              .addComponent(combobox_dateFormat, 0, 183, Short.MAX_VALUE)
-              .addComponent(checkBox_modal)
-              .addComponent(combobox_debugMode, 0, 183, Short.MAX_VALUE)
-              .addComponent(combobox_fonts, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+              .addGroup(panel_generalLayout.createSequentialGroup()
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(combobox_fonts, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+              .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(button_BGColor, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                .addComponent(combobox_laf, 0, 183, Short.MAX_VALUE)
+                .addComponent(combobox_dateFormat, 0, 183, Short.MAX_VALUE)
+                .addComponent(checkBox_modal)
+                .addComponent(combobox_debugMode, 0, 183, Short.MAX_VALUE)))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
               .addComponent(button_dateFormatHelp, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -428,7 +433,7 @@ public class OptionsPanel extends MyDraggable {
         .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
           .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
             .addComponent(spinner_fontSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(combobox_fonts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(combobox_fonts, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
           .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
@@ -444,8 +449,6 @@ public class OptionsPanel extends MyDraggable {
     panel_generalLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {button_dateFormatHelp, combobox_dateFormat});
 
     panel_generalLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {checkbox_dontUseSkin, jLabel3, jLabel4, jLabel5, jLabel6});
-
-    panel_generalLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {combobox_fonts, spinner_fontSize});
 
     createLafModel();
     combobox_laf.setSelectedItem(Options.toString(Options.LOOK_AND_FEEL));
@@ -983,7 +986,7 @@ public class OptionsPanel extends MyDraggable {
   private javax.swing.JComboBox combo_updateDb;
   private javax.swing.JComboBox combobox_dateFormat;
   private javax.swing.JComboBox combobox_debugMode;
-  private javax.swing.JComboBox combobox_fonts;
+  private com.googlecode.svalidators.formcomponents.SComboBox combobox_fonts;
   private javax.swing.JComboBox combobox_laf;
   private javax.swing.JCheckBox jCheckBox1;
   private javax.swing.JCheckBox jCheckBox2;
