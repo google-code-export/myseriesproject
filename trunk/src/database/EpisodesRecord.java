@@ -51,13 +51,13 @@ public class EpisodesRecord extends Record {
    * Unknown state of subs , used in UpdateEpisodesTable : 4
    */
   public static final int UNKNOWN_SUB = 4;
-   /**
+  /**
    * MySQL date format : "yyyy-MM-dd"
    */
   public static final String MYSQL_DATE_FORMAT = "yyyy-MM-dd";
- /**
-  * The database table
-  */
+  /**
+   * The database table
+   */
   public static final String table = "episodes";
   /**
    * Default values for episode record attributes
@@ -70,6 +70,7 @@ public class EpisodesRecord extends Record {
   private int downloaded = NOT_DOWNLOADED;
   private Language subs = LangsList.NONE;
   private int seen = NOT_SEEN;
+  private double rate = 0.0;
 
   /**
    * Default constructor
@@ -78,7 +79,7 @@ public class EpisodesRecord extends Record {
     super();
   }
 
-   /**
+  /**
    * Inserts a record in the database if it doesn't exist, or updates it if it exists
    * @return The id of the inserted record or -1 if it's an update
    * @throws java.sql.SQLException
@@ -87,16 +88,16 @@ public class EpisodesRecord extends Record {
     String sql;
 
     if (this.getEpisode_ID() != 0) {
-      sql = "UPDATE episodes SET title = '" + this.title + "', episode = " + this.episode + ", series_ID = " +
-              this.series_ID + ", aired = '" + this.aired + "' ," +
-              " subs = " + this.getSubs().getId() + ", downloaded = " + this.getDownloaded() + ", " +
-              "seen = " + this.getSeen() +
-              " WHERE episode_ID = " + this.getEpisode_ID();
+      sql = "UPDATE episodes SET title = '" + this.title + "', episode = " + this.episode + ", series_ID = "
+              + this.series_ID + ", aired = '" + this.aired + "' ,"
+              + " subs = " + this.getSubs().getId() + ", downloaded = " + this.getDownloaded() + ", "
+              + "seen = " + this.getSeen() + ", rate =" + getRate()
+              + " WHERE episode_ID = " + this.getEpisode_ID();
     } else {
-      sql = "INSERT INTO episodes (episode, title, series_ID,aired, downloaded, subs, seen) " +
-              "VALUES(" + this.episode + ", '" + this.title +
-              "', " + this.series_ID + ",'" + this.aired + "'," + this.getDownloaded() + "," +
-              this.getSubs().getId() + "," + this.getSeen() + ")";
+      sql = "INSERT INTO episodes (episode, title, series_ID,aired, downloaded, subs, seen, rate) "
+              + "VALUES(" + this.episode + ", '" + this.title
+              + "', " + this.series_ID + ",'" + this.aired + "'," + this.getDownloaded() + ","
+              + this.getSubs().getId() + "," + this.getSeen() + ", " + getRate() + ")";
     }
     return queryUpdate(sql);
   }
@@ -168,7 +169,7 @@ public class EpisodesRecord extends Record {
    * @param aired the aired to set
    */
   public void setAired(String aired) {
-    if(aired.equals("")) {
+    if (aired.equals("")) {
       aired = "";
     }
     this.aired = MyUsefulFunctions.convertDateForMySQL(aired);
@@ -218,8 +219,20 @@ public class EpisodesRecord extends Record {
 
   @Override
   public String toString() {
-   return getTitle();
+    return getTitle();
   }
 
+  /**
+   * @return the rate
+   */
+  public double getRate() {
+    return rate;
+  }
 
+  /**
+   * @param rate the rate to set
+   */
+  public void setRate(double rate) {
+    this.rate = rate;
+  }
 }

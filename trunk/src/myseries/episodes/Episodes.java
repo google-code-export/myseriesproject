@@ -7,7 +7,6 @@ package myseries.episodes;
 import myseries.series.Series;
 import database.DBConnection;
 import database.EpisodesRecord;
-import database.SeriesRecord;
 import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,9 +20,6 @@ import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 import myComponents.MyTableModels.MyEpisodesTableModel;
 import myComponents.MyUsefulFunctions;
-import myComponents.myFileFilters.SubtitlesFilter;
-import myComponents.myFileFilters.VideoFilter;
-import tools.download.subtitles.Subtitle;
 import tools.languages.LangsList;
 import tools.languages.Language;
 import tools.options.Options;
@@ -35,7 +31,7 @@ import tools.options.Options;
 public class Episodes {
 
   /** The number of columns   */
-  public static final int NUMBER_OF_COLUMS = 6;
+  public static final int NUMBER_OF_COLUMS = 7;
   /** The episodes number table column : 0   */
   public static final int EPISODE_NUM_COLUMN = 0;
   /** The episodes title table column : 1   */
@@ -48,6 +44,8 @@ public class Episodes {
   public static final int SUBS_COLUMN = 4;
   /** The episodes seen table column : 5   */
   public static final int SEEN_COLUMN = 5;
+  /** The episodes rate table column : 6   */
+  public static final int RATE_COLUMN = 6;
   /** The Episodes number column title : Episode Number   */
   public static final String EPISODE_NUM_COLUMN_TITLE = "Episode";
   /** The episodes title table column title : Title   */
@@ -60,6 +58,8 @@ public class Episodes {
   public static final String SUBS_COLUMN_TITLE = "Subtitle";
   /** The episodes seen table column title : Seen   */
   public static final String SEEN_COLUMN_TITLE = "Seen";
+  /** The episodes rate table column title : rate   */
+  public static final String RATE_COLUMN_TITLE = "Rate";
   /** The episodes table model   */
   private static MyEpisodesTableModel tableModel_episodes;
   /** The episodes table   */
@@ -126,7 +126,7 @@ public class Episodes {
       getCurrentEpisode().setDownloaded(rs.getInt("downloaded"));
       getCurrentEpisode().setSubs(LangsList.getLanguageById(rs.getInt("subs")));
       getCurrentEpisode().setSeen(rs.getInt("seen"));
-
+      getCurrentEpisode().setRate(rs.getDouble("rate"));
     }
     rs.close();
   }
@@ -171,6 +171,7 @@ public class Episodes {
       download = rs.getBoolean("downloaded");
       e.setDownloaded(rs.getInt("downloaded"));
       e.setSeen(rs.getInt("seen"));
+      e.setRate(rs.getDouble("rate"));
       if (MyUsefulFunctions.hasBeenAired(e.getAired()) && videoFiles != null) {
         boolean newDownloadedStatus = checkDownloads(Series.getCurrentSerial().getSeason(), e.getEpisode(), videoFiles);
         if (download != newDownloadedStatus) {
@@ -189,7 +190,7 @@ public class Episodes {
       }
       subs = e.getSubs();
       seen = rs.getBoolean("seen");
-      Object[] data = {episode, e, e.getAired(), download, e.getSubs(), seen};
+      Object[] data = {episode, e, e.getAired(), download, e.getSubs(), seen, e.getRate()};
       getTableModel_episodes().addRow(data);
       eps.add(e);
     }

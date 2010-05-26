@@ -23,6 +23,7 @@ public class MyEpisodesTableModel extends DefaultTableModel {
     addColumn(Episodes.DOWNLOADED_COLUMN_TITLE);
     addColumn(Episodes.SUBS_COLUMN_TITLE);
     addColumn(Episodes.SEEN_COLUMN_TITLE);
+    addColumn(Episodes.RATE_COLUMN_TITLE);
   }
 
   @Override
@@ -33,6 +34,8 @@ public class MyEpisodesTableModel extends DefaultTableModel {
       return Integer.class;
     } else if (columnIndex == Episodes.SUBS_COLUMN) {
       return Language.class;
+    } else if (columnIndex == Episodes.RATE_COLUMN) {
+      return Double.class;
     } else {
       return super.getColumnClass(columnIndex);
     }

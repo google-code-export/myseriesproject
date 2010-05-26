@@ -10,6 +10,8 @@
  */
 package myseries;
 
+import com.googlecode.starrating.TableCellStarEditor;
+import com.googlecode.starrating.TableCellStarRenderer;
 import javax.swing.ComboBoxModel;
 import myseries.episodes.NextEpisodes;
 import myseries.episodes.Episodes;
@@ -45,6 +47,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.TableCellRenderer;
 import myComponents.MyTableModels.MyFilteredSeriesTableModel;
 import myComponents.MyTableModels.MySeriesTableModel;
 import myComponents.MyUsefulFunctions;
@@ -273,6 +276,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tableEpisodes.getColumn(Episodes.AIRED_COLUMN_TITLE).setCellRenderer(new MyJDateChooserCellRenderer());
     tableEpisodes.getColumn(Episodes.EPISODERECORD_COLUMN_TITLE).setCellRenderer(new MyTitleCellRenderer());
     tableEpisodes.getColumn(Episodes.EPISODERECORD_COLUMN_TITLE).setCellEditor(new MyTitleCellEditor());
+    tableEpisodes.getColumn(Episodes.RATE_COLUMN_TITLE).setCellRenderer(new TableCellStarRenderer(false));
+    tableEpisodes.getColumn(Episodes.RATE_COLUMN_TITLE).setCellEditor(new TableCellStarEditor());
     Episodes.setTable_episodes(tableEpisodes);
     Episodes.setTableWidths(episodesTableWidths);
     tableEpisodes.setRowHeight(fontHeight + CELL_MARGIN);
