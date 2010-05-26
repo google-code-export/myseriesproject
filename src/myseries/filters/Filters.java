@@ -75,13 +75,13 @@ public class Filters {
    */
   public static final String AIRED_COLUMN_TITLE = "Aired";
   /**
-   * The downloaded field of the table title : Downloaded
+   * The downloaded field of the table title : Video File
    */
-  public static final String DOWNLOADED_COLUMN_TITLE = "Downloaded";
+  public static final String DOWNLOADED_COLUMN_TITLE = "Video File";
   /**
-   * The sub status field of the table title : Subs
+   * The sub status field of the table title : Subtitle
    */
-  public static final String SUBS_COLUMN_TITLE = "Subs";
+  public static final String SUBS_COLUMN_TITLE = "Subtitle";
   /**
    * The seen field of the table title : Seen
    */
