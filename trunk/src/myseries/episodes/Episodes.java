@@ -54,10 +54,10 @@ public class Episodes {
   public static final String EPISODERECORD_COLUMN_TITLE = "Title";
   /** The episodes aired table column title : Aired   */
   public static final String AIRED_COLUMN_TITLE = "Aired";
-  /** The episodes downloaded table column  title: Downloaded   */
-  public static final String DOWNLOADED_COLUMN_TITLE = "Downloaded";
-  /** The episodes sub status table column title : Subs   */
-  public static final String SUBS_COLUMN_TITLE = "Subs";
+  /** The episodes downloaded table column  title: Video File   */
+  public static final String DOWNLOADED_COLUMN_TITLE = "Video File";
+  /** The episodes sub status table column title : Subtitle   */
+  public static final String SUBS_COLUMN_TITLE = "Subtitle";
   /** The episodes seen table column title : Seen   */
   public static final String SEEN_COLUMN_TITLE = "Seen";
   /** The episodes table model   */
