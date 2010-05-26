@@ -176,6 +176,7 @@ public class Episodes {
         if (download != newDownloadedStatus) {
           e.setDownloaded(newDownloadedStatus ? EpisodesRecord.DOWNLOADED : EpisodesRecord.NOT_DOWNLOADED);
           updated.add(e);
+          download = newDownloadedStatus;
         }
       }
       e.setSubs(LangsList.getLanguageById(rs.getInt("subs")));
@@ -188,7 +189,7 @@ public class Episodes {
       }
       subs = e.getSubs();
       seen = rs.getBoolean("seen");
-      Object[] data = {episode, e, e.getAired(), download, subs, seen};
+      Object[] data = {episode, e, e.getAired(), download, e.getSubs(), seen};
       getTableModel_episodes().addRow(data);
       eps.add(e);
     }
