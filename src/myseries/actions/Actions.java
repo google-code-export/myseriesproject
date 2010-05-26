@@ -156,7 +156,7 @@ public class Actions {
       String[] filter = {".db"};
       String load = MyUsefulFunctions.getSelectedFile(Database.PATH, filter, "Load Database", "Select the database to load");
       if (!load.equals("null")) {
-        if (DBConnection.CheckDatabase(load)) {
+        if (DBConnection.checkDatabase(load)) {
           Options.setOption(Options.DB_NAME, load);
           Options.save();
           m.dispose();

@@ -25,24 +25,27 @@ public class DBConnection {
   public static Connection conn;
   public static Statement stmt;
 
-/**
- * Check if database needs updating
- * @param db The database to check
- * @return true if update is done or does not need update. False if update is
- * needed but an error occured
- */
-  public static boolean CheckDatabase(String db) {
+  /**
+   * Check if database needs updating
+   * @param db The database to check
+   * @return true if update is done or does not need update. False if update is
+   * needed but an error occured
+   */
+  public static boolean checkDatabase(String db) {
     //try {
     createConnection(db);
     String sqlSeries = "PRAGMA table_info(series)";
-    
+    String sqlEpisodes = "PRAGMA table_info(episodes)";
+
     ResultSet rsSeries;
+    ResultSet rsEpisodes;
     boolean internetUpdate = false;
     boolean tvRageID = false;
     boolean localDir = false;
     boolean screenshot = false;
     boolean sonline = false;
     boolean newSubs = false;
+    boolean rate = false;
     ResultSet rss;
 
     try {
@@ -64,34 +67,45 @@ public class DBConnection {
           sonline = true;
         }
       }
-      if(tvRageID && internetUpdate && localDir && screenshot && sonline){
+
+      rsEpisodes = stmt.executeQuery(sqlEpisodes);
+      while (rsEpisodes.next()) {
+        if (rsEpisodes.getString(2).equals("rate")) {
+          rate = true;
+        }
+      }
+      if (tvRageID && internetUpdate && localDir && screenshot && sonline && rate) {
         return true;
       }
       MyMessages.message("Old Database version", "Database is of an older version and needs update\nA back Up is taken first!!");
       SaveDatabase s = new SaveDatabase(db);
       if (s.backUp) {
-        if(!internetUpdate){
-        sqlSeries = "ALTER TABLE series ADD COLUMN internetUpdate INTEGER DEFAULT 1";
-        stmt.execute(sqlSeries);
+        if (!internetUpdate) {
+          sqlSeries = "ALTER TABLE series ADD COLUMN internetUpdate INTEGER DEFAULT 1";
+          stmt.execute(sqlSeries);
         }
-        if(!tvRageID){
-        sqlSeries = "ALTER TABLE series ADD COLUMN tvrage_ID INTEGER DEFAULT 0";
-        stmt.execute(sqlSeries);
+        if (!tvRageID) {
+          sqlSeries = "ALTER TABLE series ADD COLUMN tvrage_ID INTEGER DEFAULT 0";
+          stmt.execute(sqlSeries);
         }
-        if(!localDir){
-        sqlSeries = "ALTER TABLE series ADD COLUMN localDir VARCHAR DEFAULT ''";
-        stmt.execute(sqlSeries);
+        if (!localDir) {
+          sqlSeries = "ALTER TABLE series ADD COLUMN localDir VARCHAR DEFAULT ''";
+          stmt.execute(sqlSeries);
         }
-        if(!screenshot){
-        sqlSeries = "ALTER TABLE series ADD COLUMN screenshot VARCHAR DEFAULT ''";
-        stmt.execute(sqlSeries);
+        if (!screenshot) {
+          sqlSeries = "ALTER TABLE series ADD COLUMN screenshot VARCHAR DEFAULT ''";
+          stmt.execute(sqlSeries);
         }
-        if(!sonline){
-        sqlSeries = "ALTER TABLE series ADD COLUMN sonline VARCHAR DEFAULT ''";
-        stmt.execute(sqlSeries);
+        if (!sonline) {
+          sqlSeries = "ALTER TABLE series ADD COLUMN sonline VARCHAR DEFAULT ''";
+          stmt.execute(sqlSeries);
+        }
+        if (!rate) {
+          sqlEpisodes = "ALTER TABLE episodes ADD COLUMN rate DOUBLE DEFAULT 0.0";
+          stmt.execute(sqlEpisodes);
         }
         MyMessages.message("Database Update", "Database Update done!!!");
-        CheckDatabase(db);
+        checkDatabase(db);
         return true;
       } else {
         MyMessages.error("No Update", "Could not update the database");

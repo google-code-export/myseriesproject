@@ -374,7 +374,7 @@ public class StartPanel extends MyDraggable {
         StartPanel s = new StartPanel();
       } else {
         // Check if database is in the right format
-        if (DBConnection.CheckDatabase(Options.toString(Options.DB_NAME))) {
+        if (DBConnection.checkDatabase(Options.toString(Options.DB_NAME))) {
           MySeries.logger.log(Level.INFO, "MySerieS loading...");
           MySeries m = new MySeries();
         } else {
