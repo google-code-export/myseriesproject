@@ -59,6 +59,7 @@ public class UpdateEpisodesTable {
       er.setDownloaded((Boolean)rec[Episodes.DOWNLOADED_COLUMN] ? EpisodesRecord.DOWNLOADED : EpisodesRecord.NOT_DOWNLOADED);
       er.setSubs((Language) rec[Episodes.SUBS_COLUMN]);
       er.setSeen((Boolean)rec[Episodes.SEEN_COLUMN]? EpisodesRecord.SEEN : EpisodesRecord.NOT_SEEN);
+      er.setRate((Double)rec[Episodes.RATE_COLUMN]);
       er.save();
      // NextEpisodes.createNextEpisodes();
      // NextEpisodes.show();
