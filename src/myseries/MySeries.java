@@ -10,8 +10,8 @@
  */
 package myseries;
 
-import com.googlecode.starrating.TableCellStarEditor;
-import com.googlecode.starrating.TableCellStarRenderer;
+import com.googlecode.starrating.StarTableCellEditor;
+import com.googlecode.starrating.StarTableCellRenderer;
 import javax.swing.ComboBoxModel;
 import myseries.episodes.NextEpisodes;
 import myseries.episodes.Episodes;
@@ -254,8 +254,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     Integer widthsArr[] = new Integer[widths.size()];
     widthsArr = widths.toArray(widthsArr);
     seriesTableWidths = Arrays.copyOfRange(widthsArr, 0, 3);
-    episodesTableWidths = Arrays.copyOfRange(widthsArr, 3, 9);
-    filtersTableWidths = Arrays.copyOfRange(widthsArr, 9, 16);
+    episodesTableWidths = Arrays.copyOfRange(widthsArr, 3, 10);
+    filtersTableWidths = Arrays.copyOfRange(widthsArr, 10, 16);
     //Create tablemodels
     tableModel_episodes = new MyEpisodesTableModel();
     tableModel_filterSeries = new MyFilteredSeriesTableModel();
@@ -276,8 +276,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tableEpisodes.getColumn(Episodes.AIRED_COLUMN_TITLE).setCellRenderer(new MyJDateChooserCellRenderer());
     tableEpisodes.getColumn(Episodes.EPISODERECORD_COLUMN_TITLE).setCellRenderer(new MyTitleCellRenderer());
     tableEpisodes.getColumn(Episodes.EPISODERECORD_COLUMN_TITLE).setCellEditor(new MyTitleCellEditor());
-    tableEpisodes.getColumn(Episodes.RATE_COLUMN_TITLE).setCellRenderer(new TableCellStarRenderer(false));
-    tableEpisodes.getColumn(Episodes.RATE_COLUMN_TITLE).setCellEditor(new TableCellStarEditor());
+    tableEpisodes.getColumn(Episodes.RATE_COLUMN_TITLE).setCellRenderer(new StarTableCellRenderer(false,false));
+    tableEpisodes.getColumn(Episodes.RATE_COLUMN_TITLE).setCellEditor(new StarTableCellEditor());
     Episodes.setTable_episodes(tableEpisodes);
     Episodes.setTableWidths(episodesTableWidths);
     tableEpisodes.setRowHeight(fontHeight + CELL_MARGIN);
