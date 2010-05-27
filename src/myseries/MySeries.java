@@ -54,6 +54,7 @@ import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyImagePanel;
 import myComponents.myGUI.MyDisabledGlassPane;
 import myComponents.myGUI.MyFont;
+import myComponents.myTableCellEditors.MyRateEditor;
 import myComponents.myTableCellEditors.MyTitleCellEditor;
 import myComponents.myTableCellRenderers.MyJDateChooserCellRenderer;
 import myComponents.myTableCellRenderers.MyTitleCellRenderer;
@@ -277,7 +278,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tableEpisodes.getColumn(Episodes.EPISODERECORD_COLUMN_TITLE).setCellRenderer(new MyTitleCellRenderer());
     tableEpisodes.getColumn(Episodes.EPISODERECORD_COLUMN_TITLE).setCellEditor(new MyTitleCellEditor());
     tableEpisodes.getColumn(Episodes.RATE_COLUMN_TITLE).setCellRenderer(new StarTableCellRenderer(true,false));
-    tableEpisodes.getColumn(Episodes.RATE_COLUMN_TITLE).setCellEditor(new StarTableCellEditor(true));
+    tableEpisodes.getColumn(Episodes.RATE_COLUMN_TITLE).setCellEditor(new MyRateEditor(true));
     Episodes.setTable_episodes(tableEpisodes);
     Episodes.setTableWidths(episodesTableWidths);
     tableEpisodes.setRowHeight(fontHeight + CELL_MARGIN);
@@ -742,7 +743,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tableEpisodes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
     tableEpisodes.setModel(tableModel_episodes);
     tableEpisodes.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
-    tableEpisodes.setOpaque(false);
     tableEpisodes.setSelectionBackground(tableSeries.getSelectionBackground());
     tableEpisodes.setSelectionForeground(tableSeries.getSelectionForeground());
     tableEpisodes.addMouseListener(new java.awt.event.MouseAdapter() {

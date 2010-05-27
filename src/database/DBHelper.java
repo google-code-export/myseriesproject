@@ -57,6 +57,7 @@ public class DBHelper {
         er.setDownloaded(rs.getInt("downloaded"));
         er.setSubs(LangsList.getLanguageById(rs.getInt("subs")));
         er.setSeen(rs.getInt("seen"));
+        er.setRate(rs.getDouble("rate"));
         a.add(er);
       }
       rs.close();
