@@ -258,7 +258,11 @@ public class Options {
     String[] arr = w.split(",");
     try {
       for (int i = 0; i < Options._TOTAL_COLUMNS_; i++) {
+        try{
         widths.add(i, Integer.parseInt(arr[i].trim()));
+        } catch(ArrayIndexOutOfBoundsException ex){
+          widths.add(i, 100);
+        }
       }
       return widths;
     } catch (NumberFormatException ex) {
