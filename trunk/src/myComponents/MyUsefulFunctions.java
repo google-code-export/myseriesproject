@@ -511,6 +511,21 @@ public class MyUsefulFunctions {
     return false;
   }
 
+  /**
+   * List an array elements
+   * @param array The array to list
+   * @param newLine If new line should be used
+   * @return The string
+   */
+  public static String listAray(File[] array, boolean newLine) {
+    String list="";
+    for (int i = 0; i < array.length; i++) {
+      File file = array[i];
+      list += file.getName() + (newLine ? "\n":", ");
+    }
+    return list.substring(0, list.length()-(newLine ? 1 : 2));
+  }
+
   //SELECT  series.title, sum(episodes.rate)/count(1) as sum, count(1) as episodes
   //FROM series join episodes on series.series_ID = episodes.series_ID
   //where episodes.rate > 0 group by series.series_ID order by sum desc

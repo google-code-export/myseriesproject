@@ -229,6 +229,7 @@
                   <Image iconType="3" name="/images/database.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Create Database"/>
+                <Property name="toolTipText" type="java.lang.String" value="Create a new database"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItem_createDBActionPerformed"/>
@@ -243,6 +244,7 @@
                   <Image iconType="3" name="/images/load_database.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Load Database"/>
+                <Property name="toolTipText" type="java.lang.String" value="Load a database"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItem_loadDatabaseActionPerformed"/>
@@ -257,6 +259,7 @@
                   <Image iconType="3" name="/images/database_save.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Save Database As..."/>
+                <Property name="toolTipText" type="java.lang.String" value="Save the current database"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItem_saveDatabaseAsActionPerformed"/>
@@ -292,6 +295,7 @@
                   <Image iconType="3" name="/images/add_series.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Add Series"/>
+                <Property name="toolTipText" type="java.lang.String" value="Add a new series"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItem_addSeriesActionPerformed"/>
@@ -305,6 +309,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/images/edit_series.png"/>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Edit current series"/>
               </Properties>
               <BindingProperties>
                 <BindingProperty name="enabled" source="PopUpItem_EditSerial" sourcePath="${enabled}" target="menuItem_editSeries" targetPath="enabled" updateStrategy="0" immediately="false"/>
@@ -322,6 +327,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/images/delete_series.png"/>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Delete current series"/>
               </Properties>
               <BindingProperties>
                 <BindingProperty name="enabled" source="PopUpItem_DeleteSerial" sourcePath="${enabled}" target="menuItem_deleteSeries" targetPath="enabled" updateStrategy="0" immediately="false"/>
@@ -339,6 +345,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/images/add_episode.png"/>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Add a new episode to the current series"/>
               </Properties>
               <BindingProperties>
                 <BindingProperty name="enabled" source="PopUpItem_AddEpisode" sourcePath="${enabled}" target="menuItem_editEpisode" targetPath="enabled" updateStrategy="0" immediately="false"/>
@@ -364,6 +371,7 @@
                   <Image iconType="3" name="/images/export_episodes.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Export Episodes"/>
+                <Property name="toolTipText" type="java.lang.String" value="Export current series episodes"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
@@ -379,6 +387,7 @@
                   <Image iconType="3" name="/images/import_episodes.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Import Episodes"/>
+                <Property name="toolTipText" type="java.lang.String" value="Import a file with a series episodes"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItem_importEpisodesActionPerformed"/>
@@ -393,6 +402,7 @@
                   <Image iconType="3" name="/images/torrent.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Download Torrent"/>
+                <Property name="toolTipText" type="java.lang.String" value="Download an episode&apos;s torrent"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItem_downloadTorrentActionPerformed"/>
@@ -404,6 +414,7 @@
                   <Image iconType="3" name="/images/internet_update.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Internet Update"/>
+                <Property name="toolTipText" type="java.lang.String" value="Update all series episodes list"/>
               </Properties>
               <SubComponents>
                 <MenuItem class="javax.swing.JMenuItem" name="menuItem_IUTvrage">
@@ -417,6 +428,7 @@
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="&quot;Update from &quot; + InternetUpdate.TV_RAGE_NAME" type="code"/>
                     </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Update all series episodes list from TvRage"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItem_IUTvrageActionPerformed"/>
@@ -433,6 +445,7 @@
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="&quot;Update from &quot; + InternetUpdate.EP_GUIDES_NAME" type="code"/>
                     </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Update all series episodes list from EpGuides"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItem_IUEpguidesActionPerformed"/>
@@ -472,6 +485,7 @@
                   <Image iconType="3" name="/images/help.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Help"/>
+                <Property name="toolTipText" type="java.lang.String" value="Display Help"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItem_helpActionPerformed"/>
@@ -486,6 +500,7 @@
                   <Image iconType="3" name="/images/checkUpdates.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Check For Updates"/>
+                <Property name="toolTipText" type="java.lang.String" value="Check for MySerieS updates"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItem_checkUpdateActionPerformed"/>
@@ -500,9 +515,25 @@
                   <Image iconType="3" name="/images/viewLogs.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="View Log File"/>
+                <Property name="toolTipText" type="java.lang.String" value="View the log file"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItem_viewLogsActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="F6"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/exit.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Clear Log Files"/>
+                <Property name="toolTipText" type="java.lang.String" value="Clear older log files"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JSeparator" name="jSeparator3">
@@ -516,6 +547,7 @@
                   <Image iconType="3" name="/images/info.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="About"/>
+                <Property name="toolTipText" type="java.lang.String" value="About MySerieS"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItem_AboutActionPerformed"/>
