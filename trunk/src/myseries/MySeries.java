@@ -63,6 +63,8 @@ import myseries.episodes.UpdateEpisodesTable;
 import myseries.filters.Filters;
 import myseries.filters.UpdateFiltersTable;
 import myseries.series.UpdateSeriesTable;
+import myseries.statistics.StatEpisodes;
+import myseries.statistics.StatSeries;
 import tools.DesktopSupport;
 import tools.Skin;
 import tools.download.subtitles.Subtitle;
@@ -364,6 +366,9 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     comboBox_filterSubtitles = new javax.swing.JComboBox();
     combobox_downloaded = new javax.swing.JComboBox();
     comboBox_seen = new javax.swing.JComboBox();
+    tabpanel_statistics = new javax.swing.JPanel();
+    panel_stats_series = new javax.swing.JPanel();
+    panel_stats_episodes = new javax.swing.JPanel();
     menuBar = new javax.swing.JMenuBar();
     menu_MySeries = new javax.swing.JMenu();
     menuItem_createDB = new javax.swing.JMenuItem();
@@ -907,6 +912,54 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     );
 
     tabsPanel.addTab("Filter Series", new javax.swing.ImageIcon(getClass().getResource("/images/filter.png")), tabpanel_FilteredSeries); // NOI18N
+
+    javax.swing.GroupLayout panel_stats_seriesLayout = new javax.swing.GroupLayout(panel_stats_series);
+    panel_stats_series.setLayout(panel_stats_seriesLayout);
+    panel_stats_seriesLayout.setHorizontalGroup(
+      panel_stats_seriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGap(0, 382, Short.MAX_VALUE)
+    );
+    panel_stats_seriesLayout.setVerticalGroup(
+      panel_stats_seriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGap(0, 368, Short.MAX_VALUE)
+    );
+
+    javax.swing.GroupLayout panel_stats_episodesLayout = new javax.swing.GroupLayout(panel_stats_episodes);
+    panel_stats_episodes.setLayout(panel_stats_episodesLayout);
+    panel_stats_episodesLayout.setHorizontalGroup(
+      panel_stats_episodesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGap(0, 397, Short.MAX_VALUE)
+    );
+    panel_stats_episodesLayout.setVerticalGroup(
+      panel_stats_episodesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGap(0, 368, Short.MAX_VALUE)
+    );
+
+    javax.swing.GroupLayout tabpanel_statisticsLayout = new javax.swing.GroupLayout(tabpanel_statistics);
+    tabpanel_statistics.setLayout(tabpanel_statisticsLayout);
+    tabpanel_statisticsLayout.setHorizontalGroup(
+      tabpanel_statisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(tabpanel_statisticsLayout.createSequentialGroup()
+        .addContainerGap()
+        .addComponent(panel_stats_series, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(panel_stats_episodes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addGap(19, 19, 19))
+    );
+    tabpanel_statisticsLayout.setVerticalGroup(
+      tabpanel_statisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(tabpanel_statisticsLayout.createSequentialGroup()
+        .addContainerGap()
+        .addGroup(tabpanel_statisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+          .addComponent(panel_stats_series, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+          .addComponent(panel_stats_episodes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addGap(26, 26, 26))
+    );
+
+    panel_stats_series.add(new StatSeries());
+    panel_stats_episodes.add(new StatEpisodes());
+
+    tabsPanel.addTab("Statistics", new javax.swing.ImageIcon(getClass().getResource("/images/star.png")), tabpanel_statistics); // NOI18N
 
     javax.swing.GroupLayout panel_episodesLayout = new javax.swing.GroupLayout(panel_episodes);
     panel_episodes.setLayout(panel_episodesLayout);
@@ -1673,6 +1726,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static javax.swing.JScrollPane panel_episodesList;
   public static javax.swing.JPanel panel_filters;
   public static javax.swing.JPanel panel_nextEpisodes;
+  public static javax.swing.JPanel panel_stats_episodes;
+  public static javax.swing.JPanel panel_stats_series;
   public static javax.swing.JMenuItem popUpItem_DownloadSubs;
   public static javax.swing.JMenuItem popUpItem_GoToLocalDir;
   public static javax.swing.JMenuItem popUpItem_IUEpguides;
@@ -1692,6 +1747,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static javax.swing.JTable tableSeries;
   public static javax.swing.JPanel tabpanel_FilteredSeries;
   public static javax.swing.JPanel tabpanel_episodesList;
+  public static javax.swing.JPanel tabpanel_statistics;
   public static javax.swing.JTabbedPane tabsPanel;
   private org.jdesktop.beansbinding.BindingGroup bindingGroup;
   // End of variables declaration//GEN-END:variables
