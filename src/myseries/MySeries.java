@@ -388,6 +388,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     menuItem_help = new javax.swing.JMenuItem();
     menuItem_checkUpdate = new javax.swing.JMenuItem();
     menuItem_viewLogs = new javax.swing.JMenuItem();
+    jMenuItem1 = new javax.swing.JMenuItem();
     jSeparator3 = new javax.swing.JSeparator();
     menuItem_About = new javax.swing.JMenuItem();
 
@@ -940,6 +941,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     menuItem_createDB.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
     menuItem_createDB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/database.png"))); // NOI18N
     menuItem_createDB.setText("Create Database");
+    menuItem_createDB.setToolTipText("Create a new database");
     menuItem_createDB.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         menuItem_createDBActionPerformed(evt);
@@ -950,6 +952,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     menuItem_loadDatabase.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
     menuItem_loadDatabase.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/load_database.png"))); // NOI18N
     menuItem_loadDatabase.setText("Load Database");
+    menuItem_loadDatabase.setToolTipText("Load a database");
     menuItem_loadDatabase.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         menuItem_loadDatabaseActionPerformed(evt);
@@ -960,6 +963,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     menuItem_saveDatabaseAs.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
     menuItem_saveDatabaseAs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/database_save.png"))); // NOI18N
     menuItem_saveDatabaseAs.setText("Save Database As...");
+    menuItem_saveDatabaseAs.setToolTipText("Save the current database");
     menuItem_saveDatabaseAs.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         menuItem_saveDatabaseAsActionPerformed(evt);
@@ -984,6 +988,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     menuItem_addSeries.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
     menuItem_addSeries.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add_series.png"))); // NOI18N
     menuItem_addSeries.setText("Add Series");
+    menuItem_addSeries.setToolTipText("Add a new series");
     menuItem_addSeries.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         menuItem_addSeriesActionPerformed(evt);
@@ -993,6 +998,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
     menuItem_editSeries.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
     menuItem_editSeries.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit_series.png"))); // NOI18N
+    menuItem_editSeries.setToolTipText("Edit current series");
 
     binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, PopUpItem_EditSerial, org.jdesktop.beansbinding.ELProperty.create("${enabled}"), menuItem_editSeries, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
     bindingGroup.addBinding(binding);
@@ -1008,6 +1014,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
     menuItem_deleteSeries.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
     menuItem_deleteSeries.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete_series.png"))); // NOI18N
+    menuItem_deleteSeries.setToolTipText("Delete current series");
 
     binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, PopUpItem_DeleteSerial, org.jdesktop.beansbinding.ELProperty.create("${enabled}"), menuItem_deleteSeries, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
     bindingGroup.addBinding(binding);
@@ -1023,6 +1030,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
     menuItem_editEpisode.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
     menuItem_editEpisode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add_episode.png"))); // NOI18N
+    menuItem_editEpisode.setToolTipText("Add a new episode to the current series");
 
     binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, PopUpItem_AddEpisode, org.jdesktop.beansbinding.ELProperty.create("${enabled}"), menuItem_editEpisode, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
     bindingGroup.addBinding(binding);
@@ -1043,6 +1051,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     menuItem_exportEpisodes.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
     menuItem_exportEpisodes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/export_episodes.png"))); // NOI18N
     menuItem_exportEpisodes.setText("Export Episodes");
+    menuItem_exportEpisodes.setToolTipText("Export current series episodes");
     menuItem_exportEpisodes.setEnabled(false);
     menuItem_exportEpisodes.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1054,6 +1063,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     menuItem_importEpisodes.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
     menuItem_importEpisodes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/import_episodes.png"))); // NOI18N
     menuItem_importEpisodes.setText("Import Episodes");
+    menuItem_importEpisodes.setToolTipText("Import a file with a series episodes");
     menuItem_importEpisodes.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         menuItem_importEpisodesActionPerformed(evt);
@@ -1064,6 +1074,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     menuItem_downloadTorrent.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_MASK));
     menuItem_downloadTorrent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/torrent.png"))); // NOI18N
     menuItem_downloadTorrent.setText("Download Torrent");
+    menuItem_downloadTorrent.setToolTipText("Download an episode's torrent");
     menuItem_downloadTorrent.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         menuItem_downloadTorrentActionPerformed(evt);
@@ -1073,10 +1084,12 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
     menu_InternetUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/internet_update.png"))); // NOI18N
     menu_InternetUpdate.setText("Internet Update");
+    menu_InternetUpdate.setToolTipText("Update all series episodes list");
 
     menuItem_IUTvrage.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
     menuItem_IUTvrage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/tvrage.png"))); // NOI18N
     menuItem_IUTvrage.setText("Update from " + InternetUpdate.TV_RAGE_NAME);
+    menuItem_IUTvrage.setToolTipText("Update all series episodes list from TvRage");
     menuItem_IUTvrage.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         menuItem_IUTvrageActionPerformed(evt);
@@ -1087,6 +1100,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     menuItem_IUEpguides.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
     menuItem_IUEpguides.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/epguides.png"))); // NOI18N
     menuItem_IUEpguides.setText("Update from " + InternetUpdate.EP_GUIDES_NAME);
+    menuItem_IUEpguides.setToolTipText("Update all series episodes list from EpGuides");
     menuItem_IUEpguides.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         menuItem_IUEpguidesActionPerformed(evt);
@@ -1114,6 +1128,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     menuItem_help.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
     menuItem_help.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"))); // NOI18N
     menuItem_help.setText("Help");
+    menuItem_help.setToolTipText("Display Help");
     menuItem_help.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         menuItem_helpActionPerformed(evt);
@@ -1124,6 +1139,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     menuItem_checkUpdate.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
     menuItem_checkUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/checkUpdates.png"))); // NOI18N
     menuItem_checkUpdate.setText("Check For Updates");
+    menuItem_checkUpdate.setToolTipText("Check for MySerieS updates");
     menuItem_checkUpdate.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         menuItem_checkUpdateActionPerformed(evt);
@@ -1134,17 +1150,30 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     menuItem_viewLogs.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F12, 0));
     menuItem_viewLogs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/viewLogs.png"))); // NOI18N
     menuItem_viewLogs.setText("View Log File");
+    menuItem_viewLogs.setToolTipText("View the log file");
     menuItem_viewLogs.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         menuItem_viewLogsActionPerformed(evt);
       }
     });
     menu_Help.add(menuItem_viewLogs);
+
+    jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F6, 0));
+    jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/exit.png"))); // NOI18N
+    jMenuItem1.setText("Clear Log Files");
+    jMenuItem1.setToolTipText("Clear older log files");
+    jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jMenuItem1ActionPerformed(evt);
+      }
+    });
+    menu_Help.add(jMenuItem1);
     menu_Help.add(jSeparator3);
 
     menuItem_About.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F11, 0));
     menuItem_About.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/info.png"))); // NOI18N
     menuItem_About.setText("About");
+    menuItem_About.setToolTipText("About MySerieS");
     menuItem_About.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         menuItem_AboutActionPerformed(evt);
@@ -1585,6 +1614,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     Actions.internetUpdate(this,InternetUpdate.EP_GUIDES_NAME);
   }//GEN-LAST:event_menuItem_IUEpguidesActionPerformed
 
+  private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    Actions.clearLogFiles();
+  }//GEN-LAST:event_jMenuItem1ActionPerformed
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
   public static javax.swing.JMenuItem PopUpItem_AddEpisode;
   public static javax.swing.JMenuItem PopUpItem_AddEpisodeInEpisodes;
@@ -1603,6 +1636,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static javax.swing.JComboBox combobox_filters;
   public static javax.swing.JPopupMenu episodesPopUp;
   public static javax.swing.JLayeredPane imageLayerPanel;
+  public static javax.swing.JMenuItem jMenuItem1;
   public static javax.swing.JSeparator jSeparator1;
   public static javax.swing.JSeparator jSeparator2;
   public static javax.swing.JSeparator jSeparator3;

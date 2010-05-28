@@ -16,10 +16,12 @@ import help.CheckUpdate;
 import java.awt.Desktop;
 import java.awt.Image;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -356,7 +358,7 @@ public class Actions {
     new InternetUpdate(m, site);
   }
 
-  public static void internetUpdateSeries(MySeries m,String site) {
+  public static void internetUpdateSeries(MySeries m, String site) {
     MySeries.glassPane.activate(null);
     SeriesRecord cSeries = Series.getCurrentSerial();
     if (site.equals(InternetUpdate.TV_RAGE_NAME) && cSeries.getTvrage_ID() == 0) {
@@ -368,7 +370,7 @@ public class Actions {
         MySeries.logger.log(Level.SEVERE, null, ex);
       }
     } else {
-      InternetUpdate iu = new InternetUpdate(m, Series.getCurrentSerial(),site);
+      InternetUpdate iu = new InternetUpdate(m, Series.getCurrentSerial(), site);
     }
     MySeries.glassPane.deactivate();
   }
@@ -376,6 +378,34 @@ public class Actions {
   public static void checkUpdates() {
     MySeries.glassPane.activate(null);
     new CheckUpdate(false);
+  }
+
+  public static void clearLogFiles() {
+    File dir = new File(Options._USER_DIR_);
+    File[] files = dir.listFiles(new FilenameFilter() {
+
+      @Override
+      public boolean accept(File dir, String name) {
+        if (name.matches("MySeriesLogs_([1-9]\\.html$|[0-9]\\.html\\.\\d+)")) {
+          return true;
+        }
+        return false;
+      }
+    });
+    if(files.length==0){
+      MyMessages.message("Delete log files", "There are no old log files to delete");
+      return;
+    }
+    int ans = MyMessages.question("Delete log files", 
+        "Realy delete the following " + files.length + " log files:\n"
+        + MyUsefulFunctions.listAray(files,true));
+    if (ans == JOptionPane.YES_OPTION) {
+      for (int i = 0; i < files.length; i++) {
+        File file = files[i];
+        file.delete();
+      }
+
+    }
   }
 
   public static void viewLog(MySeries m) {
@@ -424,7 +454,7 @@ public class Actions {
     Vector<SeriesRecord> series = null;
     try {
       Filters.getFilteredSeries();
-      if(!MySeries.tabsPanel.getTitleAt(0).equals("")){
+      if (!MySeries.tabsPanel.getTitleAt(0).equals("")) {
         String title = MySeries.tabsPanel.getTitleAt(0).substring(0, MySeries.tabsPanel.getTitleAt(0).length() - 3).trim();
         series = DBHelper.getSeriesBySql("SELECT * FROM series WHERE title = '" + title + "'");
       } else {
