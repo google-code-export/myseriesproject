@@ -32,8 +32,10 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.event.ChangeEvent;
 import javax.swing.table.TableColumnModel;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
@@ -392,13 +394,13 @@ public class Actions {
         return false;
       }
     });
-    if(files.length==0){
+    if (files.length == 0) {
       MyMessages.message("Delete log files", "There are no old log files to delete");
       return;
     }
-    int ans = MyMessages.question("Delete log files", 
-        "Realy delete the following " + files.length + " log files:\n"
-        + MyUsefulFunctions.listAray(files,true));
+    int ans = MyMessages.question("Delete log files",
+            "Realy delete the following " + files.length + " log files:\n"
+            + MyUsefulFunctions.listAray(files, true));
     if (ans == JOptionPane.YES_OPTION) {
       for (int i = 0; i < files.length; i++) {
         File file = files[i];
@@ -450,21 +452,31 @@ public class Actions {
     Video.getVideos(localDir, regex);
   }
 
-  public static void changeTab() {
+  public static void changeTab(MySeries m, ChangeEvent evt) {
     Vector<SeriesRecord> series = null;
+    JTabbedPane tabs = (JTabbedPane) evt.getSource();
+    int index = tabs.getSelectedIndex();
     try {
-      Filters.getFilteredSeries();
-      if (!MySeries.tabsPanel.getTitleAt(0).equals("")) {
-        String title = MySeries.tabsPanel.getTitleAt(0).substring(0, MySeries.tabsPanel.getTitleAt(0).length() - 3).trim();
-        series = DBHelper.getSeriesBySql("SELECT * FROM series WHERE title = '" + title + "'");
-      } else {
-        series = DBHelper.getSeriesBySql("SELECT * FROM series LIMIT 1");
+      if (index == MySeries.TAB_SERIES) {
+        if (!MySeries.tabsPanel.getTitleAt(MySeries.TAB_SERIES).equals("")) {
+          String title = MySeries.tabsPanel.getTitleAt(MySeries.TAB_SERIES).substring(
+                  0, MySeries.tabsPanel.getTitleAt(MySeries.TAB_SERIES).length() - 3).trim();
+          series = DBHelper.getSeriesBySql("SELECT * FROM series WHERE title = '" + title + "'");
+        } else {
+          series = DBHelper.getSeriesBySql("SELECT * FROM series LIMIT 1");
+        }
+        if (series.size() > 0) {
+          Series.setCurrentSerial(series.get(0));
+          Episodes.updateEpisodesTable();
+        } else {
+        }
+      } else if (index == MySeries.TAB_FILTERS) {
+        Filters.getFilteredSeries();
+      } else if (index == MySeries.TAB_STATISTICS) {
+        m.table_stat_series.setTableModel();
+        m.table_stat_episodes.setTableModel();
       }
-      if (series.size() > 0) {
-        Series.setCurrentSerial(series.get(0));
-        Episodes.updateEpisodesTable();
-      } else {
-      }
+
     } catch (SQLException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);
     }
@@ -538,9 +550,9 @@ public class Actions {
               }
 
               String newFilename = series.getTitle()
-                  + Options.toString(Options.SEASON_SEPARATOR, false) + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0")
-                  + Options.toString(Options.EPISODE_SEPARATOR, false) + MyUsefulFunctions.padLeft(episodesRecord.getEpisode(), 2, "0")
-                  + Options.toString(Options.TITLE_SEPARATOR, false) + episodesRecord.getTitle();
+                      + Options.toString(Options.SEASON_SEPARATOR, false) + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0")
+                      + Options.toString(Options.EPISODE_SEPARATOR, false) + MyUsefulFunctions.padLeft(episodesRecord.getEpisode(), 2, "0")
+                      + Options.toString(Options.TITLE_SEPARATOR, false) + episodesRecord.getTitle();
 
               String newName = path + "/" + newFilename + "." + ext;
               File newFile = new File(newName);
@@ -590,11 +602,11 @@ public class Actions {
       }
       if (link != null && !link.equals("")) {
         TvSubtitlesForm d = new TvSubtitlesForm(
-            Subtitle.TV_SUBTITLES_URL + "tvshow-" + link + ".html",
-            Series.getCurrentSerial().getSeason(),
-            Episodes.getCurrentEpisode().getEpisode(),
-            Series.getCurrentSerial().getLocalDir(),
-            Episodes.getCurrentEpisode().getTitle());
+                Subtitle.TV_SUBTITLES_URL + "tvshow-" + link + ".html",
+                Series.getCurrentSerial().getSeason(),
+                Episodes.getCurrentEpisode().getEpisode(),
+                Series.getCurrentSerial().getLocalDir(),
+                Episodes.getCurrentEpisode().getTitle());
       }
     } else if (Options.toString(Options.SUBTITLE_SITE).equals(Subtitle.SUBTITLE_ONLINE_NAME)) {
       String sOnlineCode = Series.getCurrentSerial().getSOnlineCode().trim();
@@ -619,11 +631,11 @@ public class Actions {
 
   private static void getSOnlineSubtitle(String sOnlineCode) {
     SOnlineForm d = new SOnlineForm(
-        sOnlineCode,
-        Series.getCurrentSerial().getSeason(),
-        Episodes.getCurrentEpisode().getEpisode(),
-        Series.getCurrentSerial().getLocalDir(),
-        Episodes.getCurrentEpisode().getTitle());
+            sOnlineCode,
+            Series.getCurrentSerial().getSeason(),
+            Episodes.getCurrentEpisode().getEpisode(),
+            Series.getCurrentSerial().getLocalDir(),
+            Episodes.getCurrentEpisode().getTitle());
   }
 
   public static void downloadEpisodesTorrent() {
