@@ -315,7 +315,7 @@ public class Actions {
     }
   }
 
-  public static void downloadSub(MySeries m) {
+  public static void goToSubtitlePage(MySeries m, String site) {
     try {
       if (!DesktopSupport.isBrowseSupport()) {
         MySeries.logger.log(Level.WARNING, "Browse is not supported in the current OS");
@@ -323,12 +323,11 @@ public class Actions {
         return;
       }
       java.net.URI uri = null;
-      if (Options.toString(Options.SUBTITLE_SITE).equals(Subtitle.TV_SUBTITLES_NAME)) {
+      if (site.equals(Subtitle.TV_SUBTITLES_NAME)) {
         uri = new java.net.URI("http://www.tvsubtitles.net/tvshow-" + Series.getCurrentSerial().getTvSubtitlesCode() + ".html");
-      } else if (Options.toString(Options.SUBTITLE_SITE).equals(Subtitle.SUBTITLE_ONLINE_NAME)) {
+      } else if (site.equals(Subtitle.SUBTITLE_ONLINE_NAME)) {
         uri = new java.net.URI("http://www.subtitleonline.com/" + Series.getCurrentSerial().getSOnlineCode() + "-season-" + Series.getCurrentSerial().getSeason() + "-subtitles.html");
       }
-      System.out.println(uri);
       DesktopSupport.getDesktop().browse(uri);
     } catch (IOException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);
@@ -569,8 +568,8 @@ public class Actions {
     }
   }
 
-  public static void downloadSubtitles() {
-    if (Options.toString(Options.SUBTITLE_SITE).equals(Subtitle.TV_SUBTITLES_NAME)) {
+  public static void downloadSubtitles(String site) {
+    if (site.equals(Subtitle.TV_SUBTITLES_NAME)) {
       SeriesRecord series = Series.getCurrentSerial();
       String link = series.getTvSubtitlesCode().trim();
       boolean updateLink = false;
@@ -608,7 +607,7 @@ public class Actions {
                 Series.getCurrentSerial().getLocalDir(),
                 Episodes.getCurrentEpisode().getTitle());
       }
-    } else if (Options.toString(Options.SUBTITLE_SITE).equals(Subtitle.SUBTITLE_ONLINE_NAME)) {
+    } else if (site.equals(Subtitle.SUBTITLE_ONLINE_NAME)) {
       String sOnlineCode = Series.getCurrentSerial().getSOnlineCode().trim();
       if (sOnlineCode.equals("")) {
         GetSOnlineCode s = new GetSOnlineCode(Series.getCurrentSerial());
