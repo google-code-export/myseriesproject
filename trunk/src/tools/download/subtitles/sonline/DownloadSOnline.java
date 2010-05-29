@@ -76,29 +76,42 @@ public class DownloadSOnline extends AbstractDownloadSubtitle implements Runnabl
       URL url = new URL(Subtitle.SUBTITLE_ONLINE_URL + sOnlineCode + "-season-" + season + "-episode-" + episode + "-subtitles.html");
       BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
       parseWebpage(in, true);
+      in.close();
     } else {
       MyMessages.internetError();
       form.dispose();
-
     }
   }
 
   private void parseWebpage(BufferedReader in, boolean primary) throws IOException {
-    String line = "";
+    String line = "", dLine = "";
     URL curLink = null;
     String curtitle = "";
     String lang;
-   lang = primary ? myseries.MySeries.languages.getPrimary().getName().toLowerCase() :
-     myseries.MySeries.languages.getSecondary().getName().toLowerCase();
+    lang = primary ? myseries.MySeries.languages.getPrimary().getName().toLowerCase()
+            : myseries.MySeries.languages.getSecondary().getName().toLowerCase();
 
     String search = "<a href=\"/" + sOnlineCode + "-s" + season + "e" + episode + "-" + lang + "-subtitles-download";
+    URL dUrl;
     while ((line = in.readLine()) != null) {
       if (line.indexOf(search.toLowerCase()) > -1) {
         line = line.replaceAll("(<a href=\"/)|(\">)", "").trim();
         String[] tokens = line.split("-");
         String code = tokens[tokens.length - 1].replaceAll(".html", "");
-        String url = Subtitle.SUBTITLE_ONLINE_URL + "download-subtitle-" + code + ".html";
-        curLink = new URL(url);
+        dUrl = new URL(Subtitle.SUBTITLE_ONLINE_URL + line);
+        BufferedReader dIn = new BufferedReader(new InputStreamReader(dUrl.openStream()));
+        while ((dLine = dIn.readLine()) != null) {
+          if (dLine.indexOf(".zip") > -1) {
+            dLine = dLine.substring(0,dLine.indexOf(".zip") + 4).replaceAll("<a href=\"/", "");
+            String url = Subtitle.SUBTITLE_ONLINE_URL + dLine.trim();
+            curLink = new URL(url);
+          }
+        }
+        dIn.close();
+        //String[] tokens = line.split("-");
+        //String code = tokens[tokens.length - 1].replaceAll(".html", "");
+        //String url = Subtitle.SUBTITLE_ONLINE_URL + "download-subtitle-" + code + ".html";
+        //curLink = new URL(url);
         line = in.readLine();
         curtitle = line.replaceAll("</a>", "");
         subs.add(new Subtitle(curtitle, curLink));
