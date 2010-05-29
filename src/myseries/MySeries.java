@@ -331,9 +331,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
     seriesPopUp = new javax.swing.JPopupMenu();
     PopUpItem_AddSeries = new javax.swing.JMenuItem();
-    popUpItem_DownloadSubs = new javax.swing.JMenuItem();
     popUpItem_GoToLocalDir = new javax.swing.JMenuItem();
     popUpItem_renameEpisodes = new javax.swing.JMenuItem();
+    popUpMenu_GoToSubtitles = new javax.swing.JMenu();
+    popUpItem_GoToTvSubs = new javax.swing.JMenuItem();
+    popUpItem_GoToSubOn = new javax.swing.JMenuItem();
     popUpMenu_internetUpdate = new javax.swing.JMenu();
     popUpItem_IUTvrage = new javax.swing.JMenuItem();
     popUpItem_IUEpguides = new javax.swing.JMenuItem();
@@ -346,7 +348,9 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     PopUpItem_AddEpisodeInEpisodes = new javax.swing.JMenuItem();
     popUpItem_deleteEpisode = new javax.swing.JMenuItem();
     popUpItem_viewEpisode = new javax.swing.JMenuItem();
-    popUpItem_downloadSubtitles = new javax.swing.JMenuItem();
+    popUpMenu_downloadSubtitles = new javax.swing.JMenu();
+    popUpItem_downloadSubsTvSubs = new javax.swing.JMenuItem();
+    popUpItem_downloadSubsSubOn = new javax.swing.JMenuItem();
     popUpItem_downloadTorrent = new javax.swing.JMenuItem();
     splitPane_main = new javax.swing.JSplitPane();
     panel_Series = new javax.swing.JPanel();
@@ -415,15 +419,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     });
     seriesPopUp.add(PopUpItem_AddSeries);
 
-    popUpItem_DownloadSubs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/subtitles.png"))); // NOI18N
-    popUpItem_DownloadSubs.setText("Go to the subtitles page");
-    popUpItem_DownloadSubs.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        popUpItem_DownloadSubsActionPerformed(evt);
-      }
-    });
-    seriesPopUp.add(popUpItem_DownloadSubs);
-
     popUpItem_GoToLocalDir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/localDir.png"))); // NOI18N
     popUpItem_GoToLocalDir.setText("Open Directory");
     popUpItem_GoToLocalDir.addActionListener(new java.awt.event.ActionListener() {
@@ -441,6 +436,29 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       }
     });
     seriesPopUp.add(popUpItem_renameEpisodes);
+
+    popUpMenu_GoToSubtitles.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/subtitles.png"))); // NOI18N
+    popUpMenu_GoToSubtitles.setText("Go to Subtitles");
+
+    popUpItem_GoToTvSubs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/subtitles.png"))); // NOI18N
+    popUpItem_GoToTvSubs.setText("Go to the subtitles page");
+    popUpItem_GoToTvSubs.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        popUpItem_GoToTvSubsActionPerformed(evt);
+      }
+    });
+    popUpMenu_GoToSubtitles.add(popUpItem_GoToTvSubs);
+
+    popUpItem_GoToSubOn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/subtitles.png"))); // NOI18N
+    popUpItem_GoToSubOn.setText("Go to the subtitles page");
+    popUpItem_GoToSubOn.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        popUpItem_GoToSubOnActionPerformed(evt);
+      }
+    });
+    popUpMenu_GoToSubtitles.add(popUpItem_GoToSubOn);
+
+    seriesPopUp.add(popUpMenu_GoToSubtitles);
 
     popUpMenu_internetUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/internet_update.png"))); // NOI18N
     popUpMenu_internetUpdate.setText("Update " + Series.getCurrentSerial() + " episodes list");
@@ -534,14 +552,28 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     });
     episodesPopUp.add(popUpItem_viewEpisode);
 
-    popUpItem_downloadSubtitles.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/subtitles.png"))); // NOI18N
-    popUpItem_downloadSubtitles.setText("DownloadSubtitles");
-    popUpItem_downloadSubtitles.addActionListener(new java.awt.event.ActionListener() {
+    popUpMenu_downloadSubtitles.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/subtitles.png"))); // NOI18N
+    popUpMenu_downloadSubtitles.setText("Download Subtitles");
+
+    popUpItem_downloadSubsTvSubs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/subtitles.png"))); // NOI18N
+    popUpItem_downloadSubsTvSubs.setText("DownloadSubtitles");
+    popUpItem_downloadSubsTvSubs.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
-        popUpItem_downloadSubtitlesActionPerformed(evt);
+        popUpItem_downloadSubsTvSubsActionPerformed(evt);
       }
     });
-    episodesPopUp.add(popUpItem_downloadSubtitles);
+    popUpMenu_downloadSubtitles.add(popUpItem_downloadSubsTvSubs);
+
+    popUpItem_downloadSubsSubOn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/subtitles.png"))); // NOI18N
+    popUpItem_downloadSubsSubOn.setText("DownloadSubtitles");
+    popUpItem_downloadSubsSubOn.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        popUpItem_downloadSubsSubOnActionPerformed(evt);
+      }
+    });
+    popUpMenu_downloadSubtitles.add(popUpItem_downloadSubsSubOn);
+
+    episodesPopUp.add(popUpMenu_downloadSubtitles);
 
     popUpItem_downloadTorrent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/torrent.png"))); // NOI18N
     popUpItem_downloadTorrent.setText("Download torrent");
@@ -1268,24 +1300,35 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     PopUpItem_AddEpisode.setEnabled(state);
     PopUpItem_DeleteSerial.setEnabled(state);
     PopUpItem_EditSerial.setEnabled(state);
-    popUpItem_DownloadSubs.setEnabled(state);
+    popUpItem_GoToTvSubs.setEnabled(state);
+    popUpItem_GoToSubOn.setEnabled(state);
+    popUpMenu_GoToSubtitles.setEnabled(state);
     popUpItem_GoToLocalDir.setEnabled(state);
     popUpItem_renameEpisodes.setEnabled(state);
     menuItem_exportEpisodes.setEnabled(state);
     popUpItem_exportEpisodes.setEnabled(state);
     popUpItem_IUTvrage.setEnabled(state);
+    popUpMenu_internetUpdate.setEnabled(state);
     if (ser != null) {
       PopUpItem_AddEpisode.setText("Add new episode to " + ser);
       PopUpItem_DeleteSerial.setText("Delete series " + ser);
       PopUpItem_EditSerial.setText("Edit series " + ser);
-      popUpItem_DownloadSubs.setText("Go to the subtitles page of  " + ser);
+      popUpMenu_GoToSubtitles.setText("Go to the subtitles page of  " + ser);
+      popUpItem_GoToTvSubs.setText("Go to TvSubtitle");
+      popUpItem_GoToSubOn.setText("Go to SubtitleOnline");
       popUpItem_GoToLocalDir.setText("Open " + ser + " directory");
       popUpItem_renameEpisodes.setText("Rename " + ser + " directory");
       menuItem_exportEpisodes.setText("Export episodes of " + ser);
       popUpItem_exportEpisodes.setText("Export episodes of " + ser);
       popUpMenu_internetUpdate.setText("Update " + ser + " episodes list");
-      if (Series.getCurrentSerial().getTvSubtitlesCode().equals("") || !DesktopSupport.isDesktopSupport() || !DesktopSupport.isBrowseSupport()) {
-        popUpItem_DownloadSubs.setEnabled(false);
+      if (!DesktopSupport.isDesktopSupport() || !DesktopSupport.isBrowseSupport()) {
+        popUpItem_GoToTvSubs.setEnabled(false);
+      } else {
+        if(Series.getCurrentSerial().getTvSubtitlesCode().equals("")){
+          popUpItem_GoToTvSubs.setEnabled(false);
+        } if(Series.getCurrentSerial().getSOnlineCode().equals("")){
+          popUpItem_GoToSubOn.setEnabled(false);
+        }
       }
       if (Series.getCurrentSerial().getLocalDir().equals("") || !DesktopSupport.isDesktopSupport()) {
         popUpItem_GoToLocalDir.setEnabled(false);
@@ -1301,7 +1344,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       PopUpItem_AddEpisode.setText("Add new episode");
       PopUpItem_DeleteSerial.setText("Delete series");
       PopUpItem_EditSerial.setText("Edit series");
-      popUpItem_DownloadSubs.setText("Go to the subtitles page");
+      popUpItem_GoToTvSubs.setText("Go to the subtitles page");
       popUpItem_GoToLocalDir.setText("Open Directory");
       popUpItem_renameEpisodes.setText("Rename episodes");
       popUpItem_exportEpisodes.setText("Export episodes");
@@ -1461,8 +1504,12 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     popUpItem_deleteEpisode.setEnabled(false);
     popUpItem_viewEpisode.setText("View episode");
     popUpItem_viewEpisode.setEnabled(false);
-    popUpItem_downloadSubtitles.setText("Download subtitles");
-    popUpItem_downloadSubtitles.setEnabled(false);
+    popUpMenu_downloadSubtitles.setText("Download Subtitles");
+    popUpMenu_downloadSubtitles.setEnabled(false);
+    popUpItem_downloadSubsTvSubs.setText("Download subtitles from TvSubtitles");
+    popUpItem_downloadSubsTvSubs.setEnabled(false);
+    popUpItem_downloadSubsSubOn.setText("Download subtitles from SubtitleOnline");
+    popUpItem_downloadSubsSubOn.setEnabled(false);
     popUpItem_downloadTorrent.setText("Download torrent");
     popUpItem_downloadTorrent.setEnabled(false);
   }
@@ -1520,9 +1567,9 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tableEpisodesMouseReleased(evt);
 }//GEN-LAST:event_panel_episodesListMouseReleased
 
-  private void popUpItem_DownloadSubsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_DownloadSubsActionPerformed
-    Actions.downloadSub(this);
-  }//GEN-LAST:event_popUpItem_DownloadSubsActionPerformed
+  private void popUpItem_GoToTvSubsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_GoToTvSubsActionPerformed
+    Actions.goToSubtitlePage(this,Subtitle.TV_SUBTITLES_NAME);
+  }//GEN-LAST:event_popUpItem_GoToTvSubsActionPerformed
 
   private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
     Actions.exitApplication(this);
@@ -1587,8 +1634,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       popUpItem_deleteEpisode.setEnabled(rowSelected > -1);
       popUpItem_deleteEpisode.setText("Delete episode " + Episodes.getCurrentEpisode().getTitle());
     }
-    popUpItem_downloadSubtitles.setEnabled(true);
-    popUpItem_downloadSubtitles.setText("Downlod subtitles for " + Episodes.getCurrentEpisode().getTitle());
+    popUpMenu_downloadSubtitles.setEnabled(true);
+    popUpMenu_downloadSubtitles.setText("Download subtitles for " + Episodes.getCurrentEpisode().getTitle());
+    popUpItem_downloadSubsTvSubs.setEnabled(true);
+    popUpItem_downloadSubsSubOn.setEnabled(true);
     popUpItem_downloadTorrent.setText("Download torrent for " + Episodes.getCurrentEpisode().getTitle());
     popUpItem_downloadTorrent.setEnabled(true);
     popUpItem_viewEpisode.validate();
@@ -1598,10 +1647,9 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     Actions.renameEpisodes();
   }//GEN-LAST:event_popUpItem_renameEpisodesActionPerformed
 
-  private void popUpItem_downloadSubtitlesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_downloadSubtitlesActionPerformed
-    Actions.downloadSubtitles();
-
-  }//GEN-LAST:event_popUpItem_downloadSubtitlesActionPerformed
+  private void popUpItem_downloadSubsTvSubsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_downloadSubsTvSubsActionPerformed
+    Actions.downloadSubtitles(Subtitle.TV_SUBTITLES_NAME);
+  }//GEN-LAST:event_popUpItem_downloadSubsTvSubsActionPerformed
 
   private void popUpItem_downloadTorrentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_downloadTorrentActionPerformed
     Actions.downloadEpisodesTorrent();
@@ -1652,6 +1700,15 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
     Actions.clearLogFiles();
   }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+  private void popUpItem_downloadSubsSubOnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_downloadSubsSubOnActionPerformed
+    Actions.downloadSubtitles(Subtitle.SUBTITLE_ONLINE_NAME);
+  }//GEN-LAST:event_popUpItem_downloadSubsSubOnActionPerformed
+
+  private void popUpItem_GoToSubOnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_GoToSubOnActionPerformed
+    Actions.goToSubtitlePage(this, Subtitle.SUBTITLE_ONLINE_NAME);
+  }//GEN-LAST:event_popUpItem_GoToSubOnActionPerformed
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
   public static javax.swing.JMenuItem PopUpItem_AddEpisode;
   public static javax.swing.JMenuItem PopUpItem_AddEpisodeInEpisodes;
@@ -1708,16 +1765,20 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static javax.swing.JPanel panel_filters;
   public static javax.swing.JPanel panel_nextEpisodes;
   public javax.swing.JPanel panel_stats;
-  public static javax.swing.JMenuItem popUpItem_DownloadSubs;
   public static javax.swing.JMenuItem popUpItem_GoToLocalDir;
+  public static javax.swing.JMenuItem popUpItem_GoToSubOn;
+  public static javax.swing.JMenuItem popUpItem_GoToTvSubs;
   public static javax.swing.JMenuItem popUpItem_IUEpguides;
   public static javax.swing.JMenuItem popUpItem_IUTvrage;
   public static javax.swing.JMenuItem popUpItem_deleteEpisode;
-  public static javax.swing.JMenuItem popUpItem_downloadSubtitles;
+  public static javax.swing.JMenuItem popUpItem_downloadSubsSubOn;
+  public static javax.swing.JMenuItem popUpItem_downloadSubsTvSubs;
   public static javax.swing.JMenuItem popUpItem_downloadTorrent;
   public static javax.swing.JMenuItem popUpItem_exportEpisodes;
   public static javax.swing.JMenuItem popUpItem_renameEpisodes;
   public static javax.swing.JMenuItem popUpItem_viewEpisode;
+  public static javax.swing.JMenu popUpMenu_GoToSubtitles;
+  public static javax.swing.JMenu popUpMenu_downloadSubtitles;
   public static javax.swing.JMenu popUpMenu_internetUpdate;
   public static javax.swing.JScrollPane scrollPane_series;
   public static javax.swing.JPopupMenu seriesPopUp;
