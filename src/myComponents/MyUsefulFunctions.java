@@ -526,10 +526,6 @@ public class MyUsefulFunctions {
     return list.substring(0, list.length()-(newLine ? 1 : 2));
   }
 
-  //SELECT  series.title, sum(episodes.rate)/count(1) as sum, count(1) as episodes
-  //FROM series join episodes on series.series_ID = episodes.series_ID
-  //where episodes.rate > 0 group by series.series_ID order by sum desc
-
   private MyUsefulFunctions() {
   }
 }

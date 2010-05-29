@@ -124,6 +124,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   private Integer[] filtersTableWidths;
   public static LangsList languages;
   private static int CELL_MARGIN = 3;
+  public static int TAB_SERIES = 0;
+  public static int TAB_FILTERS = 1;
+  public static int TAB_STATISTICS = 2;
+  public StatSeries table_stat_series;
+  public StatEpisodes table_stat_episodes;
 
   /**
    *
@@ -153,7 +158,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     languages = new LangsList();
     languages.setPrimary(LangsList.getLanguageByName(Options.toString(Options.PRIMARY_SUB)));
     languages.setSecondary(LangsList.getLanguageByName(Options.toString(Options.SECONDARY_SUB)));
-     for (Iterator<Language> it = languages.getLangs().iterator(); it.hasNext();) {
+    for (Iterator<Language> it = languages.getLangs().iterator(); it.hasNext();) {
       Language language = it.next();
       Subtitle.SUBTITLE_LANG.add(language);
     }
@@ -164,6 +169,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     // Create the GUIs table
     MySeries.logger.log(Level.INFO, "Creating the GUI");
     createGUI();
+    table_stat_series = new StatSeries();
+    table_stat_episodes = new StatEpisodes();
+    panel_stats.add(table_stat_series);
+    panel_stats.add(table_stat_episodes);
+    panel_stats.validate();
     setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/subtitles.png")).getImage());
     setSize(Options.toInt(Options.WIDTH), Options.toInt(Options.HEIGHT));
     setExtendedState(Options.toInt(Options.WINDOW_STATE));
@@ -279,12 +289,12 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tableEpisodes.getColumn(Episodes.AIRED_COLUMN_TITLE).setCellRenderer(new MyJDateChooserCellRenderer());
     tableEpisodes.getColumn(Episodes.EPISODERECORD_COLUMN_TITLE).setCellRenderer(new MyTitleCellRenderer());
     tableEpisodes.getColumn(Episodes.EPISODERECORD_COLUMN_TITLE).setCellEditor(new MyTitleCellEditor());
-    tableEpisodes.getColumn(Episodes.RATE_COLUMN_TITLE).setCellRenderer(new StarTableCellRenderer(true,false));
+    tableEpisodes.getColumn(Episodes.RATE_COLUMN_TITLE).setCellRenderer(new StarTableCellRenderer(true, false));
     tableEpisodes.getColumn(Episodes.RATE_COLUMN_TITLE).setCellEditor(new MyRateEditor(true));
     Episodes.setTable_episodes(tableEpisodes);
     Episodes.setTableWidths(episodesTableWidths);
     tableEpisodes.setRowHeight(fontHeight + CELL_MARGIN);
-    
+
 
     //FILTERS TABLE
     tableFilters.getModel().addTableModelListener(this);
@@ -367,8 +377,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     combobox_downloaded = new javax.swing.JComboBox();
     comboBox_seen = new javax.swing.JComboBox();
     tabpanel_statistics = new javax.swing.JPanel();
-    panel_stats_series = new javax.swing.JPanel();
-    panel_stats_episodes = new javax.swing.JPanel();
+    panel_stats = new javax.swing.JPanel();
     menuBar = new javax.swing.JMenuBar();
     menu_MySeries = new javax.swing.JMenu();
     menuItem_createDB = new javax.swing.JMenuItem();
@@ -913,27 +922,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
     tabsPanel.addTab("Filter Series", new javax.swing.ImageIcon(getClass().getResource("/images/filter.png")), tabpanel_FilteredSeries); // NOI18N
 
-    javax.swing.GroupLayout panel_stats_seriesLayout = new javax.swing.GroupLayout(panel_stats_series);
-    panel_stats_series.setLayout(panel_stats_seriesLayout);
-    panel_stats_seriesLayout.setHorizontalGroup(
-      panel_stats_seriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 382, Short.MAX_VALUE)
-    );
-    panel_stats_seriesLayout.setVerticalGroup(
-      panel_stats_seriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 368, Short.MAX_VALUE)
-    );
-
-    javax.swing.GroupLayout panel_stats_episodesLayout = new javax.swing.GroupLayout(panel_stats_episodes);
-    panel_stats_episodes.setLayout(panel_stats_episodesLayout);
-    panel_stats_episodesLayout.setHorizontalGroup(
-      panel_stats_episodesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 397, Short.MAX_VALUE)
-    );
-    panel_stats_episodesLayout.setVerticalGroup(
-      panel_stats_episodesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 368, Short.MAX_VALUE)
-    );
+    panel_stats.setLayout(new java.awt.GridLayout(2, 1, 0, 10));
 
     javax.swing.GroupLayout tabpanel_statisticsLayout = new javax.swing.GroupLayout(tabpanel_statistics);
     tabpanel_statistics.setLayout(tabpanel_statisticsLayout);
@@ -941,23 +930,16 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       tabpanel_statisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(tabpanel_statisticsLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(panel_stats_series, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(panel_stats_episodes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        .addGap(19, 19, 19))
+        .addComponent(panel_stats, javax.swing.GroupLayout.PREFERRED_SIZE, 544, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(260, Short.MAX_VALUE))
     );
     tabpanel_statisticsLayout.setVerticalGroup(
       tabpanel_statisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(tabpanel_statisticsLayout.createSequentialGroup()
         .addContainerGap()
-        .addGroup(tabpanel_statisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addComponent(panel_stats_series, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-          .addComponent(panel_stats_episodes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addComponent(panel_stats, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
         .addGap(26, 26, 26))
     );
-
-    panel_stats_series.add(new StatSeries());
-    panel_stats_episodes.add(new StatEpisodes());
 
     tabsPanel.addTab("Statistics", new javax.swing.ImageIcon(getClass().getResource("/images/star.png")), tabpanel_statistics); // NOI18N
 
@@ -1448,7 +1430,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 }//GEN-LAST:event_menuItem_exitActionPerformed
 
   private void tabsPanelStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabsPanelStateChanged
-    Actions.changeTab();
+    Actions.changeTab(this, evt);
   }//GEN-LAST:event_tabsPanelStateChanged
 
   private void menuItem_AboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_AboutActionPerformed
@@ -1567,11 +1549,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   }//GEN-LAST:event_menuItem_saveDatabaseAsActionPerformed
 
   private void menuItem_IUTvrageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_IUTvrageActionPerformed
-    Actions.internetUpdate(this,InternetUpdate.TV_RAGE_NAME);
+    Actions.internetUpdate(this, InternetUpdate.TV_RAGE_NAME);
 }//GEN-LAST:event_menuItem_IUTvrageActionPerformed
 
   private void popUpItem_IUTvrageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_IUTvrageActionPerformed
-    Actions.internetUpdateSeries(this,InternetUpdate.TV_RAGE_NAME);
+    Actions.internetUpdateSeries(this, InternetUpdate.TV_RAGE_NAME);
   }//GEN-LAST:event_popUpItem_IUTvrageActionPerformed
 
   private void menuItem_checkUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_checkUpdateActionPerformed
@@ -1660,17 +1642,16 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   }//GEN-LAST:event_menuItem_downloadTorrentActionPerformed
 
   private void popUpItem_IUEpguidesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_IUEpguidesActionPerformed
-    Actions.internetUpdateSeries(this,InternetUpdate.EP_GUIDES_NAME);
+    Actions.internetUpdateSeries(this, InternetUpdate.EP_GUIDES_NAME);
   }//GEN-LAST:event_popUpItem_IUEpguidesActionPerformed
 
   private void menuItem_IUEpguidesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_IUEpguidesActionPerformed
-    Actions.internetUpdate(this,InternetUpdate.EP_GUIDES_NAME);
+    Actions.internetUpdate(this, InternetUpdate.EP_GUIDES_NAME);
   }//GEN-LAST:event_menuItem_IUEpguidesActionPerformed
 
   private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
     Actions.clearLogFiles();
   }//GEN-LAST:event_jMenuItem1ActionPerformed
-
   // Variables declaration - do not modify//GEN-BEGIN:variables
   public static javax.swing.JMenuItem PopUpItem_AddEpisode;
   public static javax.swing.JMenuItem PopUpItem_AddEpisodeInEpisodes;
@@ -1726,8 +1707,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static javax.swing.JScrollPane panel_episodesList;
   public static javax.swing.JPanel panel_filters;
   public static javax.swing.JPanel panel_nextEpisodes;
-  public static javax.swing.JPanel panel_stats_episodes;
-  public static javax.swing.JPanel panel_stats_series;
+  public javax.swing.JPanel panel_stats;
   public static javax.swing.JMenuItem popUpItem_DownloadSubs;
   public static javax.swing.JMenuItem popUpItem_GoToLocalDir;
   public static javax.swing.JMenuItem popUpItem_IUEpguides;
@@ -1765,14 +1745,14 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   }
 
   public void createComboBox_filters() {
-     comboBox_filterSubtitles.setModel(new DefaultComboBoxModel(
-        new String[]{
-          Subtitle.NONE,
-          languages.getPrimary().getName(),
-          languages.getSecondary().getName(),
-          Subtitle.BOTH,
-          languages.getPrimary().getName() + " or " + languages.getSecondary().getName(),
-          "Not " + languages.getPrimary().getName()
-        }));
+    comboBox_filterSubtitles.setModel(new DefaultComboBoxModel(
+            new String[]{
+              Subtitle.NONE,
+              languages.getPrimary().getName(),
+              languages.getSecondary().getName(),
+              Subtitle.BOTH,
+              languages.getPrimary().getName() + " or " + languages.getSecondary().getName(),
+              "Not " + languages.getPrimary().getName()
+            }));
   }
 }
