@@ -52,7 +52,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="popUpItem_GoToTvSubs">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/subtitles.png"/>
+                  <Image iconType="3" name="/images/tvsubtitles.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Go to the subtitles page"/>
               </Properties>
@@ -63,7 +63,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="popUpItem_GoToSubOn">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/subtitles.png"/>
+                  <Image iconType="3" name="/images/subtitleonline.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Go to the subtitles page"/>
               </Properties>
@@ -218,7 +218,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="popUpItem_downloadSubsTvSubs">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/subtitles.png"/>
+                  <Image iconType="3" name="/images/tvsubtitles.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="DownloadSubtitles"/>
               </Properties>
@@ -229,7 +229,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="popUpItem_downloadSubsSubOn">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/subtitles.png"/>
+                  <Image iconType="3" name="/images/subtitleonline.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="DownloadSubtitles"/>
               </Properties>

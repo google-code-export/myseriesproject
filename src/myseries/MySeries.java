@@ -440,7 +440,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     popUpMenu_GoToSubtitles.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/subtitles.png"))); // NOI18N
     popUpMenu_GoToSubtitles.setText("Go to Subtitles");
 
-    popUpItem_GoToTvSubs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/subtitles.png"))); // NOI18N
+    popUpItem_GoToTvSubs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/tvsubtitles.png"))); // NOI18N
     popUpItem_GoToTvSubs.setText("Go to the subtitles page");
     popUpItem_GoToTvSubs.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -449,7 +449,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     });
     popUpMenu_GoToSubtitles.add(popUpItem_GoToTvSubs);
 
-    popUpItem_GoToSubOn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/subtitles.png"))); // NOI18N
+    popUpItem_GoToSubOn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/subtitleonline.png"))); // NOI18N
     popUpItem_GoToSubOn.setText("Go to the subtitles page");
     popUpItem_GoToSubOn.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -555,7 +555,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     popUpMenu_downloadSubtitles.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/subtitles.png"))); // NOI18N
     popUpMenu_downloadSubtitles.setText("Download Subtitles");
 
-    popUpItem_downloadSubsTvSubs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/subtitles.png"))); // NOI18N
+    popUpItem_downloadSubsTvSubs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/tvsubtitles.png"))); // NOI18N
     popUpItem_downloadSubsTvSubs.setText("DownloadSubtitles");
     popUpItem_downloadSubsTvSubs.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -564,7 +564,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     });
     popUpMenu_downloadSubtitles.add(popUpItem_downloadSubsTvSubs);
 
-    popUpItem_downloadSubsSubOn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/subtitles.png"))); // NOI18N
+    popUpItem_downloadSubsSubOn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/subtitleonline.png"))); // NOI18N
     popUpItem_downloadSubsSubOn.setText("DownloadSubtitles");
     popUpItem_downloadSubsSubOn.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
