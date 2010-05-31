@@ -51,6 +51,8 @@ public class StatSeries extends javax.swing.JPanel {
     table_stat_series = new javax.swing.JTable();
     jLabel1 = new javax.swing.JLabel();
 
+    setPreferredSize(new java.awt.Dimension(400, 241));
+
     table_stat_series.setAutoCreateRowSorter(true);
     table_stat_series.setModel(new javax.swing.table.DefaultTableModel(
       new Object [][] {
@@ -88,8 +90,8 @@ public class StatSeries extends javax.swing.JPanel {
       .addGroup(layout.createSequentialGroup()
         .addContainerGap()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
-          .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE))
+          .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+          .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE))
         .addContainerGap())
     );
     layout.setVerticalGroup(
@@ -98,7 +100,7 @@ public class StatSeries extends javax.swing.JPanel {
         .addGap(7, 7, 7)
         .addComponent(jLabel1)
         .addGap(18, 18, 18)
-        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addContainerGap())
     );
   }// </editor-fold>//GEN-END:initComponents
