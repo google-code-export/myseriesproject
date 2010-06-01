@@ -12,6 +12,7 @@ package tools.renaming;
 
 import com.googlecode.svalidators.formcomponents.ValidationGroup;
 import com.googlecode.svalidators.validators.RegularExpressionValidator;
+import com.googlecode.svalidators.validators.SValidator;
 import database.EpisodesRecord;
 import database.SeriesRecord;
 import java.io.File;
@@ -383,7 +384,7 @@ public class RenameEpisodes extends MyDraggable {
         + MyUsefulFunctions.padLeft(episode.getEpisode(), 2, "0")
         + textfield_title.getText() + episode.getTitle();
 
-    String newName = series.getLocalDir() + "/" + newFilename + "." + ext;
+    String newName = series.getLocalDir() + "/" + newFilename.replaceAll("[:\\\\/\\*<>\";\\.\\?\\,]", "") + "." + ext;
     return new File(newName);
   }
 }
