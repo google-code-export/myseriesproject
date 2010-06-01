@@ -35,7 +35,7 @@ public class MyOptionsFontRenderer extends JLabel implements ListCellRenderer {
       setBackground(list.getBackground());
       setForeground(list.getForeground());
     }
-    String val = (String) list.getModel().getElementAt(index);
+    String val = (String) value;
     setText(val);
     setFont(new Font((String) value, Font.PLAIN, 12));
 

@@ -331,7 +331,6 @@ public class OptionsPanel extends MyDraggable {
       }
     });
 
-    combobox_fonts.setEditable(true);
     combobox_fonts.setName(Options.FONT_FACE);
     combobox_fonts.setRenderer(new MyOptionsFontRenderer());
     combobox_fonts.addActionListener(new java.awt.event.ActionListener() {
