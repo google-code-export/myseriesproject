@@ -384,7 +384,8 @@ public class RenameEpisodes extends MyDraggable {
         + MyUsefulFunctions.padLeft(episode.getEpisode(), 2, "0")
         + textfield_title.getText() + episode.getTitle();
 
-    String newName = series.getLocalDir() + "/" + newFilename.replaceAll("[:\\\\/\\*<>\";\\.\\?\\,]", "") + "." + ext;
+    String newName = series.getLocalDir() + "/" +
+        newFilename.replaceAll("[\\Q/\\?%*:|\"<>.;\\E]", "") + "." + ext;
     return new File(newName);
   }
 }
