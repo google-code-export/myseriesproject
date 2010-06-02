@@ -54,7 +54,9 @@ import tools.download.subtitles.sonline.GetSOnlineCode;
 import tools.download.subtitles.sonline.SOnlineForm;
 import tools.download.subtitles.tvsubtitles.GetTvSubtitlesCode;
 import tools.download.subtitles.tvsubtitles.TvSubtitlesForm;
+import tools.download.torrents.Torrent;
 import tools.download.torrents.eztv.EzTvForm;
+import tools.download.torrents.isohunt.IsohuntForm;
 import tools.importExport.ExportEpisodes;
 import tools.importExport.ImportEpisodes;
 import tools.internetUpdate.InternetUpdate;
@@ -398,8 +400,8 @@ public class Actions {
       return;
     }
     int ans = MyMessages.question("Delete log files",
-        "Realy delete the following " + files.length + " log files:\n"
-        + MyUsefulFunctions.listAray(files, true));
+            "Realy delete the following " + files.length + " log files:\n"
+            + MyUsefulFunctions.listAray(files, true));
     if (ans == JOptionPane.YES_OPTION) {
       for (int i = 0; i < files.length; i++) {
         File file = files[i];
@@ -459,7 +461,7 @@ public class Actions {
       if (index == MySeries.TAB_SERIES) {
         if (!MySeries.tabsPanel.getTitleAt(MySeries.TAB_SERIES).equals("")) {
           String title = MySeries.tabsPanel.getTitleAt(MySeries.TAB_SERIES).substring(
-              0, MySeries.tabsPanel.getTitleAt(MySeries.TAB_SERIES).length() - 3).trim();
+                  0, MySeries.tabsPanel.getTitleAt(MySeries.TAB_SERIES).length() - 3).trim();
           series = DBHelper.getSeriesBySql("SELECT * FROM series WHERE title = '" + title + "'");
         } else {
           series = DBHelper.getSeriesBySql("SELECT * FROM series LIMIT 1");
@@ -545,9 +547,9 @@ public class Actions {
           }
 
           String newFilename = series.getTitle()
-              + Options.toString(Options.SEASON_SEPARATOR, false) + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0")
-              + Options.toString(Options.EPISODE_SEPARATOR, false) + MyUsefulFunctions.padLeft(episodeRecord.getEpisode(), 2, "0")
-              + Options.toString(Options.TITLE_SEPARATOR, false) + episodeRecord.getTitle();
+                  + Options.toString(Options.SEASON_SEPARATOR, false) + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0")
+                  + Options.toString(Options.EPISODE_SEPARATOR, false) + MyUsefulFunctions.padLeft(episodeRecord.getEpisode(), 2, "0")
+                  + Options.toString(Options.TITLE_SEPARATOR, false) + episodeRecord.getTitle();
 
           String newName = path + "/" + newFilename + "." + ext;
           File newFile = new File(newName);
@@ -596,9 +598,9 @@ public class Actions {
               }
 
               String newFilename = series.getTitle()
-                  + Options.toString(Options.SEASON_SEPARATOR, false) + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0")
-                  + Options.toString(Options.EPISODE_SEPARATOR, false) + MyUsefulFunctions.padLeft(episodesRecord.getEpisode(), 2, "0")
-                  + Options.toString(Options.TITLE_SEPARATOR, false) + episodesRecord.getTitle();
+                      + Options.toString(Options.SEASON_SEPARATOR, false) + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0")
+                      + Options.toString(Options.EPISODE_SEPARATOR, false) + MyUsefulFunctions.padLeft(episodesRecord.getEpisode(), 2, "0")
+                      + Options.toString(Options.TITLE_SEPARATOR, false) + episodesRecord.getTitle();
 
               String newName = path + "/" + newFilename + "." + ext;
               File newFile = new File(newName);
@@ -652,11 +654,11 @@ public class Actions {
       }
       if (link != null && !link.equals("")) {
         TvSubtitlesForm d = new TvSubtitlesForm(
-            Subtitle.TV_SUBTITLES_URL + "tvshow-" + link + ".html",
-            Series.getCurrentSerial().getSeason(),
-            Episodes.getCurrentEpisode().getEpisode(),
-            Series.getCurrentSerial().getLocalDir(),
-            Episodes.getCurrentEpisode().getTitle());
+                Subtitle.TV_SUBTITLES_URL + "tvshow-" + link + ".html",
+                Series.getCurrentSerial().getSeason(),
+                Episodes.getCurrentEpisode().getEpisode(),
+                Series.getCurrentSerial().getLocalDir(),
+                Episodes.getCurrentEpisode().getTitle());
       }
     } else if (site.equals(Subtitle.SUBTITLE_ONLINE_NAME)) {
       String sOnlineCode = Series.getCurrentSerial().getSOnlineCode().trim();
@@ -681,11 +683,11 @@ public class Actions {
 
   private static void getSOnlineSubtitle(String sOnlineCode) {
     SOnlineForm d = new SOnlineForm(
-        sOnlineCode,
-        Series.getCurrentSerial().getSeason(),
-        Episodes.getCurrentEpisode().getEpisode(),
-        Series.getCurrentSerial().getLocalDir(),
-        Episodes.getCurrentEpisode().getTitle());
+            sOnlineCode,
+            Series.getCurrentSerial().getSeason(),
+            Episodes.getCurrentEpisode().getEpisode(),
+            Series.getCurrentSerial().getLocalDir(),
+            Episodes.getCurrentEpisode().getTitle());
   }
 
   public static void downloadEpisodesTorrent() {
@@ -694,8 +696,13 @@ public class Actions {
     new EzTvForm(series, episode);
   }
 
-  public static void downloadTorrent() {
-    new EzTvForm();
+  public static void downloadTorrent(String site) {
+    if (site.equals(Torrent.EZTV_NAME)) {
+      new EzTvForm();
+    } else if (site.equals(Torrent.ISOHUNT_NAME)) {
+      new IsohuntForm();
+    }
+
   }
 
   public void start(final Runnable r) {
