@@ -31,6 +31,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import tools.download.torrents.AbstractTorrentDownload;
 import tools.download.torrents.Torrent;
 import tools.options.Options;
 
@@ -38,11 +39,7 @@ import tools.options.Options;
  * Downloads a torrent from EzTv
  * @author lordovol
  */
-public class EzTv implements Runnable {
-
-  private final URI uri;
-  private JProgressBar progress;
-  private EzTvForm form;
+public class EzTv extends AbstractTorrentDownload implements Runnable {
 
   /**
    * Seacrhes EZTv
@@ -58,39 +55,15 @@ public class EzTv implements Runnable {
   public void run() {
     if (MyUsefulFunctions.hasInternetConnection(Torrent.EZTV_RSS)) {
       progress.setIndeterminate(true);
-      progress.setString("Getting rss feeds from eztv");
-      getRss();
+      progress.setString("Getting rss feeds from "+Torrent.EZTV_NAME);
+      getStream();
     } else {
       MyMessages.internetError();
     }
   }
 
-  private void getRss() {
-    InputStream in = null;
-    try {
-      URL rss = uri.toURL();
-      in = rss.openStream();
-      ArrayList<Torrent> torrents = readXML(in);
-      progress.setString(torrents.size() + " torrents found");
-      progress.setIndeterminate(false);
-      if (torrents.size() == 0) {
-        MyMessages.message("No Torrents", "No torrent was found");
-      } else if (torrents.size() == 1) {
-        getTorrent(torrents.get(0));
-      } else {
-        Torrent tor = (Torrent) JOptionPane.showInputDialog(null, "Choose the torrent to download", "Choose torrent", JOptionPane.QUESTION_MESSAGE, null, torrents.toArray(), 0);
-        if (tor != null) {
-          getTorrent(tor);
-        }
-      }
-    } catch (IOException ex) {
-      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
-    } finally {
-      //myseries.MySeries.glassPane.deactivate();
-    }
-  }
-
-  private boolean isTorrent(Torrent torrent) throws MalformedURLException, IOException {
+  
+  protected boolean isTorrent(Torrent torrent) throws MalformedURLException, IOException {
     URI u = torrent.getUri();
     if (uri != null) {
       BufferedReader in = new BufferedReader(new InputStreamReader(u.toURL().openStream()));
@@ -106,55 +79,7 @@ public class EzTv implements Runnable {
     return false;
   }
 
-  private void downloadTorrent(Torrent torrent) {
-    try {
-      if (!isTorrent(torrent)) {
-        return;
-      }
-      InputStream is = null;
-      BufferedOutputStream outStream = null;
-      byte[] buf;
-      URLConnection uCon = torrent.getUri().toURL().openConnection();
-      is = uCon.getInputStream();
-      buf = new byte[1024];
-      int ByteRead;
-      int ByteWritten = 0;
-      String torrentName;
-      String[] t = torrent.link.split("/", -1);
-      torrentName = t[t.length - 1];
-      String filename = Options._USER_DIR_ + "/" + Torrent.TORRENTS_PATH + torrentName;
-      outStream = new BufferedOutputStream(new FileOutputStream(filename));
-      while ((ByteRead = is.read(buf)) != -1) {
-        outStream.write(buf, 0, ByteRead);
-        ByteWritten += ByteRead;
-      }
-      is.close();
-      outStream.close();
-      Desktop.getDesktop().open(new File(filename));
-      form.dispose();
-    } catch (IOException ex) {
-      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
-    } finally {
-      myseries.MySeries.glassPane.deactivate();
-    }
-  }
-
-  private void getTorrent(Torrent torrent) throws IOException {
-    if (true) {
-      downloadTorrent(torrent);
-      return;
-    }
-    URI u = torrent.getUri();
-    if (u != null) {
-      if (isTorrent(torrent)) {
-        Desktop.getDesktop().browse(uri);
-        form.dispose();
-        myseries.MySeries.glassPane.deactivate();
-      }
-    }
-  }
-
-  private ArrayList<Torrent> readXML(InputStream in) {
+  protected ArrayList<Torrent> readStream(InputStream in) {
     Element val;
     NodeList t;
     String title = "";

@@ -19,34 +19,23 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Vector;
 import java.util.logging.Level;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
-import myComponents.myGUI.MyDraggable;
-import myseries.series.Series;
 import com.googlecode.svalidators.formcomponents.SComboBox;
 import com.googlecode.svalidators.formcomponents.ValidationGroup;
 import com.googlecode.svalidators.validators.RequiredValidator;
-import java.awt.TextField;
+import tools.download.torrents.AbstractTorrentForm;
 import tools.download.torrents.Torrent;
 
 /**
  * The form to submit a torrent search to EzTv
  * @author lordovol
  */
-public class EzTvForm extends MyDraggable {
+public class EzTvForm extends AbstractTorrentForm {
 
   private static final long serialVersionUID = 235353163L;
-  private SeriesRecord series = null;
-  private EpisodesRecord episode = null;
-  private ComboBoxModel seriesModel = new DefaultComboBoxModel();
-  private ComboBoxModel qualityModel = new DefaultComboBoxModel();
 
   {
     createModels();
@@ -122,7 +111,7 @@ public class EzTvForm extends MyDraggable {
 
     jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getStyle() | java.awt.Font.BOLD, jLabel1.getFont().getSize()+2));
     jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-    jLabel1.setText("Download torrent from EzTv");
+    jLabel1.setText("Download torrent from " + Torrent.EZTV_NAME);
 
     jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     jLabel2.setText("Series title:");
@@ -164,6 +153,7 @@ public class EzTvForm extends MyDraggable {
     jLabel7.setText("0: Any Episode");
 
     checkbox_exact.setText("Exact name");
+    checkbox_exact.setOpaque(false);
 
     combo_series.setEditable(true);
     combo_series.setModel(seriesModel);
@@ -310,20 +300,6 @@ public class EzTvForm extends MyDraggable {
   private javax.swing.JSpinner spinner_season;
   // End of variables declaration//GEN-END:variables
 
-  private void createModels() {
-    Vector<String> v = new Vector<String>();
-    try {
-      ArrayList<SeriesRecord> s = Series.getSeries();
-      for (Iterator<SeriesRecord> it = s.iterator(); it.hasNext();) {
-        SeriesRecord seriesRecord = it.next();
-        v.add(seriesRecord.getTitle());
-      }
-      seriesModel = new DefaultComboBoxModel(v);
-      qualityModel = new DefaultComboBoxModel(Torrent.QUALITIES);
-    } catch (SQLException ex) {
-      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
-    }
-  }
 
   private void setData() {
     if (series != null) {
@@ -335,7 +311,8 @@ public class EzTvForm extends MyDraggable {
     }
   }
 
-  private URI createUri() {
+  
+  protected URI createUri() {
     String address = Torrent.EZTV_RSS;
     String query = "";
     ArrayList<String> q = new ArrayList<String>();
