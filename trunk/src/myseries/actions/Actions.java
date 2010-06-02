@@ -398,8 +398,8 @@ public class Actions {
       return;
     }
     int ans = MyMessages.question("Delete log files",
-            "Realy delete the following " + files.length + " log files:\n"
-            + MyUsefulFunctions.listAray(files, true));
+        "Realy delete the following " + files.length + " log files:\n"
+        + MyUsefulFunctions.listAray(files, true));
     if (ans == JOptionPane.YES_OPTION) {
       for (int i = 0; i < files.length; i++) {
         File file = files[i];
@@ -459,7 +459,7 @@ public class Actions {
       if (index == MySeries.TAB_SERIES) {
         if (!MySeries.tabsPanel.getTitleAt(MySeries.TAB_SERIES).equals("")) {
           String title = MySeries.tabsPanel.getTitleAt(MySeries.TAB_SERIES).substring(
-                  0, MySeries.tabsPanel.getTitleAt(MySeries.TAB_SERIES).length() - 3).trim();
+              0, MySeries.tabsPanel.getTitleAt(MySeries.TAB_SERIES).length() - 3).trim();
           series = DBHelper.getSeriesBySql("SELECT * FROM series WHERE title = '" + title + "'");
         } else {
           series = DBHelper.getSeriesBySql("SELECT * FROM series LIMIT 1");
@@ -517,6 +517,49 @@ public class Actions {
     }
   }
 
+  public static void renameEpisode() {
+    ArrayList<File> oldNames = new ArrayList<File>();
+    ArrayList<EpisodesRecord> newNames = new ArrayList<EpisodesRecord>();
+    SeriesRecord series = Series.getCurrentSerial();
+    int season = series.getSeason();
+    EpisodesRecord episodeRecord = Episodes.getCurrentEpisode();
+    File dir = new File(series.getLocalDir());
+    File[] files = dir.listFiles();
+    String path;
+    int episode = episodeRecord.getEpisode();
+    String regex = MyUsefulFunctions.createRegex(season, episode);
+    Pattern pattern = Pattern.compile(regex);
+    for (int i = 0; i < files.length; i++) {
+      File file = files[i];
+      if (file != null && file.isFile()) {
+        path = file.getParent();
+        String name = file.getName();
+        Matcher matcher = pattern.matcher(name);
+        if (matcher.find()) {
+          String[] tokens = name.split("\\.", -1);
+          String ext = tokens[tokens.length - 1];
+          if (ext.equals("srt") || ext.equals("sub")) {
+            if (tokens[tokens.length - 2].equals("gr") || tokens[tokens.length - 2].equals("en")) {
+              ext = tokens[tokens.length - 2] + "." + tokens[tokens.length - 1];
+            }
+          }
+
+          String newFilename = series.getTitle()
+              + Options.toString(Options.SEASON_SEPARATOR, false) + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0")
+              + Options.toString(Options.EPISODE_SEPARATOR, false) + MyUsefulFunctions.padLeft(episodeRecord.getEpisode(), 2, "0")
+              + Options.toString(Options.TITLE_SEPARATOR, false) + episodeRecord.getTitle();
+
+          String newName = path + "/" + newFilename + "." + ext;
+          File newFile = new File(newName);
+          oldNames.add(files[i]);
+          newNames.add(episodeRecord);
+          files[i] = null;
+        }
+      }
+    }
+    RenameEpisodes r = new RenameEpisodes(oldNames, newNames, series);
+  }
+
   public static void renameEpisodes() {
     try {
       ArrayList<File> oldNames = new ArrayList<File>();
@@ -549,9 +592,9 @@ public class Actions {
               }
 
               String newFilename = series.getTitle()
-                      + Options.toString(Options.SEASON_SEPARATOR, false) + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0")
-                      + Options.toString(Options.EPISODE_SEPARATOR, false) + MyUsefulFunctions.padLeft(episodesRecord.getEpisode(), 2, "0")
-                      + Options.toString(Options.TITLE_SEPARATOR, false) + episodesRecord.getTitle();
+                  + Options.toString(Options.SEASON_SEPARATOR, false) + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0")
+                  + Options.toString(Options.EPISODE_SEPARATOR, false) + MyUsefulFunctions.padLeft(episodesRecord.getEpisode(), 2, "0")
+                  + Options.toString(Options.TITLE_SEPARATOR, false) + episodesRecord.getTitle();
 
               String newName = path + "/" + newFilename + "." + ext;
               File newFile = new File(newName);
@@ -601,11 +644,11 @@ public class Actions {
       }
       if (link != null && !link.equals("")) {
         TvSubtitlesForm d = new TvSubtitlesForm(
-                Subtitle.TV_SUBTITLES_URL + "tvshow-" + link + ".html",
-                Series.getCurrentSerial().getSeason(),
-                Episodes.getCurrentEpisode().getEpisode(),
-                Series.getCurrentSerial().getLocalDir(),
-                Episodes.getCurrentEpisode().getTitle());
+            Subtitle.TV_SUBTITLES_URL + "tvshow-" + link + ".html",
+            Series.getCurrentSerial().getSeason(),
+            Episodes.getCurrentEpisode().getEpisode(),
+            Series.getCurrentSerial().getLocalDir(),
+            Episodes.getCurrentEpisode().getTitle());
       }
     } else if (site.equals(Subtitle.SUBTITLE_ONLINE_NAME)) {
       String sOnlineCode = Series.getCurrentSerial().getSOnlineCode().trim();
@@ -630,11 +673,11 @@ public class Actions {
 
   private static void getSOnlineSubtitle(String sOnlineCode) {
     SOnlineForm d = new SOnlineForm(
-            sOnlineCode,
-            Series.getCurrentSerial().getSeason(),
-            Episodes.getCurrentEpisode().getEpisode(),
-            Series.getCurrentSerial().getLocalDir(),
-            Episodes.getCurrentEpisode().getTitle());
+        sOnlineCode,
+        Series.getCurrentSerial().getSeason(),
+        Episodes.getCurrentEpisode().getEpisode(),
+        Series.getCurrentSerial().getLocalDir(),
+        Episodes.getCurrentEpisode().getTitle());
   }
 
   public static void downloadEpisodesTorrent() {
