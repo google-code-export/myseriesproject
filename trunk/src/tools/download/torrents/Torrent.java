@@ -34,7 +34,7 @@ public class Torrent {
    */
   public String link;
 
-  Torrent(String title, String link) {
+  public Torrent(String title, String link) {
     this.title = title;
     this.link = link;
   }
