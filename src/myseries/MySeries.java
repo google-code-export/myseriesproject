@@ -348,6 +348,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     PopUpItem_AddEpisodeInEpisodes = new javax.swing.JMenuItem();
     popUpItem_deleteEpisode = new javax.swing.JMenuItem();
     popUpItem_viewEpisode = new javax.swing.JMenuItem();
+    popUpItem_renameEpisode = new javax.swing.JMenuItem();
     popUpMenu_downloadSubtitles = new javax.swing.JMenu();
     popUpItem_downloadSubsTvSubs = new javax.swing.JMenuItem();
     popUpItem_downloadSubsSubOn = new javax.swing.JMenuItem();
@@ -551,6 +552,16 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       }
     });
     episodesPopUp.add(popUpItem_viewEpisode);
+
+    popUpItem_renameEpisode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/rename.png"))); // NOI18N
+    popUpItem_renameEpisode.setText("Rename Episode");
+    popUpItem_renameEpisode.setToolTipText("Rename the episode");
+    popUpItem_renameEpisode.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        popUpItem_renameEpisodeActionPerformed(evt);
+      }
+    });
+    episodesPopUp.add(popUpItem_renameEpisode);
 
     popUpMenu_downloadSubtitles.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/subtitles.png"))); // NOI18N
     popUpMenu_downloadSubtitles.setText("Download Subtitles");
@@ -1504,7 +1515,9 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     popUpItem_deleteEpisode.setEnabled(false);
     popUpItem_viewEpisode.setText("View episode");
     popUpItem_viewEpisode.setEnabled(false);
-    popUpMenu_downloadSubtitles.setText("Download Subtitles");
+    popUpItem_renameEpisode.setText("Rename episode");
+    popUpItem_renameEpisode.setEnabled(false);
+    popUpMenu_downloadSubtitles.setText("Download subtitles");
     popUpMenu_downloadSubtitles.setEnabled(false);
     popUpItem_downloadSubsTvSubs.setText("Download subtitles from TvSubtitles");
     popUpItem_downloadSubsTvSubs.setEnabled(false);
@@ -1628,6 +1641,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     PopUpItem_AddEpisodeInEpisodes.setVisible(true);
     popUpItem_deleteEpisode.setVisible(true);
     popUpItem_viewEpisode.setEnabled(!Series.getCurrentSerial().getLocalDir().equals(""));
+    popUpItem_renameEpisode.setEnabled(!Series.getCurrentSerial().getLocalDir().equals(""));
+    popUpItem_renameEpisode.setText("Rename episode " + Episodes.getCurrentEpisode().getTitle());
     popUpItem_viewEpisode.setText("View episode " + Episodes.getCurrentEpisode().getTitle());
     PopUpItem_AddEpisodeInEpisodes.setText("Add new episode");
     if (episodePanel) {
@@ -1709,6 +1724,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     Actions.goToSubtitlePage(this, Subtitle.SUBTITLE_ONLINE_NAME);
   }//GEN-LAST:event_popUpItem_GoToSubOnActionPerformed
 
+  private void popUpItem_renameEpisodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_renameEpisodeActionPerformed
+    Actions.renameEpisode();
+  }//GEN-LAST:event_popUpItem_renameEpisodeActionPerformed
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
   public static javax.swing.JMenuItem PopUpItem_AddEpisode;
   public static javax.swing.JMenuItem PopUpItem_AddEpisodeInEpisodes;
@@ -1775,6 +1794,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static javax.swing.JMenuItem popUpItem_downloadSubsTvSubs;
   public static javax.swing.JMenuItem popUpItem_downloadTorrent;
   public static javax.swing.JMenuItem popUpItem_exportEpisodes;
+  public static javax.swing.JMenuItem popUpItem_renameEpisode;
   public static javax.swing.JMenuItem popUpItem_renameEpisodes;
   public static javax.swing.JMenuItem popUpItem_viewEpisode;
   public static javax.swing.JMenu popUpMenu_GoToSubtitles;
