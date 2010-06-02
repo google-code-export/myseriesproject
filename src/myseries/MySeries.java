@@ -397,7 +397,9 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     menu_Tools = new javax.swing.JMenu();
     menuItem_exportEpisodes = new javax.swing.JMenuItem();
     menuItem_importEpisodes = new javax.swing.JMenuItem();
+    jMenu1 = new javax.swing.JMenu();
     menuItem_downloadTorrent = new javax.swing.JMenuItem();
+    jMenuItem2 = new javax.swing.JMenuItem();
     menu_InternetUpdate = new javax.swing.JMenu();
     menuItem_IUTvrage = new javax.swing.JMenuItem();
     menuItem_IUEpguides = new javax.swing.JMenuItem();
@@ -1149,16 +1151,25 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     });
     menu_Tools.add(menuItem_importEpisodes);
 
+    jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/torrent.png"))); // NOI18N
+    jMenu1.setText("Download Torrent");
+
     menuItem_downloadTorrent.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_MASK));
-    menuItem_downloadTorrent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/torrent.png"))); // NOI18N
-    menuItem_downloadTorrent.setText("Download Torrent");
+    menuItem_downloadTorrent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eztv.png"))); // NOI18N
+    menuItem_downloadTorrent.setText("From Eztv");
     menuItem_downloadTorrent.setToolTipText("Download an episode's torrent");
     menuItem_downloadTorrent.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         menuItem_downloadTorrentActionPerformed(evt);
       }
     });
-    menu_Tools.add(menuItem_downloadTorrent);
+    jMenu1.add(menuItem_downloadTorrent);
+
+    jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/isohunt.png"))); // NOI18N
+    jMenuItem2.setText("From Isohunt");
+    jMenu1.add(jMenuItem2);
+
+    menu_Tools.add(jMenu1);
 
     menu_InternetUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/internet_update.png"))); // NOI18N
     menu_InternetUpdate.setText("Internet Update");
@@ -1746,7 +1757,9 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static javax.swing.JComboBox combobox_filters;
   public static javax.swing.JPopupMenu episodesPopUp;
   public static javax.swing.JLayeredPane imageLayerPanel;
+  public static javax.swing.JMenu jMenu1;
   public static javax.swing.JMenuItem jMenuItem1;
+  public static javax.swing.JMenuItem jMenuItem2;
   public static javax.swing.JSeparator jSeparator1;
   public static javax.swing.JSeparator jSeparator2;
   public static javax.swing.JSeparator jSeparator3;

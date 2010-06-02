@@ -8,7 +8,7 @@
  *
  * Created on 27 Μαρ 2010, 2:59:57 μμ
  */
-package tools.download.torrents;
+package tools.download.torrents.eztv;
 
 import database.EpisodesRecord;
 import database.SeriesRecord;
@@ -34,6 +34,7 @@ import com.googlecode.svalidators.formcomponents.SComboBox;
 import com.googlecode.svalidators.formcomponents.ValidationGroup;
 import com.googlecode.svalidators.validators.RequiredValidator;
 import java.awt.TextField;
+import tools.download.torrents.Torrent;
 
 /**
  * The form to submit a torrent search to EzTv

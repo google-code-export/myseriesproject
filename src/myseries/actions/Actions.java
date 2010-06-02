@@ -54,7 +54,7 @@ import tools.download.subtitles.sonline.GetSOnlineCode;
 import tools.download.subtitles.sonline.SOnlineForm;
 import tools.download.subtitles.tvsubtitles.GetTvSubtitlesCode;
 import tools.download.subtitles.tvsubtitles.TvSubtitlesForm;
-import tools.download.torrents.EzTvForm;
+import tools.download.torrents.eztv.EzTvForm;
 import tools.importExport.ExportEpisodes;
 import tools.importExport.ImportEpisodes;
 import tools.internetUpdate.InternetUpdate;
@@ -557,7 +557,11 @@ public class Actions {
         }
       }
     }
-    RenameEpisodes r = new RenameEpisodes(oldNames, newNames, series);
+    if (oldNames.size() > 0) {
+      RenameEpisodes r = new RenameEpisodes(oldNames, newNames, series);
+    } else {
+      MyMessages.message("No files to rename", "There are no available files to rename");
+    }
   }
 
   public static void renameEpisodes() {
@@ -605,7 +609,11 @@ public class Actions {
           }
         }
       }
-      RenameEpisodes r = new RenameEpisodes(oldNames, newNames, series);
+      if (oldNames.size() > 0) {
+        RenameEpisodes r = new RenameEpisodes(oldNames, newNames, series);
+      } else {
+        MyMessages.message("No files to rename", "There are no available files to rename");
+      }
     } catch (SQLException ex) {
       myseries.MySeries.logger.log(Level.SEVERE, null, ex);
     }

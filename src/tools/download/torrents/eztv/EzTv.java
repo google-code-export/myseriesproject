@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package tools.download.torrents;
+package tools.download.torrents.eztv;
 
 import java.awt.Desktop;
 import java.io.BufferedOutputStream;
@@ -31,6 +31,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import tools.download.torrents.Torrent;
 import tools.options.Options;
 
 /**
