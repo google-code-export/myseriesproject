@@ -21,7 +21,7 @@ import myseries.series.Series;
  *
  * @author lordovol
  */
-public abstract class AbstractTorrentForm extends MyDraggable {
+public abstract class AbstractTorrentForm extends MyDraggable implements TorrentConstants {
 
   protected SeriesRecord series = null;
   protected EpisodesRecord episode = null;
@@ -37,7 +37,7 @@ public abstract class AbstractTorrentForm extends MyDraggable {
         v.add(seriesRecord.getTitle());
       }
       seriesModel = new DefaultComboBoxModel(v);
-      qualityModel = new DefaultComboBoxModel(AbstractTorrent.QUALITIES);
+      qualityModel = new DefaultComboBoxModel(QUALITIES);
     } catch (SQLException ex) {
       myseries.MySeries.logger.log(Level.SEVERE, null, ex);
     }

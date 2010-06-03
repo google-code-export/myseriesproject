@@ -111,7 +111,7 @@ public class EzTvForm extends AbstractTorrentForm {
 
     jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getStyle() | java.awt.Font.BOLD, jLabel1.getFont().getSize()+2));
     jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-    jLabel1.setText("Download torrent from " + AbstractTorrent.EZTV_NAME);
+    jLabel1.setText("Download torrent from " + EZTV_NAME);
 
     jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     jLabel2.setText("Series title:");
@@ -312,8 +312,9 @@ public class EzTvForm extends AbstractTorrentForm {
   }
 
   
+  @Override
   protected URI createUri() {
-    String address = AbstractTorrent.EZTV_RSS;
+    String address = EZTV_RSS;
     String query = "";
     ArrayList<String> q = new ArrayList<String>();
     try {
