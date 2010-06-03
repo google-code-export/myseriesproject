@@ -89,7 +89,7 @@ public abstract class AbstractTorrentDownload {
       int ByteRead;
       int ByteWritten = 0;
       String torrentName;
-      String[] t = torrent.link.split("/", -1);
+      String[] t = torrent.getLink().split("/", -1);
       torrentName = t[t.length - 1];
       String filename = Torrent.TORRENTS_PATH + torrentName;
       outStream = new BufferedOutputStream(new FileOutputStream(Options._USER_DIR_ + filename));
