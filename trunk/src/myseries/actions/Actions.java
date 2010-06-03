@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Vector;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.DefaultComboBoxModel;
@@ -676,6 +677,12 @@ public class Actions {
       } else {
         getSOnlineSubtitle(sOnlineCode);
       }
+    }
+    try {
+      Episodes.updateEpisodesTable();
+      Filters.getFilteredSeries();
+    } catch (SQLException ex) {
+      Logger.getLogger(Actions.class.getName()).log(Level.SEVERE, null, ex);
     }
   }
 
