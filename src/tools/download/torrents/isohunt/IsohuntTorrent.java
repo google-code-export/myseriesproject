@@ -208,4 +208,20 @@ public class IsohuntTorrent extends AbstractTorrent{
   public void setTracker(String tracker) {
     this.tracker = tracker;
   }
+
+  public String getInfo(){
+    String info="<html>";
+    info+="Title : "+getTitle()+"<br />";
+    info+="Comments : "+getComments()+"<br />";
+    info+="Downloads : "+getDownloads()+"<br />";
+    info+="Hash : "+getHash()+"<br />";
+    info+="Original link : "+getOriginalLink()+"<br />";
+    info+="Published date : "+getPublishedDate()+"<br />";
+    info+="Summary link : "+getSummaryLink()+"<br />";
+    info+="Tracker : "+getTracker()+"<br />";
+    info+="Votes : "+getVotes()+"<br />";
+    info+="</html>";
+
+    return info;
+  }
 }

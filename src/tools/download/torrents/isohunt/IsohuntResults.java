@@ -15,14 +15,16 @@ import java.util.Iterator;
 import javax.swing.table.DefaultTableModel;
 import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyDraggable;
+import myComponents.myTableCellRenderers.IsoHuntInfoRenderer;
 import myComponents.myTableCellRenderers.IsoHuntSizeRenderer;
 import tools.download.torrents.AbstractTorrent;
+import tools.download.torrents.TorrentConstants;
 
 /**
  *
  * @author ssoldatos
  */
-public class IsohuntResults extends MyDraggable {
+public class IsohuntResults extends MyDraggable implements TorrentConstants {
   private static final long serialVersionUID = 354646575474L;
 
   private IsohuntTorrent selectedTorrent;
@@ -156,14 +158,15 @@ public class IsohuntResults extends MyDraggable {
   }
 
   private void createTable() {
-    table.getColumnModel().getColumn(0).setPreferredWidth(300);
-    table.getColumnModel().getColumn(1).setPreferredWidth(40);
-    table.getColumnModel().getColumn(2).setPreferredWidth(80);
-    table.getColumnModel().getColumn(2).setCellRenderer(new IsoHuntSizeRenderer());
-    table.getColumnModel().getColumn(3).setPreferredWidth(50);
-    table.getColumnModel().getColumn(4).setPreferredWidth(50);
-    table.getColumnModel().getColumn(5).setPreferredWidth(40);
-    table.getColumnModel().getColumn(6).setPreferredWidth(40);
+    table.getColumnModel().getColumn(ISOHUNT_RESULTS_TITLE).setPreferredWidth(340);
+    table.getColumnModel().getColumn(ISOHUNT_RESULTS_FILES).setPreferredWidth(40);
+    table.getColumnModel().getColumn(ISOHUNT_RESULTS_LENGTH).setPreferredWidth(80);
+    table.getColumnModel().getColumn(ISOHUNT_RESULTS_LENGTH).setCellRenderer(new IsoHuntSizeRenderer());
+    table.getColumnModel().getColumn(ISOHUNT_RESULTS_SEEDS).setPreferredWidth(50);
+    table.getColumnModel().getColumn(ISOHUNT_RESULTS_LEECHERS).setPreferredWidth(50);
+    table.getColumnModel().getColumn(ISOHUNT_RESULTS_INFO).setPreferredWidth(50);
+    table.getColumnModel().getColumn(ISOHUNT_RESULTS_INFO).setCellRenderer(new IsoHuntInfoRenderer());
+    table.getColumnModel().getColumn(ISOHUNT_RESULTS_DOWNLOAD).setPreferredWidth(40);
     createModel();
   }
 
