@@ -11,7 +11,7 @@ import java.net.URISyntaxException;
  *
  * @author lordovol
  */
-public class Torrent {
+public abstract class AbstractTorrent {
 
   /**
    * The torrents path : "torrents/"
@@ -54,12 +54,12 @@ public class Torrent {
    */
   private String link;
 
-  public Torrent(){
+  public AbstractTorrent(){
     this.title = "";
     this.link = "";
   }
 
-  public Torrent(String title, String link) {
+  public AbstractTorrent(String title, String link) {
     this.title = title;
     this.link = link;
   }

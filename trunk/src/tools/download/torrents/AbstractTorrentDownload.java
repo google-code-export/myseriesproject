@@ -33,7 +33,7 @@ public abstract class AbstractTorrentDownload {
   protected URI uri;
   protected JProgressBar progress;
 
-  protected void getTorrent(Torrent torrent) throws IOException {
+  protected void getTorrent(AbstractTorrent torrent) throws IOException {
     if (true) {
       downloadTorrent(torrent);
       return;
@@ -53,7 +53,7 @@ public abstract class AbstractTorrentDownload {
     try {
       URL rss = uri.toURL();
       in = rss.openStream();
-      ArrayList<Torrent> torrents = readStream(in);
+      ArrayList<AbstractTorrent> torrents = readStream(in);
       progress.setString(torrents.size() + " torrents found");
       progress.setIndeterminate(false);
       if (torrents.size() == 0) {
@@ -61,7 +61,7 @@ public abstract class AbstractTorrentDownload {
       } else if (torrents.size() == 1) {
         getTorrent(torrents.get(0));
       } else {
-        Torrent tor = (Torrent) JOptionPane.showInputDialog(null, "Choose the torrent to download", "Choose torrent", JOptionPane.QUESTION_MESSAGE, null, torrents.toArray(), 0);
+        AbstractTorrent tor = (AbstractTorrent) JOptionPane.showInputDialog(null, "Choose the torrent to download", "Choose torrent", JOptionPane.QUESTION_MESSAGE, null, torrents.toArray(), 0);
         if (tor != null) {
           getTorrent(tor);
         }
@@ -73,9 +73,9 @@ public abstract class AbstractTorrentDownload {
     }
   }
 
-  protected abstract ArrayList<Torrent> readStream(InputStream in);
+  protected abstract ArrayList<AbstractTorrent> readStream(InputStream in);
 
-   private void downloadTorrent(Torrent torrent) {
+   private void downloadTorrent(AbstractTorrent torrent) {
     try {
       if (!isTorrent(torrent)) {
         return;
@@ -91,7 +91,7 @@ public abstract class AbstractTorrentDownload {
       String torrentName;
       String[] t = torrent.getLink().split("/", -1);
       torrentName = t[t.length - 1];
-      String filename = Torrent.TORRENTS_PATH + torrentName;
+      String filename = AbstractTorrent.TORRENTS_PATH + torrentName;
       outStream = new BufferedOutputStream(new FileOutputStream(Options._USER_DIR_ + filename));
       while ((ByteRead = is.read(buf)) != -1) {
         outStream.write(buf, 0, ByteRead);
@@ -108,5 +108,5 @@ public abstract class AbstractTorrentDownload {
     }
   }
 
-   protected abstract boolean isTorrent(Torrent torrent) throws MalformedURLException, IOException;
+   protected abstract boolean isTorrent(AbstractTorrent torrent) throws MalformedURLException, IOException;
 }

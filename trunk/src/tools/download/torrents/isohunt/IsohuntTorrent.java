@@ -5,13 +5,13 @@
 
 package tools.download.torrents.isohunt;
 
-import tools.download.torrents.Torrent;
+import tools.download.torrents.AbstractTorrent;
 
 /**
  *
  * @author ssoldatos
  */
-public class IsohuntTorrent extends Torrent{
+public class IsohuntTorrent extends AbstractTorrent{
 
   private int files = 0;
   private long length = 0;

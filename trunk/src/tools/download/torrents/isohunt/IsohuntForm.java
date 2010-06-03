@@ -25,7 +25,7 @@ import javax.swing.DefaultComboBoxModel;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import tools.download.torrents.AbstractTorrentForm;
-import tools.download.torrents.Torrent;
+import tools.download.torrents.AbstractTorrent;
 
 /**
  *
@@ -44,8 +44,8 @@ public class IsohuntForm extends AbstractTorrentForm {
   @Override
   protected void createModels() {
     super.createModels();
-    sortModel = new DefaultComboBoxModel(Torrent.SORT_OPTIONS);
-    sortOrderModel = new DefaultComboBoxModel(Torrent.SORT_ORDER);
+    sortModel = new DefaultComboBoxModel(AbstractTorrent.SORT_OPTIONS);
+    sortOrderModel = new DefaultComboBoxModel(AbstractTorrent.SORT_ORDER);
 
   }
 
@@ -89,7 +89,7 @@ public class IsohuntForm extends AbstractTorrentForm {
 
     label_title.setFont(label_title.getFont().deriveFont(label_title.getFont().getStyle() | java.awt.Font.BOLD, label_title.getFont().getSize()+2));
     label_title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-    label_title.setText("Download torrent from " + Torrent.ISOHUNT_NAME);
+    label_title.setText("Download torrent from " + AbstractTorrent.ISOHUNT_NAME);
 
     label_series.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     label_series.setText("Series :");
@@ -297,7 +297,7 @@ public class IsohuntForm extends AbstractTorrentForm {
 
   @Override
   protected URI createUri() {
-    String address = Torrent.ISOHUNT_JSON;
+    String address = AbstractTorrent.ISOHUNT_JSON;
     String query = "";
     ArrayList<String> q = new ArrayList<String>();
     String season = "+S" + MyUsefulFunctions.padLeft(String.valueOf(spinner_season.getValue()), 2, "0");

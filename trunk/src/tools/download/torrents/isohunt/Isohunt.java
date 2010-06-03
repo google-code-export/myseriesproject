@@ -21,7 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import tools.download.torrents.AbstractTorrentDownload;
-import tools.download.torrents.Torrent;
+import tools.download.torrents.AbstractTorrent;
 
 /**
  *
@@ -36,9 +36,9 @@ public class Isohunt extends AbstractTorrentDownload implements Runnable {
   }
 
   public void run() {
-    if (MyUsefulFunctions.hasInternetConnection(Torrent.ISOHUNT_JSON)) {
+    if (MyUsefulFunctions.hasInternetConnection(AbstractTorrent.ISOHUNT_JSON)) {
       progress.setIndeterminate(true);
-      progress.setString("Getting json data from " + Torrent.ISOHUNT_NAME);
+      progress.setString("Getting json data from " + AbstractTorrent.ISOHUNT_NAME);
       getStream();
     } else {
       MyMessages.internetError();
@@ -46,14 +46,14 @@ public class Isohunt extends AbstractTorrentDownload implements Runnable {
   }
 
   @Override
-  protected boolean isTorrent(Torrent torrent) throws MalformedURLException, IOException {
+  protected boolean isTorrent(AbstractTorrent torrent) throws MalformedURLException, IOException {
     return true;
   }
 
   @Override
-  protected ArrayList<Torrent> readStream(InputStream in) {
+  protected ArrayList<AbstractTorrent> readStream(InputStream in) {
     BufferedReader reader = null;
-    ArrayList<Torrent> torrents = new ArrayList<Torrent>();
+    ArrayList<AbstractTorrent> torrents = new ArrayList<AbstractTorrent>();
     JSONObject items = null;
     JSONArray list = null;
 
