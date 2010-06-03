@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import org.json.JSONArray;
@@ -22,12 +23,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import tools.download.torrents.AbstractTorrentDownload;
 import tools.download.torrents.AbstractTorrent;
+import tools.download.torrents.TorrentConstants;
 
 /**
  *
  * @author lordovol
  */
-public class Isohunt extends AbstractTorrentDownload implements Runnable {
+public class Isohunt extends AbstractTorrentDownload implements Runnable, TorrentConstants {
 
   Isohunt(URI uri, IsohuntForm form) {
     this.uri = uri;
@@ -35,10 +37,11 @@ public class Isohunt extends AbstractTorrentDownload implements Runnable {
     this.progress = form.progress;
   }
 
+  @Override
   public void run() {
-    if (MyUsefulFunctions.hasInternetConnection(AbstractTorrent.ISOHUNT_JSON)) {
+    if (MyUsefulFunctions.hasInternetConnection(ISOHUNT_JSON)) {
       progress.setIndeterminate(true);
-      progress.setString("Getting json data from " + AbstractTorrent.ISOHUNT_NAME);
+      progress.setString("Getting json data from " + ISOHUNT_NAME);
       getStream();
     } else {
       MyMessages.internetError();
@@ -87,22 +90,25 @@ public class Isohunt extends AbstractTorrentDownload implements Runnable {
 //        }
 
         IsohuntTorrent torrent = new IsohuntTorrent();
-        torrent.setTitle(tor.has("title")? tor.getString("title"): "");
-        torrent.setLink(tor.has("enclosure_url")? tor.getString("enclosure_url"): "");
-        torrent.setComments(tor.has("comments")? tor.getInt("comments"): 0);
-        torrent.setDownloads(tor.has("downloads")? tor.getInt("downloads"): 0);
-        torrent.setFiles(tor.has("files")? tor.getInt("files"): 0);
-        torrent.setHash(tor.has("hash")? tor.getString("hash"): "");
-        torrent.setLeechers(tor.has("leechers")? tor.getInt("leechers"): 0);
-        torrent.setLength(tor.has("length")? tor.getLong("length"): 0);
-        torrent.setOriginalLink(tor.has("original_link")? tor.getString("original_link"): "");
-        torrent.setPublishedDate(tor.has("pubDate")? tor.getString("pubDate"): "");
-        torrent.setSeeds(tor.has("Seeds")? tor.getInt("Seeds"): 0);
-        torrent.setSize(tor.has("size")? tor.getString("size"): "");
-        torrent.setSummaryLink(tor.has("link")? tor.getString("link"): "");
-        torrent.setTracker(tor.has("tracker")? tor.getString("tracker"): "");
-        torrent.setVotes(tor.has("votes")? tor.getInt("votes"): 0);
-        torrents.add(torrent);
+        torrent.setTitle(tor.has("title") ? MyUsefulFunctions.stripHTML(tor.getString("title")) : "");
+        torrent.setLink(tor.has("enclosure_url") ? tor.getString("enclosure_url") : "");
+        torrent.setComments(tor.has("comments") ? tor.getInt("comments") : 0);
+        torrent.setDownloads(tor.has("downloads") ? tor.getInt("downloads") : 0);
+        torrent.setFiles(tor.has("files") ? tor.getInt("files") : 0);
+        torrent.setHash(tor.has("hash") ? tor.getString("hash") : "");
+        torrent.setLeechers(tor.has("leechers") ? tor.getInt("leechers") : 0);
+        torrent.setLength(tor.has("length") ? tor.getLong("length") : 0);
+        torrent.setOriginalLink(tor.has("original_link") ? tor.getString("original_link") : "");
+        torrent.setPublishedDate(tor.has("pubDate") ? tor.getString("pubDate") : "");
+        torrent.setSeeds(tor.has("Seeds") ? tor.getInt("Seeds") : 0);
+        torrent.setSize(tor.has("size") ? tor.getString("size") : "");
+        torrent.setSummaryLink(tor.has("link") ? tor.getString("link") : "");
+        torrent.setTracker(tor.has("tracker") ? tor.getString("tracker") : "");
+        torrent.setVotes(tor.has("votes") ? tor.getInt("votes") : 0);
+        if(!torrent.getTitle().equals("")){
+          torrents.add(torrent);
+        }
+        
 
       }
       return torrents;
@@ -114,5 +120,12 @@ public class Isohunt extends AbstractTorrentDownload implements Runnable {
       return torrents;
     }
 
+  }
+
+  @Override
+  protected AbstractTorrent getSelectedTorrent(ArrayList<AbstractTorrent> torrents) {
+
+    IsohuntResults isoRes = new IsohuntResults(torrents);
+    return isoRes.getSelectedTorrent();
   }
 }

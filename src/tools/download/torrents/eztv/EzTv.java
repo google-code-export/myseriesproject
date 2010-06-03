@@ -13,6 +13,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -25,12 +26,13 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import tools.download.torrents.AbstractTorrentDownload;
 import tools.download.torrents.AbstractTorrent;
+import tools.download.torrents.TorrentConstants;
 
 /**
  * Downloads a torrent from EzTv
  * @author lordovol
  */
-public class EzTv extends AbstractTorrentDownload implements Runnable {
+public class EzTv extends AbstractTorrentDownload implements Runnable, TorrentConstants {
 
   /**
    * Seacrhes EZTv
@@ -44,16 +46,15 @@ public class EzTv extends AbstractTorrentDownload implements Runnable {
   }
 
   public void run() {
-    if (MyUsefulFunctions.hasInternetConnection(AbstractTorrent.EZTV_RSS)) {
+    if (MyUsefulFunctions.hasInternetConnection(EZTV_RSS)) {
       progress.setIndeterminate(true);
-      progress.setString("Getting rss feeds from "+AbstractTorrent.EZTV_NAME);
+      progress.setString("Getting rss feeds from " + EZTV_NAME);
       getStream();
     } else {
       MyMessages.internetError();
     }
   }
 
-  
   protected boolean isTorrent(AbstractTorrent torrent) throws MalformedURLException, IOException {
     URI u = torrent.getUri();
     if (uri != null) {
@@ -114,5 +115,10 @@ public class EzTv extends AbstractTorrentDownload implements Runnable {
       return torrents;
     }
     return torrents;
+  }
+
+  @Override
+  protected AbstractTorrent getSelectedTorrent(ArrayList<AbstractTorrent> torrents) {
+    return (AbstractTorrent) JOptionPane.showInputDialog(null, "Choose the torrent to download", "Choose torrent", JOptionPane.QUESTION_MESSAGE, null, torrents.toArray(), 0);
   }
 }

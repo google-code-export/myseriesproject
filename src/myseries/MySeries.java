@@ -69,6 +69,7 @@ import tools.DesktopSupport;
 import tools.Skin;
 import tools.download.subtitles.Subtitle;
 import tools.download.torrents.AbstractTorrent;
+import tools.download.torrents.TorrentConstants;
 import tools.internetUpdate.InternetUpdate;
 import tools.languages.LangsList;
 import tools.myLogger;
@@ -1157,7 +1158,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
     menuItem_downloadEztv.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_MASK));
     menuItem_downloadEztv.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eztv.png"))); // NOI18N
-    menuItem_downloadEztv.setText("From " + AbstractTorrent.EZTV_NAME);
+    menuItem_downloadEztv.setText("From " + TorrentConstants.EZTV_NAME);
     menuItem_downloadEztv.setToolTipText("Download an episode's torrent");
     menuItem_downloadEztv.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1167,7 +1168,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     jMenu1.add(menuItem_downloadEztv);
 
     menuItem_DownloadIsohunt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/isohunt.png"))); // NOI18N
-    menuItem_DownloadIsohunt.setText("From " + AbstractTorrent.ISOHUNT_NAME);
+    menuItem_DownloadIsohunt.setText("From " + TorrentConstants.ISOHUNT_NAME);
     menuItem_DownloadIsohunt.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         menuItem_DownloadIsohuntActionPerformed(evt);
@@ -1718,7 +1719,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   }//GEN-LAST:event_tableFiltersMouseReleased
 
   private void menuItem_downloadEztvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_downloadEztvActionPerformed
-    Actions.downloadTorrent(AbstractTorrent.EZTV_NAME);
+    Actions.downloadTorrent(TorrentConstants.EZTV_NAME);
   }//GEN-LAST:event_menuItem_downloadEztvActionPerformed
 
   private void popUpItem_IUEpguidesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_IUEpguidesActionPerformed
@@ -1746,7 +1747,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   }//GEN-LAST:event_popUpItem_renameEpisodeActionPerformed
 
   private void menuItem_DownloadIsohuntActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_DownloadIsohuntActionPerformed
-    Actions.downloadTorrent(AbstractTorrent.ISOHUNT_NAME);
+    Actions.downloadTorrent(TorrentConstants.ISOHUNT_NAME);
   }//GEN-LAST:event_menuItem_DownloadIsohuntActionPerformed
 
   // Variables declaration - do not modify//GEN-BEGIN:variables

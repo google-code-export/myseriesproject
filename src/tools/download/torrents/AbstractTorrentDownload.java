@@ -27,7 +27,7 @@ import tools.options.Options;
  *
  * @author lordovol
  */
-public abstract class AbstractTorrentDownload {
+public abstract class AbstractTorrentDownload implements TorrentConstants{
 
   protected AbstractTorrentForm form;
   protected URI uri;
@@ -61,7 +61,7 @@ public abstract class AbstractTorrentDownload {
       } else if (torrents.size() == 1) {
         getTorrent(torrents.get(0));
       } else {
-        AbstractTorrent tor = (AbstractTorrent) JOptionPane.showInputDialog(null, "Choose the torrent to download", "Choose torrent", JOptionPane.QUESTION_MESSAGE, null, torrents.toArray(), 0);
+        AbstractTorrent tor  = getSelectedTorrent(torrents);
         if (tor != null) {
           getTorrent(tor);
         }
@@ -73,6 +73,7 @@ public abstract class AbstractTorrentDownload {
     }
   }
 
+  protected abstract AbstractTorrent getSelectedTorrent(ArrayList<AbstractTorrent> torrents);
   protected abstract ArrayList<AbstractTorrent> readStream(InputStream in);
 
    private void downloadTorrent(AbstractTorrent torrent) {
@@ -91,7 +92,7 @@ public abstract class AbstractTorrentDownload {
       String torrentName;
       String[] t = torrent.getLink().split("/", -1);
       torrentName = t[t.length - 1];
-      String filename = AbstractTorrent.TORRENTS_PATH + torrentName;
+      String filename = TORRENTS_PATH + torrentName;
       outStream = new BufferedOutputStream(new FileOutputStream(Options._USER_DIR_ + filename));
       while ((ByteRead = is.read(buf)) != -1) {
         outStream.write(buf, 0, ByteRead);

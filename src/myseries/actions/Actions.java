@@ -55,6 +55,7 @@ import tools.download.subtitles.sonline.SOnlineForm;
 import tools.download.subtitles.tvsubtitles.GetTvSubtitlesCode;
 import tools.download.subtitles.tvsubtitles.TvSubtitlesForm;
 import tools.download.torrents.AbstractTorrent;
+import tools.download.torrents.TorrentConstants;
 import tools.download.torrents.eztv.EzTvForm;
 import tools.download.torrents.isohunt.IsohuntForm;
 import tools.importExport.ExportEpisodes;
@@ -697,9 +698,9 @@ public class Actions {
   }
 
   public static void downloadTorrent(String site) {
-    if (site.equals(AbstractTorrent.EZTV_NAME)) {
+    if (site.equals(TorrentConstants.EZTV_NAME)) {
       new EzTvForm();
-    } else if (site.equals(AbstractTorrent.ISOHUNT_NAME)) {
+    } else if (site.equals(TorrentConstants.ISOHUNT_NAME)) {
       new IsohuntForm();
     }
 

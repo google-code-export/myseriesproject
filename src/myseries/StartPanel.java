@@ -31,6 +31,7 @@ import tools.DesktopSupport;
 import tools.options.Options;
 import tools.Skin;
 import tools.download.torrents.AbstractTorrent;
+import tools.download.torrents.TorrentConstants;
 
 /**
  * The start up panel
@@ -365,7 +366,7 @@ public class StartPanel extends MyDraggable {
       MySeries.logger.log(Level.INFO, "Checking directories");
       MyUsefulFunctions.checkDir(Options._USER_DIR_ + "/" + Database.PATH);
       MyUsefulFunctions.checkDir(Options._USER_DIR_ + "/" + MyImagePanel.PATH);
-      MyUsefulFunctions.checkDir(Options._USER_DIR_ + "/" + AbstractTorrent.TORRENTS_PATH);
+      MyUsefulFunctions.checkDir(Options._USER_DIR_ + "/" + TorrentConstants.TORRENTS_PATH);
       // Create the default db if not exists and create the conn, stmt
 
       if (Options.toString(Options.DB_NAME).equals("") ||
