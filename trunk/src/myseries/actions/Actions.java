@@ -719,4 +719,29 @@ public class Actions {
       }
     });
   }
+
+  public static void updateFiles() {
+    if (!Options.toBoolean(Options.AUTO_FILE_UPDATING)) {
+      MyMessages.error("Auto file updating disabled", "Auto file updating is disabled in the options.\n"
+              + "Enable it and try again");
+      return;
+    }
+    try {
+      SeriesRecord origSeries = Series.getCurrentSerial();
+      ArrayList<SeriesRecord> series = Series.getSeries();
+      for (Iterator<SeriesRecord> it = series.iterator(); it.hasNext();) {
+        SeriesRecord ser = it.next();
+        if (ser.getSeries_ID() != origSeries.getSeries_ID()) {
+          Series.setCurrentSerial(ser);
+          Episodes.updateEpisodesTable();
+        }
+      }
+      Series.setCurrentSerial(origSeries);
+      Episodes.updateEpisodesTable();
+      MyMessages.message("Update finished", "Updating of series files finished.");
+    } catch (SQLException ex) {
+      MySeries.logger.log(Level.SEVERE, null, ex);
+    }
+
+  }
 }
