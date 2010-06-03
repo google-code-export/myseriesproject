@@ -649,16 +649,16 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="checkbox_useProxy" alignment="0" pref="133" max="32767" attributes="0"/>
-                                      <Component id="jLabel15" alignment="1" pref="133" max="32767" attributes="0"/>
-                                      <Component id="jLabel13" alignment="1" pref="133" max="32767" attributes="0"/>
-                                      <Component id="jLabel12" alignment="1" pref="133" max="32767" attributes="0"/>
+                                      <Component id="checkbox_useProxy" alignment="0" pref="128" max="32767" attributes="0"/>
+                                      <Component id="jLabel15" alignment="1" max="32767" attributes="0"/>
+                                      <Component id="jLabel13" alignment="1" pref="128" max="32767" attributes="0"/>
+                                      <Component id="jLabel12" alignment="1" pref="128" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="combo_primaryLang" pref="205" max="32767" attributes="0"/>
+                                      <Component id="combo_primaryLang" pref="192" max="32767" attributes="0"/>
                                       <Component id="jCheckBox1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="combo_secondaryLang" pref="205" max="32767" attributes="0"/>
+                                      <Component id="combo_secondaryLang" pref="192" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="152" max="-2" attributes="0"/>
                               </Group>
@@ -666,14 +666,14 @@
                                   <Group type="103" groupAlignment="1" attributes="0">
                                       <Group type="102" alignment="1" attributes="0">
                                           <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                                          <Component id="jLabel9" pref="84" max="32767" attributes="0"/>
+                                          <Component id="jLabel9" pref="75" max="32767" attributes="0"/>
                                       </Group>
-                                      <Component id="jLabel8" alignment="1" pref="111" max="32767" attributes="0"/>
+                                      <Component id="jLabel8" alignment="1" pref="102" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="textfield_port" alignment="0" pref="145" max="32767" attributes="0"/>
-                                      <Component id="textfield_proxy" alignment="0" pref="145" max="32767" attributes="2"/>
+                                      <Component id="textfield_port" alignment="0" pref="136" max="32767" attributes="0"/>
+                                      <Component id="textfield_proxy" alignment="0" pref="136" max="32767" attributes="2"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="220" max="-2" attributes="0"/>
                               </Group>
@@ -889,17 +889,17 @@
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel18" pref="119" max="32767" attributes="0"/>
+                                  <Component id="jLabel18" pref="101" max="32767" attributes="0"/>
                                   <EmptySpace min="-2" max="-2" attributes="0"/>
                                   <Component id="tf_seasonSep" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
-                                  <Component id="jLabel19" pref="119" max="32767" attributes="0"/>
+                                  <Component id="jLabel19" pref="101" max="32767" attributes="0"/>
                                   <EmptySpace min="-2" max="-2" attributes="0"/>
                                   <Component id="tf_episodeSep" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
-                                  <Component id="jLabel20" pref="119" max="32767" attributes="0"/>
+                                  <Component id="jLabel20" pref="101" max="32767" attributes="0"/>
                                   <EmptySpace min="-2" max="-2" attributes="0"/>
                                   <Component id="tf_titleSep" min="-2" max="-2" attributes="0"/>
                               </Group>

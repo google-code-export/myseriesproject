@@ -15,15 +15,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Vector;
 import java.util.logging.Level;
 import javax.swing.JFrame;
 import myComponents.MyUsefulFunctions;
 import myseries.*;
 import tools.download.subtitles.Subtitle;
+import tools.download.subtitles.SubtitleConstants;
 import tools.internetUpdate.InternetUpdate;
-import tools.languages.LangsList;
-import tools.languages.Language;
 
 /**
  *
@@ -203,8 +201,8 @@ public class Options {
   static {
     InternetUpdate.DB_UPDATERS.add(InternetUpdate.EP_GUIDES_NAME);
     InternetUpdate.DB_UPDATERS.add(InternetUpdate.TV_RAGE_NAME);
-    Subtitle.SUBTITLE_SITES.add(Subtitle.TV_SUBTITLES_NAME);
-    Subtitle.SUBTITLE_SITES.add(Subtitle.SUBTITLE_ONLINE_NAME);
+    SubtitleConstants.SUBTITLE_SITES.add(SubtitleConstants.TV_SUBTITLES_NAME);
+    SubtitleConstants.SUBTITLE_SITES.add(SubtitleConstants.SUBTITLE_ONLINE_NAME);
   }
 
   /**
@@ -456,7 +454,7 @@ public class Options {
     out.println(Options.CHECK_VERSION + " =true");
     out.println(Options.PRIMARY_SUB + " =Greek");
     out.println(Options.SECONDARY_SUB + " =English");
-    out.println(Options.SUBTITLE_SITE + " =" + Subtitle.SUBTITLE_ONLINE_NAME);
+    out.println(Options.SUBTITLE_SITE + " =" + SubtitleConstants.SUBTITLE_ONLINE_NAME);
     out.println(Options.AUTO_FILE_UPDATING + " =false");
     out.println(Options.SEASON_SEPARATOR + " =SE");
     out.println(Options.TITLE_SEPARATOR + " = - ");

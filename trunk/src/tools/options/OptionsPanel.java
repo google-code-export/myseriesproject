@@ -48,7 +48,7 @@ import com.googlecode.svalidators.validators.RegularExpressionValidator;
 import com.googlecode.svalidators.validators.SValidator;
 import tools.LookAndFeels;
 import tools.Skin;
-import tools.download.subtitles.Subtitle;
+import tools.download.subtitles.SubtitleConstants;
 import tools.internetUpdate.InternetUpdate;
 import tools.languages.Language;
 
@@ -69,9 +69,9 @@ public class OptionsPanel extends MyDraggable {
   private Color oldColor;
   private boolean oldUseSkin;
   private ComboBoxModel updateDbModel = new DefaultComboBoxModel(InternetUpdate.DB_UPDATERS);
-  private ComboBoxModel primarySubtitlesModel = new DefaultComboBoxModel(Subtitle.SUBTITLE_LANG);
-  private ComboBoxModel secondarySubtitlesModel = new DefaultComboBoxModel(Subtitle.SUBTITLE_LANG);
-  private ComboBoxModel subtitleSitesModel = new DefaultComboBoxModel(Subtitle.SUBTITLE_SITES);
+  private ComboBoxModel primarySubtitlesModel = new DefaultComboBoxModel(SubtitleConstants.SUBTITLE_LANG);
+  private ComboBoxModel secondarySubtitlesModel = new DefaultComboBoxModel(SubtitleConstants.SUBTITLE_LANG);
+  private ComboBoxModel subtitleSitesModel = new DefaultComboBoxModel(SubtitleConstants.SUBTITLE_SITES);
   private String sepRegex = "^[^/\\\\?%*:|\\\"<>\\.]*$";
 
   /** Creates new form OptionsPanel
