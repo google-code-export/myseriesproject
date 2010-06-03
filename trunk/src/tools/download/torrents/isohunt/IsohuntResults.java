@@ -10,6 +10,10 @@
  */
 package tools.download.torrents.isohunt;
 
+import java.awt.Cursor;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.table.DefaultTableModel;
@@ -26,9 +30,9 @@ import tools.download.torrents.TorrentConstants;
  * @author ssoldatos
  */
 public class IsohuntResults extends MyDraggable implements TorrentConstants {
-  private static final long serialVersionUID = 354646575474L;
 
-  private IsohuntTorrent selectedTorrent;
+  private static final long serialVersionUID = 354646575474L;
+  IsohuntTorrent selectedTorrent;
   private ArrayList<AbstractTorrent> torrents;
 
   /** Creates new form IsohuntResults
@@ -113,11 +117,11 @@ public class IsohuntResults extends MyDraggable implements TorrentConstants {
       .addGroup(jPanel1Layout.createSequentialGroup()
         .addContainerGap()
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 797, Short.MAX_VALUE)
+          .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 865, Short.MAX_VALUE)
           .addGroup(jPanel1Layout.createSequentialGroup()
             .addGap(10, 10, 10)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 787, Short.MAX_VALUE)
+              .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 855, Short.MAX_VALUE)
               .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                   .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -143,7 +147,9 @@ public class IsohuntResults extends MyDraggable implements TorrentConstants {
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+      .addGroup(layout.createSequentialGroup()
+        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,8 +186,9 @@ public class IsohuntResults extends MyDraggable implements TorrentConstants {
     table.getColumnModel().getColumn(ISOHUNT_RESULTS_LENGTH).setCellRenderer(new IsoHuntSizeRenderer());
     table.getColumnModel().getColumn(ISOHUNT_RESULTS_SEEDS).setPreferredWidth(50);
     table.getColumnModel().getColumn(ISOHUNT_RESULTS_LEECHERS).setPreferredWidth(50);
-    table.getColumnModel().getColumn(ISOHUNT_RESULTS_DOWNLOAD).setPreferredWidth(40);
+    table.getColumnModel().getColumn(ISOHUNT_RESULTS_DOWNLOAD).setPreferredWidth(80);
     table.getColumnModel().getColumn(ISOHUNT_RESULTS_DOWNLOAD).setCellRenderer(new IsoHuntLinkRenderer());
+    table.addMouseListener(new IsoHuntTableMouseListener());
     createModel();
   }
 
@@ -190,14 +197,32 @@ public class IsohuntResults extends MyDraggable implements TorrentConstants {
     for (Iterator<AbstractTorrent> it = torrents.iterator(); it.hasNext();) {
       IsohuntTorrent torrent = (IsohuntTorrent) it.next();
       model.addRow(new Object[]{
-            torrent,
-            torrent.getFiles(),
-            torrent.getLength(),
-            torrent.getSeeds(),
-            torrent.getLeechers(),
-            torrent
-          });
+                torrent,
+                torrent.getFiles(),
+                torrent.getLength(),
+                torrent.getSeeds(),
+                torrent.getLeechers(),
+                torrent
+              });
     }
+  }
 
+  class IsoHuntTableMouseListener extends MouseAdapter {
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+      if (e.getButton() == MouseEvent.BUTTON1) {
+        Point p = e.getPoint();
+        int row = table.rowAtPoint(p);
+        int col = table.columnAtPoint(p);
+        if (col == ISOHUNT_RESULTS_DOWNLOAD) {
+          IsohuntTorrent torrent = (IsohuntTorrent) table.getValueAt(row, col);
+          IsohuntResults.this.selectedTorrent = torrent;
+          dispose();
+        }
+        super.mouseClicked(e);
+      }
+
+    }
   }
 }
