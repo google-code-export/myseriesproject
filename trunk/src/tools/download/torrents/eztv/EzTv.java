@@ -70,6 +70,7 @@ public class EzTv extends AbstractTorrentDownload implements Runnable {
     return false;
   }
 
+  @Override
   protected ArrayList<AbstractTorrent> readStream(InputStream in) {
     Element val;
     NodeList t;
