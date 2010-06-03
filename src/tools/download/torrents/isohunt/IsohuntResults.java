@@ -224,5 +224,18 @@ public class IsohuntResults extends MyDraggable implements TorrentConstants {
       }
 
     }
+    @Override
+    public void mouseEntered(MouseEvent e) {
+      if (e.getButton() == MouseEvent.BUTTON1) {
+        Point p = e.getPoint();
+        int row = table.rowAtPoint(p);
+        int col = table.columnAtPoint(p);
+        if (col == ISOHUNT_RESULTS_DOWNLOAD) {
+          table.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        }
+        super.mouseClicked(e);
+      }
+
+    }
   }
 }
