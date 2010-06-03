@@ -48,11 +48,16 @@ public class Torrent {
   /**
    * The torrents title
    */
-  public String title;
+  private String title;
   /**
    * The torrents link
    */
-  public String link;
+  private String link;
+
+  public Torrent(){
+    this.title = "";
+    this.link = "";
+  }
 
   public Torrent(String title, String link) {
     this.title = title;
@@ -61,7 +66,7 @@ public class Torrent {
 
   @Override
   public String toString() {
-    return title;
+    return getTitle();
   }
 
   /**
@@ -69,12 +74,40 @@ public class Torrent {
    * @return The torrents URI or null if there's a syntax error
    */
   public URI getUri() {
-    String encodedLink = link.replaceAll("\\[", "%5B");
+    String encodedLink = getLink().replaceAll("\\[", "%5B");
     encodedLink = encodedLink.replaceAll("\\]", "%5D");
     try {
       return new URI(encodedLink);
     } catch (URISyntaxException ex) {
       return null;
     }
+  }
+
+  /**
+   * @return the title
+   */
+  public String getTitle() {
+    return title;
+  }
+
+  /**
+   * @param title the title to set
+   */
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  /**
+   * @return the link
+   */
+  public String getLink() {
+    return link;
+  }
+
+  /**
+   * @param link the link to set
+   */
+  public void setLink(String link) {
+    this.link = link;
   }
 }
