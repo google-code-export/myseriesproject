@@ -28,6 +28,6 @@ public class IsoHuntInfoRenderer extends DefaultTableCellRenderer {
     IsohuntTorrent torrent = (IsohuntTorrent) value;
     setText(MyUsefulFunctions.stripHTML(torrent.getTitle()));
     setToolTipText(torrent.getInfo());
-    return this;
+    return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
   }
 }
