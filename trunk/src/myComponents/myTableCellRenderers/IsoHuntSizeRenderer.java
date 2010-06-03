@@ -41,6 +41,6 @@ import javax.swing.table.DefaultTableCellRenderer;
       setText(strValue);
       setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 4));
       setHorizontalAlignment(SwingConstants.RIGHT);
-      return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+      return super.getTableCellRendererComponent(table, strValue, isSelected, hasFocus, row, column);
     }
   }
