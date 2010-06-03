@@ -42,4 +42,33 @@ public interface TorrentConstants {
    * List of sorting orer
    */
   public static String[] SORT_ORDER = {"Desc", "Asc"};
+  /**
+   * Isohunt results column title : 0
+   */
+  public static int ISOHUNT_RESULTS_TITLE = 0;
+  /**
+   * Isohunt results column files : 1
+   */
+  public static int ISOHUNT_RESULTS_FILES = 1;
+  /**
+   * Isohunt results column length : 2
+   */
+  public static int ISOHUNT_RESULTS_LENGTH = 2;
+  /**
+   * Isohunt results column seeds : 3
+   */
+  public static int ISOHUNT_RESULTS_SEEDS = 3;
+  /**
+   * Isohunt results column leechers : 4
+   */
+  public static int ISOHUNT_RESULTS_LEECHERS = 4;
+  /**
+   * Isohunt results column info : 5
+   */
+  public static int ISOHUNT_RESULTS_INFO = 5;
+  /**
+   * Isohunt results column download : 6
+   */
+  public static int ISOHUNT_RESULTS_DOWNLOAD = 6;
+  
 }
