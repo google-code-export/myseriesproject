@@ -467,6 +467,8 @@ public class JSONObject {
             return o instanceof Number ?
                 ((Number)o).intValue() :
                 Integer.parseInt((String)o);
+        } catch(NumberFormatException e){
+         return 0; 
         } catch (Exception e) {
             throw new JSONException("JSONObject[" + quote(key) +
                 "] is not an int.");
