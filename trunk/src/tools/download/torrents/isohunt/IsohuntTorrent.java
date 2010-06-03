@@ -210,18 +210,32 @@ public class IsohuntTorrent extends AbstractTorrent{
   }
 
   public String getInfo(){
-    String info="<html>";
-    info+="Title : "+getTitle()+"<br />";
-    info+="Comments : "+getComments()+"<br />";
-    info+="Downloads : "+getDownloads()+"<br />";
-    info+="Hash : "+getHash()+"<br />";
-    info+="Original link : "+getOriginalLink()+"<br />";
-    info+="Published date : "+getPublishedDate()+"<br />";
-    info+="Summary link : "+getSummaryLink()+"<br />";
-    info+="Tracker : "+getTracker()+"<br />";
-    info+="Votes : "+getVotes()+"<br />";
-    info+="</html>";
+    String info="";
+    info="<html><table width='300px'>";
+    info+="<tr><th width='200px'>Title</th><td width='100px'>"+getTitle()+"</td></tr>";
+    info+="<tr><th>Comments</th><td>"+getComments()+"</td></tr>";
+    info+="<tr><th>Downloads</th><td>"+getDownloads()+"</td></tr>";
+    info+="<tr><th>Hash</th><td>"+getHash()+"</td></tr>";
+    info+="<tr><th>Original link</th><td>"+breakLine(getOriginalLink())+"</td></tr>";
+    info+="<tr><th>Published date</th><td>"+getPublishedDate()+"</td></tr>";
+    info+="<tr><th>Summary link</th><td>"+breakLine(getSummaryLink())+"</td></tr>";
+    info+="<tr><th>Tracker</th><td>"+getTracker()+"</td></tr>";
+    info+="<tr><th>Votes</th><td>"+getVotes()+"</td></tr>";
+    info+="</table></html>";
 
     return info;
+  }
+
+  private String breakLine(String text) {
+    String fixed = "";
+    char[] chars =text.toCharArray();
+    for (int j = 0; j < chars.length; j++) {
+      char c = chars[j];
+      fixed += c;
+      if(j%35==0 && j>0){
+        fixed +="<br />";
+      }
+    }
+    return fixed;
   }
 }
