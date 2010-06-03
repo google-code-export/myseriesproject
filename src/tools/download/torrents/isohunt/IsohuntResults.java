@@ -16,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyDraggable;
 import myComponents.myTableCellRenderers.IsoHuntInfoRenderer;
+import myComponents.myTableCellRenderers.IsoHuntLinkRenderer;
 import myComponents.myTableCellRenderers.IsoHuntSizeRenderer;
 import tools.download.torrents.AbstractTorrent;
 import tools.download.torrents.TorrentConstants;
@@ -93,6 +94,7 @@ public class IsohuntResults extends MyDraggable implements TorrentConstants {
     table.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
     table.setPreferredSize(new java.awt.Dimension(600, 300));
     table.setRequestFocusEnabled(false);
+    table.setRowHeight(20);
     jScrollPane1.setViewportView(table);
 
     button_cancel.setText("Cancel");
@@ -111,13 +113,16 @@ public class IsohuntResults extends MyDraggable implements TorrentConstants {
       .addGroup(jPanel1Layout.createSequentialGroup()
         .addContainerGap()
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 689, Short.MAX_VALUE)
+          .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 797, Short.MAX_VALUE)
           .addGroup(jPanel1Layout.createSequentialGroup()
             .addGap(10, 10, 10)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 670, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(button_cancel))))
+              .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 787, Short.MAX_VALUE)
+              .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                  .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
+                  .addComponent(button_cancel))
+                .addGap(254, 254, 254)))))
         .addContainerGap())
     );
     jPanel1Layout.setVerticalGroup(
@@ -138,7 +143,7 @@ public class IsohuntResults extends MyDraggable implements TorrentConstants {
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+      .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,6 +181,7 @@ public class IsohuntResults extends MyDraggable implements TorrentConstants {
     table.getColumnModel().getColumn(ISOHUNT_RESULTS_SEEDS).setPreferredWidth(50);
     table.getColumnModel().getColumn(ISOHUNT_RESULTS_LEECHERS).setPreferredWidth(50);
     table.getColumnModel().getColumn(ISOHUNT_RESULTS_DOWNLOAD).setPreferredWidth(40);
+    table.getColumnModel().getColumn(ISOHUNT_RESULTS_DOWNLOAD).setCellRenderer(new IsoHuntLinkRenderer());
     createModel();
   }
 
@@ -189,7 +195,7 @@ public class IsohuntResults extends MyDraggable implements TorrentConstants {
             torrent.getLength(),
             torrent.getSeeds(),
             torrent.getLeechers(),
-            torrent.getLink()
+            torrent
           });
     }
 
