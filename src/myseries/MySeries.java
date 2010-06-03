@@ -84,10 +84,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   /**
    * Shortcuts
    * MySeries
-   *    Create Database : Ctrl+C
-   *    Load Database : Ctrl+L
-   *    Save Database : Ctrl+S
-   *    Exit Database : Ctrl+Q
+   *    Create Database:Ctrl - C
+   *    Load Database : Ctrl - L
+   *    Save Database : Ctrl - S
+   *    Exit Database : Ctrl - Q
    *
    * Edit
    *    Add Series    : Ctrl - A
@@ -98,9 +98,13 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
    * Tools
    *    Export Episodes : Ctrl - X
    *    Import Episodes : Ctrl - I
-   *    Download AbstractTorrent: Ctrl - T
-   *    IU TvRage       : Ctrl - R
-   *    IU EpGuides     : Ctrl - G
+   *    Download Torrent:
+   *        EzTv        : Ctrl - Shift - E
+   *        Isohunt     : Ctrl - Shift - I
+   *    Internet Update :
+   *        TvRage      : Ctrl - Shift - T
+   *        EpGuides    : Ctrl - Shift - G
+   *    Update Downloads: Ctrl - U
    *    Options         : Ctrl - O
    *
    * Help
@@ -406,6 +410,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     menu_InternetUpdate = new javax.swing.JMenu();
     menuItem_IUTvrage = new javax.swing.JMenuItem();
     menuItem_IUEpguides = new javax.swing.JMenuItem();
+    menuItem_uploadFiles = new javax.swing.JMenuItem();
     jSeparator2 = new javax.swing.JSeparator();
     menuItem_options = new javax.swing.JMenuItem();
     menu_Help = new javax.swing.JMenu();
@@ -1184,7 +1189,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     menu_InternetUpdate.setText("Internet Update");
     menu_InternetUpdate.setToolTipText("Update all series episodes list");
 
-    menuItem_IUTvrage.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+    menuItem_IUTvrage.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
     menuItem_IUTvrage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/tvrage.png"))); // NOI18N
     menuItem_IUTvrage.setText("Update from " + InternetUpdate.TV_RAGE_NAME);
     menuItem_IUTvrage.setToolTipText("Update all series episodes list from TvRage");
@@ -1195,7 +1200,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     });
     menu_InternetUpdate.add(menuItem_IUTvrage);
 
-    menuItem_IUEpguides.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
+    menuItem_IUEpguides.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
     menuItem_IUEpguides.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/epguides.png"))); // NOI18N
     menuItem_IUEpguides.setText("Update from " + InternetUpdate.EP_GUIDES_NAME);
     menuItem_IUEpguides.setToolTipText("Update all series episodes list from EpGuides");
@@ -1207,6 +1212,17 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     menu_InternetUpdate.add(menuItem_IUEpguides);
 
     menu_Tools.add(menu_InternetUpdate);
+
+    menuItem_uploadFiles.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
+    menuItem_uploadFiles.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/updateFiles.png"))); // NOI18N
+    menuItem_uploadFiles.setText("Update Files");
+    menuItem_uploadFiles.setToolTipText("Scans local dirs and update the file and subtitles statuses");
+    menuItem_uploadFiles.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        menuItem_uploadFilesActionPerformed(evt);
+      }
+    });
+    menu_Tools.add(menuItem_uploadFiles);
     menu_Tools.add(jSeparator2);
 
     menuItem_options.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
@@ -1752,6 +1768,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     Actions.downloadTorrent(TorrentConstants.ISOHUNT_NAME);
   }//GEN-LAST:event_menuItem_DownloadIsohuntActionPerformed
 
+  private void menuItem_uploadFilesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_uploadFilesActionPerformed
+    Actions.updateFiles();
+  }//GEN-LAST:event_menuItem_uploadFilesActionPerformed
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
   public static javax.swing.JMenuItem PopUpItem_AddEpisode;
   public static javax.swing.JMenuItem PopUpItem_AddEpisodeInEpisodes;
@@ -1796,6 +1816,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static javax.swing.JMenuItem menuItem_loadDatabase;
   public static javax.swing.JMenuItem menuItem_options;
   public static javax.swing.JMenuItem menuItem_saveDatabaseAs;
+  public static javax.swing.JMenuItem menuItem_uploadFiles;
   public static javax.swing.JMenuItem menuItem_viewLogs;
   public static javax.swing.JMenu menu_Edit;
   public static javax.swing.JMenu menu_Help;
