@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import myComponents.MyMessages;
@@ -361,6 +362,8 @@ public class StartPanel extends MyDraggable {
 
       //Check Desktop supported
       DesktopSupport ds = new DesktopSupport();
+
+      ToolTipManager.sharedInstance().setDismissDelay(50000);
       
       //create dirs
       MySeries.logger.log(Level.INFO, "Checking directories");
