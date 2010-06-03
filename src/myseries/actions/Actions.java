@@ -21,11 +21,9 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Vector;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.DefaultComboBoxModel;
@@ -49,12 +47,11 @@ import myseries.episodes.NextEpisodes;
 import myseries.episodes.Video;
 import myseries.filters.Filters;
 import tools.DesktopSupport;
-import tools.download.subtitles.Subtitle;
+import tools.download.subtitles.SubtitleConstants;
 import tools.download.subtitles.sonline.GetSOnlineCode;
 import tools.download.subtitles.sonline.SOnlineForm;
 import tools.download.subtitles.tvsubtitles.GetTvSubtitlesCode;
 import tools.download.subtitles.tvsubtitles.TvSubtitlesForm;
-import tools.download.torrents.AbstractTorrent;
 import tools.download.torrents.TorrentConstants;
 import tools.download.torrents.eztv.EzTvForm;
 import tools.download.torrents.isohunt.IsohuntForm;
@@ -326,9 +323,9 @@ public class Actions {
         return;
       }
       java.net.URI uri = null;
-      if (site.equals(Subtitle.TV_SUBTITLES_NAME)) {
+      if (site.equals(SubtitleConstants.TV_SUBTITLES_NAME)) {
         uri = new java.net.URI("http://www.tvsubtitles.net/tvshow-" + Series.getCurrentSerial().getTvSubtitlesCode() + ".html");
-      } else if (site.equals(Subtitle.SUBTITLE_ONLINE_NAME)) {
+      } else if (site.equals(SubtitleConstants.SUBTITLE_ONLINE_NAME)) {
         uri = new java.net.URI("http://www.subtitleonline.com/" + Series.getCurrentSerial().getSOnlineCode() + "-season-" + Series.getCurrentSerial().getSeason() + "-subtitles.html");
       }
       DesktopSupport.getDesktop().browse(uri);
@@ -623,12 +620,12 @@ public class Actions {
   }
 
   public static void downloadSubtitles(String site) {
-    if (site.equals(Subtitle.TV_SUBTITLES_NAME)) {
+    if (site.equals(SubtitleConstants.TV_SUBTITLES_NAME)) {
       SeriesRecord series = Series.getCurrentSerial();
       String link = series.getTvSubtitlesCode().trim();
       boolean updateLink = false;
-      if (link.startsWith(Subtitle.TV_SUBTITLES_URL)) {
-        link = link.replaceAll("(" + Subtitle.TV_SUBTITLES_URL + "/tvshow-)|(.html)", "");
+      if (link.startsWith(SubtitleConstants.TV_SUBTITLES_URL)) {
+        link = link.replaceAll("(" + SubtitleConstants.TV_SUBTITLES_URL + "/tvshow-)|(.html)", "");
         updateLink = true;
       }
       if (MyUsefulFunctions.isNumeric(link)) {
@@ -655,13 +652,13 @@ public class Actions {
       }
       if (link != null && !link.equals("")) {
         TvSubtitlesForm d = new TvSubtitlesForm(
-                Subtitle.TV_SUBTITLES_URL + "tvshow-" + link + ".html",
+                SubtitleConstants.TV_SUBTITLES_URL + "tvshow-" + link + ".html",
                 Series.getCurrentSerial().getSeason(),
                 Episodes.getCurrentEpisode().getEpisode(),
                 Series.getCurrentSerial().getLocalDir(),
                 Episodes.getCurrentEpisode().getTitle());
       }
-    } else if (site.equals(Subtitle.SUBTITLE_ONLINE_NAME)) {
+    } else if (site.equals(SubtitleConstants.SUBTITLE_ONLINE_NAME)) {
       String sOnlineCode = Series.getCurrentSerial().getSOnlineCode().trim();
       if (sOnlineCode.equals("")) {
         GetSOnlineCode s = new GetSOnlineCode(Series.getCurrentSerial());

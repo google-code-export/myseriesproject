@@ -18,14 +18,13 @@ import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import tools.download.subtitles.AbstractDownloadSubtitle;
 import tools.download.subtitles.Subtitle;
-import tools.languages.LangsList;
-import tools.options.Options;
+import tools.download.subtitles.SubtitleConstants;
 
 /**
  * Download from tvSubtitles
  * @author lordovol
  */
-public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Runnable {
+public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Runnable , SubtitleConstants{
 
   private final String link;
 
@@ -62,7 +61,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
       if (sub != null) {
         String newPath = sub.url.getPath().replace("/subtitle", "download");
         try {
-          sub.url = new URL(Subtitle.TV_SUBTITLES_URL + newPath);
+          sub.url = new URL(TV_SUBTITLES_URL + newPath);
         } catch (MalformedURLException ex) {
           MyMessages.error("Error occured!!!", "Wrong url : " + sub.url);
           myseries.MySeries.logger.log(Level.SEVERE, null, ex);
@@ -79,7 +78,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
 
   private void getSubtitle() {
     try {
-      if (MyUsefulFunctions.hasInternetConnection(Subtitle.TV_SUBTITLES_URL)) {
+      if (MyUsefulFunctions.hasInternetConnection(TV_SUBTITLES_URL)) {
         String buff = parseWebPage();
         if (!buff.equals("")) {
           String subsLink = getLink(buff, true);
@@ -162,7 +161,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
   }
 
   private void getDownloadLinks(String subsLink) throws MalformedURLException, IOException {
-    URL subsUrl = new URL(Subtitle.TV_SUBTITLES_URL + subsLink);
+    URL subsUrl = new URL(TV_SUBTITLES_URL + subsLink);
     BufferedReader in = new BufferedReader(new InputStreamReader(subsUrl.openStream()));
     String inputLine, line = "";
     while ((inputLine = in.readLine()) != null) {
@@ -179,7 +178,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
     for (int i = 0; i < fields.length; i++) {
       String field = fields[i];
       if ((field.startsWith("subtitle") || (field.startsWith("download"))) && field.endsWith("html")) {
-        curLink = Subtitle.TV_SUBTITLES_URL + URLEncoder.encode(field, "UTF-8");
+        curLink = TV_SUBTITLES_URL + URLEncoder.encode(field, "UTF-8");
         if (field.startsWith("download")) {
           curTitle = "dummy";
         }

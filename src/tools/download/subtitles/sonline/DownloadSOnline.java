@@ -15,6 +15,7 @@ import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import tools.download.subtitles.AbstractDownloadSubtitle;
 import tools.download.subtitles.Subtitle;
+import tools.download.subtitles.SubtitleConstants;
 import tools.languages.LangsList;
 import tools.options.Options;
 
@@ -22,7 +23,7 @@ import tools.options.Options;
  *
  * @author lordovol
  */
-public class DownloadSOnline extends AbstractDownloadSubtitle implements Runnable {
+public class DownloadSOnline extends AbstractDownloadSubtitle implements Runnable, SubtitleConstants {
 
   private String sOnlineCode;
 
@@ -72,8 +73,8 @@ public class DownloadSOnline extends AbstractDownloadSubtitle implements Runnabl
   }
 
   private void getSubtitle() throws FileNotFoundException, IOException {
-    if (MyUsefulFunctions.hasInternetConnection(Subtitle.SUBTITLE_ONLINE_URL)) {
-      URL url = new URL(Subtitle.SUBTITLE_ONLINE_URL + sOnlineCode + "-season-" + season + "-episode-" + episode + "-subtitles.html");
+    if (MyUsefulFunctions.hasInternetConnection(SUBTITLE_ONLINE_URL)) {
+      URL url = new URL(SUBTITLE_ONLINE_URL + sOnlineCode + "-season-" + season + "-episode-" + episode + "-subtitles.html");
       BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
       parseWebpage(in, true);
       in.close();
@@ -98,12 +99,12 @@ public class DownloadSOnline extends AbstractDownloadSubtitle implements Runnabl
         line = line.replaceAll("(<a href=\"/)|(\">)", "").trim();
         String[] tokens = line.split("-");
         String code = tokens[tokens.length - 1].replaceAll(".html", "");
-        dUrl = new URL(Subtitle.SUBTITLE_ONLINE_URL + line);
+        dUrl = new URL(SUBTITLE_ONLINE_URL + line);
         BufferedReader dIn = new BufferedReader(new InputStreamReader(dUrl.openStream()));
         while ((dLine = dIn.readLine()) != null) {
           if (dLine.indexOf(".zip") > -1) {
             dLine = dLine.substring(0,dLine.indexOf(".zip") + 4).replaceAll("<a href=\"/", "");
-            String url = Subtitle.SUBTITLE_ONLINE_URL + dLine.trim();
+            String url = SUBTITLE_ONLINE_URL + dLine.trim();
             curLink = new URL(url);
           }
         }

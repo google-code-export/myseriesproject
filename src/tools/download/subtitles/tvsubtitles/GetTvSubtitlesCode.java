@@ -17,12 +17,13 @@ import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import tools.download.subtitles.Subtitle;
 import tools.download.subtitles.SubtitleCode;
+import tools.download.subtitles.SubtitleConstants;
 
 /**
  * Gets the tvSubtitles code for a series
  * @author lordovol
  */
-public class GetTvSubtitlesCode {
+public class GetTvSubtitlesCode implements SubtitleConstants{
 
   public String tSubCode;
   private SeriesRecord series;
@@ -43,8 +44,8 @@ public class GetTvSubtitlesCode {
   }
 
   private void getCode() throws IOException {
-    if (MyUsefulFunctions.hasInternetConnection(Subtitle.TV_SUBTITLES_URL)) {
-      URL subsUrl = new URL(Subtitle.TV_SUBTITLES_URL + "search.php?q=" + URLEncoder.encode(series.getTitle(), "UTF-8"));
+    if (MyUsefulFunctions.hasInternetConnection(TV_SUBTITLES_URL)) {
+      URL subsUrl = new URL(TV_SUBTITLES_URL + "search.php?q=" + URLEncoder.encode(series.getTitle(), "UTF-8"));
       BufferedReader in = new BufferedReader(new InputStreamReader(subsUrl.openStream()));
       parseSearchResult(in);
       in.close();

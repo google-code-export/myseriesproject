@@ -68,6 +68,7 @@ import myseries.statistics.StatSeries;
 import tools.DesktopSupport;
 import tools.Skin;
 import tools.download.subtitles.Subtitle;
+import tools.download.subtitles.SubtitleConstants;
 import tools.download.torrents.AbstractTorrent;
 import tools.download.torrents.TorrentConstants;
 import tools.internetUpdate.InternetUpdate;
@@ -162,7 +163,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     languages.setSecondary(LangsList.getLanguageByName(Options.toString(Options.SECONDARY_SUB)));
     for (Iterator<Language> it = languages.getLangs().iterator(); it.hasNext();) {
       Language language = it.next();
-      Subtitle.SUBTITLE_LANG.add(language);
+      SubtitleConstants.SUBTITLE_LANG.add(language);
     }
 
     // Create connection
@@ -1600,7 +1601,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 }//GEN-LAST:event_panel_episodesListMouseReleased
 
   private void popUpItem_GoToTvSubsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_GoToTvSubsActionPerformed
-    Actions.goToSubtitlePage(this,Subtitle.TV_SUBTITLES_NAME);
+    Actions.goToSubtitlePage(this,SubtitleConstants.TV_SUBTITLES_NAME);
   }//GEN-LAST:event_popUpItem_GoToTvSubsActionPerformed
 
   private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -1682,7 +1683,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   }//GEN-LAST:event_popUpItem_renameEpisodesActionPerformed
 
   private void popUpItem_downloadSubsTvSubsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_downloadSubsTvSubsActionPerformed
-    Actions.downloadSubtitles(Subtitle.TV_SUBTITLES_NAME);
+    Actions.downloadSubtitles(SubtitleConstants.TV_SUBTITLES_NAME);
   }//GEN-LAST:event_popUpItem_downloadSubsTvSubsActionPerformed
 
   private void popUpItem_downloadTorrentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_downloadTorrentActionPerformed
@@ -1736,11 +1737,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   }//GEN-LAST:event_jMenuItem1ActionPerformed
 
   private void popUpItem_downloadSubsSubOnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_downloadSubsSubOnActionPerformed
-    Actions.downloadSubtitles(Subtitle.SUBTITLE_ONLINE_NAME);
+    Actions.downloadSubtitles(SubtitleConstants.SUBTITLE_ONLINE_NAME);
   }//GEN-LAST:event_popUpItem_downloadSubsSubOnActionPerformed
 
   private void popUpItem_GoToSubOnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_GoToSubOnActionPerformed
-    Actions.goToSubtitlePage(this, Subtitle.SUBTITLE_ONLINE_NAME);
+    Actions.goToSubtitlePage(this, SubtitleConstants.SUBTITLE_ONLINE_NAME);
   }//GEN-LAST:event_popUpItem_GoToSubOnActionPerformed
 
   private void popUpItem_renameEpisodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_renameEpisodeActionPerformed
@@ -1853,10 +1854,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public void createComboBox_filters() {
     comboBox_filterSubtitles.setModel(new DefaultComboBoxModel(
             new String[]{
-              Subtitle.NONE,
+              SubtitleConstants.NONE,
               languages.getPrimary().getName(),
               languages.getSecondary().getName(),
-              Subtitle.BOTH,
+              SubtitleConstants.BOTH,
               languages.getPrimary().getName() + " or " + languages.getSecondary().getName(),
               "Not " + languages.getPrimary().getName()
             }));

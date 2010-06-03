@@ -17,13 +17,14 @@ import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import tools.download.subtitles.Subtitle;
 import tools.download.subtitles.SubtitleCode;
+import tools.download.subtitles.SubtitleConstants;
 import tools.options.Options;
 
 /**
  * Gets the subtitleOnline code for the series
  * @author 
  */
-public class GetSOnlineCode {
+public class GetSOnlineCode implements SubtitleConstants {
 
   private SeriesRecord series;
   private ArrayList<SCode> sLinks;
@@ -47,8 +48,8 @@ public class GetSOnlineCode {
   }
 
   private void getCode() throws IOException {
-    if (MyUsefulFunctions.hasInternetConnection(Subtitle.SUBTITLE_ONLINE_URL)) {
-      URL subsUrl = new URL(Subtitle.SUBTITLE_ONLINE_URL + "search?query=" + URLEncoder.encode(series.getTitle(),"UTF-8"));
+    if (MyUsefulFunctions.hasInternetConnection(SUBTITLE_ONLINE_URL)) {
+      URL subsUrl = new URL(SUBTITLE_ONLINE_URL + "search?query=" + URLEncoder.encode(series.getTitle(),"UTF-8"));
       BufferedReader in = new BufferedReader(new InputStreamReader(subsUrl.openStream()));
       parseSearchResult(in);
       in.close();
