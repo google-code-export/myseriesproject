@@ -35,6 +35,8 @@ public abstract class AbstractTorrentDownload implements TorrentConstants{
 
   protected void getTorrent(AbstractTorrent torrent) throws IOException {
     if (true) {
+      progress.setString("Downloading the torrent");
+      progress.setIndeterminate(true);
       downloadTorrent(torrent);
       return;
     }

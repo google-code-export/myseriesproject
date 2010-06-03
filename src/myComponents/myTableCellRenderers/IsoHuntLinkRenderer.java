@@ -4,18 +4,15 @@
  */
 package myComponents.myTableCellRenderers;
 
+import java.awt.Color;
 import java.awt.Component;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.net.URI;
+import java.awt.Cursor;
 import java.text.DecimalFormat;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
-import myComponents.MyUsefulFunctions;
-import tools.download.torrents.isohunt.IsohuntTorrent;
 
 /**
  *
@@ -28,19 +25,13 @@ public class IsoHuntLinkRenderer extends DefaultTableCellRenderer {
 
   @Override
   public Component getTableCellRendererComponent(
-      JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-    setIcon(new ImageIcon(getClass().getResource("/images/torrent.png")));
+          JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+    setIcon(new ImageIcon(getClass().getResource("/images/download.png")));
     setText("");
+    setBorder(BorderFactory.createLineBorder(Color.GRAY));
+    setCursor(new Cursor(Cursor.HAND_CURSOR));
     setHorizontalAlignment(SwingConstants.CENTER);
-    addMouseListener(new MouseAdapter() {
-
-      @Override
-      public void mouseClicked(MouseEvent e) {
-        
-        super.mouseClicked(e);
-      }
-
-    });
+    setVerticalAlignment(SwingConstants.CENTER);
     return super.getTableCellRendererComponent(table, "", isSelected, hasFocus, row, column);
   }
 }

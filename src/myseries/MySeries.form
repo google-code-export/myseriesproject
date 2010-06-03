@@ -458,7 +458,7 @@
                 <MenuItem class="javax.swing.JMenuItem" name="menuItem_downloadEztv">
                   <Properties>
                     <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                      <KeyStroke key="Ctrl+T"/>
+                      <KeyStroke key="Shift+Ctrl+E"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/images/eztv.png"/>
@@ -474,6 +474,9 @@
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="menuItem_DownloadIsohunt">
                   <Properties>
+                    <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                      <KeyStroke key="Shift+Ctrl+I"/>
+                    </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/images/isohunt.png"/>
                     </Property>

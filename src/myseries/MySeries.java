@@ -1156,7 +1156,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/torrent.png"))); // NOI18N
     jMenu1.setText("Download Torrent");
 
-    menuItem_downloadEztv.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_MASK));
+    menuItem_downloadEztv.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
     menuItem_downloadEztv.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eztv.png"))); // NOI18N
     menuItem_downloadEztv.setText("From " + TorrentConstants.EZTV_NAME);
     menuItem_downloadEztv.setToolTipText("Download an episode's torrent");
@@ -1167,6 +1167,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     });
     jMenu1.add(menuItem_downloadEztv);
 
+    menuItem_DownloadIsohunt.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
     menuItem_DownloadIsohunt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/isohunt.png"))); // NOI18N
     menuItem_DownloadIsohunt.setText("From " + TorrentConstants.ISOHUNT_NAME);
     menuItem_DownloadIsohunt.addActionListener(new java.awt.event.ActionListener() {
