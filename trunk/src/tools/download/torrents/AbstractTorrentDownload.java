@@ -6,7 +6,6 @@
 package tools.download.torrents;
 
 import java.awt.Desktop;
-import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -18,7 +17,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.logging.Level;
-import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import myComponents.MyMessages;
 import tools.options.Options;

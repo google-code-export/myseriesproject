@@ -154,12 +154,7 @@ public class Options {
    * integer default 600
    */
   public static String HEIGHT = "HEIGHT";
-  /**
-   * The web database used for updating episodes' data
-   * String default Options._TV_RAGE_NAME_
-   */
-  public static String INTERNET_UPDATE_DB = "INTERNET_UPDATE_DB";
-  /**
+   /**
    * Check for updates on start up
    * boolean default true
    */
@@ -203,7 +198,7 @@ public class Options {
    * An array of the options that are selected in combo boxes
    */
   public static String[] _COMBO_OPTIONS_ = {DATE_FORMAT, DEBUG_MODE, LOOK_AND_FEEL,
-    FONT_FACE, INTERNET_UPDATE_DB, SUBTITLE_SITE, PRIMARY_SUB, SECONDARY_SUB};
+    FONT_FACE,  SUBTITLE_SITE, PRIMARY_SUB, SECONDARY_SUB};
 
   static {
     InternetUpdate.DB_UPDATERS.add(InternetUpdate.EP_GUIDES_NAME);
@@ -458,7 +453,6 @@ public class Options {
     out.println(Options.WINDOW_STATE + " =" + JFrame.NORMAL);
     out.println(Options.WIDTH + " =1000");
     out.println(Options.HEIGHT + " =600");
-    out.println(Options.INTERNET_UPDATE_DB + "=" + InternetUpdate.TV_RAGE_NAME);
     out.println(Options.CHECK_VERSION + " =true");
     out.println(Options.PRIMARY_SUB + " =Greek");
     out.println(Options.SECONDARY_SUB + " =English");
