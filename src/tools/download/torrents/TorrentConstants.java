@@ -63,12 +63,8 @@ public interface TorrentConstants {
    */
   public static int ISOHUNT_RESULTS_LEECHERS = 4;
   /**
-   * Isohunt results column info : 5
+   * Isohunt results column download : 5
    */
-  public static int ISOHUNT_RESULTS_INFO = 5;
-  /**
-   * Isohunt results column download : 6
-   */
-  public static int ISOHUNT_RESULTS_DOWNLOAD = 6;
+  public static int ISOHUNT_RESULTS_DOWNLOAD = 5;
   
 }
