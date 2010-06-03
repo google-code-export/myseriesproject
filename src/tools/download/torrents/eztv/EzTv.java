@@ -4,23 +4,15 @@
  */
 package tools.download.torrents.eztv;
 
-import java.awt.Desktop;
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import javax.swing.JProgressBar;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -32,8 +24,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import tools.download.torrents.AbstractTorrentDownload;
-import tools.download.torrents.Torrent;
-import tools.options.Options;
+import tools.download.torrents.AbstractTorrent;
 
 /**
  * Downloads a torrent from EzTv
@@ -53,9 +44,9 @@ public class EzTv extends AbstractTorrentDownload implements Runnable {
   }
 
   public void run() {
-    if (MyUsefulFunctions.hasInternetConnection(Torrent.EZTV_RSS)) {
+    if (MyUsefulFunctions.hasInternetConnection(AbstractTorrent.EZTV_RSS)) {
       progress.setIndeterminate(true);
-      progress.setString("Getting rss feeds from "+Torrent.EZTV_NAME);
+      progress.setString("Getting rss feeds from "+AbstractTorrent.EZTV_NAME);
       getStream();
     } else {
       MyMessages.internetError();
@@ -63,7 +54,7 @@ public class EzTv extends AbstractTorrentDownload implements Runnable {
   }
 
   
-  protected boolean isTorrent(Torrent torrent) throws MalformedURLException, IOException {
+  protected boolean isTorrent(AbstractTorrent torrent) throws MalformedURLException, IOException {
     URI u = torrent.getUri();
     if (uri != null) {
       BufferedReader in = new BufferedReader(new InputStreamReader(u.toURL().openStream()));
@@ -79,13 +70,13 @@ public class EzTv extends AbstractTorrentDownload implements Runnable {
     return false;
   }
 
-  protected ArrayList<Torrent> readStream(InputStream in) {
+  protected ArrayList<AbstractTorrent> readStream(InputStream in) {
     Element val;
     NodeList t;
     String title = "";
     NodeList l;
     String link = "";
-    ArrayList<Torrent> torrents = new ArrayList<Torrent>();
+    ArrayList<AbstractTorrent> torrents = new ArrayList<AbstractTorrent>();
     try {
       progress.setString("Reading the rss data");
       myseries.MySeries.logger.log(Level.INFO, "Parsing XML");
@@ -105,7 +96,10 @@ public class EzTv extends AbstractTorrentDownload implements Runnable {
         l = val.getElementsByTagName("link");
         link = l.item(0).getFirstChild().getNodeValue();
         if (!link.equals("") && !title.equals("")) {
-          torrents.add(new Torrent(title, link));
+          EzTvTorrent torrent = new EzTvTorrent();
+          torrent.setTitle(title);
+          torrent.setLink(link);
+          torrents.add(torrent);
         }
       }
     } catch (SAXException ex) {

@@ -37,7 +37,7 @@ public abstract class AbstractTorrentForm extends MyDraggable {
         v.add(seriesRecord.getTitle());
       }
       seriesModel = new DefaultComboBoxModel(v);
-      qualityModel = new DefaultComboBoxModel(Torrent.QUALITIES);
+      qualityModel = new DefaultComboBoxModel(AbstractTorrent.QUALITIES);
     } catch (SQLException ex) {
       myseries.MySeries.logger.log(Level.SEVERE, null, ex);
     }

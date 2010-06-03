@@ -27,7 +27,7 @@ import com.googlecode.svalidators.formcomponents.SComboBox;
 import com.googlecode.svalidators.formcomponents.ValidationGroup;
 import com.googlecode.svalidators.validators.RequiredValidator;
 import tools.download.torrents.AbstractTorrentForm;
-import tools.download.torrents.Torrent;
+import tools.download.torrents.AbstractTorrent;
 
 /**
  * The form to submit a torrent search to EzTv
@@ -111,7 +111,7 @@ public class EzTvForm extends AbstractTorrentForm {
 
     jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getStyle() | java.awt.Font.BOLD, jLabel1.getFont().getSize()+2));
     jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-    jLabel1.setText("Download torrent from " + Torrent.EZTV_NAME);
+    jLabel1.setText("Download torrent from " + AbstractTorrent.EZTV_NAME);
 
     jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     jLabel2.setText("Series title:");
@@ -313,7 +313,7 @@ public class EzTvForm extends AbstractTorrentForm {
 
   
   protected URI createUri() {
-    String address = Torrent.EZTV_RSS;
+    String address = AbstractTorrent.EZTV_RSS;
     String query = "";
     ArrayList<String> q = new ArrayList<String>();
     try {
