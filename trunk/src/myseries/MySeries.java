@@ -978,7 +978,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
         .addContainerGap())
     );
 
-    tabsPanel.addTab("Filter Series", new javax.swing.ImageIcon(getClass().getResource("/images/filter.png")), tabpanel_FilteredSeries); // NOI18N
+    tabsPanel.addTab("Filter Series", new javax.swing.ImageIcon(getClass().getResource("/images/filter.png")), tabpanel_FilteredSeries, "Filter series"); // NOI18N
 
     panel_stats.setLayout(new java.awt.GridLayout(2, 1, 0, 10));
 
@@ -999,7 +999,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
         .addGap(26, 26, 26))
     );
 
-    tabsPanel.addTab("Statistics", new javax.swing.ImageIcon(getClass().getResource("/images/star.png")), tabpanel_statistics); // NOI18N
+    tabsPanel.addTab("Ratings", new javax.swing.ImageIcon(getClass().getResource("/images/star.png")), tabpanel_statistics, "Series and episodes ratings"); // NOI18N
 
     javax.swing.GroupLayout panel_episodesLayout = new javax.swing.GroupLayout(panel_episodes);
     panel_episodes.setLayout(panel_episodesLayout);
@@ -1376,9 +1376,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       if (!DesktopSupport.isDesktopSupport() || !DesktopSupport.isBrowseSupport()) {
         popUpItem_GoToTvSubs.setEnabled(false);
       } else {
-        if(Series.getCurrentSerial().getTvSubtitlesCode().equals("")){
+        if (Series.getCurrentSerial().getTvSubtitlesCode().equals("")) {
           popUpItem_GoToTvSubs.setEnabled(false);
-        } if(Series.getCurrentSerial().getSOnlineCode().equals("")){
+        }
+        if (Series.getCurrentSerial().getSOnlineCode().equals("")) {
           popUpItem_GoToSubOn.setEnabled(false);
         }
       }
@@ -1622,7 +1623,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 }//GEN-LAST:event_panel_episodesListMouseReleased
 
   private void popUpItem_GoToTvSubsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_GoToTvSubsActionPerformed
-    SeriesActions.goToSubtitlePage(this,SubtitleConstants.TV_SUBTITLES_NAME);
+    SeriesActions.goToSubtitlePage(this, SubtitleConstants.TV_SUBTITLES_NAME);
   }//GEN-LAST:event_popUpItem_GoToTvSubsActionPerformed
 
   private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -1735,10 +1736,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
         MySeries.logger.log(Level.SEVERE, null, ex);
       } catch (IndexOutOfBoundsException ex) {
       }
-
-    } else {
     }
-
   }//GEN-LAST:event_tableFiltersMouseReleased
 
   private void menuItem_downloadEztvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_downloadEztvActionPerformed
@@ -1776,7 +1774,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   private void menuItem_uploadFilesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_uploadFilesActionPerformed
     SeriesActions.updateFiles();
   }//GEN-LAST:event_menuItem_uploadFilesActionPerformed
-
   // Variables declaration - do not modify//GEN-BEGIN:variables
   public static javax.swing.JMenuItem PopUpItem_AddEpisode;
   public static javax.swing.JMenuItem PopUpItem_AddEpisodeInEpisodes;
@@ -1879,13 +1876,13 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
   public void createComboBox_filters() {
     comboBox_filterSubtitles.setModel(new DefaultComboBoxModel(
-            new String[]{
-              SubtitleConstants.NONE,
-              languages.getPrimary().getName(),
-              languages.getSecondary().getName(),
-              SubtitleConstants.BOTH,
-              languages.getPrimary().getName() + " or " + languages.getSecondary().getName(),
-              "Not " + languages.getPrimary().getName()
-            }));
+        new String[]{
+          SubtitleConstants.NONE,
+          languages.getPrimary().getName(),
+          languages.getSecondary().getName(),
+          SubtitleConstants.BOTH,
+          languages.getPrimary().getName() + " or " + languages.getSecondary().getName(),
+          "Not " + languages.getPrimary().getName()
+        }));
   }
 }

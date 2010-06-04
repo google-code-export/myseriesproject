@@ -34,6 +34,7 @@ public class Help extends JFrame {
     //Create the links map
     Links.createLinksMap();
     initComponents();
+    
     setLocationRelativeTo(m);
     tree_help.setSelectionPath(tree_help.getPathForRow(0));
     setVisible(true);
@@ -73,6 +74,8 @@ public class Help extends JFrame {
     panel_right.setBackground(new java.awt.Color(255, 255, 255));
     panel_right.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
     panel_right.setOpaque(false);
+
+    jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
     mainContent.setBorder(null);
     mainContent.setContentType("text/html");
@@ -124,6 +127,8 @@ public class Help extends JFrame {
     treeNode2.add(treeNode3);
     treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Filters Panel");
     treeNode2.add(treeNode3);
+    treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Ratings Panel");
+    treeNode2.add(treeNode3);
     treeNode1.add(treeNode2);
     treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Administration");
     treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Series Administration");
@@ -148,6 +153,8 @@ public class Help extends JFrame {
     treeNode2.add(treeNode3);
     treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Download Torrent");
     treeNode2.add(treeNode3);
+    treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Update Files");
+    treeNode2.add(treeNode3);
     treeNode1.add(treeNode2);
     treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Options");
     treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("General Options");
@@ -156,11 +163,15 @@ public class Help extends JFrame {
     treeNode2.add(treeNode3);
     treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Internet Options");
     treeNode2.add(treeNode3);
+    treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Renaming");
+    treeNode2.add(treeNode3);
     treeNode1.add(treeNode2);
     treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Help");
     treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Check For Updates");
     treeNode2.add(treeNode3);
     treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("View Log File");
+    treeNode2.add(treeNode3);
+    treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Clear Log Files");
     treeNode2.add(treeNode3);
     treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("About");
     treeNode2.add(treeNode3);

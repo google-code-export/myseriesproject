@@ -1042,10 +1042,13 @@
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                      <JTabbedPaneConstraints tabName="                          ">
+                      <JTabbedPaneConstraints tabName="                          " toolTip="&lt;User Code&gt;">
                         <Property name="tabTitle" type="java.lang.String" value="                          "/>
                         <Property name="tabIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                           <Image iconType="3" name="/images/series.png"/>
+                        </Property>
+                        <Property name="tabToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="Series.getCurrentSerial()" type="code"/>
                         </Property>
                       </JTabbedPaneConstraints>
                     </Constraint>
@@ -1147,11 +1150,12 @@
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                      <JTabbedPaneConstraints tabName="Filter Series">
+                      <JTabbedPaneConstraints tabName="Filter Series" toolTip="Filter series">
                         <Property name="tabTitle" type="java.lang.String" value="Filter Series"/>
                         <Property name="tabIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                           <Image iconType="3" name="/images/filter.png"/>
                         </Property>
+                        <Property name="tabToolTip" type="java.lang.String" value="Filter series"/>
                       </JTabbedPaneConstraints>
                     </Constraint>
                   </Constraints>
@@ -1359,11 +1363,12 @@
                 <Container class="javax.swing.JPanel" name="tabpanel_statistics">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                      <JTabbedPaneConstraints tabName="Statistics">
-                        <Property name="tabTitle" type="java.lang.String" value="Statistics"/>
+                      <JTabbedPaneConstraints tabName="Ratings" toolTip="Series and episodes ratings">
+                        <Property name="tabTitle" type="java.lang.String" value="Ratings"/>
                         <Property name="tabIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                           <Image iconType="3" name="/images/star.png"/>
                         </Property>
+                        <Property name="tabToolTip" type="java.lang.String" value="Series and episodes ratings"/>
                       </JTabbedPaneConstraints>
                     </Constraint>
                   </Constraints>
