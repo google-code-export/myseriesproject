@@ -15,21 +15,7 @@ import tools.options.Options;
  * Database helper class
  * @author ssoldatos
  */
-public class Database {
-
-  /**
-   * The database extension : .db
-   */
-  public static final String EXT = ".db";
-  /**
-   * The back up extension : .bk
-   */
-  public static final String BACK_UP_EXT = ".bk";
-  /**
-   * The databases path : "databases/"
-   */
-  public static final String PATH = "databases/";
-
+public class Database implements DatabaseConstants {
 
   /**
    * Get All Databases
@@ -39,6 +25,7 @@ public class Database {
     Vector<String> databases = new Vector<String>();
     File dir = new File(Options._USER_DIR_ + "/" + Database.PATH);
     File[] files = dir.listFiles(new FilenameFilter() {
+      @Override
       public boolean accept(File dir, String name) {
         return name.endsWith(EXT);
       }
