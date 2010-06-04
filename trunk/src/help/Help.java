@@ -76,6 +76,7 @@ public class Help extends JFrame {
     panel_right.setOpaque(false);
 
     jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+    jScrollPane2.setHorizontalScrollBar(null);
 
     mainContent.setBorder(null);
     mainContent.setContentType("text/html");
