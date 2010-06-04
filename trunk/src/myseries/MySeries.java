@@ -10,7 +10,6 @@
  */
 package myseries;
 
-import com.googlecode.starrating.StarTableCellEditor;
 import com.googlecode.starrating.StarTableCellRenderer;
 import javax.swing.ComboBoxModel;
 import myseries.episodes.NextEpisodes;
@@ -47,7 +46,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.TableModelListener;
-import javax.swing.table.TableCellRenderer;
 import myComponents.MyTableModels.MyFilteredSeriesTableModel;
 import myComponents.MyTableModels.MySeriesTableModel;
 import myComponents.MyUsefulFunctions;
@@ -58,7 +56,6 @@ import myComponents.myTableCellEditors.MyRateEditor;
 import myComponents.myTableCellEditors.MyTitleCellEditor;
 import myComponents.myTableCellRenderers.MyJDateChooserCellRenderer;
 import myComponents.myTableCellRenderers.MyTitleCellRenderer;
-import myseries.actions.Actions;
 import myseries.actions.ApplicationActions;
 import myseries.actions.DatabaseActions;
 import myseries.actions.EpisodesActions;
@@ -72,9 +69,7 @@ import myseries.statistics.StatEpisodes;
 import myseries.statistics.StatSeries;
 import tools.DesktopSupport;
 import tools.Skin;
-import tools.download.subtitles.Subtitle;
 import tools.download.subtitles.SubtitleConstants;
-import tools.download.torrents.AbstractTorrent;
 import tools.download.torrents.TorrentConstants;
 import tools.internetUpdate.InternetUpdate;
 import tools.languages.LangsList;

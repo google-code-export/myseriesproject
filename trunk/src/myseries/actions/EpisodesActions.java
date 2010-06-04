@@ -286,7 +286,7 @@ public class EpisodesActions {
       Episodes.updateEpisodesTable();
       Filters.getFilteredSeries();
     } catch (SQLException ex) {
-      Logger.getLogger(Actions.class.getName()).log(Level.SEVERE, null, ex);
+      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
     }
   }
 
