@@ -59,6 +59,11 @@ import myComponents.myTableCellEditors.MyTitleCellEditor;
 import myComponents.myTableCellRenderers.MyJDateChooserCellRenderer;
 import myComponents.myTableCellRenderers.MyTitleCellRenderer;
 import myseries.actions.Actions;
+import myseries.actions.ApplicationActions;
+import myseries.actions.DatabaseActions;
+import myseries.actions.EpisodesActions;
+import myseries.actions.FiltersActions;
+import myseries.actions.SeriesActions;
 import myseries.episodes.UpdateEpisodesTable;
 import myseries.filters.Filters;
 import myseries.filters.UpdateFiltersTable;
@@ -1439,16 +1444,16 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   }
 
   private void PopUpItem_AddSeriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PopUpItem_AddSeriesActionPerformed
-    Actions.addSeries(this);
+    SeriesActions.addSeries(this);
 }//GEN-LAST:event_PopUpItem_AddSeriesActionPerformed
 
   private void PopUpItem_EditSerialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PopUpItem_EditSerialActionPerformed
-    Actions.editSeries(this);
+    SeriesActions.editSeries(this);
 
 }//GEN-LAST:event_PopUpItem_EditSerialActionPerformed
 
   private void PopUpItem_DeleteSerialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PopUpItem_DeleteSerialActionPerformed
-    Actions.deleteSeries(this);
+    SeriesActions.deleteSeries(this);
 }//GEN-LAST:event_PopUpItem_DeleteSerialActionPerformed
 
   private void scrollPane_seriesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_scrollPane_seriesMouseReleased
@@ -1456,7 +1461,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 }//GEN-LAST:event_scrollPane_seriesMouseReleased
 
   private void PopUpItem_AddEpisodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PopUpItem_AddEpisodeActionPerformed
-    Actions.AddEpisode(this);
+    EpisodesActions.AddEpisode(this);
 }//GEN-LAST:event_PopUpItem_AddEpisodeActionPerformed
 
   private void button_firstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_firstActionPerformed
@@ -1492,55 +1497,55 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 }//GEN-LAST:event_menuItem_editEpisodeActionPerformed
 
   private void comboBox_filterSubtitlesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBox_filterSubtitlesActionPerformed
-    Actions.filterSubtitles(comboBox_filterSubtitles);
+    FiltersActions.filterSubtitles(comboBox_filterSubtitles);
   }//GEN-LAST:event_comboBox_filterSubtitlesActionPerformed
 
   private void comboBox_seenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBox_seenActionPerformed
-    Actions.filterSeen(comboBox_seen);
+    FiltersActions.filterSeen(comboBox_seen);
 }//GEN-LAST:event_comboBox_seenActionPerformed
 
   private void menuItem_createDBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_createDBActionPerformed
-    Actions.createDatabase(this, true);
+    DatabaseActions.createDatabase(this, true);
 }//GEN-LAST:event_menuItem_createDBActionPerformed
 
   private void menuItem_loadDatabaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_loadDatabaseActionPerformed
-    Actions.loadDatabase(this);
+    DatabaseActions.loadDatabase(this);
 }//GEN-LAST:event_menuItem_loadDatabaseActionPerformed
 
   private void combobox_downloadedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combobox_downloadedActionPerformed
-    Actions.filterDownloaded(combobox_downloaded);
+    FiltersActions.filterDownloaded(combobox_downloaded);
   }//GEN-LAST:event_combobox_downloadedActionPerformed
 
   private void menuItem_optionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_optionsActionPerformed
-    Actions.showOptions(this);
+    ApplicationActions.showOptions(this);
   }//GEN-LAST:event_menuItem_optionsActionPerformed
 
   private void menuItem_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_exitActionPerformed
-    Actions.exitApplication(this);
+    ApplicationActions.exitApplication(this);
 }//GEN-LAST:event_menuItem_exitActionPerformed
 
   private void tabsPanelStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabsPanelStateChanged
-    Actions.changeTab(this, evt);
+    ApplicationActions.changeTab(this, evt);
   }//GEN-LAST:event_tabsPanelStateChanged
 
   private void menuItem_AboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_AboutActionPerformed
-    Actions.about(this);
+    ApplicationActions.about(this);
   }//GEN-LAST:event_menuItem_AboutActionPerformed
 
   private void button_saveFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_saveFilterActionPerformed
-    Actions.saveFilter(this);
+    FiltersActions.saveFilter(this);
 }//GEN-LAST:event_button_saveFilterActionPerformed
 
   private void button_deleteFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_deleteFilterActionPerformed
-    Actions.deleteFilter(this);
+    FiltersActions.deleteFilter(this);
 }//GEN-LAST:event_button_deleteFilterActionPerformed
 
   private void combobox_filtersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combobox_filtersActionPerformed
-    Actions.applyFilter(this);
+    FiltersActions.applyFilter(this);
   }//GEN-LAST:event_combobox_filtersActionPerformed
 
   private void PopUpItem_AddEpisodeInEpisodesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PopUpItem_AddEpisodeInEpisodesActionPerformed
-    Actions.AddEpisodeInEpisodes(this);
+    EpisodesActions.AddEpisodeInEpisodes(this);
 
 }//GEN-LAST:event_PopUpItem_AddEpisodeInEpisodesActionPerformed
 
@@ -1600,7 +1605,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
   private void popUpItem_deleteEpisodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_deleteEpisodeActionPerformed
     if (tableEpisodes.getSelectedRowCount() == 1) {
-      Actions.deleteEpisode();
+      EpisodesActions.deleteEpisode();
     } else {
       ArrayList<EpisodesRecord> episodes = new ArrayList<EpisodesRecord>();
       int[] selRows = tableEpisodes.getSelectedRows();
@@ -1608,7 +1613,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
         EpisodesRecord ep = (EpisodesRecord) tableEpisodes.getValueAt(selRows[i], 1);
         episodes.add(ep);
       }
-      Actions.deleteEpisodes(episodes);
+      EpisodesActions.deleteEpisodes(episodes);
     }
   }//GEN-LAST:event_popUpItem_deleteEpisodeActionPerformed
 
@@ -1617,23 +1622,23 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 }//GEN-LAST:event_panel_episodesListMouseReleased
 
   private void popUpItem_GoToTvSubsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_GoToTvSubsActionPerformed
-    Actions.goToSubtitlePage(this,SubtitleConstants.TV_SUBTITLES_NAME);
+    SeriesActions.goToSubtitlePage(this,SubtitleConstants.TV_SUBTITLES_NAME);
   }//GEN-LAST:event_popUpItem_GoToTvSubsActionPerformed
 
   private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-    Actions.exitApplication(this);
+    ApplicationActions.exitApplication(this);
   }//GEN-LAST:event_formWindowClosing
 
   private void menuItem_exportEpisodesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_exportEpisodesActionPerformed
-    Actions.exportEpisodes();
+    EpisodesActions.exportEpisodes();
   }//GEN-LAST:event_menuItem_exportEpisodesActionPerformed
 
   private void popUpItem_exportEpisodesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_exportEpisodesActionPerformed
-    Actions.exportEpisodes();
+    EpisodesActions.exportEpisodes();
   }//GEN-LAST:event_popUpItem_exportEpisodesActionPerformed
 
   private void menuItem_importEpisodesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_importEpisodesActionPerformed
-    Actions.importEpisodes(this);
+    EpisodesActions.importEpisodes(this);
   }//GEN-LAST:event_menuItem_importEpisodesActionPerformed
 
   private void menuItem_helpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_helpActionPerformed
@@ -1641,31 +1646,31 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 }//GEN-LAST:event_menuItem_helpActionPerformed
 
   private void menuItem_saveDatabaseAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_saveDatabaseAsActionPerformed
-    Actions.saveDatase();
+    DatabaseActions.saveDatase();
   }//GEN-LAST:event_menuItem_saveDatabaseAsActionPerformed
 
   private void menuItem_IUTvrageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_IUTvrageActionPerformed
-    Actions.internetUpdate(this, InternetUpdate.TV_RAGE_NAME);
+    SeriesActions.internetUpdate(this, InternetUpdate.TV_RAGE_NAME);
 }//GEN-LAST:event_menuItem_IUTvrageActionPerformed
 
   private void popUpItem_IUTvrageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_IUTvrageActionPerformed
-    Actions.internetUpdateSeries(this, InternetUpdate.TV_RAGE_NAME);
+    SeriesActions.internetUpdateSeries(this, InternetUpdate.TV_RAGE_NAME);
   }//GEN-LAST:event_popUpItem_IUTvrageActionPerformed
 
   private void menuItem_checkUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_checkUpdateActionPerformed
-    Actions.checkUpdates();
+    ApplicationActions.checkUpdates();
   }//GEN-LAST:event_menuItem_checkUpdateActionPerformed
 
   private void menuItem_viewLogsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_viewLogsActionPerformed
-    Actions.viewLog(this);
+    ApplicationActions.viewLog(this);
   }//GEN-LAST:event_menuItem_viewLogsActionPerformed
 
   private void popUpItem_GoToLocalDirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_GoToLocalDirActionPerformed
-    Actions.goToLocalDir();
+    SeriesActions.goToLocalDir();
   }//GEN-LAST:event_popUpItem_GoToLocalDirActionPerformed
 
   private void popUpItem_viewEpisodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_viewEpisodeActionPerformed
-    Actions.viewEpisode();
+    EpisodesActions.viewEpisode();
   }//GEN-LAST:event_popUpItem_viewEpisodeActionPerformed
 
   private void panel_SeriesComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_panel_SeriesComponentResized
@@ -1695,15 +1700,15 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   }
 
   private void popUpItem_renameEpisodesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_renameEpisodesActionPerformed
-    Actions.renameEpisodes();
+    EpisodesActions.renameEpisodes();
   }//GEN-LAST:event_popUpItem_renameEpisodesActionPerformed
 
   private void popUpItem_downloadSubsTvSubsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_downloadSubsTvSubsActionPerformed
-    Actions.downloadSubtitles(SubtitleConstants.TV_SUBTITLES_NAME);
+    EpisodesActions.downloadSubtitles(SubtitleConstants.TV_SUBTITLES_NAME);
   }//GEN-LAST:event_popUpItem_downloadSubsTvSubsActionPerformed
 
   private void popUpItem_downloadTorrentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_downloadTorrentActionPerformed
-    Actions.downloadEpisodesTorrent();
+    EpisodesActions.downloadEpisodesTorrent();
   }//GEN-LAST:event_popUpItem_downloadTorrentActionPerformed
 
   private void tableFiltersMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableFiltersMouseReleased
@@ -1737,39 +1742,39 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   }//GEN-LAST:event_tableFiltersMouseReleased
 
   private void menuItem_downloadEztvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_downloadEztvActionPerformed
-    Actions.downloadTorrent(TorrentConstants.EZTV_NAME);
+    SeriesActions.downloadTorrent(TorrentConstants.EZTV_NAME);
   }//GEN-LAST:event_menuItem_downloadEztvActionPerformed
 
   private void popUpItem_IUEpguidesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_IUEpguidesActionPerformed
-    Actions.internetUpdateSeries(this, InternetUpdate.EP_GUIDES_NAME);
+    SeriesActions.internetUpdateSeries(this, InternetUpdate.EP_GUIDES_NAME);
   }//GEN-LAST:event_popUpItem_IUEpguidesActionPerformed
 
   private void menuItem_IUEpguidesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_IUEpguidesActionPerformed
-    Actions.internetUpdate(this, InternetUpdate.EP_GUIDES_NAME);
+    SeriesActions.internetUpdate(this, InternetUpdate.EP_GUIDES_NAME);
   }//GEN-LAST:event_menuItem_IUEpguidesActionPerformed
 
   private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-    Actions.clearLogFiles();
+    ApplicationActions.clearLogFiles();
   }//GEN-LAST:event_jMenuItem1ActionPerformed
 
   private void popUpItem_downloadSubsSubOnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_downloadSubsSubOnActionPerformed
-    Actions.downloadSubtitles(SubtitleConstants.SUBTITLE_ONLINE_NAME);
+    EpisodesActions.downloadSubtitles(SubtitleConstants.SUBTITLE_ONLINE_NAME);
   }//GEN-LAST:event_popUpItem_downloadSubsSubOnActionPerformed
 
   private void popUpItem_GoToSubOnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_GoToSubOnActionPerformed
-    Actions.goToSubtitlePage(this, SubtitleConstants.SUBTITLE_ONLINE_NAME);
+    SeriesActions.goToSubtitlePage(this, SubtitleConstants.SUBTITLE_ONLINE_NAME);
   }//GEN-LAST:event_popUpItem_GoToSubOnActionPerformed
 
   private void popUpItem_renameEpisodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_renameEpisodeActionPerformed
-    Actions.renameEpisode();
+    EpisodesActions.renameEpisode();
   }//GEN-LAST:event_popUpItem_renameEpisodeActionPerformed
 
   private void menuItem_DownloadIsohuntActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_DownloadIsohuntActionPerformed
-    Actions.downloadTorrent(TorrentConstants.ISOHUNT_NAME);
+    SeriesActions.downloadTorrent(TorrentConstants.ISOHUNT_NAME);
   }//GEN-LAST:event_menuItem_DownloadIsohuntActionPerformed
 
   private void menuItem_uploadFilesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_uploadFilesActionPerformed
-    Actions.updateFiles();
+    SeriesActions.updateFiles();
   }//GEN-LAST:event_menuItem_uploadFilesActionPerformed
 
   // Variables declaration - do not modify//GEN-BEGIN:variables

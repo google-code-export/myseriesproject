@@ -35,6 +35,7 @@ import com.googlecode.svalidators.validators.NoSpaceValidator;
 import com.googlecode.svalidators.validators.PositiveNumberValidator;
 import com.googlecode.svalidators.validators.RequiredValidator;
 import myseries.actions.Actions;
+import myseries.actions.SeriesActions;
 import tools.download.subtitles.sonline.GetSubtitleOnlineCode;
 import tools.download.subtitles.tvsubtitles.GetTvSubtitlesCode;
 import tools.internetUpdate.InternetUpdate;
@@ -502,7 +503,7 @@ public class AdminSeries extends MyDraggable {
           Image im = new ImageIcon(sc.getAbsolutePath()).getImage();
           m.imagePanel.setImage(im);
           Series.setCurrentSerial(seriesRecord);
-          Actions.internetUpdateSeries(m, InternetUpdate.TV_RAGE_NAME);
+          SeriesActions.internetUpdateSeries(m, InternetUpdate.TV_RAGE_NAME);
         } catch (SQLException ex) {
           MySeries.logger.log(Level.SEVERE, "SQL error occured", ex);
         }
