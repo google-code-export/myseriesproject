@@ -63,7 +63,7 @@ public class RenameEpisodes extends MyDraggable {
    * @param series The series record
    */
   public RenameEpisodes(ArrayList<File> oldNames,
-    ArrayList<EpisodesRecord> newNames, SeriesRecord series) {
+          ArrayList<EpisodesRecord> newNames, SeriesRecord series) {
     this.oldNames = oldNames;
     this.newNames = newNames;
     this.series = series;
@@ -106,6 +106,7 @@ public class RenameEpisodes extends MyDraggable {
     button_apply = new javax.swing.JButton();
     jLabel6 = new javax.swing.JLabel();
     checkBox_checkAll = new javax.swing.JCheckBox();
+    button_save = new javax.swing.JButton();
 
     jTextField4.setText("jTextField4");
 
@@ -145,12 +146,27 @@ public class RenameEpisodes extends MyDraggable {
 
     textfield_season.setText(Options.toString(Options.SEASON_SEPARATOR, false));
     textfield_season.setName("Season separator"); // NOI18N
+    textfield_season.addKeyListener(new java.awt.event.KeyAdapter() {
+      public void keyReleased(java.awt.event.KeyEvent evt) {
+        textfield_seasonKeyReleased(evt);
+      }
+    });
 
     textfield_episode.setText(Options.toString(Options.EPISODE_SEPARATOR, false));
     textfield_episode.setName("Episode separator"); // NOI18N
+    textfield_episode.addKeyListener(new java.awt.event.KeyAdapter() {
+      public void keyReleased(java.awt.event.KeyEvent evt) {
+        textfield_episodeKeyReleased(evt);
+      }
+    });
 
     textfield_title.setText(Options.toString(Options.TITLE_SEPARATOR, false));
     textfield_title.setName("Title separator"); // NOI18N
+    textfield_title.addKeyListener(new java.awt.event.KeyAdapter() {
+      public void keyReleased(java.awt.event.KeyEvent evt) {
+        textfield_titleKeyReleased(evt);
+      }
+    });
 
     button_apply.setText("Apply");
     button_apply.addActionListener(new java.awt.event.ActionListener() {
@@ -162,9 +178,17 @@ public class RenameEpisodes extends MyDraggable {
     jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     jLabel6.setText("Check/Uncheck  all :");
 
+    checkBox_checkAll.setOpaque(false);
     checkBox_checkAll.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         checkBox_checkAllActionPerformed(evt);
+      }
+    });
+
+    button_save.setText("Save");
+    button_save.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_saveActionPerformed(evt);
       }
     });
 
@@ -180,20 +204,24 @@ public class RenameEpisodes extends MyDraggable {
         .addGap(18, 18, 18)
         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addComponent(checkBox_checkAll)
-          .addComponent(textfield_season, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(jLabel3))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jLabel4)
-          .addComponent(textfield_episode, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jLabel5)
           .addGroup(jPanel2Layout.createSequentialGroup()
-            .addComponent(textfield_title, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(button_apply)))
-        .addGap(423, 423, 423))
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(textfield_season, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addComponent(jLabel3))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(jLabel4)
+              .addComponent(textfield_episode, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(jLabel5)
+              .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(textfield_title, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(button_apply, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button_save, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)))))
+        .addGap(360, 360, 360))
     );
 
     jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {textfield_episode, textfield_season, textfield_title});
@@ -212,7 +240,8 @@ public class RenameEpisodes extends MyDraggable {
           .addComponent(textfield_season, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(textfield_episode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(textfield_title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(button_apply))
+          .addComponent(button_apply)
+          .addComponent(button_save))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addComponent(checkBox_checkAll, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -284,9 +313,12 @@ public class RenameEpisodes extends MyDraggable {
   }
 
   private void button_applyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_applyActionPerformed
-    if (validateValues()) {
+    if (evt == null) {
+      createTableModel();
+    } else if (validateValues()) {
       createTableModel();
     }
+
 
   }//GEN-LAST:event_button_applyActionPerformed
 
@@ -319,10 +351,33 @@ public class RenameEpisodes extends MyDraggable {
     checkAll = checkBox_checkAll.isSelected();
     createTableModel();
   }//GEN-LAST:event_checkBox_checkAllActionPerformed
+
+  private void button_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_saveActionPerformed
+    if (validateValues()) {
+      Options.setOption(Options.SEASON_SEPARATOR, textfield_season.getText());
+      Options.setOption(Options.EPISODE_SEPARATOR, textfield_episode.getText());
+      Options.setOption(Options.TITLE_SEPARATOR, textfield_title.getText());
+      Options.save();
+      MyMessages.message("Saving options", "Options saved");
+    }
+  }//GEN-LAST:event_button_saveActionPerformed
+
+  private void textfield_seasonKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textfield_seasonKeyReleased
+    button_applyActionPerformed(null);
+  }//GEN-LAST:event_textfield_seasonKeyReleased
+
+  private void textfield_episodeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textfield_episodeKeyReleased
+    button_applyActionPerformed(null);
+  }//GEN-LAST:event_textfield_episodeKeyReleased
+
+  private void textfield_titleKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textfield_titleKeyReleased
+    button_applyActionPerformed(null);
+  }//GEN-LAST:event_textfield_titleKeyReleased
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton button_apply;
   private javax.swing.JButton button_cancel;
   private javax.swing.JButton button_rename;
+  private javax.swing.JButton button_save;
   private javax.swing.JCheckBox checkBox_checkAll;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
@@ -379,13 +434,13 @@ public class RenameEpisodes extends MyDraggable {
     }
 
     String newFilename = series.getTitle() + textfield_season.getText()
-        + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0")
-        + textfield_episode.getText()
-        + MyUsefulFunctions.padLeft(episode.getEpisode(), 2, "0")
-        + textfield_title.getText() + episode.getTitle();
+            + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0")
+            + textfield_episode.getText()
+            + MyUsefulFunctions.padLeft(episode.getEpisode(), 2, "0")
+            + textfield_title.getText() + episode.getTitle();
 
-    String newName = series.getLocalDir() + "/" +
-        newFilename.replaceAll("[\\Q/\\?%*:|\"<>.;\\E]", "") + "." + ext;
+    String newName = series.getLocalDir() + "/"
+            + newFilename.replaceAll("[\\Q/\\?%*:|\"<>.;\\E]", "") + "." + ext;
     return new File(newName);
   }
 }
