@@ -7,6 +7,8 @@ package database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import tools.languages.LangsList;
 
 /**
@@ -47,7 +49,7 @@ public class DBHelper {
     ResultSet rs = DBConnection.conn.createStatement().executeQuery(sql);
     Vector<EpisodesRecord> a = new Vector<EpisodesRecord>();
     try {
-      if (rs.next()) {
+      while (rs.next()) {
         EpisodesRecord er = new EpisodesRecord();
         er.setEpisode_ID(rs.getInt("episode_ID"));
         er.setEpisode(rs.getInt("episode"));
@@ -190,6 +192,17 @@ public class DBHelper {
    */
   public static Vector<SeriesRecord> getAllSeries() throws SQLException {
     return getSeriesBySql("SELECT * FROM series WHERE hidden = " + SeriesRecord.NOT_HIDDEN);
+
+  }
+
+  public static Vector<EpisodesRecord> getSeriesEpisodesByRate(int series_ID) {
+    String sql = "SELECT * FROM episodes WHERE series_ID = " + series_ID + " AND rate > 0 ORDER BY rate DESC";
+    try {
+      return getEpisodesBySql(sql);
+    } catch (SQLException ex) {
+      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      return null;
+    }
 
   }
 

@@ -73,6 +73,7 @@ public class StatEpisodes extends javax.swing.JPanel {
         return canEdit [columnIndex];
       }
     });
+    table_stat_episodes.setName("episodesTable"); // NOI18N
     jScrollPane1.setViewportView(table_stat_episodes);
 
     jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getStyle() | java.awt.Font.BOLD, jLabel1.getFont().getSize()+2));
