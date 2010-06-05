@@ -11,6 +11,8 @@
 package myseries.statistics;
 
 import database.DBConnection;
+import database.DBHelper;
+import database.SeriesRecord;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -25,6 +27,9 @@ import myComponents.myTableCellRenderers.MyDecimalFormatRenderer;
  */
 public class StatSeries extends javax.swing.JPanel {
 
+  public static int SERIES_COLUMN = 0;
+  public static int EPISODES_COLUMN = 1;
+  public static int RATE_COLUMN = 2;
   private DefaultTableModel model;
 
   /** Creates new form StatSeries */
@@ -32,7 +37,8 @@ public class StatSeries extends javax.swing.JPanel {
     super();
     initComponents();
     model = (DefaultTableModel) table_stat_series.getModel();
-    table_stat_series.getColumnModel().getColumn(2).setCellRenderer(new MyDecimalFormatRenderer());
+    table_stat_series.getColumnModel().getColumn(RATE_COLUMN).setCellRenderer(new MyDecimalFormatRenderer());
+
     setTableModel();
     validate();
     setVisible(true);
@@ -50,6 +56,7 @@ public class StatSeries extends javax.swing.JPanel {
     jScrollPane1 = new javax.swing.JScrollPane();
     table_stat_series = new javax.swing.JTable();
     jLabel1 = new javax.swing.JLabel();
+    jLabel2 = new javax.swing.JLabel();
 
     setPreferredSize(new java.awt.Dimension(400, 241));
 
@@ -63,7 +70,7 @@ public class StatSeries extends javax.swing.JPanel {
       }
     ) {
       Class[] types = new Class [] {
-        java.lang.String.class, java.lang.Integer.class, java.lang.Double.class
+        java.lang.Object.class, java.lang.Integer.class, java.lang.Double.class
       };
       boolean[] canEdit = new boolean [] {
         false, false, false
@@ -77,11 +84,14 @@ public class StatSeries extends javax.swing.JPanel {
         return canEdit [columnIndex];
       }
     });
+    table_stat_series.setName("seriesStats"); // NOI18N
     jScrollPane1.setViewportView(table_stat_series);
 
     jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getStyle() | java.awt.Font.BOLD, jLabel1.getFont().getSize()+2));
     jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     jLabel1.setText("Series Statistics");
+
+    jLabel2.setText("Mouse over rate to see a list of the series episodes rates");
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
     this.setLayout(layout);
@@ -90,22 +100,28 @@ public class StatSeries extends javax.swing.JPanel {
       .addGroup(layout.createSequentialGroup()
         .addContainerGap()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
-          .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE))
+          .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+          .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+          .addGroup(layout.createSequentialGroup()
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(107, 107, 107)))
         .addContainerGap())
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addGap(7, 7, 7)
+        .addGap(11, 11, 11)
         .addComponent(jLabel1)
-        .addGap(18, 18, 18)
-        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(14, 14, 14)
+        .addComponent(jLabel2)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
         .addContainerGap())
     );
   }// </editor-fold>//GEN-END:initComponents
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JLabel jLabel1;
+  private javax.swing.JLabel jLabel2;
   private javax.swing.JScrollPane jScrollPane1;
   private javax.swing.JTable table_stat_series;
   // End of variables declaration//GEN-END:variables
@@ -114,15 +130,14 @@ public class StatSeries extends javax.swing.JPanel {
     clearModel();
     try {
       Statement stmt = DBConnection.stmt;
-      String sql = "SELECT  series.title AS series, sum(episodes.rate)/count(1) as rate, count(1) as episodes "
+      String sql = "SELECT series.series_ID AS series_ID, series.title AS series, sum(episodes.rate)/count(1) as rate, count(1) as episodes "
               + "FROM series join episodes on series.series_ID = episodes.series_ID "
               + "where episodes.rate > 0 group by series.series_ID order by rate desc";
       ResultSet rs = stmt.executeQuery(sql);
       while (rs.next()) {
-        String series = rs.getString("series");
+        SeriesRecord series = DBHelper.getSeriesByID(rs.getInt("series_ID"));
         int episodes = rs.getInt("episodes");
         double rate = rs.getDouble("rate");
-
         Object[] data = {series, episodes, rate};
         model.addRow(data);
       }
@@ -132,8 +147,8 @@ public class StatSeries extends javax.swing.JPanel {
   }
 
   private void clearModel() {
-    for (int i = 0; i < model.getRowCount(); i++) {
-      model.removeRow(i);
-    }
+    model = (DefaultTableModel) table_stat_series.getModel();
+    model.getDataVector().removeAllElements();
+    model.fireTableDataChanged();
   }
 }
