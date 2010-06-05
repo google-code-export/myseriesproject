@@ -119,7 +119,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public MyEpisodesTableModel tableModel_episodes;
   private MyFilteredSeriesTableModel tableModel_filterSeries;
   public ComboBoxModel comboBoxModel_filters;
-  public static String version = "1.3(dev)";
+  public static String version = "1.3(dev394)";
   public String date = "2010-05-17";
   public static MyDisabledGlassPane glassPane;
   public static Logger logger;
@@ -247,7 +247,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
   public static void createLogger() {
     //Create the JVM logger
-    logger = myLogger.createHtmlLogger("MYSERIES", Options._USER_DIR_ + "/MySeriesLogs", 262144, true, 1);
+    logger = myLogger.createHtmlLogger("MYSERIES", Options._USER_DIR_ + "MySeriesLogs", 262144, true, 1);
     logger.setLevel(Level.parse(Options.toString(Options.DEBUG_MODE)));
   }
 
@@ -298,6 +298,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tableEpisodes.getColumn(Episodes.EPISODERECORD_COLUMN_TITLE).setCellEditor(new MyTitleCellEditor());
     tableEpisodes.getColumn(Episodes.RATE_COLUMN_TITLE).setCellRenderer(new StarTableCellRenderer(true, false));
     tableEpisodes.getColumn(Episodes.RATE_COLUMN_TITLE).setCellEditor(new MyRateEditor(true));
+    tableEpisodes.getColumn(Episodes.RATE_COLUMN_TITLE).setMinWidth(160);
     Episodes.setTable_episodes(tableEpisodes);
     Episodes.setTableWidths(episodesTableWidths);
     tableEpisodes.setRowHeight(fontHeight + CELL_MARGIN);
@@ -1328,7 +1329,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     if (selectedRow > -1) {
       Series.setCurrentSerial((SeriesRecord) tableSeries.getValueAt(selectedRow, Series.SERIESRECORD_COLUMN));
       tabsPanel.setTitleAt(0, Series.getCurrentSerial().getFullTitle());
-      String imagePath = Options._USER_DIR_ + "/" + MyImagePanel.PATH + "/" + Series.getCurrentSerial().getScreenshot();
+      String imagePath = Options._USER_DIR_ + MyImagePanel.PATH + "/" + Series.getCurrentSerial().getScreenshot();
       if (new File(imagePath).isFile()) {
         Image im = new ImageIcon(imagePath).getImage();
         imagePanel.setImage(im);

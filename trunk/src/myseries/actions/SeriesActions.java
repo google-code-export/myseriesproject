@@ -51,7 +51,7 @@ public class SeriesActions {
     MySeries.glassPane.activate(null);
     //if (!addSeriesPanel) {
     try {
-      AdminSeries a = new AdminSeries(m, null);
+      AdminSeries a = new AdminSeries(m);
       Series.setCurrentSerial(null);
     } catch (SQLException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);
@@ -177,7 +177,7 @@ public class SeriesActions {
         MySeries.logger.log(Level.SEVERE, null, ex);
       }
     } else {
-      InternetUpdate iu = new InternetUpdate(m, Series.getCurrentSerial(), site);
+      InternetUpdate iu = new InternetUpdate(m, cSeries, site);
     }
     MySeries.glassPane.deactivate();
   }

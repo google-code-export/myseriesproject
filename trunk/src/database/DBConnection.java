@@ -133,7 +133,7 @@ public class DBConnection {
         DBConnection.db = db;
       }
       Class.forName("org.sqlite.JDBC");
-      conn = DriverManager.getConnection("jdbc:sqlite:" + Options._USER_DIR_ + "/" + Database.PATH + DBConnection.db);
+      conn = DriverManager.getConnection("jdbc:sqlite:" + Options._USER_DIR_ + Database.PATH + DBConnection.db);
       stmt = conn.createStatement();
     } catch (SQLException ex) {
       MySeries.logger.log(Level.SEVERE, "Could not connect to the SQLite database", ex);
@@ -148,7 +148,7 @@ public class DBConnection {
    * @return
    */
   public static boolean databaseExists(String dbName) {
-    if (new File(Options._USER_DIR_ + "/" + Database.PATH + dbName).isFile()) {
+    if (new File(Options._USER_DIR_ +  Database.PATH + dbName).isFile()) {
       return true;
     }
     return false;

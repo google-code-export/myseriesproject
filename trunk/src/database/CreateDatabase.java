@@ -43,10 +43,12 @@ public class CreateDatabase implements Runnable {
     } else {
       DBConnection.db = db;
     }
-    DBConnection.createConnection(db);
+    
+    DBConnection.createConnection(DBConnection.db);
     this.stmt = DBConnection.stmt;
     this.startPanel = startPanelForm;
     this.createNewDb = createNewDB;
+    DBConnection.checkDatabase(DBConnection.db);
   }
 
   /**
@@ -54,7 +56,7 @@ public class CreateDatabase implements Runnable {
    */
   public void run() {
     try {
-      File dbFile = new File(Options._USER_DIR_ + "/" + Database.PATH + DBConnection.db);
+      File dbFile = new File(Options._USER_DIR_ +Database.PATH + DBConnection.db);
       if(dbFile.exists() && dbFile.length() > 1 && createNewDb){
         MyMessages.error("DB Exists!!!", "DB File " + DBConnection.db + " already exists\nAborting...");
         MySeries.logger.log(Level.WARNING, "DB File already exists");
@@ -118,7 +120,7 @@ public class CreateDatabase implements Runnable {
             " [downloaded] INTEGER DEFAULT 0," +
             " [subs] INTEGER DEFAULT 0," +
             " [seen] INTEGER DEFAULT 0," +
-            " [rate] BOOLEAN DEFAULT 0.0");
+            " [rate] BOOLEAN DEFAULT 0.0)");
     MySeries.logger.log(Level.INFO, "Creating table series");
     stmt.executeUpdate("CREATE TABLE IF NOT EXISTS [series] " +
             "([series_ID] INTEGER NOT NULL ON CONFLICT ABORT " +

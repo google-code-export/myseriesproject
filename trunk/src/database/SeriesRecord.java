@@ -233,4 +233,6 @@ public class SeriesRecord extends Record {
   public void setSOnlineCode(String sonline) {
     this.sOnlineCode = sonline;
   }
+
+
 }

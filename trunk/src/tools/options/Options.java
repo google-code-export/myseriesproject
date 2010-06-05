@@ -215,10 +215,10 @@ public class Options {
     //Options._USER_DIR_ = System.getProperties().getProperty("user.dir");
     Options._USER_DIR_ = "./";
     options = new HashMap<String, Object>();
-    if (!new File(Options._USER_DIR_ + "/MySeries.ini").isFile()) {
+    if (!new File(Options._USER_DIR_ + "MySeries.ini").isFile()) {
       writeDefaultIniFile();
     }
-    BufferedReader in = MyUsefulFunctions.createInputStream(new File(Options._USER_DIR_ + "/MySeries.ini"));
+    BufferedReader in = MyUsefulFunctions.createInputStream(new File(Options._USER_DIR_ + "MySeries.ini"));
     String line = "";
     String[] fields;
     Object value = null;
@@ -430,7 +430,7 @@ public class Options {
    * @throws java.io.IOException
    */
   private static void writeDefaultIniFile() throws IOException {
-    PrintWriter out = MyUsefulFunctions.createOutputStream(new File(Options._USER_DIR_ + "/MySeries.ini"), false);
+    PrintWriter out = MyUsefulFunctions.createOutputStream(new File(Options._USER_DIR_ + "MySeries.ini"), false);
     out.println(Options.NEXT_EPISODES_LIMIT + "=10");
     out.println(Options.SHOW_UNDOWNLOADED + "=false");
     out.println(Options.SHOW_UNSEEN + "=false");
@@ -469,7 +469,7 @@ public class Options {
     PrintWriter out = null;
     ArrayList<String> arr;
     try {
-      out = MyUsefulFunctions.createOutputStream(new File(Options._USER_DIR_ + "/MySeries.ini"), false);
+      out = MyUsefulFunctions.createOutputStream(new File(Options._USER_DIR_ + "MySeries.ini"), false);
       Iterator<String> it = options.keySet().iterator();
       while (it.hasNext()) {
         String key = String.valueOf(it.next());

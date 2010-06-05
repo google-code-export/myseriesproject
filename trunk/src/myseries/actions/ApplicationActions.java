@@ -119,7 +119,7 @@ public class ApplicationActions {
         MyMessages.error("Sorry!!!", "Your OS does not support this function");
       } else {
         try {
-          d.open(new File(Options._USER_DIR_ + "/MySeriesLogs_0.html"));
+          d.open(new File(Options._USER_DIR_ + "/ySeriesLogs_0.html"));
         } catch (IOException ex) {
           MySeries.logger.log(Level.SEVERE, "Could not read the log file", ex);
         }
@@ -133,18 +133,7 @@ public class ApplicationActions {
     int index = tabs.getSelectedIndex();
     try {
       if (index == MySeries.TAB_SERIES) {
-        if (!MySeries.tabsPanel.getTitleAt(MySeries.TAB_SERIES).equals("")) {
-          String title = MySeries.tabsPanel.getTitleAt(MySeries.TAB_SERIES).substring(
-              0, MySeries.tabsPanel.getTitleAt(MySeries.TAB_SERIES).length() - 3).trim();
-          series = DBHelper.getSeriesBySql("SELECT * FROM series WHERE title = '" + title + "'");
-        } else {
-          series = DBHelper.getSeriesBySql("SELECT * FROM series LIMIT 1");
-        }
-        if (series.size() > 0) {
-          Series.setCurrentSerial(series.get(0));
-          Episodes.updateEpisodesTable();
-        } else {
-        }
+        
       } else if (index == MySeries.TAB_FILTERS) {
         Filters.getFilteredSeries();
       } else if (index == MySeries.TAB_STATISTICS) {
