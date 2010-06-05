@@ -23,7 +23,7 @@ public class Database implements DatabaseConstants {
    */
   public static Vector<String> getDatabases() {
     Vector<String> databases = new Vector<String>();
-    File dir = new File(Options._USER_DIR_ + "/" + Database.PATH);
+    File dir = new File(Options._USER_DIR_ + Database.PATH);
     File[] files = dir.listFiles(new FilenameFilter() {
       @Override
       public boolean accept(File dir, String name) {

@@ -44,6 +44,7 @@ public class TrGetId extends MyDraggable {
   {
     isConected = MyUsefulFunctions.hasInternetConnection(InternetUpdate.TV_RAGE_URL);
   }
+  private boolean cancel = true;
 
   /** Creates new form GetTvRageID */
   public TrGetId() {
@@ -204,16 +205,17 @@ public class TrGetId extends MyDraggable {
   private void button_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_cancelActionPerformed
     dispose();
     //MySeries.glassPane.deactivate();
-    if (adminSeries != null) {
-      adminSeries.setModalityType(ModalityType.APPLICATION_MODAL);
-      if (tvRageID > 0) {
-        adminSeries.textfield_tvRageID.setText(String.valueOf(tvRageID));
+    if (!cancel) {
+      if (adminSeries != null) {
+        adminSeries.setModalityType(ModalityType.APPLICATION_MODAL);
+        if (tvRageID > 0) {
+          adminSeries.textfield_tvRageID.setText(String.valueOf(tvRageID));
+        }
+        adminSeries.setVisible(true);
+      } else {
+        InternetUpdate iu = new InternetUpdate(myS, Series.getCurrentSerial(), InternetUpdate.TV_RAGE_NAME);
       }
-      adminSeries.setVisible(true);
-    } else {
-      InternetUpdate iu = new InternetUpdate(myS, Series.getCurrentSerial(),InternetUpdate.TV_RAGE_NAME);
     }
-
   }//GEN-LAST:event_button_cancelActionPerformed
 
   private void button_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_okActionPerformed
@@ -224,12 +226,13 @@ public class TrGetId extends MyDraggable {
         SeriesRecord cSeries = DBHelper.getSeriesByID(series_ID);
         cSeries.setTvrage_ID(tvRageID);
         cSeries.save();
-        Series.getCurrentSerial().setTvrage_ID(tvRageID);
+        Series.setCurrentSerial(cSeries);
       } catch (SQLException ex) {
         MySeries.logger.log(Level.SEVERE, null, ex);
         MyMessages.error("SQL Error", "TvRage ID could not be saved in database");
       }
     }
+    cancel = false;
     button_cancelActionPerformed(evt);
     //MySeries.glassPane.deactivate();
   }//GEN-LAST:event_button_okActionPerformed
@@ -243,6 +246,4 @@ public class TrGetId extends MyDraggable {
   private javax.swing.JLabel label_title;
   protected javax.swing.JProgressBar progress;
   // End of variables declaration//GEN-END:variables
-
-  
 }

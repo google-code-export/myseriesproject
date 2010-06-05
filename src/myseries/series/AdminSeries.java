@@ -73,10 +73,8 @@ public class AdminSeries extends MyDraggable {
    * @param m The main mySeries form
    * @throws java.sql.SQLException
    */
-  AdminSeries(MySeries m) throws SQLException {
-    this.m = m;
-    initComponents();
-    setLocationRelativeTo(m);
+  public AdminSeries(MySeries m) throws SQLException {
+    this(m, new SeriesRecord());
 
   }
 
@@ -92,7 +90,7 @@ public class AdminSeries extends MyDraggable {
     initComponents();
     setLocationRelativeTo(m);
     spinner_season.setModel(new SpinnerNumberModel(Series.DEFAULT_SEASON, Series.MINIMUM_SEASON, Series.MAXIMUM_SEASON, Series.SEASON_STEP));
-    if (seriesRecord != null) {
+    if (seriesRecord.getSeries_ID() >0) {
       spinner_season.setValue(seriesRecord.getSeason());
       textField_Serial.setText(seriesRecord.getTitle());
       label_Title.setText("Edit Series " + seriesRecord.getTitle()
@@ -101,7 +99,7 @@ public class AdminSeries extends MyDraggable {
       textfield_tvRageID.setText(String.valueOf(seriesRecord.getTvrage_ID()));
       textfield_localDir.setText(seriesRecord.getLocalDir());
 
-      textfield_screenshot.setText(seriesRecord.getScreenshot().equals("")? "" : "./images/"+seriesRecord.getScreenshot());
+      textfield_screenshot.setText(seriesRecord.getScreenshot().equals("") ? "" : "./images/" + seriesRecord.getScreenshot());
 
       textfield_tvSubsId.setText(seriesRecord.getTvSubtitlesCode());
       textfield_subsOnline.setText(seriesRecord.getSOnlineCode());
@@ -300,7 +298,8 @@ public class AdminSeries extends MyDraggable {
     jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     jLabel1.setText("Update episodes list :");
 
-    checkbox_updateEpisodes.setSelected(true);
+    checkbox_updateEpisodes.setSelected(seriesRecord.getSeries_ID() ==0);
+    checkbox_updateEpisodes.setEnabled(seriesRecord.getSeries_ID() == 0);
     checkbox_updateEpisodes.setMargin(new java.awt.Insets(0, 0, 0, 0));
     checkbox_updateEpisodes.setOpaque(false);
 
@@ -485,24 +484,32 @@ public class AdminSeries extends MyDraggable {
         seriesRecord.setLocalDir(textfield_localDir.getText());
         seriesRecord.setTvSubtitlesCode(textfield_tvSubsId.getText().trim());
         seriesRecord.setSOnlineCode(textfield_subsOnline.getText().trim());
-        try {
-          File sc = new File(screenshot);
+        File sc = null;
+        if (!screenshot.equals("")) {
+          sc = new File(screenshot);
           if (sc.isFile() && !screenshot.startsWith("./images")) {
             CopyScreenshot c = new CopyScreenshot(screenshot);
             Thread t = new Thread(c);
             t.start();
           }
-          seriesRecord.setScreenshot(sc.getName());
+          Image im = new ImageIcon(sc.getAbsolutePath()).getImage();
+          m.imagePanel.setImage(im);
+        } else {
+          seriesRecord.setScreenshot("");
+        }
+        try {
           int series_ID = seriesRecord.save();
-          seriesRecord.setSeries_ID(series_ID);
-          m.imagePanel.relocate(m);
+          if (series_ID > 0 ) {
+            seriesRecord.setSeries_ID(series_ID);
+          }
+          //m.imagePanel.relocate(m);
           Series.getSeries();
           MySeries.glassPane.deactivate();
           dispose();
-          Image im = new ImageIcon(sc.getAbsolutePath()).getImage();
-          m.imagePanel.setImage(im);
           Series.setCurrentSerial(seriesRecord);
-          SeriesActions.internetUpdateSeries(m, InternetUpdate.TV_RAGE_NAME);
+          if (checkbox_updateEpisodes.isSelected()) {
+            SeriesActions.internetUpdateSeries(m, InternetUpdate.TV_RAGE_NAME);
+          }
         } catch (SQLException ex) {
           MySeries.logger.log(Level.SEVERE, "SQL error occured", ex);
         }
@@ -521,7 +528,7 @@ public class AdminSeries extends MyDraggable {
       group.addComponent(textfield_tvRageID);
       group.addComponent(textfield_localDir);
       group.addComponent(textfield_screenshot);
-      if(!group.validate()){
+      if (!group.validate()) {
         group.errorMessage(true);
         return;
       }
@@ -629,7 +636,7 @@ public class AdminSeries extends MyDraggable {
     }//GEN-LAST:event_button_getSubOnlineIdActionPerformed
 
     private void button_browseScreenshot1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_browseScreenshot1ActionPerformed
-       JFileChooser fc = new JFileChooser();
+      JFileChooser fc = new JFileChooser();
       fc.setCurrentDirectory(new File(textfield_localDir.getText()));
       fc.setDialogTitle("Choose the Series directory");
       fc.setDialogType(JFileChooser.OPEN_DIALOG);
@@ -638,7 +645,6 @@ public class AdminSeries extends MyDraggable {
       File localDir = fc.getSelectedFile();
       textfield_localDir.setText(localDir.getAbsolutePath());
     }//GEN-LAST:event_button_browseScreenshot1ActionPerformed
-
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton button_Add;
   private javax.swing.JButton button_Cancel;

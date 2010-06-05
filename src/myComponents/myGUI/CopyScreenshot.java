@@ -27,7 +27,7 @@ public class CopyScreenshot implements Runnable {
 
   public CopyScreenshot(String screenshot) {
     this.screenshot = screenshot;
-    destination = Options._USER_DIR_ + "/" + MyImagePanel.PATH;
+    destination = Options._USER_DIR_ + MyImagePanel.PATH;
   }
 
   public void run() {
