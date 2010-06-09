@@ -617,7 +617,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setTitle("MySerieS v" + version+ " - Database: " + Options.toString(Options.DB_NAME).replace(".db", ""));
     setIconImages(null);
-    setMinimumSize(new java.awt.Dimension(1000, 500));
+    setMinimumSize(new java.awt.Dimension(760, 560));
     addWindowListener(new java.awt.event.WindowAdapter() {
       public void windowClosing(java.awt.event.WindowEvent evt) {
         formWindowClosing(evt);
@@ -772,9 +772,9 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       panel_nextEpisodesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(panel_nextEpisodesLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(label_NextEpisodeTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
+        .addComponent(label_NextEpisodeTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(label_NextEpisode, javax.swing.GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE)
+        .addComponent(label_NextEpisode, javax.swing.GroupLayout.DEFAULT_SIZE, 495, Short.MAX_VALUE)
         .addGap(18, 18, 18)
         .addComponent(panel_NextEpisodesbuttons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addContainerGap())
@@ -850,7 +850,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
           .addGap(31, 31, 31)))
     );
 
-    tabsPanel.addTab("                          ", new javax.swing.ImageIcon(getClass().getResource("/images/series.png")), tabpanel_episodesList); // NOI18N
+    tabsPanel.addTab("                          ", new javax.swing.ImageIcon(getClass().getResource("/images/series.png")), tabpanel_episodesList, ""); // NOI18N
 
     tabpanel_FilteredSeries.setBackground(new java.awt.Color(255, 255, 255));
     tabpanel_FilteredSeries.setToolTipText("Filter series episodes");
@@ -993,23 +993,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tabsPanel.addTab("Ratings", new javax.swing.ImageIcon(getClass().getResource("/images/star.png")), tabpanel_statistics, "Series and episodes ratings"); // NOI18N
 
     tabpanel_schedule.setToolTipText("Schedule");
+    tabpanel_schedule.setLayout(new javax.swing.BoxLayout(tabpanel_schedule, javax.swing.BoxLayout.LINE_AXIS));
 
-    javax.swing.GroupLayout tabpanel_scheduleLayout = new javax.swing.GroupLayout(tabpanel_schedule);
-    tabpanel_schedule.setLayout(tabpanel_scheduleLayout);
-    tabpanel_scheduleLayout.setHorizontalGroup(
-      tabpanel_scheduleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(tabpanel_scheduleLayout.createSequentialGroup()
-        .addContainerGap()
-        .addComponent(scheduler, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(398, Short.MAX_VALUE))
-    );
-    tabpanel_scheduleLayout.setVerticalGroup(
-      tabpanel_scheduleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(tabpanel_scheduleLayout.createSequentialGroup()
-        .addContainerGap()
-        .addComponent(scheduler, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(57, Short.MAX_VALUE))
-    );
+    scheduler.setMaximumSize(new java.awt.Dimension(1000, 800));
+    tabpanel_schedule.add(scheduler);
 
     tabsPanel.addTab("Schedule", new javax.swing.ImageIcon(getClass().getResource("/images/today.png")), tabpanel_schedule, "Schedule"); // NOI18N
 
