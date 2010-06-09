@@ -491,9 +491,13 @@ public class AdminSeries extends MyDraggable {
             CopyScreenshot c = new CopyScreenshot(screenshot);
             Thread t = new Thread(c);
             t.start();
+            seriesRecord.setScreenshot(sc.getName());
+          } else {
+          seriesRecord.setScreenshot(sc.getName());
           }
           Image im = new ImageIcon(sc.getAbsolutePath()).getImage();
           m.imagePanel.setImage(im);
+          
         } else {
           seriesRecord.setScreenshot("");
         }

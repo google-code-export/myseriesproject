@@ -137,8 +137,8 @@ public class ApplicationActions {
       } else if (index == MySeries.TAB_FILTERS) {
         Filters.getFilteredSeries();
       } else if (index == MySeries.TAB_STATISTICS) {
-        m.table_stat_series.setTableModel();
-        m.table_stat_episodes.setTableModel();
+        m.statSeries.refresh();
+        m.statEpisodes.refresh();
       }
 
     } catch (SQLException ex) {

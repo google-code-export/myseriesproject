@@ -4,11 +4,16 @@
  */
 package database;
 
+import com.googlecode.scheduler.ScheduleDay;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import myComponents.myTableCellRenderers.MyScheduleTableCellRenderer;
+import myseries.schedule.ScheduleEvent;
 import tools.languages.LangsList;
 
 /**
@@ -70,7 +75,8 @@ public class DBHelper {
       }
     }
   }
-    /**
+
+  /**
    * Gets all the filters
    * @return a vector of filtersRecords
    * @throws SQLException
@@ -103,7 +109,7 @@ public class DBHelper {
    */
   public static Vector<FilterRecord> getFilterRecordBySql(String sql) throws SQLException {
     ResultSet rs = null;
-    
+
     try {
       rs = database.DBConnection.conn.createStatement().executeQuery(sql);
       Vector<FilterRecord> a = new Vector<FilterRecord>();
@@ -139,7 +145,7 @@ public class DBHelper {
     return filters;
   }
 
-    /**
+  /**
    * Gets series by executing a query
    * @param sql The query to execute
    * @return a vector of series records
@@ -147,7 +153,7 @@ public class DBHelper {
    */
   public static Vector<SeriesRecord> getSeriesBySql(String sql) throws SQLException {
     ResultSet rs = null;
-    
+
     try {
       rs = DBConnection.conn.createStatement().executeQuery(sql);
       Vector<SeriesRecord> a = new Vector<SeriesRecord>();
@@ -204,6 +210,30 @@ public class DBHelper {
       return null;
     }
 
+  }
+
+  public static ArrayList<ScheduleEvent> getDayEvents(ScheduleDay sDay) {
+    ArrayList<ScheduleEvent> events = new ArrayList<ScheduleEvent>();
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    String date = sdf.format(sDay.getDate());
+    String sql = "SELECT series.screenshot as image, episodes.episode AS ep, episodes.title AS title , series.title AS series FROM "
+        + "episodes JOIN series on episodes.series_ID = series.series_ID WHERE "
+        + "aired = '" + date + "'";
+    try {
+      ResultSet rs = DBConnection.conn.createStatement().executeQuery(sql);
+      while (rs.next()) {
+        ScheduleEvent ev = new ScheduleEvent();
+        ev.setSeries(rs.getString("series"));
+        ev.setEpisodeNumber(rs.getInt("ep"));
+        ev.setEpisode(rs.getString("title"));
+        ev.setImage(rs.getString("image"));
+        events.add(ev);
+      }
+      return events;
+    } catch (SQLException ex) {
+      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      return events;
+    }
   }
 
   private DBHelper() {

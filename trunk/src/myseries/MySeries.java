@@ -17,6 +17,7 @@ import myseries.episodes.Episodes;
 import myseries.series.Series;
 import database.DBConnection;
 import database.DBHelper;
+import database.Database;
 import tools.languages.Language;
 import tools.options.Options;
 import myComponents.MyTableModels.MyEpisodesTableModel;
@@ -55,6 +56,7 @@ import myComponents.myGUI.MyFont;
 import myComponents.myTableCellEditors.MyRateEditor;
 import myComponents.myTableCellEditors.MyTitleCellEditor;
 import myComponents.myTableCellRenderers.MyJDateChooserCellRenderer;
+import myComponents.myTableCellRenderers.MyScheduleTableCellRenderer;
 import myComponents.myTableCellRenderers.MyTitleCellRenderer;
 import myseries.actions.ApplicationActions;
 import myseries.actions.DatabaseActions;
@@ -64,6 +66,7 @@ import myseries.actions.SeriesActions;
 import myseries.episodes.UpdateEpisodesTable;
 import myseries.filters.Filters;
 import myseries.filters.UpdateFiltersTable;
+import myseries.schedule.Schedule;
 import myseries.series.UpdateSeriesTable;
 import myseries.statistics.StatEpisodes;
 import myseries.statistics.StatSeries;
@@ -136,6 +139,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static int TAB_STATISTICS = 2;
   public StatSeries table_stat_series;
   public StatEpisodes table_stat_episodes;
+  
 
   /**
    *
@@ -178,13 +182,14 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     createGUI();
     table_stat_series = new StatSeries();
     table_stat_episodes = new StatEpisodes();
-    panel_stats.add(table_stat_series);
-    panel_stats.add(table_stat_episodes);
-    panel_stats.validate();
     setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/subtitles.png")).getImage());
     setSize(Options.toInt(Options.WIDTH), Options.toInt(Options.HEIGHT));
     setExtendedState(Options.toInt(Options.WINDOW_STATE));
     createComboBox_filters();
+
+    //SCHEDULE
+    scheduler.setDatabase(Options._USER_DIR_ +Database.PATH + DBConnection.db);
+    scheduler.setDefaultRenderer(new MyScheduleTableCellRenderer());
 
 //    this.getContentPane().setBackground(Options.getColor(Options.SKIN_COLOR));
     if (Options.toBoolean(Options.USE_SKIN)) {
@@ -390,7 +395,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     combobox_downloaded = new javax.swing.JComboBox();
     comboBox_seen = new javax.swing.JComboBox();
     tabpanel_statistics = new javax.swing.JPanel();
-    panel_stats = new javax.swing.JPanel();
+    statSeries = new myseries.statistics.StatSeries();
+    statEpisodes = new myseries.statistics.StatEpisodes();
+    tabpanel_schedule = new javax.swing.JPanel();
+    scheduler = new com.googlecode.scheduler.Scheduler();
     menuBar = new javax.swing.JMenuBar();
     menu_MySeries = new javax.swing.JMenu();
     menuItem_createDB = new javax.swing.JMenuItem();
@@ -976,26 +984,34 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
     tabsPanel.addTab("Filter Series", new javax.swing.ImageIcon(getClass().getResource("/images/filter.png")), tabpanel_FilteredSeries, "Filter series"); // NOI18N
 
-    panel_stats.setLayout(new java.awt.GridLayout(2, 1, 0, 10));
+    tabpanel_statistics.setLayout(new java.awt.GridLayout(2, 1));
 
-    javax.swing.GroupLayout tabpanel_statisticsLayout = new javax.swing.GroupLayout(tabpanel_statistics);
-    tabpanel_statistics.setLayout(tabpanel_statisticsLayout);
-    tabpanel_statisticsLayout.setHorizontalGroup(
-      tabpanel_statisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(tabpanel_statisticsLayout.createSequentialGroup()
-        .addContainerGap()
-        .addComponent(panel_stats, javax.swing.GroupLayout.PREFERRED_SIZE, 544, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(260, Short.MAX_VALUE))
-    );
-    tabpanel_statisticsLayout.setVerticalGroup(
-      tabpanel_statisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(tabpanel_statisticsLayout.createSequentialGroup()
-        .addContainerGap()
-        .addComponent(panel_stats, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
-        .addGap(26, 26, 26))
-    );
+    statSeries.setPreferredSize(new java.awt.Dimension(400, 121));
+    tabpanel_statistics.add(statSeries);
+    tabpanel_statistics.add(statEpisodes);
 
     tabsPanel.addTab("Ratings", new javax.swing.ImageIcon(getClass().getResource("/images/star.png")), tabpanel_statistics, "Series and episodes ratings"); // NOI18N
+
+    tabpanel_schedule.setToolTipText("Schedule");
+
+    javax.swing.GroupLayout tabpanel_scheduleLayout = new javax.swing.GroupLayout(tabpanel_schedule);
+    tabpanel_schedule.setLayout(tabpanel_scheduleLayout);
+    tabpanel_scheduleLayout.setHorizontalGroup(
+      tabpanel_scheduleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(tabpanel_scheduleLayout.createSequentialGroup()
+        .addContainerGap()
+        .addComponent(scheduler, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(398, Short.MAX_VALUE))
+    );
+    tabpanel_scheduleLayout.setVerticalGroup(
+      tabpanel_scheduleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(tabpanel_scheduleLayout.createSequentialGroup()
+        .addContainerGap()
+        .addComponent(scheduler, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(57, Short.MAX_VALUE))
+    );
+
+    tabsPanel.addTab("Schedule", new javax.swing.ImageIcon(getClass().getResource("/images/today.png")), tabpanel_schedule, "Schedule"); // NOI18N
 
     javax.swing.GroupLayout panel_episodesLayout = new javax.swing.GroupLayout(panel_episodes);
     panel_episodes.setLayout(panel_episodesLayout);
@@ -1828,7 +1844,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static javax.swing.JScrollPane panel_episodesList;
   public static javax.swing.JPanel panel_filters;
   public static javax.swing.JPanel panel_nextEpisodes;
-  public javax.swing.JPanel panel_stats;
   public static javax.swing.JMenuItem popUpItem_GoToLocalDir;
   public static javax.swing.JMenuItem popUpItem_GoToSubOn;
   public static javax.swing.JMenuItem popUpItem_GoToTvSubs;
@@ -1845,14 +1860,18 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static javax.swing.JMenu popUpMenu_GoToSubtitles;
   public static javax.swing.JMenu popUpMenu_downloadSubtitles;
   public static javax.swing.JMenu popUpMenu_internetUpdate;
+  public static com.googlecode.scheduler.Scheduler scheduler;
   public static javax.swing.JScrollPane scrollPane_series;
   public static javax.swing.JPopupMenu seriesPopUp;
   public static javax.swing.JSplitPane splitPane_main;
+  public static myseries.statistics.StatEpisodes statEpisodes;
+  public static myseries.statistics.StatSeries statSeries;
   public static javax.swing.JTable tableEpisodes;
   public static javax.swing.JTable tableFilters;
   public static javax.swing.JTable tableSeries;
   public static javax.swing.JPanel tabpanel_FilteredSeries;
   public static javax.swing.JPanel tabpanel_episodesList;
+  public static javax.swing.JPanel tabpanel_schedule;
   public static javax.swing.JPanel tabpanel_statistics;
   public static javax.swing.JTabbedPane tabsPanel;
   private org.jdesktop.beansbinding.BindingGroup bindingGroup;

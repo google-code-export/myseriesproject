@@ -32,7 +32,6 @@ public class StatEpisodes extends javax.swing.JPanel {
     initComponents();
     model = (DefaultTableModel) table_stat_episodes.getModel();
     table_stat_episodes.getColumnModel().getColumn(2).setCellRenderer(new MyDecimalFormatRenderer());
-    setTableModel();
     setVisible(true);
   }
 
@@ -87,8 +86,8 @@ public class StatEpisodes extends javax.swing.JPanel {
       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
         .addContainerGap()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
-          .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE))
+          .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 564, Short.MAX_VALUE)
+          .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 564, Short.MAX_VALUE))
         .addContainerGap())
     );
     layout.setVerticalGroup(
@@ -97,8 +96,8 @@ public class StatEpisodes extends javax.swing.JPanel {
         .addContainerGap()
         .addComponent(jLabel1)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+        .addContainerGap())
     );
   }// </editor-fold>//GEN-END:initComponents
   // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -107,7 +106,7 @@ public class StatEpisodes extends javax.swing.JPanel {
   private javax.swing.JTable table_stat_episodes;
   // End of variables declaration//GEN-END:variables
 
- public void setTableModel() {
+ public void refresh() {
     clearModel();
     try {
       Statement stmt = DBConnection.stmt;
