@@ -138,11 +138,22 @@ public class scheduleDayPanel extends javax.swing.JPanel {
     int h = image.getHeight(this);
     int newW = 0, newH = 0;
     if (events.size() == 1) {
+      if(w>=h){
       newW = width - NUMBER_LABEL_WIDTH;
-      newH = height;
+      newH = h/(w/newW);
+      } else {
+       newH = height;
+       newW = w/(h/newH);
+      }
     } else {
+      if(w>=h){
       newW  = ((width-NUMBER_LABEL_WIDTH)/MAX_COLUMNS) -(rows*GAP);
-      newH =  (height/rows)-(rows*GAP);
+      //newH =  (height/rows)-(rows*GAP);
+      newH = h/(w/newW);
+      } else {
+        newH =  (height/rows)-(rows*GAP);
+        newW = w/(h/newH);
+      }
     }
     ImageIcon im = new ImageIcon(image.getScaledInstance(newW, newH, Image.SCALE_SMOOTH));
     return im;
