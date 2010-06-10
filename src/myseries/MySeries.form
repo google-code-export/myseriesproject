@@ -251,17 +251,29 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <MenuItem class="javax.swing.JMenuItem" name="popUpItem_downloadTorrent">
+        <Menu class="javax.swing.JMenu" name="popUpMenu_downloadTorrent">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/images/torrent.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Download torrent"/>
+            <Property name="text" type="java.lang.String" value="Download"/>
+            <Property name="toolTipText" type="java.lang.String" value="Download torrent"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="popUpItem_downloadTorrentActionPerformed"/>
-          </Events>
-        </MenuItem>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="popUpItem_downloadEzTv">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/eztv.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Download from EzTv"/>
+                <Property name="toolTipText" type="java.lang.String" value="Download torrent from EzTv"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="popUpItem_downloadEzTvActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
       </SubComponents>
     </Container>
     <Menu class="javax.swing.JMenuBar" name="menuBar">
