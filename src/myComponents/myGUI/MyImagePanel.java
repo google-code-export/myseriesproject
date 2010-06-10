@@ -22,7 +22,7 @@ public class MyImagePanel extends JPanel {
    /**
    * The screenshots path : "images/"
    */
-  public static final String PATH ="images/";
+  public static final String SCREENSHOTS_PATH ="images/";
 
   private static final long serialVersionUID = 356475743574387L;
 

@@ -34,11 +34,13 @@ import com.googlecode.svalidators.validators.FileValidator;
 import com.googlecode.svalidators.validators.NoSpaceValidator;
 import com.googlecode.svalidators.validators.PositiveNumberValidator;
 import com.googlecode.svalidators.validators.RequiredValidator;
+import myComponents.myGUI.MyImagePanel;
 import myseries.actions.SeriesActions;
 import tools.download.subtitles.sonline.GetSubtitleOnlineCode;
 import tools.download.subtitles.tvsubtitles.GetTvSubtitlesCode;
 import tools.internetUpdate.InternetUpdate;
 import tools.internetUpdate.tvrage.TrGetId;
+import tools.options.Options;
 
 /**
  * Administrate series
@@ -99,7 +101,7 @@ public class AdminSeries extends MyDraggable {
       textfield_tvRageID.setText(String.valueOf(seriesRecord.getTvrage_ID()));
       textfield_localDir.setText(seriesRecord.getLocalDir());
 
-      textfield_screenshot.setText(seriesRecord.getScreenshot().equals("") ? "" : "./images/" + seriesRecord.getScreenshot());
+      textfield_screenshot.setText(seriesRecord.getScreenshot().equals("") ? "" : Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH  + seriesRecord.getScreenshot());
 
       textfield_tvSubsId.setText(seriesRecord.getTvSubtitlesCode());
       textfield_subsOnline.setText(seriesRecord.getSOnlineCode());

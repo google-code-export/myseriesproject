@@ -1332,7 +1332,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     if (selectedRow > -1) {
       Series.setCurrentSerial((SeriesRecord) tableSeries.getValueAt(selectedRow, Series.SERIESRECORD_COLUMN));
       tabsPanel.setTitleAt(0, Series.getCurrentSerial().getFullTitle());
-      String imagePath = Options._USER_DIR_ + MyImagePanel.PATH + "/" + Series.getCurrentSerial().getScreenshot();
+      String imagePath = Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH + "/" + Series.getCurrentSerial().getScreenshot();
       if (new File(imagePath).isFile()) {
         Image im = new ImageIcon(imagePath).getImage();
         imagePanel.setImage(im);
