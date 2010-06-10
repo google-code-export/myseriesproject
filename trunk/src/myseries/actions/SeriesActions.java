@@ -16,6 +16,7 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import javax.swing.ImageIcon;
 import myComponents.MyMessages;
+import myComponents.myGUI.MyImagePanel;
 import myseries.MySeries;
 import myseries.episodes.Episodes;
 import myseries.episodes.NextEpisodes;
@@ -71,7 +72,7 @@ public class SeriesActions {
         DBConnection.stmt.execute(sql);
         sql = "DELETE FROM episodes WHERE series_ID = " + series_ID;
         DBConnection.stmt.execute(sql);
-        File screenshotFile = new File("./images/" + screenshot);
+        File screenshotFile = new File(Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH  + screenshot);
         if (screenshotFile.isFile()) {
           screenshotFile.delete();
           Image image = new ImageIcon(MySeries.class.getResource("/images/logo.png")).getImage();
