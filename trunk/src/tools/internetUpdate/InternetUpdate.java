@@ -41,6 +41,8 @@ public class InternetUpdate extends MyDraggable {
   public static final String TV_RAGE_SEARCH_SHOW_URL = "http://services.tvrage.com/feeds/search.php?show=";
   /** The tvrage epoisodes list rss url : "http://services.tvrage.com/feeds/episode_list.php?sid=" **/
   public static final String TV_RAGE_EPISODE_LIST_URL = "http://services.tvrage.com/feeds/episode_list.php?sid=";
+  /** tvrage images url : "http://images.tvrage.com/"; */
+  public static String TV_RAGE_IMAGES_URL = "http://images.tvrage.com/";
 
   /**
    * If proccess is finished

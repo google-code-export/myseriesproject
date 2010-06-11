@@ -219,7 +219,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     //Create image pane
     imageLayerPanel.add(imagePanel);
     Image scrImage = new ImageIcon(getClass().getResource("/images/logo.png")).getImage();
-    imagePanel.setImage(scrImage);
+    imagePanel.setImage(scrImage, true);
 
     //Create the episodes data
     MySeries.logger.log(Level.INFO, "Creating episodes data");
@@ -678,11 +678,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       .addGroup(panel_SeriesLayout.createSequentialGroup()
         .addGap(33, 33, 33)
         .addComponent(imageLayerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
-        .addGap(53, 53, 53))
+        .addGap(80, 80, 80))
       .addGroup(panel_SeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(panel_SeriesLayout.createSequentialGroup()
           .addContainerGap()
-          .addComponent(scrollPane_series, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+          .addComponent(scrollPane_series, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
           .addGap(157, 157, 157)))
     );
 
@@ -735,20 +735,20 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tabpanel_episodesList.setLayout(tabpanel_episodesListLayout);
     tabpanel_episodesListLayout.setHorizontalGroup(
       tabpanel_episodesListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 814, Short.MAX_VALUE)
+      .addGap(0, 844, Short.MAX_VALUE)
       .addGroup(tabpanel_episodesListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(tabpanel_episodesListLayout.createSequentialGroup()
           .addContainerGap()
-          .addComponent(panel_episodesList, javax.swing.GroupLayout.DEFAULT_SIZE, 790, Short.MAX_VALUE)
+          .addComponent(panel_episodesList, javax.swing.GroupLayout.DEFAULT_SIZE, 820, Short.MAX_VALUE)
           .addGap(14, 14, 14)))
     );
     tabpanel_episodesListLayout.setVerticalGroup(
       tabpanel_episodesListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 471, Short.MAX_VALUE)
+      .addGap(0, 535, Short.MAX_VALUE)
       .addGroup(tabpanel_episodesListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(tabpanel_episodesListLayout.createSequentialGroup()
           .addContainerGap()
-          .addComponent(panel_episodesList, javax.swing.GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
+          .addComponent(panel_episodesList, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
           .addGap(31, 31, 31)))
     );
 
@@ -839,7 +839,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(comboBox_filterSubtitles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(combobox_filters, 0, 396, Short.MAX_VALUE)
+        .addComponent(combobox_filters, 0, 426, Short.MAX_VALUE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(button_saveFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -870,7 +870,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       .addGroup(tabpanel_FilteredSeriesLayout.createSequentialGroup()
         .addContainerGap()
         .addGroup(tabpanel_FilteredSeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(panel_allSeriesEpisodes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE)
+          .addComponent(panel_allSeriesEpisodes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 824, Short.MAX_VALUE)
           .addComponent(panel_filters, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         .addContainerGap())
     );
@@ -880,7 +880,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
         .addContainerGap()
         .addComponent(panel_filters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(panel_allSeriesEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
+        .addComponent(panel_allSeriesEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)
         .addContainerGap())
     );
 
@@ -894,15 +894,16 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tabpanel_statistics.setLayout(tabpanel_statisticsLayout);
     tabpanel_statisticsLayout.setHorizontalGroup(
       tabpanel_statisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(statSeries, javax.swing.GroupLayout.DEFAULT_SIZE, 814, Short.MAX_VALUE)
-      .addComponent(statEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 814, Short.MAX_VALUE)
+      .addComponent(statEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 844, Short.MAX_VALUE)
+      .addComponent(statSeries, javax.swing.GroupLayout.DEFAULT_SIZE, 844, Short.MAX_VALUE)
     );
     tabpanel_statisticsLayout.setVerticalGroup(
       tabpanel_statisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(tabpanel_statisticsLayout.createSequentialGroup()
-        .addComponent(statSeries, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
-        .addComponent(statEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
-        .addGap(67, 67, 67))
+        .addComponent(statSeries, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(statEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
+        .addContainerGap())
     );
 
     tabsPanel.addTab("Ratings", new javax.swing.ImageIcon(getClass().getResource("/images/star.png")), tabpanel_statistics, "Series and episodes ratings"); // NOI18N
@@ -922,15 +923,15 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       panel_episodesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(panel_episodesLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(tabsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 819, Short.MAX_VALUE)
+        .addComponent(tabsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 849, Short.MAX_VALUE)
         .addContainerGap())
     );
     panel_episodesLayout.setVerticalGroup(
       panel_episodesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_episodesLayout.createSequentialGroup()
+      .addGroup(panel_episodesLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(tabsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE)
-        .addGap(9, 9, 9))
+        .addComponent(tabsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE)
+        .addContainerGap())
     );
 
     tabsPanel.getAccessibleContext().setAccessibleName("");
@@ -1219,11 +1220,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(splitPane_main, javax.swing.GroupLayout.DEFAULT_SIZE, 1064, Short.MAX_VALUE)
+      .addComponent(splitPane_main, javax.swing.GroupLayout.DEFAULT_SIZE, 1094, Short.MAX_VALUE)
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(splitPane_main, javax.swing.GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
+      .addComponent(splitPane_main, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 597, Short.MAX_VALUE)
     );
 
     bindingGroup.bind();
@@ -1247,10 +1248,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       String imagePath = Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH + "/" + Series.getCurrentSerial().getScreenshot();
       if (new File(imagePath).isFile()) {
         Image im = new ImageIcon(imagePath).getImage();
-        imagePanel.setImage(im);
+        imagePanel.setImage(im,false);
       } else {
         Image image = new ImageIcon(getClass().getResource("/images/logo.png")).getImage();
-        imagePanel.setImage(image);
+        imagePanel.setImage(image,true);
       }
       seriesPopUpItemsState(Series.getCurrentSerial().getFullTitle(), true);
       tabsPanel.setSelectedComponent(tabpanel_episodesList);

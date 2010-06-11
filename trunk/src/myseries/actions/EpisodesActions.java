@@ -178,6 +178,10 @@ public class EpisodesActions {
       SeriesRecord series = Series.getCurrentSerial();
       int season = series.getSeason();
       File dir = new File(series.getLocalDir());
+      if(!dir.isDirectory()){
+        MyMessages.error("Not a directory", "The local directory is not found");
+        return;
+      }
       File[] files = dir.listFiles();
       String path;
 
