@@ -48,6 +48,10 @@ public class StatEpisodes extends javax.swing.JPanel {
     table_stat_episodes = new javax.swing.JTable();
     jLabel1 = new javax.swing.JLabel();
 
+    setOpaque(false);
+
+    jScrollPane1.setOpaque(false);
+
     table_stat_episodes.setAutoCreateRowSorter(true);
     table_stat_episodes.setModel(new javax.swing.table.DefaultTableModel(
       new Object [][] {

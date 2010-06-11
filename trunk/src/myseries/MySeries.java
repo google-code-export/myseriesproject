@@ -1003,15 +1003,29 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
     tabsPanel.addTab("Filter Series", new javax.swing.ImageIcon(getClass().getResource("/images/filter.png")), tabpanel_FilteredSeries, "Filter series"); // NOI18N
 
-    tabpanel_statistics.setLayout(new java.awt.GridLayout(2, 1));
+    tabpanel_statistics.setOpaque(false);
 
     statSeries.setPreferredSize(new java.awt.Dimension(400, 121));
-    tabpanel_statistics.add(statSeries);
-    tabpanel_statistics.add(statEpisodes);
+
+    javax.swing.GroupLayout tabpanel_statisticsLayout = new javax.swing.GroupLayout(tabpanel_statistics);
+    tabpanel_statistics.setLayout(tabpanel_statisticsLayout);
+    tabpanel_statisticsLayout.setHorizontalGroup(
+      tabpanel_statisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addComponent(statSeries, javax.swing.GroupLayout.DEFAULT_SIZE, 814, Short.MAX_VALUE)
+      .addComponent(statEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 814, Short.MAX_VALUE)
+    );
+    tabpanel_statisticsLayout.setVerticalGroup(
+      tabpanel_statisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(tabpanel_statisticsLayout.createSequentialGroup()
+        .addComponent(statSeries, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
+        .addComponent(statEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
+        .addGap(1, 1, 1))
+    );
 
     tabsPanel.addTab("Ratings", new javax.swing.ImageIcon(getClass().getResource("/images/star.png")), tabpanel_statistics, "Series and episodes ratings"); // NOI18N
 
     tabpanel_schedule.setToolTipText("Schedule");
+    tabpanel_schedule.setOpaque(false);
     tabpanel_schedule.setLayout(new javax.swing.BoxLayout(tabpanel_schedule, javax.swing.BoxLayout.LINE_AXIS));
 
     scheduler.setMaximumSize(new java.awt.Dimension(1000, 800));

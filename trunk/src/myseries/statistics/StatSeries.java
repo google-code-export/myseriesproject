@@ -13,6 +13,7 @@ package myseries.statistics;
 import database.DBConnection;
 import database.DBHelper;
 import database.SeriesRecord;
+import java.awt.Color;
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,6 +38,8 @@ public class StatSeries extends javax.swing.JPanel  {
   public StatSeries() {
     super();
     initComponents();
+    jScrollPane1.getViewport().setOpaque(false);
+    jScrollPane1.getViewport().setBackground(Color.red);
     model = (DefaultTableModel) table_stat_series.getModel();
     table_stat_series.getColumnModel().getColumn(RATE_COLUMN).setCellRenderer(new MyDecimalFormatRenderer());
     validate();
@@ -56,6 +59,11 @@ public class StatSeries extends javax.swing.JPanel  {
     table_stat_series = new javax.swing.JTable();
     jLabel1 = new javax.swing.JLabel();
     jLabel2 = new javax.swing.JLabel();
+
+    setOpaque(false);
+
+    jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+    jScrollPane1.setOpaque(false);
 
     table_stat_series.setAutoCreateRowSorter(true);
     table_stat_series.setModel(new javax.swing.table.DefaultTableModel(
@@ -82,6 +90,7 @@ public class StatSeries extends javax.swing.JPanel  {
       }
     });
     table_stat_series.setName("seriesStats"); // NOI18N
+    table_stat_series.setOpaque(false);
     jScrollPane1.setViewportView(table_stat_series);
 
     jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getStyle() | java.awt.Font.BOLD, jLabel1.getFont().getSize()+2));
