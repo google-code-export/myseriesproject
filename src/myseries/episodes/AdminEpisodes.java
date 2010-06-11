@@ -336,7 +336,6 @@ public class AdminEpisodes extends MyDraggable {
       }
       episodeRecord.setAired(aired);
       episodeRecord.save();
-      NextEpisodes.show();
       Episodes.getCurrentSeriesEpisodes();
       dispose();
       MySeries.glassPane.deactivate();

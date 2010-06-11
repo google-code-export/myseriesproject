@@ -19,7 +19,6 @@ import myComponents.MyMessages;
 import myComponents.myGUI.MyImagePanel;
 import myseries.MySeries;
 import myseries.episodes.Episodes;
-import myseries.episodes.NextEpisodes;
 import myseries.series.AdminSeries;
 import myseries.series.Series;
 import tools.DesktopSupport;
@@ -81,8 +80,6 @@ public class SeriesActions {
         Series.getSeries();
         Series.setCurrentSerial(null);
         Episodes.updateEpisodesTable();
-        NextEpisodes.createNextEpisodes();
-        NextEpisodes.show();
       } catch (SQLException ex) {
         MySeries.logger.log(Level.SEVERE, null, ex);
       }
