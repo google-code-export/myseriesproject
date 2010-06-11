@@ -30,6 +30,7 @@ public class StatEpisodes extends javax.swing.JPanel {
   /** Creates new form StatEpisodes */
   public StatEpisodes() {
     initComponents();
+    jScrollPane1.getViewport().setOpaque(false);
     model = (DefaultTableModel) table_stat_episodes.getModel();
     table_stat_episodes.getColumnModel().getColumn(2).setCellRenderer(new MyDecimalFormatRenderer());
     setVisible(true);
@@ -50,6 +51,7 @@ public class StatEpisodes extends javax.swing.JPanel {
 
     setOpaque(false);
 
+    jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
     jScrollPane1.setOpaque(false);
 
     table_stat_episodes.setAutoCreateRowSorter(true);
@@ -77,6 +79,7 @@ public class StatEpisodes extends javax.swing.JPanel {
       }
     });
     table_stat_episodes.setName("episodesTable"); // NOI18N
+    table_stat_episodes.setOpaque(false);
     jScrollPane1.setViewportView(table_stat_episodes);
 
     jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getStyle() | java.awt.Font.BOLD, jLabel1.getFont().getSize()+2));

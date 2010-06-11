@@ -75,7 +75,7 @@ public class SeriesActions {
         if (screenshotFile.isFile()) {
           screenshotFile.delete();
           Image image = new ImageIcon(MySeries.class.getResource("/images/logo.png")).getImage();
-          m.imagePanel.setImage(image);
+          m.imagePanel.setImage(image,true);
         }
         Series.getSeries();
         Series.setCurrentSerial(null);

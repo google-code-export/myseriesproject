@@ -36,6 +36,7 @@ import com.googlecode.svalidators.validators.PositiveNumberValidator;
 import com.googlecode.svalidators.validators.RequiredValidator;
 import myComponents.myGUI.MyImagePanel;
 import myseries.actions.SeriesActions;
+import tools.download.screenshot.DownloadScreenshot;
 import tools.download.subtitles.sonline.GetSubtitleOnlineCode;
 import tools.download.subtitles.tvsubtitles.GetTvSubtitlesCode;
 import tools.internetUpdate.InternetUpdate;
@@ -92,7 +93,7 @@ public class AdminSeries extends MyDraggable {
     initComponents();
     setLocationRelativeTo(m);
     spinner_season.setModel(new SpinnerNumberModel(Series.DEFAULT_SEASON, Series.MINIMUM_SEASON, Series.MAXIMUM_SEASON, Series.SEASON_STEP));
-    if (seriesRecord.getSeries_ID() >0) {
+    if (seriesRecord.getSeries_ID() > 0) {
       spinner_season.setValue(seriesRecord.getSeason());
       textField_Serial.setText(seriesRecord.getTitle());
       label_Title.setText("Edit Series " + seriesRecord.getTitle()
@@ -101,7 +102,7 @@ public class AdminSeries extends MyDraggable {
       textfield_tvRageID.setText(String.valueOf(seriesRecord.getTvrage_ID()));
       textfield_localDir.setText(seriesRecord.getLocalDir());
 
-      textfield_screenshot.setText(seriesRecord.getScreenshot().equals("") ? "" : Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH  + seriesRecord.getScreenshot());
+      textfield_screenshot.setText(seriesRecord.getScreenshot().equals("") ? "" : Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH + seriesRecord.getScreenshot());
 
       textfield_tvSubsId.setText(seriesRecord.getTvSubtitlesCode());
       textfield_subsOnline.setText(seriesRecord.getSOnlineCode());
@@ -148,6 +149,7 @@ public class AdminSeries extends MyDraggable {
     textfield_tvSubsId = new com.googlecode.svalidators.formcomponents.STextField(new NoSpaceValidator("",true));
     jLabel1 = new javax.swing.JLabel();
     checkbox_updateEpisodes = new javax.swing.JCheckBox();
+    button_getScreenshot = new javax.swing.JButton();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
     setBackground(new java.awt.Color(102, 102, 102));
@@ -305,6 +307,26 @@ public class AdminSeries extends MyDraggable {
     checkbox_updateEpisodes.setMargin(new java.awt.Insets(0, 0, 0, 0));
     checkbox_updateEpisodes.setOpaque(false);
 
+    button_getScreenshot.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/internet_update_small.png"))); // NOI18N
+    button_getScreenshot.setToolTipText("Download a screenshot from tvrage");
+    button_getScreenshot.setIconTextGap(2);
+    button_getScreenshot.setMaximumSize(new java.awt.Dimension(31, 25));
+    button_getScreenshot.setMinimumSize(new java.awt.Dimension(31, 25));
+    button_getScreenshot.setOpaque(false);
+    button_getScreenshot.addMouseListener(new java.awt.event.MouseAdapter() {
+      public void mouseEntered(java.awt.event.MouseEvent evt) {
+        button_getScreenshotMouseEntered(evt);
+      }
+      public void mouseExited(java.awt.event.MouseEvent evt) {
+        button_getScreenshotMouseExited(evt);
+      }
+    });
+    button_getScreenshot.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_getScreenshotActionPerformed(evt);
+      }
+    });
+
     javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     jPanel1.setLayout(jPanel1Layout);
     jPanel1Layout.setHorizontalGroup(
@@ -316,58 +338,60 @@ public class AdminSeries extends MyDraggable {
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
               .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                  .addComponent(label_tvsubsId, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
-                  .addComponent(label_subOnlineId, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                  .addComponent(label_tvsubsId, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                  .addComponent(label_subOnlineId, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
                   .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(label_season, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(label_title, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
               .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(button_Add, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+                .addComponent(button_Add, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(button_Cancel, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
+                .addComponent(button_Cancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(50, 50, 50))
               .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(label_localDir, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                .addComponent(label_localDir, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
               .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(label_screenshot, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                .addComponent(label_screenshot, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
               .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                  .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
-                  .addComponent(label_tvrageId, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE))
+                  .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
+                  .addComponent(label_tvrageId, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
               .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                  .addComponent(textfield_localDir, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
-                  .addComponent(textField_Serial, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+                  .addComponent(textfield_localDir, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+                  .addComponent(textField_Serial, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
                   .addComponent(spinner_season, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                   .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                      .addComponent(textfield_tvSubsId, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                      .addComponent(textfield_subsOnline, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
-                      .addComponent(textfield_tvRageID, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE))
+                      .addComponent(textfield_subsOnline, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                      .addComponent(textfield_tvRageID, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                      .addComponent(textfield_tvSubsId, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                       .addComponent(button_getTvSubtitlesId, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                       .addComponent(button_getSubOnlineId, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                       .addComponent(button_getTvRageID, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(label_message, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE))
-                  .addComponent(textfield_screenshot, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE))
+                    .addComponent(label_message, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))
+                  .addComponent(textfield_screenshot, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                   .addGroup(jPanel1Layout.createSequentialGroup()
                     .addComponent(button_browseScreenshot, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(button_getScreenshot, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(button_browseScreenshot1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                   .addGroup(jPanel1Layout.createSequentialGroup()
                     .addComponent(button_browse, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
                     .addGap(47, 47, 47))))
               .addComponent(checkbox_updateEpisodes)))
-          .addComponent(label_Title, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE))
+          .addComponent(label_Title, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE))
         .addContainerGap())
     );
 
@@ -402,7 +426,8 @@ public class AdminSeries extends MyDraggable {
               .addComponent(button_browseScreenshot, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
               .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(textfield_screenshot, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
-                .addComponent(label_screenshot, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(label_screenshot, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+              .addComponent(button_getScreenshot, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(jPanel1Layout.createSequentialGroup()
@@ -440,11 +465,13 @@ public class AdminSeries extends MyDraggable {
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+      .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 619, Short.MAX_VALUE)
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+      .addGroup(layout.createSequentialGroup()
+        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
     pack();
@@ -495,17 +522,17 @@ public class AdminSeries extends MyDraggable {
             t.start();
             seriesRecord.setScreenshot(sc.getName());
           } else {
-          seriesRecord.setScreenshot(sc.getName());
+            seriesRecord.setScreenshot(sc.getName());
           }
           Image im = new ImageIcon(sc.getAbsolutePath()).getImage();
-          m.imagePanel.setImage(im);
-          
+          m.imagePanel.setImage(im, false);
+
         } else {
           seriesRecord.setScreenshot("");
         }
         try {
           int series_ID = seriesRecord.save();
-          if (series_ID > 0 ) {
+          if (series_ID > 0) {
             seriesRecord.setSeries_ID(series_ID);
           }
           //m.imagePanel.relocate(m);
@@ -651,12 +678,34 @@ public class AdminSeries extends MyDraggable {
       File localDir = fc.getSelectedFile();
       textfield_localDir.setText(localDir.getAbsolutePath());
     }//GEN-LAST:event_button_browseScreenshot1ActionPerformed
+
+    private void button_getScreenshotMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button_getScreenshotMouseEntered
+      setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_button_getScreenshotMouseEntered
+
+    private void button_getScreenshotMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button_getScreenshotMouseExited
+      setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }//GEN-LAST:event_button_getScreenshotMouseExited
+
+    private void button_getScreenshotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_getScreenshotActionPerformed
+      if (textfield_tvRageID.getText().equals("") || textfield_tvRageID.getText().equals("0")) {
+        setModalityType(ModalityType.MODELESS);
+        dispose();
+        TrGetId g = new TrGetId(this, textField_Serial.getText().trim(), true);
+      } else {
+        DownloadScreenshot g = new DownloadScreenshot(Integer.parseInt(textfield_tvRageID.getText()));
+        if (g.isSuccess()) {
+          textfield_screenshot.setText(g.getFilename());
+        }
+      }
+    }//GEN-LAST:event_button_getScreenshotActionPerformed
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton button_Add;
   private javax.swing.JButton button_Cancel;
   private javax.swing.JButton button_browse;
   private javax.swing.JButton button_browseScreenshot;
   private javax.swing.JButton button_browseScreenshot1;
+  private javax.swing.JButton button_getScreenshot;
   private javax.swing.JButton button_getSubOnlineId;
   private javax.swing.JButton button_getTvRageID;
   private javax.swing.JButton button_getTvSubtitlesId;
@@ -675,7 +724,7 @@ public class AdminSeries extends MyDraggable {
   private javax.swing.JSpinner spinner_season;
   private com.googlecode.svalidators.formcomponents.STextField textField_Serial;
   private com.googlecode.svalidators.formcomponents.STextField textfield_localDir;
-  private com.googlecode.svalidators.formcomponents.STextField textfield_screenshot;
+  public com.googlecode.svalidators.formcomponents.STextField textfield_screenshot;
   private com.googlecode.svalidators.formcomponents.STextField textfield_subsOnline;
   public com.googlecode.svalidators.formcomponents.STextField textfield_tvRageID;
   private com.googlecode.svalidators.formcomponents.STextField textfield_tvSubsId;

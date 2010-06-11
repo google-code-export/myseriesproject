@@ -20,11 +20,14 @@ import javax.swing.DefaultComboBoxModel;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyDraggable;
+import myComponents.myGUI.MyImagePanel;
 import myseries.MySeries;
 import myseries.series.AdminSeries;
 import myseries.series.Series;
+import tools.download.screenshot.DownloadScreenshot;
 import tools.internetUpdate.InternetUpdate;
 import tools.internetUpdate.tvrage.SearchTvRage.TvRageSeries;
+import tools.options.Options;
 
 /**
  * Get TvRage id form
@@ -40,11 +43,13 @@ public class TrGetId extends MyDraggable {
   public int tvRageID = 0;
   private boolean isConected;
   private static final long serialVersionUID = 345645747547L;
+  private static int instances = 0;
+  private boolean cancel = true;
+  private boolean screenshot = false;
 
   {
     isConected = MyUsefulFunctions.hasInternetConnection(InternetUpdate.TV_RAGE_URL);
   }
-  private boolean cancel = true;
 
   /** Creates new form GetTvRageID */
   public TrGetId() {
@@ -74,6 +79,21 @@ public class TrGetId extends MyDraggable {
     this.title = title;
     getID();
     adminSeries.setModalityType(ModalityType.APPLICATION_MODAL);
+  }
+
+  /**
+   * Creates a TvRage get id from admin series form
+   * @param adminSeries The ad
+   * @param title
+   * @param screenshot If screenshot is queried
+   */
+  public TrGetId(AdminSeries adminSeries, String title, boolean screenshot) {
+    this.adminSeries = adminSeries;
+    this.title = title;
+    this.screenshot = screenshot;
+    getID();
+    adminSeries.setModalityType(ModalityType.APPLICATION_MODAL);
+
   }
 
   private void getID() {
@@ -203,18 +223,32 @@ public class TrGetId extends MyDraggable {
   }// </editor-fold>//GEN-END:initComponents
 
   private void button_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_cancelActionPerformed
-    dispose();
+
     //MySeries.glassPane.deactivate();
     if (!cancel) {
       if (adminSeries != null) {
         adminSeries.setModalityType(ModalityType.APPLICATION_MODAL);
         if (tvRageID > 0) {
           adminSeries.textfield_tvRageID.setText(String.valueOf(tvRageID));
+          if (screenshot) {
+            progress.setIndeterminate(true);
+            progress.setString("Searching for screenshot");
+            DownloadScreenshot g = new DownloadScreenshot(tvRageID);
+            progress.setIndeterminate(false);
+            if (g.isSuccess()) {
+              adminSeries.textfield_screenshot.setText(g.getFilename());
+            }
+          }
         }
+        dispose();
         adminSeries.setVisible(true);
       } else {
-        InternetUpdate iu = new InternetUpdate(myS, Series.getCurrentSerial(), InternetUpdate.TV_RAGE_NAME);
+        if (myS != null) {
+          InternetUpdate iu = new InternetUpdate(myS, Series.getCurrentSerial(), InternetUpdate.TV_RAGE_NAME);
+        }
       }
+    } else {
+      dispose();
     }
   }//GEN-LAST:event_button_cancelActionPerformed
 

@@ -26,12 +26,15 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+          <Component id="jPanel1" alignment="0" pref="619" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -59,8 +62,8 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="label_tvsubsId" alignment="0" pref="170" max="32767" attributes="2"/>
-                                      <Component id="label_subOnlineId" alignment="1" pref="170" max="32767" attributes="0"/>
+                                      <Component id="label_tvsubsId" alignment="0" pref="168" max="32767" attributes="2"/>
+                                      <Component id="label_subOnlineId" alignment="1" pref="168" max="32767" attributes="0"/>
                                       <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
                                           <Component id="label_season" alignment="1" max="32767" attributes="1"/>
                                           <Component id="label_title" alignment="1" pref="114" max="32767" attributes="3"/>
@@ -69,23 +72,23 @@
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
-                                  <Component id="button_Add" pref="52" max="32767" attributes="2"/>
+                                  <Component id="button_Add" max="32767" attributes="2"/>
                                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                                  <Component id="button_Cancel" pref="66" max="32767" attributes="0"/>
+                                  <Component id="button_Cancel" max="32767" attributes="0"/>
                                   <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
-                                  <Component id="label_localDir" pref="170" max="32767" attributes="2"/>
+                                  <Component id="label_localDir" pref="168" max="32767" attributes="2"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="label_screenshot" pref="170" max="32767" attributes="2"/>
+                                  <Component id="label_screenshot" pref="168" max="32767" attributes="2"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="jLabel1" alignment="1" pref="164" max="32767" attributes="0"/>
-                                      <Component id="label_tvrageId" alignment="1" pref="164" max="32767" attributes="2"/>
+                                      <Component id="jLabel1" alignment="1" pref="162" max="32767" attributes="0"/>
+                                      <Component id="label_tvrageId" alignment="1" pref="162" max="32767" attributes="2"/>
                                   </Group>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               </Group>
@@ -93,14 +96,14 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="textfield_localDir" pref="260" max="32767" attributes="0"/>
-                                      <Component id="textField_Serial" alignment="0" pref="260" max="32767" attributes="1"/>
+                                      <Component id="textfield_localDir" pref="316" max="32767" attributes="0"/>
+                                      <Component id="textField_Serial" alignment="0" pref="316" max="32767" attributes="1"/>
                                       <Component id="spinner_season" alignment="0" min="-2" pref="48" max="-2" attributes="0"/>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="textfield_tvSubsId" alignment="0" min="-2" pref="136" max="-2" attributes="1"/>
-                                              <Component id="textfield_subsOnline" pref="136" max="32767" attributes="1"/>
-                                              <Component id="textfield_tvRageID" pref="136" max="32767" attributes="1"/>
+                                              <Component id="textfield_subsOnline" pref="164" max="32767" attributes="1"/>
+                                              <Component id="textfield_tvRageID" pref="164" max="32767" attributes="1"/>
+                                              <Component id="textfield_tvSubsId" alignment="0" pref="164" max="32767" attributes="1"/>
                                           </Group>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
@@ -109,14 +112,16 @@
                                               <Component id="button_getTvRageID" linkSize="1" min="-2" pref="39" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="label_message" pref="74" max="32767" attributes="0"/>
+                                          <Component id="label_message" pref="102" max="32767" attributes="0"/>
                                       </Group>
-                                      <Component id="textfield_screenshot" pref="260" max="32767" attributes="0"/>
+                                      <Component id="textfield_screenshot" alignment="0" min="-2" pref="316" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" attributes="0">
                                           <Component id="button_browseScreenshot" linkSize="1" min="-2" pref="40" max="-2" attributes="1"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="button_getScreenshot" min="-2" pref="39" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="button_browseScreenshot1" min="-2" pref="40" max="-2" attributes="1"/>
                                       </Group>
@@ -129,7 +134,7 @@
                               <Component id="checkbox_updateEpisodes" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <Component id="label_Title" alignment="1" pref="527" max="32767" attributes="0"/>
+                      <Component id="label_Title" alignment="1" pref="625" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -171,6 +176,7 @@
                                   <Component id="textfield_screenshot" linkSize="4" alignment="3" pref="25" max="32767" attributes="1"/>
                                   <Component id="label_screenshot" alignment="3" min="-2" pref="16" max="-2" attributes="0"/>
                               </Group>
+                              <Component id="button_getScreenshot" alignment="0" max="32767" attributes="1"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -439,6 +445,7 @@
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new com.googlecode.svalidators.formcomponents.STextField(new FileValidator(&quot;&quot;, FileValidator.Type.FILE, true))"/>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
           </AuxValues>
         </Component>
         <Component class="com.googlecode.svalidators.formcomponents.STextField" name="textfield_subsOnline">
@@ -476,6 +483,27 @@
             </Property>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="button_getScreenshot">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/images/internet_update_small.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Download a screenshot from tvrage"/>
+            <Property name="iconTextGap" type="int" value="2"/>
+            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[31, 25]"/>
+            </Property>
+            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[31, 25]"/>
+            </Property>
+            <Property name="opaque" type="boolean" value="false"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="button_getScreenshotMouseEntered"/>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="button_getScreenshotMouseExited"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_getScreenshotActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

@@ -26,6 +26,7 @@ import myseries.MySeries;
 import myseries.episodes.Episodes;
 import myseries.filters.Filters;
 import myseries.series.Series;
+import tools.internetUpdate.tvrage.TrGetId;
 import tools.options.Options;
 import tools.options.OptionsPanel;
 
@@ -137,12 +138,19 @@ public class ApplicationActions {
       } else if (index == MySeries.TAB_FILTERS) {
         Filters.getFilteredSeries();
       } else if (index == MySeries.TAB_STATISTICS) {
-        m.statSeries.refresh();
-        m.statEpisodes.refresh();
+        MySeries.statSeries.refresh();
+        MySeries.statEpisodes.refresh();
       }
 
     } catch (SQLException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);
+    }
+  }
+
+  public static void downloadScreenshot() {
+    SeriesRecord series = Series.getCurrentSerial();
+    if(series.getTvrage_ID()==0){
+      TrGetId tr = new TrGetId(null,series.getSeries_ID(),series.getFullTitle());
     }
   }
 }

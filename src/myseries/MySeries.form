@@ -713,12 +713,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="splitPane_main" alignment="0" pref="1064" max="32767" attributes="0"/>
+          <Component id="splitPane_main" alignment="0" pref="1094" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="splitPane_main" pref="531" max="32767" attributes="0"/>
+          <Component id="splitPane_main" alignment="1" pref="597" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -772,12 +772,12 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                       <Component id="imageLayerPanel" pref="482" max="32767" attributes="0"/>
-                      <EmptySpace min="53" pref="53" max="53" attributes="0"/>
+                      <EmptySpace min="80" pref="80" max="80" attributes="0"/>
                   </Group>
                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" max="-2" attributes="0"/>
-                          <Component id="scrollPane_series" max="32767" attributes="2"/>
+                          <Component id="scrollPane_series" pref="427" max="32767" attributes="2"/>
                           <EmptySpace min="-2" pref="157" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -873,17 +873,17 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="tabsPanel" pref="819" max="32767" attributes="2"/>
+                      <Component id="tabsPanel" pref="849" max="32767" attributes="2"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="tabsPanel" pref="507" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                      <Component id="tabsPanel" pref="571" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -934,11 +934,11 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <EmptySpace min="0" pref="814" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="844" max="32767" attributes="0"/>
                           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="panel_episodesList" pref="790" max="32767" attributes="0"/>
+                                  <Component id="panel_episodesList" pref="820" max="32767" attributes="0"/>
                                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -946,11 +946,11 @@
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <EmptySpace min="0" pref="471" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="535" max="32767" attributes="0"/>
                           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                                  <Component id="panel_episodesList" pref="429" max="32767" attributes="0"/>
+                                  <Component id="panel_episodesList" pref="493" max="32767" attributes="0"/>
                                   <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -1043,7 +1043,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="panel_allSeriesEpisodes" alignment="1" pref="794" max="32767" attributes="2"/>
+                                  <Component id="panel_allSeriesEpisodes" alignment="1" pref="824" max="32767" attributes="2"/>
                                   <Component id="panel_filters" alignment="1" max="32767" attributes="3"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -1056,7 +1056,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="panel_filters" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="panel_allSeriesEpisodes" pref="390" max="32767" attributes="0"/>
+                              <Component id="panel_allSeriesEpisodes" pref="454" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -1137,7 +1137,7 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="comboBox_filterSubtitles" min="-2" max="-2" attributes="1"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="combobox_filters" pref="396" max="32767" attributes="0"/>
+                                  <Component id="combobox_filters" pref="426" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="button_saveFilter" min="-2" pref="40" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -1256,16 +1256,17 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="statSeries" pref="814" max="32767" attributes="0"/>
-                          <Component id="statEpisodes" pref="814" max="32767" attributes="0"/>
+                          <Component id="statEpisodes" alignment="0" pref="844" max="32767" attributes="0"/>
+                          <Component id="statSeries" alignment="0" pref="844" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="statSeries" pref="202" max="32767" attributes="0"/>
-                              <Component id="statEpisodes" pref="202" max="32767" attributes="0"/>
-                              <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
+                              <Component id="statSeries" min="-2" pref="212" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="statEpisodes" pref="306" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>

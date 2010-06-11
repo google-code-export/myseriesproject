@@ -39,7 +39,6 @@ public class StatSeries extends javax.swing.JPanel  {
     super();
     initComponents();
     jScrollPane1.getViewport().setOpaque(false);
-    jScrollPane1.getViewport().setBackground(Color.red);
     model = (DefaultTableModel) table_stat_series.getModel();
     table_stat_series.getColumnModel().getColumn(RATE_COLUMN).setCellRenderer(new MyDecimalFormatRenderer());
     validate();
