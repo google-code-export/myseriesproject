@@ -53,21 +53,6 @@ public class Options {
    * User Options
    ************************************************/
   /**
-   * next episodes limit
-   * int default: 10
-   */
-  public static String NEXT_EPISODES_LIMIT = "NEXT_EPISODES_LIMIT";
-  /**
-   * Show not seen episodes in next episodes?
-   * boolean default : false
-   */
-  public static String SHOW_UNSEEN = "SHOW_UNSEEN";
-  /**
-   * Show not downloaded episodes in next episodes?
-   * boolean default : false
-   */
-  public static String SHOW_UNDOWNLOADED = "SHOW_UNDOWNLOADED";
-  /**
    * Database name
    * String default ""
    */
@@ -431,9 +416,6 @@ public class Options {
    */
   private static void writeDefaultIniFile() throws IOException {
     PrintWriter out = MyUsefulFunctions.createOutputStream(new File(Options._USER_DIR_ + "MySeries.ini"), false);
-    out.println(Options.NEXT_EPISODES_LIMIT + "=10");
-    out.println(Options.SHOW_UNDOWNLOADED + "=false");
-    out.println(Options.SHOW_UNSEEN + "=false");
     out.println(Options.DB_NAME + "=");
     out.println(Options.DEBUG_MODE + "=0");
     out.println(Options.MODAL + "=true");

@@ -161,11 +161,6 @@ public class OptionsPanel extends MyDraggable {
     jLabel16 = new javax.swing.JLabel();
     jLabel17 = new javax.swing.JLabel();
     jCheckBox2 = new javax.swing.JCheckBox();
-    panel_nextepisodes = new javax.swing.JPanel();
-    jLabel2 = new javax.swing.JLabel();
-    checkbox_showUnseen = new javax.swing.JCheckBox();
-    spinner_maxNextEpisodes = new javax.swing.JSpinner();
-    checkbox_showNotDownloaded = new javax.swing.JCheckBox();
     panel_internet = new javax.swing.JPanel();
     checkbox_useProxy = new javax.swing.JCheckBox();
     jLabel8 = new javax.swing.JLabel();
@@ -451,67 +446,6 @@ public class OptionsPanel extends MyDraggable {
 
     tabbedPane_options.addTab("General", panel_general);
 
-    jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-    jLabel2.setText("Maximum number of episodes :");
-    jLabel2.setName("noname"); // NOI18N
-
-    checkbox_showUnseen.setSelected(Options.toBoolean(Options.SHOW_UNSEEN));
-    checkbox_showUnseen.setText("Show downloaded but not seen yet :");
-    checkbox_showUnseen.setToolTipText("<html>\nShow episodes that have been downloaded but not seen yet");
-    checkbox_showUnseen.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-    checkbox_showUnseen.setName(Options.SHOW_UNSEEN);
-    checkbox_showUnseen.setOpaque(false);
-
-    spinner_maxNextEpisodes.setModel(new javax.swing.SpinnerNumberModel(5, 1, 99, 1));
-    spinner_maxNextEpisodes.setToolTipText("The maximum number of episodes");
-    spinner_maxNextEpisodes.setName(Options.NEXT_EPISODES_LIMIT);
-    spinner_maxNextEpisodes.setValue(Options.toInt(Options.NEXT_EPISODES_LIMIT));
-
-    checkbox_showNotDownloaded.setSelected(Options.toBoolean(Options.SHOW_UNDOWNLOADED));
-    checkbox_showNotDownloaded.setText("Show not downloaded :");
-    checkbox_showNotDownloaded.setToolTipText("<html>\nShow episodes that have been aired in the past but not have been downloaded yet");
-    checkbox_showNotDownloaded.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-    checkbox_showNotDownloaded.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-    checkbox_showNotDownloaded.setName(Options.SHOW_UNDOWNLOADED);
-    checkbox_showNotDownloaded.setOpaque(false);
-
-    javax.swing.GroupLayout panel_nextepisodesLayout = new javax.swing.GroupLayout(panel_nextepisodes);
-    panel_nextepisodes.setLayout(panel_nextepisodesLayout);
-    panel_nextepisodesLayout.setHorizontalGroup(
-      panel_nextepisodesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(panel_nextepisodesLayout.createSequentialGroup()
-        .addGap(28, 28, 28)
-        .addGroup(panel_nextepisodesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(panel_nextepisodesLayout.createSequentialGroup()
-            .addGap(3, 3, 3)
-            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(spinner_maxNextEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE))
-          .addGroup(panel_nextepisodesLayout.createSequentialGroup()
-            .addGroup(panel_nextepisodesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-              .addComponent(checkbox_showUnseen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-              .addGroup(panel_nextepisodesLayout.createSequentialGroup()
-                .addGap(64, 64, 64)
-                .addComponent(checkbox_showNotDownloaded, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-            .addGap(25, 25, 25)))
-        .addGap(248, 248, 248))
-    );
-    panel_nextepisodesLayout.setVerticalGroup(
-      panel_nextepisodesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(panel_nextepisodesLayout.createSequentialGroup()
-        .addContainerGap()
-        .addGroup(panel_nextepisodesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jLabel2)
-          .addComponent(spinner_maxNextEpisodes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(checkbox_showUnseen)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(checkbox_showNotDownloaded)
-        .addContainerGap(189, Short.MAX_VALUE))
-    );
-
-    tabbedPane_options.addTab("Next Episodes", panel_nextepisodes);
-
     checkbox_useProxy.setSelected(Options.toBoolean(Options.USE_PROXY));
     checkbox_useProxy.setText("Proxy Settings");
     checkbox_useProxy.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -613,26 +547,26 @@ public class OptionsPanel extends MyDraggable {
         .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(panel_internetLayout.createSequentialGroup()
             .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-              .addComponent(checkbox_useProxy, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
-              .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
-              .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
-              .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE))
+              .addComponent(checkbox_useProxy, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
+              .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+              .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
+              .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(combo_primaryLang, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
+              .addComponent(combo_primaryLang, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
               .addComponent(jCheckBox1)
-              .addComponent(combo_secondaryLang, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE))
+              .addComponent(combo_secondaryLang, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE))
             .addGap(152, 152, 152))
           .addGroup(panel_internetLayout.createSequentialGroup()
             .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
               .addGroup(panel_internetLayout.createSequentialGroup()
                 .addGap(27, 27, 27)
-                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE))
-              .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE))
+                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE))
+              .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))
             .addGap(18, 18, 18)
             .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(textfield_port, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
-              .addComponent(textfield_proxy, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE))
+              .addComponent(textfield_port, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+              .addComponent(textfield_proxy, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE))
             .addGap(220, 220, 220))))
     );
     panel_internetLayout.setVerticalGroup(
@@ -693,15 +627,15 @@ public class OptionsPanel extends MyDraggable {
         .addContainerGap()
         .addGroup(panel_renamingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(panel_renamingLayout.createSequentialGroup()
-            .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
+            .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(tf_seasonSep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
           .addGroup(panel_renamingLayout.createSequentialGroup()
-            .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
+            .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(tf_episodeSep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
           .addGroup(panel_renamingLayout.createSequentialGroup()
-            .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
+            .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(tf_titleSep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         .addGap(291, 291, 291))
@@ -939,8 +873,6 @@ public class OptionsPanel extends MyDraggable {
   private javax.swing.JButton button_ok;
   private javax.swing.JCheckBox checkBox_modal;
   private javax.swing.JCheckBox checkbox_dontUseSkin;
-  private javax.swing.JCheckBox checkbox_showNotDownloaded;
-  private javax.swing.JCheckBox checkbox_showUnseen;
   private javax.swing.JCheckBox checkbox_useProxy;
   private com.googlecode.svalidators.formcomponents.SComboBox combo_primaryLang;
   private com.googlecode.svalidators.formcomponents.SComboBox combo_secondaryLang;
@@ -959,7 +891,6 @@ public class OptionsPanel extends MyDraggable {
   private javax.swing.JLabel jLabel17;
   private javax.swing.JLabel jLabel18;
   private javax.swing.JLabel jLabel19;
-  private javax.swing.JLabel jLabel2;
   private javax.swing.JLabel jLabel20;
   private javax.swing.JLabel jLabel3;
   private javax.swing.JLabel jLabel4;
@@ -975,11 +906,9 @@ public class OptionsPanel extends MyDraggable {
   private javax.swing.JPanel panel_DateFormatHelp;
   private javax.swing.JPanel panel_general;
   private javax.swing.JPanel panel_internet;
-  private javax.swing.JPanel panel_nextepisodes;
   private javax.swing.JPanel panel_options;
   private javax.swing.JPanel panel_renaming;
   private javax.swing.JSpinner spinner_fontSize;
-  private javax.swing.JSpinner spinner_maxNextEpisodes;
   private javax.swing.JTabbedPane tabbedPane_options;
   private com.googlecode.svalidators.formcomponents.STextField textfield_port;
   private com.googlecode.svalidators.formcomponents.STextField textfield_proxy;
@@ -993,7 +922,6 @@ public class OptionsPanel extends MyDraggable {
    * Parsing all the options panels for option components
    */
   private void getOptionsComponents() {
-    parse(panel_nextepisodes);
     parse(panel_general);
     parse(panel_internet);
     parse(panel_renaming);
