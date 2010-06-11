@@ -16,7 +16,6 @@ import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -37,7 +36,6 @@ import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyDraggable;
 import myseries.MySeries;
 import myseries.StartPanel;
-import myseries.episodes.NextEpisodes;
 import com.googlecode.svalidators.formcomponents.ValidationGroup;
 import com.googlecode.svalidators.validators.CompareValidator;
 import com.googlecode.svalidators.validators.ListValidator;
@@ -725,15 +723,11 @@ public class OptionsPanel extends MyDraggable {
       getOptionsComponents();
       Options.save();
       Options.getOptions();
-      NextEpisodes.createNextEpisodes();
-      NextEpisodes.show();
       dispose();
       MySeries.glassPane.deactivate();
     } catch (FileNotFoundException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);
     } catch (IOException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
-    } catch (SQLException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);
     } catch (IllegalArgumentException ex) {
       MyMessages.error("Wrong Arguments", "The date format pattern you provided is invalid");

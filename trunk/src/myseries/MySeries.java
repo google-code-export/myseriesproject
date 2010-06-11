@@ -12,7 +12,6 @@ package myseries;
 
 import com.googlecode.starrating.StarTableCellRenderer;
 import javax.swing.ComboBoxModel;
-import myseries.episodes.NextEpisodes;
 import myseries.episodes.Episodes;
 import myseries.series.Series;
 import database.DBConnection;
@@ -66,7 +65,6 @@ import myseries.actions.SeriesActions;
 import myseries.episodes.UpdateEpisodesTable;
 import myseries.filters.Filters;
 import myseries.filters.UpdateFiltersTable;
-import myseries.schedule.Schedule;
 import myseries.series.UpdateSeriesTable;
 import myseries.statistics.StatEpisodes;
 import myseries.statistics.StatSeries;
@@ -196,7 +194,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       scrollPane_series.getViewport().setBackground(Skin.getSkinColor());
       panel_episodesList.getViewport().setBackground(Skin.getColor_4());
       panel_allSeriesEpisodes.getViewport().setBackground(Skin.getColor_4());
-      panel_nextEpisodes.setBackground(Skin.getColor_4());
       panel_Series.setBackground(Skin.getSkinColor());
       panel_episodes.setBackground(Skin.getSkinColor());
       scrollPane_series.setBackground(Skin.getSkinColor());
@@ -212,7 +209,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     setVisible(true);
     // Create the next episodes obj
     MySeries.logger.log(Level.INFO, "Creating Next Episodes Object");
-    createNextEpisodes();
 
     //create the series data
     MySeries.logger.log(Level.INFO, "Creating series data");
@@ -254,16 +250,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     //Create the JVM logger
     logger = myLogger.createHtmlLogger("MYSERIES", Options._USER_DIR_ + "MySeriesLogs", 262144, true, 1);
     logger.setLevel(Level.parse(Options.toString(Options.DEBUG_MODE)));
-  }
-
-  private void createNextEpisodes() throws SQLException {
-    NextEpisodes.createNextEpisodes();
-    NextEpisodes.button_first = button_first;
-    NextEpisodes.button_last = button_last;
-    NextEpisodes.button_previous = button_previous;
-    NextEpisodes.button_next = button_next;
-    NextEpisodes.label_NextEpisode = label_NextEpisode;
-    NextEpisodes.show();
   }
 
   private void createGUI() throws SQLException {
@@ -374,14 +360,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tableSeries = new javax.swing.JTable();
     imageLayerPanel = new javax.swing.JLayeredPane();
     panel_episodes = new javax.swing.JPanel();
-    panel_nextEpisodes = new javax.swing.JPanel();
-    label_NextEpisodeTitle = new javax.swing.JLabel();
-    label_NextEpisode = new javax.swing.JLabel();
-    panel_NextEpisodesbuttons = new javax.swing.JPanel();
-    button_last = new javax.swing.JButton();
-    button_previous = new javax.swing.JButton();
-    button_next = new javax.swing.JButton();
-    button_first = new javax.swing.JButton();
     tabsPanel = new javax.swing.JTabbedPane();
     tabpanel_episodesList = new javax.swing.JPanel();
     panel_episodesList = new javax.swing.JScrollPane();
@@ -714,101 +692,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     panel_episodes.setMaximumSize(new java.awt.Dimension(35000, 30000));
     panel_episodes.setPreferredSize(new java.awt.Dimension(812, 584));
 
-    panel_nextEpisodes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-    label_NextEpisodeTitle.setFont(label_NextEpisodeTitle.getFont().deriveFont(label_NextEpisodeTitle.getFont().getStyle() | java.awt.Font.BOLD));
-    label_NextEpisodeTitle.setText("Next Episodes:");
-
-    label_NextEpisode.setFont(label_NextEpisode.getFont().deriveFont(label_NextEpisode.getFont().getStyle() | java.awt.Font.BOLD, label_NextEpisode.getFont().getSize()+1));
-    label_NextEpisode.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-
-    panel_NextEpisodesbuttons.setOpaque(false);
-
-    button_last.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/last.png"))); // NOI18N
-    button_last.setToolTipText("First");
-    button_last.setEnabled(false);
-    button_last.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        button_lastActionPerformed(evt);
-      }
-    });
-
-    button_previous.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/previous.png"))); // NOI18N
-    button_previous.setToolTipText("First");
-    button_previous.setEnabled(false);
-    button_previous.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        button_previousActionPerformed(evt);
-      }
-    });
-
-    button_next.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/next.png"))); // NOI18N
-    button_next.setToolTipText("First");
-    button_next.setEnabled(false);
-    button_next.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        button_nextActionPerformed(evt);
-      }
-    });
-
-    button_first.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/first.png"))); // NOI18N
-    button_first.setToolTipText("First");
-    button_first.setEnabled(false);
-    button_first.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        button_firstActionPerformed(evt);
-      }
-    });
-
-    javax.swing.GroupLayout panel_NextEpisodesbuttonsLayout = new javax.swing.GroupLayout(panel_NextEpisodesbuttons);
-    panel_NextEpisodesbuttons.setLayout(panel_NextEpisodesbuttonsLayout);
-    panel_NextEpisodesbuttonsLayout.setHorizontalGroup(
-      panel_NextEpisodesbuttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(panel_NextEpisodesbuttonsLayout.createSequentialGroup()
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        .addComponent(button_first, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(button_previous, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(button_next, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(button_last, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-    );
-
-    panel_NextEpisodesbuttonsLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {button_first, button_last, button_next, button_previous});
-
-    panel_NextEpisodesbuttonsLayout.setVerticalGroup(
-      panel_NextEpisodesbuttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(button_last, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-      .addComponent(button_next, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-      .addComponent(button_previous, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-      .addComponent(button_first, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-    );
-
-    javax.swing.GroupLayout panel_nextEpisodesLayout = new javax.swing.GroupLayout(panel_nextEpisodes);
-    panel_nextEpisodes.setLayout(panel_nextEpisodesLayout);
-    panel_nextEpisodesLayout.setHorizontalGroup(
-      panel_nextEpisodesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(panel_nextEpisodesLayout.createSequentialGroup()
-        .addContainerGap()
-        .addComponent(label_NextEpisodeTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(label_NextEpisode, javax.swing.GroupLayout.DEFAULT_SIZE, 495, Short.MAX_VALUE)
-        .addGap(18, 18, 18)
-        .addComponent(panel_NextEpisodesbuttons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap())
-    );
-    panel_nextEpisodesLayout.setVerticalGroup(
-      panel_nextEpisodesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(panel_nextEpisodesLayout.createSequentialGroup()
-        .addContainerGap()
-        .addGroup(panel_nextEpisodesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(panel_NextEpisodesbuttons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-          .addComponent(label_NextEpisode, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
-          .addComponent(label_NextEpisodeTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
-        .addContainerGap())
-    );
-
     tabsPanel.setToolTipText("");
     tabsPanel.setMinimumSize(new java.awt.Dimension(120, 460));
     tabsPanel.setPreferredSize(new java.awt.Dimension(400, 463));
@@ -861,11 +744,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     );
     tabpanel_episodesListLayout.setVerticalGroup(
       tabpanel_episodesListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 405, Short.MAX_VALUE)
+      .addGap(0, 471, Short.MAX_VALUE)
       .addGroup(tabpanel_episodesListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(tabpanel_episodesListLayout.createSequentialGroup()
           .addContainerGap()
-          .addComponent(panel_episodesList, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
+          .addComponent(panel_episodesList, javax.swing.GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
           .addGap(31, 31, 31)))
     );
 
@@ -997,7 +880,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
         .addContainerGap()
         .addComponent(panel_filters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(panel_allSeriesEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
+        .addComponent(panel_allSeriesEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
         .addContainerGap())
     );
 
@@ -1019,7 +902,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       .addGroup(tabpanel_statisticsLayout.createSequentialGroup()
         .addComponent(statSeries, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
         .addComponent(statEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
-        .addGap(1, 1, 1))
+        .addGap(67, 67, 67))
     );
 
     tabsPanel.addTab("Ratings", new javax.swing.ImageIcon(getClass().getResource("/images/star.png")), tabpanel_statistics, "Series and episodes ratings"); // NOI18N
@@ -1039,19 +922,15 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       panel_episodesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(panel_episodesLayout.createSequentialGroup()
         .addContainerGap()
-        .addGroup(panel_episodesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(tabsPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 819, Short.MAX_VALUE)
-          .addComponent(panel_nextEpisodes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addComponent(tabsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 819, Short.MAX_VALUE)
         .addContainerGap())
     );
     panel_episodesLayout.setVerticalGroup(
       panel_episodesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(panel_episodesLayout.createSequentialGroup()
+      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_episodesLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(panel_nextEpisodes, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(18, 18, 18)
-        .addComponent(tabsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 441, Short.MAX_VALUE)
-        .addGap(10, 10, 10))
+        .addComponent(tabsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE)
+        .addGap(9, 9, 9))
     );
 
     tabsPanel.getAccessibleContext().setAccessibleName("");
@@ -1497,22 +1376,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     EpisodesActions.AddEpisode(this);
 }//GEN-LAST:event_PopUpItem_AddEpisodeActionPerformed
 
-  private void button_firstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_firstActionPerformed
-    NextEpisodes.showNextEpisodes(NextEpisodes.FIRST_BUTTON);
-  }//GEN-LAST:event_button_firstActionPerformed
-
-  private void button_previousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_previousActionPerformed
-    NextEpisodes.showNextEpisodes(NextEpisodes.PREVIOUS_BUTTON);
-  }//GEN-LAST:event_button_previousActionPerformed
-
-  private void button_nextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_nextActionPerformed
-    NextEpisodes.showNextEpisodes(NextEpisodes.NEXT_BUTTON);
-  }//GEN-LAST:event_button_nextActionPerformed
-
-  private void button_lastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_lastActionPerformed
-    NextEpisodes.showNextEpisodes(NextEpisodes.LAST_BUTTON);
-  }//GEN-LAST:event_button_lastActionPerformed
-
   private void menuItem_addSeriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_addSeriesActionPerformed
     PopUpItem_AddSeriesActionPerformed(evt);
 }//GEN-LAST:event_menuItem_addSeriesActionPerformed
@@ -1819,10 +1682,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static javax.swing.JMenuItem PopUpItem_DeleteSerial;
   public static javax.swing.JMenuItem PopUpItem_EditSerial;
   public static javax.swing.JButton button_deleteFilter;
-  public static javax.swing.JButton button_first;
-  public static javax.swing.JButton button_last;
-  public static javax.swing.JButton button_next;
-  public static javax.swing.JButton button_previous;
   public static javax.swing.JButton button_saveFilter;
   public static javax.swing.JComboBox comboBox_filterSubtitles;
   public static javax.swing.JComboBox comboBox_seen;
@@ -1835,8 +1694,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static javax.swing.JSeparator jSeparator1;
   public static javax.swing.JSeparator jSeparator2;
   public static javax.swing.JSeparator jSeparator3;
-  public static javax.swing.JLabel label_NextEpisode;
-  public static javax.swing.JLabel label_NextEpisodeTitle;
   public static javax.swing.JMenuBar menuBar;
   public static javax.swing.JMenuItem menuItem_About;
   public static javax.swing.JMenuItem menuItem_DownloadIsohunt;
@@ -1863,13 +1720,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static javax.swing.JMenu menu_InternetUpdate;
   public static javax.swing.JMenu menu_MySeries;
   public static javax.swing.JMenu menu_Tools;
-  public static javax.swing.JPanel panel_NextEpisodesbuttons;
   public static javax.swing.JPanel panel_Series;
   public static javax.swing.JScrollPane panel_allSeriesEpisodes;
   public static javax.swing.JPanel panel_episodes;
   public static javax.swing.JScrollPane panel_episodesList;
   public static javax.swing.JPanel panel_filters;
-  public static javax.swing.JPanel panel_nextEpisodes;
   public static javax.swing.JMenuItem popUpItem_GoToLocalDir;
   public static javax.swing.JMenuItem popUpItem_GoToSubOn;
   public static javax.swing.JMenuItem popUpItem_GoToTvSubs;

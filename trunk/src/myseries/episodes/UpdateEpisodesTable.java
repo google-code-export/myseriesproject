@@ -39,13 +39,6 @@ public class UpdateEpisodesTable {
       rec[i] = model.getValueAt(row, i);
     }
     updateEpisode(rec);
-    try {
-      //Episodes.updateEpisodesTable();
-      NextEpisodes.createNextEpisodes();
-      NextEpisodes.show();
-    } catch (SQLException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
-    }
   }
 
   private void updateEpisode(Object[] rec) {
