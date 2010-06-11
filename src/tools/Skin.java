@@ -173,6 +173,7 @@ public class Skin {
 
     UIManager.put("TabbedPane.contentAreaColor", getColor_4());
     UIManager.put("TabbedPane.selected", getColor_4());
+    UIManager.put("TabbedPane.background", getColor_4());
     UIManager.put("TabbedPane.foreground", getForeGroundColor(getColor_4()));
     UIManager.put("TabbedPane.unselectedBackground", getColor_5());
 
