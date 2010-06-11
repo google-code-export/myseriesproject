@@ -13,6 +13,8 @@ package tools.download.torrents.isohunt;
 import com.googlecode.svalidators.formcomponents.SComboBox;
 import com.googlecode.svalidators.formcomponents.ValidationGroup;
 import com.googlecode.svalidators.validators.RequiredValidator;
+import database.EpisodesRecord;
+import database.SeriesRecord;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
@@ -37,9 +39,32 @@ public class IsohuntForm extends AbstractTorrentForm implements TorrentConstants
   private static final long serialVersionUID = 235353163L;
   private ComboBoxModel sortModel;
   private ComboBoxModel sortOrderModel;
+  
 
   {
     createModels();
+  }
+
+  /** Creates new form IsohuntForm
+   * @param series 
+   * @param episode
+   */
+  public IsohuntForm(SeriesRecord series, EpisodesRecord episode) {
+    this.series = series;
+    this.episode = episode;
+    initComponents();
+    combo_series.setSelectedItem(series);
+    spinner_episode.setValue(episode.getEpisode());
+    spinner_season.setValue(series.getSeason());
+    setLocationRelativeTo(null);
+    setVisible(true);
+  }
+
+  /** Creates new form IsohuntForm */
+  public IsohuntForm() {
+    initComponents();
+    setLocationRelativeTo(null);
+    setVisible(true);
   }
 
   @Override
@@ -48,13 +73,6 @@ public class IsohuntForm extends AbstractTorrentForm implements TorrentConstants
     sortModel = new DefaultComboBoxModel(SORT_OPTIONS);
     sortOrderModel = new DefaultComboBoxModel(SORT_ORDER);
 
-  }
-
-  /** Creates new form IsohuntForm */
-  public IsohuntForm() {
-    initComponents();
-    setLocationRelativeTo(null);
-    setVisible(true);
   }
 
   /** This method is called from within the constructor to
@@ -305,9 +323,9 @@ public class IsohuntForm extends AbstractTorrentForm implements TorrentConstants
     String episode = String.valueOf(spinner_episode.getValue()).equals("0") ? "" : "E" + MyUsefulFunctions.padLeft(String.valueOf(spinner_episode.getValue()), 2, "0");
     try {
       q.add("ihq=" + URLEncoder.encode(
-              String.valueOf(combo_series.getSelectedItem())
-              + season + episode + "+"
-              + String.valueOf(combo_quality.getSelectedItem()), "UTF-8"));
+          String.valueOf(combo_series.getSelectedItem())
+          + season + episode + "+"
+          + String.valueOf(combo_quality.getSelectedItem()), "UTF-8"));
       q.add("sort=" + String.valueOf(combo_sort.getSelectedItem()).toLowerCase());
       q.add("order=" + String.valueOf(combo_order.getSelectedItem()).toLowerCase());
       q.add("iht=3");

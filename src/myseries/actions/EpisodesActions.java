@@ -30,7 +30,9 @@ import tools.download.subtitles.sonline.GetSOnlineCode;
 import tools.download.subtitles.sonline.SOnlineForm;
 import tools.download.subtitles.tvsubtitles.GetTvSubtitlesCode;
 import tools.download.subtitles.tvsubtitles.TvSubtitlesForm;
+import tools.download.torrents.TorrentConstants;
 import tools.download.torrents.eztv.EzTvForm;
+import tools.download.torrents.isohunt.IsohuntForm;
 import tools.importExport.ExportEpisodes;
 import tools.importExport.ImportEpisodes;
 import tools.options.Options;
@@ -299,9 +301,13 @@ public class EpisodesActions {
             Episodes.getCurrentEpisode().getTitle());
   }
 
-  public static void downloadEpisodesTorrent() {
+  public static void downloadEpisodesTorrent(String site) {
     SeriesRecord series = Series.getCurrentSerial();
     EpisodesRecord episode = Episodes.getCurrentEpisode();
+    if(site.equals(TorrentConstants.EZTV_NAME)){
     new EzTvForm(series, episode);
+    } else if(site.equals(TorrentConstants.ISOHUNT_NAME)){
+    new IsohuntForm(series, episode);
+    }
   }
 }

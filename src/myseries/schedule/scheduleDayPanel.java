@@ -12,14 +12,12 @@ package myseries.schedule;
 
 import com.googlecode.scheduler.ScheduleDay;
 import database.DBHelper;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;

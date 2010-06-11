@@ -367,6 +367,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     popUpItem_downloadSubsSubOn = new javax.swing.JMenuItem();
     popUpMenu_downloadTorrent = new javax.swing.JMenu();
     popUpItem_downloadEzTv = new javax.swing.JMenuItem();
+    popUpItem_downloadIsohunt = new javax.swing.JMenuItem();
     splitPane_main = new javax.swing.JSplitPane();
     panel_Series = new javax.swing.JPanel();
     scrollPane_series = new javax.swing.JScrollPane();
@@ -619,6 +620,16 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       }
     });
     popUpMenu_downloadTorrent.add(popUpItem_downloadEzTv);
+
+    popUpItem_downloadIsohunt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eztv.png"))); // NOI18N
+    popUpItem_downloadIsohunt.setText("Download from Isohunt");
+    popUpItem_downloadIsohunt.setToolTipText("Download torrent from Isohunt");
+    popUpItem_downloadIsohunt.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        popUpItem_downloadIsohuntActionPerformed(evt);
+      }
+    });
+    popUpMenu_downloadTorrent.add(popUpItem_downloadIsohunt);
 
     episodesPopUp.add(popUpMenu_downloadTorrent);
 
@@ -1572,8 +1583,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     popUpItem_downloadSubsTvSubs.setEnabled(false);
     popUpItem_downloadSubsSubOn.setText("Download subtitles from SubtitleOnline");
     popUpItem_downloadSubsSubOn.setEnabled(false);
-    popUpItem_downloadEzTv.setText("Download torrent");
-    popUpItem_downloadEzTv.setEnabled(false);
+    popUpItem_downloadEzTv.setText("Download torrent from EzTv");
+    popUpItem_downloadIsohunt.setText("Download torrent from Isohunt");
   }
 
   private void tableEpisodesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableEpisodesMouseReleased
@@ -1702,8 +1713,9 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     popUpMenu_downloadSubtitles.setText("Download subtitles for " + Episodes.getCurrentEpisode().getTitle());
     popUpItem_downloadSubsTvSubs.setEnabled(true);
     popUpItem_downloadSubsSubOn.setEnabled(true);
-    popUpItem_downloadEzTv.setText("Download torrent for " + Episodes.getCurrentEpisode().getTitle());
+    popUpMenu_downloadTorrent.setText("Download torrent for " + Episodes.getCurrentEpisode().getTitle());
     popUpItem_downloadEzTv.setEnabled(true);
+    popUpItem_downloadIsohunt.setEnabled(true);
     popUpItem_viewEpisode.validate();
   }
 
@@ -1716,7 +1728,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   }//GEN-LAST:event_popUpItem_downloadSubsTvSubsActionPerformed
 
   private void popUpItem_downloadEzTvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_downloadEzTvActionPerformed
-    EpisodesActions.downloadEpisodesTorrent();
+    EpisodesActions.downloadEpisodesTorrent(TorrentConstants.EZTV_NAME);
   }//GEN-LAST:event_popUpItem_downloadEzTvActionPerformed
 
   private void tableFiltersMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableFiltersMouseReleased
@@ -1781,6 +1793,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   private void menuItem_uploadFilesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_uploadFilesActionPerformed
     SeriesActions.updateFiles();
   }//GEN-LAST:event_menuItem_uploadFilesActionPerformed
+
+  private void popUpItem_downloadIsohuntActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_downloadIsohuntActionPerformed
+    EpisodesActions.downloadEpisodesTorrent(TorrentConstants.ISOHUNT_NAME);
+  }//GEN-LAST:event_popUpItem_downloadIsohuntActionPerformed
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
   public static javax.swing.JMenuItem PopUpItem_AddEpisode;
   public static javax.swing.JMenuItem PopUpItem_AddEpisodeInEpisodes;
@@ -1846,6 +1863,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static javax.swing.JMenuItem popUpItem_IUTvrage;
   public static javax.swing.JMenuItem popUpItem_deleteEpisode;
   public static javax.swing.JMenuItem popUpItem_downloadEzTv;
+  public static javax.swing.JMenuItem popUpItem_downloadIsohunt;
   public static javax.swing.JMenuItem popUpItem_downloadSubsSubOn;
   public static javax.swing.JMenuItem popUpItem_downloadSubsTvSubs;
   public static javax.swing.JMenuItem popUpItem_exportEpisodes;
