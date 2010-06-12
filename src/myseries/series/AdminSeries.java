@@ -10,6 +10,7 @@
  */
 package myseries.series;
 
+import java.util.logging.Logger;
 import javax.swing.event.DocumentEvent;
 import myComponents.myGUI.CopyScreenshot;
 import java.io.IOException;
@@ -34,10 +35,12 @@ import com.googlecode.svalidators.validators.FileValidator;
 import com.googlecode.svalidators.validators.NoSpaceValidator;
 import com.googlecode.svalidators.validators.PositiveNumberValidator;
 import com.googlecode.svalidators.validators.RequiredValidator;
+import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyDescriptor;
 import javax.swing.event.DocumentListener;
 import myComponents.myGUI.MyImagePanel;
+import myComponents.myGUI.MyScaledImage;
 import myseries.actions.SeriesActions;
 import tools.download.screenshot.DownloadScreenshot;
 import tools.download.subtitles.sonline.GetSubtitleOnlineCode;
@@ -767,13 +770,17 @@ public class AdminSeries extends MyDraggable {
     if (!sc.equals("")) {
       File f = new File(sc);
       if (f.isFile()) {
-        Image im = new ImageIcon(sc).getImage();
-        scrPanel.setImage(im, scrPanel.getWidth(), scrPanel.getHeight());
+        MyScaledImage im = new MyScaledImage(new ImageIcon(sc).getImage());
+        im.fitImageIn(scrPanel.getWidth(), scrPanel.getHeight());
+        scrPanel.setPreferredSize(new Dimension(im.getWidth(),im.getHeight()));
+        scrPanel.repaint();
+        scrPanel.revalidate();
+        scrPanel.changeSize(im.getImage(), im.getWidth(), im.getHeight());
       } else {
-        scrPanel.setImage(null, scrPanel.getWidth(), scrPanel.getHeight());
+        scrPanel.changeSize(null, scrPanel.getWidth(), scrPanel.getHeight());
       }
     } else {
-      scrPanel.setImage(null, scrPanel.getWidth(), scrPanel.getHeight());
+      scrPanel.changeSize(null, scrPanel.getWidth(), scrPanel.getHeight());
     }
 
   }

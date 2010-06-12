@@ -72,7 +72,7 @@ public class MyImagePanel extends JPanel {
    * @param width
    * @param height 
    */
-  public void setImage(Image image, int width, int height) {
+  public void changeSize(Image image, int width, int height) {
     this.defaultImage = false;
     if (image == null) {
       this.image = new ImageIcon(getClass().getResource("/images/logo.png")).getImage();
@@ -96,7 +96,7 @@ public class MyImagePanel extends JPanel {
         }
         //imageLayerPanel.setBounds(0, yPos, width, height);
         m.imagePanel.setBounds(0, yPos, width, height);
-        m.imagePanel.setImage(image, width, height);
+        m.imagePanel.changeSize(image, width, height);
       } catch (NullPointerException ex) {
       }
     } catch (InterruptedException ex) {
@@ -115,7 +115,7 @@ public class MyImagePanel extends JPanel {
     int height = (int) (this.image.getHeight(this) * ((double) width / (double) this.image.getWidth(this)));
     setBounds(0, (int) MySeries.tableSeries.getPreferredSize().getHeight() + 20,
             width, height);
-    setImage(this.image, width, height);
+    changeSize(this.image, width, height);
 
   }
 }
