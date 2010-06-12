@@ -226,6 +226,9 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     Episodes.setTableModel_episodes(tableModel_episodes);
     Episodes.setTabsPanel(tabsPanel);
     Series.selectSeries(0);
+    if(!Series.getCurrentSerial().getScreenshot().equals("")){
+      imagePanel.setImage(new ImageIcon(Options._USER_DIR_+MyImagePanel.SCREENSHOTS_PATH + Series.getCurrentSerial().getScreenshot()).getImage(),false);
+    }
 
     tableEpisodes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
@@ -682,8 +685,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       .addGroup(panel_SeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(panel_SeriesLayout.createSequentialGroup()
           .addContainerGap()
-          .addComponent(scrollPane_series, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
-          .addGap(157, 157, 157)))
+          .addComponent(scrollPane_series, javax.swing.GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE)
+          .addContainerGap()))
     );
 
     splitPane_main.setLeftComponent(panel_Series);
