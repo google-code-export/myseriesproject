@@ -43,12 +43,14 @@ public class CreateDatabase implements Runnable {
     } else {
       DBConnection.db = db;
     }
-    
+
     DBConnection.createConnection(DBConnection.db);
     this.stmt = DBConnection.stmt;
     this.startPanel = startPanelForm;
     this.createNewDb = createNewDB;
-    DBConnection.checkDatabase(DBConnection.db);
+    if (!createNewDB) {
+      DBConnection.checkDatabase(DBConnection.db);
+    }
   }
 
   /**
@@ -56,13 +58,13 @@ public class CreateDatabase implements Runnable {
    */
   public void run() {
     try {
-      File dbFile = new File(Options._USER_DIR_ +Database.PATH + DBConnection.db);
-      if(dbFile.exists() && dbFile.length() > 1 && createNewDb){
+      File dbFile = new File(Options._USER_DIR_ + Database.PATH + DBConnection.db);
+      if (dbFile.exists() && dbFile.length() > 1 && createNewDb) {
         MyMessages.error("DB Exists!!!", "DB File " + DBConnection.db + " already exists\nAborting...");
         MySeries.logger.log(Level.WARNING, "DB File already exists");
         //startProgram();
       } else {
-      commit();
+        commit();
       }
     } catch (IOException ex) {
       MySeries.logger.log(Level.SEVERE, "Could not create the db file", ex);
@@ -88,8 +90,8 @@ public class CreateDatabase implements Runnable {
     startProgram();
   }
 
-  private void startProgram() throws IOException, ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException{
-     if (startPanel.m == null) {
+  private void startProgram() throws IOException, ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+    if (startPanel.m == null) {
       startPanel.startMySeries();
     } else {
       MySeries.logger.log(Level.INFO, "Setting database");
@@ -110,36 +112,36 @@ public class CreateDatabase implements Runnable {
    */
   public void createTables() throws SQLException, IOException {
     MySeries.logger.log(Level.INFO, "Creating table episodes");
-    stmt.executeUpdate("CREATE TABLE IF NOT EXISTS [episodes] " +
-            "([episode_ID] INTEGER NOT NULL PRIMARY KEY UNIQUE," +
-            "  [episode] VARCHAR DEFAULT 0," +
-            " [title] VARCHAR DEFAULT ''," +
-            " [series_ID] INTEGER NOT NULL REFERENCES [series]" +
-            " ( series_ID ) ON DELETE CASCADE ON UPDATE RESTRICT," +
-            " [aired] VARCHAR DEFAULT '0000-00-00'," +
-            " [downloaded] INTEGER DEFAULT 0," +
-            " [subs] INTEGER DEFAULT 0," +
-            " [seen] INTEGER DEFAULT 0," +
-            " [rate] BOOLEAN DEFAULT 0.0)");
+    stmt.executeUpdate("CREATE TABLE IF NOT EXISTS [episodes] "
+            + "([episode_ID] INTEGER NOT NULL PRIMARY KEY UNIQUE,"
+            + "  [episode] VARCHAR DEFAULT 0,"
+            + " [title] VARCHAR DEFAULT '',"
+            + " [series_ID] INTEGER NOT NULL REFERENCES [series]"
+            + " ( series_ID ) ON DELETE CASCADE ON UPDATE RESTRICT,"
+            + " [aired] VARCHAR DEFAULT '0000-00-00',"
+            + " [downloaded] INTEGER DEFAULT 0,"
+            + " [subs] INTEGER DEFAULT 0,"
+            + " [seen] INTEGER DEFAULT 0,"
+            + " [rate] BOOLEAN DEFAULT 0.0)");
     MySeries.logger.log(Level.INFO, "Creating table series");
-    stmt.executeUpdate("CREATE TABLE IF NOT EXISTS [series] " +
-            "([series_ID] INTEGER NOT NULL ON CONFLICT ABORT " +
-            "PRIMARY KEY ON CONFLICT ABORT AUTOINCREMENT UNIQUE ON CONFLICT ABORT, " +
-            "[title] VARCHAR NOT NULL ON CONFLICT ABORT," +
-            "[season] INTEGER NOT NULL ON CONFLICT ABORT DEFAULT 0," +
-            "[hidden] INTEGER DEFAULT 0," +
-            "[link] VARCHAR," +
-            "[internetUpdate] INTEGER DEFAULT 1," +
-            "[tvrage_ID] INTEGER DEFAULT 0," +
-            "[localDir] VARCHAR DEFAULT ''," +
-            "[sonline] VARCHAR DEFAULT ''," +
-            "[screenshot] VARCHAR DEFAULT '')");
+    stmt.executeUpdate("CREATE TABLE IF NOT EXISTS [series] "
+            + "([series_ID] INTEGER NOT NULL ON CONFLICT ABORT "
+            + "PRIMARY KEY ON CONFLICT ABORT AUTOINCREMENT UNIQUE ON CONFLICT ABORT, "
+            + "[title] VARCHAR NOT NULL ON CONFLICT ABORT,"
+            + "[season] INTEGER NOT NULL ON CONFLICT ABORT DEFAULT 0,"
+            + "[hidden] INTEGER DEFAULT 0,"
+            + "[link] VARCHAR,"
+            + "[internetUpdate] INTEGER DEFAULT 1,"
+            + "[tvrage_ID] INTEGER DEFAULT 0,"
+            + "[localDir] VARCHAR DEFAULT '',"
+            + "[sonline] VARCHAR DEFAULT '',"
+            + "[screenshot] VARCHAR DEFAULT '')");
     MySeries.logger.log(Level.INFO, "Creating table filters");
-    stmt.executeUpdate("CREATE  TABLE IF NOT EXISTS [filters] " +
-            "([filter_ID] INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , " +
-            "[title] VARCHAR NOT NULL  DEFAULT 'filter', " +
-            "[downloaded] INTEGER NOT NULL  DEFAULT 0, " +
-            "[seen] INTEGER NOT NULL  DEFAULT 0, " +
-            "[subtitles] INTEGER NOT NULL  DEFAULT 0)");
+    stmt.executeUpdate("CREATE  TABLE IF NOT EXISTS [filters] "
+            + "([filter_ID] INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , "
+            + "[title] VARCHAR NOT NULL  DEFAULT 'filter', "
+            + "[downloaded] INTEGER NOT NULL  DEFAULT 0, "
+            + "[seen] INTEGER NOT NULL  DEFAULT 0, "
+            + "[subtitles] INTEGER NOT NULL  DEFAULT 0)");
   }
 }
