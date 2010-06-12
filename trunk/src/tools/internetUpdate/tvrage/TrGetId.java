@@ -231,13 +231,19 @@ public class TrGetId extends MyDraggable {
         if (tvRageID > 0) {
           adminSeries.textfield_tvRageID.setText(String.valueOf(tvRageID));
           if (screenshot) {
-            progress.setIndeterminate(true);
-            progress.setString("Searching for screenshot");
+            setVisible(false);
             DownloadScreenshot g = new DownloadScreenshot(tvRageID);
-            progress.setIndeterminate(false);
-            if (g.isSuccess()) {
-              adminSeries.textfield_screenshot.setText(g.getFilename());
-            }
+            dispose();
+           if (g.isSuccess()) {
+            adminSeries.textfield_screenshot.setText(g.getFilename());
+            MyMessages.message("Downloading screenshot", "The screenshot was saved in the images folder");
+            adminSeries.setVisible(true);
+            return;
+          } else {
+            MyMessages.error("Downloading screenshot", "No screenshot was found");
+            adminSeries.setVisible(true);
+            return;
+          }
           }
         }
         dispose();
@@ -278,6 +284,6 @@ public class TrGetId extends MyDraggable {
   private javax.swing.JLabel jLabel2;
   private javax.swing.JPanel jPanel1;
   private javax.swing.JLabel label_title;
-  protected javax.swing.JProgressBar progress;
+  public javax.swing.JProgressBar progress;
   // End of variables declaration//GEN-END:variables
 }
