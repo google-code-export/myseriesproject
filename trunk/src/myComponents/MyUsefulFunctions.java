@@ -7,6 +7,8 @@ package myComponents;
 import database.EpisodesRecord;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.image.ImageObserver;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
