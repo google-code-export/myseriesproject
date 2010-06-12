@@ -26,15 +26,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="0" pref="619" max="32767" attributes="0"/>
+          <Component id="jPanel1" min="-2" pref="631" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
-          </Group>
+          <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -94,16 +91,14 @@
                               </Group>
                           </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="spinner_season" alignment="0" min="-2" pref="48" max="-2" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="textfield_localDir" pref="316" max="32767" attributes="0"/>
-                                      <Component id="textField_Serial" alignment="0" pref="316" max="32767" attributes="1"/>
-                                      <Component id="spinner_season" alignment="0" min="-2" pref="48" max="-2" attributes="0"/>
-                                      <Group type="102" alignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="textfield_subsOnline" pref="164" max="32767" attributes="1"/>
-                                              <Component id="textfield_tvRageID" pref="164" max="32767" attributes="1"/>
-                                              <Component id="textfield_tvSubsId" alignment="0" pref="164" max="32767" attributes="1"/>
+                                              <Component id="textfield_subsOnline" pref="172" max="32767" attributes="1"/>
+                                              <Component id="textfield_tvRageID" pref="172" max="32767" attributes="1"/>
+                                              <Component id="textfield_tvSubsId" alignment="0" pref="172" max="32767" attributes="1"/>
                                           </Group>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
@@ -111,30 +106,36 @@
                                               <Component id="button_getSubOnlineId" linkSize="1" min="-2" pref="39" max="-2" attributes="0"/>
                                               <Component id="button_getTvRageID" linkSize="1" min="-2" pref="39" max="-2" attributes="0"/>
                                           </Group>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="label_message" pref="102" max="32767" attributes="0"/>
                                       </Group>
-                                      <Component id="textfield_screenshot" alignment="0" min="-2" pref="316" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="checkbox_updateEpisodes" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="201" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="scrPanel" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="label_message" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                      <Component id="textField_Serial" alignment="0" max="32767" attributes="1"/>
+                                      <Component id="textfield_localDir" alignment="0" max="32767" attributes="1"/>
+                                      <Component id="textfield_screenshot" alignment="0" pref="316" max="32767" attributes="1"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <Component id="button_browseScreenshot" linkSize="1" min="-2" pref="40" max="-2" attributes="1"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="button_getScreenshot" min="-2" pref="39" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="button_browseScreenshot1" min="-2" pref="40" max="-2" attributes="1"/>
-                                      </Group>
-                                      <Group type="102" attributes="0">
-                                          <Component id="button_browse" linkSize="1" pref="40" max="32767" attributes="1"/>
-                                          <EmptySpace min="47" pref="47" max="47" attributes="0"/>
-                                      </Group>
+                                      <Component id="button_browseScreenshot" linkSize="1" min="-2" pref="40" max="-2" attributes="1"/>
+                                      <Component id="button_browse" linkSize="1" alignment="0" pref="40" max="32767" attributes="1"/>
                                   </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="button_getScreenshot" min="-2" pref="39" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="checkbox_updateEpisodes" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
+                          <Component id="button_browseScreenshot1" min="-2" pref="40" max="-2" attributes="1"/>
                       </Group>
-                      <Component id="label_Title" alignment="1" pref="625" max="32767" attributes="0"/>
+                      <Component id="label_Title" alignment="1" pref="735" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -156,7 +157,7 @@
                       <Component id="spinner_season" linkSize="4" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="button_browse" pref="25" max="32767" attributes="1"/>
                       <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                           <Component id="label_localDir" alignment="3" min="-2" max="-2" attributes="1"/>
@@ -171,17 +172,21 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="button_browseScreenshot" alignment="0" max="32767" attributes="1"/>
                               <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                   <Component id="textfield_screenshot" linkSize="4" alignment="3" pref="25" max="32767" attributes="1"/>
                                   <Component id="label_screenshot" alignment="3" min="-2" pref="16" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="button_getScreenshot" alignment="0" max="32767" attributes="1"/>
+                              <Component id="button_browseScreenshot" alignment="0" max="32767" attributes="1"/>
+                              <Component id="button_getScreenshot" alignment="1" max="32767" attributes="1"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="scrPanel" max="32767" attributes="0"/>
+                          <EmptySpace min="6" pref="6" max="6" attributes="0"/>
+                      </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="label_message" pref="96" max="32767" attributes="0"/>
                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
@@ -505,6 +510,21 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_getScreenshotActionPerformed"/>
           </Events>
         </Component>
+        <Container class="myComponents.myGUI.MyImagePanel" name="scrPanel">
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <EmptySpace min="0" pref="178" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <EmptySpace min="0" pref="108" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+        </Container>
       </SubComponents>
     </Container>
   </SubComponents>

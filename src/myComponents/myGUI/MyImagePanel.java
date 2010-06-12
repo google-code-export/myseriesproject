@@ -74,7 +74,11 @@ public class MyImagePanel extends JPanel {
    */
   public void setImage(Image image, int width, int height) {
     this.defaultImage = false;
-    this.image = image;
+    if (image == null) {
+      this.image = new ImageIcon(getClass().getResource("/images/logo.png")).getImage();
+    } else {
+      this.image = image;
+    }
     this.setSize(width, height);
     repaint();
   }
@@ -100,14 +104,18 @@ public class MyImagePanel extends JPanel {
     }
   }
 
-  public void setImage(final Image image, final boolean defaultImage) {
+  public void setImage(Image image, boolean defaultImage) {
     this.defaultImage = defaultImage;
-    this.image = image;
+    if (image == null) {
+      this.image = new ImageIcon(getClass().getResource("/images/logo.png")).getImage();
+    } else {
+      this.image = image;
+    }
     int width = MySeries.splitPane_main.getDividerLocation() - 26;
-    int height = (int) (image.getHeight(this) * ((double) width / (double) image.getWidth(this)));
+    int height = (int) (this.image.getHeight(this) * ((double) width / (double) this.image.getWidth(this)));
     setBounds(0, (int) MySeries.tableSeries.getPreferredSize().getHeight() + 20,
             width, height);
-    setImage(image, width, height);
-    
+    setImage(this.image, width, height);
+
   }
 }

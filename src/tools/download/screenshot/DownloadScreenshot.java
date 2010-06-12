@@ -28,31 +28,27 @@ public class DownloadScreenshot {
   public DownloadScreenshot(int tvRageID) {
     this.tvRageID = tvRageID;
     get();
-    
+
   }
 
   private void get() {
     InputStream in;
     URLConnection con;
-
-    {
+    int i = (tvRageID/1000)+1;
+    
       try {
-        for (int i = 0; i < 20; i++) {
-          String url = InternetUpdate.TV_RAGE_IMAGES_URL + "shows/" + i + "/" + tvRageID + ".jpg";
-          URL u = new URL(url);
-          con = u.openConnection();
-          if (con.getHeaderField("Content-type").equals("image/jpeg")) {
-            in = u.openStream();
-            download(in);
-            return;
-          }
-
-
+        String url = InternetUpdate.TV_RAGE_IMAGES_URL + "shows/" + i + "/" + tvRageID + ".jpg";
+        URL u = new URL(url);
+        con = u.openConnection();
+        if (con.getHeaderField("Content-type").equals("image/jpeg")) {
+          in = u.openStream();
+          download(in);
+          return;
         }
       } catch (IOException ex) {
         myseries.MySeries.logger.log(Level.SEVERE, null, ex);
       }
-    }
+    
   }
 
   private void download(InputStream in) {
@@ -71,7 +67,7 @@ public class DownloadScreenshot {
       setSuccess(true);
     } catch (IOException ex) {
       myseries.MySeries.logger.log(Level.SEVERE, null, ex);
-    } 
+    }
   }
 
   /**
