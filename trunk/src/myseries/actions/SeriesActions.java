@@ -80,7 +80,7 @@ public class SeriesActions {
         // }
         Image image = new ImageIcon(MySeries.class.getResource("/images/logo.png")).getImage();
         MySeries.imagePanel.setImage(image, true);
-        s = Series.getSeries();
+        s = Series.updateSeriesTable(false);
         if (s.size() > 0) {
           Series.setCurrentSerial(s.get(0));
         }
@@ -146,7 +146,7 @@ public class SeriesActions {
     }
     try {
       SeriesRecord origSeries = Series.getCurrentSerial();
-      ArrayList<SeriesRecord> series = Series.getSeries();
+      ArrayList<SeriesRecord> series = Series.updateSeriesTable(false);
       for (Iterator<SeriesRecord> it = series.iterator(); it.hasNext();) {
         SeriesRecord ser = it.next();
         if (ser.getSeries_ID() != origSeries.getSeries_ID()) {
