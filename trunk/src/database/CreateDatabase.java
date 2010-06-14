@@ -135,7 +135,8 @@ public class CreateDatabase implements Runnable {
             + "[tvrage_ID] INTEGER DEFAULT 0,"
             + "[localDir] VARCHAR DEFAULT '',"
             + "[sonline] VARCHAR DEFAULT '',"
-            + "[screenshot] VARCHAR DEFAULT '')");
+            + "[screenshot] VARCHAR DEFAULT '',"
+            + "[deleted]INTEGER DEFAULT 0)");
     MySeries.logger.log(Level.INFO, "Creating table filters");
     stmt.executeUpdate("CREATE  TABLE IF NOT EXISTS [filters] "
             + "([filter_ID] INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , "

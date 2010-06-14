@@ -46,6 +46,7 @@ public class DBConnection {
     boolean sonline = false;
     boolean newSubs = false;
     boolean rate = false;
+    boolean deleted = false;
     ResultSet rss;
 
     try {
@@ -66,6 +67,9 @@ public class DBConnection {
         if (rsSeries.getString(2).equals("sonline")) {
           sonline = true;
         }
+        if (rsSeries.getString(2).equals("deleted")) {
+          deleted = true;
+        }
       }
 
       rsEpisodes = stmt.executeQuery(sqlEpisodes);
@@ -74,7 +78,7 @@ public class DBConnection {
           rate = true;
         }
       }
-      if (tvRageID && internetUpdate && localDir && screenshot && sonline && rate) {
+      if (tvRageID && internetUpdate && localDir && screenshot && sonline && rate && deleted) {
         return true;
       }
       MyMessages.message("Old Database version", "Database is of an older version and needs update\nA back Up is taken first!!");
@@ -98,6 +102,10 @@ public class DBConnection {
         }
         if (!sonline) {
           sqlSeries = "ALTER TABLE series ADD COLUMN sonline VARCHAR DEFAULT ''";
+          stmt.execute(sqlSeries);
+        }
+        if (!deleted) {
+          sqlSeries = "ALTER TABLE series ADD COLUMN deleted INTEGER DEFAULT 0";
           stmt.execute(sqlSeries);
         }
         if (!rate) {
