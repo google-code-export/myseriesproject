@@ -118,14 +118,17 @@ public class AdminSeries extends MyDraggable {
     }
     textfield_screenshot.getDocument().addDocumentListener(new DocumentListener() {
 
+      @Override
       public void insertUpdate(DocumentEvent e) {
         setScreenshot();
       }
 
+      @Override
       public void removeUpdate(DocumentEvent e) {
         setScreenshot();
       }
 
+      @Override
       public void changedUpdate(DocumentEvent e) {
         setScreenshot();
       }
@@ -348,6 +351,8 @@ public class AdminSeries extends MyDraggable {
       }
     });
 
+    scrPanel.setMaximumSize(new java.awt.Dimension(180, 110));
+
     javax.swing.GroupLayout scrPanelLayout = new javax.swing.GroupLayout(scrPanel);
     scrPanel.setLayout(scrPanelLayout);
     scrPanelLayout.setHorizontalGroup(
@@ -466,8 +471,8 @@ public class AdminSeries extends MyDraggable {
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(jPanel1Layout.createSequentialGroup()
-            .addComponent(scrPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGap(6, 6, 6))
+            .addComponent(scrPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
           .addGroup(jPanel1Layout.createSequentialGroup()
             .addComponent(label_message, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
             .addGap(20, 20, 20))

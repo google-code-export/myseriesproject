@@ -184,8 +184,8 @@
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="scrPanel" max="32767" attributes="0"/>
-                          <EmptySpace min="6" pref="6" max="6" attributes="0"/>
+                          <Component id="scrPanel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="1"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="label_message" pref="96" max="32767" attributes="0"/>
@@ -511,6 +511,11 @@
           </Events>
         </Component>
         <Container class="myComponents.myGUI.MyImagePanel" name="scrPanel">
+          <Properties>
+            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[180, 110]"/>
+            </Property>
+          </Properties>
 
           <Layout>
             <DimensionLayout dim="0">
