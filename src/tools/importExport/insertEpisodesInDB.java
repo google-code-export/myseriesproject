@@ -51,7 +51,7 @@ class insertEpisodesInDB implements Runnable {
       im.progress_import.setString(val + "%");
     }
     im.progress_import.setString("Completed");
-    Series.getSeries();
+    Series.updateSeriesTable(false);
     Episodes.getCurrentSeriesEpisodes();
     im.dispose();
     MySeries.glassPane.deactivate();

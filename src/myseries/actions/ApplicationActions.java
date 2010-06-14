@@ -12,10 +12,12 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
@@ -25,6 +27,7 @@ import myComponents.MyUsefulFunctions;
 import myseries.MySeries;
 import myseries.episodes.Episodes;
 import myseries.filters.Filters;
+import myseries.series.RestoreSeries;
 import myseries.series.Series;
 import tools.internetUpdate.tvrage.TrGetId;
 import tools.options.Options;
@@ -151,6 +154,20 @@ public class ApplicationActions {
     SeriesRecord series = Series.getCurrentSerial();
     if(series.getTvrage_ID()==0){
       TrGetId tr = new TrGetId(null,series.getSeries_ID(),series.getFullTitle());
+    }
+  }
+
+  public static void restoreSeries() {
+    try {
+      ArrayList<SeriesRecord> series = Series.getSeries(true);
+
+      if(series.size()==0){
+        MyMessages.message("Restore Series", "There are no deleted series to restore");
+      } else {
+        new RestoreSeries(series);
+      }
+    } catch (SQLException ex) {
+      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
     }
   }
 }

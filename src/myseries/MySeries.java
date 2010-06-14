@@ -94,6 +94,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
    *    Add Series    : Ctrl - A
    *    Edit Series   : Ctrl - E
    *    Delete Series : Ctrl - D
+   *    Restore Series: Ctrl - R
    *    Add Episode   : Ctrl - P
    *
    * Tools
@@ -213,7 +214,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     //create the series data
     MySeries.logger.log(Level.INFO, "Creating series data");
     Series.setTableModel_series(tableModel_series);
-    Series.getSeries();
+    Series.updateSeriesTable(false);
     tableModel_series = Series.getTableModel_series();
 
     //Create image pane
@@ -392,6 +393,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     menuItem_addSeries = new javax.swing.JMenuItem();
     menuItem_editSeries = new javax.swing.JMenuItem();
     menuItem_deleteSeries = new javax.swing.JMenuItem();
+    jMenuItem2 = new javax.swing.JMenuItem();
     menuItem_editEpisode = new javax.swing.JMenuItem();
     menu_Tools = new javax.swing.JMenu();
     menuItem_exportEpisodes = new javax.swing.JMenuItem();
@@ -1036,6 +1038,16 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     });
     menu_Edit.add(menuItem_deleteSeries);
 
+    jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+    jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/restore.png"))); // NOI18N
+    jMenuItem2.setText("Restore Series");
+    jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jMenuItem2ActionPerformed(evt);
+      }
+    });
+    menu_Edit.add(jMenuItem2);
+
     menuItem_editEpisode.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
     menuItem_editEpisode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add_episode.png"))); // NOI18N
     menuItem_editEpisode.setToolTipText("Add a new episode to the current series");
@@ -1679,6 +1691,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     EpisodesActions.downloadEpisodesTorrent(TorrentConstants.ISOHUNT_NAME);
   }//GEN-LAST:event_popUpItem_downloadIsohuntActionPerformed
 
+  private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    ApplicationActions.restoreSeries();
+  }//GEN-LAST:event_jMenuItem2ActionPerformed
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
   public static javax.swing.JMenuItem PopUpItem_AddEpisode;
   public static javax.swing.JMenuItem PopUpItem_AddEpisodeInEpisodes;
@@ -1695,6 +1711,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static javax.swing.JLayeredPane imageLayerPanel;
   public static javax.swing.JMenu jMenu1;
   public static javax.swing.JMenuItem jMenuItem1;
+  public static javax.swing.JMenuItem jMenuItem2;
   public static javax.swing.JSeparator jSeparator1;
   public static javax.swing.JSeparator jSeparator2;
   public static javax.swing.JSeparator jSeparator3;

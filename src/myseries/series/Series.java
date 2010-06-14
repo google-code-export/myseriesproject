@@ -13,6 +13,7 @@ import java.io.FilenameFilter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
@@ -70,17 +71,38 @@ public class Series {
    * Gets all the series
    * First empties the series, gets all the series by title and sets the
    * model of the series table.
+   * @param deleted Show deleted series or not
    * @return an arraylist of all the series records
    * @throws java.sql.SQLException
    */
-  public static ArrayList<SeriesRecord> getSeries() throws SQLException {
+  public static ArrayList<SeriesRecord> updateSeriesTable(boolean deleted) throws SQLException {
     emptySeries();
+    ArrayList<SeriesRecord> series = getSeries(false);
+
+    for (Iterator<SeriesRecord> it = series.iterator(); it.hasNext();) {
+      SeriesRecord s = it.next();
+      Object[] data = {s, s.getHidden() == 1 ? true : false, s.getInternetUpdate() == 1 ? true : false};
+      getTableModel_series().addRow(data);
+    }
+    getTable_series().setModel(getTableModel_series());
+    return series;
+  }
+
+  /**
+   * Gets all the series
+   * First empties the series, gets all the series by title and sets the
+   * model of the series table.
+   * @param deleted If should search for deleted series
+   * @return an arraylist of all the series records
+   * @throws java.sql.SQLException
+   */
+  public static ArrayList<SeriesRecord> getSeries(boolean deleted) throws SQLException {
+    int d = deleted ? 1 : 0;
     ArrayList<SeriesRecord> series = new ArrayList<SeriesRecord>();
-    String sql = "SELECT * FROM series  WHERE deleted = 0 ORDER BY title , season";
+    String sql = "SELECT * FROM series  WHERE deleted = " + d + " ORDER BY title , season";
     ResultSet rs = DBConnection.stmt.executeQuery(sql);
     boolean hidden;
     boolean update;
-    boolean deleted;
     while (rs.next()) {
       SeriesRecord s = new SeriesRecord();
       s.setTitle(rs.getString("title"));
@@ -97,12 +119,9 @@ public class Series {
       s.setInternetUpdate(rs.getInt("internetUpdate"));
       deleted = rs.getBoolean("deleted");
       s.setDeleted(rs.getInt("deleted"));
-      Object[] data = {s, hidden, update};
-      getTableModel_series().addRow(data);
       series.add(s);
     }
     rs.close();
-    getTable_series().setModel(getTableModel_series());
     return series;
   }
 
