@@ -65,20 +65,25 @@ public class SeriesActions {
     int series_ID = Series.getCurrentSerial().getSeries_ID();
     String screenshot = Series.getCurrentSerial().getScreenshot();
     int answ = MyMessages.question("Delete Serial?", "Really delete the series " + title + " season " + season + "?");
+    ArrayList<SeriesRecord> s;
     if (answ == 0) {
       try {
-        String sql = "DELETE FROM series WHERE series_ID = " + series_ID;
+        String sql = "UPDATE series SET deleted = " + SeriesRecord.DELETED + " WHERE series_ID = " + series_ID;
         DBConnection.stmt.execute(sql);
-        sql = "DELETE FROM episodes WHERE series_ID = " + series_ID;
-        DBConnection.stmt.execute(sql);
-        File screenshotFile = new File(Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH  + screenshot);
-        if (screenshotFile.isFile()) {
-          screenshotFile.delete();
-          Image image = new ImageIcon(MySeries.class.getResource("/images/logo.png")).getImage();
-          m.imagePanel.setImage(image,true);
+        // sql = "DELETE FROM episodes WHERE series_ID = " + series_ID;
+        // DBConnection.stmt.execute(sql);
+        // File screenshotFile = new File(Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH  + screenshot);
+        // if (screenshotFile.isFile()) {
+        //   screenshotFile.delete();
+        //   Image image = new ImageIcon(MySeries.class.getResource("/images/logo.png")).getImage();
+        //   m.imagePanel.setImage(image,true);
+        // }
+        Image image = new ImageIcon(MySeries.class.getResource("/images/logo.png")).getImage();
+        MySeries.imagePanel.setImage(image, true);
+        s = Series.getSeries();
+        if (s.size() > 0) {
+          Series.setCurrentSerial(s.get(0));
         }
-        Series.getSeries();
-        Series.setCurrentSerial(null);
         Episodes.updateEpisodesTable();
       } catch (SQLException ex) {
         MySeries.logger.log(Level.SEVERE, null, ex);

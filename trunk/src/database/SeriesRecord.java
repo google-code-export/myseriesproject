@@ -15,22 +15,18 @@ import java.util.Vector;
  */
 public class SeriesRecord extends Record {
 
-  /**
-   * No internet update : 0
-   */
+  /** No internet update : 0   */
   public static final int NO_INTERNET_UPDATE = 0;
-  /**
-   * Internet update : 1
-   */
+  /** Internet update : 1   */
   public static final int INTERNET_UPDATE = 1;
-  /**
-   * Not hidden : 0
-   */
+  /** Not hidden : 0   */
   public static final int NOT_HIDDEN = 0;
-  /**
-   * Hidden : 1
-   */
+  /* Hidden : 1  */
   public static final int HIDDEN = 1;
+  /** Not deleted : 0  */
+  public static final int NOT_DELETED = 0;
+  /** Deleted : 1 **/
+  public static final int DELETED = 1;
   /**
    * The table name
    */
@@ -41,13 +37,14 @@ public class SeriesRecord extends Record {
   private int series_ID = 0;
   private String title = "";
   private int season = 0;
-  private int hidden = 0;
+  private int hidden = NOT_HIDDEN;
   private String tvSubtitlesCode = "";
-  private int internetUpdate = 1;
+  private int internetUpdate = INTERNET_UPDATE;
   private int tvrage_ID = 0;
   private String localDir = "";
   private String screenshot = "";
   private String sOnlineCode = "";
+  private int deleted = NOT_DELETED;
 
   /**
    * The default constructor
@@ -65,13 +62,20 @@ public class SeriesRecord extends Record {
     String sql;
     if (this.series_ID != 0) {
       sql = "UPDATE series SET title = '" + this.title + "', season = " + this.getSeason()
-              + ", hidden = " + this.getHidden() + ", link ='" + this.getTvSubtitlesCode() + "', internetUpdate  ="
-              + this.getInternetUpdate() + ", tvrage_ID = " + this.getTvrage_ID()
-              + ", localDir = '" + this.localDir + "', screenshot = '" + this.screenshot + "', sonline = '" + this.sOnlineCode + "' WHERE series_ID = " + this.getSeries_ID();
+          + ", hidden = " + this.getHidden() + ", link ='" + this.getTvSubtitlesCode() + "', internetUpdate  ="
+          + this.getInternetUpdate() + ", tvrage_ID = " + this.getTvrage_ID()
+          + ", localDir = '" + this.localDir + "', screenshot = '"
+          + this.screenshot + "', sonline = '" + this.sOnlineCode
+          + "', deleted = " + this.deleted
+          + " WHERE series_ID = " + this.getSeries_ID();
     } else {
-      sql = "INSERT INTO series (title, season, hidden, link, internetUpdate, tvrage_ID, localDir, screenshot, sonline) VALUES('" + this.getTitle() + "', "
-              + this.getSeason() + ", " + this.getHidden() + ", '" + this.getTvSubtitlesCode() + "',"
-              + this.getInternetUpdate() + ", " + this.getTvrage_ID() + ", '" + this.getLocalDir() + "','" + this.getScreenshot() + "','" + this.sOnlineCode + "' )";
+      sql = "INSERT INTO series (title, season, hidden, link, internetUpdate, "
+          + "tvrage_ID, localDir, screenshot, sonline, deleted) "
+          + "VALUES('" + this.getTitle() + "', " + this.getSeason() + ", "
+          + this.getHidden() + ", '" + this.getTvSubtitlesCode() + "',"
+          + this.getInternetUpdate() + ", " + this.getTvrage_ID() + ", '"
+          + this.getLocalDir() + "','" + this.getScreenshot()
+          + "','" + this.sOnlineCode + "'," + this.deleted + ")";
     }
     return queryUpdate(sql);
   }
@@ -234,5 +238,17 @@ public class SeriesRecord extends Record {
     this.sOnlineCode = sonline;
   }
 
+  /**
+   * @return the deleted
+   */
+  public int getDeleted() {
+    return deleted;
+  }
 
+  /**
+   * @param deleted the deleted to set
+   */
+  public void setDeleted(int deleted) {
+    this.deleted = deleted;
+  }
 }

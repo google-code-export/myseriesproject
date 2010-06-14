@@ -86,7 +86,7 @@ public class Filters {
    * The seen field of the table title : Seen
    */
   public static final String SEEN_COLUMN_TITLE = "Seen";
-   /**
+  /**
    * The not seen status : 0
    */
   public static final int SEEN_NO = 0;
@@ -147,7 +147,10 @@ public class Filters {
     where += getSeen() == EpisodesRecord.NOT_SEEN || getSeen() == EpisodesRecord.SEEN ? " AND seen = " + getSeen() : "";
     where += getDownloaded() == EpisodesRecord.NOT_DOWNLOADED || getDownloaded() == EpisodesRecord.DOWNLOADED ? " AND downloaded = " + getDownloaded() : "";
     where += getSubtitles();
-    String sql = "SELECT e.* FROM episodes e JOIN series s on e.series_ID = s.series_ID WHERE s.hidden = " + SeriesRecord.NOT_HIDDEN + " " + where + " ORDER BY aired ASC";
+    String sql = "SELECT e.* FROM episodes e JOIN series s on "
+        + "e.series_ID = s.series_ID WHERE s.hidden = "
+        + SeriesRecord.NOT_HIDDEN + " AND s.deleted = "
+        + SeriesRecord.NOT_DELETED + " " + where + " ORDER BY aired ASC";
     ResultSet rs = DBConnection.stmt.executeQuery(sql);
     SeriesRecord ser;
     while (rs.next()) {
@@ -160,7 +163,10 @@ public class Filters {
       subsInt = rs.getInt("subs");
       subs = LangsList.getLanguageById(subsInt);
       boolSeen = rs.getBoolean("seen");
-      Vector<SeriesRecord> seriesV = DBHelper.getSeriesBySql("SELECT * FROM series WHERE hidden = " + SeriesRecord.NOT_HIDDEN + " AND series_ID = " + series_ID);
+      Vector<SeriesRecord> seriesV = DBHelper.getSeriesBySql(
+          "SELECT * FROM series WHERE hidden = " + SeriesRecord.NOT_HIDDEN
+          + " AND deleted = " + SeriesRecord.NOT_DELETED
+          + " AND series_ID = " + series_ID);
       ser = seriesV.get(0);
       Object[] data = {ser.getFullTitle(), episode, DBHelper.getEpisodeByID(id), aired, boolDownloaded, subs, boolSeen};
       if (getTableModel_filterSeries() != null) {
@@ -231,13 +237,19 @@ public class Filters {
    */
   public static String getSubtitles() {
     int sel = myseries.MySeries.comboBox_filterSubtitles.getSelectedIndex();
-    switch (sel){
-      case 0 : return " AND subs = 0 ";
-      case 1 : return " AND subs = " + myseries.MySeries.languages.getPrimary().getId();
-      case 2 : return " AND subs = " + myseries.MySeries.languages.getSecondary().getId();
-      case 3 : return " AND subs = 3";
-      case 4 : return " AND (subs = "+ myseries.MySeries.languages.getPrimary().getId() + " OR subs = " + myseries.MySeries.languages.getSecondary().getId() +")";
-      case 5 : return " AND subs <> " + myseries.MySeries.languages.getPrimary().getId();
+    switch (sel) {
+      case 0:
+        return " AND subs = 0 ";
+      case 1:
+        return " AND subs = " + myseries.MySeries.languages.getPrimary().getId();
+      case 2:
+        return " AND subs = " + myseries.MySeries.languages.getSecondary().getId();
+      case 3:
+        return " AND subs = 3";
+      case 4:
+        return " AND (subs = " + myseries.MySeries.languages.getPrimary().getId() + " OR subs = " + myseries.MySeries.languages.getSecondary().getId() + ")";
+      case 5:
+        return " AND subs <> " + myseries.MySeries.languages.getPrimary().getId();
     }
     return "";
 

@@ -125,7 +125,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static MyDisabledGlassPane glassPane;
   public static Logger logger;
   public static final long serialVersionUID = 1L;
-  public MyImagePanel imagePanel = new MyImagePanel();
+  public static MyImagePanel imagePanel = new MyImagePanel();
   public Image image;
   private Integer[] seriesTableWidths;
   private Integer[] episodesTableWidths;
