@@ -103,7 +103,7 @@ public class Help extends JFrame {
       panel_rightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(panel_rightLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 879, Short.MAX_VALUE)
+        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 909, Short.MAX_VALUE)
         .addContainerGap())
     );
     panel_rightLayout.setVerticalGroup(
@@ -133,11 +133,11 @@ public class Help extends JFrame {
     treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Episodes PopUp");
     treeNode3.add(treeNode4);
     treeNode2.add(treeNode3);
-    treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Next episodes Panel");
-    treeNode2.add(treeNode3);
     treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Filters Panel");
     treeNode2.add(treeNode3);
     treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Ratings Panel");
+    treeNode2.add(treeNode3);
+    treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Schedule Panel");
     treeNode2.add(treeNode3);
     treeNode1.add(treeNode2);
     treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Administration");

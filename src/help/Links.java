@@ -26,6 +26,7 @@ public class Links {
     links.put("The Next Episodes panel:","Next Episodes Panel");
     links.put("The Episodes panel:","Episodes Panel");
     links.put("The Filters panel:","Filters Panel");
+    links.put("The Schedule panel:","Schedule Panel");
     links.put("Create","Create database");
     links.put("Load","Load Database");
     links.put("Save","Save Database");
