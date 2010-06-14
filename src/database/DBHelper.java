@@ -197,7 +197,8 @@ public class DBHelper {
    * @throws SQLException
    */
   public static Vector<SeriesRecord> getAllSeries() throws SQLException {
-    return getSeriesBySql("SELECT * FROM series WHERE hidden = " + SeriesRecord.NOT_HIDDEN);
+    return getSeriesBySql("SELECT * FROM series WHERE hidden = " + 
+        SeriesRecord.NOT_HIDDEN + " AND deleted = " + SeriesRecord.NOT_DELETED);
 
   }
 

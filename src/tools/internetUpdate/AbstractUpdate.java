@@ -115,7 +115,9 @@ public abstract class AbstractUpdate {
   protected void update() {
     try {
       if (iu.getCurrentSeries() == null) {
-        serVector = DBHelper.getSeriesBySql("SELECT * FROM series WHERE internetUpdate = 1");
+        serVector = DBHelper.getSeriesBySql(
+            "SELECT * FROM series WHERE internetUpdate = 1 AND " +
+            "deleted = "+SeriesRecord.NOT_DELETED);
       } else {
         serVector.add(iu.getCurrentSeries());
       }

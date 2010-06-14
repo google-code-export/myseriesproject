@@ -470,9 +470,7 @@ public class AdminSeries extends MyDraggable {
               .addComponent(button_getScreenshot, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(jPanel1Layout.createSequentialGroup()
-            .addComponent(scrPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+          .addComponent(scrPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addGroup(jPanel1Layout.createSequentialGroup()
             .addComponent(label_message, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
             .addGap(20, 20, 20))
@@ -560,11 +558,11 @@ public class AdminSeries extends MyDraggable {
             seriesRecord.setScreenshot(sc.getName());
           }
           Image im = new ImageIcon(sc.getAbsolutePath()).getImage();
-          m.imagePanel.setImage(im, false);
+          MySeries.imagePanel.setImage(im, false);
 
         } else {
           seriesRecord.setScreenshot("");
-          m.imagePanel.setImage(null, true);
+          MySeries.imagePanel.setImage(null, true);
         }
         try {
           int series_ID = seriesRecord.save();

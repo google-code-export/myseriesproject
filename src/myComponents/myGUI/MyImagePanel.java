@@ -95,8 +95,8 @@ public class MyImagePanel extends JPanel {
           yPos = 40;
         }
         //imageLayerPanel.setBounds(0, yPos, width, height);
-        m.imagePanel.setBounds(0, yPos, width, height);
-        m.imagePanel.changeSize(image, width, height);
+        MySeries.imagePanel.setBounds(0, yPos, width, height);
+        MySeries.imagePanel.changeSize(image, width, height);
       } catch (NullPointerException ex) {
       }
     } catch (InterruptedException ex) {

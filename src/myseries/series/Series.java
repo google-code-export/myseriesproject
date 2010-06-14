@@ -7,17 +7,22 @@ package myseries.series;
 import database.DBConnection;
 import database.DBHelper;
 import database.SeriesRecord;
+import java.awt.Image;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 import myComponents.MyTableModels.MySeriesTableModel;
 import myComponents.myFileFilters.SubtitlesFilter;
 import myComponents.myFileFilters.VideoFilter;
+import myComponents.myGUI.MyImagePanel;
+import myseries.MySeries;
 import myseries.episodes.Episodes;
+import tools.options.Options;
 
 /**
  * The series table
@@ -71,10 +76,11 @@ public class Series {
   public static ArrayList<SeriesRecord> getSeries() throws SQLException {
     emptySeries();
     ArrayList<SeriesRecord> series = new ArrayList<SeriesRecord>();
-    String sql = "SELECT * FROM series ORDER BY title , season";
+    String sql = "SELECT * FROM series  WHERE deleted = 0 ORDER BY title , season";
     ResultSet rs = DBConnection.stmt.executeQuery(sql);
     boolean hidden;
     boolean update;
+    boolean deleted;
     while (rs.next()) {
       SeriesRecord s = new SeriesRecord();
       s.setTitle(rs.getString("title"));
@@ -89,6 +95,8 @@ public class Series {
       s.setHidden(rs.getInt("hidden"));
       update = rs.getBoolean("internetUpdate");
       s.setInternetUpdate(rs.getInt("internetUpdate"));
+      deleted = rs.getBoolean("deleted");
+      s.setDeleted(rs.getInt("deleted"));
       Object[] data = {s, hidden, update};
       getTableModel_series().addRow(data);
       series.add(s);
@@ -146,6 +154,7 @@ public class Series {
       currentSeries.setInternetUpdate(SeriesRecord.INTERNET_UPDATE);
       currentSeries.setSOnlineCode("");
       currentSeries.setHidden(SeriesRecord.NOT_HIDDEN);
+      currentSeries.setDeleted(SeriesRecord.NOT_DELETED);
       Series.setCurrentSerial(currentSeries);
       return;
     }
@@ -207,12 +216,20 @@ public class Series {
   public static void setCurrentSerial(SeriesRecord series) {
     try {
       //Update data
-      if(series != null){
-      int series_id = series.getSeries_ID();
-      currentSeries = DBHelper.getSeriesByID(series_id);
+      Image image = new ImageIcon(MySeries.class.getResource("/images/logo.png")).getImage();
+      if (series != null) {
+        int series_id = series.getSeries_ID();
+        currentSeries = DBHelper.getSeriesByID(series_id);
       } else {
         currentSeries = new SeriesRecord();
       }
+      if (!currentSeries.getScreenshot().equals("")) {
+        File sc = new File(Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH + currentSeries.getScreenshot());
+        if (sc.isFile()) {
+          image = new ImageIcon(sc.getAbsolutePath()).getImage();
+        }
+      }
+      MySeries.imagePanel.setImage(image, true);
     } catch (SQLException ex) {
       currentSeries = new SeriesRecord();
     }
@@ -222,8 +239,8 @@ public class Series {
    * @return the subtitleFiles
    */
   public static File[] getSubtitleFiles() {
-    if(subtitleFiles == null){
-     return getFiles(new SubtitlesFilter());
+    if (subtitleFiles == null) {
+      return getFiles(new SubtitlesFilter());
     }
     return subtitleFiles;
   }
@@ -232,8 +249,8 @@ public class Series {
    * @return the videoFiles
    */
   public static File[] getVideoFiles() {
-    if(videoFiles == null){
-     return getFiles(new VideoFilter());
+    if (videoFiles == null) {
+      return getFiles(new VideoFilter());
     }
     return videoFiles;
   }
