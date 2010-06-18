@@ -34,7 +34,7 @@ public class Schedule extends javax.swing.JPanel {
 
     jPanel1 = new javax.swing.JPanel();
     jLabel1 = new javax.swing.JLabel();
-    scheduler1 = new com.googlecode.scheduler.Scheduler();
+    schedule = new com.googlecode.scheduler.Scheduler();
 
     jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getStyle() | java.awt.Font.BOLD, jLabel1.getFont().getSize()+2));
     jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -48,7 +48,7 @@ public class Schedule extends javax.swing.JPanel {
         .addContainerGap()
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
-          .addComponent(scheduler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addComponent(schedule, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addContainerGap())
     );
     jPanel1Layout.setVerticalGroup(
@@ -57,7 +57,7 @@ public class Schedule extends javax.swing.JPanel {
         .addContainerGap()
         .addComponent(jLabel1)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(scheduler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(schedule, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addContainerGap(22, Short.MAX_VALUE))
     );
 
@@ -77,7 +77,14 @@ public class Schedule extends javax.swing.JPanel {
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JLabel jLabel1;
   private javax.swing.JPanel jPanel1;
-  private com.googlecode.scheduler.Scheduler scheduler1;
+  private com.googlecode.scheduler.Scheduler schedule;
   // End of variables declaration//GEN-END:variables
+
+  /**
+   * @return the schedule
+   */
+  public com.googlecode.scheduler.Scheduler getSchedule() {
+    return schedule;
+  }
 
 }
