@@ -189,6 +189,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     //SCHEDULE
     scheduler.setDatabase(Options._USER_DIR_ +Database.PATH + DBConnection.db);
     scheduler.setDefaultRenderer(new MyScheduleTableCellRenderer());
+    scheduler.setPastYears(2);
 
 //    this.getContentPane().setBackground(Options.getColor(Options.SKIN_COLOR));
     if (Options.toBoolean(Options.USE_SKIN)) {

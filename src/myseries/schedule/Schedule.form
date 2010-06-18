@@ -35,7 +35,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel1" alignment="0" pref="406" max="32767" attributes="0"/>
-                      <Component id="scheduler1" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="schedule" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -47,7 +47,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="scheduler1" min="-2" max="-2" attributes="0"/>
+                  <Component id="schedule" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="22" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -65,7 +65,7 @@
             <Property name="text" type="java.lang.String" value="Schedule"/>
           </Properties>
         </Component>
-        <Component class="com.googlecode.scheduler.Scheduler" name="scheduler1">
+        <Component class="com.googlecode.scheduler.Scheduler" name="schedule">
         </Component>
       </SubComponents>
     </Container>

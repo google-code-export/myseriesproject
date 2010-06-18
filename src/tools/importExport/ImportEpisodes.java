@@ -91,21 +91,22 @@ public class ImportEpisodes extends MyDraggable {
   private void initComponents() {
 
     panel = new javax.swing.JPanel();
-    jLabel1 = new javax.swing.JLabel();
-    jLabel2 = new javax.swing.JLabel();
-    combobox_series = new javax.swing.JComboBox();
+    title = new javax.swing.JLabel();
     button_import = new javax.swing.JButton();
     button_cancel = new javax.swing.JButton();
     panel_newSeries = new javax.swing.JPanel();
-    jLabel3 = new javax.swing.JLabel();
-    spinner_newSeriesSeason = new javax.swing.JSpinner();
-    jLabel4 = new javax.swing.JLabel();
-    textfield_newSeriesTitle = new com.googlecode.svalidators.formcomponents.STextField(new NullValidator());
-    button_browse = new javax.swing.JButton();
+    label_series = new javax.swing.JLabel();
+    combobox_series = new javax.swing.JComboBox();
     checkBox_newSeries = new javax.swing.JCheckBox();
+    label_title = new javax.swing.JLabel();
+    textfield_newSeriesTitle = new com.googlecode.svalidators.formcomponents.STextField(new NullValidator());
+    label_season = new javax.swing.JLabel();
+    spinner_newSeriesSeason = new javax.swing.JSpinner();
     textfield_file = new com.googlecode.svalidators.formcomponents.STextField(fileValidator);
+    button_browse = new javax.swing.JButton();
+    label_progress = new javax.swing.JLabel();
     progress_import = new javax.swing.JProgressBar();
-    jLabel5 = new javax.swing.JLabel();
+    jLabel1 = new javax.swing.JLabel();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
@@ -114,15 +115,9 @@ public class ImportEpisodes extends MyDraggable {
     panel.setOpaque(false);
     panel.setPreferredSize(new java.awt.Dimension(485, 204));
 
-    jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getStyle() | java.awt.Font.BOLD, jLabel1.getFont().getSize()+2));
-    jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-    jLabel1.setText("Import Episodes");
-
-    jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-    jLabel2.setText("Series :");
-
-    combobox_series.setModel(comboboxModel_allSeries);
-    combobox_series.setOpaque(false);
+    title.setFont(title.getFont().deriveFont(title.getFont().getStyle() | java.awt.Font.BOLD, title.getFont().getSize()+2));
+    title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+    title.setText("Import Episodes");
 
     button_import.setText("Import");
     button_import.setOpaque(false);
@@ -145,53 +140,11 @@ public class ImportEpisodes extends MyDraggable {
     panel_newSeries.setOpaque(false);
     panel_newSeries.setPreferredSize(new java.awt.Dimension(334, 74));
 
-    jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-    jLabel3.setText("Title:");
+    label_series.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    label_series.setText("Series :");
 
-    spinner_newSeriesSeason.setModel(new javax.swing.SpinnerNumberModel(1, 1, 99, 1));
-
-    jLabel4.setText("Season :");
-
-    textfield_newSeriesTitle.setName("Series title"); // NOI18N
-
-    javax.swing.GroupLayout panel_newSeriesLayout = new javax.swing.GroupLayout(panel_newSeries);
-    panel_newSeries.setLayout(panel_newSeriesLayout);
-    panel_newSeriesLayout.setHorizontalGroup(
-      panel_newSeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(panel_newSeriesLayout.createSequentialGroup()
-        .addContainerGap()
-        .addGroup(panel_newSeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(panel_newSeriesLayout.createSequentialGroup()
-            .addComponent(jLabel4)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(spinner_newSeriesSeason, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-          .addGroup(panel_newSeriesLayout.createSequentialGroup()
-            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(textfield_newSeriesTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        .addGap(40, 40, 40))
-    );
-    panel_newSeriesLayout.setVerticalGroup(
-      panel_newSeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(panel_newSeriesLayout.createSequentialGroup()
-        .addContainerGap()
-        .addGroup(panel_newSeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jLabel3)
-          .addComponent(textfield_newSeriesTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(panel_newSeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jLabel4)
-          .addComponent(spinner_newSeriesSeason, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addContainerGap())
-    );
-
-    button_browse.setText("Browse");
-    button_browse.setOpaque(false);
-    button_browse.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        button_browseActionPerformed(evt);
-      }
-    });
+    combobox_series.setModel(comboboxModel_allSeries);
+    combobox_series.setOpaque(false);
 
     checkBox_newSeries.setText("New Series :");
     checkBox_newSeries.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -202,12 +155,89 @@ public class ImportEpisodes extends MyDraggable {
       }
     });
 
+    label_title.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    label_title.setText("Title:");
+
+    textfield_newSeriesTitle.setName("Series title"); // NOI18N
+
+    label_season.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    label_season.setText("Season :");
+
+    spinner_newSeriesSeason.setModel(new javax.swing.SpinnerNumberModel(1, 1, 99, 1));
+
     textfield_file.setEditable(false);
     textfield_file.setName("Import file"); // NOI18N
 
+    button_browse.setText("Browse");
+    button_browse.setOpaque(false);
+    button_browse.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_browseActionPerformed(evt);
+      }
+    });
+
+    label_progress.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    label_progress.setText("Progress :");
+
     progress_import.setStringPainted(true);
 
-    jLabel5.setText("Progress :");
+    jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    jLabel1.setText("File :");
+
+    javax.swing.GroupLayout panel_newSeriesLayout = new javax.swing.GroupLayout(panel_newSeries);
+    panel_newSeries.setLayout(panel_newSeriesLayout);
+    panel_newSeriesLayout.setHorizontalGroup(
+      panel_newSeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(panel_newSeriesLayout.createSequentialGroup()
+        .addContainerGap()
+        .addGroup(panel_newSeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(label_progress, javax.swing.GroupLayout.Alignment.TRAILING)
+          .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(label_season, javax.swing.GroupLayout.Alignment.TRAILING)
+          .addComponent(label_title, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(label_series, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addGroup(panel_newSeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(combobox_series, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(textfield_newSeriesTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
+          .addComponent(spinner_newSeriesSeason, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(textfield_file, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(progress_import, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGroup(panel_newSeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(checkBox_newSeries)
+          .addComponent(button_browse))
+        .addContainerGap())
+    );
+
+    panel_newSeriesLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {combobox_series, progress_import, textfield_file, textfield_newSeriesTitle});
+
+    panel_newSeriesLayout.setVerticalGroup(
+      panel_newSeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(panel_newSeriesLayout.createSequentialGroup()
+        .addGap(11, 11, 11)
+        .addGroup(panel_newSeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+          .addComponent(label_series, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+          .addComponent(combobox_series, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(checkBox_newSeries))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addGroup(panel_newSeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+          .addComponent(label_title, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+          .addComponent(textfield_newSeriesTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGroup(panel_newSeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+          .addComponent(label_season, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+          .addComponent(spinner_newSeriesSeason, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addGroup(panel_newSeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+          .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+          .addComponent(textfield_file, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(button_browse))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGroup(panel_newSeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+          .addComponent(label_progress, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+          .addComponent(progress_import, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+    );
 
     javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
     panel.setLayout(panelLayout);
@@ -216,56 +246,22 @@ public class ImportEpisodes extends MyDraggable {
       .addGroup(panelLayout.createSequentialGroup()
         .addContainerGap()
         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE)
           .addGroup(panelLayout.createSequentialGroup()
-            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(button_import)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(combobox_series, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(checkBox_newSeries)))
-        .addGap(60, 60, 60))
-      .addGroup(panelLayout.createSequentialGroup()
-        .addContainerGap()
-        .addComponent(panel_newSeries, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
-        .addGap(90, 90, 90))
-      .addGroup(panelLayout.createSequentialGroup()
-        .addGap(21, 21, 21)
-        .addComponent(button_import)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(button_cancel)
-        .addContainerGap(349, Short.MAX_VALUE))
-      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
-        .addContainerGap()
-        .addComponent(jLabel5)
-        .addGap(10, 10, 10)
-        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-          .addComponent(textfield_file, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
-          .addComponent(progress_import, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        .addGap(18, 18, 18)
-        .addComponent(button_browse)
-        .addGap(42, 42, 42))
+            .addComponent(button_cancel))
+          .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE)
+          .addComponent(panel_newSeries, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE))
+        .addContainerGap())
     );
     panelLayout.setVerticalGroup(
       panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(panelLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(jLabel1)
+        .addComponent(title)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jLabel2)
-          .addComponent(combobox_series, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(checkBox_newSeries))
-        .addGap(2, 2, 2)
-        .addComponent(panel_newSeries, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addComponent(button_browse)
-          .addComponent(textfield_file, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addComponent(panel_newSeries, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(progress_import, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(jLabel5))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(button_import)
           .addComponent(button_cancel))
@@ -276,11 +272,11 @@ public class ImportEpisodes extends MyDraggable {
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, 508, Short.MAX_VALUE)
+      .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
+      .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
     );
 
     pack();
@@ -440,15 +436,16 @@ public class ImportEpisodes extends MyDraggable {
   private javax.swing.JCheckBox checkBox_newSeries;
   private javax.swing.JComboBox combobox_series;
   private javax.swing.JLabel jLabel1;
-  private javax.swing.JLabel jLabel2;
-  private javax.swing.JLabel jLabel3;
-  private javax.swing.JLabel jLabel4;
-  private javax.swing.JLabel jLabel5;
+  private javax.swing.JLabel label_progress;
+  private javax.swing.JLabel label_season;
+  private javax.swing.JLabel label_series;
+  private javax.swing.JLabel label_title;
   private javax.swing.JPanel panel;
   private javax.swing.JPanel panel_newSeries;
   public javax.swing.JProgressBar progress_import;
   private javax.swing.JSpinner spinner_newSeriesSeason;
   private com.googlecode.svalidators.formcomponents.STextField textfield_file;
   private com.googlecode.svalidators.formcomponents.STextField textfield_newSeriesTitle;
+  private javax.swing.JLabel title;
   // End of variables declaration//GEN-END:variables
 }
