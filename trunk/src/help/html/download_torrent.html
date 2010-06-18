@@ -1,25 +1,64 @@
 <link rel="stylesheet" href="styles.css" type="text/css" />
 <table align="left" class="mainTable">
-  <tr><th>Download Torrent</th></tr>
-  <tr>
-    <th><img src="../images/search_torrent.png"></th>
-  <tr>
-    <td align="center">Search torrent form</td>
+  <tr><th colspan="2">Download Torrent</th></tr>
+  <tr valign="top">
+    <th width="50%"><img src="../images/search_torrent_eztv.png"></th>
+    <th width="50%"><img src="../images/search_torrent_isohunt.png"></th>
   </tr>
   <tr>
-    <td>
-      Search torrent lets you search eztv.it for a torrent based on :
+    <td align="center">Download from EzTv</td>
+    <td align="center">Download from Isohunt</td>
+  </tr>
+  <tr>
+    <th colspan="2">EzTv</th>
+  </tr>
+  <tr>
+    <td colspan="2">
+      Download from EzTv form lets you search eztv.it for a torrent based on :
       <ul>
-        <li><b>The episode title :</b>Select from the combo box one of the series you already watch , or edit it to search
-        for a new series. Note that some series in eztv database are not entered with their official name , so if nothing is found
-        try another title (eg 'House MD' will return no results but 'House' will return.)</li>
+        <li><b>The episode title :</b>Select from the combo box one of the series
+          you already watch , or edit it to search
+          for a new series. Note that some series in eztv database are not entered
+          with their official name , so if nothing is found
+          try another title (eg 'House MD' will return no results but 'House' will return.)</li>
         <li><b>Exact name : </b>If name should be queried axactly as it is entered.</li>
         <li><b>Season : </b>The season to search (0 for all seasons)</li>
         <li><b>Episode : </b>The episode to search (0 for all episodes)</li>
         <li><b>Quality :</b>The quality to search</li>
       </ul>
-      After the search if one torrent is found it's saved in the myseries torrents subdirectory and then opened by the default
-      torrents application.If more results are found you are prompt to choose the one to save.
+      After the search if one torrent is found it's saved in the myseries
+      torrents subdirectory and then opened by the default
+      torrents application.If more results are found you are prompt to choose
+      the one to save.
+    </td>
+  </tr>
+  <tr>
+    <th colspan="2">Isohunt</th>
+  </tr>
+  <tr>
+    <td colspan="2">
+      Download from isohunt form lets you search isohunt.com for a torrent based on :
+      <ul>
+        <li><b>The episode title :</b>Select from the combo box one of the series
+          you already watch , or edit it to search
+          for a new series. Note that some series in eztv database are not entered
+          with their official name , so if nothing is found
+          try another title (eg 'House MD' will return no results but 'House' will return.)</li>
+        <li><b>Season : </b>The season to search</li>
+        <li><b>Episode : </b>The episode to search (0 for full season)</li>
+        <li><b>Quality :</b>The quality to search</li>
+        <li><b>Sort :</b>Sort the result ascending or descending based on Seeds (and peers),
+          age or size</li>
+      </ul>
+      After the search if one torrent is found it's saved in the myseries
+      torrents subdirectory and then opened by the default
+      torrents application.<br />
+      If more results are found the following table is displayed to let you choose
+      the one to save.</td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center">
+      <img  src="../images/search_torrent_isohunt_results.png">
     </td>
   </tr>
 </table>
