@@ -169,11 +169,9 @@ public class Help extends JFrame {
     treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Options");
     treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("General Options");
     treeNode2.add(treeNode3);
-    treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Next Episodes Options");
-    treeNode2.add(treeNode3);
     treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Internet Options");
     treeNode2.add(treeNode3);
-    treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Renaming");
+    treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Renaming Options");
     treeNode2.add(treeNode3);
     treeNode1.add(treeNode2);
     treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Help");
@@ -187,7 +185,7 @@ public class Help extends JFrame {
     treeNode2.add(treeNode3);
     treeNode1.add(treeNode2);
     tree_help.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
-    tree_help.setMaximumSize(new java.awt.Dimension(300, 600));
+    tree_help.setMaximumSize(new java.awt.Dimension(300, 2000));
     tree_help.setMinimumSize(new java.awt.Dimension(140, 300));
     tree_help.setPreferredSize(new java.awt.Dimension(140, 300));
     tree_help.addMouseListener(new java.awt.event.MouseAdapter() {
