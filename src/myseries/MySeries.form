@@ -1322,6 +1322,9 @@
                           <Dimension value="[1000, 800]"/>
                         </Property>
                       </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new com.googlecode.scheduler.Scheduler(Options._USER_DIR_ +Database.PATH + DBConnection.db)"/>
+                      </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>
