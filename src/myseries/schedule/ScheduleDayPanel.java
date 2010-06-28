@@ -41,7 +41,7 @@ public class ScheduleDayPanel extends javax.swing.JPanel {
   private int  MAX_COLUMNS = 2;
   private int  GAP = 2;
   private int  MIN_COLUMNS = 1;
-  private int NUMBER_LABEL_WIDTH = 26;
+  private int NUMBER_LABEL_WIDTH = 30;
 
   public ScheduleDayPanel(Object value, JLabel dayLabel, int height, int width) {
     this.value = value;
@@ -55,7 +55,7 @@ public class ScheduleDayPanel extends javax.swing.JPanel {
       sDay = (ScheduleDay) value;
       events = DBHelper.getDayEvents(sDay);
       createDefaultPanel();
-      if (events.size() == 0) {
+      if (events.isEmpty()) {
       } else {
         createPanel();
       }
