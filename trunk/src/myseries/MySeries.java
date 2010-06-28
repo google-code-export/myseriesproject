@@ -187,7 +187,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     createComboBox_filters();
 
     //SCHEDULE
-    scheduler.setDatabase(Options._USER_DIR_ +Database.PATH + DBConnection.db);
+    //scheduler.setDatabase(Options._USER_DIR_ +Database.PATH + DBConnection.db);
     scheduler.setDefaultRenderer(new MyScheduleTableCellRenderer());
     scheduler.setPastYears(2);
 
@@ -383,7 +383,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     statSeries = new myseries.statistics.StatSeries();
     statEpisodes = new myseries.statistics.StatEpisodes();
     tabpanel_schedule = new javax.swing.JPanel();
-    scheduler = new com.googlecode.scheduler.Scheduler();
+    scheduler = new com.googlecode.scheduler.Scheduler(Options._USER_DIR_ +Database.PATH + DBConnection.db);
     menuBar = new javax.swing.JMenuBar();
     menu_MySeries = new javax.swing.JMenu();
     menuItem_createDB = new javax.swing.JMenuItem();
