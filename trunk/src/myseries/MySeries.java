@@ -138,7 +138,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static int TAB_STATISTICS = 2;
   public StatSeries table_stat_series;
   public StatEpisodes table_stat_episodes;
-  
+  public static boolean isHelp = false;
 
   /**
    *
@@ -228,8 +228,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     Episodes.setTableModel_episodes(tableModel_episodes);
     Episodes.setTabsPanel(tabsPanel);
     Series.selectSeries(0);
-    if(!Series.getCurrentSerial().getScreenshot().equals("")){
-      imagePanel.setImage(new ImageIcon(Options._USER_DIR_+MyImagePanel.SCREENSHOTS_PATH + Series.getCurrentSerial().getScreenshot()).getImage(),false);
+    if (!Series.getCurrentSerial().getScreenshot().equals("")) {
+      imagePanel.setImage(new ImageIcon(Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH + Series.getCurrentSerial().getScreenshot()).getImage(), false);
     }
 
     tableEpisodes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -1264,10 +1264,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       String imagePath = Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH + "/" + Series.getCurrentSerial().getScreenshot();
       if (new File(imagePath).isFile()) {
         Image im = new ImageIcon(imagePath).getImage();
-        imagePanel.setImage(im,false);
+        imagePanel.setImage(im, false);
       } else {
         Image image = new ImageIcon(getClass().getResource("/images/logo.png")).getImage();
-        imagePanel.setImage(image,true);
+        imagePanel.setImage(image, true);
       }
       seriesPopUpItemsState(Series.getCurrentSerial().getFullTitle(), true);
       tabsPanel.setSelectedComponent(tabpanel_episodesList);
@@ -1555,7 +1555,9 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   }//GEN-LAST:event_menuItem_importEpisodesActionPerformed
 
   private void menuItem_helpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_helpActionPerformed
-    new Help(this);
+    if (!isHelp) {
+      new Help(this);
+    }
 }//GEN-LAST:event_menuItem_helpActionPerformed
 
   private void menuItem_saveDatabaseAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_saveDatabaseAsActionPerformed
@@ -1695,7 +1697,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
     ApplicationActions.restoreSeries();
   }//GEN-LAST:event_jMenuItem2ActionPerformed
-
   // Variables declaration - do not modify//GEN-BEGIN:variables
   public static javax.swing.JMenuItem PopUpItem_AddEpisode;
   public static javax.swing.JMenuItem PopUpItem_AddEpisodeInEpisodes;
