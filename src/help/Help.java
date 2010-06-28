@@ -35,6 +35,7 @@ public class Help extends JFrame {
    */
   public Help(MySeries m) {
     this.m = m;
+    MySeries.isHelp = true;
     //Create the links map
     Links.createLinksMap();
     initComponents();
@@ -66,6 +67,11 @@ public class Help extends JFrame {
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     setTitle("MySerieS Help");
     setMinimumSize(new java.awt.Dimension(600, 400));
+    addWindowListener(new java.awt.event.WindowAdapter() {
+      public void windowClosing(java.awt.event.WindowEvent evt) {
+        formWindowClosing(evt);
+      }
+    });
 
     panel_help.setBackground(new java.awt.Color(255, 255, 255));
     panel_help.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -254,6 +260,7 @@ public class Help extends JFrame {
   }// </editor-fold>//GEN-END:initComponents
 
     private void button_closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_closeActionPerformed
+      MySeries.isHelp = false;
       dispose();
 }//GEN-LAST:event_button_closeActionPerformed
 
@@ -281,6 +288,10 @@ public class Help extends JFrame {
         MySeries.logger.log(Level.WARNING, "Null pointer when selecting help tree ", ex);
       }
     }//GEN-LAST:event_tree_helpValueChanged
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+      MySeries.isHelp = false;
+    }//GEN-LAST:event_formWindowClosing
 
   private void followHyperLink() throws BadLocationException, IOException {
     int pos = mainContent.getCaretPosition();
