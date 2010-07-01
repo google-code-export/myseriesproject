@@ -41,6 +41,7 @@ import java.beans.PropertyDescriptor;
 import javax.swing.event.DocumentListener;
 import myComponents.myEvents.MyEvent;
 import myComponents.myEvents.MyEventHandler;
+import myComponents.myEvents.MyEventsClass;
 import myComponents.myGUI.MyImagePanel;
 import myComponents.myGUI.MyScaledImage;
 import myseries.actions.SeriesActions;
@@ -56,6 +57,8 @@ import tools.options.Options;
  * @author lordovol
  */
 public class AdminSeries extends MyDraggable {
+
+  private MyEventsClass evClass = new MyEventsClass();
 
   private final static long serialVersionUID = 43547453657578L;
   /**
@@ -528,6 +531,7 @@ public class AdminSeries extends MyDraggable {
    * @throws java.io.IOException
    */
   private void addSeries() {
+    MyEvent ev;
 
     try {
       int tvRageID = 0;
@@ -571,12 +575,13 @@ public class AdminSeries extends MyDraggable {
         if (series_ID > 0) {
           seriesRecord.setSeries_ID(series_ID);
         }
-        m.fireMyEvent(new MyEvent(m, MyEventHandler.SERIES_UPDATE));
+        ev = new MyEvent(this,MyEventHandler.SERIES_UPDATE);
+        evClass.fireMyEvent(ev);
         MySeries.glassPane.deactivate();
         dispose();
-        MyEvent event = new MyEvent(m, MyEventHandler.SET_CURRENT_SERIES);
-        event.setSeries(seriesRecord);
-        m.fireMyEvent(event);
+        ev.setType(MyEventHandler.SET_CURRENT_SERIES);
+        ev.setSeries(seriesRecord);
+        m.getEvClass().fireMyEvent(ev);
         if (checkbox_updateEpisodes.isSelected()) {
           SeriesActions.internetUpdateSeries(m, InternetUpdate.TV_RAGE_NAME);
         }

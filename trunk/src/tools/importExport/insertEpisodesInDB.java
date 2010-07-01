@@ -9,8 +9,8 @@ import java.util.Vector;
 import java.util.logging.Level;
 import myComponents.myEvents.MyEvent;
 import myComponents.myEvents.MyEventHandler;
+import myComponents.myEvents.MyEventsClass;
 import myseries.episodes.Episodes;
-import myseries.series.Series;
 import myseries.*;
 
 /**
@@ -19,15 +19,15 @@ import myseries.*;
 class insertEpisodesInDB implements Runnable {
 
   private ImportEpisodes im;
-  private MySeries m;
+  private MyEventsClass evClass = new MyEventsClass();
 
   /**
    * Import episodes
    * @param im The import episodes form
    */
-  insertEpisodesInDB(MySeries m, ImportEpisodes im) {
+  insertEpisodesInDB(ImportEpisodes im) {
     this.im = im;
-    this.m = m;
+
   }
 
   public void run() {
@@ -55,7 +55,7 @@ class insertEpisodesInDB implements Runnable {
       im.progress_import.setString(val + "%");
     }
     im.progress_import.setString("Completed");
-    m.fireMyEvent(new MyEvent(m, MyEventHandler.SERIES_UPDATE));
+    evClass.fireMyEvent(new MyEvent(this, MyEventHandler.SERIES_UPDATE));
     Episodes.getCurrentSeriesEpisodes();
     im.dispose();
     MySeries.glassPane.deactivate();

@@ -152,12 +152,12 @@ public class Series {
       table_series.setRowSelectionInterval(s, s);
       series = getCurrentSerial(m, s, true);
       evt.setSeries(series);
-      m.fireMyEvent(evt);
+      m.getEvClass().fireMyEvent(evt);
       return Series.getCurrentSerial().getFullTitle();
     } else {
       series = getCurrentSerial(m, -1, true);
       evt.setSeries(series);
-      m.fireMyEvent(evt);
+      m.getEvClass().fireMyEvent(evt);
       return "";
     }
   }
@@ -197,7 +197,7 @@ public class Series {
     }
     MyEvent evt = new MyEvent(m, MyEventHandler.SET_CURRENT_SERIES);
     evt.setSeries(currentSeries);
-    m.fireMyEvent(evt);
+    m.getEvClass().fireMyEvent(evt);
     return currentSeries;
   }
 

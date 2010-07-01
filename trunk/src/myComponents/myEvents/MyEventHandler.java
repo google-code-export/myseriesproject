@@ -23,19 +23,14 @@ public class MyEventHandler implements MyEventListener {
 
   @Override
   public void myEventOccured(MyEvent evt) {
-    MySeries m = null;
-    Object source = evt.getSource();
-    if (source instanceof myseries.MySeries) {
-      m = (MySeries) source;
-    }
     try {
       //Add event responses here
       if (evt.getType() == SERIES_UPDATE) {
         Series.updateSeriesTable(false);
       } else if (evt.getType() == SET_CURRENT_SERIES) {
         Series.setCurrentSerial(evt.getSeries());
-        MySeries.tableSeries.setRowSelectionInterval(m.getSeriesTableRow(evt.getSeries()),m.getSeriesTableRow(evt.getSeries()));
         Episodes.updateEpisodesTable();
+        MySeries.tableSeries.setRowSelectionInterval(MySeries.getSeriesTableRow(evt.getSeries()),MySeries.getSeriesTableRow(evt.getSeries()));
       }
     } catch (SQLException ex) {
       myseries.MySeries.logger.log(Level.SEVERE, null, ex);

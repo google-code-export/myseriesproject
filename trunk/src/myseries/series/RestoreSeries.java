@@ -15,34 +15,35 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.event.EventListenerList;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import myComponents.myEvents.MyEvent;
 import myComponents.myEvents.MyEventHandler;
+import myComponents.myEvents.MyEventListener;
+import myComponents.myEvents.MyEventListenerInterface;
+import myComponents.myEvents.MyEventsClass;
 import myComponents.myGUI.MyDraggable;
-import myseries.MySeries;
 
 /**
  *
  * @author ssoldatos
  */
-public class RestoreSeries extends MyDraggable {
+public class RestoreSeries extends MyDraggable  {
 
+  public static final long serialVersionUID = 23534663L;
   private final ArrayList<SeriesRecord> series;
-  private MySeries m;
+  MyEventsClass evClass = new MyEventsClass();
 
   /** Creates new form RestoreSeries */
   public RestoreSeries() {
-    this(null,new ArrayList<SeriesRecord>());
+    this(new ArrayList<SeriesRecord>());
   }
 
-  public RestoreSeries(MySeries m, ArrayList<SeriesRecord> series) {
+  public RestoreSeries(ArrayList<SeriesRecord> series) {
     initComponents();
-    this.m = m;
     table.getColumnModel().getColumn(0).setPreferredWidth(400);
     table.getColumnModel().getColumn(1).setPreferredWidth(100);
-
     this.series = series;
     DefaultTableModel model = (DefaultTableModel) table.getModel();
     for (Iterator<SeriesRecord> it = series.iterator(); it.hasNext();) {
@@ -53,6 +54,8 @@ public class RestoreSeries extends MyDraggable {
     setLocationRelativeTo(null);
     setVisible(true);
   }
+
+
 
   /** This method is called from within the constructor to
    * initialize the form.
@@ -166,18 +169,18 @@ public class RestoreSeries extends MyDraggable {
 
   private void restoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restoreActionPerformed
     TableModel model = table.getModel();
-    for (int i=0;i<model.getRowCount();i++){
-      if((Boolean)model.getValueAt(i, 1)){
+    for (int i = 0; i < model.getRowCount(); i++) {
+      if ((Boolean) model.getValueAt(i, 1)) {
         try {
           SeriesRecord ser = (SeriesRecord) model.getValueAt(i, 0);
           ser.setDeleted(0);
           ser.save();
         } catch (SQLException ex) {
-           myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+          myseries.MySeries.logger.log(Level.SEVERE, null, ex);
         }
       }
     }
-    m.fireMyEvent(new MyEvent(m, MyEventHandler.SERIES_UPDATE));
+    evClass.fireMyEvent(new MyEvent(this, MyEventHandler.SERIES_UPDATE));
     dispose();
   }//GEN-LAST:event_restoreActionPerformed
   // Variables declaration - do not modify//GEN-BEGIN:variables

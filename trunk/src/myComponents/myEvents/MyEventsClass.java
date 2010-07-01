@@ -14,6 +14,12 @@ public class MyEventsClass implements MyEventListenerInterface {
 
   protected EventListenerList listenerList = new EventListenerList();
 
+  public MyEventsClass() {
+    addCustomEventListener(new MyEventHandler());
+  }
+
+
+
   @Override
   public void addCustomEventListener(MyEventListener listener) {
     listenerList.add(MyEventListener.class, listener);
