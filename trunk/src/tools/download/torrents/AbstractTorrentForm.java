@@ -31,7 +31,7 @@ public abstract class AbstractTorrentForm extends MyDraggable implements Torrent
   protected void createModels() {
     Vector<String> v = new Vector<String>();
     try {
-      ArrayList<SeriesRecord> s = Series.updateSeriesTable(false);
+      ArrayList<SeriesRecord> s = Series.getSeries(false);
       for (Iterator<SeriesRecord> it = s.iterator(); it.hasNext();) {
         SeriesRecord seriesRecord = it.next();
         v.add(seriesRecord.getTitle());

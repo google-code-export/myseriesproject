@@ -75,7 +75,7 @@ public class ImportEpisodes extends MyDraggable {
    * @throws java.sql.SQLException
    */
   private void createSeries() throws SQLException {
-    series = Series.updateSeriesTable(false);
+    series = Series.getSeries(false);
     for (int i = 0; i < series.size(); i++) {
       comboboxModel_allSeries.addElement(series.get(i).getFullTitle());
     }

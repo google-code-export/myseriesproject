@@ -39,6 +39,8 @@ import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyDescriptor;
 import javax.swing.event.DocumentListener;
+import myComponents.myEvents.MyEvent;
+import myComponents.myEvents.MyEventHandler;
 import myComponents.myGUI.MyImagePanel;
 import myComponents.myGUI.MyScaledImage;
 import myseries.actions.SeriesActions;
@@ -569,8 +571,7 @@ public class AdminSeries extends MyDraggable {
           if (series_ID > 0) {
             seriesRecord.setSeries_ID(series_ID);
           }
-          //m.imagePanel.relocate(m);
-          Series.updateSeriesTable(false);
+          m.fireMyEvent(new MyEvent(m, MyEventHandler.SERIES_UPDATE));
           MySeries.glassPane.deactivate();
           dispose();
           Series.setCurrentSerial(seriesRecord);
