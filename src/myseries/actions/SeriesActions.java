@@ -16,6 +16,8 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import javax.swing.ImageIcon;
 import myComponents.MyMessages;
+import myComponents.myEvents.MyEvent;
+import myComponents.myEvents.MyEventHandler;
 import myComponents.myGUI.MyImagePanel;
 import myseries.MySeries;
 import myseries.episodes.Episodes;
@@ -49,7 +51,6 @@ public class SeriesActions {
   public static void addSeries(MySeries m) {
     Series.setCurrentSerial(null);
     MySeries.glassPane.activate(null);
-    //if (!addSeriesPanel) {
     try {
       AdminSeries a = new AdminSeries(m);
       Series.setCurrentSerial(null);
@@ -80,9 +81,9 @@ public class SeriesActions {
         // }
         Image image = new ImageIcon(MySeries.class.getResource("/images/logo.png")).getImage();
         MySeries.imagePanel.setImage(image, true);
-        s = Series.updateSeriesTable(false);
-        if (s.size() > 0) {
-          Series.setCurrentSerial(s.get(0));
+        m.fireMyEvent(new MyEvent(m, MyEventHandler.SERIES_UPDATE));
+        if (Series.getSize() > 0) {
+          Series.setCurrentSerial(Series.getSeries(false).get(0));
         }
         Episodes.updateEpisodesTable();
       } catch (SQLException ex) {
@@ -146,7 +147,7 @@ public class SeriesActions {
     }
     try {
       SeriesRecord origSeries = Series.getCurrentSerial();
-      ArrayList<SeriesRecord> series = Series.updateSeriesTable(false);
+      ArrayList<SeriesRecord> series = Series.getSeries(false);
       for (Iterator<SeriesRecord> it = series.iterator(); it.hasNext();) {
         SeriesRecord ser = it.next();
         if (ser.getSeries_ID() != origSeries.getSeries_ID()) {

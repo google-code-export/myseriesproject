@@ -183,7 +183,7 @@
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="2" attributes="0">
-                          <Component id="label_progress" alignment="2" pref="20" max="32767" attributes="0"/>
+                          <Component id="label_progress" alignment="2" pref="17" max="32767" attributes="0"/>
                           <Component id="progress_import" alignment="2" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>

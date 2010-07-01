@@ -12,6 +12,8 @@ package myseries;
 
 import com.googlecode.starrating.StarTableCellRenderer;
 import javax.swing.ComboBoxModel;
+import myComponents.myEvents.MyEvent;
+import myComponents.myEvents.MyEventListener;
 import myseries.episodes.Episodes;
 import myseries.series.Series;
 import database.DBConnection;
@@ -45,10 +47,13 @@ import javax.swing.JRootPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelListener;
 import myComponents.MyTableModels.MyFilteredSeriesTableModel;
 import myComponents.MyTableModels.MySeriesTableModel;
 import myComponents.MyUsefulFunctions;
+import myComponents.myEvents.MyEventHandler;
+import myComponents.myEvents.MyEventListenerInterface;
 import myComponents.myGUI.MyImagePanel;
 import myComponents.myGUI.MyDisabledGlassPane;
 import myComponents.myGUI.MyFont;
@@ -80,7 +85,7 @@ import tools.myLogger;
  *
  * @author lordovol
  */
-public class MySeries extends javax.swing.JFrame implements TableModelListener {
+public class MySeries extends javax.swing.JFrame implements TableModelListener, MyEventListenerInterface {
 
   /**
    * Shortcuts
@@ -139,6 +144,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public StatSeries table_stat_series;
   public StatEpisodes table_stat_episodes;
   public static boolean isHelp = false;
+  private EventListenerList listenerList = new EventListenerList();
 
   /**
    *
@@ -239,18 +245,26 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     Filters.setTableModel_filterSeries(tableModel_filterSeries);
     Filters.getFilteredSeries();
 
-    //Set the glass pane
-    MySeries.logger.log(Level.INFO, "Creating the glass pane");
-    glassPane = new MyDisabledGlassPane();
-    JRootPane root = SwingUtilities.getRootPane(this);
-    root.setGlassPane(glassPane);
+    setGlassPane();
+    
     //Check for updates
     MyUsefulFunctions.initInternetConnection();
     if (Options.toBoolean(Options.CHECK_VERSION)) {
       new CheckUpdate(true);
     }
+    //Add the listeners for the custom events
+    addListeners();
+  }
+  
+  private void setGlassPane(){
+    //Set the glass pane
+    MySeries.logger.log(Level.INFO, "Creating the glass pane");
+    glassPane = new MyDisabledGlassPane();
+    JRootPane root = SwingUtilities.getRootPane(this);
+    root.setGlassPane(glassPane);
   }
 
+  
   public static void createLogger() {
     //Create the JVM logger
     logger = myLogger.createHtmlLogger("MYSERIES", Options._USER_DIR_ + "MySeriesLogs", 262144, true, 1);
@@ -394,7 +408,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     menuItem_addSeries = new javax.swing.JMenuItem();
     menuItem_editSeries = new javax.swing.JMenuItem();
     menuItem_deleteSeries = new javax.swing.JMenuItem();
-    jMenuItem2 = new javax.swing.JMenuItem();
+    menuItem_restore = new javax.swing.JMenuItem();
     menuItem_editEpisode = new javax.swing.JMenuItem();
     menu_Tools = new javax.swing.JMenu();
     menuItem_exportEpisodes = new javax.swing.JMenuItem();
@@ -1039,15 +1053,15 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     });
     menu_Edit.add(menuItem_deleteSeries);
 
-    jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
-    jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/restore.png"))); // NOI18N
-    jMenuItem2.setText("Restore Series");
-    jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+    menuItem_restore.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+    menuItem_restore.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/restore.png"))); // NOI18N
+    menuItem_restore.setText("Restore Series");
+    menuItem_restore.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
-        jMenuItem2ActionPerformed(evt);
+        menuItem_restoreActionPerformed(evt);
       }
     });
-    menu_Edit.add(jMenuItem2);
+    menu_Edit.add(menuItem_restore);
 
     menuItem_editEpisode.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
     menuItem_editEpisode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add_episode.png"))); // NOI18N
@@ -1694,9 +1708,9 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     EpisodesActions.downloadEpisodesTorrent(TorrentConstants.ISOHUNT_NAME);
   }//GEN-LAST:event_popUpItem_downloadIsohuntActionPerformed
 
-  private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-    ApplicationActions.restoreSeries();
-  }//GEN-LAST:event_jMenuItem2ActionPerformed
+  private void menuItem_restoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_restoreActionPerformed
+    ApplicationActions.restoreSeries(this);
+  }//GEN-LAST:event_menuItem_restoreActionPerformed
   // Variables declaration - do not modify//GEN-BEGIN:variables
   public static javax.swing.JMenuItem PopUpItem_AddEpisode;
   public static javax.swing.JMenuItem PopUpItem_AddEpisodeInEpisodes;
@@ -1713,7 +1727,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static javax.swing.JLayeredPane imageLayerPanel;
   public static javax.swing.JMenu jMenu1;
   public static javax.swing.JMenuItem jMenuItem1;
-  public static javax.swing.JMenuItem jMenuItem2;
   public static javax.swing.JSeparator jSeparator1;
   public static javax.swing.JSeparator jSeparator2;
   public static javax.swing.JSeparator jSeparator3;
@@ -1735,6 +1748,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static javax.swing.JMenuItem menuItem_importEpisodes;
   public static javax.swing.JMenuItem menuItem_loadDatabase;
   public static javax.swing.JMenuItem menuItem_options;
+  public static javax.swing.JMenuItem menuItem_restore;
   public static javax.swing.JMenuItem menuItem_saveDatabaseAs;
   public static javax.swing.JMenuItem menuItem_uploadFiles;
   public static javax.swing.JMenuItem menuItem_viewLogs;
@@ -1795,6 +1809,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
   }
 
+   private void addListeners() {
+    addCustomEventListener(new MyEventHandler());
+  }
+
   public void createComboBox_filters() {
     comboBox_filterSubtitles.setModel(new DefaultComboBoxModel(
         new String[]{
@@ -1805,5 +1823,25 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
           languages.getPrimary().getName() + " or " + languages.getSecondary().getName(),
           "Not " + languages.getPrimary().getName()
         }));
+  }
+
+  @Override
+  public void addCustomEventListener(MyEventListener listener) {
+    listenerList.add(MyEventListener.class, listener);
+  }
+
+  @Override
+  public void removeMyEventListener(MyEventListener listener) {
+    listenerList.remove(MyEventListener.class, listener);
+  }
+
+  @Override
+  public void fireMyEvent(MyEvent evt) {
+    Object[] listeners = listenerList.getListenerList();
+    for (int i = 0; i < listeners.length; i = i + 2) {
+      if (listeners[i] == MyEventListener.class) {
+        ((MyEventListener) listeners[i + 1]).myEventOccured(evt);
+      }
+    }
   }
 }

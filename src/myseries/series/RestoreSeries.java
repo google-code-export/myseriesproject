@@ -18,7 +18,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import myComponents.myEvents.MyEvent;
+import myComponents.myEvents.MyEventHandler;
 import myComponents.myGUI.MyDraggable;
+import myseries.MySeries;
 
 /**
  *
@@ -27,14 +30,16 @@ import myComponents.myGUI.MyDraggable;
 public class RestoreSeries extends MyDraggable {
 
   private final ArrayList<SeriesRecord> series;
+  private MySeries m;
 
   /** Creates new form RestoreSeries */
   public RestoreSeries() {
-    this(new ArrayList<SeriesRecord>());
+    this(null,new ArrayList<SeriesRecord>());
   }
 
-  public RestoreSeries(ArrayList<SeriesRecord> series) {
+  public RestoreSeries(MySeries m, ArrayList<SeriesRecord> series) {
     initComponents();
+    this.m = m;
     table.getColumnModel().getColumn(0).setPreferredWidth(400);
     table.getColumnModel().getColumn(1).setPreferredWidth(100);
 
@@ -172,11 +177,7 @@ public class RestoreSeries extends MyDraggable {
         }
       }
     }
-    try {
-      Series.updateSeriesTable(false);
-    } catch (SQLException ex) {
-       myseries.MySeries.logger.log(Level.SEVERE, null, ex);
-    }
+    m.fireMyEvent(new MyEvent(m, MyEventHandler.SERIES_UPDATE));
     dispose();
   }//GEN-LAST:event_restoreActionPerformed
   // Variables declaration - do not modify//GEN-BEGIN:variables

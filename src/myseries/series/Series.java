@@ -14,6 +14,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
@@ -75,7 +77,7 @@ public class Series {
    * @return an arraylist of all the series records
    * @throws java.sql.SQLException
    */
-  public static ArrayList<SeriesRecord> updateSeriesTable(boolean deleted) throws SQLException {
+  public static void updateSeriesTable(boolean deleted) throws SQLException {
     emptySeries();
     ArrayList<SeriesRecord> series = getSeries(false);
 
@@ -85,8 +87,17 @@ public class Series {
       getTableModel_series().addRow(data);
     }
     getTable_series().setModel(getTableModel_series());
-    return series;
   }
+
+  public static int getSize() {
+    try {
+      return getSeries(false).size();
+    } catch (SQLException ex) {
+      return 0;
+    }
+  }
+
+
 
   /**
    * Gets all the series
