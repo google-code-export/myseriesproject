@@ -157,14 +157,14 @@ public class ApplicationActions {
     }
   }
 
-  public static void restoreSeries(MySeries m) {
+  public static void restoreSeries() {
     try {
       ArrayList<SeriesRecord> series = Series.getSeries(true);
 
       if(series.isEmpty()){
         MyMessages.message("Restore Series", "There are no deleted series to restore");
       } else {
-        new RestoreSeries(m,series);
+        new RestoreSeries(series);
       }
     } catch (SQLException ex) {
       myseries.MySeries.logger.log(Level.SEVERE, null, ex);

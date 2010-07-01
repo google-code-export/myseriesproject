@@ -21,6 +21,7 @@ import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myComponents.myEvents.MyEvent;
 import myComponents.myEvents.MyEventHandler;
+import myComponents.myEvents.MyEventsClass;
 import myComponents.myGUI.MyDraggable;
 import myComponents.myGUI.MyImagePanel;
 import myseries.MySeries;
@@ -37,6 +38,7 @@ import tools.options.Options;
  */
 public class TrGetId extends MyDraggable {
 
+  private MyEventsClass evClass = new MyEventsClass();
   private MySeries m;
   private int series_ID = 0;
   private AdminSeries adminSeries;
@@ -270,7 +272,7 @@ public class TrGetId extends MyDraggable {
         cSeries.save();
          MyEvent event = new MyEvent(m, MyEventHandler.SET_CURRENT_SERIES);
           event.setSeries(cSeries);
-          m.fireMyEvent(event);
+          evClass.fireMyEvent(event);
       } catch (SQLException ex) {
         MySeries.logger.log(Level.SEVERE, null, ex);
         MyMessages.error("SQL Error", "TvRage ID could not be saved in database");

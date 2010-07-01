@@ -55,6 +55,7 @@ import myComponents.MyTableModels.MySeriesTableModel;
 import myComponents.MyUsefulFunctions;
 import myComponents.myEvents.MyEventHandler;
 import myComponents.myEvents.MyEventListenerInterface;
+import myComponents.myEvents.MyEventsClass;
 import myComponents.myGUI.MyImagePanel;
 import myComponents.myGUI.MyDisabledGlassPane;
 import myComponents.myGUI.MyFont;
@@ -86,7 +87,7 @@ import tools.myLogger;
  *
  * @author lordovol
  */
-public class MySeries extends javax.swing.JFrame implements TableModelListener, MyEventListenerInterface {
+public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
   /**
    * Shortcuts
@@ -146,6 +147,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
   public StatEpisodes table_stat_episodes;
   public static boolean isHelp = false;
   private EventListenerList listenerList = new EventListenerList();
+  private MyEventsClass evClass = new MyEventsClass();
 
   /**
    *
@@ -213,9 +215,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
       panel_allSeriesEpisodes.getViewport().setBackground(Color.white);
 
     }
-
-    //Add the listeners for the custom events
-    addListeners();
 
     // Create the next episodes obj
     MySeries.logger.log(Level.INFO, "Creating Next Episodes Object");
@@ -888,20 +887,19 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     tabpanel_FilteredSeries.setLayout(tabpanel_FilteredSeriesLayout);
     tabpanel_FilteredSeriesLayout.setHorizontalGroup(
       tabpanel_FilteredSeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(tabpanel_FilteredSeriesLayout.createSequentialGroup()
+      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabpanel_FilteredSeriesLayout.createSequentialGroup()
         .addContainerGap()
-        .addGroup(tabpanel_FilteredSeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(panel_allSeriesEpisodes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 824, Short.MAX_VALUE)
-          .addComponent(panel_filters, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addGroup(tabpanel_FilteredSeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+          .addComponent(panel_allSeriesEpisodes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 824, Short.MAX_VALUE)
+          .addComponent(panel_filters, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         .addContainerGap())
     );
     tabpanel_FilteredSeriesLayout.setVerticalGroup(
       tabpanel_FilteredSeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(tabpanel_FilteredSeriesLayout.createSequentialGroup()
-        .addContainerGap()
         .addComponent(panel_filters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(panel_allSeriesEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)
+        .addComponent(panel_allSeriesEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE)
         .addContainerGap())
     );
 
@@ -1124,11 +1122,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     menuItem_DownloadIsohunt.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
     menuItem_DownloadIsohunt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/isohunt.png"))); // NOI18N
     menuItem_DownloadIsohunt.setText("From " + TorrentConstants.ISOHUNT_NAME);
-    menuItem_DownloadIsohunt.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        menuItem_DownloadIsohuntActionPerformed(evt);
-      }
-    });
     jMenu1.add(menuItem_DownloadIsohunt);
 
     menu_Tools.add(jMenu1);
@@ -1212,7 +1205,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     menuItem_viewLogs.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F12, 0));
     menuItem_viewLogs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/viewLogs.png"))); // NOI18N
     menuItem_viewLogs.setText("View Log File");
-    menuItem_viewLogs.setToolTipText("View the log file");
     menuItem_viewLogs.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         menuItem_viewLogsActionPerformed(evt);
@@ -1277,7 +1269,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
       SeriesRecord series = (SeriesRecord) tableSeries.getValueAt(selectedRow, Series.SERIESRECORD_COLUMN);
       MyEvent event = new MyEvent(this, MyEventHandler.SET_CURRENT_SERIES);
       event.setSeries(series);
-      fireMyEvent(event);
+      getEvClass().fireMyEvent(event);
       tabsPanel.setTitleAt(0, Series.getCurrentSerial().getFullTitle());
       String imagePath = Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH + "/" + Series.getCurrentSerial().getScreenshot();
       if (new File(imagePath).isFile()) {
@@ -1521,7 +1513,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
           series = DBHelper.getSeriesByID(series_ID);
           MyEvent event = new MyEvent(this, MyEventHandler.SET_CURRENT_SERIES);
           event.setSeries(series);
-          fireMyEvent(event);
+          getEvClass().fireMyEvent(event);
           setEpisodePopUpMenu(rowSelected, true);
           episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
         } catch (SQLException ex) {
@@ -1658,7 +1650,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
       if (evt.getButton() == MouseEvent.BUTTON3) {
         MyEvent event = new MyEvent(this, MyEventHandler.SET_CURRENT_SERIES);
         event.setSeries(seriesRec);
-        fireMyEvent(event);
+        getEvClass().fireMyEvent(event);
         Episodes.setCurrentEpisode(ep.getEpisode());
         initEpisodesPopUp();
         setEpisodePopUpMenu(rowSelected, false);
@@ -1674,7 +1666,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
       } else {
         MyEvent event = new MyEvent(this, MyEventHandler.SET_CURRENT_SERIES);
         event.setSeries(seriesRec);
-        fireMyEvent(event);
+        getEvClass().fireMyEvent(event);
       }
     } catch (SQLException ex) {
       logger.log(Level.SEVERE, null, ex);
@@ -1722,7 +1714,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
   }//GEN-LAST:event_popUpItem_downloadIsohuntActionPerformed
 
   private void menuItem_restoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_restoreActionPerformed
-    ApplicationActions.restoreSeries(this);
+    ApplicationActions.restoreSeries();
   }//GEN-LAST:event_menuItem_restoreActionPerformed
   // Variables declaration - do not modify//GEN-BEGIN:variables
   public static javax.swing.JMenuItem PopUpItem_AddEpisode;
@@ -1822,43 +1814,24 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
   }
 
-  private void addListeners() {
-    addCustomEventListener(new MyEventHandler());
-  }
+  
 
   public void createComboBox_filters() {
     comboBox_filterSubtitles.setModel(new DefaultComboBoxModel(
-        new String[]{
-          SubtitleConstants.NONE,
-          languages.getPrimary().getName(),
-          languages.getSecondary().getName(),
-          SubtitleConstants.BOTH,
-          languages.getPrimary().getName() + " or " + languages.getSecondary().getName(),
-          "Not " + languages.getPrimary().getName()
-        }));
+            new String[]{
+              SubtitleConstants.NONE,
+              languages.getPrimary().getName(),
+              languages.getSecondary().getName(),
+              SubtitleConstants.BOTH,
+              languages.getPrimary().getName() + " or " + languages.getSecondary().getName(),
+              "Not " + languages.getPrimary().getName()
+            }));
   }
 
-  @Override
-  public void addCustomEventListener(MyEventListener listener) {
-    listenerList.add(MyEventListener.class, listener);
-  }
-
-  @Override
-  public void removeMyEventListener(MyEventListener listener) {
-    listenerList.remove(MyEventListener.class, listener);
-  }
-
-  @Override
-  public void fireMyEvent(MyEvent evt) {
-    Object[] listeners = listenerList.getListenerList();
-    for (int i = 0; i < listeners.length; i = i + 2) {
-      if (listeners[i] == MyEventListener.class) {
-        ((MyEventListener) listeners[i + 1]).myEventOccured(evt);
-      }
+  public static int getSeriesTableRow(SeriesRecord series) {
+    if (series == null) {
+      return -1;
     }
-  }
-
-  public int getSeriesTableRow(SeriesRecord series) {
     TableModel model = tableSeries.getModel();
     for (int i = 0; i < model.getRowCount(); i++) {
       SeriesRecord s = (SeriesRecord) model.getValueAt(i, 0);
@@ -1866,6 +1839,20 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
         return i;
       }
     }
-    return 0;
+    return -1;
+  }
+
+  /**
+   * @return the evClass
+   */
+  public MyEventsClass getEvClass() {
+    return evClass;
+  }
+
+  /**
+   * @param evClass the evClass to set
+   */
+  public void setEvClass(MyEventsClass evClass) {
+    this.evClass = evClass;
   }
 }

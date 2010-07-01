@@ -54,7 +54,7 @@ public class SeriesActions {
       AdminSeries a = new AdminSeries(m);
       MyEvent evt = new MyEvent(m, MyEventHandler.SET_CURRENT_SERIES);
       evt.setSeries(null);
-      m.fireMyEvent(evt);
+      m.getEvClass().fireMyEvent(evt);
     } catch (SQLException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);
     }
@@ -83,12 +83,12 @@ public class SeriesActions {
         // }
         Image image = new ImageIcon(MySeries.class.getResource("/images/logo.png")).getImage();
         MySeries.imagePanel.setImage(image, true);
-        m.fireMyEvent(new MyEvent(m, MyEventHandler.SERIES_UPDATE));
+        m.getEvClass().fireMyEvent(new MyEvent(m, MyEventHandler.SERIES_UPDATE));
         if (Series.getSize() > 0) {
           ser = Series.getSeries(false).get(0);
           MyEvent evt = new MyEvent(m, MyEventHandler.SET_CURRENT_SERIES);
           evt.setSeries(ser);
-          m.fireMyEvent(evt);
+          m.getEvClass().fireMyEvent(evt);
         }
         Episodes.updateEpisodesTable();
       } catch (SQLException ex) {
@@ -158,12 +158,12 @@ public class SeriesActions {
         if (ser.getSeries_ID() != origSeries.getSeries_ID()) {
           MyEvent evt = new MyEvent(m, MyEventHandler.SET_CURRENT_SERIES);
           evt.setSeries(ser);
-          m.fireMyEvent(evt);
+          m.getEvClass().fireMyEvent(evt);
         }
       }
       MyEvent evt = new MyEvent(m, MyEventHandler.SET_CURRENT_SERIES);
       evt.setSeries(origSeries);
-      m.fireMyEvent(evt);
+      m.getEvClass().fireMyEvent(evt);
       MyMessages.message("Update finished", "Updating of series files finished.");
     } catch (SQLException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);
