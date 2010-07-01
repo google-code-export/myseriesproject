@@ -20,6 +20,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 import myComponents.MyTableModels.MySeriesTableModel;
+import myComponents.myEvents.MyEvent;
+import myComponents.myEvents.MyEventHandler;
 import myComponents.myFileFilters.SubtitlesFilter;
 import myComponents.myFileFilters.VideoFilter;
 import myComponents.myGUI.MyImagePanel;
@@ -97,8 +99,6 @@ public class Series {
     }
   }
 
-
-
   /**
    * Gets all the series
    * First empties the series, gets all the series by title and sets the
@@ -143,15 +143,21 @@ public class Series {
    * @return The fulltitle of the selected series
    * @throws java.sql.SQLException
    */
-  public static String selectSeries(int s) throws SQLException {
+  public static String selectSeries(MySeries m, int s) throws SQLException {
+    SeriesRecord series = null;
+    MyEvent evt = new MyEvent(m, MyEventHandler.SET_CURRENT_SERIES);
     if (table_series.getRowCount() > 0) {
       table_series.setColumnSelectionAllowed(false);
       table_series.setRowSelectionAllowed(true);
       table_series.setRowSelectionInterval(s, s);
-      getCurrentSerial(s, true);
+      series = getCurrentSerial(m, s, true);
+      evt.setSeries(series);
+      m.fireMyEvent(evt);
       return Series.getCurrentSerial().getFullTitle();
     } else {
-      getCurrentSerial(-1, true);
+      series = getCurrentSerial(m, -1, true);
+      evt.setSeries(series);
+      m.fireMyEvent(evt);
       return "";
     }
   }
@@ -171,26 +177,28 @@ public class Series {
    * @param showEpisodes update episodes or not (deprecated - always update)
    * @throws java.sql.SQLException
    */
-  public static void getCurrentSerial(int s, boolean showEpisodes) throws SQLException {
+  public static SeriesRecord getCurrentSerial(MySeries m, int s, boolean showEpisodes) throws SQLException {
     if (s == -1) {
-      currentSeries = new SeriesRecord();
-      currentSeries.setSeries_ID(0);
-      currentSeries.setTvrage_ID(0);
-      currentSeries.setSeason(0);
-      currentSeries.setTitle("");
-      currentSeries.setTvSubtitlesCode("");
-      currentSeries.setLocalDir("");
-      currentSeries.setScreenshot("");
-      currentSeries.setInternetUpdate(SeriesRecord.INTERNET_UPDATE);
-      currentSeries.setSOnlineCode("");
-      currentSeries.setHidden(SeriesRecord.NOT_HIDDEN);
-      currentSeries.setDeleted(SeriesRecord.NOT_DELETED);
-      Series.setCurrentSerial(currentSeries);
-      return;
+//      currentSeries = new SeriesRecord();
+//      currentSeries.setSeries_ID(0);
+//      currentSeries.setTvrage_ID(0);
+//      currentSeries.setSeason(0);
+//      currentSeries.setTitle("");
+//      currentSeries.setTvSubtitlesCode("");
+//      currentSeries.setLocalDir("");
+//      currentSeries.setScreenshot("");
+//      currentSeries.setInternetUpdate(SeriesRecord.INTERNET_UPDATE);
+//      currentSeries.setSOnlineCode("");
+//      currentSeries.setHidden(SeriesRecord.NOT_HIDDEN);
+//      currentSeries.setDeleted(SeriesRecord.NOT_DELETED);
+      currentSeries = null;
+    } else {
+      currentSeries = (SeriesRecord) table_series.getModel().getValueAt(s, Series.SERIESRECORD_COLUMN);
     }
-    currentSeries = (SeriesRecord) table_series.getModel().getValueAt(s, Series.SERIESRECORD_COLUMN);
-    Series.setCurrentSerial(currentSeries);
-    Episodes.updateEpisodesTable();
+    MyEvent evt = new MyEvent(m, MyEventHandler.SET_CURRENT_SERIES);
+    evt.setSeries(currentSeries);
+    m.fireMyEvent(evt);
+    return currentSeries;
   }
 
   /**

@@ -49,11 +49,12 @@ public class SeriesActions {
   }
 
   public static void addSeries(MySeries m) {
-    Series.setCurrentSerial(null);
     MySeries.glassPane.activate(null);
     try {
       AdminSeries a = new AdminSeries(m);
-      Series.setCurrentSerial(null);
+      MyEvent evt = new MyEvent(m, MyEventHandler.SET_CURRENT_SERIES);
+      evt.setSeries(null);
+      m.fireMyEvent(evt);
     } catch (SQLException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);
     }
@@ -67,6 +68,7 @@ public class SeriesActions {
     String screenshot = Series.getCurrentSerial().getScreenshot();
     int answ = MyMessages.question("Delete Serial?", "Really delete the series " + title + " season " + season + "?");
     ArrayList<SeriesRecord> s;
+    SeriesRecord ser;
     if (answ == 0) {
       try {
         String sql = "UPDATE series SET deleted = " + SeriesRecord.DELETED + " WHERE series_ID = " + series_ID;
@@ -83,7 +85,10 @@ public class SeriesActions {
         MySeries.imagePanel.setImage(image, true);
         m.fireMyEvent(new MyEvent(m, MyEventHandler.SERIES_UPDATE));
         if (Series.getSize() > 0) {
-          Series.setCurrentSerial(Series.getSeries(false).get(0));
+          ser = Series.getSeries(false).get(0);
+          MyEvent evt = new MyEvent(m, MyEventHandler.SET_CURRENT_SERIES);
+          evt.setSeries(ser);
+          m.fireMyEvent(evt);
         }
         Episodes.updateEpisodesTable();
       } catch (SQLException ex) {
@@ -139,7 +144,7 @@ public class SeriesActions {
 
   }
 
-  public static void updateFiles() {
+  public static void updateFiles(MySeries m) {
     if (!Options.toBoolean(Options.AUTO_FILE_UPDATING)) {
       MyMessages.error("Auto file updating disabled", "Auto file updating is disabled in the options.\n"
           + "Enable it and try again");
@@ -151,12 +156,14 @@ public class SeriesActions {
       for (Iterator<SeriesRecord> it = series.iterator(); it.hasNext();) {
         SeriesRecord ser = it.next();
         if (ser.getSeries_ID() != origSeries.getSeries_ID()) {
-          Series.setCurrentSerial(ser);
-          Episodes.updateEpisodesTable();
+          MyEvent evt = new MyEvent(m, MyEventHandler.SET_CURRENT_SERIES);
+          evt.setSeries(ser);
+          m.fireMyEvent(evt);
         }
       }
-      Series.setCurrentSerial(origSeries);
-      Episodes.updateEpisodesTable();
+      MyEvent evt = new MyEvent(m, MyEventHandler.SET_CURRENT_SERIES);
+      evt.setSeries(origSeries);
+      m.fireMyEvent(evt);
       MyMessages.message("Update finished", "Updating of series files finished.");
     } catch (SQLException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);

@@ -105,7 +105,7 @@ public class AdminSeries extends MyDraggable {
       spinner_season.setValue(seriesRecord.getSeason());
       textField_Serial.setText(seriesRecord.getTitle());
       label_Title.setText("Edit Series " + seriesRecord.getTitle()
-              + " S" + MyUsefulFunctions.padLeft(seriesRecord.getSeason(), 2, "0"));
+          + " S" + MyUsefulFunctions.padLeft(seriesRecord.getSeason(), 2, "0"));
       textfield_tvSubsId.setText(seriesRecord.getTvSubtitlesCode());
       textfield_tvRageID.setText(String.valueOf(seriesRecord.getTvrage_ID()));
       textfield_localDir.setText(seriesRecord.getLocalDir());
@@ -528,65 +528,66 @@ public class AdminSeries extends MyDraggable {
    * @throws java.io.IOException
    */
   private void addSeries() {
-  
+
+    try {
+      int tvRageID = 0;
       try {
-        int tvRageID = 0;
-        try {
-          tvRageID = Integer.parseInt(textfield_tvRageID.getText());
-        } catch (NumberFormatException ex) {
-        }
-        screenshot = textfield_screenshot.getText().trim();
-        season = Integer.parseInt(String.valueOf(spinner_season.getValue()).trim());
-        serial = textField_Serial.getText().trim();
-        if (Series.getCurrentSerial().getSeries_ID() == 0) {
-          seriesRecord = new SeriesRecord();
-        }
-        seriesRecord.setTitle(serial);
-        seriesRecord.setSeason(season);
-        seriesRecord.setTvSubtitlesCode(textfield_tvSubsId.getText().trim());
-        seriesRecord.setTvrage_ID(tvRageID);
-        seriesRecord.setLocalDir(textfield_localDir.getText());
-        seriesRecord.setTvSubtitlesCode(textfield_tvSubsId.getText().trim());
-        seriesRecord.setSOnlineCode(textfield_subsOnline.getText().trim());
-        File sc = null;
-        if (!screenshot.equals("")) {
-          sc = new File(screenshot);
-          if (sc.isFile() && !screenshot.startsWith("./images")) {
-            CopyScreenshot c = new CopyScreenshot(screenshot);
-            Thread t = new Thread(c);
-            t.start();
-            seriesRecord.setScreenshot(sc.getName());
-          } else {
-            seriesRecord.setScreenshot(sc.getName());
-          }
-          Image im = new ImageIcon(sc.getAbsolutePath()).getImage();
-          MySeries.imagePanel.setImage(im, false);
-
-        } else {
-          seriesRecord.setScreenshot("");
-          MySeries.imagePanel.setImage(null, true);
-        }
-        try {
-          int series_ID = seriesRecord.save();
-          if (series_ID > 0) {
-            seriesRecord.setSeries_ID(series_ID);
-          }
-          m.fireMyEvent(new MyEvent(m, MyEventHandler.SERIES_UPDATE));
-          MySeries.glassPane.deactivate();
-          dispose();
-          Series.setCurrentSerial(seriesRecord);
-          if (checkbox_updateEpisodes.isSelected()) {
-            SeriesActions.internetUpdateSeries(m, InternetUpdate.TV_RAGE_NAME);
-          }
-        } catch (SQLException ex) {
-          MySeries.logger.log(Level.SEVERE, "SQL error occured", ex);
-        }
+        tvRageID = Integer.parseInt(textfield_tvRageID.getText());
       } catch (NumberFormatException ex) {
-        MySeries.logger.log(Level.WARNING, "Season must be a number", ex);
-        MyMessages.error("Season not a number!!!", "Season must be a number");
       }
-    }
+      screenshot = textfield_screenshot.getText().trim();
+      season = Integer.parseInt(String.valueOf(spinner_season.getValue()).trim());
+      serial = textField_Serial.getText().trim();
+      if (Series.getCurrentSerial().getSeries_ID() == 0) {
+        seriesRecord = new SeriesRecord();
+      }
+      seriesRecord.setTitle(serial);
+      seriesRecord.setSeason(season);
+      seriesRecord.setTvSubtitlesCode(textfield_tvSubsId.getText().trim());
+      seriesRecord.setTvrage_ID(tvRageID);
+      seriesRecord.setLocalDir(textfield_localDir.getText());
+      seriesRecord.setTvSubtitlesCode(textfield_tvSubsId.getText().trim());
+      seriesRecord.setSOnlineCode(textfield_subsOnline.getText().trim());
+      File sc = null;
+      if (!screenshot.equals("")) {
+        sc = new File(screenshot);
+        if (sc.isFile() && !screenshot.startsWith("./images")) {
+          CopyScreenshot c = new CopyScreenshot(screenshot);
+          Thread t = new Thread(c);
+          t.start();
+          seriesRecord.setScreenshot(sc.getName());
+        } else {
+          seriesRecord.setScreenshot(sc.getName());
+        }
+        Image im = new ImageIcon(sc.getAbsolutePath()).getImage();
+        MySeries.imagePanel.setImage(im, false);
 
+      } else {
+        seriesRecord.setScreenshot("");
+        MySeries.imagePanel.setImage(null, true);
+      }
+      try {
+        int series_ID = seriesRecord.save();
+        if (series_ID > 0) {
+          seriesRecord.setSeries_ID(series_ID);
+        }
+        m.fireMyEvent(new MyEvent(m, MyEventHandler.SERIES_UPDATE));
+        MySeries.glassPane.deactivate();
+        dispose();
+        MyEvent event = new MyEvent(m, MyEventHandler.SET_CURRENT_SERIES);
+        event.setSeries(seriesRecord);
+        m.fireMyEvent(event);
+        if (checkbox_updateEpisodes.isSelected()) {
+          SeriesActions.internetUpdateSeries(m, InternetUpdate.TV_RAGE_NAME);
+        }
+      } catch (SQLException ex) {
+        MySeries.logger.log(Level.SEVERE, "SQL error occured", ex);
+      }
+    } catch (NumberFormatException ex) {
+      MySeries.logger.log(Level.WARNING, "Season must be a number", ex);
+      MyMessages.error("Season not a number!!!", "Season must be a number");
+    }
+  }
 
     private void button_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_AddActionPerformed
       ValidationGroup group = new ValidationGroup();
@@ -776,7 +777,7 @@ public class AdminSeries extends MyDraggable {
       if (f.isFile()) {
         MyScaledImage im = new MyScaledImage(new ImageIcon(sc).getImage());
         im.fitImageIn(scrPanel.getWidth(), scrPanel.getHeight());
-        scrPanel.setPreferredSize(new Dimension(im.getWidth(),im.getHeight()));
+        scrPanel.setPreferredSize(new Dimension(im.getWidth(), im.getHeight()));
         scrPanel.repaint();
         scrPanel.revalidate();
         scrPanel.changeSize(im.getImage(), im.getWidth(), im.getHeight());

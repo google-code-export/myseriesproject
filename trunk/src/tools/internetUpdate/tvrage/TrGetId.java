@@ -19,6 +19,8 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
+import myComponents.myEvents.MyEvent;
+import myComponents.myEvents.MyEventHandler;
 import myComponents.myGUI.MyDraggable;
 import myComponents.myGUI.MyImagePanel;
 import myseries.MySeries;
@@ -35,7 +37,7 @@ import tools.options.Options;
  */
 public class TrGetId extends MyDraggable {
 
-  private MySeries myS;
+  private MySeries m;
   private int series_ID = 0;
   private AdminSeries adminSeries;
   String title;
@@ -57,12 +59,12 @@ public class TrGetId extends MyDraggable {
 
   /**
    * Creates a tvrage get id from My series form
-   * @param myS MySeries form
+   * @param m MySeries form
    * @param series_ID The series ID
    * @param title The series title
    */
-  public TrGetId(MySeries myS, int series_ID, String title) {
-    this.myS = myS;
+  public TrGetId(MySeries m, int series_ID, String title) {
+    this.m = m;
     this.series_ID = series_ID;
     this.title = title;
     getID();
@@ -249,8 +251,8 @@ public class TrGetId extends MyDraggable {
         dispose();
         adminSeries.setVisible(true);
       } else {
-        if (myS != null) {
-          InternetUpdate iu = new InternetUpdate(myS, Series.getCurrentSerial(), InternetUpdate.TV_RAGE_NAME);
+        if (m != null) {
+          InternetUpdate iu = new InternetUpdate(m, Series.getCurrentSerial(), InternetUpdate.TV_RAGE_NAME);
         }
       }
     } else {
@@ -266,7 +268,9 @@ public class TrGetId extends MyDraggable {
         SeriesRecord cSeries = DBHelper.getSeriesByID(series_ID);
         cSeries.setTvrage_ID(tvRageID);
         cSeries.save();
-        Series.setCurrentSerial(cSeries);
+         MyEvent event = new MyEvent(m, MyEventHandler.SET_CURRENT_SERIES);
+          event.setSeries(cSeries);
+          m.fireMyEvent(event);
       } catch (SQLException ex) {
         MySeries.logger.log(Level.SEVERE, null, ex);
         MyMessages.error("SQL Error", "TvRage ID could not be saved in database");
