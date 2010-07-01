@@ -12,6 +12,7 @@ package myseries;
 
 import com.googlecode.starrating.StarTableCellRenderer;
 import javax.swing.ComboBoxModel;
+import javax.swing.table.TableModel;
 import myComponents.myEvents.MyEvent;
 import myComponents.myEvents.MyEventListener;
 import myseries.episodes.Episodes;
@@ -213,8 +214,9 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
     }
 
-    setLocationRelativeTo(null);
-    setVisible(true);
+    //Add the listeners for the custom events
+    addListeners();
+
     // Create the next episodes obj
     MySeries.logger.log(Level.INFO, "Creating Next Episodes Object");
 
@@ -233,7 +235,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     MySeries.logger.log(Level.INFO, "Creating episodes data");
     Episodes.setTableModel_episodes(tableModel_episodes);
     Episodes.setTabsPanel(tabsPanel);
-    Series.selectSeries(0);
+    Series.selectSeries(this, 0);
     if (!Series.getCurrentSerial().getScreenshot().equals("")) {
       imagePanel.setImage(new ImageIcon(Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH + Series.getCurrentSerial().getScreenshot()).getImage(), false);
     }
@@ -246,17 +248,17 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     Filters.getFilteredSeries();
 
     setGlassPane();
-    
+    setLocationRelativeTo(null);
+    setVisible(true);
+
     //Check for updates
     MyUsefulFunctions.initInternetConnection();
     if (Options.toBoolean(Options.CHECK_VERSION)) {
       new CheckUpdate(true);
     }
-    //Add the listeners for the custom events
-    addListeners();
   }
-  
-  private void setGlassPane(){
+
+  private void setGlassPane() {
     //Set the glass pane
     MySeries.logger.log(Level.INFO, "Creating the glass pane");
     glassPane = new MyDisabledGlassPane();
@@ -264,7 +266,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     root.setGlassPane(glassPane);
   }
 
-  
   public static void createLogger() {
     //Create the JVM logger
     logger = myLogger.createHtmlLogger("MYSERIES", Options._USER_DIR_ + "MySeriesLogs", 262144, true, 1);
@@ -1273,7 +1274,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
   private void seriesMouseClicked() throws IOException {
     int selectedRow = tableSeries.getSelectedRow();
     if (selectedRow > -1) {
-      Series.setCurrentSerial((SeriesRecord) tableSeries.getValueAt(selectedRow, Series.SERIESRECORD_COLUMN));
+      SeriesRecord series = (SeriesRecord) tableSeries.getValueAt(selectedRow, Series.SERIESRECORD_COLUMN);
+      MyEvent event = new MyEvent(this, MyEventHandler.SET_CURRENT_SERIES);
+      event.setSeries(series);
+      fireMyEvent(event);
       tabsPanel.setTitleAt(0, Series.getCurrentSerial().getFullTitle());
       String imagePath = Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH + "/" + Series.getCurrentSerial().getScreenshot();
       if (new File(imagePath).isFile()) {
@@ -1361,7 +1365,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     if (rowSelected > -1) {
       String ser = "";
       try {
-        ser = Series.selectSeries(rowSelected);
+        ser = Series.selectSeries(this, rowSelected);
       } catch (SQLException ex) {
         MySeries.logger.log(Level.SEVERE, null, ex);
       }
@@ -1496,6 +1500,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
   }
 
   private void tableEpisodesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableEpisodesMouseReleased
+    SeriesRecord series;
 
     if (evt.getButton() == MouseEvent.BUTTON3) {
       if (tableEpisodes.getSelectedRowCount() > 1) {
@@ -1513,7 +1518,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
           int s = Integer.parseInt(String.valueOf(tableEpisodes.getValueAt(rowSelected, 0)));
           Episodes.setCurrentEpisode(s);
           int series_ID = Episodes.getCurrentEpisode().getSeries_ID();
-          Series.setCurrentSerial(DBHelper.getSeriesByID(series_ID));
+          series = DBHelper.getSeriesByID(series_ID);
+          MyEvent event = new MyEvent(this, MyEventHandler.SET_CURRENT_SERIES);
+          event.setSeries(series);
+          fireMyEvent(event);
           setEpisodePopUpMenu(rowSelected, true);
           episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
         } catch (SQLException ex) {
@@ -1642,29 +1650,34 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
   }//GEN-LAST:event_popUpItem_downloadEzTvActionPerformed
 
   private void tableFiltersMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableFiltersMouseReleased
-    if (evt.getButton() == MouseEvent.BUTTON3) {
+    try {
       Point p = evt.getPoint();
       int rowSelected = tableFilters.rowAtPoint(p);
-      try {
-        EpisodesRecord ep = (EpisodesRecord) tableFilters.getValueAt(rowSelected, 2);
-        SeriesRecord seriesRec = DBHelper.getSeriesByID(ep.getSeries_ID());
-        Series.setCurrentSerial(seriesRec);
+      EpisodesRecord ep = (EpisodesRecord) tableFilters.getValueAt(rowSelected, 2);
+      SeriesRecord seriesRec = DBHelper.getSeriesByID(ep.getSeries_ID());
+      if (evt.getButton() == MouseEvent.BUTTON3) {
+        MyEvent event = new MyEvent(this, MyEventHandler.SET_CURRENT_SERIES);
+        event.setSeries(seriesRec);
+        fireMyEvent(event);
         Episodes.setCurrentEpisode(ep.getEpisode());
         initEpisodesPopUp();
         setEpisodePopUpMenu(rowSelected, false);
-//        if (seriesRec != null) {
-//          popUpItem_viewEpisode.setEnabled(!seriesRec.getLocalDir().equals(""));
-//          popUpItem_viewEpisode.setText("View episode " + Episodes.getCurrentEpisode().getTitle());
-//          popUpItem_downloadSubtitles.setEnabled(!seriesRec.getLink().equals(""));
-//          popUpItem_downloadSubtitles.setText("Downlod subtitles for " + Episodes.getCurrentEpisode().getTitle());
-//          popUpItem_downloadTorrent.setEnabled(true);
-//          popUpItem_downloadTorrent.setText("Download torrent for " + Episodes.getCurrentEpisode().getTitle());
-//        }
+        //        if (seriesRec != null) {
+        //          popUpItem_viewEpisode.setEnabled(!seriesRec.getLocalDir().equals(""));
+        //          popUpItem_viewEpisode.setText("View episode " + Episodes.getCurrentEpisode().getTitle());
+        //          popUpItem_downloadSubtitles.setEnabled(!seriesRec.getLink().equals(""));
+        //          popUpItem_downloadSubtitles.setText("Downlod subtitles for " + Episodes.getCurrentEpisode().getTitle());
+        //          popUpItem_downloadTorrent.setEnabled(true);
+        //          popUpItem_downloadTorrent.setText("Download torrent for " + Episodes.getCurrentEpisode().getTitle());
+        //        }
         episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
-      } catch (SQLException ex) {
-        MySeries.logger.log(Level.SEVERE, null, ex);
-      } catch (IndexOutOfBoundsException ex) {
+      } else {
+        MyEvent event = new MyEvent(this, MyEventHandler.SET_CURRENT_SERIES);
+        event.setSeries(seriesRec);
+        fireMyEvent(event);
       }
+    } catch (SQLException ex) {
+      logger.log(Level.SEVERE, null, ex);
     }
   }//GEN-LAST:event_tableFiltersMouseReleased
 
@@ -1701,7 +1714,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
   }//GEN-LAST:event_menuItem_DownloadIsohuntActionPerformed
 
   private void menuItem_uploadFilesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_uploadFilesActionPerformed
-    SeriesActions.updateFiles();
+    SeriesActions.updateFiles(this);
   }//GEN-LAST:event_menuItem_uploadFilesActionPerformed
 
   private void popUpItem_downloadIsohuntActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_downloadIsohuntActionPerformed
@@ -1809,7 +1822,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
   }
 
-   private void addListeners() {
+  private void addListeners() {
     addCustomEventListener(new MyEventHandler());
   }
 
@@ -1843,5 +1856,16 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
         ((MyEventListener) listeners[i + 1]).myEventOccured(evt);
       }
     }
+  }
+
+  public int getSeriesTableRow(SeriesRecord series) {
+    TableModel model = tableSeries.getModel();
+    for (int i = 0; i < model.getRowCount(); i++) {
+      SeriesRecord s = (SeriesRecord) model.getValueAt(i, 0);
+      if (s.getSeries_ID() == series.getSeries_ID()) {
+        return i;
+      }
+    }
+    return 0;
   }
 }
