@@ -143,22 +143,20 @@ public class Series {
    * @return The fulltitle of the selected series
    * @throws java.sql.SQLException
    */
-  public static String selectSeries(MySeries m, int s) throws SQLException {
+  public static void selectSeries(MySeries m, int s) throws SQLException {
     SeriesRecord series = null;
     MyEvent evt = new MyEvent(m, MyEventHandler.SET_CURRENT_SERIES);
-    if (table_series.getRowCount() > 0) {
+    if (table_series.getRowCount() > 0 && s > -1) {
       table_series.setColumnSelectionAllowed(false);
       table_series.setRowSelectionAllowed(true);
       table_series.setRowSelectionInterval(s, s);
       series = getCurrentSerial(m, s, true);
       evt.setSeries(series);
       m.getEvClass().fireMyEvent(evt);
-      return Series.getCurrentSerial().getFullTitle();
     } else {
       series = getCurrentSerial(m, -1, true);
       evt.setSeries(series);
       m.getEvClass().fireMyEvent(evt);
-      return "";
     }
   }
 
@@ -260,6 +258,7 @@ public class Series {
         currentSeries = DBHelper.getSeriesByID(series_id);
       } else {
         currentSeries = null;
+        return;
       }
       if (!currentSeries.getScreenshot().equals("")) {
         File sc = new File(Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH + currentSeries.getScreenshot());
@@ -269,7 +268,7 @@ public class Series {
       }
       MySeries.imagePanel.setImage(image, true);
     } catch (SQLException ex) {
-      currentSeries = new SeriesRecord();
+      currentSeries = null;
     }
   }
 
