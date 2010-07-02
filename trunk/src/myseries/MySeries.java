@@ -1307,6 +1307,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     Point p = evt.getPoint();
     int rowSelected = tableSeries.rowAtPoint(p);
     try {
+      //TODO select sereies by event
       Series.selectSeries(this, rowSelected);
     } catch (SQLException ex) {
       logger.log(Level.SEVERE, null, ex);
@@ -1435,12 +1436,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
           int series_ID = ep.getSeries_ID();
           series = DBHelper.getSeriesByID(series_ID);
 
-          event = new MyEvent(this, MyEventHandler.SET_CURRENT_SERIES);
+          event.setType(MyEventHandler.SET_CURRENT_SERIES);
           event.setSeries(series);
           getEvClass().fireMyEvent(event);
 
-          event = new MyEvent(this, MyEventHandler.SET_CURRENT_EPISODE);
-          event.setSeries(series);
+          event.setType(MyEventHandler.SET_CURRENT_EPISODE);
           event.setEpisode(ep);
           getEvClass().fireMyEvent(event);
 
@@ -1563,15 +1563,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
         event.setEpisode(ep);
         event.setEpisodesPanel(false);
         getEvClass().fireMyEvent(event);
-       
-        //        if (seriesRec != null) {
-        //          popUpItem_viewEpisode.setEnabled(!seriesRec.getLocalDir().equals(""));
-        //          popUpItem_viewEpisode.setText("View episode " + Episodes.getCurrentEpisode().getTitle());
-        //          popUpItem_downloadSubtitles.setEnabled(!seriesRec.getLink().equals(""));
-        //          popUpItem_downloadSubtitles.setText("Downlod subtitles for " + Episodes.getCurrentEpisode().getTitle());
-        //          popUpItem_downloadTorrent.setEnabled(true);
-        //          popUpItem_downloadTorrent.setText("Download torrent for " + Episodes.getCurrentEpisode().getTitle());
-        //        }
         episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
       } else {
         MyEvent event = new MyEvent(this, MyEventHandler.SET_CURRENT_SERIES);

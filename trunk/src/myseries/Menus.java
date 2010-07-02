@@ -26,52 +26,42 @@ public class Menus {
   }
 
   public static void setEpisodesPopup(SeriesRecord series, EpisodesRecord episode, boolean singleEpisode, boolean episodesPanel) {
-    initEpisodesPopUp();
-    if (!singleEpisode) {
-      MySeries.popUpItem_deleteEpisode.setText("Delete selected episodes");
-      MySeries.popUpItem_deleteEpisode.setEnabled(true);
-    } else {
-      MySeries.PopUpItem_AddEpisodeInEpisodes.setEnabled(true);
-      MySeries.PopUpItem_AddEpisodeInEpisodes.setVisible(true);
-      MySeries.popUpItem_deleteEpisode.setVisible(true);
-      MySeries.popUpItem_viewEpisode.setEnabled(!series.getLocalDir().equals(""));
-      MySeries.popUpItem_renameEpisode.setEnabled(!series.getLocalDir().equals(""));
-      MySeries.popUpItem_renameEpisode.setText("Rename episode " + episode.getTitle());
-      MySeries.popUpItem_viewEpisode.setText("View episode " + episode.getTitle());
-      MySeries.PopUpItem_AddEpisodeInEpisodes.setText("Add new episode");
-      if (episodesPanel) {
-        MySeries.popUpItem_deleteEpisode.setEnabled(episode != null);
-        MySeries.popUpItem_deleteEpisode.setText("Delete episode " + episode.getTitle());
-      }
-      MySeries.popUpMenu_downloadSubtitles.setEnabled(true);
-      MySeries.popUpMenu_downloadSubtitles.setText("Download subtitles for " + episode.getTitle());
-      MySeries.popUpItem_downloadSubsTvSubs.setEnabled(true);
-      MySeries.popUpItem_downloadSubsSubOn.setEnabled(true);
-      MySeries.popUpMenu_downloadTorrent.setText("Download torrent for " + episode.getTitle());
-      MySeries.popUpItem_downloadEzTv.setEnabled(true);
-      MySeries.popUpItem_downloadIsohunt.setEnabled(true);
-      MySeries.popUpItem_viewEpisode.validate();
-    }
+       String seriesTitle = series != null ? series.getFullTitle() : "";
+       String episodeTitle = episode != null ? episode.getTitle() : "";
+       String localDir = series != null ? series.getLocalDir() : "";
+      //ADD EPISODE
+      MySeries.PopUpItem_AddEpisodeInEpisodes.setEnabled(singleEpisode);
+      MySeries.PopUpItem_AddEpisodeInEpisodes.setText("Add new episode to " + seriesTitle);
 
-  }
+      //DELETE EPISODE
+      MySeries.popUpItem_deleteEpisode.setEnabled(episodesPanel);
+      MySeries.popUpItem_deleteEpisode.setText(singleEpisode ? 
+        "Delete episode " + episodeTitle :
+        "Delete selected episodes");
 
-  private static void initEpisodesPopUp() {
-    MySeries.PopUpItem_AddEpisodeInEpisodes.setText("Add episode");
-    MySeries.PopUpItem_AddEpisodeInEpisodes.setEnabled(false);
-    MySeries.popUpItem_deleteEpisode.setText("Delete episode");
-    MySeries.popUpItem_deleteEpisode.setEnabled(false);
-    MySeries.popUpItem_viewEpisode.setText("View episode");
-    MySeries.popUpItem_viewEpisode.setEnabled(false);
-    MySeries.popUpItem_renameEpisode.setText("Rename episode");
-    MySeries.popUpItem_renameEpisode.setEnabled(false);
-    MySeries.popUpMenu_downloadSubtitles.setText("Download subtitles");
-    MySeries.popUpMenu_downloadSubtitles.setEnabled(false);
-    MySeries.popUpItem_downloadSubsTvSubs.setText("Download subtitles from TvSubtitles");
-    MySeries.popUpItem_downloadSubsTvSubs.setEnabled(false);
-    MySeries.popUpItem_downloadSubsSubOn.setText("Download subtitles from SubtitleOnline");
-    MySeries.popUpItem_downloadSubsSubOn.setEnabled(false);
-    MySeries.popUpItem_downloadEzTv.setText("Download torrent from EzTv");
-    MySeries.popUpItem_downloadIsohunt.setText("Download torrent from Isohunt");
+      //VIEW EPISODE
+      MySeries.popUpItem_viewEpisode.setEnabled(!localDir.equals("")&&singleEpisode);
+      MySeries.popUpItem_viewEpisode.setText("View episode " + episodeTitle);
+
+      //RENAME EPISODE
+      MySeries.popUpItem_renameEpisode.setEnabled(!localDir.equals("")&&singleEpisode);
+      MySeries.popUpItem_renameEpisode.setText("Rename episode " + episodeTitle);
+
+      //DOWNLOAD SUBS
+      MySeries.popUpMenu_downloadSubtitles.setEnabled(singleEpisode);
+      MySeries.popUpMenu_downloadSubtitles.setText("Download subtitles for " + episodeTitle);
+      MySeries.popUpItem_downloadSubsTvSubs.setEnabled(singleEpisode);
+      MySeries.popUpItem_downloadSubsSubOn.setEnabled(singleEpisode);
+
+      //DOWNLOAD TORRENT
+      MySeries.popUpMenu_downloadTorrent.setEnabled(singleEpisode);
+      MySeries.popUpMenu_downloadTorrent.setText("Download torrent for " + episodeTitle);
+      MySeries.popUpItem_downloadEzTv.setEnabled(singleEpisode);
+      MySeries.popUpItem_downloadIsohunt.setEnabled(singleEpisode);
+      
+
+    
+
   }
 
   private void setSeriesPopup(SeriesRecord series, boolean state) {

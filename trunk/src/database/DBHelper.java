@@ -219,7 +219,7 @@ public class DBHelper {
     String date = sdf.format(sDay.getDate());
     String sql = "SELECT series.screenshot as image, episodes.episode AS ep, episodes.title AS title , series.title AS series FROM "
         + "episodes JOIN series on episodes.series_ID = series.series_ID WHERE "
-        + "aired = '" + date + "'";
+        + "aired = '" + date + "' AND deleted = 0";
     try {
       ResultSet rs = DBConnection.conn.createStatement().executeQuery(sql);
       while (rs.next()) {
