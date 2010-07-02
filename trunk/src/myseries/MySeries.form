@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.1" encoding="UTF-8" ?>
 
 <Form version="1.6" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
@@ -389,10 +389,6 @@
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Edit current series"/>
               </Properties>
-              <BindingProperties>
-                <BindingProperty name="enabled" source="PopUpItem_EditSerial" sourcePath="${enabled}" target="menuItem_editSeries" targetPath="enabled" updateStrategy="0" immediately="false"/>
-                <BindingProperty name="text" source="PopUpItem_EditSerial" sourcePath="${text}" target="menuItem_editSeries" targetPath="text" updateStrategy="0" immediately="false"/>
-              </BindingProperties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItem_editSeriesActionPerformed"/>
               </Events>
@@ -407,10 +403,6 @@
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Delete current series"/>
               </Properties>
-              <BindingProperties>
-                <BindingProperty name="enabled" source="PopUpItem_DeleteSerial" sourcePath="${enabled}" target="menuItem_deleteSeries" targetPath="enabled" updateStrategy="0" immediately="false"/>
-                <BindingProperty name="text" source="PopUpItem_DeleteSerial" sourcePath="${text}" target="menuItem_deleteSeries" targetPath="text" updateStrategy="0" immediately="false"/>
-              </BindingProperties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItem_deleteSeriesActionPerformed"/>
               </Events>
@@ -439,10 +431,6 @@
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Add a new episode to the current series"/>
               </Properties>
-              <BindingProperties>
-                <BindingProperty name="enabled" source="PopUpItem_AddEpisode" sourcePath="${enabled}" target="menuItem_editEpisode" targetPath="enabled" updateStrategy="0" immediately="false"/>
-                <BindingProperty name="text" source="PopUpItem_AddEpisode" sourcePath="${text}" target="menuItem_editEpisode" targetPath="text" updateStrategy="0" immediately="false"/>
-              </BindingProperties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItem_editEpisodeActionPerformed"/>
               </Events>
@@ -723,12 +711,20 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <Component id="toolbar" pref="1084" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
           <Component id="splitPane_main" alignment="0" pref="1094" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="splitPane_main" alignment="1" pref="597" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <Component id="toolbar" min="-2" pref="25" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="splitPane_main" pref="566" max="32767" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -781,13 +777,13 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-                      <Component id="imageLayerPanel" pref="482" max="32767" attributes="0"/>
+                      <Component id="imageLayerPanel" pref="451" max="32767" attributes="0"/>
                       <EmptySpace min="80" pref="80" max="80" attributes="0"/>
                   </Group>
                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="scrollPane_series" pref="573" max="32767" attributes="2"/>
+                          <Component id="scrollPane_series" pref="542" max="32767" attributes="2"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -892,7 +888,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="tabsPanel" pref="571" max="32767" attributes="0"/>
+                      <Component id="tabsPanel" pref="540" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -956,11 +952,11 @@
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <EmptySpace min="0" pref="535" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="504" max="32767" attributes="0"/>
                           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                                  <Component id="panel_episodesList" pref="493" max="32767" attributes="0"/>
+                                  <Component id="panel_episodesList" pref="462" max="32767" attributes="0"/>
                                   <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -1065,7 +1061,7 @@
                           <Group type="102" attributes="0">
                               <Component id="panel_filters" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="panel_allSeriesEpisodes" pref="465" max="32767" attributes="0"/>
+                              <Component id="panel_allSeriesEpisodes" pref="434" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -1274,7 +1270,7 @@
                           <Group type="102" attributes="0">
                               <Component id="statSeries" min="-2" pref="212" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="statEpisodes" pref="306" max="32767" attributes="0"/>
+                              <Component id="statEpisodes" pref="275" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -1327,6 +1323,29 @@
             </Container>
           </SubComponents>
         </Container>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JToolBar" name="toolbar">
+      <Properties>
+        <Property name="rollover" type="boolean" value="true"/>
+      </Properties>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JButton" name="tb_addSeries">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/images/add_series.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Add Series"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tb_addSeriesActionPerformed"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>
