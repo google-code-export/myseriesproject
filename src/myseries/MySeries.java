@@ -1264,7 +1264,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
   private void tableSeriesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableSeriesMouseClicked
     try {
-      seriesMouseClicked();
+      seriesMouseReleased(evt);
     } catch (IOException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);
     }
@@ -1273,21 +1273,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   private void seriesMouseClicked() throws IOException {
     int selectedRow = tableSeries.getSelectedRow();
     if (selectedRow > -1) {
-      SeriesRecord series = (SeriesRecord) tableSeries.getValueAt(selectedRow, Series.SERIESRECORD_COLUMN);
-      MyEvent event = new MyEvent(this, MyEventHandler.SET_CURRENT_SERIES);
-      event.setSeries(series);
-      getEvClass().fireMyEvent(event);
-      tabsPanel.setTitleAt(0, Series.getCurrentSerial().getFullTitle());
-      String imagePath = Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH + "/" + Series.getCurrentSerial().getScreenshot();
-      if (new File(imagePath).isFile()) {
-        Image im = new ImageIcon(imagePath).getImage();
-        imagePanel.setImage(im, false);
-      } else {
-        Image image = new ImageIcon(getClass().getResource(MyImagePanel.LOGO)).getImage();
-        imagePanel.setImage(image, true);
-      }
-      
-      tabsPanel.setSelectedComponent(tabpanel_episodesList);
+     
     } else {
       
     }
@@ -1305,14 +1291,15 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
   private void seriesMouseReleased(java.awt.event.MouseEvent evt) throws IOException {
     Point p = evt.getPoint();
-    int rowSelected = tableSeries.rowAtPoint(p);
-    try {
-      //TODO select sereies by event
-      Series.selectSeries(this, rowSelected);
-    } catch (SQLException ex) {
-      logger.log(Level.SEVERE, null, ex);
-    }
-    if (rowSelected > -1) {
+    int selectedRow = tableSeries.rowAtPoint(p);
+    
+    if (selectedRow > -1) {
+       SeriesRecord series = (SeriesRecord) tableSeries.getValueAt(selectedRow, Series.SERIESRECORD_COLUMN);
+      MyEvent event = new MyEvent(tableSeries, MyEventHandler.SET_CURRENT_SERIES);
+      event.setSeries(series);
+      event.setSeriesPanel(true);
+      getEvClass().fireMyEvent(event);
+      
       if (evt.getButton() == MouseEvent.BUTTON3) {
         seriesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
       }

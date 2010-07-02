@@ -20,6 +20,7 @@ public class MyEvent extends EventObject {
   private EpisodesRecord episode = null;
   private boolean singleEpisode = true;
   private boolean episodesPanel = true;
+  private boolean seriesPanel = false;
 
 
   public MyEvent(Object source, int type) {
@@ -93,5 +94,19 @@ public class MyEvent extends EventObject {
    */
   public void setEpisodesPanel(boolean episodesPanel) {
     this.episodesPanel = episodesPanel;
+  }
+
+  /**
+   * @return the seriesPanel
+   */
+  public boolean isSeriesPanel() {
+    return seriesPanel;
+  }
+
+  /**
+   * @param seriesPanel the seriesPanel to set
+   */
+  public void setSeriesPanel(boolean seriesPanel) {
+    this.seriesPanel = seriesPanel;
   }
 }
