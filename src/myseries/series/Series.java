@@ -259,7 +259,7 @@ public class Series {
         int series_id = series.getSeries_ID();
         currentSeries = DBHelper.getSeriesByID(series_id);
       } else {
-        currentSeries = new SeriesRecord();
+        currentSeries = null;
       }
       if (!currentSeries.getScreenshot().equals("")) {
         File sc = new File(Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH + currentSeries.getScreenshot());
