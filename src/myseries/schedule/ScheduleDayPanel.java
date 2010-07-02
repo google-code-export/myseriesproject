@@ -158,7 +158,7 @@ public class ScheduleDayPanel extends javax.swing.JPanel {
   }
 
   public ImageIcon getDefaultImage() {
-    ImageIcon im = new ImageIcon(getClass().getResource("/images/logo.png"));
+    ImageIcon im = new ImageIcon(getClass().getResource(MyImagePanel.LOGO));
     return im;
   }
 }
