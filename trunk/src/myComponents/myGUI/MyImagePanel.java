@@ -27,6 +27,7 @@ public class MyImagePanel extends JPanel {
    * The screenshots path : "images/"
    */
   public static final String SCREENSHOTS_PATH = "images/";
+  public static final String LOGO = "/images/logo.png";
   private static final long serialVersionUID = 356475743574387L;
   private Image image;
 
@@ -39,7 +40,7 @@ public class MyImagePanel extends JPanel {
    * Creates the default screenshot of the application's logo
    */
   public MyImagePanel() {
-    this.image = new ImageIcon(getClass().getResource("/images/logo.png")).getImage();
+    this.image = new ImageIcon(getClass().getResource(MyImagePanel.LOGO)).getImage();
     this.defaultImage = true;
     this.setBorder(BorderFactory.createLineBorder(Color.black));
   }
@@ -75,7 +76,7 @@ public class MyImagePanel extends JPanel {
   public void changeSize(Image image, int width, int height) {
     this.defaultImage = false;
     if (image == null) {
-      this.image = new ImageIcon(getClass().getResource("/images/logo.png")).getImage();
+      this.image = new ImageIcon(getClass().getResource(MyImagePanel.LOGO)).getImage();
     } else {
       this.image = image;
     }
@@ -107,7 +108,7 @@ public class MyImagePanel extends JPanel {
   public void setImage(Image image, boolean defaultImage) {
     this.defaultImage = defaultImage;
     if (image == null) {
-      this.image = new ImageIcon(getClass().getResource("/images/logo.png")).getImage();
+      this.image = new ImageIcon(getClass().getResource(LOGO)).getImage();
     } else {
       this.image = image;
     }

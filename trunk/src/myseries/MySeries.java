@@ -227,7 +227,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
     //Create image pane
     imageLayerPanel.add(imagePanel);
-    Image scrImage = new ImageIcon(getClass().getResource("/images/logo.png")).getImage();
+    Image scrImage = new ImageIcon(getClass().getResource(MyImagePanel.LOGO)).getImage();
     imagePanel.setImage(scrImage, true);
 
     //Create the episodes data
@@ -1276,7 +1276,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
         Image im = new ImageIcon(imagePath).getImage();
         imagePanel.setImage(im, false);
       } else {
-        Image image = new ImageIcon(getClass().getResource("/images/logo.png")).getImage();
+        Image image = new ImageIcon(getClass().getResource(MyImagePanel.LOGO)).getImage();
         imagePanel.setImage(image, true);
       }
       seriesPopUpItemsState(Series.getCurrentSerial().getFullTitle(), true);

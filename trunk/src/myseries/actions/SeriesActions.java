@@ -78,10 +78,10 @@ public class SeriesActions {
         // File screenshotFile = new File(Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH  + screenshot);
         // if (screenshotFile.isFile()) {
         //   screenshotFile.delete();
-        //   Image image = new ImageIcon(MySeries.class.getResource("/images/logo.png")).getImage();
+        //   Image image = new ImageIcon(MySeries.class.getResource(MyImagePanel.LOGO)).getImage();
         //   m.imagePanel.setImage(image,true);
         // }
-        Image image = new ImageIcon(MySeries.class.getResource("/images/logo.png")).getImage();
+        Image image = new ImageIcon(MySeries.class.getResource(MyImagePanel.LOGO)).getImage();
         MySeries.imagePanel.setImage(image, true);
         m.getEvClass().fireMyEvent(new MyEvent(m, MyEventHandler.SERIES_UPDATE));
         if (Series.getSize() > 0) {

@@ -254,7 +254,7 @@ public class Series {
   public static void setCurrentSerial(SeriesRecord series) {
     try {
       //Update data
-      Image image = new ImageIcon(MySeries.class.getResource("/images/logo.png")).getImage();
+      Image image = new ImageIcon(MySeries.class.getResource(MyImagePanel.LOGO)).getImage();
       if (series != null) {
         int series_id = series.getSeries_ID();
         currentSeries = DBHelper.getSeriesByID(series_id);
