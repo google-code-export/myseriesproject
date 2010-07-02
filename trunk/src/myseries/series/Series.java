@@ -252,7 +252,7 @@ public class Series {
   public static void setCurrentSerial(SeriesRecord series) {
     try {
       //Update data
-      Image image = new ImageIcon(MySeries.class.getResource(MyImagePanel.LOGO)).getImage();
+     // Image image = new ImageIcon(MySeries.class.getResource(MyImagePanel.LOGO)).getImage();
       if (series != null) {
         int series_id = series.getSeries_ID();
         currentSeries = DBHelper.getSeriesByID(series_id);
@@ -260,13 +260,13 @@ public class Series {
         currentSeries = null;
         return;
       }
-      if (!currentSeries.getScreenshot().equals("")) {
-        File sc = new File(Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH + currentSeries.getScreenshot());
-        if (sc.isFile()) {
-          image = new ImageIcon(sc.getAbsolutePath()).getImage();
-        }
-      }
-      MySeries.imagePanel.setImage(image, true);
+      //if (!currentSeries.getScreenshot().equals("")) {
+      //  File sc = new File(Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH + currentSeries.getScreenshot());
+      //  if (sc.isFile()) {
+      //    image = new ImageIcon(sc.getAbsolutePath()).getImage();
+      //  }
+     // }
+     // MySeries.imagePanel.setImage(image, true);
     } catch (SQLException ex) {
       currentSeries = null;
     }

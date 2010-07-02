@@ -6,13 +6,19 @@ package myComponents.myEvents;
 
 import database.EpisodesRecord;
 import database.SeriesRecord;
+import java.awt.Image;
+import java.io.File;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JTable;
+import myComponents.myGUI.MyImagePanel;
 import myseries.Menus;
 import myseries.MySeries;
 import myseries.episodes.Episodes;
 import myseries.series.Series;
+import tools.options.Options;
 
 /**
  *
@@ -34,6 +40,22 @@ public class MyEventHandler implements MyEventListener {
       } else if (evt.getType() == SET_CURRENT_SERIES) {
         SeriesRecord series = evt.getSeries();
         Series.setCurrentSerial(series);
+
+        //TABS
+        MySeries.tabsPanel.setTitleAt(0, series.getFullTitle());
+        if(evt.isSeriesPanel()){
+          MySeries.tabsPanel.setSelectedIndex(0);
+        }
+        //IMAGE SCREENSHOT
+        String imagePath = Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH + "/" + series.getScreenshot();
+      if (new File(imagePath).isFile()) {
+        Image im = new ImageIcon(imagePath).getImage();
+        MySeries.imagePanel.setImage(im, false);
+      } else {
+        Image image = new ImageIcon(getClass().getResource(MyImagePanel.LOGO)).getImage();
+        MySeries.imagePanel.setImage(image, true);
+      }
+
         Episodes.updateEpisodesTable();
         int row = MySeries.getSeriesTableRow(series);
         if (row > -1) {

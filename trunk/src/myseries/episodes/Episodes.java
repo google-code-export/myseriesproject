@@ -202,7 +202,7 @@ public class Episodes {
     }
 
     table_episodesList.setModel(getTableModel_episodes());
-    getTabsPanel().setTitleAt(0, Series.getCurrentSerial().getFullTitle());
+    
     return eps;
   }
 
