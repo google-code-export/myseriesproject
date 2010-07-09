@@ -51,6 +51,7 @@ public class ApplicationActions {
     Options.setOption(Options.WINDOW_STATE, m.getExtendedState());
     Options.setOption(Options.WIDTH, m.getWidth());
     Options.setOption(Options.HEIGHT, m.getHeight());
+    Options.setOption(Options.TOOLBAR_POSITION,m.getToolbarPosition());
     ArrayList<Integer> w = getTablesWidths(m);
     Options.setOption(Options.TABLE_WIDTHS, w);
     MySeries.logger.log(Level.INFO, "Saving options");
