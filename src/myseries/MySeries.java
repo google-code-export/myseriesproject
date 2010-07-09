@@ -11,6 +11,7 @@
 package myseries;
 
 import com.googlecode.starrating.StarTableCellRenderer;
+import java.awt.Component;
 import javax.swing.ComboBoxModel;
 import javax.swing.table.TableModel;
 import myComponents.myEvents.MyEvent;
@@ -28,6 +29,7 @@ import database.EpisodesRecord;
 import database.SeriesRecord;
 import help.CheckUpdate;
 import help.Help;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Image;
@@ -46,12 +48,14 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JRootPane;
+import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelListener;
+import javax.swing.plaf.basic.BasicToolBarUI;
 import myComponents.MyTableModels.MyFilteredSeriesTableModel;
 import myComponents.MyTableModels.MySeriesTableModel;
 import myComponents.MyUsefulFunctions;
@@ -247,6 +251,32 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     MySeries.logger.log(Level.INFO, "Creating filters data");
     Filters.setTableModel_filterSeries(tableModel_filterSeries);
     Filters.getFilteredSeries();
+
+    //Move toolbar to desired position
+    switch (Options.toInt(Options.TOOLBAR_POSITION)) {
+      case Options._NORTH_:
+        toolbar.setOrientation(SwingConstants.HORIZONTAL);
+        getContentPane().add(toolbar, BorderLayout.NORTH);
+        break;
+      case Options._EAST_:
+        toolbar.setOrientation(SwingConstants.VERTICAL);
+        getContentPane().add(toolbar, BorderLayout.EAST);
+        break;
+      case Options._SOUTH_:
+        toolbar.setOrientation(SwingConstants.HORIZONTAL);
+        getContentPane().add(toolbar, BorderLayout.SOUTH);
+        break;
+      case Options._WEST_:
+        toolbar.setOrientation(SwingConstants.VERTICAL);
+        getContentPane().add(toolbar, BorderLayout.WEST);
+        break;
+      case Options._FLOAT_:
+        getContentPane().add(toolbar, BorderLayout.WEST);
+        ((BasicToolBarUI) toolbar.getUI()).setFloating(true, new Point(100, 100));
+        toolbar.setLocation(200, 200);
+        break;
+    }
+
 
     setGlassPane();
     setLocationRelativeTo(null);
@@ -702,7 +732,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       panel_SeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(panel_SeriesLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(imageLayerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+        .addComponent(imageLayerPanel)
         .addContainerGap())
       .addGroup(panel_SeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(panel_SeriesLayout.createSequentialGroup()
@@ -714,12 +744,12 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       panel_SeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(panel_SeriesLayout.createSequentialGroup()
         .addGap(33, 33, 33)
-        .addComponent(imageLayerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE)
-        .addGap(80, 80, 80))
+        .addComponent(imageLayerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
+        .addGap(144, 144, 144))
       .addGroup(panel_SeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(panel_SeriesLayout.createSequentialGroup()
           .addContainerGap()
-          .addComponent(scrollPane_series, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE)
+          .addComponent(scrollPane_series, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
           .addContainerGap()))
     );
 
@@ -772,20 +802,20 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tabpanel_episodesList.setLayout(tabpanel_episodesListLayout);
     tabpanel_episodesListLayout.setHorizontalGroup(
       tabpanel_episodesListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 844, Short.MAX_VALUE)
+      .addGap(0, 738, Short.MAX_VALUE)
       .addGroup(tabpanel_episodesListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(tabpanel_episodesListLayout.createSequentialGroup()
           .addContainerGap()
-          .addComponent(panel_episodesList, javax.swing.GroupLayout.DEFAULT_SIZE, 820, Short.MAX_VALUE)
+          .addComponent(panel_episodesList, javax.swing.GroupLayout.DEFAULT_SIZE, 714, Short.MAX_VALUE)
           .addGap(14, 14, 14)))
     );
     tabpanel_episodesListLayout.setVerticalGroup(
       tabpanel_episodesListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 498, Short.MAX_VALUE)
+      .addGap(0, 424, Short.MAX_VALUE)
       .addGroup(tabpanel_episodesListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(tabpanel_episodesListLayout.createSequentialGroup()
           .addContainerGap()
-          .addComponent(panel_episodesList, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)
+          .addComponent(panel_episodesList, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
           .addGap(31, 31, 31)))
     );
 
@@ -876,7 +906,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(comboBox_filterSubtitles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(combobox_filters, 0, 426, Short.MAX_VALUE)
+        .addComponent(combobox_filters, 0, 0, Short.MAX_VALUE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(button_saveFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -907,7 +937,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabpanel_FilteredSeriesLayout.createSequentialGroup()
         .addContainerGap()
         .addGroup(tabpanel_FilteredSeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addComponent(panel_allSeriesEpisodes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 824, Short.MAX_VALUE)
+          .addComponent(panel_allSeriesEpisodes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 718, Short.MAX_VALUE)
           .addComponent(panel_filters, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         .addContainerGap())
     );
@@ -916,7 +946,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       .addGroup(tabpanel_FilteredSeriesLayout.createSequentialGroup()
         .addComponent(panel_filters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(panel_allSeriesEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
+        .addComponent(panel_allSeriesEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
         .addContainerGap())
     );
 
@@ -930,15 +960,15 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tabpanel_statistics.setLayout(tabpanel_statisticsLayout);
     tabpanel_statisticsLayout.setHorizontalGroup(
       tabpanel_statisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(statEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 844, Short.MAX_VALUE)
-      .addComponent(statSeries, javax.swing.GroupLayout.DEFAULT_SIZE, 844, Short.MAX_VALUE)
+      .addComponent(statEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 738, Short.MAX_VALUE)
+      .addComponent(statSeries, javax.swing.GroupLayout.DEFAULT_SIZE, 738, Short.MAX_VALUE)
     );
     tabpanel_statisticsLayout.setVerticalGroup(
       tabpanel_statisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(tabpanel_statisticsLayout.createSequentialGroup()
         .addComponent(statSeries, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(statEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
+        .addComponent(statEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
         .addContainerGap())
     );
 
@@ -959,14 +989,14 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       panel_episodesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(panel_episodesLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(tabsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 849, Short.MAX_VALUE)
+        .addComponent(tabsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 743, Short.MAX_VALUE)
         .addContainerGap())
     );
     panel_episodesLayout.setVerticalGroup(
       panel_episodesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(panel_episodesLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(tabsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
+        .addComponent(tabsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
         .addContainerGap())
     );
 
@@ -974,9 +1004,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
     splitPane_main.setRightComponent(panel_episodes);
 
+    getContentPane().add(splitPane_main, java.awt.BorderLayout.CENTER);
+
     toolbar.setRollover(true);
+    toolbar.setBorderPainted(false);
     toolbar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-    toolbar.setOpaque(false);
 
     tb_addSeries.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add_series.png"))); // NOI18N
     tb_addSeries.setToolTipText("Add Series");
@@ -1113,6 +1145,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       }
     });
     toolbar.add(tb_viewLogFiles1);
+
+    getContentPane().add(toolbar, java.awt.BorderLayout.NORTH);
 
     org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tableSeries, org.jdesktop.beansbinding.ELProperty.create("${background}"), menuBar, org.jdesktop.beansbinding.BeanProperty.create("foreground"));
     bindingGroup.addBinding(binding);
@@ -1378,21 +1412,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
     setJMenuBar(menuBar);
 
-    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-    getContentPane().setLayout(layout);
-    layout.setHorizontalGroup(
-      layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(splitPane_main, javax.swing.GroupLayout.DEFAULT_SIZE, 1094, Short.MAX_VALUE)
-      .addComponent(toolbar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1094, Short.MAX_VALUE)
-    );
-    layout.setVerticalGroup(
-      layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(layout.createSequentialGroup()
-        .addComponent(toolbar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(splitPane_main, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE))
-    );
-
     bindingGroup.bind();
 
     pack();
@@ -1409,13 +1428,9 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   private void seriesMouseClicked() throws IOException {
     int selectedRow = tableSeries.getSelectedRow();
     if (selectedRow > -1) {
-     
     } else {
-      
     }
   }
-
-
 
   private void tableSeriesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableSeriesMouseReleased
     try {
@@ -1428,14 +1443,14 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   private void seriesMouseReleased(java.awt.event.MouseEvent evt) throws IOException {
     Point p = evt.getPoint();
     int selectedRow = tableSeries.rowAtPoint(p);
-    
+
     if (selectedRow > -1) {
-       SeriesRecord series = (SeriesRecord) tableSeries.getValueAt(selectedRow, Series.SERIESRECORD_COLUMN);
+      SeriesRecord series = (SeriesRecord) tableSeries.getValueAt(selectedRow, Series.SERIESRECORD_COLUMN);
       MyEvent event = new MyEvent(tableSeries, MyEventHandler.SET_CURRENT_SERIES);
       event.setSeries(series);
       event.setSeriesPanel(true);
       getEvClass().fireMyEvent(event);
-      
+
       if (evt.getButton() == MouseEvent.BUTTON3) {
         seriesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
       }
@@ -1623,7 +1638,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   }//GEN-LAST:event_menuItem_importEpisodesActionPerformed
 
   private void menuItem_helpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_helpActionPerformed
-   ApplicationActions.showHelp(this);
+    ApplicationActions.showHelp(this);
 }//GEN-LAST:event_menuItem_helpActionPerformed
 
   private void menuItem_saveDatabaseAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_saveDatabaseAsActionPerformed
@@ -1680,7 +1695,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
         MyEvent event = new MyEvent(this, MyEventHandler.SET_CURRENT_SERIES);
         event.setSeries(seriesRec);
         getEvClass().fireMyEvent(event);
-        
+
         event.setType(MyEventHandler.SET_CURRENT_EPISODE);
         event.setEpisode(ep);
         event.setEpisodesPanel(false);
@@ -1773,7 +1788,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   }//GEN-LAST:event_tb_optionsActionPerformed
 
   private void tb_checkUpdatesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tb_checkUpdatesActionPerformed
-   ApplicationActions.checkUpdates();
+    ApplicationActions.checkUpdates();
   }//GEN-LAST:event_tb_checkUpdatesActionPerformed
 
   private void tb_viewLogFilesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tb_viewLogFilesActionPerformed
@@ -1781,9 +1796,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   }//GEN-LAST:event_tb_viewLogFilesActionPerformed
 
   private void tb_viewLogFiles1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tb_viewLogFiles1ActionPerformed
-   ApplicationActions.showHelp(this);
+    ApplicationActions.showHelp(this);
   }//GEN-LAST:event_tb_viewLogFiles1ActionPerformed
-
   // Variables declaration - do not modify//GEN-BEGIN:variables
   public static javax.swing.JMenuItem PopUpItem_AddEpisode;
   public static javax.swing.JMenuItem PopUpItem_AddEpisodeInEpisodes;
@@ -1883,6 +1897,22 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static javax.swing.JToolBar toolbar;
   private org.jdesktop.beansbinding.BindingGroup bindingGroup;
   // End of variables declaration//GEN-END:variables
+
+  public int getToolbarPosition() {
+    BorderLayout layout = (BorderLayout) getContentPane().getLayout();
+    Component[] comps = new Component[4];
+    comps[0] = layout.getLayoutComponent(getContentPane(), BorderLayout.NORTH);
+    comps[1] = layout.getLayoutComponent(getContentPane(), BorderLayout.EAST);
+    comps[2] = layout.getLayoutComponent(getContentPane(), BorderLayout.SOUTH);
+    comps[3] = layout.getLayoutComponent(getContentPane(), BorderLayout.WEST);
+    for (int i = 0; i < comps.length; i++) {
+      Component component = comps[i];
+      if (component instanceof JToolBar) {
+        return i;
+      }
+    }
+    return -1;
+  }
 
   @Override
   public void tableChanged(TableModelEvent e) {
