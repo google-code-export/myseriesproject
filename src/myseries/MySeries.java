@@ -235,7 +235,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     //Create the episodes data
     MySeries.logger.log(Level.INFO, "Creating episodes data");
     Episodes.setTableModel_episodes(tableModel_episodes);
-    Episodes.setTabsPanel(tabsPanel);
+    //Episodes.setTabsPanel(tabsPanel);
     Series.selectSeries(this, 0);
     if (!Series.getCurrentSerial().getScreenshot().equals("")) {
       imagePanel.setImage(new ImageIcon(Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH + Series.getCurrentSerial().getScreenshot()).getImage(), false);
