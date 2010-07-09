@@ -8,6 +8,7 @@ import database.DBHelper;
 import database.SeriesRecord;
 import help.About;
 import help.CheckUpdate;
+import help.Help;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FilenameFilter;
@@ -168,6 +169,12 @@ public class ApplicationActions {
       }
     } catch (SQLException ex) {
       myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+    }
+  }
+
+  public static void showHelp(MySeries m) {
+     if (!MySeries.isHelp) {
+      new Help(m);
     }
   }
 }

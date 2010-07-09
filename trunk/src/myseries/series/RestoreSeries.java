@@ -41,6 +41,7 @@ public class RestoreSeries extends MyDraggable  {
   }
 
   public RestoreSeries(ArrayList<SeriesRecord> series) {
+    myseries.MySeries.glassPane.activate(null);
     initComponents();
     table.getColumnModel().getColumn(0).setPreferredWidth(400);
     table.getColumnModel().getColumn(1).setPreferredWidth(100);
@@ -165,6 +166,7 @@ public class RestoreSeries extends MyDraggable  {
 
   private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed
     dispose();
+     myseries.MySeries.glassPane.deactivate();
   }//GEN-LAST:event_cancelActionPerformed
 
   private void restoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restoreActionPerformed
@@ -182,6 +184,7 @@ public class RestoreSeries extends MyDraggable  {
     }
     evClass.fireMyEvent(new MyEvent(this, MyEventHandler.SERIES_UPDATE));
     dispose();
+     myseries.MySeries.glassPane.deactivate();
   }//GEN-LAST:event_restoreActionPerformed
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton cancel;

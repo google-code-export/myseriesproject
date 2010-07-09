@@ -39,6 +39,9 @@ public class MyEventHandler implements MyEventListener {
         Series.updateSeriesTable(false);
       } else if (evt.getType() == SET_CURRENT_SERIES) {
         SeriesRecord series = evt.getSeries();
+        if (series == null) {
+          series = new SeriesRecord();
+        }
         Series.setCurrentSerial(series);
 
         //TABS

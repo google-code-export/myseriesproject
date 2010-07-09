@@ -26,6 +26,7 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
+import myseries.series.Series;
 import tools.download.torrents.AbstractTorrentForm;
 import tools.download.torrents.AbstractTorrent;
 import tools.download.torrents.TorrentConstants;
@@ -63,6 +64,7 @@ public class IsohuntForm extends AbstractTorrentForm implements TorrentConstants
   /** Creates new form IsohuntForm */
   public IsohuntForm() {
     initComponents();
+    combo_series.setSelectedItem(Series.getCurrentSerial());
     setLocationRelativeTo(null);
     setVisible(true);
   }

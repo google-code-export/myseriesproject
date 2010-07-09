@@ -26,6 +26,7 @@ import myComponents.MyUsefulFunctions;
 import com.googlecode.svalidators.formcomponents.SComboBox;
 import com.googlecode.svalidators.formcomponents.ValidationGroup;
 import com.googlecode.svalidators.validators.RequiredValidator;
+import myseries.series.Series;
 import tools.download.torrents.AbstractTorrentForm;
 import tools.download.torrents.AbstractTorrent;
 
@@ -63,6 +64,7 @@ public class EzTvForm extends AbstractTorrentForm {
 
   private void showUp() {
     initComponents();
+    combo_series.setSelectedItem(Series.getCurrentSerial());
     combo_series.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
 
       @Override
