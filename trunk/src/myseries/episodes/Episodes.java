@@ -65,7 +65,7 @@ public class Episodes {
   /** The episodes table   */
   private static JTable table_episodesList = new JTable();
   /** The tabbed pane   */
-  private static JTabbedPane tabsPanel = new JTabbedPane();
+  private static final JTabbedPane tabsPanel = myseries.MySeries.tabsPanel;
   /** The current episode   */
   private static EpisodesRecord currentEpisode;
 
@@ -269,10 +269,10 @@ public class Episodes {
    */
   public static void updateEpisodesTable() throws SQLException {
     Episodes.setTableModel_episodes(tableModel_episodes);
-    Episodes.setTabsPanel(tabsPanel);
+   // Episodes.setTabsPanel(tabsPanel);
     Episodes.getCurrentSeriesEpisodes();
     tableModel_episodes = Episodes.getTableModel_episodes();
-    tabsPanel = Episodes.getTabsPanel();
+    //tabsPanel = Episodes.getTabsPanel();
   }
 
   /**
@@ -280,7 +280,7 @@ public class Episodes {
    */
   public static void emptyEpisodes() {
     getTableModel_episodes().setRowCount(0);
-    getTabsPanel().setTitleAt(0, "");
+    //getTabsPanel().setTitleAt(0, "");
   }
 
   /**
@@ -290,12 +290,12 @@ public class Episodes {
     return tabsPanel;
   }
 
-  /**
-   * @param tabsPanel the tabsPanel to set
-   */
-  public static void setTabsPanel(JTabbedPane tabsPanel) {
-    Episodes.tabsPanel = tabsPanel;
-  }
+//  /**
+//   * @param tabsPanel the tabsPanel to set
+//   */
+//  public static void setTabsPanel(JTabbedPane tabsPanel) {
+//    Episodes.tabsPanel = tabsPanel;
+//  }
 
   /**
    * @return the currentEpisode
