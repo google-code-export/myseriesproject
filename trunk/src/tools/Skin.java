@@ -216,6 +216,8 @@ public class Skin {
 
     UIManager.put("ScrollBar.thumb", getColor_4());
 
+    UIManager.put("ToolBar.floatingBackground",getSkinColor());
+    UIManager.put("ToolBar.background",getSkinColor());
 
     UIManager.put("MenuBar.background", getColor_4());
     UIManager.put("MenuBar.foreground", getForeGroundColor(getColor_4()));

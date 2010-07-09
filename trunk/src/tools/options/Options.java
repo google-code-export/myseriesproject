@@ -49,6 +49,14 @@ public class Options {
    * "(([ xeEX]|(ep)|(EP))|(([ xeEX]|(ep)|(EP))\\d*([- &])))0*"
    */
   public static String _REGEX_ = " ?((?i)([ xe-]|(ep))|(([ xe-]|(ep))\\d*([- &])))0?";
+  /**
+   * The possible toolbar positions
+   */
+  public static final int _NORTH_ = 0;
+  public static final int _EAST_ = 1;
+  public static final int _SOUTH_ = 2;
+  public static final int _WEST_ = 3;
+  public static final int _FLOAT_ = -1;
   /************************************************
    * User Options
    ************************************************/
@@ -137,7 +145,7 @@ public class Options {
    * integer default 600
    */
   public static String HEIGHT = "HEIGHT";
-   /**
+  /**
    * Check for updates on start up
    * boolean default true
    */
@@ -178,10 +186,14 @@ public class Options {
    */
   public static String TITLE_SEPARATOR = "TITLE_SEPARATOR";
   /**
+   * The position of the toolbar
+   */
+  public static String TOOLBAR_POSITION = "TOOLBAR_POSITION";
+  /**
    * An array of the options that are selected in combo boxes
    */
   public static String[] _COMBO_OPTIONS_ = {DATE_FORMAT, DEBUG_MODE, LOOK_AND_FEEL,
-    FONT_FACE,  SUBTITLE_SITE, PRIMARY_SUB, SECONDARY_SUB};
+    FONT_FACE, SUBTITLE_SITE, PRIMARY_SUB, SECONDARY_SUB};
 
   static {
     InternetUpdate.DB_UPDATERS.add(InternetUpdate.EP_GUIDES_NAME);
@@ -236,9 +248,9 @@ public class Options {
     String[] arr = w.split(",");
     try {
       for (int i = 0; i < Options._TOTAL_COLUMNS_; i++) {
-        try{
-        widths.add(i, Integer.parseInt(arr[i].trim()));
-        } catch(ArrayIndexOutOfBoundsException ex){
+        try {
+          widths.add(i, Integer.parseInt(arr[i].trim()));
+        } catch (ArrayIndexOutOfBoundsException ex) {
           widths.add(i, 100);
         }
       }
@@ -391,7 +403,7 @@ public class Options {
    */
   public static String toString(String key, boolean trim) {
     String val = "";
-    val = trim ? String.valueOf(options.get(key)).trim():String.valueOf(options.get(key));
+    val = trim ? String.valueOf(options.get(key)).trim() : String.valueOf(options.get(key));
     return val;
   }
 
@@ -441,6 +453,7 @@ public class Options {
     out.println(Options.SEASON_SEPARATOR + " =SE");
     out.println(Options.TITLE_SEPARATOR + " = - ");
     out.println(Options.EPISODE_SEPARATOR + " =x");
+    out.println(Options.TOOLBAR_POSITION + " =1");
     out.close();
   }
 
