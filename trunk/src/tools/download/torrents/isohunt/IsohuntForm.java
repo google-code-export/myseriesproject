@@ -15,6 +15,7 @@ import com.googlecode.svalidators.formcomponents.ValidationGroup;
 import com.googlecode.svalidators.validators.RequiredValidator;
 import database.EpisodesRecord;
 import database.SeriesRecord;
+import help.HelpWindow;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
@@ -103,6 +104,7 @@ public class IsohuntForm extends AbstractTorrentForm implements TorrentConstants
     button_search = new javax.swing.JButton();
     button_cancel = new javax.swing.JButton();
     progress = new javax.swing.JProgressBar();
+    bt_help1 = new javax.swing.JButton();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
@@ -171,16 +173,24 @@ public class IsohuntForm extends AbstractTorrentForm implements TorrentConstants
     progress.setString("");
     progress.setStringPainted(true);
 
+    bt_help1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"))); // NOI18N
+    bt_help1.setToolTipText("Help");
+    bt_help1.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        bt_help1ActionPerformed(evt);
+      }
+    });
+
     javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
     panel.setLayout(panelLayout);
     panelLayout.setHorizontalGroup(
       panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(panelLayout.createSequentialGroup()
-        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(panelLayout.createSequentialGroup()
+      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
+        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+          .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelLayout.createSequentialGroup()
             .addContainerGap()
             .addComponent(label_title, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE))
-          .addGroup(panelLayout.createSequentialGroup()
+          .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelLayout.createSequentialGroup()
             .addGap(12, 12, 12)
             .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
               .addComponent(label_series, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
@@ -203,15 +213,17 @@ public class IsohuntForm extends AbstractTorrentForm implements TorrentConstants
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(combo_order, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE))
-          .addGroup(panelLayout.createSequentialGroup()
+          .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelLayout.createSequentialGroup()
+            .addContainerGap()
+            .addComponent(progress, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE))
+          .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelLayout.createSequentialGroup()
             .addContainerGap()
             .addComponent(button_search)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(button_cancel))
-          .addGroup(panelLayout.createSequentialGroup()
-            .addContainerGap()
-            .addComponent(progress, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        .addContainerGap())
+            .addComponent(button_cancel)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
+            .addComponent(bt_help1)))
+        .addGap(24, 24, 24))
     );
     panelLayout.setVerticalGroup(
       panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -242,10 +254,12 @@ public class IsohuntForm extends AbstractTorrentForm implements TorrentConstants
           .addComponent(combo_order, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addGap(18, 18, 18)
         .addComponent(progress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(button_search)
-          .addComponent(button_cancel))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+          .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addComponent(button_search)
+            .addComponent(button_cancel))
+          .addComponent(bt_help1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
@@ -296,7 +310,13 @@ public class IsohuntForm extends AbstractTorrentForm implements TorrentConstants
         combo_order.setSelectedIndex(0);
       }
     }//GEN-LAST:event_spinner_episodeStateChanged
+
+    private void bt_help1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_help1ActionPerformed
+      new HelpWindow(HelpWindow.DOWNLOAD_TORRENT);
+}//GEN-LAST:event_bt_help1ActionPerformed
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
+  private javax.swing.JButton bt_help1;
   private javax.swing.JButton button_cancel;
   private javax.swing.JButton button_search;
   private javax.swing.JComboBox combo_order;

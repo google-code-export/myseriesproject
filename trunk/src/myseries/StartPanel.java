@@ -13,6 +13,7 @@ package myseries;
 import database.CreateDatabase;
 import database.DBConnection;
 import database.Database;
+import help.HelpWindow;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.io.FileNotFoundException;
@@ -114,6 +115,7 @@ public class StartPanel extends MyDraggable {
     panel_loadDatabase = new javax.swing.JPanel();
     combobox_databases = new javax.swing.JComboBox();
     jLabel2 = new javax.swing.JLabel();
+    bt_help1 = new javax.swing.JButton();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
@@ -135,7 +137,7 @@ public class StartPanel extends MyDraggable {
         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(textbox_name, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(85, Short.MAX_VALUE))
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
     panel_newDBLayout.setVerticalGroup(
       panel_newDBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -199,6 +201,14 @@ public class StartPanel extends MyDraggable {
         .addContainerGap())
     );
 
+    bt_help1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"))); // NOI18N
+    bt_help1.setToolTipText("Help");
+    bt_help1.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        bt_help1ActionPerformed(evt);
+      }
+    });
+
     javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
     panel.setLayout(panelLayout);
     panelLayout.setHorizontalGroup(
@@ -206,18 +216,21 @@ public class StartPanel extends MyDraggable {
       .addGroup(panelLayout.createSequentialGroup()
         .addContainerGap()
         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(panelLayout.createSequentialGroup()
-            .addComponent(button_create, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(button_exit, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+            .addComponent(panel_loadDatabase, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(label_title, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE))
           .addGroup(panelLayout.createSequentialGroup()
             .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(panel_newDB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-              .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                .addComponent(panel_loadDatabase, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(label_title, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)))
-            .addGap(136, 136, 136)
-            .addComponent(label_wait, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))))
+              .addGroup(panelLayout.createSequentialGroup()
+                .addComponent(button_create, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button_exit, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+              .addComponent(panel_newDB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(bt_help1)
+            .addGap(63, 63, 63)))
+        .addGap(136, 136, 136)
+        .addComponent(label_wait, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
     );
     panelLayout.setVerticalGroup(
       panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,13 +240,16 @@ public class StartPanel extends MyDraggable {
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(panel_loadDatabase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(label_wait, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(panel_newDB, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(button_exit)
-          .addComponent(button_create))
+        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+          .addGroup(panelLayout.createSequentialGroup()
+            .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(label_wait, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addComponent(panel_newDB, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+              .addComponent(button_exit)
+              .addComponent(button_create)))
+          .addComponent(bt_help1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addContainerGap())
     );
 
@@ -309,6 +325,10 @@ public class StartPanel extends MyDraggable {
         setSize(big);
       }
     }//GEN-LAST:event_combobox_databasesActionPerformed
+
+    private void bt_help1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_help1ActionPerformed
+      new HelpWindow(HelpWindow.START_APPLICATION);
+}//GEN-LAST:event_bt_help1ActionPerformed
 
   /**
    * Starts MySeries Application after getting the database to use and save the options file
@@ -403,6 +423,7 @@ public class StartPanel extends MyDraggable {
     }
   }
   // Variables declaration - do not modify//GEN-BEGIN:variables
+  private javax.swing.JButton bt_help1;
   private javax.swing.JButton button_create;
   private javax.swing.JButton button_exit;
   private javax.swing.JComboBox combobox_databases;

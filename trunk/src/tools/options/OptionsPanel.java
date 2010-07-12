@@ -44,6 +44,7 @@ import com.googlecode.svalidators.validators.NullValidator;
 import com.googlecode.svalidators.validators.PositiveNumberValidator;
 import com.googlecode.svalidators.validators.RegularExpressionValidator;
 import com.googlecode.svalidators.validators.SValidator;
+import help.HelpWindow;
 import tools.LookAndFeels;
 import tools.Skin;
 import tools.download.subtitles.SubtitleConstants;
@@ -85,9 +86,9 @@ public class OptionsPanel extends MyDraggable {
     tf_seasonSep.setTrimValue(false);
     tf_titleSep.setTrimValue(false);
     combo_secondaryLang.addValidator(
-            new CompareValidator(combo_secondaryLang.getSelectedItem().toString(),
-            combo_primaryLang.getSelectedItem().toString(),
-            CompareValidator.Type.NOT_EQUAL, true));
+        new CompareValidator(combo_secondaryLang.getSelectedItem().toString(),
+        combo_primaryLang.getSelectedItem().toString(),
+        CompareValidator.Type.NOT_EQUAL, true));
     checkbox_useProxyActionPerformed(null);
     setLocationRelativeTo(m);
     oldFontFace = Options.toString(Options.FONT_FACE);
@@ -178,6 +179,7 @@ public class OptionsPanel extends MyDraggable {
     tf_seasonSep = new com.googlecode.svalidators.formcomponents.STextField();
     tf_episodeSep = new com.googlecode.svalidators.formcomponents.STextField();
     tf_titleSep = new com.googlecode.svalidators.formcomponents.STextField();
+    bt_help = new javax.swing.JButton();
 
     javax.swing.GroupLayout panel_DateFormatHelpLayout = new javax.swing.GroupLayout(panel_DateFormatHelp);
     panel_DateFormatHelp.setLayout(panel_DateFormatHelpLayout);
@@ -658,6 +660,14 @@ public class OptionsPanel extends MyDraggable {
 
     tabbedPane_options.addTab("Renaming", panel_renaming);
 
+    bt_help.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"))); // NOI18N
+    bt_help.setToolTipText("Help");
+    bt_help.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        bt_helpActionPerformed(evt);
+      }
+    });
+
     javax.swing.GroupLayout panel_optionsLayout = new javax.swing.GroupLayout(panel_options);
     panel_options.setLayout(panel_optionsLayout);
     panel_optionsLayout.setHorizontalGroup(
@@ -669,12 +679,15 @@ public class OptionsPanel extends MyDraggable {
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
             .addContainerGap())
           .addGroup(panel_optionsLayout.createSequentialGroup()
-            .addComponent(button_ok, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(button_cancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGap(380, 380, 380))
-          .addGroup(panel_optionsLayout.createSequentialGroup()
-            .addComponent(tabbedPane_options, javax.swing.GroupLayout.PREFERRED_SIZE, 491, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(panel_optionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+              .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel_optionsLayout.createSequentialGroup()
+                .addComponent(button_ok, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button_cancel, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
+                .addGap(264, 264, 264)
+                .addComponent(bt_help, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26))
+              .addComponent(tabbedPane_options, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 491, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addContainerGap())))
     );
     panel_optionsLayout.setVerticalGroup(
@@ -685,9 +698,11 @@ public class OptionsPanel extends MyDraggable {
         .addGap(23, 23, 23)
         .addComponent(tabbedPane_options, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addGap(18, 18, 18)
-        .addGroup(panel_optionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(button_ok)
-          .addComponent(button_cancel))
+        .addGroup(panel_optionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+          .addGroup(panel_optionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addComponent(button_ok)
+            .addComponent(button_cancel))
+          .addComponent(bt_help))
         .addContainerGap())
     );
 
@@ -732,8 +747,8 @@ public class OptionsPanel extends MyDraggable {
     } catch (IllegalArgumentException ex) {
       MyMessages.error("Wrong Arguments", "The date format pattern you provided is invalid");
       MySeries.logger.log(Level.WARNING, "The date format "
-              + String.valueOf(combobox_dateFormat.getSelectedItem())
-              + " pattern you provided is invalid", ex);
+          + String.valueOf(combobox_dateFormat.getSelectedItem())
+          + " pattern you provided is invalid", ex);
     }
   }
 
@@ -771,7 +786,7 @@ public class OptionsPanel extends MyDraggable {
       }
       if (!mess.equals("")) {
         int ans = MyMessages.question("Restart?",
-                mess + "\nRestart The application?");
+            mess + "\nRestart The application?");
         if (ans == 0) {
           m.dispose();
           StartPanel.main(null);
@@ -856,11 +871,22 @@ public class OptionsPanel extends MyDraggable {
     label_preview.setFont(newFont);
   }//GEN-LAST:event_spinner_fontSizeStateChanged
 
+  private void bt_helpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_helpActionPerformed
+    if (tabbedPane_options.getSelectedIndex() == 0) {
+      new HelpWindow(HelpWindow.GENERAL_OPTIONS);
+    } else if (tabbedPane_options.getSelectedIndex() == 1) {
+      new HelpWindow(HelpWindow.INTERNET_OPTIONS);
+    } else if (tabbedPane_options.getSelectedIndex() == 2) {
+      new HelpWindow(HelpWindow.RENAME_OPTIONS);
+    }
+  }//GEN-LAST:event_bt_helpActionPerformed
+
   private Font getSelectedFont() {
     Font font = new Font((String) combobox_fonts.getSelectedItem(), Font.PLAIN, (int) Float.parseFloat(String.valueOf(spinner_fontSize.getValue())));
     return font;
   }
   // Variables declaration - do not modify//GEN-BEGIN:variables
+  private javax.swing.JButton bt_help;
   private javax.swing.JButton button_BGColor;
   private javax.swing.JButton button_cancel;
   private javax.swing.JButton button_dateFormatHelp;
@@ -968,8 +994,8 @@ public class OptionsPanel extends MyDraggable {
     if (c instanceof JButton) {
       JButton button = (JButton) c;
       return button.getBackground().getRed() + ", "
-              + button.getBackground().getGreen() + ", "
-              + button.getBackground().getBlue();
+          + button.getBackground().getGreen() + ", "
+          + button.getBackground().getBlue();
     }
     return "";
   }
