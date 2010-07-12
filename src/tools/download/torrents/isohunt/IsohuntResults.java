@@ -10,6 +10,7 @@
  */
 package tools.download.torrents.isohunt;
 
+import help.HelpWindow;
 import java.awt.Cursor;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
@@ -61,6 +62,7 @@ public class IsohuntResults extends MyDraggable implements TorrentConstants {
     table = new javax.swing.JTable();
     button_cancel = new javax.swing.JButton();
     jLabel3 = new javax.swing.JLabel();
+    bt_help1 = new javax.swing.JButton();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     setUndecorated(true);
@@ -110,6 +112,14 @@ public class IsohuntResults extends MyDraggable implements TorrentConstants {
 
     jLabel3.setText("Mouse over the title for more info about the torrent");
 
+    bt_help1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"))); // NOI18N
+    bt_help1.setToolTipText("Help");
+    bt_help1.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        bt_help1ActionPerformed(evt);
+      }
+    });
+
     javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     jPanel1.setLayout(jPanel1Layout);
     jPanel1Layout.setHorizontalGroup(
@@ -117,16 +127,16 @@ public class IsohuntResults extends MyDraggable implements TorrentConstants {
       .addGroup(jPanel1Layout.createSequentialGroup()
         .addContainerGap()
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 865, Short.MAX_VALUE)
+          .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 875, Short.MAX_VALUE)
           .addGroup(jPanel1Layout.createSequentialGroup()
             .addGap(10, 10, 10)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 855, Short.MAX_VALUE)
+              .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 865, Short.MAX_VALUE)
+              .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
               .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                  .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
-                  .addComponent(button_cancel))
-                .addGap(254, 254, 254)))))
+                .addComponent(button_cancel)
+                .addGap(745, 745, 745)
+                .addComponent(bt_help1)))))
         .addContainerGap())
     );
     jPanel1Layout.setVerticalGroup(
@@ -139,7 +149,9 @@ public class IsohuntResults extends MyDraggable implements TorrentConstants {
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(button_cancel)
+        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(button_cancel)
+          .addComponent(bt_help1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addContainerGap())
     );
 
@@ -147,9 +159,7 @@ public class IsohuntResults extends MyDraggable implements TorrentConstants {
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(layout.createSequentialGroup()
-        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+      .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,7 +172,13 @@ public class IsohuntResults extends MyDraggable implements TorrentConstants {
   private void button_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_cancelActionPerformed
     dispose();
   }//GEN-LAST:event_button_cancelActionPerformed
+
+  private void bt_help1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_help1ActionPerformed
+    new HelpWindow(HelpWindow.DOWNLOAD_TORRENT);
+}//GEN-LAST:event_bt_help1ActionPerformed
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
+  private javax.swing.JButton bt_help1;
   private javax.swing.JButton button_cancel;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel3;

@@ -11,6 +11,7 @@
 package myseries.series;
 
 import database.SeriesRecord;
+import help.HelpWindow;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -73,6 +74,7 @@ public class RestoreSeries extends MyDraggable  {
     table = new javax.swing.JTable();
     restore = new javax.swing.JButton();
     cancel = new javax.swing.JButton();
+    bt_help1 = new javax.swing.JButton();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
@@ -121,6 +123,14 @@ public class RestoreSeries extends MyDraggable  {
       }
     });
 
+    bt_help1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"))); // NOI18N
+    bt_help1.setToolTipText("Help");
+    bt_help1.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        bt_help1ActionPerformed(evt);
+      }
+    });
+
     javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     jPanel1.setLayout(jPanel1Layout);
     jPanel1Layout.setHorizontalGroup(
@@ -128,12 +138,14 @@ public class RestoreSeries extends MyDraggable  {
       .addGroup(jPanel1Layout.createSequentialGroup()
         .addContainerGap()
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
+          .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
           .addGroup(jPanel1Layout.createSequentialGroup()
             .addComponent(restore)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(cancel)))
+            .addComponent(cancel)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 236, Short.MAX_VALUE)
+            .addComponent(bt_help1))
+          .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE))
         .addContainerGap())
     );
     jPanel1Layout.setVerticalGroup(
@@ -144,10 +156,12 @@ public class RestoreSeries extends MyDraggable  {
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(restore)
-          .addComponent(cancel))
-        .addContainerGap(17, Short.MAX_VALUE))
+        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+          .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addComponent(cancel)
+            .addComponent(restore))
+          .addComponent(bt_help1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -186,7 +200,14 @@ public class RestoreSeries extends MyDraggable  {
     dispose();
      myseries.MySeries.glassPane.deactivate();
   }//GEN-LAST:event_restoreActionPerformed
+
+  private void bt_help1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_help1ActionPerformed
+    new HelpWindow(HelpWindow.RESTORE_SERIES);
+}//GEN-LAST:event_bt_help1ActionPerformed
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
+  private javax.swing.JButton bt_help;
+  private javax.swing.JButton bt_help1;
   private javax.swing.JButton cancel;
   private javax.swing.JPanel jPanel1;
   private javax.swing.JButton restore;

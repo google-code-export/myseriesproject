@@ -15,6 +15,7 @@ import com.googlecode.svalidators.validators.RegularExpressionValidator;
 import com.googlecode.svalidators.validators.SValidator;
 import database.EpisodesRecord;
 import database.SeriesRecord;
+import help.HelpWindow;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -63,7 +64,7 @@ public class RenameEpisodes extends MyDraggable {
    * @param series The series record
    */
   public RenameEpisodes(ArrayList<File> oldNames,
-          ArrayList<EpisodesRecord> newNames, SeriesRecord series) {
+      ArrayList<EpisodesRecord> newNames, SeriesRecord series) {
     this.oldNames = oldNames;
     this.newNames = newNames;
     this.series = series;
@@ -107,6 +108,7 @@ public class RenameEpisodes extends MyDraggable {
     jLabel6 = new javax.swing.JLabel();
     checkBox_checkAll = new javax.swing.JCheckBox();
     button_save = new javax.swing.JButton();
+    bt_help = new javax.swing.JButton();
 
     jTextField4.setText("jTextField4");
 
@@ -248,6 +250,14 @@ public class RenameEpisodes extends MyDraggable {
           .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)))
     );
 
+    bt_help.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"))); // NOI18N
+    bt_help.setToolTipText("Help");
+    bt_help.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        bt_helpActionPerformed(evt);
+      }
+    });
+
     javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     jPanel1.setLayout(jPanel1Layout);
     jPanel1Layout.setHorizontalGroup(
@@ -259,7 +269,9 @@ public class RenameEpisodes extends MyDraggable {
           .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
             .addComponent(button_rename)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(button_cancel))
+            .addComponent(button_cancel)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 623, Short.MAX_VALUE)
+            .addComponent(bt_help, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
           .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 829, Short.MAX_VALUE)
           .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         .addContainerGap())
@@ -272,11 +284,13 @@ public class RenameEpisodes extends MyDraggable {
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addGap(18, 18, 18)
-        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
+        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
         .addGap(18, 18, 18)
-        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(button_rename)
-          .addComponent(button_cancel))
+        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+          .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addComponent(button_rename)
+            .addComponent(button_cancel))
+          .addComponent(bt_help))
         .addContainerGap())
     );
 
@@ -373,7 +387,12 @@ public class RenameEpisodes extends MyDraggable {
   private void textfield_titleKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textfield_titleKeyReleased
     button_applyActionPerformed(null);
   }//GEN-LAST:event_textfield_titleKeyReleased
+
+  private void bt_helpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_helpActionPerformed
+    new HelpWindow(HelpWindow.RENAMING);
+}//GEN-LAST:event_bt_helpActionPerformed
   // Variables declaration - do not modify//GEN-BEGIN:variables
+  private javax.swing.JButton bt_help;
   private javax.swing.JButton button_apply;
   private javax.swing.JButton button_cancel;
   private javax.swing.JButton button_rename;
@@ -434,13 +453,13 @@ public class RenameEpisodes extends MyDraggable {
     }
 
     String newFilename = series.getTitle() + textfield_season.getText()
-            + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0")
-            + textfield_episode.getText()
-            + MyUsefulFunctions.padLeft(episode.getEpisode(), 2, "0")
-            + textfield_title.getText() + episode.getTitle();
+        + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0")
+        + textfield_episode.getText()
+        + MyUsefulFunctions.padLeft(episode.getEpisode(), 2, "0")
+        + textfield_title.getText() + episode.getTitle();
 
     String newName = series.getLocalDir() + "/"
-            + newFilename.replaceAll("[\\Q/\\?%*:|\"<>.;\\E]", "") + "." + ext;
+        + newFilename.replaceAll("[\\Q/\\?%*:|\"<>.;\\E]", "") + "." + ext;
     return new File(newName);
   }
 }

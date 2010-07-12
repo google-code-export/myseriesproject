@@ -32,6 +32,7 @@ import com.googlecode.svalidators.formcomponents.ValidationGroup;
 import com.googlecode.svalidators.validators.FileValidator;
 import com.googlecode.svalidators.validators.NullValidator;
 import com.googlecode.svalidators.validators.RequiredValidator;
+import help.HelpWindow;
 
 /**
  * Imports previous exported episodes
@@ -91,6 +92,7 @@ public class ImportEpisodes extends MyDraggable {
   private void initComponents() {
 
     panel = new javax.swing.JPanel();
+    bt_help = new javax.swing.JButton();
     title = new javax.swing.JLabel();
     button_import = new javax.swing.JButton();
     button_cancel = new javax.swing.JButton();
@@ -114,6 +116,14 @@ public class ImportEpisodes extends MyDraggable {
     panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
     panel.setOpaque(false);
     panel.setPreferredSize(new java.awt.Dimension(485, 204));
+
+    bt_help.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"))); // NOI18N
+    bt_help.setToolTipText("Help");
+    bt_help.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        bt_helpActionPerformed(evt);
+      }
+    });
 
     title.setFont(title.getFont().deriveFont(title.getFont().getStyle() | java.awt.Font.BOLD, title.getFont().getSize()+2));
     title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -235,7 +245,7 @@ public class ImportEpisodes extends MyDraggable {
           .addComponent(button_browse))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(panel_newSeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-          .addComponent(label_progress, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+          .addComponent(label_progress, javax.swing.GroupLayout.DEFAULT_SIZE, 17, Short.MAX_VALUE)
           .addComponent(progress_import, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
     );
 
@@ -246,12 +256,14 @@ public class ImportEpisodes extends MyDraggable {
       .addGroup(panelLayout.createSequentialGroup()
         .addContainerGap()
         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE)
+          .addComponent(panel_newSeries, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE)
           .addGroup(panelLayout.createSequentialGroup()
             .addComponent(button_import)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(button_cancel))
-          .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE)
-          .addComponent(panel_newSeries, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE))
+            .addComponent(button_cancel)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 258, Short.MAX_VALUE)
+            .addComponent(bt_help)))
         .addContainerGap())
     );
     panelLayout.setVerticalGroup(
@@ -262,9 +274,11 @@ public class ImportEpisodes extends MyDraggable {
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(panel_newSeries, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(button_import)
-          .addComponent(button_cancel))
+        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+          .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addComponent(button_cancel)
+            .addComponent(button_import))
+          .addComponent(bt_help, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE))
         .addContainerGap())
     );
 
@@ -276,7 +290,7 @@ public class ImportEpisodes extends MyDraggable {
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+      .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
     );
 
     pack();
@@ -339,6 +353,10 @@ public class ImportEpisodes extends MyDraggable {
       }
 
     }//GEN-LAST:event_button_importActionPerformed
+
+    private void bt_helpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_helpActionPerformed
+      new HelpWindow(HelpWindow.IMPORT_EPISODES);
+}//GEN-LAST:event_bt_helpActionPerformed
 
   private void importEpisodes() throws FileNotFoundException, SQLException, IOException, EpisodeImportFormatException {
     String newSeriesTitle;
@@ -430,6 +448,7 @@ public class ImportEpisodes extends MyDraggable {
     }
   }
   // Variables declaration - do not modify//GEN-BEGIN:variables
+  private javax.swing.JButton bt_help;
   private javax.swing.JButton button_browse;
   private javax.swing.JButton button_cancel;
   private javax.swing.JButton button_import;

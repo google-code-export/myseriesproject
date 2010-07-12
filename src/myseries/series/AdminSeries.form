@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.1" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
   <Properties>
@@ -93,31 +93,6 @@
                           </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="spinner_season" alignment="0" min="-2" pref="48" max="-2" attributes="0"/>
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="textfield_subsOnline" pref="172" max="32767" attributes="1"/>
-                                              <Component id="textfield_tvRageID" pref="172" max="32767" attributes="1"/>
-                                              <Component id="textfield_tvSubsId" alignment="0" pref="172" max="32767" attributes="1"/>
-                                          </Group>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="button_getTvSubtitlesId" linkSize="1" min="-2" pref="39" max="-2" attributes="0"/>
-                                              <Component id="button_getSubOnlineId" linkSize="1" min="-2" pref="39" max="-2" attributes="0"/>
-                                              <Component id="button_getTvRageID" linkSize="1" min="-2" pref="39" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="checkbox_updateEpisodes" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="201" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="scrPanel" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="label_message" max="32767" attributes="0"/>
-                              </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                       <Component id="textField_Serial" alignment="0" max="32767" attributes="1"/>
@@ -131,6 +106,39 @@
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="button_getScreenshot" min="-2" pref="39" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="bt_help" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" attributes="0">
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <Component id="textfield_subsOnline" pref="172" max="32767" attributes="1"/>
+                                                      <Component id="textfield_tvRageID" pref="172" max="32767" attributes="1"/>
+                                                      <Component id="textfield_tvSubsId" alignment="0" pref="172" max="32767" attributes="1"/>
+                                                  </Group>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <Component id="button_getTvSubtitlesId" linkSize="1" min="-2" pref="39" max="-2" attributes="0"/>
+                                                      <Component id="button_getSubOnlineId" linkSize="1" min="-2" pref="39" max="-2" attributes="0"/>
+                                                      <Component id="button_getTvRageID" linkSize="1" min="-2" pref="39" max="-2" attributes="0"/>
+                                                  </Group>
+                                              </Group>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="checkbox_updateEpisodes" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace min="-2" pref="201" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="scrPanel" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="label_message" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -217,8 +225,9 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="button_Cancel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="button_Add" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="bt_help" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -527,6 +536,17 @@
             </DimensionLayout>
           </Layout>
         </Container>
+        <Component class="javax.swing.JButton" name="bt_help">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/images/help.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Help"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_helpActionPerformed"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>
