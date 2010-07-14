@@ -46,18 +46,18 @@ public class MyEventHandler implements MyEventListener {
 
         //TABS
         MySeries.tabsPanel.setTitleAt(0, series.getFullTitle());
-        if(evt.isSeriesPanel()){
+        if (evt.isSeriesPanel()) {
           MySeries.tabsPanel.setSelectedIndex(0);
         }
         //IMAGE SCREENSHOT
         String imagePath = Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH + "/" + series.getScreenshot();
-      if (new File(imagePath).isFile()) {
-        Image im = new ImageIcon(imagePath).getImage();
-        MySeries.imagePanel.setImage(im, false);
-      } else {
-        Image image = new ImageIcon(getClass().getResource(MyImagePanel.LOGO)).getImage();
-        MySeries.imagePanel.setImage(image, true);
-      }
+        if (new File(imagePath).isFile()) {
+          Image im = new ImageIcon(imagePath).getImage();
+          MySeries.imagePanel.setImage(im, false);
+        } else {
+          Image image = new ImageIcon(getClass().getResource(MyImagePanel.LOGO)).getImage();
+          MySeries.imagePanel.setImage(image, true);
+        }
 
         Episodes.updateEpisodesTable();
         int row = MySeries.getSeriesTableRow(series);
@@ -69,12 +69,11 @@ public class MyEventHandler implements MyEventListener {
         Menus.setSeriesMenus(series);
       } else if (evt.getType() == SET_CURRENT_EPISODE) {
         if (!evt.isSingleEpisode()) {
-          
         } else {
           EpisodesRecord episode = evt.getEpisode();
           Episodes.setCurrentEpisode(episode.getEpisode());
         }
-        Menus.setEpisodesPopup(evt.getSeries(),evt.getEpisode(), evt.isSingleEpisode(), evt.isEpisodesPanel());
+        Menus.setEpisodesPopup(evt.getSeries(), evt.getEpisode(), evt.isSingleEpisode(), evt.isEpisodesPanel());
       }
     } catch (SQLException ex) {
       myseries.MySeries.logger.log(Level.SEVERE, null, ex);
