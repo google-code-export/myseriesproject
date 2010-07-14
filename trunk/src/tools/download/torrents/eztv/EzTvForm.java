@@ -65,7 +65,7 @@ public class EzTvForm extends AbstractTorrentForm {
 
   private void showUp() {
     initComponents();
-    combo_series.setSelectedItem(Series.getCurrentSerial());
+    combo_series.setSelectedItem(Series.getCurrentSerial().getTitle());
     combo_series.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
 
       @Override
@@ -262,11 +262,11 @@ public class EzTvForm extends AbstractTorrentForm {
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
+      .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+      .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
     );
 
     pack();

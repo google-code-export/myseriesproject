@@ -55,7 +55,7 @@ public class IsohuntForm extends AbstractTorrentForm implements TorrentConstants
     this.series = series;
     this.episode = episode;
     initComponents();
-    combo_series.setSelectedItem(series);
+    combo_series.setSelectedItem(series.getTitle());
     spinner_episode.setValue(episode.getEpisode());
     spinner_season.setValue(series.getSeason());
     setLocationRelativeTo(null);
@@ -65,7 +65,7 @@ public class IsohuntForm extends AbstractTorrentForm implements TorrentConstants
   /** Creates new form IsohuntForm */
   public IsohuntForm() {
     initComponents();
-    combo_series.setSelectedItem(Series.getCurrentSerial());
+    combo_series.setSelectedItem(Series.getCurrentSerial().getTitle());
     setLocationRelativeTo(null);
     setVisible(true);
   }

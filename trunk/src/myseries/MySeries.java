@@ -277,7 +277,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
         break;
     }
 
-
+    splitPane_main.setDividerLocation(Options.toInt(Options.DIVIDER_LOCATION) == 0 ? 250 : Options.toInt(Options.DIVIDER_LOCATION));
     setGlassPane();
     setLocationRelativeTo(null);
     setVisible(true);
@@ -633,7 +633,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     popUpMenu_downloadSubtitles.setText("Download Subtitles");
 
     popUpItem_downloadSubsTvSubs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/tvsubtitles.png"))); // NOI18N
-    popUpItem_downloadSubsTvSubs.setText("DownloadSubtitles");
+    popUpItem_downloadSubsTvSubs.setText("Download From TvSubtitles.net");
     popUpItem_downloadSubsTvSubs.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         popUpItem_downloadSubsTvSubsActionPerformed(evt);
@@ -642,7 +642,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     popUpMenu_downloadSubtitles.add(popUpItem_downloadSubsTvSubs);
 
     popUpItem_downloadSubsSubOn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/subtitleonline.png"))); // NOI18N
-    popUpItem_downloadSubsSubOn.setText("DownloadSubtitles");
+    popUpItem_downloadSubsSubOn.setText("Download from SubtitleOnline.com");
     popUpItem_downloadSubsSubOn.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         popUpItem_downloadSubsSubOnActionPerformed(evt);
@@ -688,7 +688,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       }
     });
 
-    splitPane_main.setDividerLocation(Options.toInt(Options.DIVIDER_LOCATION) == 0 ? 250 : Options.toInt(Options.DIVIDER_LOCATION));
+    splitPane_main.setDividerLocation(200);
 
     panel_Series.setMaximumSize(new java.awt.Dimension(216, 32767));
     panel_Series.setPreferredSize(new java.awt.Dimension(216, 584));
@@ -732,7 +732,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       panel_SeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(panel_SeriesLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(imageLayerPanel)
+        .addComponent(imageLayerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
         .addContainerGap())
       .addGroup(panel_SeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(panel_SeriesLayout.createSequentialGroup()
@@ -802,11 +802,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tabpanel_episodesList.setLayout(tabpanel_episodesListLayout);
     tabpanel_episodesListLayout.setHorizontalGroup(
       tabpanel_episodesListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 738, Short.MAX_VALUE)
+      .addGap(0, 835, Short.MAX_VALUE)
       .addGroup(tabpanel_episodesListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(tabpanel_episodesListLayout.createSequentialGroup()
           .addContainerGap()
-          .addComponent(panel_episodesList, javax.swing.GroupLayout.DEFAULT_SIZE, 714, Short.MAX_VALUE)
+          .addComponent(panel_episodesList, javax.swing.GroupLayout.DEFAULT_SIZE, 811, Short.MAX_VALUE)
           .addGap(14, 14, 14)))
     );
     tabpanel_episodesListLayout.setVerticalGroup(
@@ -937,7 +937,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabpanel_FilteredSeriesLayout.createSequentialGroup()
         .addContainerGap()
         .addGroup(tabpanel_FilteredSeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addComponent(panel_allSeriesEpisodes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 718, Short.MAX_VALUE)
+          .addComponent(panel_allSeriesEpisodes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE)
           .addComponent(panel_filters, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         .addContainerGap())
     );
@@ -960,8 +960,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tabpanel_statistics.setLayout(tabpanel_statisticsLayout);
     tabpanel_statisticsLayout.setHorizontalGroup(
       tabpanel_statisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(statEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 738, Short.MAX_VALUE)
-      .addComponent(statSeries, javax.swing.GroupLayout.DEFAULT_SIZE, 738, Short.MAX_VALUE)
+      .addComponent(statEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 835, Short.MAX_VALUE)
+      .addComponent(statSeries, javax.swing.GroupLayout.DEFAULT_SIZE, 835, Short.MAX_VALUE)
     );
     tabpanel_statisticsLayout.setVerticalGroup(
       tabpanel_statisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -975,7 +975,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tabsPanel.addTab("Ratings", new javax.swing.ImageIcon(getClass().getResource("/images/star.png")), tabpanel_statistics, "Series and episodes ratings"); // NOI18N
 
     tabpanel_schedule.setToolTipText("Schedule");
-    tabpanel_schedule.setOpaque(false);
     tabpanel_schedule.setLayout(new javax.swing.BoxLayout(tabpanel_schedule, javax.swing.BoxLayout.LINE_AXIS));
 
     scheduler.setMaximumSize(new java.awt.Dimension(1000, 800));
@@ -989,7 +988,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       panel_episodesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(panel_episodesLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(tabsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 743, Short.MAX_VALUE)
+        .addComponent(tabsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 840, Short.MAX_VALUE)
         .addContainerGap())
     );
     panel_episodesLayout.setVerticalGroup(
