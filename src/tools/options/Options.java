@@ -402,9 +402,8 @@ public class Options {
    * @return
    */
   public static String toString(String key, boolean trim) {
-    String val = "";
-    val = trim ? String.valueOf(options.get(key)).trim() : String.valueOf(options.get(key));
-    return val;
+    String val = trim ? String.valueOf(options.get(key)).trim() : String.valueOf(options.get(key));
+    return val!=null && !val.equals("null") ? val : "";
   }
 
   /**

@@ -83,11 +83,11 @@ public class OptionsPanel extends MyDraggable {
     tf_seasonSep.addValidator(new RegularExpressionValidator("", sepRegex, false, false));
     tf_titleSep.addValidator(new RegularExpressionValidator("", sepRegex, false, false));
     tf_episodeSep.setTrimValue(false);
-    tf_seasonSep.setTrimValue(false);
+    tf_seasonSep.setTrimValue(false); 
     tf_titleSep.setTrimValue(false);
     combo_secondaryLang.addValidator(
-        new CompareValidator(combo_secondaryLang.getSelectedItem().toString(),
-        combo_primaryLang.getSelectedItem().toString(),
+        new CompareValidator(combo_secondaryLang.getSelectedItem() != null ? combo_secondaryLang.getSelectedItem().toString()  : "",
+        combo_primaryLang.getSelectedItem()!= null ?combo_primaryLang.getSelectedItem().toString() :"",
         CompareValidator.Type.NOT_EQUAL, true));
     checkbox_useProxyActionPerformed(null);
     setLocationRelativeTo(m);
@@ -264,7 +264,6 @@ public class OptionsPanel extends MyDraggable {
     combobox_dateFormat.setName(Options.DATE_FORMAT);
 
     button_dateFormatHelp.setBackground(new java.awt.Color(255, 255, 255));
-    button_dateFormatHelp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"))); // NOI18N
     button_dateFormatHelp.setToolTipText("Brings up help about formating date");
     button_dateFormatHelp.setBorder(null);
     button_dateFormatHelp.setBorderPainted(false);
@@ -675,20 +674,16 @@ public class OptionsPanel extends MyDraggable {
       .addGroup(panel_optionsLayout.createSequentialGroup()
         .addContainerGap()
         .addGroup(panel_optionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_optionsLayout.createSequentialGroup()
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
-            .addContainerGap())
+          .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 509, Short.MAX_VALUE)
           .addGroup(panel_optionsLayout.createSequentialGroup()
-            .addGroup(panel_optionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-              .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel_optionsLayout.createSequentialGroup()
-                .addComponent(button_ok, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(button_cancel, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
-                .addGap(264, 264, 264)
-                .addComponent(bt_help, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
-              .addComponent(tabbedPane_options, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 491, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addContainerGap())))
+            .addComponent(button_ok, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(button_cancel, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+            .addGap(222, 222, 222)
+            .addComponent(bt_help, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(32, 32, 32))
+          .addComponent(tabbedPane_options, javax.swing.GroupLayout.PREFERRED_SIZE, 491, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addContainerGap())
     );
     panel_optionsLayout.setVerticalGroup(
       panel_optionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
