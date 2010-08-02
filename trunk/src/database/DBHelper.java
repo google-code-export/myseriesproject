@@ -21,6 +21,10 @@ import tools.languages.LangsList;
  * @author lordovol
  */
 public class DBHelper {
+  /**
+   * The limit of the episodes to fetch 
+   */
+  public static final int LIMIT = 20;
 
   /**
    * Gets an episode by the primary key (episode_ID)
@@ -217,7 +221,8 @@ public class DBHelper {
     ArrayList<ScheduleEvent> events = new ArrayList<ScheduleEvent>();
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     String date = sdf.format(sDay.getDate());
-    String sql = "SELECT series.screenshot as image, episodes.episode AS ep, episodes.title AS title , series.title AS series FROM "
+    String sql = "SELECT series.screenshot as image, episodes.episode AS ep, episodes.title AS title , "
+        + "series.title AS series, episodes.downloaded AS downloaded FROM "
         + "episodes JOIN series on episodes.series_ID = series.series_ID WHERE "
         + "aired = '" + date + "' AND deleted = 0";
     try {
@@ -228,12 +233,37 @@ public class DBHelper {
         ev.setEpisodeNumber(rs.getInt("ep"));
         ev.setEpisode(rs.getString("title"));
         ev.setImage(rs.getString("image"));
+        ev.setDownloaded(rs.getInt("downloaded"));
         events.add(ev);
       }
       return events;
     } catch (SQLException ex) {
       myseries.MySeries.logger.log(Level.SEVERE, null, ex);
       return events;
+    }
+  }
+
+  public static Vector<EpisodesRecord> getSeriesEpisodesByRate(String seriesTitle) {
+
+       String sql = "SELECT episodes.* FROM episodes  JOIN series ON "
+           + "series.series_ID = episodes.series_ID "
+           + "WHERE series.title = '" + seriesTitle + "' AND rate > 0 ORDER BY rate DESC LIMIT "+LIMIT;
+    try {
+      return getEpisodesBySql(sql);
+    } catch (SQLException ex) {
+      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      return null;
+    }
+  }
+
+  public static int getSeasonByEpisodeId(int episode_ID) {
+    try {
+      String sql = "SELECT series.season FROM series join episodes ON " + "series.series_ID=episodes.series_ID WHERE episodes.episode_ID=" + episode_ID;
+      ResultSet rs = DBConnection.conn.createStatement().executeQuery(sql);
+      return rs.getInt("season");
+    } catch (SQLException ex) {
+      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      return 0;
     }
   }
 
