@@ -30,7 +30,8 @@ public class MyTitleCellRenderer extends DefaultTableCellRenderer {
       Language sub = (Language) table.getModel().getValueAt(row, Episodes.SUBS_COLUMN);
       this.setFont(MyUsefulFunctions.getCellFont(this.getFont(),downloaded,seen,sub));
       this.setForeground(MyUsefulFunctions.getCellColor(isSelected,seen));
-      this.setText(value.toString());
+      String size = MyUsefulFunctions.getVideoFileSize((EpisodesRecord)value);
+      this.setText(value.toString() + size);
     }
 
     return this;
