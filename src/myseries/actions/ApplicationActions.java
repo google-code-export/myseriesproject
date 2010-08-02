@@ -125,9 +125,10 @@ public class ApplicationActions {
         MyMessages.error("Sorry!!!", "Your OS does not support this function");
       } else {
         try {
-          d.open(new File(Options._USER_DIR_ + "/ySeriesLogs_0.html"));
+          d.open(new File("MySeriesLogs_0.html"));
         } catch (IOException ex) {
           MySeries.logger.log(Level.SEVERE, "Could not read the log file", ex);
+          MyMessages.error("View Log", "Couldn't find the log file");
         }
       }
     }
@@ -143,7 +144,7 @@ public class ApplicationActions {
       } else if (index == MySeries.TAB_FILTERS) {
         Filters.getFilteredSeries();
       } else if (index == MySeries.TAB_STATISTICS) {
-        MySeries.statSeries.refresh();
+        MySeries.statSeries.refresh(false);
         MySeries.statEpisodes.refresh();
       }
 
