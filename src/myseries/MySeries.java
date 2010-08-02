@@ -12,10 +12,10 @@ package myseries;
 
 import com.googlecode.starrating.StarTableCellRenderer;
 import java.awt.Component;
+import java.awt.event.MouseListener;
 import javax.swing.ComboBoxModel;
 import javax.swing.table.TableModel;
 import myComponents.myEvents.MyEvent;
-import myComponents.myEvents.MyEventListener;
 import myseries.episodes.Episodes;
 import myseries.series.Series;
 import database.DBConnection;
@@ -28,15 +28,12 @@ import javax.swing.event.TableModelEvent;
 import database.EpisodesRecord;
 import database.SeriesRecord;
 import help.CheckUpdate;
-import help.Help;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
-import java.beans.EventHandler;
-import java.io.File;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -60,7 +57,6 @@ import myComponents.MyTableModels.MyFilteredSeriesTableModel;
 import myComponents.MyTableModels.MySeriesTableModel;
 import myComponents.MyUsefulFunctions;
 import myComponents.myEvents.MyEventHandler;
-import myComponents.myEvents.MyEventListenerInterface;
 import myComponents.myEvents.MyEventsClass;
 import myComponents.myGUI.MyImagePanel;
 import myComponents.myGUI.MyDisabledGlassPane;
@@ -70,6 +66,10 @@ import myComponents.myTableCellEditors.MyTitleCellEditor;
 import myComponents.myTableCellRenderers.MyJDateChooserCellRenderer;
 import myComponents.myTableCellRenderers.MyScheduleTableCellRenderer;
 import myComponents.myTableCellRenderers.MyTitleCellRenderer;
+import myComponents.myTableCellRenderers.MyDownloadedCellRenderer;
+import myComponents.myToolbar.Toolbar;
+import myComponents.myToolbar.ToolbarButton;
+import myComponents.myToolbar.ToolbarButtonActions;
 import myseries.actions.ApplicationActions;
 import myseries.actions.DatabaseActions;
 import myseries.actions.EpisodesActions;
@@ -81,7 +81,6 @@ import myseries.filters.UpdateFiltersTable;
 import myseries.series.UpdateSeriesTable;
 import myseries.statistics.StatEpisodes;
 import myseries.statistics.StatSeries;
-import tools.DesktopSupport;
 import tools.Skin;
 import tools.download.subtitles.SubtitleConstants;
 import tools.download.torrents.TorrentConstants;
@@ -154,6 +153,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static boolean isHelp = false;
   private EventListenerList listenerList = new EventListenerList();
   private MyEventsClass evClass = new MyEventsClass();
+  private Integer[] visibleButtons;
+  //public static Toolbar myToolbar;
 
   /**
    *
@@ -192,6 +193,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     MySeries.logger.log(Level.INFO, "Creating database connection");
     DBConnection.createConnection(Options.toString(Options.DB_NAME));
     // Create the GUIs table
+   visibleButtons = Options.toIntegerArray(Options.TOOLBAR_BUTTONS);
+    if(visibleButtons==null){
+      visibleButtons = Options.getDefaultToolbarButtons();
+    }
     MySeries.logger.log(Level.INFO, "Creating the GUI");
     createGUI();
     table_stat_series = new StatSeries();
@@ -252,36 +257,45 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     Filters.setTableModel_filterSeries(tableModel_filterSeries);
     Filters.getFilteredSeries();
 
+   
+    //myToolbar = new Toolbar(visibleButtons);
+
     //Move toolbar to desired position
+
     switch (Options.toInt(Options.TOOLBAR_POSITION)) {
-      case Options._NORTH_:
-        toolbar.setOrientation(SwingConstants.HORIZONTAL);
-        getContentPane().add(toolbar, BorderLayout.NORTH);
-        break;
-      case Options._EAST_:
-        toolbar.setOrientation(SwingConstants.VERTICAL);
-        getContentPane().add(toolbar, BorderLayout.EAST);
-        break;
-      case Options._SOUTH_:
-        toolbar.setOrientation(SwingConstants.HORIZONTAL);
-        getContentPane().add(toolbar, BorderLayout.SOUTH);
-        break;
-      case Options._WEST_:
-        toolbar.setOrientation(SwingConstants.VERTICAL);
-        getContentPane().add(toolbar, BorderLayout.WEST);
-        break;
-      case Options._FLOAT_:
-        getContentPane().add(toolbar, BorderLayout.WEST);
-        ((BasicToolBarUI) toolbar.getUI()).setFloating(true, new Point(100, 100));
-        toolbar.setLocation(200, 200);
-        break;
+    case Options._NORTH_:
+    myToolbar.setOrientation(SwingConstants.HORIZONTAL);
+    getContentPane().add(myToolbar, BorderLayout.NORTH);
+    break;
+    case Options._EAST_:
+    myToolbar.setOrientation(SwingConstants.VERTICAL);
+    getContentPane().add(myToolbar, BorderLayout.EAST);
+    break;
+    case Options._SOUTH_:
+    myToolbar.setOrientation(SwingConstants.HORIZONTAL);
+    getContentPane().add(myToolbar, BorderLayout.SOUTH);
+    break;
+    case Options._WEST_:
+    myToolbar.setOrientation(SwingConstants.VERTICAL);
+    getContentPane().add(myToolbar, BorderLayout.WEST);
+    break;
+    case Options._FLOAT_:
+    getContentPane().add(myToolbar, BorderLayout.WEST);
+    ((BasicToolBarUI) myToolbar.getUI()).setFloating(true, new Point(100, 100));
+    myToolbar.setLocation(200, 200);
+    break;
     }
 
+    //getContentPane().add(myToolbar, BorderLayout.NORTH);
     splitPane_main.setDividerLocation(Options.toInt(Options.DIVIDER_LOCATION) == 0 ? 250 : Options.toInt(Options.DIVIDER_LOCATION));
     setGlassPane();
     setLocationRelativeTo(null);
     setVisible(true);
-
+    MouseListener[] list = scheduler.getTblCalendar().getMouseListeners();
+    if (list.length == 1) {
+      scheduler.getTblCalendar().removeMouseListener(list[0]);
+    }
+    scheduler.goToToday();
     //Check for updates
     MyUsefulFunctions.initInternetConnection();
     if (Options.toBoolean(Options.CHECK_VERSION)) {
@@ -333,6 +347,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     //table_episodesList.removeColumn(table_episodesList.getColumnModel().getColumn(6));
     tableEpisodes.getModel().addTableModelListener(this);
     tableEpisodes.getTableHeader().setReorderingAllowed(false);
+    tableEpisodes.getColumn(Episodes.DOWNLOADED_COLUMN_TITLE).setCellRenderer(new MyDownloadedCellRenderer());
     tableEpisodes.getColumn(Episodes.SUBS_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MySubtitleEditor(subs));
     tableEpisodes.getColumn(Episodes.AIRED_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MyJDateChooserCellEditor());
     tableEpisodes.getColumn(Episodes.AIRED_COLUMN_TITLE).setCellRenderer(new MyJDateChooserCellRenderer());
@@ -365,7 +380,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tableSeries.setRowHeight(fontHeight + CELL_MARGIN);
     Series.setTable_series(tableSeries);
     Series.setTableWidths(seriesTableWidths);
-
 
     setLocationRelativeTo(null);
   }
@@ -431,20 +445,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     statEpisodes = new myseries.statistics.StatEpisodes();
     tabpanel_schedule = new javax.swing.JPanel();
     scheduler = new com.googlecode.scheduler.Scheduler(Options._USER_DIR_ +Database.PATH + DBConnection.db);
-    toolbar = new javax.swing.JToolBar();
-    tb_addSeries = new javax.swing.JButton();
-    tb_restoreSeries = new javax.swing.JButton();
-    jSeparator4 = new javax.swing.JToolBar.Separator();
-    tb_downloadTorrentEztv = new javax.swing.JButton();
-    tb_downloadTorrentIsohunt = new javax.swing.JButton();
-    tb_internetUpdateTvrage = new javax.swing.JButton();
-    tb_internetUpdateEpguides = new javax.swing.JButton();
-    tb_updateFiles = new javax.swing.JButton();
-    jSeparator5 = new javax.swing.JToolBar.Separator();
-    tb_options = new javax.swing.JButton();
-    tb_checkUpdates = new javax.swing.JButton();
-    tb_viewLogFiles = new javax.swing.JButton();
-    tb_viewLogFiles1 = new javax.swing.JButton();
+    myToolbar = new myComponents.myToolbar.Toolbar(this, visibleButtons);
     menuBar = new javax.swing.JMenuBar();
     menu_MySeries = new javax.swing.JMenu();
     menuItem_createDB = new javax.swing.JMenuItem();
@@ -691,6 +692,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     splitPane_main.setDividerLocation(200);
 
     panel_Series.setMaximumSize(new java.awt.Dimension(216, 32767));
+    panel_Series.setMinimumSize(new java.awt.Dimension(200, 600));
     panel_Series.setPreferredSize(new java.awt.Dimension(216, 584));
     panel_Series.addComponentListener(new java.awt.event.ComponentAdapter() {
       public void componentResized(java.awt.event.ComponentEvent evt) {
@@ -742,15 +744,15 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     );
     panel_SeriesLayout.setVerticalGroup(
       panel_SeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(panel_SeriesLayout.createSequentialGroup()
-        .addGap(33, 33, 33)
-        .addComponent(imageLayerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
-        .addGap(144, 144, 144))
+      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_SeriesLayout.createSequentialGroup()
+        .addContainerGap()
+        .addComponent(imageLayerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
+        .addContainerGap())
       .addGroup(panel_SeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(panel_SeriesLayout.createSequentialGroup()
           .addContainerGap()
-          .addComponent(scrollPane_series, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
-          .addContainerGap()))
+          .addComponent(scrollPane_series, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addGap(105, 105, 105)))
     );
 
     splitPane_main.setLeftComponent(panel_Series);
@@ -811,12 +813,12 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     );
     tabpanel_episodesListLayout.setVerticalGroup(
       tabpanel_episodesListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 424, Short.MAX_VALUE)
+      .addGap(0, 540, Short.MAX_VALUE)
       .addGroup(tabpanel_episodesListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(tabpanel_episodesListLayout.createSequentialGroup()
           .addContainerGap()
-          .addComponent(panel_episodesList, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
-          .addGap(31, 31, 31)))
+          .addComponent(panel_episodesList, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addContainerGap(51, Short.MAX_VALUE)))
     );
 
     tabsPanel.addTab("                          ", new javax.swing.ImageIcon(getClass().getResource("/images/series.png")), tabpanel_episodesList, ""); // NOI18N
@@ -946,7 +948,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       .addGroup(tabpanel_FilteredSeriesLayout.createSequentialGroup()
         .addComponent(panel_filters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(panel_allSeriesEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
+        .addComponent(panel_allSeriesEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
         .addContainerGap())
     );
 
@@ -968,7 +970,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       .addGroup(tabpanel_statisticsLayout.createSequentialGroup()
         .addComponent(statSeries, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(statEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
+        .addComponent(statEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
         .addContainerGap())
     );
 
@@ -995,7 +997,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       panel_episodesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(panel_episodesLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(tabsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
+        .addComponent(tabsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 576, Short.MAX_VALUE)
         .addContainerGap())
     );
 
@@ -1005,147 +1007,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
     getContentPane().add(splitPane_main, java.awt.BorderLayout.CENTER);
 
-    toolbar.setRollover(true);
-    toolbar.setBorderPainted(false);
-    toolbar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
-    tb_addSeries.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add_series.png"))); // NOI18N
-    tb_addSeries.setToolTipText("Add Series");
-    tb_addSeries.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    tb_addSeries.setFocusable(false);
-    tb_addSeries.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-    tb_addSeries.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-    tb_addSeries.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        tb_addSeriesActionPerformed(evt);
-      }
-    });
-    toolbar.add(tb_addSeries);
-
-    tb_restoreSeries.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/restore.png"))); // NOI18N
-    tb_restoreSeries.setToolTipText("Restore Series");
-    tb_restoreSeries.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    tb_restoreSeries.setFocusable(false);
-    tb_restoreSeries.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-    tb_restoreSeries.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-    tb_restoreSeries.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        tb_restoreSeriesActionPerformed(evt);
-      }
-    });
-    toolbar.add(tb_restoreSeries);
-    toolbar.add(jSeparator4);
-
-    tb_downloadTorrentEztv.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eztv.png"))); // NOI18N
-    tb_downloadTorrentEztv.setToolTipText("Download torrent from eztv");
-    tb_downloadTorrentEztv.setFocusable(false);
-    tb_downloadTorrentEztv.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-    tb_downloadTorrentEztv.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-    tb_downloadTorrentEztv.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        tb_downloadTorrentEztvActionPerformed(evt);
-      }
-    });
-    toolbar.add(tb_downloadTorrentEztv);
-
-    tb_downloadTorrentIsohunt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/isohunt.png"))); // NOI18N
-    tb_downloadTorrentIsohunt.setToolTipText("Download torrent from isohunt");
-    tb_downloadTorrentIsohunt.setFocusable(false);
-    tb_downloadTorrentIsohunt.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-    tb_downloadTorrentIsohunt.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-    tb_downloadTorrentIsohunt.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        tb_downloadTorrentIsohuntActionPerformed(evt);
-      }
-    });
-    toolbar.add(tb_downloadTorrentIsohunt);
-
-    tb_internetUpdateTvrage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/tvrage.png"))); // NOI18N
-    tb_internetUpdateTvrage.setToolTipText("Internet update from tvrage");
-    tb_internetUpdateTvrage.setFocusable(false);
-    tb_internetUpdateTvrage.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-    tb_internetUpdateTvrage.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-    tb_internetUpdateTvrage.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        tb_internetUpdateTvrageActionPerformed(evt);
-      }
-    });
-    toolbar.add(tb_internetUpdateTvrage);
-
-    tb_internetUpdateEpguides.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/epguides.png"))); // NOI18N
-    tb_internetUpdateEpguides.setToolTipText("Internet update from epguides");
-    tb_internetUpdateEpguides.setFocusable(false);
-    tb_internetUpdateEpguides.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-    tb_internetUpdateEpguides.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-    tb_internetUpdateEpguides.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        tb_internetUpdateEpguidesActionPerformed(evt);
-      }
-    });
-    toolbar.add(tb_internetUpdateEpguides);
-
-    tb_updateFiles.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/updateFiles.png"))); // NOI18N
-    tb_updateFiles.setToolTipText("Update episodes download and subtitle statuses");
-    tb_updateFiles.setFocusable(false);
-    tb_updateFiles.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-    tb_updateFiles.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-    tb_updateFiles.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        tb_updateFilesActionPerformed(evt);
-      }
-    });
-    toolbar.add(tb_updateFiles);
-    toolbar.add(jSeparator5);
-
-    tb_options.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/options.png"))); // NOI18N
-    tb_options.setToolTipText("Options");
-    tb_options.setFocusable(false);
-    tb_options.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-    tb_options.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-    tb_options.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        tb_optionsActionPerformed(evt);
-      }
-    });
-    toolbar.add(tb_options);
-
-    tb_checkUpdates.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/checkUpdates.png"))); // NOI18N
-    tb_checkUpdates.setToolTipText("Check for updates");
-    tb_checkUpdates.setFocusable(false);
-    tb_checkUpdates.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-    tb_checkUpdates.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-    tb_checkUpdates.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        tb_checkUpdatesActionPerformed(evt);
-      }
-    });
-    toolbar.add(tb_checkUpdates);
-
-    tb_viewLogFiles.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/viewLogs.png"))); // NOI18N
-    tb_viewLogFiles.setToolTipText("View Log file");
-    tb_viewLogFiles.setFocusable(false);
-    tb_viewLogFiles.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-    tb_viewLogFiles.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-    tb_viewLogFiles.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        tb_viewLogFilesActionPerformed(evt);
-      }
-    });
-    toolbar.add(tb_viewLogFiles);
-
-    tb_viewLogFiles1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"))); // NOI18N
-    tb_viewLogFiles1.setToolTipText("Help");
-    tb_viewLogFiles1.setFocusable(false);
-    tb_viewLogFiles1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-    tb_viewLogFiles1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-    tb_viewLogFiles1.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        tb_viewLogFiles1ActionPerformed(evt);
-      }
-    });
-    toolbar.add(tb_viewLogFiles1);
-
-    getContentPane().add(toolbar, java.awt.BorderLayout.NORTH);
+    myToolbar.setRollover(true);
+    getContentPane().add(myToolbar, java.awt.BorderLayout.NORTH);
 
     org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tableSeries, org.jdesktop.beansbinding.ELProperty.create("${background}"), menuBar, org.jdesktop.beansbinding.BeanProperty.create("foreground"));
     bindingGroup.addBinding(binding);
@@ -1212,6 +1075,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
     menuItem_editSeries.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
     menuItem_editSeries.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit_series.png"))); // NOI18N
+    menuItem_editSeries.setText("Edit Series");
     menuItem_editSeries.setToolTipText("Edit current series");
     menuItem_editSeries.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1222,6 +1086,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
     menuItem_deleteSeries.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
     menuItem_deleteSeries.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete_series.png"))); // NOI18N
+    menuItem_deleteSeries.setText("Delete Series");
     menuItem_deleteSeries.setToolTipText("Delete current series");
     menuItem_deleteSeries.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1242,6 +1107,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
     menuItem_editEpisode.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
     menuItem_editEpisode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add_episode.png"))); // NOI18N
+    menuItem_editEpisode.setText("Add Episode");
     menuItem_editEpisode.setToolTipText("Add a new episode to the current series");
     menuItem_editEpisode.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1385,7 +1251,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     menu_Help.add(menuItem_viewLogs);
 
     jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F6, 0));
-    jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/exit.png"))); // NOI18N
+    jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clearLogs.png"))); // NOI18N
     jMenuItem1.setText("Clear Log Files");
     jMenuItem1.setToolTipText("Clear older log files");
     jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -1457,6 +1323,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       if (evt.getButton() == MouseEvent.BUTTON1) {
         try {
           tableSeries.removeRowSelectionInterval(0, tableSeries.getRowCount() - 1);
+          MyEvent event = new MyEvent(tableSeries, MyEventHandler.SET_CURRENT_SERIES);
+          event.setSeries(null);
+          event.setSeriesPanel(true);
+          getEvClass().fireMyEvent(event);
         } catch (IllegalArgumentException ex) {
         }
       } else if (evt.getButton() == MouseEvent.BUTTON3) {
@@ -1754,49 +1624,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     ApplicationActions.restoreSeries();
   }//GEN-LAST:event_menuItem_restoreActionPerformed
 
-  private void tb_addSeriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tb_addSeriesActionPerformed
-    SeriesActions.addSeries(this);
-  }//GEN-LAST:event_tb_addSeriesActionPerformed
-
-  private void tb_restoreSeriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tb_restoreSeriesActionPerformed
-    ApplicationActions.restoreSeries();
-  }//GEN-LAST:event_tb_restoreSeriesActionPerformed
-
-  private void tb_downloadTorrentEztvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tb_downloadTorrentEztvActionPerformed
-    SeriesActions.downloadTorrent(TorrentConstants.EZTV_NAME);
-  }//GEN-LAST:event_tb_downloadTorrentEztvActionPerformed
-
-  private void tb_downloadTorrentIsohuntActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tb_downloadTorrentIsohuntActionPerformed
-    SeriesActions.downloadTorrent(TorrentConstants.ISOHUNT_NAME);
-  }//GEN-LAST:event_tb_downloadTorrentIsohuntActionPerformed
-
-  private void tb_internetUpdateTvrageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tb_internetUpdateTvrageActionPerformed
-    SeriesActions.internetUpdate(this, InternetUpdate.TV_RAGE_NAME);
-  }//GEN-LAST:event_tb_internetUpdateTvrageActionPerformed
-
-  private void tb_internetUpdateEpguidesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tb_internetUpdateEpguidesActionPerformed
-    SeriesActions.internetUpdate(this, InternetUpdate.EP_GUIDES_NAME);
-  }//GEN-LAST:event_tb_internetUpdateEpguidesActionPerformed
-
-  private void tb_updateFilesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tb_updateFilesActionPerformed
-    SeriesActions.updateFiles(this);
-  }//GEN-LAST:event_tb_updateFilesActionPerformed
-
-  private void tb_optionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tb_optionsActionPerformed
-    ApplicationActions.showOptions(this);
-  }//GEN-LAST:event_tb_optionsActionPerformed
-
-  private void tb_checkUpdatesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tb_checkUpdatesActionPerformed
-    ApplicationActions.checkUpdates();
-  }//GEN-LAST:event_tb_checkUpdatesActionPerformed
-
-  private void tb_viewLogFilesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tb_viewLogFilesActionPerformed
-    ApplicationActions.viewLog(this);
-  }//GEN-LAST:event_tb_viewLogFilesActionPerformed
-
-  private void tb_viewLogFiles1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tb_viewLogFiles1ActionPerformed
-    ApplicationActions.showHelp(this);
-  }//GEN-LAST:event_tb_viewLogFiles1ActionPerformed
   // Variables declaration - do not modify//GEN-BEGIN:variables
   public static javax.swing.JMenuItem PopUpItem_AddEpisode;
   public static javax.swing.JMenuItem PopUpItem_AddEpisodeInEpisodes;
@@ -1816,8 +1643,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static javax.swing.JSeparator jSeparator1;
   public static javax.swing.JSeparator jSeparator2;
   public static javax.swing.JSeparator jSeparator3;
-  public static javax.swing.JToolBar.Separator jSeparator4;
-  public static javax.swing.JToolBar.Separator jSeparator5;
   public static javax.swing.JMenuBar menuBar;
   public static javax.swing.JMenuItem menuItem_About;
   public static javax.swing.JMenuItem menuItem_DownloadIsohunt;
@@ -1845,6 +1670,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static javax.swing.JMenu menu_InternetUpdate;
   public static javax.swing.JMenu menu_MySeries;
   public static javax.swing.JMenu menu_Tools;
+  public static myComponents.myToolbar.Toolbar myToolbar;
   public static javax.swing.JPanel panel_Series;
   public static javax.swing.JScrollPane panel_allSeriesEpisodes;
   public static javax.swing.JPanel panel_episodes;
@@ -1882,18 +1708,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static javax.swing.JPanel tabpanel_schedule;
   public static javax.swing.JPanel tabpanel_statistics;
   public static javax.swing.JTabbedPane tabsPanel;
-  public static javax.swing.JButton tb_addSeries;
-  public static javax.swing.JButton tb_checkUpdates;
-  public static javax.swing.JButton tb_downloadTorrentEztv;
-  public static javax.swing.JButton tb_downloadTorrentIsohunt;
-  public static javax.swing.JButton tb_internetUpdateEpguides;
-  public static javax.swing.JButton tb_internetUpdateTvrage;
-  public static javax.swing.JButton tb_options;
-  public static javax.swing.JButton tb_restoreSeries;
-  public static javax.swing.JButton tb_updateFiles;
-  public static javax.swing.JButton tb_viewLogFiles;
-  public static javax.swing.JButton tb_viewLogFiles1;
-  public static javax.swing.JToolBar toolbar;
   private org.jdesktop.beansbinding.BindingGroup bindingGroup;
   // End of variables declaration//GEN-END:variables
 
@@ -1963,5 +1777,9 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
    */
   public void setEvClass(MyEventsClass evClass) {
     this.evClass = evClass;
+  }
+
+  public static Class<MySeries> getInstance(){
+    return MySeries.class;
   }
 }
