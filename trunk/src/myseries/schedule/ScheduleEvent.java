@@ -14,6 +14,7 @@ public class ScheduleEvent {
   private int episodeNumber;
   private String episode;
   private String image;
+  private int downloaded;
 
   /**
    * @return the series
@@ -69,6 +70,20 @@ public class ScheduleEvent {
    */
   public void setImage(String image) {
     this.image = image;
+  }
+
+  /**
+   * @return the downloaded
+   */
+  public int getDownloaded() {
+    return downloaded;
+  }
+
+  /**
+   * @param downloaded the downloaded to set
+   */
+  public void setDownloaded(int downloaded) {
+    this.downloaded = downloaded;
   }
 
 }
