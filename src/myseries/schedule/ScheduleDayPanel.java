@@ -12,9 +12,14 @@ package myseries.schedule;
 
 import com.googlecode.scheduler.ScheduleDay;
 import database.DBHelper;
+import database.EpisodesRecord;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -29,8 +34,8 @@ import tools.options.Options;
  * @author ssoldatos
  */
 public class ScheduleDayPanel extends javax.swing.JPanel {
+
   private static final long serialVersionUID = 234534643563L;
-  
   private final Object value;
   private final JLabel dayLabel;
   private final int height;
@@ -38,9 +43,9 @@ public class ScheduleDayPanel extends javax.swing.JPanel {
   private ScheduleDay sDay;
   private ArrayList<ScheduleEvent> events;
   private int rows;
-  private int  MAX_COLUMNS = 2;
-  private int  GAP = 2;
-  private int  MIN_COLUMNS = 1;
+  private int MAX_COLUMNS = 2;
+  private int GAP = 2;
+  private int MIN_COLUMNS = 1;
   private int NUMBER_LABEL_WIDTH = 30;
 
   public ScheduleDayPanel(Object value, JLabel dayLabel, int height, int width) {
@@ -101,6 +106,7 @@ public class ScheduleDayPanel extends javax.swing.JPanel {
     number.add(dayLabel);
     number.setToolTipText("");
     setBackground(dayLabel.getBackground());
+
   }
 
   private void createPanel() {
@@ -120,45 +126,78 @@ public class ScheduleDayPanel extends javax.swing.JPanel {
         File sc = new File(Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH + event.getImage());
         orIm = getScaledImageIcon(new ImageIcon(sc.getAbsolutePath()).getImage());
       }
+      orIm = addDownloadStatus(orIm, event.getDownloaded());
       eventLabel.setMaximumSize(new Dimension(orIm.getIconWidth(), orIm.getIconHeight()));
       eventLabel.setIcon(orIm);
       eventLabel.setHorizontalAlignment(SwingConstants.CENTER);
       icons.add(eventLabel);
-
     }
     tip += "</table></html>";
     setToolTipText(tip);
   }
 
   private ImageIcon getScaledImageIcon(Image image) {
-
-    int w = image.getWidth(this);
-    int h = image.getHeight(this);
-    int newW = 0, newH = 0;
-    if (events.size() == 1) {
-      if(w>=h){
-      newW = width - NUMBER_LABEL_WIDTH;
-      newH = h/(w/newW);
+    ImageIcon im = null;
+    try {
+      int w = image.getWidth(this);
+      int h = image.getHeight(this);
+      int newW = 0, newH = 0;
+      if (events.size() == 1) {
+        if (w >= h) {
+          newW = width - NUMBER_LABEL_WIDTH;
+          newH = h / (w / newW);
+        } else {
+          newH = height;
+          newW = w / (h / newH);
+        }
       } else {
-       newH = height;
-       newW = w/(h/newH);
+        newW = ((width - NUMBER_LABEL_WIDTH) / MAX_COLUMNS) - (rows * GAP);
+        newH = h / (w / newW);
       }
-    } else {
-      if(w>=h){
-      newW  = ((width-NUMBER_LABEL_WIDTH)/MAX_COLUMNS) -(rows*GAP);
-      //newH =  (height/rows)-(rows*GAP);
-      newH = h/(w/newW);
-      } else {
-        newH =  (height/rows)-(rows*GAP);
-        newW = w/(h/newH);
-      }
+      im = new ImageIcon(image.getScaledInstance(newW, newH, Image.SCALE_SMOOTH));
+    } catch (Exception ex) {
+      return getScaledImageIcon(getDefaultImage().getImage());
     }
-    ImageIcon im = new ImageIcon(image.getScaledInstance(newW, newH, Image.SCALE_SMOOTH));
     return im;
   }
 
   public ImageIcon getDefaultImage() {
     ImageIcon im = new ImageIcon(getClass().getResource(MyImagePanel.LOGO));
     return im;
+  }
+
+  private ImageIcon addDownloadStatus(ImageIcon orIm, int downloaded) {
+    int imWidth = orIm.getIconWidth();
+    int imHeight = orIm.getIconHeight();
+    ImageIcon indicator = null;
+    if (downloaded == EpisodesRecord.DOWNLOADED) {
+      indicator = getScaledImageIcon("/images/downloaded.png", imWidth, imHeight);
+    } else {
+      // indicator = getScaledImageIcon("/images/torrent.png", imWidth, imHeight);
+    }
+    if (indicator != null) {
+      BufferedImage buff = new BufferedImage(imWidth, imHeight, BufferedImage.TYPE_INT_ARGB);
+      buff.getGraphics().drawImage(orIm.getImage(), 0, 0, this);
+      buff.getGraphics().drawImage(indicator.getImage(), imWidth - indicator.getIconWidth(), imHeight - indicator.getIconHeight(), this);
+      orIm = new ImageIcon(buff);
+    }
+    return orIm;
+  }
+
+  private ImageIcon getScaledImageIcon(String imagePath, int imWidth, int imHeight) {
+    ImageIcon im = new ImageIcon(getClass().getResource(imagePath));
+    int icWidth = imWidth / 3;
+    int icHeight = imWidth / 3;
+    Image scaled = im.getImage().getScaledInstance(icWidth, icHeight, Image.SCALE_SMOOTH);
+    return new ImageIcon(scaled);
+  }
+
+  public class ScheduleEpisodeListener extends MouseAdapter {
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+      super.mouseClicked(e);
+      System.out.println("aaaaa");
+    }
   }
 }
