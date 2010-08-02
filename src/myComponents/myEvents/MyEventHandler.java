@@ -64,7 +64,9 @@ public class MyEventHandler implements MyEventListener {
         if (row > -1) {
           MySeries.tableSeries.setRowSelectionInterval(row, row);
         } else {
+          if(MySeries.tableSeries.getRowCount()>0){
           MySeries.tableSeries.removeRowSelectionInterval(0, MySeries.tableSeries.getRowCount() - 1);
+          }
         }
         Menus.setSeriesMenus(series);
       } else if (evt.getType() == SET_CURRENT_EPISODE) {
