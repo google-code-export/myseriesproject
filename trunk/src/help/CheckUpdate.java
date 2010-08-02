@@ -52,6 +52,9 @@ public class CheckUpdate extends MyDraggable {
       up = new Update();
       Thread t = new Thread(up);
       t.start();
+    } else{
+      MySeries.glassPane.deactivate();
+      return;
     }
     setLocationRelativeTo(null);
     if (!onStartUp) {
