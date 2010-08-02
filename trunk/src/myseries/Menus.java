@@ -6,6 +6,8 @@ package myseries;
 
 import database.EpisodesRecord;
 import database.SeriesRecord;
+import myComponents.myToolbar.Toolbar;
+import myComponents.myToolbar.ToolbarButtonActions;
 import tools.DesktopSupport;
 
 /**
@@ -15,14 +17,15 @@ import tools.DesktopSupport;
 public class Menus {
 
   public static void setSeriesMenus(SeriesRecord s) {
-    MySeries.menuItem_editSeries.setEnabled(s != null);
-    MySeries.menuItem_deleteSeries.setEnabled(s != null);
-    MySeries.menuItem_editEpisode.setEnabled(s != null);
-    MySeries.menuItem_exportEpisodes.setEnabled(s != null);
+    MySeries.menuItem_editSeries.setEnabled(s.getSeries_ID() != 0);
+    MySeries.menuItem_deleteSeries.setEnabled(s.getSeries_ID() != 0);
+    MySeries.menuItem_editEpisode.setEnabled(s.getSeries_ID() != 0);
+    MySeries.menuItem_exportEpisodes.setEnabled(s.getSeries_ID() != 0);
     MySeries.menuItem_editSeries.setText("Edit series " + s);
     MySeries.menuItem_deleteSeries.setText("Delete series " + s);
     MySeries.menuItem_editEpisode.setText("Add episode to " + s);
     setSeriesPopup(s);
+    setSeriesToolbar(s);
   }
 
   public static void setEpisodesPopup(SeriesRecord series, EpisodesRecord episode, boolean singleEpisode, boolean episodesPanel) {
@@ -68,17 +71,17 @@ public class Menus {
     String seriesTitle = series != null ? series.getFullTitle() : "";
     String localDir = series != null ? series.getLocalDir() : "";
 
-    MySeries.PopUpItem_AddEpisode.setEnabled(series != null);
-    MySeries.PopUpItem_DeleteSerial.setEnabled(series != null);
-    MySeries.PopUpItem_EditSerial.setEnabled(series != null);
-    MySeries.popUpItem_GoToTvSubs.setEnabled(series != null && !series.getTvSubtitlesCode().equals("") && DesktopSupport.isBrowseSupport());
-    MySeries.popUpItem_GoToSubOn.setEnabled(series != null && !series.getSOnlineCode().equals("") && DesktopSupport.isBrowseSupport());
-    MySeries.popUpMenu_GoToSubtitles.setEnabled(series != null);
-    MySeries.popUpItem_GoToLocalDir.setEnabled(series != null && !series.getLocalDir().equals("") && DesktopSupport.isDesktopSupport());
-    MySeries.popUpItem_renameEpisodes.setEnabled(series != null && !series.getLocalDir().equals(""));
-    MySeries.popUpItem_exportEpisodes.setEnabled(series != null);
-    MySeries.popUpItem_IUTvrage.setEnabled(series != null && series.getTvrage_ID() > 0);
-    MySeries.popUpMenu_internetUpdate.setEnabled(series != null);
+    MySeries.PopUpItem_AddEpisode.setEnabled(series.getSeries_ID() != 0);
+    MySeries.PopUpItem_DeleteSerial.setEnabled(series.getSeries_ID() != 0);
+    MySeries.PopUpItem_EditSerial.setEnabled(series.getSeries_ID() != 0);
+    MySeries.popUpItem_GoToTvSubs.setEnabled(series.getSeries_ID() != 0 && !series.getTvSubtitlesCode().equals("") && DesktopSupport.isBrowseSupport());
+    MySeries.popUpItem_GoToSubOn.setEnabled(series.getSeries_ID() != 0 && !series.getSOnlineCode().equals("") && DesktopSupport.isBrowseSupport());
+    MySeries.popUpMenu_GoToSubtitles.setEnabled(series.getSeries_ID() != 0);
+    MySeries.popUpItem_GoToLocalDir.setEnabled(series.getSeries_ID() != 0 && !series.getLocalDir().equals("") && DesktopSupport.isDesktopSupport());
+    MySeries.popUpItem_renameEpisodes.setEnabled(series.getSeries_ID() != 0 && !series.getLocalDir().equals(""));
+    MySeries.popUpItem_exportEpisodes.setEnabled(series.getSeries_ID() != 0);
+    MySeries.popUpItem_IUTvrage.setEnabled(series.getSeries_ID() != 0 && series.getTvrage_ID() > 0);
+    MySeries.popUpMenu_internetUpdate.setEnabled(series.getSeries_ID() != 0);
 
 
     MySeries.PopUpItem_AddEpisode.setText("Add new episode to " + seriesTitle);
@@ -92,6 +95,18 @@ public class Menus {
     MySeries.popUpItem_exportEpisodes.setText("Export episodes of " + seriesTitle);
     MySeries.popUpMenu_internetUpdate.setText("Update " + seriesTitle + " episodes list");
 
+  }
+
+  private static void setSeriesToolbar(SeriesRecord s) {
+    if(MySeries.myToolbar==null){
+      return;
+    }
+    if(MySeries.myToolbar.getComponentCount()>0){
+    MySeries.myToolbar.getButtons().get(ToolbarButtonActions.EDIT_SERIES).setEnabled(s.getSeries_ID() != 0);
+    MySeries.myToolbar.getButtons().get(ToolbarButtonActions.DELETE_SERIES).setEnabled(s.getSeries_ID() != 0);
+    MySeries.myToolbar.getButtons().get(ToolbarButtonActions.ADD_EPISODE).setEnabled(s.getSeries_ID() != 0);
+    MySeries.myToolbar.getButtons().get(ToolbarButtonActions.EXPORT_EPISODES).setEnabled(s.getSeries_ID() != 0);
+    }
   }
 
   private Menus() {
