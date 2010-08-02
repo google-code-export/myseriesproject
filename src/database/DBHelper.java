@@ -34,6 +34,7 @@ public class DBHelper {
    */
   public static EpisodesRecord getEpisodeByID(int episode_ID) throws SQLException {
     String sql = "SELECT * FROM episodes WHERE episode_ID = " + episode_ID;
+    
     Vector<EpisodesRecord> episodes = getEpisodesBySql(sql);
     return episodes.size() == 1 ? episodes.get(0) : null;
   }
