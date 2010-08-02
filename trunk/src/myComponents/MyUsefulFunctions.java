@@ -5,10 +5,9 @@
 package myComponents;
 
 import database.EpisodesRecord;
+import database.SeriesRecord;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Image;
-import java.awt.image.ImageObserver;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -26,18 +25,23 @@ import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.Random;
 import java.util.logging.Level;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import myComponents.myGUI.MyFont;
+import myComponents.myTableCellRenderers.MyDownloadedCellRenderer;
+import myseries.series.Series;
 import tools.Skin;
-import tools.download.subtitles.Subtitle;
 import tools.languages.LangsList;
 import tools.languages.Language;
 import tools.options.Options;
@@ -394,7 +398,7 @@ public class MyUsefulFunctions {
     return false;
   }
 
-   /**
+  /**
    * Creates the regex for finding episodes
    * @param season The episode's season
    * @param episode The episode's number
@@ -520,12 +524,97 @@ public class MyUsefulFunctions {
    * @return The string
    */
   public static String listAray(File[] array, boolean newLine) {
-    String list="";
+    String list = "";
     for (int i = 0; i < array.length; i++) {
       File file = array[i];
-      list += file.getName() + (newLine ? "\n":", ");
+      list += file.getName() + (newLine ? "\n" : ", ");
     }
-    return list.substring(0, list.length()-(newLine ? 1 : 2));
+    return list.substring(0, list.length() - (newLine ? 1 : 2));
+  }
+
+  public static String getVideoFileSize(EpisodesRecord episode) {
+    String size = "";
+    SeriesRecord series = Series.getCurrentSerial();
+    if (new File(series.getLocalDir()).isDirectory()) {
+      File video = MyUsefulFunctions.getVideoFile(series, episode);
+      if (video != null) {
+        return " (" + createFileSize(video.length()) + ")";
+      }
+    }
+    return size;
+  }
+
+  private static File getVideoFile(SeriesRecord series, EpisodesRecord episode) {
+    String regex = MyUsefulFunctions.createRegex(series.getSeason(), episode.getEpisode());
+    File[] videoFiles = Series.getVideoFiles();
+    Pattern pattern = Pattern.compile(regex);
+    for (int j = 0; j < videoFiles.length; j++) {
+      File file = videoFiles[j];
+      Matcher matcher = pattern.matcher(file.getName());
+      if (matcher.find()) {
+        return file;
+      }
+    }
+    return null;
+  }
+
+  private static ArrayList<File> getVideoFiles(SeriesRecord series, EpisodesRecord episode) {
+    String regex = MyUsefulFunctions.createRegex(series.getSeason(), episode.getEpisode());
+    ArrayList<File> files = new ArrayList<File>();
+    File[] videoFiles = Series.getVideoFiles();
+    Pattern pattern = Pattern.compile(regex);
+    for (int j = 0; j < videoFiles.length; j++) {
+      File file = videoFiles[j];
+      Matcher matcher = pattern.matcher(file.getName());
+      if (matcher.find()) {
+        files.add(file);
+      }
+    }
+    return files;
+  }
+
+  public static String[] getVideoFileTypes(EpisodesRecord ep) {
+    SeriesRecord series = Series.getCurrentSerial();
+    ArrayList<File> videos = new ArrayList<File>();
+    if (new File(series.getLocalDir()).isDirectory()) {
+      videos = MyUsefulFunctions.getVideoFiles(series, ep);
+    } else {
+      return null;
+    }
+    if(videos.isEmpty()){
+      return new String[]{MyDownloadedCellRenderer.NONE};
+    }
+    String[] types = new String[videos.size()];
+    int i = 0;
+    for (Iterator<File> it = videos.iterator(); it.hasNext();) {
+      String file = it.next().getName();
+      String type = file.substring(file.length() - 3, file.length());
+      if (type.equals(MyDownloadedCellRenderer.AVI)) {
+        types[i++] = MyDownloadedCellRenderer.AVI;
+      } else if (type.equals(MyDownloadedCellRenderer.MKV)) {
+        types[i++] = MyDownloadedCellRenderer.MKV;
+      } else {
+        types[i++] = MyDownloadedCellRenderer.OTHER;
+      }
+
+    }
+    return types;
+  }
+
+  public static String createFileSize(long value) {
+    String strValue = String.valueOf(value);
+    if (value < 1024) {
+      strValue = strValue + " bytes";
+    } else if (value < Math.pow(1024l, 2)) {
+      strValue = Options._DEC_FORMAT_.format(value / 1024) + " KB";
+    } else if (value < Math.pow(1024l, 3)) {
+      strValue = Options._DEC_FORMAT_.format(value / Math.pow(1024, 2)) + " MB";
+    } else if (value < Math.pow(1024l, 4)) {
+      strValue = Options._DEC_FORMAT_.format(value / Math.pow(1024, 3)) + " GB";
+    } else if (value < Math.pow(1024l, 5)) {
+      strValue = Options._DEC_FORMAT_.format(value / Math.pow(1024, 4)) + " TB";
+    }
+    return strValue;
   }
 
   private MyUsefulFunctions() {
