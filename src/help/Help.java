@@ -39,6 +39,7 @@ public class Help extends JFrame {
     //Create the links map
     Links.createLinksMap();
     initComponents();
+setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/help.png")).getImage());
 
     setLocationRelativeTo(m);
     tree_help.setSelectionPath(tree_help.getPathForRow(0));
