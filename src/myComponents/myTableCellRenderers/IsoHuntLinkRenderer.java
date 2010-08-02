@@ -7,7 +7,6 @@ package myComponents.myTableCellRenderers;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
-import java.text.DecimalFormat;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
@@ -21,7 +20,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 public class IsoHuntLinkRenderer extends DefaultTableCellRenderer {
 
   private static final long serialVersionUID = 23543643523654L;
-  private final DecimalFormat formatter = new DecimalFormat("#.00");
 
   @Override
   public Component getTableCellRendererComponent(

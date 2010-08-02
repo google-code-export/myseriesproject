@@ -5,7 +5,9 @@
 package myComponents.myTableCellRenderers;
 
 import com.googlecode.scheduler.SchedulerCellRenderer;
+import com.googlecode.scheduler.SchedulerMouseListener;
 import java.awt.Component;
+import java.awt.event.MouseListener;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import myseries.schedule.ScheduleDayPanel;
@@ -28,4 +30,7 @@ public class MyScheduleTableCellRenderer extends SchedulerCellRenderer {
     panel = new ScheduleDayPanel(value, dayLabel, cellHeight, cellWidth);
     return panel;
   }
+
+  
+
 }

@@ -5,7 +5,6 @@
 package myComponents.myTableCellRenderers;
 
 import java.awt.Component;
-import java.text.DecimalFormat;
 import javax.swing.BorderFactory;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
@@ -20,7 +19,6 @@ import tools.download.torrents.isohunt.IsohuntTorrent;
 public class IsoHuntInfoRenderer extends DefaultTableCellRenderer {
 
   private static final long serialVersionUID = 23543643523654L;
-  private final DecimalFormat formatter = new DecimalFormat("#.00");
 
   @Override
   public Component getTableCellRendererComponent(
