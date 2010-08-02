@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import myComponents.MyUsefulFunctions;
 import myseries.episodes.Episodes;
@@ -48,6 +49,7 @@ public class MyDownloadedCellRenderer extends DefaultTableCellRenderer {
          setIcon(null);
        }
      }
+     setHorizontalAlignment(SwingConstants.CENTER);
     return this;
   }
 
