@@ -11,7 +11,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -57,6 +59,10 @@ public class Options {
   public static final int _SOUTH_ = 2;
   public static final int _WEST_ = 3;
   public static final int _FLOAT_ = -1;
+  /**
+   * The decimal number format
+   */
+  public static final DecimalFormat _DEC_FORMAT_ = new DecimalFormat("#.000");
   /************************************************
    * User Options
    ************************************************/
@@ -190,6 +196,10 @@ public class Options {
    */
   public static String TOOLBAR_POSITION = "TOOLBAR_POSITION";
   /**
+   * The toolbar buttons
+   */
+  public static String TOOLBAR_BUTTONS = "TOOLBAR_BUTTONS";
+  /**
    * An array of the options that are selected in combo boxes
    */
   public static String[] _COMBO_OPTIONS_ = {DATE_FORMAT, DEBUG_MODE, LOOK_AND_FEEL,
@@ -232,6 +242,23 @@ public class Options {
         options.put(fields[0].trim(), value);
       }
     }
+  }
+
+  public static Integer[] toIntegerArray(String key) {
+    String w = Options.toString(key).replaceAll("\\[", "").replaceAll("\\]", "");
+    if(w.equals("")){
+      return null;
+    }
+    String[] arr = w.split(",");
+    Integer[] intArr = new Integer[arr.length];
+    for (int i = 0; i < arr.length; i++) {
+      try {
+        intArr[i] = Integer.parseInt(arr[i].trim());
+      } catch (NumberFormatException ex) {
+        intArr[i] = -1;
+      }
+    }
+    return intArr;
   }
 
   public static ArrayList<Integer> toIntegerArrayList(String TABLE_WIDTHS) {
@@ -403,7 +430,7 @@ public class Options {
    */
   public static String toString(String key, boolean trim) {
     String val = trim ? String.valueOf(options.get(key)).trim() : String.valueOf(options.get(key));
-    return val!=null && !val.equals("null") ? val : "";
+    return val != null && !val.equals("null") ? val : "";
   }
 
   /**
@@ -453,6 +480,7 @@ public class Options {
     out.println(Options.TITLE_SEPARATOR + " = - ");
     out.println(Options.EPISODE_SEPARATOR + " =x");
     out.println(Options.TOOLBAR_POSITION + " =1");
+    out.println(Options.TOOLBAR_BUTTONS + "="+getDefaultToolbarButtons() );
     out.close();
   }
 
@@ -462,12 +490,19 @@ public class Options {
   public static void save() {
     PrintWriter out = null;
     ArrayList<String> arr;
+
     try {
       out = MyUsefulFunctions.createOutputStream(new File(Options._USER_DIR_ + "MySeries.ini"), false);
       Iterator<String> it = options.keySet().iterator();
       while (it.hasNext()) {
         String key = String.valueOf(it.next());
-        String value = String.valueOf(options.get(key));
+        String value = "";
+        if(options.get(key) instanceof Object[]){
+          Object[] obj =(Object[]) options.get(key);
+          value = Arrays.asList(obj).toString();
+        }else{
+        value = String.valueOf(options.get(key));
+        }
         // Check DB extension
         if (key.equals(Options.DB_NAME)) {
           if (!value.endsWith(".db")) {
@@ -482,6 +517,10 @@ public class Options {
     } finally {
       out.close();
     }
+  }
+
+  public static Integer[] getDefaultToolbarButtons() {
+    return new Integer[] {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25};
   }
 
   private Options() {
