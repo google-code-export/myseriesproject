@@ -58,6 +58,7 @@ public class StatSeries extends javax.swing.JPanel  {
     table_stat_series = new javax.swing.JTable();
     jLabel1 = new javax.swing.JLabel();
     jLabel2 = new javax.swing.JLabel();
+    cb_unified = new javax.swing.JCheckBox();
 
     setOpaque(false);
 
@@ -98,6 +99,14 @@ public class StatSeries extends javax.swing.JPanel  {
 
     jLabel2.setText("Mouse over rate to see a list of the series episodes rates");
 
+    cb_unified.setText("Unified series");
+    cb_unified.setOpaque(false);
+    cb_unified.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        cb_unifiedActionPerformed(evt);
+      }
+    });
+
     org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
     this.setLayout(layout);
     layout.setHorizontalGroup(
@@ -108,8 +117,9 @@ public class StatSeries extends javax.swing.JPanel  {
           .add(org.jdesktop.layout.GroupLayout.LEADING, jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 557, Short.MAX_VALUE)
           .add(jLabel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 557, Short.MAX_VALUE)
           .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
-            .add(jLabel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
-            .add(107, 107, 107)))
+            .add(jLabel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
+            .add(44, 44, 44)
+            .add(cb_unified, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 227, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
         .addContainerGap())
     );
     layout.setVerticalGroup(
@@ -118,32 +128,51 @@ public class StatSeries extends javax.swing.JPanel  {
         .addContainerGap()
         .add(jLabel1)
         .add(14, 14, 14)
-        .add(jLabel2)
+        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+          .add(jLabel2)
+          .add(cb_unified))
         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-        .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+        .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
         .addContainerGap())
     );
   }// </editor-fold>//GEN-END:initComponents
+
+  private void cb_unifiedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_unifiedActionPerformed
+    if(!cb_unified.isSelected()){
+      refresh(false);
+    }else{
+      refresh(true);
+    }
+  }//GEN-LAST:event_cb_unifiedActionPerformed
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
+  private javax.swing.JCheckBox cb_unified;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JScrollPane jScrollPane1;
   private javax.swing.JTable table_stat_series;
   // End of variables declaration//GEN-END:variables
 
-  public void refresh() {
+  public void refresh(boolean unified) {
     clearModel();
     try {
       Statement stmt = DBConnection.stmt;
-      String sql = "SELECT series.series_ID AS series_ID, series.title AS series, sum(episodes.rate)/count(1) as rate, count(1) as episodes "
+      String sql;
+      if(!unified){
+      sql = "SELECT series.series_ID AS series_ID, series.title AS series, sum(episodes.rate)/count(1) as rate, count(1) as episodes "
               + "FROM series join episodes on series.series_ID = episodes.series_ID "
               + "where episodes.rate > 0 group by series.series_ID order by rate desc";
+      } else{
+         sql = "SELECT series.series_ID AS series_ID, series.title AS series, sum(episodes.rate)/count(1) as rate, count(1) as episodes "
+              + "FROM series join episodes on series.series_ID = episodes.series_ID "
+              + "where episodes.rate > 0 group by series.title order by rate desc";
+      }
       ResultSet rs = stmt.executeQuery(sql);
       while (rs.next()) {
         SeriesRecord series = DBHelper.getSeriesByID(rs.getInt("series_ID"));
         int episodes = rs.getInt("episodes");
         double rate = rs.getDouble("rate");
-        Object[] data = {series, episodes, rate};
+        Object[] data = {unified?series.getTitle():series, episodes, rate};
         getModel().addRow(data);
       }
     } catch (SQLException ex) {
