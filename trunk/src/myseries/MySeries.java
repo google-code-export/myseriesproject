@@ -348,7 +348,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     //table_episodesList.removeColumn(table_episodesList.getColumnModel().getColumn(6));
     tableEpisodes.getModel().addTableModelListener(this);
     tableEpisodes.getTableHeader().setReorderingAllowed(false);
-    tableEpisodes.getColumn(Episodes.DOWNLOADED_COLUMN_TITLE).setCellRenderer(new MyDownloadedCellRenderer());
+    tableEpisodes.getColumn(Episodes.DOWNLOADED_COLUMN_TITLE).setCellRenderer(new MyDownloadedCellRenderer(Episodes.EPISODERECORD_COLUMN));
     tableEpisodes.getColumn(Episodes.SUBS_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MySubtitleEditor(subs));
     tableEpisodes.getColumn(Episodes.AIRED_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MyJDateChooserCellEditor());
     tableEpisodes.getColumn(Episodes.AIRED_COLUMN_TITLE).setCellRenderer(new MyJDateChooserCellRenderer());
@@ -370,6 +370,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tableFilters.getColumn(Filters.SUBS_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MySubtitleEditor(subs));
     tableFilters.getColumn(Filters.AIRED_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MyJDateChooserCellEditor());
     tableFilters.getColumn(Filters.AIRED_COLUMN_TITLE).setCellRenderer(new MyJDateChooserCellRenderer());
+    tableFilters.getColumn(Filters.DOWNLOADED_COLUMN_TITLE).setCellRenderer(new MyDownloadedCellRenderer(Filters.EPISODERECORD_COLUMN));
     Filters.setTableFilters(tableFilters);
     Filters.setTableWidths(filtersTableWidths);
     tableFilters.setRowHeight(fontHeight + CELL_MARGIN);
@@ -669,7 +670,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     });
     popUpMenu_downloadTorrent.add(popUpItem_downloadEzTv);
 
-    popUpItem_downloadIsohunt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eztv.png"))); // NOI18N
     popUpItem_downloadIsohunt.setText("Download from Isohunt");
     popUpItem_downloadIsohunt.setToolTipText("Download torrent from Isohunt");
     popUpItem_downloadIsohunt.addActionListener(new java.awt.event.ActionListener() {
@@ -793,6 +793,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tableEpisodes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
     tableEpisodes.setModel(tableModel_episodes);
     tableEpisodes.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
+    tableEpisodes.setRowHeight(24);
     tableEpisodes.setSelectionBackground(tableSeries.getSelectionBackground());
     tableEpisodes.setSelectionForeground(tableSeries.getSelectionForeground());
     tableEpisodes.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1090,11 +1091,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     menuItem_deleteSeries.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete_series.png"))); // NOI18N
     menuItem_deleteSeries.setText("Delete Series");
     menuItem_deleteSeries.setToolTipText("Delete current series");
-    menuItem_deleteSeries.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        menuItem_deleteSeriesActionPerformed(evt);
-      }
-    });
     menu_Edit.add(menuItem_deleteSeries);
 
     menuItem_restore.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
