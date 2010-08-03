@@ -41,6 +41,7 @@ public abstract class AbstractToolbar extends JToolBar implements ToolbarButtonA
   protected ToolbarButton viewLogs;
   protected ToolbarButton clearLogs;
   protected ToolbarButton about;
+  protected ToolbarButton deleteTorrents;
   protected Integer[] visibleButtons;
 
   public AbstractToolbar() {
@@ -76,6 +77,7 @@ public abstract class AbstractToolbar extends JToolBar implements ToolbarButtonA
       tvrageUpdate = new ToolbarButton(ToolbarButtonActions.TVRAGE_UPDATE, "Update episodes list from tvrage", "tvrage.png");
       epguidesUpdate = new ToolbarButton(ToolbarButtonActions.EPGUIDES_UPDATE, "Update episodes list from epguides", "epguides.png");
       updateFiles = new ToolbarButton(ToolbarButtonActions.UPDATE_FILES, "Update episodes download and subtitles statuses", "updateFiles.png");
+      deleteTorrents = new ToolbarButton(ToolbarButtonActions.DELETE_TORRENTS, "Delete the downloaded torrents", "deleteTorrents.png");
       options = new ToolbarButton(ToolbarButtonActions.OPTIONS, "Options", "options.png");
       sepTools = new ToolbarSeperator(ToolbarButtonActions.SEP_TOOLS, "", "");
       help = new ToolbarButton(ToolbarButtonActions.HELP, "Help", "help.png");
@@ -102,6 +104,7 @@ public abstract class AbstractToolbar extends JToolBar implements ToolbarButtonA
     buttons.put(ToolbarButtonActions.TVRAGE_UPDATE, tvrageUpdate);
     buttons.put(ToolbarButtonActions.EPGUIDES_UPDATE, epguidesUpdate);
     buttons.put(ToolbarButtonActions.UPDATE_FILES, updateFiles);
+    buttons.put(ToolbarButtonActions.DELETE_TORRENTS, deleteTorrents);
     buttons.put(ToolbarButtonActions.OPTIONS, options);
     buttons.put(ToolbarButtonActions.SEP_TOOLS, sepTools);
     buttons.put(ToolbarButtonActions.HELP, help);

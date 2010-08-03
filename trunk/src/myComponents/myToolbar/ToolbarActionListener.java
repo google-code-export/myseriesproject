@@ -83,6 +83,9 @@ public class ToolbarActionListener implements ActionListener, ToolbarButtonActio
         case UPDATE_FILES:
           SeriesActions.updateFiles(ms);
           break;
+        case DELETE_TORRENTS:
+          ApplicationActions.deleteTorrents();
+          break;
         case OPTIONS:
           ApplicationActions.showOptions(ms);
           break;

@@ -119,6 +119,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
    *        TvRage      : Ctrl - Shift - T
    *        EpGuides    : Ctrl - Shift - G
    *    Update Downloads: Ctrl - U
+   *    Delete Torrents : Ctrl - T
    *    Options         : Ctrl - O
    *
    * Help
@@ -468,6 +469,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     menuItem_IUTvrage = new javax.swing.JMenuItem();
     menuItem_IUEpguides = new javax.swing.JMenuItem();
     menuItem_uploadFiles = new javax.swing.JMenuItem();
+    jMenuItem2 = new javax.swing.JMenuItem();
     jSeparator2 = new javax.swing.JSeparator();
     menuItem_options = new javax.swing.JMenuItem();
     menu_Help = new javax.swing.JMenu();
@@ -1202,6 +1204,17 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       }
     });
     menu_Tools.add(menuItem_uploadFiles);
+
+    jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_MASK));
+    jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/deleteTorrents.png"))); // NOI18N
+    jMenuItem2.setText("Delete Torents");
+    jMenuItem2.setToolTipText("Delete downloaded torrent files");
+    jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jMenuItem2ActionPerformed(evt);
+      }
+    });
+    menu_Tools.add(jMenuItem2);
     menu_Tools.add(jSeparator2);
 
     menuItem_options.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
@@ -1624,6 +1637,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     ApplicationActions.restoreSeries();
   }//GEN-LAST:event_menuItem_restoreActionPerformed
 
+  private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    ApplicationActions.deleteTorrents();
+  }//GEN-LAST:event_jMenuItem2ActionPerformed
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
   public static javax.swing.JMenuItem PopUpItem_AddEpisode;
   public static javax.swing.JMenuItem PopUpItem_AddEpisodeInEpisodes;
@@ -1640,6 +1657,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static javax.swing.JLayeredPane imageLayerPanel;
   public static javax.swing.JMenu jMenu1;
   public static javax.swing.JMenuItem jMenuItem1;
+  public static javax.swing.JMenuItem jMenuItem2;
   public static javax.swing.JSeparator jSeparator1;
   public static javax.swing.JSeparator jSeparator2;
   public static javax.swing.JSeparator jSeparator3;

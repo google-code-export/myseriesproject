@@ -30,6 +30,7 @@ import myseries.episodes.Episodes;
 import myseries.filters.Filters;
 import myseries.series.RestoreSeries;
 import myseries.series.Series;
+import tools.download.torrents.TorrentConstants;
 import tools.internetUpdate.tvrage.TrGetId;
 import tools.options.Options;
 import tools.options.OptionsPanel;
@@ -51,7 +52,7 @@ public class ApplicationActions {
     Options.setOption(Options.WINDOW_STATE, m.getExtendedState());
     Options.setOption(Options.WIDTH, m.getWidth());
     Options.setOption(Options.HEIGHT, m.getHeight());
-    Options.setOption(Options.TOOLBAR_POSITION,m.getToolbarPosition());
+    Options.setOption(Options.TOOLBAR_POSITION, m.getToolbarPosition());
     ArrayList<Integer> w = getTablesWidths(m);
     Options.setOption(Options.TABLE_WIDTHS, w);
     MySeries.logger.log(Level.INFO, "Saving options");
@@ -140,7 +141,6 @@ public class ApplicationActions {
     int index = tabs.getSelectedIndex();
     try {
       if (index == MySeries.TAB_SERIES) {
-        
       } else if (index == MySeries.TAB_FILTERS) {
         Filters.getFilteredSeries();
       } else if (index == MySeries.TAB_STATISTICS) {
@@ -155,8 +155,8 @@ public class ApplicationActions {
 
   public static void downloadScreenshot() {
     SeriesRecord series = Series.getCurrentSerial();
-    if(series.getTvrage_ID()==0){
-      TrGetId tr = new TrGetId(null,series.getSeries_ID(),series.getFullTitle());
+    if (series.getTvrage_ID() == 0) {
+      TrGetId tr = new TrGetId(null, series.getSeries_ID(), series.getFullTitle());
     }
   }
 
@@ -164,7 +164,7 @@ public class ApplicationActions {
     try {
       ArrayList<SeriesRecord> series = Series.getSeries(true);
 
-      if(series.isEmpty()){
+      if (series.isEmpty()) {
         MyMessages.message("Restore Series", "There are no deleted series to restore");
       } else {
         new RestoreSeries(series);
@@ -175,8 +175,36 @@ public class ApplicationActions {
   }
 
   public static void showHelp(MySeries m) {
-     if (!MySeries.isHelp) {
+    if (!MySeries.isHelp) {
       new Help(m);
+    }
+  }
+
+  public static void deleteTorrents() {
+    if (MyMessages.question("Delete torrents", "Do you really want to clear the torrents directory?") == JOptionPane.OK_OPTION) {
+      File dir = new File(Options._USER_DIR_ + TorrentConstants.TORRENTS_PATH);
+      if (dir.isDirectory()) {
+        File[] torrents = dir.listFiles();
+        int del = 0, notDel = 0;
+        if(torrents.length==0){
+          MyMessages.message("Delete torrents", "There are no torrents to delete");
+          return;
+        }
+        for (int i = 0; i < torrents.length; i++) {
+          File tor = torrents[i];
+          myseries.MySeries.logger.log(Level.INFO, "Deleting torrent {0}", tor.getName());
+          if (tor.delete()) {
+            del++;
+            myseries.MySeries.logger.log(Level.FINE, "Torrent {0} deleted", tor.getName());
+          } else {
+            notDel++;
+            myseries.MySeries.logger.log(Level.WARNING, "Torrent {0} could not be deleted", tor.getName());
+          }
+        }
+        MyMessages.message("Delete torrents", del + " torrents deleted and " + notDel + "  torrents could not be deleted");
+      } else {
+        MyMessages.error("Delete torrents", "The torrents directory does not exist");
+      }
     }
   }
 }
