@@ -4,6 +4,7 @@
  */
 package database;
 
+import java.io.File;
 import myComponents.MyUsefulFunctions;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -250,5 +251,12 @@ public class SeriesRecord extends Record {
    */
   public void setDeleted(int deleted) {
     this.deleted = deleted;
+  }
+
+  public boolean isValidLocalDir() {
+    if(!this.getLocalDir().equals("") && (new File(this.getLocalDir()).isDirectory())){
+      return true;
+    }
+    return false;
   }
 }

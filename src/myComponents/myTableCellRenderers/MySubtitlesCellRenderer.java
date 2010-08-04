@@ -75,8 +75,12 @@ public class MySubtitlesCellRenderer extends DefaultTableCellRenderer {
     if (langs.length == 1 && langs[0].equals("")) {
      langs[0] = "multiple";
     }
+    
     BufferedImage buff = new BufferedImage(langs.length * IMAGE_WIDTH + langs.length * GAP, IMAGE_HEIGHT, BufferedImage.TYPE_INT_ARGB);
     for (int i = 0; i < langs.length; i++) {
+      if (langs[i].equals(OTHER)) {
+     langs[i] = myseries.MySeries.languages.getPrimary().getCode();
+    }
       ImageIcon im = new ImageIcon(getClass().getResource("/images/langs/" + langs[i] + ".png"));
       buff.getGraphics().drawImage(im.getImage(), (i * IMAGE_WIDTH) + (i * GAP), 0,IMAGE_WIDTH,IMAGE_HEIGHT, this);
     }
@@ -88,6 +92,9 @@ public class MySubtitlesCellRenderer extends DefaultTableCellRenderer {
     String[] tooltip = new String[langs.length];
     for (int i = 0; i < langs.length; i++) {
       String lang = langs[i];
+      if(lang.equals(OTHER)){
+        lang = myseries.MySeries.languages.getPrimary().getCode();
+      }
       tooltip[i] = LangsList.getLanguageByCode(lang).getName();
     }
     return Arrays.toString(tooltip);
