@@ -85,7 +85,7 @@ public class Filters {
   /**
    * The seen field of the table title : Seen
    */
-  public static final String SEEN_COLUMN_TITLE = "Seen";
+  public static final String SEEN_COLUMN_TITLE = "Watched";
   /**
    * The not seen status : 0
    */
