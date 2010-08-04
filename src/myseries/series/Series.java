@@ -275,9 +275,9 @@ public class Series {
   /**
    * @return the subtitleFiles
    */
-  public static File[] getSubtitleFiles() {
+  public static File[] getSubtitleFiles(SeriesRecord series) {
     if (subtitleFiles == null) {
-      return getFiles(new SubtitlesFilter());
+      return getFiles(series, new SubtitlesFilter());
     }
     return subtitleFiles;
   }
@@ -285,16 +285,16 @@ public class Series {
   /**
    * @return the videoFiles
    */
-  public static File[] getVideoFiles() {
+  public static File[] getVideoFiles(SeriesRecord series) {
     if (videoFiles == null) {
-      return getFiles(new VideoFilter());
+      return getFiles(series, new VideoFilter());
     }
     return videoFiles;
   }
 
-  private static File[] getFiles(FilenameFilter filter) {
-    File directory = new File(Series.getCurrentSerial().getLocalDir());
-    if (!directory.isDirectory()) {
+  private static File[] getFiles(SeriesRecord series, FilenameFilter filter) {
+    File directory = new File(series.getLocalDir());
+    if (!series.isValidLocalDir() || !Options.toBoolean(Options.AUTO_FILE_UPDATING)) {
       return null;
     }
     File[] files = directory.listFiles(filter);

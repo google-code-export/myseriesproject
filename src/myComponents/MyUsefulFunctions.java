@@ -24,6 +24,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -35,6 +36,7 @@ import java.util.Iterator;
 import java.util.Properties;
 import java.util.Random;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
@@ -535,7 +537,12 @@ public class MyUsefulFunctions {
 
   public static String getVideoFileSize(EpisodesRecord episode) {
     String size = "";
-    SeriesRecord series = Series.getCurrentSerial();
+     SeriesRecord series;
+    try {
+      series = database.DBHelper.getSeriesByID(episode.getSeries_ID());
+    } catch (SQLException ex) {
+      return null;
+    }
     if (new File(series.getLocalDir()).isDirectory()) {
       File video = MyUsefulFunctions.getVideoFile(series, episode);
       if (video != null) {
@@ -547,7 +554,7 @@ public class MyUsefulFunctions {
 
   private static File getVideoFile(SeriesRecord series, EpisodesRecord episode) {
     String regex = MyUsefulFunctions.createRegex(series.getSeason(), episode.getEpisode());
-    File[] videoFiles = Series.getVideoFiles();
+    File[] videoFiles = Series.getVideoFiles(series);
     Pattern pattern = Pattern.compile(regex);
     for (int j = 0; j < videoFiles.length; j++) {
       File file = videoFiles[j];
@@ -562,8 +569,11 @@ public class MyUsefulFunctions {
   private static ArrayList<File> getVideoFiles(SeriesRecord series, EpisodesRecord episode) {
     String regex = MyUsefulFunctions.createRegex(series.getSeason(), episode.getEpisode());
     ArrayList<File> files = new ArrayList<File>();
-    File[] videoFiles = Series.getVideoFiles();
+    File[] videoFiles = Series.getVideoFiles(series);
     Pattern pattern = Pattern.compile(regex);
+    if(videoFiles==null){
+      return null;
+    }
     for (int j = 0; j < videoFiles.length; j++) {
       File file = videoFiles[j];
       Matcher matcher = pattern.matcher(file.getName());
@@ -575,15 +585,20 @@ public class MyUsefulFunctions {
   }
 
   public static String[] getVideoFileTypes(EpisodesRecord ep) {
-    SeriesRecord series = Series.getCurrentSerial();
-    ArrayList<File> videos = new ArrayList<File>();
-    if (new File(series.getLocalDir()).isDirectory()) {
-      videos = MyUsefulFunctions.getVideoFiles(series, ep);
-    } else {
+     SeriesRecord series;
+    try {
+      series = database.DBHelper.getSeriesByID(ep.getSeries_ID());
+    } catch (SQLException ex) {
       return null;
     }
-    if (videos.isEmpty()) {
-      return new String[]{MyDownloadedCellRenderer.NONE};
+    ArrayList<File> videos = new ArrayList<File>();
+    if (series.isValidLocalDir() && Options.toBoolean(Options.AUTO_FILE_UPDATING)) {
+      videos = MyUsefulFunctions.getVideoFiles(series, ep);
+      if(videos.size()==0){
+        return null;
+      }
+    } else {
+      return null;
     }
     String[] types = new String[videos.size()];
     int i = 0;
@@ -605,8 +620,11 @@ public class MyUsefulFunctions {
   private static ArrayList<File> getSubtitles(SeriesRecord series, EpisodesRecord episode) {
     String regex = MyUsefulFunctions.createRegex(series.getSeason(), episode.getEpisode());
     ArrayList<File> subs = new ArrayList<File>();
-    File[] subtitles = Series.getSubtitleFiles();
+    File[] subtitles = Series.getSubtitleFiles(series);
     Pattern pattern = Pattern.compile(regex);
+    if(subtitles == null ){
+      return subs;
+    }
     for (int j = 0; j < subtitles.length; j++) {
       File file = subtitles[j];
       Matcher matcher = pattern.matcher(file.getName());
@@ -618,15 +636,20 @@ public class MyUsefulFunctions {
   }
 
   public static String[] getSubtitleLangs(EpisodesRecord ep) {
-    SeriesRecord series = Series.getCurrentSerial();
+    SeriesRecord series;
+    try {
+      series = database.DBHelper.getSeriesByID(ep.getSeries_ID());
+    } catch (SQLException ex) {
+      return null;
+    }
     ArrayList<File> subtitles = new ArrayList<File>();
-    if (new File(series.getLocalDir()).isDirectory()) {
+    if (series.isValidLocalDir() && Options.toBoolean(Options.AUTO_FILE_UPDATING)) {
       subtitles = MyUsefulFunctions.getSubtitles(series, ep);
     } else {
       return null;
     }
     if (subtitles.isEmpty()) {
-      return new String[]{MySubtitlesCellRenderer.NONE};
+      return null;
     }
     String[] types = new String[subtitles.size()];
     int i = 0;
