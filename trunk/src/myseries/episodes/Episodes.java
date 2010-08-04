@@ -58,7 +58,7 @@ public class Episodes {
   /** The episodes sub status table column title : Subtitle   */
   public static final String SUBS_COLUMN_TITLE = "Subtitle";
   /** The episodes seen table column title : Seen   */
-  public static final String SEEN_COLUMN_TITLE = "Seen";
+  public static final String SEEN_COLUMN_TITLE = "Watched";
   /** The episodes rate table column title : rate   */
   public static final String RATE_COLUMN_TITLE = "Rate";
   /** The episodes table model   */
