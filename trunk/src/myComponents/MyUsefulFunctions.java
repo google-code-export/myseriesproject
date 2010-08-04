@@ -40,6 +40,7 @@ import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import myComponents.myGUI.MyFont;
 import myComponents.myTableCellRenderers.MyDownloadedCellRenderer;
+import myComponents.myTableCellRenderers.MySubtitlesCellRenderer;
 import myseries.series.Series;
 import tools.Skin;
 import tools.languages.LangsList;
@@ -581,7 +582,7 @@ public class MyUsefulFunctions {
     } else {
       return null;
     }
-    if(videos.isEmpty()){
+    if (videos.isEmpty()) {
       return new String[]{MyDownloadedCellRenderer.NONE};
     }
     String[] types = new String[videos.size()];
@@ -597,6 +598,51 @@ public class MyUsefulFunctions {
         types[i++] = MyDownloadedCellRenderer.OTHER;
       }
 
+    }
+    return types;
+  }
+
+  private static ArrayList<File> getSubtitles(SeriesRecord series, EpisodesRecord episode) {
+    String regex = MyUsefulFunctions.createRegex(series.getSeason(), episode.getEpisode());
+    ArrayList<File> subs = new ArrayList<File>();
+    File[] subtitles = Series.getSubtitleFiles();
+    Pattern pattern = Pattern.compile(regex);
+    for (int j = 0; j < subtitles.length; j++) {
+      File file = subtitles[j];
+      Matcher matcher = pattern.matcher(file.getName());
+      if (matcher.find()) {
+        subs.add(file);
+      }
+    }
+    return subs;
+  }
+
+  public static String[] getSubtitleLangs(EpisodesRecord ep) {
+    SeriesRecord series = Series.getCurrentSerial();
+    ArrayList<File> subtitles = new ArrayList<File>();
+    if (new File(series.getLocalDir()).isDirectory()) {
+      subtitles = MyUsefulFunctions.getSubtitles(series, ep);
+    } else {
+      return null;
+    }
+    if (subtitles.isEmpty()) {
+      return new String[]{MySubtitlesCellRenderer.NONE};
+    }
+    String[] types = new String[subtitles.size()];
+    int i = 0;
+    for (Iterator<File> it = subtitles.iterator(); it.hasNext();) {
+      String name = it.next().getName();
+      String[] tokens = name.split("\\.", -1);
+      if (tokens.length < 3) {
+        types[i++] = MySubtitlesCellRenderer.OTHER;
+      } else {
+        String lan = tokens[tokens.length - 2];
+        if (LangsList.isLanguageCode(lan)) {
+          types[i++] = lan;
+        } else {
+          types[i++] = MySubtitlesCellRenderer.OTHER;
+        }
+      }
     }
     return types;
   }
