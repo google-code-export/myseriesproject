@@ -222,6 +222,7 @@ public class Options {
     //Options._USER_DIR_ = System.getProperties().getProperty("user.dir");
     Options._USER_DIR_ = "./";
     options = new HashMap<String, Object>();
+    loadDefaultOptions();
     if (!new File(Options._USER_DIR_ + "MySeries.ini").isFile()) {
       writeDefaultIniFile();
     }
@@ -246,7 +247,7 @@ public class Options {
 
   public static Integer[] toIntegerArray(String key) {
     String w = Options.toString(key).replaceAll("\\[", "").replaceAll("\\]", "");
-    if(w.equals("")){
+    if (w.equals("")) {
       return null;
     }
     String[] arr = w.split(",");
@@ -480,7 +481,7 @@ public class Options {
     out.println(Options.TITLE_SEPARATOR + " = - ");
     out.println(Options.EPISODE_SEPARATOR + " =x");
     out.println(Options.TOOLBAR_POSITION + " =1");
-    out.println(Options.TOOLBAR_BUTTONS + "="+getDefaultToolbarButtons() );
+    out.println(Options.TOOLBAR_BUTTONS + "=" + getDefaultToolbarButtons());
     out.close();
   }
 
@@ -497,11 +498,11 @@ public class Options {
       while (it.hasNext()) {
         String key = String.valueOf(it.next());
         String value = "";
-        if(options.get(key) instanceof Object[]){
-          Object[] obj =(Object[]) options.get(key);
+        if (options.get(key) instanceof Object[]) {
+          Object[] obj = (Object[]) options.get(key);
           value = Arrays.asList(obj).toString();
-        }else{
-        value = String.valueOf(options.get(key));
+        } else {
+          value = String.valueOf(options.get(key));
         }
         // Check DB extension
         if (key.equals(Options.DB_NAME)) {
@@ -520,7 +521,38 @@ public class Options {
   }
 
   public static Integer[] getDefaultToolbarButtons() {
-    return new Integer[] {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25};
+    return new Integer[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25};
+  }
+
+  private static void loadDefaultOptions() {
+    options.put(Options.DB_NAME, "");
+    options.put(Options.DEBUG_MODE, new Integer(0));
+    options.put(Options.MODAL, new Boolean(true));
+    options.put(Options.DATE_FORMAT, "dd/MM/yyyy");
+    options.put(Options.LOOK_AND_FEEL, "");
+    options.put(Options.SKIN_COLOR, "240,240,240");
+    options.put(Options.USE_SKIN, new Boolean(true));
+    options.put(Options.USE_PROXY, new Boolean(false));
+    options.put(Options.PROXY_HOST, "");
+    options.put(Options.PROXY_PORT, "");
+    options.put(Options.DIVIDER_LOCATION, new Integer(250));
+    options.put(Options.FONT_FACE, "Arial");
+    options.put(Options.FONT_SIZE, new Float(12F));
+    options.put(Options.TABLE_WIDTHS, getDefaultColumnWidths());
+    options.put(Options.WINDOW_STATE, JFrame.NORMAL);
+    options.put(Options.WIDTH, new Integer(1000));
+    options.put(Options.HEIGHT, new Integer(600));
+    options.put(Options.CHECK_VERSION, new Boolean(true));
+    options.put(Options.PRIMARY_SUB, "Greek");
+    options.put(Options.SECONDARY_SUB, "English");
+    options.put(Options.SUBTITLE_SITE, SubtitleConstants.SUBTITLE_ONLINE_NAME);
+    options.put(Options.AUTO_FILE_UPDATING, new Boolean(false));
+    options.put(Options.SEASON_SEPARATOR, " SE");
+    options.put(Options.TITLE_SEPARATOR, "  - ");
+    options.put(Options.EPISODE_SEPARATOR, " x");
+    options.put(Options.TOOLBAR_POSITION, new Integer(1));
+    options.put(Options.TOOLBAR_BUTTONS, getDefaultToolbarButtons());
+
   }
 
   private Options() {
