@@ -61,6 +61,7 @@ import myComponents.myEvents.MyEventsClass;
 import myComponents.myGUI.MyImagePanel;
 import myComponents.myGUI.MyDisabledGlassPane;
 import myComponents.myGUI.MyFont;
+import myComponents.myTableCellEditors.MyDownloadedCellEditor;
 import myComponents.myTableCellEditors.MyRateEditor;
 import myComponents.myTableCellEditors.MyTitleCellEditor;
 import myComponents.myTableCellRenderers.MyJDateChooserCellRenderer;
@@ -343,6 +344,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tableEpisodes.getModel().addTableModelListener(this);
     tableEpisodes.getTableHeader().setReorderingAllowed(false);
     tableEpisodes.getColumn(Episodes.DOWNLOADED_COLUMN_TITLE).setCellRenderer(new MyDownloadedCellRenderer(Episodes.EPISODERECORD_COLUMN));
+    tableEpisodes.getColumn(Episodes.DOWNLOADED_COLUMN_TITLE).setCellEditor(new MyDownloadedCellEditor());
     tableEpisodes.getColumn(Episodes.SUBS_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MySubtitleEditor());
     tableEpisodes.getColumn(Episodes.SUBS_COLUMN_TITLE).setCellRenderer(new MySubtitlesCellRenderer(Episodes.EPISODERECORD_COLUMN));
     tableEpisodes.getColumn(Episodes.AIRED_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MyJDateChooserCellEditor());
