@@ -141,6 +141,17 @@ public class ScheduleDayPanel extends javax.swing.JPanel {
     try {
       int w = image.getWidth(this);
       int h = image.getHeight(this);
+      double ratio = (double)w/h;
+      if(w>(width - NUMBER_LABEL_WIDTH)){
+        w = width - NUMBER_LABEL_WIDTH;
+        h = (int) (w/ratio);
+      }
+      if (h >height){
+        h = height;
+        w = (int) (h * ratio);
+      }
+
+
       int newW = 0, newH = 0;
       if (events.size() == 1) {
         if (w >= h) {
@@ -171,7 +182,7 @@ public class ScheduleDayPanel extends javax.swing.JPanel {
     int imHeight = orIm.getIconHeight();
     ImageIcon indicator = null;
     if (downloaded == EpisodesRecord.DOWNLOADED) {
-      indicator = getScaledImageIcon("/images/downloaded.png", imWidth, imHeight);
+      indicator = getScaledImageIcon("/images/tick_big.png", imWidth, imHeight);
     } else {
       // indicator = getScaledImageIcon("/images/torrent.png", imWidth, imHeight);
     }
@@ -190,14 +201,5 @@ public class ScheduleDayPanel extends javax.swing.JPanel {
     int icHeight = imWidth / 3;
     Image scaled = im.getImage().getScaledInstance(icWidth, icHeight, Image.SCALE_SMOOTH);
     return new ImageIcon(scaled);
-  }
-
-  public class ScheduleEpisodeListener extends MouseAdapter {
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-      super.mouseClicked(e);
-      System.out.println("aaaaa");
-    }
   }
 }
