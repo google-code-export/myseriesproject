@@ -101,7 +101,17 @@ public class LangsList {
         return language;
       }
     }
-    return null;
+    return LangsList.NONE;
+  }
+
+  public static Language getLanguageByCode(String code) {
+     for (Iterator<Language> it = list.iterator(); it.hasNext();) {
+      Language language = it.next();
+      if (language.getCode().equals(code)) {
+        return language;
+      }
+    }
+    return LangsList.NONE;
   }
 
   public static Language getLanguageById(int id) {

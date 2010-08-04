@@ -67,6 +67,7 @@ import myComponents.myTableCellRenderers.MyJDateChooserCellRenderer;
 import myComponents.myTableCellRenderers.MyScheduleTableCellRenderer;
 import myComponents.myTableCellRenderers.MyTitleCellRenderer;
 import myComponents.myTableCellRenderers.MyDownloadedCellRenderer;
+import myComponents.myTableCellRenderers.MySubtitlesCellRenderer;
 import myComponents.myToolbar.Toolbar;
 import myComponents.myToolbar.ToolbarButton;
 import myComponents.myToolbar.ToolbarButtonActions;
@@ -350,6 +351,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tableEpisodes.getTableHeader().setReorderingAllowed(false);
     tableEpisodes.getColumn(Episodes.DOWNLOADED_COLUMN_TITLE).setCellRenderer(new MyDownloadedCellRenderer(Episodes.EPISODERECORD_COLUMN));
     tableEpisodes.getColumn(Episodes.SUBS_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MySubtitleEditor(subs));
+    tableEpisodes.getColumn(Episodes.SUBS_COLUMN_TITLE).setCellRenderer(new MySubtitlesCellRenderer(Episodes.EPISODERECORD_COLUMN));
     tableEpisodes.getColumn(Episodes.AIRED_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MyJDateChooserCellEditor());
     tableEpisodes.getColumn(Episodes.AIRED_COLUMN_TITLE).setCellRenderer(new MyJDateChooserCellRenderer());
     tableEpisodes.getColumn(Episodes.EPISODERECORD_COLUMN_TITLE).setCellRenderer(new MyTitleCellRenderer());
@@ -368,6 +370,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tableFilters.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     tableFilters.getTableHeader().setCursor(Cursor.getDefaultCursor());
     tableFilters.getColumn(Filters.SUBS_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MySubtitleEditor(subs));
+    tableFilters.getColumn(Filters.SUBS_COLUMN_TITLE).setCellRenderer(new MySubtitlesCellRenderer(Filters.EPISODERECORD_COLUMN));;
     tableFilters.getColumn(Filters.AIRED_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MyJDateChooserCellEditor());
     tableFilters.getColumn(Filters.AIRED_COLUMN_TITLE).setCellRenderer(new MyJDateChooserCellRenderer());
     tableFilters.getColumn(Filters.DOWNLOADED_COLUMN_TITLE).setCellRenderer(new MyDownloadedCellRenderer(Filters.EPISODERECORD_COLUMN));

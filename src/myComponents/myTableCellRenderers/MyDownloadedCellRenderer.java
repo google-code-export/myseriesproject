@@ -27,7 +27,7 @@ public class MyDownloadedCellRenderer extends DefaultTableCellRenderer {
   public static final String NONE = "none";
   public static final int IMAGE_WIDTH = 27;
   public static final int IMAGE_HEIGHT = 16;
-  public static final int GAP = 6;
+  public static final int GAP = 2;
   private final int episodeColumn;
 
   public MyDownloadedCellRenderer(int episodeColumn) {
@@ -54,7 +54,8 @@ public class MyDownloadedCellRenderer extends DefaultTableCellRenderer {
         setIcon(null);
       }
     }
-    setHorizontalAlignment(SwingConstants.CENTER);
+    //setHorizontalAlignment(SwingConstants.CENTER);
+    setVerticalAlignment(SwingConstants.CENTER);
     return this;
   }
 
