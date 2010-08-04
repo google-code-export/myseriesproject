@@ -62,14 +62,14 @@ public class CreateDatabase implements Runnable {
       if (dbFile.exists() && dbFile.length() > 1 && createNewDb) {
         MyMessages.error("DB Exists!!!", "DB File " + DBConnection.db + " already exists\nAborting...");
         MySeries.logger.log(Level.WARNING, "DB File already exists");
-        //startProgram();
       } else {
         commit();
       }
     } catch (IOException ex) {
       MySeries.logger.log(Level.SEVERE, "Could not create the db file", ex);
+      
     } catch (SQLException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      myseries.MySeries.logger.log(Level.SEVERE, "SQL exception", ex);
     } catch (ClassNotFoundException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);
     } catch (InstantiationException ex) {
@@ -84,7 +84,6 @@ public class CreateDatabase implements Runnable {
   }
 
   private void commit() throws IOException, SQLException, FileNotFoundException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, ParseException {
-
     MySeries.logger.log(Level.INFO, "Loading the Database");
     createTables();
     startProgram();
@@ -123,6 +122,7 @@ public class CreateDatabase implements Runnable {
             + " [subs] INTEGER DEFAULT 0,"
             + " [seen] INTEGER DEFAULT 0,"
             + " [rate] BOOLEAN DEFAULT 0.0)");
+    myseries.MySeries.logger.log(Level.FINE, "Episodes table created");
     MySeries.logger.log(Level.INFO, "Creating table series");
     stmt.executeUpdate("CREATE TABLE IF NOT EXISTS [series] "
             + "([series_ID] INTEGER NOT NULL ON CONFLICT ABORT "
@@ -145,4 +145,5 @@ public class CreateDatabase implements Runnable {
             + "[seen] INTEGER NOT NULL  DEFAULT 0, "
             + "[subtitles] INTEGER NOT NULL  DEFAULT 0)");
   }
+
 }

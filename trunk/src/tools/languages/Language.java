@@ -4,6 +4,9 @@
  */
 package tools.languages;
 
+import javax.swing.ImageIcon;
+import myComponents.myTableCellRenderers.MySubtitlesCellRenderer;
+
 /**
  * Subtitle language object
  * @author ssoldatos
@@ -26,6 +29,8 @@ public class Language {
   private String code;
   /** The language's id in the database */
   private int id;
+  /** The languages icon   */
+  private ImageIcon icon;
 
   Language(String name, String code, int priority, int id) {
     this.name = name;
@@ -118,5 +123,15 @@ public class Language {
     this.id = id;
   }
 
-
+  /**
+   * @return the icon
+   */
+  public ImageIcon getIcon() {
+    if(this.equals(LangsList.NONE)){
+      return null;
+    } else if(this.equals(LangsList.MULTIPLE)){
+      return new ImageIcon(getClass().getResource("/images/langs/"+MySubtitlesCellRenderer.MULTIPLE+".png"));
+    }
+    return new ImageIcon(getClass().getResource("/images/langs/"+getCode()+".png"));
+  }
 }

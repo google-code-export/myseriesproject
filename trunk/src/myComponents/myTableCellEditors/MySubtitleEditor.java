@@ -5,11 +5,15 @@
 package myComponents.myTableCellEditors;
 
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.AbstractCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
+import myComponents.myTableCellRenderers.MySubtitleListRenderer;
+import tools.languages.LangsList;
 import tools.languages.Language;
 
 /**
@@ -21,8 +25,13 @@ public class MySubtitleEditor extends AbstractCellEditor implements TableCellEdi
   public static final long serialVersionUID = 234534634646L;
   JComboBox combo = new JComboBox();
 
-  public MySubtitleEditor(JComboBox subs) {
-    this.combo = subs;
+  public MySubtitleEditor() {
+    Language[] subStatuses = {
+      LangsList.NONE,
+      myseries.MySeries.languages.getPrimary(),
+      myseries.MySeries.languages.getSecondary(),
+      LangsList.MULTIPLE};
+      combo.setModel(new DefaultComboBoxModel(subStatuses));
   }
 
   @Override
@@ -32,6 +41,14 @@ public class MySubtitleEditor extends AbstractCellEditor implements TableCellEdi
      model.addElement(value); 
     }
     combo.setSelectedItem(value);
+    combo.addActionListener(new ActionListener() {
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        stopCellEditing();
+      }
+    });
+    combo.setRenderer(new MySubtitleListRenderer());
     return combo;
   }
 
