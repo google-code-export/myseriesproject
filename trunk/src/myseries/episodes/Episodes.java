@@ -7,6 +7,7 @@ package myseries.episodes;
 import myseries.series.Series;
 import database.DBConnection;
 import database.EpisodesRecord;
+import database.SeriesRecord;
 import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -148,10 +149,10 @@ public class Episodes {
     String title, aired;
     Language subs;
     emptyEpisodes();
-    String localDir = Series.getCurrentSerial().getLocalDir();
-    if (Options.toBoolean(Options.AUTO_FILE_UPDATING) && !localDir.equals("") && new File(localDir).isDirectory()) {
-      subtitleFiles = Series.getSubtitleFiles();
-      videoFiles = Series.getVideoFiles();
+    SeriesRecord series = Series.getCurrentSerial();
+    if (Options.toBoolean(Options.AUTO_FILE_UPDATING) && series.isValidLocalDir()) {
+      subtitleFiles = Series.getSubtitleFiles(series);
+      videoFiles = Series.getVideoFiles(series);
     }
     if (Series.getCurrentSerial() == null) {
     }
@@ -172,24 +173,36 @@ public class Episodes {
       e.setDownloaded(rs.getInt("downloaded"));
       e.setSeen(rs.getInt("seen"));
       e.setRate(rs.getDouble("rate"));
-      if (MyUsefulFunctions.hasBeenAired(e.getAired()) && videoFiles != null) {
-        boolean newDownloadedStatus = checkDownloads(Series.getCurrentSerial().getSeason(), e.getEpisode(), videoFiles);
-        if (download != newDownloadedStatus) {
-          e.setDownloaded(newDownloadedStatus ? EpisodesRecord.DOWNLOADED : EpisodesRecord.NOT_DOWNLOADED);
-          updated.add(e);
-          download = newDownloadedStatus;
-        }
-      }
       e.setSubs(LangsList.getLanguageById(rs.getInt("subs")));
-      if (subtitleFiles != null && MyUsefulFunctions.hasBeenAired(e.getAired())) {
-        Language cSubs = checkSubs(Series.getCurrentSerial().getSeason(), e.getEpisode(), subtitleFiles);
-        if (cSubs != e.getSubs()) {
-          e.setSubs(cSubs);
-          updated.add(e);
+      boolean newDownloadedStatus = download;
+      Language cSubs = e.getSubs();
+      if (MyUsefulFunctions.hasBeenAired(e.getAired())) {
+        seen = rs.getBoolean("seen");
+        //Video files
+        if (videoFiles != null) {
+          newDownloadedStatus = checkDownloads(Series.getCurrentSerial().getSeason(), e.getEpisode(), videoFiles);
+
         }
+        // Subs fuiles
+        if (subtitleFiles != null) {
+          cSubs = checkSubs(Series.getCurrentSerial().getSeason(), e.getEpisode(), subtitleFiles);
+
+        }
+      } else {
+        newDownloadedStatus = false;
+        cSubs = LangsList.NONE;
+        seen = false;
+      }
+      if (download != newDownloadedStatus) {
+        e.setDownloaded(newDownloadedStatus ? EpisodesRecord.DOWNLOADED : EpisodesRecord.NOT_DOWNLOADED);
+        updated.add(e);
+        download = newDownloadedStatus;
+      }
+      if (cSubs != e.getSubs()) {
+        e.setSubs(cSubs);
+        updated.add(e);
       }
       subs = e.getSubs();
-      seen = rs.getBoolean("seen");
       Object[] data = {episode, e, e.getAired(), download, e.getSubs(), seen, e.getRate()};
       getTableModel_episodes().addRow(data);
       eps.add(e);
@@ -202,7 +215,7 @@ public class Episodes {
     }
 
     table_episodesList.setModel(getTableModel_episodes());
-    
+
     return eps;
   }
 
@@ -248,7 +261,7 @@ public class Episodes {
         }
       }
     }
-    if(subsFound < totalSubs){
+    if (subsFound < totalSubs) {
       hasPrimary = true;
     }
     if (hasPrimary && hasSecondary) {
@@ -269,7 +282,7 @@ public class Episodes {
    */
   public static void updateEpisodesTable() throws SQLException {
     Episodes.setTableModel_episodes(tableModel_episodes);
-   // Episodes.setTabsPanel(tabsPanel);
+    // Episodes.setTabsPanel(tabsPanel);
     Episodes.getCurrentSeriesEpisodes();
     tableModel_episodes = Episodes.getTableModel_episodes();
     //tabsPanel = Episodes.getTabsPanel();
@@ -296,7 +309,6 @@ public class Episodes {
 //  public static void setTabsPanel(JTabbedPane tabsPanel) {
 //    Episodes.tabsPanel = tabsPanel;
 //  }
-
   /**
    * @return the currentEpisode
    */

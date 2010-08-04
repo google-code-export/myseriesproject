@@ -344,8 +344,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tableEpisodes.getModel().addTableModelListener(this);
     tableEpisodes.getTableHeader().setReorderingAllowed(false);
     tableEpisodes.getColumn(Episodes.DOWNLOADED_COLUMN_TITLE).setCellRenderer(new MyDownloadedCellRenderer(Episodes.EPISODERECORD_COLUMN));
-    tableEpisodes.getColumn(Episodes.DOWNLOADED_COLUMN_TITLE).setCellEditor(new MyDownloadedCellEditor());
-    tableEpisodes.getColumn(Episodes.SUBS_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MySubtitleEditor());
+    tableEpisodes.getColumn(Episodes.DOWNLOADED_COLUMN_TITLE).setCellEditor(new MyDownloadedCellEditor(Episodes.EPISODERECORD_COLUMN));
+    tableEpisodes.getColumn(Episodes.SUBS_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MySubtitleCellEditor(Episodes.EPISODERECORD_COLUMN));
     tableEpisodes.getColumn(Episodes.SUBS_COLUMN_TITLE).setCellRenderer(new MySubtitlesCellRenderer(Episodes.EPISODERECORD_COLUMN));
     tableEpisodes.getColumn(Episodes.AIRED_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MyJDateChooserCellEditor());
     tableEpisodes.getColumn(Episodes.AIRED_COLUMN_TITLE).setCellRenderer(new MyJDateChooserCellRenderer());
@@ -364,11 +364,12 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tableFilters.getTableHeader().setReorderingAllowed(false);
     tableFilters.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     tableFilters.getTableHeader().setCursor(Cursor.getDefaultCursor());
-    tableFilters.getColumn(Filters.SUBS_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MySubtitleEditor());
+    tableFilters.getColumn(Filters.SUBS_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MySubtitleCellEditor(Filters.EPISODERECORD_COLUMN));
     tableFilters.getColumn(Filters.SUBS_COLUMN_TITLE).setCellRenderer(new MySubtitlesCellRenderer(Filters.EPISODERECORD_COLUMN));;
     tableFilters.getColumn(Filters.AIRED_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MyJDateChooserCellEditor());
     tableFilters.getColumn(Filters.AIRED_COLUMN_TITLE).setCellRenderer(new MyJDateChooserCellRenderer());
     tableFilters.getColumn(Filters.DOWNLOADED_COLUMN_TITLE).setCellRenderer(new MyDownloadedCellRenderer(Filters.EPISODERECORD_COLUMN));
+    tableFilters.getColumn(Filters.DOWNLOADED_COLUMN_TITLE).setCellEditor(new MyDownloadedCellEditor(Filters.EPISODERECORD_COLUMN));
     Filters.setTableFilters(tableFilters);
     Filters.setTableWidths(filtersTableWidths);
     tableFilters.setRowHeight(fontHeight + CELL_MARGIN);
@@ -903,35 +904,37 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       panel_filtersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(panel_filtersLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(combobox_downloaded, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(combobox_downloaded, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(comboBox_seen, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(comboBox_seen, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(comboBox_filterSubtitles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(comboBox_filterSubtitles, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(combobox_filters, 0, 0, Short.MAX_VALUE)
+        .addComponent(combobox_filters, 0, 333, Short.MAX_VALUE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(button_saveFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(button_saveFilter)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(button_deleteFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(button_deleteFilter)
         .addContainerGap())
     );
     panel_filtersLayout.setVerticalGroup(
       panel_filtersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(panel_filtersLayout.createSequentialGroup()
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         .addGroup(panel_filtersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_filtersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-            .addComponent(combobox_downloaded, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(comboBox_seen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(comboBox_filterSubtitles, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(combobox_filters, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-          .addComponent(button_deleteFilter, javax.swing.GroupLayout.Alignment.TRAILING)
-          .addComponent(button_saveFilter, javax.swing.GroupLayout.Alignment.TRAILING))
-        .addContainerGap())
+          .addGroup(panel_filtersLayout.createSequentialGroup()
+            .addGap(7, 7, 7)
+            .addGroup(panel_filtersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+              .addComponent(combobox_downloaded, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addComponent(comboBox_seen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addComponent(comboBox_filterSubtitles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+          .addGroup(panel_filtersLayout.createSequentialGroup()
+            .addGap(7, 7, 7)
+            .addGroup(panel_filtersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(button_deleteFilter)
+              .addComponent(button_saveFilter)
+              .addComponent(combobox_filters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
-
-    panel_filtersLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {button_deleteFilter, button_saveFilter, comboBox_filterSubtitles, comboBox_seen, combobox_downloaded, combobox_filters});
 
     javax.swing.GroupLayout tabpanel_FilteredSeriesLayout = new javax.swing.GroupLayout(tabpanel_FilteredSeries);
     tabpanel_FilteredSeries.setLayout(tabpanel_FilteredSeriesLayout);
@@ -940,17 +943,18 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabpanel_FilteredSeriesLayout.createSequentialGroup()
         .addContainerGap()
         .addGroup(tabpanel_FilteredSeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addComponent(panel_allSeriesEpisodes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE)
-          .addComponent(panel_filters, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+          .addComponent(panel_filters, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+          .addComponent(panel_allSeriesEpisodes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE))
         .addContainerGap())
     );
     tabpanel_FilteredSeriesLayout.setVerticalGroup(
       tabpanel_FilteredSeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(tabpanel_FilteredSeriesLayout.createSequentialGroup()
-        .addComponent(panel_filters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(panel_allSeriesEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
-        .addContainerGap())
+        .addContainerGap()
+        .addComponent(panel_filters, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addComponent(panel_allSeriesEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
+        .addGap(21, 21, 21))
     );
 
     tabsPanel.addTab("Filter Series", new javax.swing.ImageIcon(getClass().getResource("/images/filter.png")), tabpanel_FilteredSeries, "Filter series"); // NOI18N
@@ -1567,20 +1571,17 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       int rowSelected = tableFilters.rowAtPoint(p);
       EpisodesRecord ep = (EpisodesRecord) tableFilters.getValueAt(rowSelected, 2);
       SeriesRecord seriesRec = DBHelper.getSeriesByID(ep.getSeries_ID());
-      if (evt.getButton() == MouseEvent.BUTTON3) {
-        MyEvent event = new MyEvent(this, MyEventHandler.SET_CURRENT_SERIES);
+      MyEvent event = new MyEvent(this, MyEventHandler.SET_CURRENT_SERIES);
         event.setSeries(seriesRec);
         getEvClass().fireMyEvent(event);
-
+      if (evt.getButton() == MouseEvent.BUTTON3) {
         event.setType(MyEventHandler.SET_CURRENT_EPISODE);
         event.setEpisode(ep);
         event.setEpisodesPanel(false);
         getEvClass().fireMyEvent(event);
         episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
       } else {
-        MyEvent event = new MyEvent(this, MyEventHandler.SET_CURRENT_SERIES);
-        event.setSeries(seriesRec);
-        getEvClass().fireMyEvent(event);
+        
       }
     } catch (SQLException ex) {
       logger.log(Level.SEVERE, null, ex);

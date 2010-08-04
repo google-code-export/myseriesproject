@@ -32,7 +32,6 @@ public class MyDownloadedCellRenderer extends DefaultTableCellRenderer {
 
   public MyDownloadedCellRenderer(int episodeColumn) {
     this.episodeColumn = episodeColumn;
-
   }
 
   @Override
@@ -60,11 +59,12 @@ public class MyDownloadedCellRenderer extends DefaultTableCellRenderer {
   }
 
   private Icon createIcon(String[] types) {
-    if (types.length == 1 && types[0].equals(NONE)) {
-      return null;
-    }
     BufferedImage buff = new BufferedImage(types.length * IMAGE_WIDTH + types.length * GAP, IMAGE_HEIGHT, BufferedImage.TYPE_INT_ARGB);
     for (int i = 0; i < types.length; i++) {
+      // There can be none when val = true;
+      if(types[i].equals(NONE)){
+        types[i] = OTHER;
+      }
       ImageIcon im = new ImageIcon(getClass().getResource("/images/" + types[i] + ".png"));
       buff.getGraphics().drawImage(im.getImage(), (i * IMAGE_WIDTH) + (i * GAP), 0, this);
     }

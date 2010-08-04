@@ -45,6 +45,7 @@ public class MySubtitlesCellRenderer extends DefaultTableCellRenderer {
     super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
     String[] langs;
     String tooltip="";
+    setIcon(null);
     if (value instanceof Language) {
       Language val = (Language) value;
       setText("");
@@ -63,6 +64,7 @@ public class MySubtitlesCellRenderer extends DefaultTableCellRenderer {
       }
     }
     //setHorizontalAlignment(SwingConstants.CENTER);
+
     setVerticalAlignment(SwingConstants.CENTER);
     setToolTipText(tooltip);
     return this;
@@ -70,7 +72,7 @@ public class MySubtitlesCellRenderer extends DefaultTableCellRenderer {
 
   private Icon createIcon(String[] langs) {
     if (langs.length == 1 && langs[0].equals(NONE)) {
-      return null;
+     langs[0] = "other";
     }
     if (langs.length == 1 && langs[0].equals("")) {
      langs[0] = "multiple";

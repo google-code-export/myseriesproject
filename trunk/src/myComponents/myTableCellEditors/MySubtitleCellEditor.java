@@ -4,11 +4,13 @@
  */
 package myComponents.myTableCellEditors;
 
+import database.EpisodesRecord;
 import database.SeriesRecord;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
+import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import java.util.EventObject;
 import javax.swing.AbstractCellEditor;
 import javax.swing.DefaultComboBoxModel;
@@ -17,7 +19,6 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import myComponents.MyUsefulFunctions;
 import myComponents.myTableCellRenderers.MySubtitleListRenderer;
-import myseries.series.Series;
 import tools.languages.LangsList;
 import tools.languages.Language;
 import tools.options.Options;
@@ -26,18 +27,21 @@ import tools.options.Options;
  *
  * @author lordovol
  */
-public class MySubtitleEditor extends AbstractCellEditor implements TableCellEditor {
+public class MySubtitleCellEditor extends AbstractCellEditor implements TableCellEditor {
 
   public static final long serialVersionUID = 234534634646L;
   JComboBox combo = new JComboBox();
+  private final int episodeColumn;
 
-  public MySubtitleEditor() {
+  public MySubtitleCellEditor(int episodeColumn) {
+    this.episodeColumn = episodeColumn;
     Language[] subStatuses = {
       LangsList.NONE,
       myseries.MySeries.languages.getPrimary(),
       myseries.MySeries.languages.getSecondary(),
       LangsList.MULTIPLE};
-      combo.setModel(new DefaultComboBoxModel(subStatuses));
+    combo.setModel(new DefaultComboBoxModel(subStatuses));
+
   }
 
   @Override
@@ -51,23 +55,41 @@ public class MySubtitleEditor extends AbstractCellEditor implements TableCellEdi
         stopCellEditing();
       }
     });
-    
     return combo;
   }
 
   @Override
   public boolean isCellEditable(EventObject e) {
-    SeriesRecord ser = Series.getCurrentSerial();
-    if(!ser.isValidLocalDir() || !Options.toBoolean(Options.AUTO_FILE_UPDATING)){
-      return true;
+    MouseEvent me;
+    if (e instanceof MouseEvent) {
+      me = (MouseEvent) e;
+    } else {
+      return false;
     }
-    return false;
+    SeriesRecord series = new SeriesRecord();
+    EpisodesRecord ep = new EpisodesRecord();
+    if (e.getSource() instanceof JTable) {
+      JTable table = (JTable) e.getSource();
+      int row = table.rowAtPoint(((MouseEvent) e).getPoint());
+      ep = (EpisodesRecord) table.getValueAt(row, episodeColumn);
+      int sid = ep.getSeries_ID();
+      try {
+        series = database.DBHelper.getSeriesByID(sid);
+      } catch (SQLException ex) {
+        return true;
+      }
+    }
+    if (series.isValidLocalDir() && Options.toBoolean(Options.AUTO_FILE_UPDATING)) {
+      return false;
+    }
+    if (!MyUsefulFunctions.hasBeenAired(ep.getAired())) {
+      return false;
+    }
+    return true;
   }
 
-
-
   @Override
-   public Language getCellEditorValue() {
+  public Language getCellEditorValue() {
     return (Language) combo.getSelectedItem();
   }
 
@@ -76,6 +98,4 @@ public class MySubtitleEditor extends AbstractCellEditor implements TableCellEdi
 
     return super.stopCellEditing();
   }
-
-
 }

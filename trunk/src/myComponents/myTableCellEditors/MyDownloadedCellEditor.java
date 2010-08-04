@@ -2,18 +2,25 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package myComponents.myTableCellEditors;
 
+import database.EpisodesRecord;
+import database.SeriesRecord;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import java.util.EventObject;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.AbstractCellEditor;
 import javax.swing.JCheckBox;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableCellEditor;
+import myComponents.MyUsefulFunctions;
 import myseries.series.Series;
 import tools.options.Options;
 
@@ -22,26 +29,54 @@ import tools.options.Options;
  * @author lordovol
  */
 public class MyDownloadedCellEditor extends AbstractCellEditor implements TableCellEditor {
+
   public static final long serialVersionUID = 2352352525L;
   private JCheckBox cb = new JCheckBox();
+  private final int episodeColumn;
 
-  public MyDownloadedCellEditor() {
-    cb.addActionListener(new ActionListener() {
+  public MyDownloadedCellEditor(int episodeColumn) {
+    cb.addMouseListener(new MouseAdapter() {
 
-      public void actionPerformed(ActionEvent e) {
+      @Override
+      public void mouseExited(MouseEvent e) {
         stopCellEditing();
       }
+
     });
+    this.episodeColumn = episodeColumn;
   }
 
-
-
-   @Override
+  @Override
   public boolean isCellEditable(EventObject e) {
-   if(Series.getCurrentSerial().isValidLocalDir() && Options.toBoolean(Options.AUTO_FILE_UPDATING)){
-    return false;
-   }
-   return true;
+    MouseEvent me;
+    if (!(e instanceof MouseEvent)){
+      return false;
+    } else {
+     me = (MouseEvent) e;  
+    }
+//    if(me.getClickCount() <2 ){
+//      return false;
+//    }
+    SeriesRecord series = new SeriesRecord();
+    EpisodesRecord ep = new EpisodesRecord();
+    if (e.getSource() instanceof JTable) {
+      JTable table = (JTable) e.getSource();
+      int row = table.rowAtPoint(((MouseEvent) e).getPoint());
+      ep = (EpisodesRecord) table.getValueAt(row, episodeColumn);
+      int sid = ep.getSeries_ID();
+      try {
+        series = database.DBHelper.getSeriesByID(sid);
+      } catch (SQLException ex) {
+        return true;
+      }
+    }
+    if (series.isValidLocalDir() && Options.toBoolean(Options.AUTO_FILE_UPDATING)) {
+      return false;
+    }
+    if(!MyUsefulFunctions.hasBeenAired(ep.getAired())){
+      return false;
+    }
+    return true;
   }
 
   public Object getCellEditorValue() {
