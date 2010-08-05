@@ -69,6 +69,7 @@ import myComponents.myTableCellRenderers.MyJDateChooserCellRenderer;
 import myComponents.myTableCellRenderers.MyScheduleTableCellRenderer;
 import myComponents.myTableCellRenderers.MyTitleCellRenderer;
 import myComponents.myTableCellRenderers.MyDownloadedCellRenderer;
+import myComponents.myTableCellRenderers.MySeriesBooleanCellRenderer;
 import myComponents.myTableCellRenderers.MySubtitlesCellRenderer;
 import myComponents.myTableCellRenderers.MyWatchedCellRenderer;
 import myComponents.myToolbar.Toolbar;
@@ -353,7 +354,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tableEpisodes.getColumn(Episodes.AIRED_COLUMN_TITLE).setCellRenderer(new MyJDateChooserCellRenderer());
     tableEpisodes.getColumn(Episodes.EPISODERECORD_COLUMN_TITLE).setCellRenderer(new MyTitleCellRenderer());
     tableEpisodes.getColumn(Episodes.EPISODERECORD_COLUMN_TITLE).setCellEditor(new MyTitleCellEditor());
-    tableEpisodes.getColumn(Episodes.SEEN_COLUMN_TITLE).setCellRenderer(new MyWatchedCellRenderer(Episodes.SEEN_COLUMN));
+    tableEpisodes.getColumn(Episodes.SEEN_COLUMN_TITLE).setCellRenderer(new MyWatchedCellRenderer());
     tableEpisodes.getColumn(Episodes.SEEN_COLUMN_TITLE).setCellEditor(new MyWatchedCellEditor(Episodes.EPISODERECORD_COLUMN));
     tableEpisodes.getColumn(Episodes.RATE_COLUMN_TITLE).setCellRenderer(new StarTableCellRenderer(true, false));
     tableEpisodes.getColumn(Episodes.RATE_COLUMN_TITLE).setCellEditor(new MyRateEditor(true));
@@ -374,7 +375,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tableFilters.getColumn(Filters.AIRED_COLUMN_TITLE).setCellRenderer(new MyJDateChooserCellRenderer());
     tableFilters.getColumn(Filters.DOWNLOADED_COLUMN_TITLE).setCellRenderer(new MyDownloadedCellRenderer(Filters.EPISODERECORD_COLUMN));
     tableFilters.getColumn(Filters.DOWNLOADED_COLUMN_TITLE).setCellEditor(new MyDownloadedCellEditor(Filters.EPISODERECORD_COLUMN));
-    tableFilters.getColumn(Filters.SEEN_COLUMN_TITLE).setCellRenderer(new MyWatchedCellRenderer(Filters.SEEN_COLUMN));
+    tableFilters.getColumn(Filters.SEEN_COLUMN_TITLE).setCellRenderer(new MyWatchedCellRenderer());
     tableFilters.getColumn(Filters.SEEN_COLUMN_TITLE).setCellEditor(new MyWatchedCellEditor(Filters.EPISODERECORD_COLUMN));
     Filters.setTableFilters(tableFilters);
     Filters.setTableWidths(filtersTableWidths);
@@ -384,6 +385,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tableSeries.getModel().addTableModelListener(this);
     tableSeries.getTableHeader().setReorderingAllowed(false);
     tableSeries.getTableHeader().setCursor(Cursor.getDefaultCursor());
+    tableSeries.getColumn(Series.HIDDEN_COLUMN_TITLE).setCellRenderer(new MySeriesBooleanCellRenderer());
+    tableSeries.getColumn(Series.UPDATE_COLUMN_TITLE).setCellRenderer(new MySeriesBooleanCellRenderer());
     tableSeries.setRowHeight(fontHeight + CELL_MARGIN);
     Series.setTable_series(tableSeries);
     Series.setTableWidths(seriesTableWidths);

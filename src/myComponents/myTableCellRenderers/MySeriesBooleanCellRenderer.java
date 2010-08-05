@@ -18,13 +18,13 @@ import myComponents.MyUsefulFunctions;
  *
  * @author ssoldatos
  */
-public class MyWatchedCellRenderer extends DefaultTableCellRenderer {
+public class MySeriesBooleanCellRenderer extends DefaultTableCellRenderer {
 
   private static final long serialVersionUID = 7897867559L;
   public static final int IMAGE_WIDTH = 16;
   public static final int IMAGE_HEIGHT = 16;
-  
 
+  
   @Override
   public Component getTableCellRendererComponent(
           JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
@@ -34,7 +34,6 @@ public class MyWatchedCellRenderer extends DefaultTableCellRenderer {
       setText("");
          setIcon(createIcon(val));
     }
-    //setHorizontalAlignment(SwingConstants.CENTER);
     setHorizontalAlignment(SwingConstants.CENTER);
     return this;
   }
