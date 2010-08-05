@@ -95,11 +95,12 @@ public class StatSeries extends javax.swing.JPanel  {
 
     jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getStyle() | java.awt.Font.BOLD, jLabel1.getFont().getSize()+2));
     jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-    jLabel1.setText("Series Statistics");
+    jLabel1.setText("Series Ratings");
 
     jLabel2.setText("Mouse over rate to see a list of the series episodes rates");
 
     cb_unified.setText("Unified series");
+    cb_unified.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
     cb_unified.setOpaque(false);
     cb_unified.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -132,7 +133,7 @@ public class StatSeries extends javax.swing.JPanel  {
           .add(jLabel2)
           .add(cb_unified))
         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-        .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+        .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
         .addContainerGap())
     );
   }// </editor-fold>//GEN-END:initComponents
