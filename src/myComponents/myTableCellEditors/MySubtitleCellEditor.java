@@ -35,17 +35,18 @@ public class MySubtitleCellEditor extends AbstractCellEditor implements TableCel
 
   public MySubtitleCellEditor(int episodeColumn) {
     this.episodeColumn = episodeColumn;
+
+
+  }
+
+  @Override
+  public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
     Language[] subStatuses = {
       LangsList.NONE,
       myseries.MySeries.languages.getPrimary(),
       myseries.MySeries.languages.getSecondary(),
       LangsList.MULTIPLE};
     combo.setModel(new DefaultComboBoxModel(subStatuses));
-
-  }
-
-  @Override
-  public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
     combo.setSelectedItem(value);
     combo.setRenderer(new MySubtitleListRenderer());
     combo.addActionListener(new ActionListener() {

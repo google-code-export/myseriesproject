@@ -222,9 +222,9 @@ public class Options {
     //Options._USER_DIR_ = System.getProperties().getProperty("user.dir");
     Options._USER_DIR_ = "./";
     options = new HashMap<String, Object>();
-    loadDefaultOptions();
+    Options.loadDefaultOptions();
     if (!new File(Options._USER_DIR_ + "MySeries.ini").isFile()) {
-      writeDefaultIniFile();
+      Options.save();
     }
     BufferedReader in = MyUsefulFunctions.createInputStream(new File(Options._USER_DIR_ + "MySeries.ini"));
     String line = "";
@@ -550,7 +550,7 @@ public class Options {
     options.put(Options.SEASON_SEPARATOR, " SE");
     options.put(Options.TITLE_SEPARATOR, "  - ");
     options.put(Options.EPISODE_SEPARATOR, " x");
-    options.put(Options.TOOLBAR_POSITION, new Integer(1));
+    options.put(Options.TOOLBAR_POSITION, new Integer(0));
     options.put(Options.TOOLBAR_BUTTONS, getDefaultToolbarButtons());
 
   }
