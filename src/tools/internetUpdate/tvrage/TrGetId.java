@@ -255,11 +255,13 @@ public class TrGetId extends MyDraggable {
       } else {
         if (m != null) {
           InternetUpdate iu = new InternetUpdate(m, Series.getCurrentSerial(), InternetUpdate.TV_RAGE_NAME);
+          
         }
       }
     } else {
       dispose();
     }
+    dispose();
   }//GEN-LAST:event_button_cancelActionPerformed
 
   private void button_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_okActionPerformed
