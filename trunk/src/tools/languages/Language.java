@@ -19,6 +19,8 @@ public class Language {
   public static int SECONDARY = 1;
   /** The no priority lang constant **/
   public static int NO_PRIORITY = 2;
+  /** The multiple icon name **/
+  private String MULTIPLE = "multiple";
   /** If the lang is the primary one **/
   private boolean isPrimary = false;
   /** If the lang is the secondary one **/
@@ -31,6 +33,7 @@ public class Language {
   private int id;
   /** The languages icon   */
   private ImageIcon icon;
+
 
   Language(String name, String code, int priority, int id) {
     this.name = name;
@@ -127,11 +130,16 @@ public class Language {
    * @return the icon
    */
   public ImageIcon getIcon() {
-    if(this.equals(LangsList.NONE)){
-      return null;
-    } else if(this.equals(LangsList.MULTIPLE)){
-      return new ImageIcon(getClass().getResource("/images/langs/"+MySubtitlesCellRenderer.MULTIPLE+".png"));
+    try {
+      if (this.equals(LangsList.NONE)) {
+        return null;
+      } else if (this.equals(LangsList.MULTIPLE)) {
+        return new ImageIcon(getClass().getResource("/images/langs/" + MULTIPLE + ".png"));
+      }
+      return new ImageIcon(getClass().getResource("/images/langs/" + getCode() + ".png"));
+    } catch (Exception e) {
+      System.out.println(this);
     }
-    return new ImageIcon(getClass().getResource("/images/langs/"+getCode()+".png"));
+    return null;
   }
 }
