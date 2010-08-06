@@ -31,7 +31,7 @@ public class MySubtitleCellEditor extends AbstractCellEditor implements TableCel
 
   public static final long serialVersionUID = 234534634646L;
   JComboBox combo = new JComboBox();
-  private final int episodeColumn;
+  private int episodeColumn;
 
   public MySubtitleCellEditor(int episodeColumn) {
     this.episodeColumn = episodeColumn;
@@ -41,21 +41,26 @@ public class MySubtitleCellEditor extends AbstractCellEditor implements TableCel
 
   @Override
   public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-    Language[] subStatuses = {
-      LangsList.NONE,
-      myseries.MySeries.languages.getPrimary(),
-      myseries.MySeries.languages.getSecondary(),
-      LangsList.MULTIPLE};
-    combo.setModel(new DefaultComboBoxModel(subStatuses));
-    combo.setSelectedItem(value);
-    combo.setRenderer(new MySubtitleListRenderer());
-    combo.addActionListener(new ActionListener() {
 
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        stopCellEditing();
-      }
-    });
+    if (value instanceof Language) {
+      Language[] subStatuses = {
+        LangsList.NONE,
+        myseries.MySeries.languages.getPrimary(),
+        myseries.MySeries.languages.getSecondary(),
+        LangsList.MULTIPLE};
+      combo.setModel(new DefaultComboBoxModel(subStatuses));
+      combo.setSelectedItem(value);
+      combo.setRenderer(new MySubtitleListRenderer());
+      combo.addActionListener(new ActionListener() {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+          stopCellEditing();
+        }
+      });
+    } else {
+      System.out.println("ERROR");
+    }
     return combo;
   }
 
@@ -92,11 +97,5 @@ public class MySubtitleCellEditor extends AbstractCellEditor implements TableCel
   @Override
   public Language getCellEditorValue() {
     return (Language) combo.getSelectedItem();
-  }
-
-  @Override
-  public boolean stopCellEditing() {
-
-    return super.stopCellEditing();
   }
 }
