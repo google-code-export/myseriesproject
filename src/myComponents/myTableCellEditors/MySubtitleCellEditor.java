@@ -58,8 +58,6 @@ public class MySubtitleCellEditor extends AbstractCellEditor implements TableCel
           stopCellEditing();
         }
       });
-    } else {
-      System.out.println("ERROR");
     }
     return combo;
   }
