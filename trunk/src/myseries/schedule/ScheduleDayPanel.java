@@ -21,6 +21,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.ImageIcon;
@@ -113,7 +114,10 @@ public class ScheduleDayPanel extends javax.swing.JPanel {
     ImageIcon orIm;
     rows = (int) Math.ceil((double) events.size() / MAX_COLUMNS);
     icons.setLayout(new GridLayout(rows, events.size() == 1 ? MIN_COLUMNS : MAX_COLUMNS, GAP, GAP));
+    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+    String date = sdf.format(sDay.getDate());
     String tip = "<html><table>";
+    tip += "<tr><td><b>" + date + "</b></td></tr>";
     for (Iterator<ScheduleEvent> it = events.iterator(); it.hasNext();) {
       ScheduleEvent event = it.next();
       JLabel eventLabel = new JLabel();
@@ -141,12 +145,12 @@ public class ScheduleDayPanel extends javax.swing.JPanel {
     try {
       int w = image.getWidth(this);
       int h = image.getHeight(this);
-      double ratio = (double)w/h;
-      if(w>(width - NUMBER_LABEL_WIDTH)){
+      double ratio = (double) w / h;
+      if (w > (width - NUMBER_LABEL_WIDTH)) {
         w = width - NUMBER_LABEL_WIDTH;
-        h = (int) (w/ratio);
+        h = (int) (w / ratio);
       }
-      if (h >height){
+      if (h > height) {
         h = height;
         w = (int) (h * ratio);
       }
