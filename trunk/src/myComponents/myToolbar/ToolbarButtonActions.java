@@ -33,13 +33,14 @@ public interface ToolbarButtonActions {
  public static int TVRAGE_UPDATE = 14;
  public static int EPGUIDES_UPDATE = 15;
  public static int UPDATE_FILES = 16;
- public static int OPTIONS = 17;
- public static int SEP_TOOLS = 18;
- public static int HELP = 19;
- public static int CHECK_UPDATES = 20;
- public static int VIEW_LOGS = 21;
- public static int CLEAR_LOGS = 22;
- public static int ABOUT = 23;
- public static int DELETE_TORRENTS = 24;
+ public static int DELETE_TORRENTS = 17;
+ public static int OPTIONS = 18;
+ public static int SEP_TOOLS = 19;
+ public static int HELP = 20;
+ public static int CHECK_UPDATES = 21;
+ public static int VIEW_LOGS = 22;
+ public static int CLEAR_LOGS = 23;
+ public static int ABOUT = 24;
+ 
 
 }
