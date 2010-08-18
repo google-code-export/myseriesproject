@@ -546,7 +546,7 @@ public class Options {
     options.put(Options.PRIMARY_SUB, "Greek");
     options.put(Options.SECONDARY_SUB, "English");
     options.put(Options.SUBTITLE_SITE, SubtitleConstants.SUBTITLE_ONLINE_NAME);
-    options.put(Options.AUTO_FILE_UPDATING, new Boolean(false));
+    options.put(Options.AUTO_FILE_UPDATING, new Boolean(true));
     options.put(Options.SEASON_SEPARATOR, " SE");
     options.put(Options.TITLE_SEPARATOR, "  - ");
     options.put(Options.EPISODE_SEPARATOR, " x");
