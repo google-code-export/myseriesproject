@@ -674,6 +674,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     });
     popUpMenu_downloadTorrent.add(popUpItem_downloadEzTv);
 
+    popUpItem_downloadIsohunt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/isohunt.png"))); // NOI18N
     popUpItem_downloadIsohunt.setText("Download from Isohunt");
     popUpItem_downloadIsohunt.setToolTipText("Download torrent from Isohunt");
     popUpItem_downloadIsohunt.addActionListener(new java.awt.event.ActionListener() {
@@ -925,19 +926,15 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     panel_filtersLayout.setVerticalGroup(
       panel_filtersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(panel_filtersLayout.createSequentialGroup()
+        .addGap(7, 7, 7)
         .addGroup(panel_filtersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(panel_filtersLayout.createSequentialGroup()
-            .addGap(7, 7, 7)
-            .addGroup(panel_filtersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-              .addComponent(combobox_downloaded, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(comboBox_seen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(comboBox_filterSubtitles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-          .addGroup(panel_filtersLayout.createSequentialGroup()
-            .addGap(7, 7, 7)
-            .addGroup(panel_filtersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(button_deleteFilter)
-              .addComponent(button_saveFilter)
-              .addComponent(combobox_filters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+          .addGroup(panel_filtersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addComponent(combobox_downloaded, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(comboBox_seen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(comboBox_filterSubtitles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addComponent(button_deleteFilter)
+          .addComponent(button_saveFilter)
+          .addComponent(combobox_filters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
@@ -1165,6 +1162,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     menuItem_DownloadIsohunt.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
     menuItem_DownloadIsohunt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/isohunt.png"))); // NOI18N
     menuItem_DownloadIsohunt.setText("From " + TorrentConstants.ISOHUNT_NAME);
+    menuItem_DownloadIsohunt.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        menuItem_DownloadIsohuntActionPerformed(evt);
+      }
+    });
     jMenu1.add(menuItem_DownloadIsohunt);
 
     menu_Tools.add(jMenu1);
