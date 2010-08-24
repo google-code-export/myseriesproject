@@ -176,6 +176,8 @@ setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"
     treeNode2.add(treeNode3);
     treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Delete Torrents");
     treeNode2.add(treeNode3);
+    treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Customize Toolbar");
+    treeNode2.add(treeNode3);
     treeNode1.add(treeNode2);
     treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Options");
     treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("General Options");
