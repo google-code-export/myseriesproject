@@ -69,9 +69,9 @@ public class RenameEpisodes extends MyDraggable {
     this.newNames = newNames;
     this.series = series;
     initComponents();
-    textfield_episode.addValidator(new RegularExpressionValidator("", sepRegex, false, false));
-    textfield_season.addValidator(new RegularExpressionValidator("", sepRegex, false, false));
-    textfield_title.addValidator(new RegularExpressionValidator("", sepRegex, false, false));
+    textfield_episode.addValidator(new RegularExpressionValidator("", sepRegex, false, true));
+    textfield_season.addValidator(new RegularExpressionValidator("", sepRegex, false, true));
+    textfield_title.addValidator(new RegularExpressionValidator("", sepRegex, false, true));
     textfield_episode.setTrimValue(false);
     textfield_season.setTrimValue(false);
     textfield_title.setTrimValue(false);
