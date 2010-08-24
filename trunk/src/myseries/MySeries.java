@@ -82,6 +82,7 @@ import myseries.filters.UpdateFiltersTable;
 import myseries.series.UpdateSeriesTable;
 import myseries.statistics.StatEpisodes;
 import myseries.statistics.StatSeries;
+import tools.LookAndFeels;
 import tools.Skin;
 import tools.download.subtitles.SubtitleConstants;
 import tools.download.torrents.TorrentConstants;
@@ -135,11 +136,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public MyEpisodesTableModel tableModel_episodes;
   private MyFilteredSeriesTableModel tableModel_filterSeries;
   public ComboBoxModel comboBoxModel_filters;
-  public static String version = "1.3(dev394)";
-  public String date = "2010-05-17";
+  public static String version = "1.3(dev481)";
+  public String date = "2010-08-20";
   public static MyDisabledGlassPane glassPane;
   public static Logger logger;
-  public static final long serialVersionUID = 1L;
+  public static final long serialVersionUID = 234563636363L;
   public static MyImagePanel imagePanel = new MyImagePanel();
   public Image image;
   private Integer[] seriesTableWidths;
@@ -179,7 +180,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     if (Options.toString(Options.LOOK_AND_FEEL).equals("")) {
     } else {
       //set look and feel
-      //LookAndFeels.setLookAndFeel(this, Options.toString(Options.LOOK_AND_FEEL));
+     // LookAndFeels.setLookAndFeel(this, Options.toString(Options.LOOK_AND_FEEL));
     }
 
     //Get language list
