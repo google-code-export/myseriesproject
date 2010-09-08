@@ -759,8 +759,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       .addGroup(panel_SeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(panel_SeriesLayout.createSequentialGroup()
           .addContainerGap()
-          .addComponent(scrollPane_series, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addGap(105, 105, 105)))
+          .addComponent(scrollPane_series, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
+          .addContainerGap()))
     );
 
     splitPane_main.setLeftComponent(panel_Series);
