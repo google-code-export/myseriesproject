@@ -975,10 +975,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     );
     tabpanel_statisticsLayout.setVerticalGroup(
       tabpanel_statisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(tabpanel_statisticsLayout.createSequentialGroup()
-        .addComponent(statSeries, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabpanel_statisticsLayout.createSequentialGroup()
+        .addComponent(statSeries, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(statEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
+        .addComponent(statEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
         .addContainerGap())
     );
 
