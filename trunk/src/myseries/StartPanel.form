@@ -141,7 +141,7 @@
                 <Property name="text" type="java.lang.String" value="Create new database:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="textbox_name">
+            <Component class="com.googlecode.svalidators.formcomponents.STextField" name="textbox_name">
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
               </AuxValues>

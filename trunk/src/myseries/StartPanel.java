@@ -10,6 +10,7 @@
  */
 package myseries;
 
+import com.googlecode.svalidators.validators.RequiredValidator;
 import database.CreateDatabase;
 import database.DBConnection;
 import database.Database;
@@ -47,12 +48,13 @@ public class StartPanel extends MyDraggable {
   Dimension big = new Dimension(428, 210);
   Dimension small = new Dimension(428, 160);
   Dimension smaller = new Dimension(428, 140);
-  private String dbName;
+  public String dbName;
   private boolean createNewDB;
 
   /** Creates new form startPanel */
   public StartPanel() {
     initComponents();
+    textbox_name.addValidator(new RequiredValidator());
     getRootPane().setDefaultButton(button_create);
     setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/subtitles.png")).getImage());
     databasesModel = new DefaultComboBoxModel(Database.getDatabases());
@@ -69,6 +71,7 @@ public class StartPanel extends MyDraggable {
   StartPanel(MySeries m) {
     this.m = m;
     initComponents();
+    textbox_name.addValidator(new RequiredValidator());
     getRootPane().setDefaultButton(button_create);
     setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/subtitles.png")).getImage());
     //progress.setVisible(false);
@@ -86,6 +89,7 @@ public class StartPanel extends MyDraggable {
     this.m = m;
     this.createNewDB = createNewDB;
     initComponents();
+    textbox_name.addValidator(new RequiredValidator());
     getRootPane().setDefaultButton(button_create);
     //progress.setVisible(false);
     label_title.setText("Create database");
@@ -107,7 +111,7 @@ public class StartPanel extends MyDraggable {
     panel = new javax.swing.JPanel();
     panel_newDB = new javax.swing.JPanel();
     jLabel1 = new javax.swing.JLabel();
-    textbox_name = new javax.swing.JTextField();
+    textbox_name = new com.googlecode.svalidators.formcomponents.STextField();
     button_exit = new javax.swing.JButton();
     button_create = new javax.swing.JButton();
     label_title = new javax.swing.JLabel();
@@ -295,7 +299,7 @@ public class StartPanel extends MyDraggable {
         createNewDB = true;
       }
 
-      if (!dbName.equals("")) {
+      if (new RequiredValidator(dbName).validate()) {
         try {
           CreateDatabase d = new CreateDatabase(this, dbName, createNewDB);
           Thread t = new Thread(d);
@@ -434,7 +438,7 @@ public class StartPanel extends MyDraggable {
   private javax.swing.JPanel panel;
   private javax.swing.JPanel panel_loadDatabase;
   private javax.swing.JPanel panel_newDB;
-  public javax.swing.JTextField textbox_name;
+  public com.googlecode.svalidators.formcomponents.STextField textbox_name;
   // End of variables declaration//GEN-END:variables
 
 }

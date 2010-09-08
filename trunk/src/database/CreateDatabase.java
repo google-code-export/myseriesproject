@@ -94,7 +94,7 @@ public class CreateDatabase implements Runnable {
       startPanel.startMySeries();
     } else {
       MySeries.logger.log(Level.INFO, "Setting database");
-      Options.setOption(Options.DB_NAME, startPanel.textbox_name.getText().trim());
+      Options.setOption(Options.DB_NAME, startPanel.dbName.trim());
       MySeries.logger.log(Level.INFO, "Saving options");
       Options.save();
       startPanel.dispose();
