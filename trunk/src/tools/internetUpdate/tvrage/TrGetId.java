@@ -238,16 +238,16 @@ public class TrGetId extends MyDraggable {
             setVisible(false);
             DownloadScreenshot g = new DownloadScreenshot(tvRageID);
             dispose();
-           if (g.isSuccess()) {
-            adminSeries.textfield_screenshot.setText(g.getFilename());
-            MyMessages.message("Downloading screenshot", "The screenshot was saved in the images folder");
-            adminSeries.setVisible(true);
-            return;
-          } else {
-            MyMessages.error("Downloading screenshot", "No screenshot was found");
-            adminSeries.setVisible(true);
-            return;
-          }
+            if (g.isSuccess()) {
+              adminSeries.textfield_screenshot.setText(g.getFilename());
+              MyMessages.message("Downloading screenshot", "The screenshot was saved in the images folder");
+              adminSeries.setVisible(true);
+              return;
+            } else {
+              MyMessages.error("Downloading screenshot", "No screenshot was found");
+              adminSeries.setVisible(true);
+              return;
+            }
           }
         }
         dispose();
@@ -255,11 +255,14 @@ public class TrGetId extends MyDraggable {
       } else {
         if (m != null) {
           InternetUpdate iu = new InternetUpdate(m, Series.getCurrentSerial(), InternetUpdate.TV_RAGE_NAME);
-          
         }
       }
     } else {
       dispose();
+      if (adminSeries != null) {
+        adminSeries.setVisible(true);
+      }
+      
     }
     dispose();
   }//GEN-LAST:event_button_cancelActionPerformed
@@ -272,9 +275,9 @@ public class TrGetId extends MyDraggable {
         SeriesRecord cSeries = DBHelper.getSeriesByID(series_ID);
         cSeries.setTvrage_ID(tvRageID);
         cSeries.save();
-         MyEvent event = new MyEvent(m, MyEventHandler.SET_CURRENT_SERIES);
-          event.setSeries(cSeries);
-          evClass.fireMyEvent(event);
+        MyEvent event = new MyEvent(m, MyEventHandler.SET_CURRENT_SERIES);
+        event.setSeries(cSeries);
+        evClass.fireMyEvent(event);
       } catch (SQLException ex) {
         MySeries.logger.log(Level.SEVERE, null, ex);
         MyMessages.error("SQL Error", "TvRage ID could not be saved in database");
