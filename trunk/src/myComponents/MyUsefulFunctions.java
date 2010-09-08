@@ -479,14 +479,18 @@ public class MyUsefulFunctions {
    * @param seen If the episode is seen
    * @return The color to use
    */
-  public static Color getCellColor(boolean isSelected, boolean seen) {
+  public static Color getCellColor(boolean isSelected, boolean seen, String date, boolean downloaded) {
     if (isSelected) {
       return Skin.getColor_1();
     } else {
       if (seen) {
         return Skin.getColor_4();
       } else {
-        return Skin.getColor_5();
+        if(MyUsefulFunctions.hasBeenAired(date) && !downloaded){
+          return Color.RED;
+        } else {
+          return Skin.getColor_5();
+        }
       }
     }
   }
