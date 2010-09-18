@@ -10,6 +10,7 @@ import database.SeriesRecord;
 import java.awt.Image;
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 import myComponents.MyTableModels.MySeriesTableModel;
+import myComponents.MyUsefulFunctions;
 import myComponents.myEvents.MyEvent;
 import myComponents.myEvents.MyEventHandler;
 import myComponents.myFileFilters.SubtitlesFilter;
@@ -68,6 +70,7 @@ public class Series {
   /** The series video files */
   private static File[] videoFiles;
 
+  
   private Series() {
   }
 
@@ -294,7 +297,7 @@ public class Series {
 
   private static File[] getFiles(SeriesRecord series, FilenameFilter filter) {
     File directory = new File(series.getLocalDir());
-    if (!series.isValidLocalDir() || !Options.toBoolean(Options.AUTO_FILE_UPDATING)) {
+    if (!series.isValidLocalDir() || !Options.toBoolean(Options.AUTO_FILE_UPDATING) || MyUsefulFunctions.isNetworkPath(directory)) {
       return null;
     }
     File[] files = directory.listFiles(filter);
