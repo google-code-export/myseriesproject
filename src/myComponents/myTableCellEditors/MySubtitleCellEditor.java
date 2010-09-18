@@ -10,6 +10,7 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.sql.SQLException;
 import java.util.EventObject;
 import javax.swing.AbstractCellEditor;
@@ -83,7 +84,7 @@ public class MySubtitleCellEditor extends AbstractCellEditor implements TableCel
         return true;
       }
     }
-    if (series.isValidLocalDir() && Options.toBoolean(Options.AUTO_FILE_UPDATING)) {
+    if (series.isValidLocalDir() && Options.toBoolean(Options.AUTO_FILE_UPDATING) && !MyUsefulFunctions.isNetworkPath(new File(series.getLocalDir()))) {
       return false;
     }
     if (!MyUsefulFunctions.hasBeenAired(ep.getAired())) {

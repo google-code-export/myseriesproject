@@ -576,7 +576,7 @@ public class MyUsefulFunctions {
     File[] videoFiles = Series.getVideoFiles(series);
     Pattern pattern = Pattern.compile(regex);
     if(videoFiles==null){
-      return null;
+      return new ArrayList<File>();
     }
     for (int j = 0; j < videoFiles.length; j++) {
       File file = videoFiles[j];
@@ -598,7 +598,7 @@ public class MyUsefulFunctions {
     ArrayList<File> videos = new ArrayList<File>();
     if (series.isValidLocalDir() && Options.toBoolean(Options.AUTO_FILE_UPDATING)) {
       videos = MyUsefulFunctions.getVideoFiles(series, ep);
-      if(videos.size()==0){
+      if(videos.isEmpty()){
         return null;
       }
     } else {
@@ -688,6 +688,17 @@ public class MyUsefulFunctions {
       strValue = Options._DEC_FORMAT_.format(value / Math.pow(1024, 4)) + " TB";
     }
     return strValue;
+  }
+
+  public static boolean isNetworkPath(File directory) {
+    try {
+      if (directory.getCanonicalPath().startsWith("\\\\")) {
+        return true;
+      }
+      return false;
+    } catch (IOException ex) {
+      return false;
+    }
   }
 
   private MyUsefulFunctions() {
