@@ -297,6 +297,7 @@ public class Series {
 
   private static File[] getFiles(SeriesRecord series, FilenameFilter filter) {
     File directory = new File(series.getLocalDir());
+    System.out.println(directory.toURI());
     if (!series.isValidLocalDir() || !Options.toBoolean(Options.AUTO_FILE_UPDATING) || MyUsefulFunctions.isNetworkPath(directory)) {
       return null;
     }
