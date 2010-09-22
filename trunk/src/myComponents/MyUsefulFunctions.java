@@ -313,11 +313,11 @@ public class MyUsefulFunctions {
         System.exit(0);
       } else {
         name = JOptionPane.showInputDialog(null,
-            message,
-            title,
-            JOptionPane.PLAIN_MESSAGE,
-            null,
-            files, files[0]);
+                message,
+                title,
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                files, files[0]);
 
         return String.valueOf(name);
       }
@@ -486,7 +486,7 @@ public class MyUsefulFunctions {
       if (seen) {
         return Skin.getColor_4();
       } else {
-        if(MyUsefulFunctions.hasBeenAired(date) && !downloaded){
+        if (MyUsefulFunctions.hasBeenAired(date) && !downloaded) {
           return Color.RED;
         } else {
           return Skin.getColor_5();
@@ -541,7 +541,7 @@ public class MyUsefulFunctions {
 
   public static String getVideoFileSize(EpisodesRecord episode) {
     String size = "";
-     SeriesRecord series;
+    SeriesRecord series;
     try {
       series = database.DBHelper.getSeriesByID(episode.getSeries_ID());
     } catch (SQLException ex) {
@@ -575,7 +575,7 @@ public class MyUsefulFunctions {
     ArrayList<File> files = new ArrayList<File>();
     File[] videoFiles = Series.getVideoFiles(series);
     Pattern pattern = Pattern.compile(regex);
-    if(videoFiles==null){
+    if (videoFiles == null) {
       return new ArrayList<File>();
     }
     for (int j = 0; j < videoFiles.length; j++) {
@@ -589,7 +589,7 @@ public class MyUsefulFunctions {
   }
 
   public static String[] getVideoFileTypes(EpisodesRecord ep) {
-     SeriesRecord series;
+    SeriesRecord series;
     try {
       series = database.DBHelper.getSeriesByID(ep.getSeries_ID());
     } catch (SQLException ex) {
@@ -598,7 +598,7 @@ public class MyUsefulFunctions {
     ArrayList<File> videos = new ArrayList<File>();
     if (series.isValidLocalDir() && Options.toBoolean(Options.AUTO_FILE_UPDATING)) {
       videos = MyUsefulFunctions.getVideoFiles(series, ep);
-      if(videos.isEmpty()){
+      if (videos.isEmpty()) {
         return null;
       }
     } else {
@@ -626,7 +626,7 @@ public class MyUsefulFunctions {
     ArrayList<File> subs = new ArrayList<File>();
     File[] subtitles = Series.getSubtitleFiles(series);
     Pattern pattern = Pattern.compile(regex);
-    if(subtitles == null ){
+    if (subtitles == null) {
       return subs;
     }
     for (int j = 0; j < subtitles.length; j++) {
@@ -691,14 +691,10 @@ public class MyUsefulFunctions {
   }
 
   public static boolean isNetworkPath(File directory) {
-    try {
-      if (directory.getCanonicalPath().startsWith("\\\\")) {
-        return true;
-      }
-      return false;
-    } catch (IOException ex) {
-      return false;
+    if (directory.toURI().toString().startsWith("file:////")) {
+      return true;
     }
+    return false;
   }
 
   private MyUsefulFunctions() {
