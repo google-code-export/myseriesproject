@@ -1488,7 +1488,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   }//GEN-LAST:event_tableEpisodesMouseReleased
 
   private void popUpItem_deleteEpisodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_deleteEpisodeActionPerformed
-    if (tableEpisodes.getSelectedRowCount() == 1) {
+    if (tableEpisodes.getSelectedRowCount() < 2) {
       EpisodesActions.deleteEpisode();
     } else {
       ArrayList<EpisodesRecord> episodes = new ArrayList<EpisodesRecord>();
