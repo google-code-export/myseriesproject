@@ -138,7 +138,7 @@ public class Language {
       }
       return new ImageIcon(getClass().getResource("/images/langs/" + getCode() + ".png"));
     } catch (Exception e) {
-      System.out.println(this);
+     // System.out.println(this);
     }
     return null;
   }
