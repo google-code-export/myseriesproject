@@ -176,7 +176,7 @@ public class Episodes {
       e.setSubs(LangsList.getLanguageById(rs.getInt("subs")));
       boolean newDownloadedStatus = download;
       Language cSubs = e.getSubs();
-      if (MyUsefulFunctions.hasBeenAired(e.getAired())) {
+      if (MyUsefulFunctions.hasBeenAired(e.getAired(),true)) {
         seen = rs.getBoolean("seen");
         //Video files
         if (videoFiles != null) {

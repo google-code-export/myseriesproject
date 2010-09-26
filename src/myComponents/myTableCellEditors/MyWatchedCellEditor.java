@@ -60,7 +60,7 @@ public class MyWatchedCellEditor extends AbstractCellEditor implements TableCell
       int row = table.rowAtPoint(((MouseEvent) e).getPoint());
       ep = (EpisodesRecord) table.getValueAt(row, episodeColumn);
     }
-    if (!MyUsefulFunctions.hasBeenAired(ep.getAired())) {
+    if (!MyUsefulFunctions.hasBeenAired(ep.getAired(),true)) {
       return false;
     }
     return true;

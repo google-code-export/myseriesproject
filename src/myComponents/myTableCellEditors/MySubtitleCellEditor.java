@@ -87,7 +87,7 @@ public class MySubtitleCellEditor extends AbstractCellEditor implements TableCel
     if (series.isValidLocalDir() && Options.toBoolean(Options.AUTO_FILE_UPDATING) && !MyUsefulFunctions.isNetworkPath(new File(series.getLocalDir()))) {
       return false;
     }
-    if (!MyUsefulFunctions.hasBeenAired(ep.getAired())) {
+    if (!MyUsefulFunctions.hasBeenAired(ep.getAired(),true)) {
       return false;
     }
     return true;
