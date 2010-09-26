@@ -394,11 +394,25 @@ public class MyUsefulFunctions {
    * @param aired The date that the episode is aired
    * @return True if it's aired or false
    */
-  public static boolean hasBeenAired(String aired) {
-    if (aired.compareTo(getToday("yyyy-MM-dd")) <= 0) {
-      return true;
+  public static boolean hasBeenAired(String aired, boolean includeToday) {
+    //Check aired format
+    if(aired.substring(2,3).equals("/")){
+     String[] d = aired.split("/");
+     aired = d[2]+"-"+d[1]+"-"+d[0];
     }
-    return false;
+
+    if (includeToday) {
+      if (aired.compareTo(getToday("yyyy-MM-dd")) <= 0) {
+        return true;
+      }
+      return false;
+    } else {
+      if (aired.compareTo(getToday("yyyy-MM-dd")) < 0) {
+        return true;
+      }
+      return false;
+    }
+
   }
 
   /**
@@ -486,7 +500,7 @@ public class MyUsefulFunctions {
       if (seen) {
         return Skin.getColor_4();
       } else {
-        if (MyUsefulFunctions.hasBeenAired(date) && !downloaded) {
+        if (MyUsefulFunctions.hasBeenAired(date, false) && !downloaded) {
           return Color.RED;
         } else {
           return Skin.getColor_5();
