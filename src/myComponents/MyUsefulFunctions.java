@@ -392,9 +392,13 @@ public class MyUsefulFunctions {
   /**
    * Checks if an episode has been eired
    * @param aired The date that the episode is aired
+   * @param includeToday 
    * @return True if it's aired or false
    */
   public static boolean hasBeenAired(String aired, boolean includeToday) {
+    if(aired.equals("0000-00-00")){
+      return false;
+    }
     //Check aired format
     if(aired.substring(2,3).equals("/")){
      String[] d = aired.split("/");
