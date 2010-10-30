@@ -55,6 +55,9 @@ import tools.options.Options;
  */
 public class MyUsefulFunctions {
 
+  public static final int VIDEO_FILE = 0;
+  public static final int SUBTITLE_FILE = 1;
+
   /**
    * Converts a date from the database (YYYY-MM-DD) to the Options._DATE_FORMAT_
    * @param date
@@ -396,13 +399,13 @@ public class MyUsefulFunctions {
    * @return True if it's aired or false
    */
   public static boolean hasBeenAired(String aired, boolean includeToday) {
-    if(aired.equals("0000-00-00")){
+    if (aired.equals("0000-00-00")) {
       return false;
     }
     //Check aired format
-    if(aired.substring(2,3).equals("/")){
-     String[] d = aired.split("/");
-     aired = d[2]+"-"+d[1]+"-"+d[0];
+    if (aired.substring(2, 3).equals("/")) {
+      String[] d = aired.split("/");
+      aired = d[2] + "-" + d[1] + "-" + d[0];
     }
 
     if (includeToday) {
@@ -713,6 +716,70 @@ public class MyUsefulFunctions {
       return true;
     }
     return false;
+  }
+
+  public static boolean needRenaming(EpisodesRecord ep) {
+    SeriesRecord series;
+    try {
+      series = database.DBHelper.getSeriesByID(ep.getSeries_ID());
+      ArrayList<File> videos = new ArrayList<File>();
+      ArrayList<File> subs = new ArrayList<File>();
+      if (series.isValidLocalDir()) {
+        videos = getVideoFiles(series, ep);
+        subs = getSubtitles(series, ep);
+        if (videos.isEmpty() || subs.isEmpty()) {
+          return false;
+        } else {
+          return !areVideoAndSubsRenamed(videos, subs);
+        }
+      } else {
+        return false;
+      }
+    } catch (SQLException ex) {
+      return false;
+    }
+
+  }
+
+  private static boolean areVideoAndSubsRenamed(ArrayList<File> videos, ArrayList<File> subs) {
+    boolean[] results = new boolean[videos.size()];
+    int i = 0;
+    for (Iterator<File> it = videos.iterator(); it.hasNext();) {
+      File video = it.next();
+      String videoBaseName = getBaseName(video, VIDEO_FILE);
+      for (Iterator<File> it1 = subs.iterator(); it1.hasNext();) {
+        File sub = it1.next();
+        String subBaseName = getBaseName(sub, SUBTITLE_FILE);
+        if(videoBaseName.equals(subBaseName)){
+          results[i] =true;
+        }
+      }
+      i++;
+    }
+    for (int j = 0; j < results.length; j++) {
+      boolean b = results[j];
+      if(!b){
+        return false;
+      }
+    }
+    return true;
+  }
+
+  private static String getBaseName(File file, int type) {
+    if (file == null) {
+      return null;
+    }
+    String name = file.getName();
+    if (type == VIDEO_FILE) {
+      return name.substring(0, name.lastIndexOf("."));
+    } else {
+      // when theres no lang string interface name
+      if(name.matches(".*\\..{2}\\..{3}")){
+        return name.substring(0, name.length()-7);
+      }else {
+        return name.substring(0, name.length()-4);
+      }
+    }
   }
 
   private MyUsefulFunctions() {
