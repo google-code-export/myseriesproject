@@ -5,13 +5,20 @@
 
 package database;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import tools.feeds.FeedLeaf;
 
 /**
  *
  * @author lordovol
  */
 public class FeedsRecord extends Record {
+
+
 
    /**
    * The default values for the record attributes
@@ -24,6 +31,15 @@ public class FeedsRecord extends Record {
     super();
   }
 
+  public static ResultSet getAll() {
+    try {
+      String sql = "SELECT * FROM feeds ORDER BY title";
+      return query(sql);
+    } catch (SQLException ex) {
+      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      return null;
+    }
+  }
 
   /**
    * Saves a feed Record
