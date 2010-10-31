@@ -78,9 +78,11 @@ import myComponents.myTableCellRenderers.MyDownloadedCellRenderer;
 import myComponents.myTableCellRenderers.MySeriesBooleanCellRenderer;
 import myComponents.myTableCellRenderers.MySubtitlesCellRenderer;
 import myComponents.myTableCellRenderers.MyWatchedCellRenderer;
+import myComponents.myTreeCellRenderers.FeedTreeCellRenderer;
 import myseries.actions.ApplicationActions;
 import myseries.actions.DatabaseActions;
 import myseries.actions.EpisodesActions;
+import myseries.actions.FeedsActions;
 import myseries.actions.FiltersActions;
 import myseries.actions.SeriesActions;
 import myseries.episodes.UpdateEpisodesTable;
@@ -424,6 +426,10 @@ testFeed();
     Series.setTable_series(tableSeries);
     Series.setTableWidths(seriesTableWidths);
 
+    //POPULATE FEEDS TREE
+    feedTree.setCellRenderer(new FeedTreeCellRenderer());
+    feedTree.populate();
+    
     setLocationRelativeTo(null);
   }
 
@@ -488,6 +494,13 @@ testFeed();
     statEpisodes = new myseries.statistics.StatEpisodes();
     tabpanel_schedule = new javax.swing.JPanel();
     scheduler = new com.googlecode.scheduler.Scheduler(Options._USER_DIR_ +Database.PATH + DBConnection.db);
+    tabpanel_feeds = new javax.swing.JPanel();
+    feedSplitPanel = new javax.swing.JSplitPane();
+    leftFeedPanel = new javax.swing.JPanel();
+    feedTree = new tools.feeds.FeedTree();
+    bt_addRss = new javax.swing.JButton();
+    bt_refreshRss = new javax.swing.JButton();
+    feedsPreviewPanel1 = new tools.feeds.FeedsPreviewPanel();
     myToolbar = new myComponents.myToolbar.Toolbar(this, visibleButtons);
     menuBar = new javax.swing.JMenuBar();
     menu_MySeries = new javax.swing.JMenu();
@@ -1027,6 +1040,77 @@ testFeed();
     tabpanel_schedule.add(scheduler);
 
     tabsPanel.addTab("Schedule", new javax.swing.ImageIcon(getClass().getResource("/images/today.png")), tabpanel_schedule, "Schedule"); // NOI18N
+
+    feedSplitPanel.setDividerLocation(200);
+
+    bt_addRss.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/rss_add.png"))); // NOI18N
+    bt_addRss.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        bt_addRssActionPerformed(evt);
+      }
+    });
+
+    bt_refreshRss.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/rss_refresh.png"))); // NOI18N
+
+    javax.swing.GroupLayout leftFeedPanelLayout = new javax.swing.GroupLayout(leftFeedPanel);
+    leftFeedPanel.setLayout(leftFeedPanelLayout);
+    leftFeedPanelLayout.setHorizontalGroup(
+      leftFeedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(leftFeedPanelLayout.createSequentialGroup()
+        .addContainerGap()
+        .addGroup(leftFeedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(feedTree, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+          .addGroup(leftFeedPanelLayout.createSequentialGroup()
+            .addComponent(bt_addRss, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(bt_refreshRss, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        .addContainerGap())
+    );
+    leftFeedPanelLayout.setVerticalGroup(
+      leftFeedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(leftFeedPanelLayout.createSequentialGroup()
+        .addContainerGap()
+        .addGroup(leftFeedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(bt_addRss)
+          .addComponent(bt_refreshRss))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(feedTree, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
+        .addContainerGap())
+    );
+
+    feedSplitPanel.setLeftComponent(leftFeedPanel);
+
+    javax.swing.GroupLayout feedsPreviewPanel1Layout = new javax.swing.GroupLayout(feedsPreviewPanel1);
+    feedsPreviewPanel1.setLayout(feedsPreviewPanel1Layout);
+    feedsPreviewPanel1Layout.setHorizontalGroup(
+      feedsPreviewPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGap(0, 609, Short.MAX_VALUE)
+    );
+    feedsPreviewPanel1Layout.setVerticalGroup(
+      feedsPreviewPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGap(0, 504, Short.MAX_VALUE)
+    );
+
+    feedSplitPanel.setRightComponent(feedsPreviewPanel1);
+
+    javax.swing.GroupLayout tabpanel_feedsLayout = new javax.swing.GroupLayout(tabpanel_feeds);
+    tabpanel_feeds.setLayout(tabpanel_feedsLayout);
+    tabpanel_feedsLayout.setHorizontalGroup(
+      tabpanel_feedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(tabpanel_feedsLayout.createSequentialGroup()
+        .addContainerGap()
+        .addComponent(feedSplitPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE)
+        .addContainerGap())
+    );
+    tabpanel_feedsLayout.setVerticalGroup(
+      tabpanel_feedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(tabpanel_feedsLayout.createSequentialGroup()
+        .addContainerGap()
+        .addComponent(feedSplitPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE)
+        .addGap(23, 23, 23))
+    );
+
+    tabsPanel.addTab("Rss Feeds", new javax.swing.ImageIcon(getClass().getResource("/images/rss.png")), tabpanel_feeds); // NOI18N
 
     javax.swing.GroupLayout panel_episodesLayout = new javax.swing.GroupLayout(panel_episodes);
     panel_episodes.setLayout(panel_episodesLayout);
@@ -1680,12 +1764,18 @@ testFeed();
     ApplicationActions.deleteTorrents();
   }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+  private void bt_addRssActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_addRssActionPerformed
+    FeedsActions.addFeedPanel();
+  }//GEN-LAST:event_bt_addRssActionPerformed
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
   public static javax.swing.JMenuItem PopUpItem_AddEpisode;
   public static javax.swing.JMenuItem PopUpItem_AddEpisodeInEpisodes;
   public static javax.swing.JMenuItem PopUpItem_AddSeries;
   public static javax.swing.JMenuItem PopUpItem_DeleteSerial;
   public static javax.swing.JMenuItem PopUpItem_EditSerial;
+  public static javax.swing.JButton bt_addRss;
+  public static javax.swing.JButton bt_refreshRss;
   public static javax.swing.JButton button_deleteFilter;
   public static javax.swing.JButton button_saveFilter;
   public static javax.swing.JComboBox comboBox_filterSubtitles;
@@ -1693,6 +1783,9 @@ testFeed();
   public static javax.swing.JComboBox combobox_downloaded;
   public static javax.swing.JComboBox combobox_filters;
   public static javax.swing.JPopupMenu episodesPopUp;
+  public static javax.swing.JSplitPane feedSplitPanel;
+  public static tools.feeds.FeedTree feedTree;
+  public static tools.feeds.FeedsPreviewPanel feedsPreviewPanel1;
   public static javax.swing.JLayeredPane imageLayerPanel;
   public static javax.swing.JMenu jMenu1;
   public static javax.swing.JMenuItem jMenuItem1;
@@ -1700,6 +1793,7 @@ testFeed();
   public static javax.swing.JSeparator jSeparator1;
   public static javax.swing.JSeparator jSeparator2;
   public static javax.swing.JSeparator jSeparator3;
+  public static javax.swing.JPanel leftFeedPanel;
   public static javax.swing.JMenuBar menuBar;
   public static javax.swing.JMenuItem menuItem_About;
   public static javax.swing.JMenuItem menuItem_DownloadIsohunt;
@@ -1762,6 +1856,7 @@ testFeed();
   public static javax.swing.JTable tableSeries;
   public static javax.swing.JPanel tabpanel_FilteredSeries;
   public static javax.swing.JPanel tabpanel_episodesList;
+  public static javax.swing.JPanel tabpanel_feeds;
   public static javax.swing.JPanel tabpanel_schedule;
   public static javax.swing.JPanel tabpanel_statistics;
   public static javax.swing.JTabbedPane tabsPanel;
