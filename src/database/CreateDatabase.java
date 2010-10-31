@@ -67,7 +67,7 @@ public class CreateDatabase implements Runnable {
       }
     } catch (IOException ex) {
       MySeries.logger.log(Level.SEVERE, "Could not create the db file", ex);
-      
+
     } catch (SQLException ex) {
       myseries.MySeries.logger.log(Level.SEVERE, "SQL exception", ex);
     } catch (ClassNotFoundException ex) {
@@ -144,6 +144,10 @@ public class CreateDatabase implements Runnable {
             + "[downloaded] INTEGER NOT NULL  DEFAULT 0, "
             + "[seen] INTEGER NOT NULL  DEFAULT 0, "
             + "[subtitles] INTEGER NOT NULL  DEFAULT 0)");
+    MySeries.logger.log(Level.INFO, "Creating table feeds");
+    stmt.executeUpdate("CREATE TABLE IF NOT EXISTS  [feeds]"
+            + "([feed_id] INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE ,"
+            + "[title] VARCHAR NOT NULL , "
+            + "[url] VARCHAR NOT NULL )");
   }
-
 }
