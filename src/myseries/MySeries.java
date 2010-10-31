@@ -1110,7 +1110,7 @@ testFeed();
         .addGap(23, 23, 23))
     );
 
-    tabsPanel.addTab("Rss Feeds", new javax.swing.ImageIcon(getClass().getResource("/images/rss.png")), tabpanel_feeds); // NOI18N
+    tabsPanel.addTab("Rss Feeds", new javax.swing.ImageIcon(getClass().getResource("/images/rss_tab.png")), tabpanel_feeds); // NOI18N
 
     javax.swing.GroupLayout panel_episodesLayout = new javax.swing.GroupLayout(panel_episodes);
     panel_episodes.setLayout(panel_episodesLayout);
@@ -1765,7 +1765,10 @@ testFeed();
   }//GEN-LAST:event_jMenuItem2ActionPerformed
 
   private void bt_addRssActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_addRssActionPerformed
-    FeedsActions.addFeedPanel();
+    boolean isFeedSaved = FeedsActions.addFeedPanel(null);
+    if(isFeedSaved){
+      feedTree.populate();
+    }
   }//GEN-LAST:event_bt_addRssActionPerformed
 
   // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -1332,7 +1332,7 @@
                       <JTabbedPaneConstraints tabName="Rss Feeds">
                         <Property name="tabTitle" type="java.lang.String" value="Rss Feeds"/>
                         <Property name="tabIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/images/rss.png"/>
+                          <Image iconType="3" name="/images/rss_tab.png"/>
                         </Property>
                       </JTabbedPaneConstraints>
                     </Constraint>

@@ -49,7 +49,7 @@ public class FeedTree extends javax.swing.JPanel {
       ResultSet rs = FeedsRecord.getAll();
       while (rs.next()) {
         FeedLeaf l = new FeedLeaf();
-        l.id = rs.getInt("id");
+        l.id = rs.getInt("feed_ID");
         l.title = rs.getString("title");
         l.url = rs.getString("url");
         model.add(l);
@@ -86,6 +86,7 @@ public class FeedTree extends javax.swing.JPanel {
     tree = new javax.swing.JTree();
 
     tree.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 1));
+    tree.setModel(treemodel);
     FeedScrollPane.setViewportView(tree);
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

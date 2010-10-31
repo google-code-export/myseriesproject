@@ -14,4 +14,11 @@ public class FeedLeaf {
   public int id;
   public String title;
   public String url;
+
+  @Override
+  public String toString() {
+    return title;
+  }
+
+
 }
