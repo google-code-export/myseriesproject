@@ -40,6 +40,9 @@
                 <EmptyBorder bottom="10" left="10" right="1" top="10"/>
               </Border>
             </Property>
+            <Property name="model" type="javax.swing.tree.TreeModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="treemodel" type="code"/>
+            </Property>
           </Properties>
         </Component>
       </SubComponents>
