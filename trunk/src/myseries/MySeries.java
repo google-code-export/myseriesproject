@@ -1765,7 +1765,7 @@ testFeed();
   }//GEN-LAST:event_jMenuItem2ActionPerformed
 
   private void bt_addRssActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_addRssActionPerformed
-    boolean isFeedSaved = FeedsActions.addFeedPanel(null);
+    boolean isFeedSaved = FeedsActions.addFeedPanel(0);
     if(isFeedSaved){
       feedTree.populate();
     }
