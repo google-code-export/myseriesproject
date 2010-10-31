@@ -40,6 +40,8 @@ public class AdminFeed extends MyDraggable {
       label_title.setText("Add a new rss feed");
     } else {
       label_title.setText("Edit " + f.getTitle());
+      tf_url.setText(f.getUrl());
+      tf_title.setText(f.getTitle());
     }
     setLocationRelativeTo(null);
     setVisible(true);
