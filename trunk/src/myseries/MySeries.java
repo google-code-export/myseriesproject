@@ -11,8 +11,14 @@
 package myseries;
 
 import com.googlecode.starrating.StarTableCellRenderer;
+import com.sun.syndication.feed.synd.SyndEntryImpl;
+import com.sun.syndication.feed.synd.SyndFeed;
+import com.sun.syndication.io.FeedException;
+import com.sun.syndication.io.SyndFeedInput;
+import com.sun.syndication.io.XmlReader;
 import java.awt.Component;
 import java.awt.event.MouseListener;
+import java.util.List;
 import javax.swing.ComboBoxModel;
 import javax.swing.table.TableModel;
 import myComponents.myEvents.MyEvent;
@@ -35,6 +41,7 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -82,7 +89,6 @@ import myseries.filters.UpdateFiltersTable;
 import myseries.series.UpdateSeriesTable;
 import myseries.statistics.StatEpisodes;
 import myseries.statistics.StatSeries;
-import tools.LookAndFeels;
 import tools.Skin;
 import tools.download.subtitles.SubtitleConstants;
 import tools.download.torrents.TorrentConstants;
@@ -169,7 +175,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
    * @throws java.io.IOException
    */
   public MySeries() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, IOException {
-
+testFeed();
     //DEBUG DATABASE
     if (Options._USER_DIR_.equals("D:\\JavaProjects\\myseriesproject")) {
       //System.out.println("Copy debug db");
@@ -304,6 +310,35 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     if (Options.toBoolean(Options.CHECK_VERSION)) {
       new CheckUpdate(true);
     }
+    
+  }
+  private void testFeed(){
+    try {
+      SyndFeedInput input = new SyndFeedInput();
+      URL feedUrl = new URL("http://www.tvsubtitles.net/rssgr.xml");
+      SyndFeed feed = input.build(new XmlReader(feedUrl));
+
+     
+      List entries = feed.getEntries();
+      for (int i = 0; i < entries.size(); i++) {
+       SyndEntryImpl entry = (SyndEntryImpl) entries.get(i);
+        System.out.println(entry.getAuthor());
+        System.out.println(entry.getPublishedDate().toString());
+        System.out.println(entry.getTitle());
+        System.out.println(entry.getDescription().getType());
+        System.out.println(entry.getDescription().getValue());
+        System.out.println(entry.getLink());
+        System.out.println("=====================================================");
+      }
+
+    } catch (IOException ex) {
+      Logger.getLogger(MySeries.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (IllegalArgumentException ex) {
+      Logger.getLogger(MySeries.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (FeedException ex) {
+      Logger.getLogger(MySeries.class.getName()).log(Level.SEVERE, null, ex);
+    } 
+
   }
 
   private void setGlassPane() {

@@ -36,9 +36,11 @@ public class DBConnection {
     createConnection(db);
     String sqlSeries = "PRAGMA table_info(series)";
     String sqlEpisodes = "PRAGMA table_info(episodes)";
+    String sqlFeeds = "SELECT name FROM sqlite_master WHERE name='feeds'";
 
     ResultSet rsSeries;
     ResultSet rsEpisodes;
+    ResultSet rsFeeds;
     boolean internetUpdate = false;
     boolean tvRageID = false;
     boolean localDir = false;
@@ -47,7 +49,7 @@ public class DBConnection {
     boolean newSubs = false;
     boolean rate = false;
     boolean deleted = false;
-    ResultSet rss;
+    boolean feeds = false;
 
     try {
       rsSeries = stmt.executeQuery(sqlSeries);
@@ -78,7 +80,13 @@ public class DBConnection {
           rate = true;
         }
       }
-      if (tvRageID && internetUpdate && localDir && screenshot && sonline && rate && deleted) {
+
+      rsFeeds = stmt.executeQuery(sqlFeeds);
+      while (rsFeeds.next()) {
+        feeds = true;
+      }
+
+      if (tvRageID && internetUpdate && localDir && screenshot && sonline && rate && deleted && feeds) {
         return true;
       }
       MyMessages.message("Old Database version", "Database is of an older version and needs update\nA back Up is taken first!!");
@@ -111,6 +119,13 @@ public class DBConnection {
         if (!rate) {
           sqlEpisodes = "ALTER TABLE episodes ADD COLUMN rate DOUBLE DEFAULT 0.0";
           stmt.execute(sqlEpisodes);
+        }
+        if (!feeds) {
+          MySeries.logger.log(Level.INFO, "Creating table feeds");
+          stmt.executeUpdate("CREATE TABLE IF NOT EXISTS  [feeds]"
+                  + "([feed_id] INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE ,"
+                  + "[title] VARCHAR NOT NULL , "
+                  + "[url] VARCHAR NOT NULL )");
         }
         MyMessages.message("Database Update", "Database Update done!!!");
         checkDatabase(db);
@@ -156,7 +171,7 @@ public class DBConnection {
    * @return
    */
   public static boolean databaseExists(String dbName) {
-    if (new File(Options._USER_DIR_ +  Database.PATH + dbName).isFile()) {
+    if (new File(Options._USER_DIR_ + Database.PATH + dbName).isFile()) {
       return true;
     }
     return false;
