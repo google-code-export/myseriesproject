@@ -1424,6 +1424,9 @@
                                   <Image iconType="3" name="/images/rss_refresh.png"/>
                                 </Property>
                               </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_refreshRssActionPerformed"/>
+                              </Events>
                             </Component>
                           </SubComponents>
                         </Container>
