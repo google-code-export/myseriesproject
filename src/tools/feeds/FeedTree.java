@@ -32,6 +32,7 @@ import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreePath;
 import myComponents.MyMessages;
 import myComponents.myTreeCellRenderers.FeedTreeCellRenderer;
+import myseries.MySeries;
 import myseries.actions.FeedsActions;
 
 /**
@@ -54,6 +55,7 @@ public class FeedTree extends javax.swing.JPanel {
   private void mouseReleased(java.awt.event.MouseEvent evt) {
     DefaultMutableTreeNode node;
     Feed feed;
+    FeedPreviewPanel pp;
     if (evt.getButton() == MouseEvent.BUTTON1 && evt.getClickCount() == 1) {
       Point p = evt.getPoint();
       TreePath selectedPath = tree.getClosestPathForLocation(p.x, p.y);
@@ -65,6 +67,8 @@ public class FeedTree extends javax.swing.JPanel {
           FeedsRecord feedsRecord = new FeedsRecord(leaf.id);
           FeedReader fr = new FeedReader(this,feedsRecord);
           feed = fr.getFeed();
+          pp = MySeries.feedPreviewPanel;
+          pp.setFeed(feed);
         }
       }
     } else if (evt.getButton() == MouseEvent.BUTTON3) {
