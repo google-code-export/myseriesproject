@@ -32,6 +32,7 @@ import tools.options.Options;
 import myComponents.MyTableModels.MyEpisodesTableModel;
 import javax.swing.event.TableModelEvent;
 import database.EpisodesRecord;
+import database.FeedsRecord;
 import database.SeriesRecord;
 import help.CheckUpdate;
 import java.awt.BorderLayout;
@@ -94,6 +95,7 @@ import myseries.statistics.StatSeries;
 import tools.Skin;
 import tools.download.subtitles.SubtitleConstants;
 import tools.download.torrents.TorrentConstants;
+import tools.feeds.FeedUpdater;
 import tools.internetUpdate.InternetUpdate;
 import tools.languages.LangsList;
 import tools.myLogger;
@@ -177,7 +179,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
    * @throws java.io.IOException
    */
   public MySeries() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, IOException {
-testFeed();
     //DEBUG DATABASE
     if (Options._USER_DIR_.equals("D:\\JavaProjects\\myseriesproject")) {
       //System.out.println("Copy debug db");
@@ -314,34 +315,7 @@ testFeed();
     }
     
   }
-  private void testFeed(){
-    try {
-      SyndFeedInput input = new SyndFeedInput();
-      URL feedUrl = new URL("http://www.tvsubtitles.net/rssgr.xml");
-      SyndFeed feed = input.build(new XmlReader(feedUrl));
-
-     
-      List entries = feed.getEntries();
-      for (int i = 0; i < entries.size(); i++) {
-       SyndEntryImpl entry = (SyndEntryImpl) entries.get(i);
-        System.out.println(entry.getAuthor());
-        System.out.println(entry.getPublishedDate().toString());
-        System.out.println(entry.getTitle());
-        System.out.println(entry.getDescription().getType());
-        System.out.println(entry.getDescription().getValue());
-        System.out.println(entry.getLink());
-        System.out.println("=====================================================");
-      }
-
-    } catch (IOException ex) {
-      Logger.getLogger(MySeries.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (IllegalArgumentException ex) {
-      Logger.getLogger(MySeries.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (FeedException ex) {
-      Logger.getLogger(MySeries.class.getName()).log(Level.SEVERE, null, ex);
-    } 
-
-  }
+ 
 
   private void setGlassPane() {
     //Set the glass pane
@@ -1051,6 +1025,11 @@ testFeed();
     });
 
     bt_refreshRss.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/rss_refresh.png"))); // NOI18N
+    bt_refreshRss.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        bt_refreshRssActionPerformed(evt);
+      }
+    });
 
     javax.swing.GroupLayout leftFeedPanelLayout = new javax.swing.GroupLayout(leftFeedPanel);
     leftFeedPanel.setLayout(leftFeedPanelLayout);
@@ -1770,6 +1749,11 @@ testFeed();
       feedTree.populate();
     }
   }//GEN-LAST:event_bt_addRssActionPerformed
+
+  private void bt_refreshRssActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_refreshRssActionPerformed
+   ArrayList<FeedsRecord> feeds = FeedsRecord.getAll();
+    feedTree.updateFeeds(feeds);
+  }//GEN-LAST:event_bt_refreshRssActionPerformed
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   public static javax.swing.JMenuItem PopUpItem_AddEpisode;

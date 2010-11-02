@@ -28,6 +28,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreePath;
 import myComponents.MyMessages;
 import myComponents.myTreeCellRenderers.FeedTreeCellRenderer;
@@ -47,11 +48,12 @@ public class FeedTree extends javax.swing.JPanel {
   /** Creates new form FeedTree */
   public FeedTree() {
     initComponents();
-   
+
   }
 
   private void mouseReleased(java.awt.event.MouseEvent evt) {
     DefaultMutableTreeNode node;
+    Feed feed;
     if (evt.getButton() == MouseEvent.BUTTON1 && evt.getClickCount() == 1) {
       Point p = evt.getPoint();
       TreePath selectedPath = tree.getClosestPathForLocation(p.x, p.y);
@@ -59,9 +61,10 @@ public class FeedTree extends javax.swing.JPanel {
         tree.setSelectionPath(selectedPath);
         node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
         if (node.isLeaf()) {
-          FeedLeaf newValue = (FeedLeaf) node.getUserObject();
-          FeedLeaf oldValue = selectedLeaf;
-          selectedLeaf = newValue;
+          FeedLeaf leaf = (FeedLeaf) node.getUserObject();
+          FeedsRecord feedsRecord = new FeedsRecord(leaf.id);
+          FeedReader fr = new FeedReader(this,feedsRecord);
+          feed = fr.getFeed();
         }
       }
     } else if (evt.getButton() == MouseEvent.BUTTON3) {
@@ -82,24 +85,24 @@ public class FeedTree extends javax.swing.JPanel {
     tree.setCellRenderer(renderer);
   }
 
-  public void populate() {
-    try {
-      model.clear();
-      ResultSet rs = FeedsRecord.getAll();
-      while (rs.next()) {
-        FeedLeaf l = new FeedLeaf();
-        l.id = rs.getInt("feed_ID");
-        l.title = rs.getString("title");
-        l.url = rs.getString("url");
-        model.add(l);
-      }
-      DefaultMutableTreeNode root = createTree();
-      treemodel = new DefaultTreeModel(root);
-      tree.setModel(treemodel);
-    } catch (SQLException ex) {
-      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
-    }
+  public TreeCellRenderer getCellRenderer() {
+    return tree.getCellRenderer();
+  }
 
+  public void populate() {
+    model.clear();
+    ArrayList<FeedsRecord> feeds = FeedsRecord.getAll();
+    for (Iterator<FeedsRecord> it = feeds.iterator(); it.hasNext();) {
+      FeedsRecord f = it.next();
+      FeedLeaf l = new FeedLeaf();
+      l.id = f.getFeed_ID();
+      l.title = f.getTitle();
+      l.url = f.getUrl();
+      model.add(l);
+    }
+    DefaultMutableTreeNode root = createTree();
+    treemodel = new DefaultTreeModel(root);
+    tree.setModel(treemodel);
   }
 
   protected DefaultMutableTreeNode createTree() {
@@ -124,6 +127,7 @@ public class FeedTree extends javax.swing.JPanel {
     popup = new javax.swing.JPopupMenu();
     edit = new javax.swing.JMenuItem();
     delete = new javax.swing.JMenuItem();
+    update = new javax.swing.JMenuItem();
     FeedScrollPane = new javax.swing.JScrollPane();
     tree = new javax.swing.JTree();
 
@@ -144,6 +148,15 @@ public class FeedTree extends javax.swing.JPanel {
       }
     });
     popup.add(delete);
+
+    update.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/rss_refresh.png"))); // NOI18N
+    update.setText("Update Feed");
+    update.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        updateActionPerformed(evt);
+      }
+    });
+    popup.add(update);
 
     tree.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 1));
     tree.setModel(treemodel);
@@ -169,11 +182,11 @@ public class FeedTree extends javax.swing.JPanel {
   private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
     if (MyMessages.question("Delete Feed", "Do you really want to delete this feed") == JOptionPane.YES_OPTION) {
       boolean deleteById = FeedsRecord.deleteById(selectedLeaf.id);
-      if(deleteById){
+      if (deleteById) {
         populate();
       }
     }
-    
+
     popup.setVisible(false);
   }//GEN-LAST:event_deleteActionPerformed
 
@@ -185,11 +198,24 @@ public class FeedTree extends javax.swing.JPanel {
     FeedsActions.addFeedPanel(selectedLeaf.id);
   }//GEN-LAST:event_editActionPerformed
 
+  private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
+    FeedsRecord feed = new FeedsRecord(selectedLeaf.id);
+    FeedUpdater fu = new FeedUpdater(this,feed);
+    Thread t = new Thread(fu);
+    t.start();
+  }//GEN-LAST:event_updateActionPerformed
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JScrollPane FeedScrollPane;
   private javax.swing.JMenuItem delete;
   private javax.swing.JMenuItem edit;
   private javax.swing.JPopupMenu popup;
-  private javax.swing.JTree tree;
+  public javax.swing.JTree tree;
+  private javax.swing.JMenuItem update;
   // End of variables declaration//GEN-END:variables
+
+  public void updateFeeds(ArrayList<FeedsRecord> feeds) {
+    FeedUpdater fu = new FeedUpdater(this,feeds);
+    Thread t = new Thread(fu);
+    t.start();
+  }
 }

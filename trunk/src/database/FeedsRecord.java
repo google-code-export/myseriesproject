@@ -6,8 +6,8 @@ package database;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -59,10 +59,19 @@ public class FeedsRecord extends Record {
     return false;
   }
 
-  public static ResultSet getAll() {
+  public static ArrayList<FeedsRecord> getAll() {
+    ArrayList<FeedsRecord> feeds = new ArrayList<FeedsRecord>();
     try {
       String sql = "SELECT * FROM feeds ORDER BY title";
-      return query(sql);
+      ResultSet rs = query(sql);
+      while(rs.next()){
+        FeedsRecord f = new FeedsRecord();
+        f.feed_ID = rs.getInt("feed_ID");
+        f.title = rs.getString("title");
+        f.url = rs.getString("url");
+        feeds.add(f);
+      }
+      return feeds;
     } catch (SQLException ex) {
       myseries.MySeries.logger.log(Level.SEVERE, null, ex);
       return null;
