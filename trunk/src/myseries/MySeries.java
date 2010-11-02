@@ -474,7 +474,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     feedTree = new tools.feeds.FeedTree();
     bt_addRss = new javax.swing.JButton();
     bt_refreshRss = new javax.swing.JButton();
-    feedsPreviewPanel1 = new tools.feeds.FeedsPreviewPanel();
+    feedPreviewPanel = new tools.feeds.FeedPreviewPanel();
     myToolbar = new myComponents.myToolbar.Toolbar(this, visibleButtons);
     menuBar = new javax.swing.JMenuBar();
     menu_MySeries = new javax.swing.JMenu();
@@ -1059,18 +1059,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
     feedSplitPanel.setLeftComponent(leftFeedPanel);
 
-    javax.swing.GroupLayout feedsPreviewPanel1Layout = new javax.swing.GroupLayout(feedsPreviewPanel1);
-    feedsPreviewPanel1.setLayout(feedsPreviewPanel1Layout);
-    feedsPreviewPanel1Layout.setHorizontalGroup(
-      feedsPreviewPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 609, Short.MAX_VALUE)
-    );
-    feedsPreviewPanel1Layout.setVerticalGroup(
-      feedsPreviewPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 504, Short.MAX_VALUE)
-    );
-
-    feedSplitPanel.setRightComponent(feedsPreviewPanel1);
+    feedPreviewPanel.setLayout(new java.awt.BorderLayout());
+    feedSplitPanel.setRightComponent(feedPreviewPanel);
 
     javax.swing.GroupLayout tabpanel_feedsLayout = new javax.swing.GroupLayout(tabpanel_feeds);
     tabpanel_feeds.setLayout(tabpanel_feedsLayout);
@@ -1770,9 +1760,9 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   public static javax.swing.JComboBox combobox_downloaded;
   public static javax.swing.JComboBox combobox_filters;
   public static javax.swing.JPopupMenu episodesPopUp;
+  public static tools.feeds.FeedPreviewPanel feedPreviewPanel;
   public static javax.swing.JSplitPane feedSplitPanel;
   public static tools.feeds.FeedTree feedTree;
-  public static tools.feeds.FeedsPreviewPanel feedsPreviewPanel1;
   public static javax.swing.JLayeredPane imageLayerPanel;
   public static javax.swing.JMenu jMenu1;
   public static javax.swing.JMenuItem jMenuItem1;
