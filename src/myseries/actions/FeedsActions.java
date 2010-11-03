@@ -6,6 +6,7 @@
 package myseries.actions;
 
 import database.FeedsRecord;
+import tools.feeds.AdminFeed;
 
 /**
  *
