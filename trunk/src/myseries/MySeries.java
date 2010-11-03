@@ -393,7 +393,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
     //POPULATE FEEDS TREE
     feedTree.setCellRenderer(new FeedTreeCellRenderer());
-    feedTree.populate();
+    feedTree.populate(-1);
     
     setLocationRelativeTo(null);
   }
@@ -1736,9 +1736,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
   private void bt_addRssActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_addRssActionPerformed
     boolean isFeedSaved = FeedsActions.addFeedPanel(0);
-    if(isFeedSaved){
-      feedTree.populate();
-    }
   }//GEN-LAST:event_bt_addRssActionPerformed
 
   private void bt_refreshRssActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_refreshRssActionPerformed
