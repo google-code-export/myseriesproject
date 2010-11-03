@@ -14,8 +14,7 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
-import javax.swing.ImageIcon;
-import javax.swing.tree.DefaultTreeCellRenderer;
+import myComponents.MyMessages;
 import tools.options.Options;
 
 /**
@@ -38,10 +37,17 @@ public class FeedUpdater implements Runnable {
   }
 
   public void run() {
+    myseries.MySeries.glassPane.activate(null);
     for (Iterator<FeedsRecord> it = feeds.iterator(); it.hasNext();) {
       FeedsRecord feedRecord = it.next();
       update(feedRecord);
-      
+    }
+    myseries.MySeries.glassPane.deactivate();
+    int[] sel = myseries.MySeries.feedTree.tree.getSelectionRows();
+    if(sel == null || sel[0]==0){
+      myseries.MySeries.feedTree.tree.setSelectionRow(1);
+    } else {
+      myseries.MySeries.feedTree.tree.setSelectionRow(sel[0]);
     }
   }
 

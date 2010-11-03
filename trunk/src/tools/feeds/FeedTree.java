@@ -30,6 +30,7 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
 import myComponents.MyMessages;
 import myComponents.myTreeCellRenderers.FeedTreeCellRenderer;
 import myseries.MySeries;
@@ -49,6 +50,7 @@ public class FeedTree extends javax.swing.JPanel {
   /** Creates new form FeedTree */
   public FeedTree() {
     initComponents();
+    tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 
   }
 
@@ -56,22 +58,7 @@ public class FeedTree extends javax.swing.JPanel {
     DefaultMutableTreeNode node;
     Feed feed;
     FeedPreviewPanel pp;
-    if (evt.getButton() == MouseEvent.BUTTON1 && evt.getClickCount() == 1) {
-      Point p = evt.getPoint();
-      TreePath selectedPath = tree.getClosestPathForLocation(p.x, p.y);
-      if (tree.getPathBounds(selectedPath).contains(p)) {
-        tree.setSelectionPath(selectedPath);
-        node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
-        if (node.isLeaf()) {
-          FeedLeaf leaf = (FeedLeaf) node.getUserObject();
-          FeedsRecord feedsRecord = new FeedsRecord(leaf.id);
-          FeedReader fr = new FeedReader(this,feedsRecord);
-          feed = fr.getFeed();
-          pp = MySeries.feedPreviewPanel;
-          pp.setFeed(feed);
-        }
-      }
-    } else if (evt.getButton() == MouseEvent.BUTTON3) {
+    if (evt.getButton() == MouseEvent.BUTTON3) {
       Point p = evt.getPoint();
       TreePath selectedPath = tree.getClosestPathForLocation(p.x, p.y);
       if (tree.getPathBounds(selectedPath).contains(p)) {
@@ -170,6 +157,11 @@ public class FeedTree extends javax.swing.JPanel {
         treeMouseReleased(evt);
       }
     });
+    tree.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+      public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
+        treeValueChanged(evt);
+      }
+    });
     FeedScrollPane.setViewportView(tree);
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -205,10 +197,22 @@ public class FeedTree extends javax.swing.JPanel {
 
   private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
     FeedsRecord feed = new FeedsRecord(selectedLeaf.id);
-    FeedUpdater fu = new FeedUpdater(this,feed);
+    FeedUpdater fu = new FeedUpdater(this, feed);
     Thread t = new Thread(fu);
     t.start();
   }//GEN-LAST:event_updateActionPerformed
+
+  private void treeValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_treeValueChanged
+    DefaultMutableTreeNode node = (DefaultMutableTreeNode) evt.getNewLeadSelectionPath().getLastPathComponent();
+    if (node.isLeaf()) {
+      FeedLeaf leaf = (FeedLeaf) node.getUserObject();
+      FeedsRecord feedsRecord = new FeedsRecord(leaf.id);
+      FeedReader fr = new FeedReader(this, feedsRecord);
+      Feed feed = fr.getFeed();
+      FeedPreviewPanel pp = MySeries.feedPreviewPanel;
+      pp.setFeed(feed);
+    }
+  }//GEN-LAST:event_treeValueChanged
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JScrollPane FeedScrollPane;
   private javax.swing.JMenuItem delete;
@@ -219,7 +223,7 @@ public class FeedTree extends javax.swing.JPanel {
   // End of variables declaration//GEN-END:variables
 
   public void updateFeeds(ArrayList<FeedsRecord> feeds) {
-    FeedUpdater fu = new FeedUpdater(this,feeds);
+    FeedUpdater fu = new FeedUpdater(this, feeds);
     Thread t = new Thread(fu);
     t.start();
   }
