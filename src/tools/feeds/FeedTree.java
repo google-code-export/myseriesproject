@@ -163,6 +163,7 @@ public class FeedTree extends javax.swing.JPanel {
     popup.add(update);
 
     tree.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 1));
+    tree.setFont(tree.getFont().deriveFont(tree.getFont().getStyle() | java.awt.Font.BOLD, tree.getFont().getSize()-1));
     tree.setModel(treemodel);
     tree.addMouseListener(new java.awt.event.MouseAdapter() {
       public void mouseReleased(java.awt.event.MouseEvent evt) {

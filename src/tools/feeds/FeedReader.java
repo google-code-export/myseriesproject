@@ -13,8 +13,10 @@ import com.sun.syndication.io.XmlReader;
 import database.FeedsRecord;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import tools.options.Options;
 
 /**
@@ -41,12 +43,17 @@ public class FeedReader {
       }
       SyndFeedInput input = new SyndFeedInput();
       SyndFeed feedXml = input.build(new XmlReader(file));
+      String title = feedXml.getTitle();
+      feedRecord.setTitle(title);
+      feedRecord.save();
       List entries = feedXml.getEntries();
       feed = new Feed();
       for (int i = 0; i < entries.size(); i++) {
        SyndEntryImpl entry = (SyndEntryImpl) entries.get(i);
         getFeed().getEntries().add(entry);
       }
+    } catch (SQLException ex) {
+      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
     } catch (FeedException ex) {
       myseries.MySeries.logger.log(Level.SEVERE, null, ex);
     } catch (IOException ex) {

@@ -40,14 +40,8 @@ public class FeedUpdater implements Runnable {
   public void run() {
     for (Iterator<FeedsRecord> it = feeds.iterator(); it.hasNext();) {
       FeedsRecord feedRecord = it.next();
-      DefaultTreeCellRenderer r = (DefaultTreeCellRenderer) tree.getCellRenderer();
-      r.setOpenIcon(new ImageIcon(getClass().getResource("/images/rss_opened.png")));
-      tree.tree.revalidate();
-      tree.tree.repaint();
       update(feedRecord);
-      r.setLeafIcon(new ImageIcon(getClass().getResource("/images/rss.png")));
-      tree.revalidate();
-      tree.repaint();
+      
     }
   }
 
