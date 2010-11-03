@@ -4,10 +4,13 @@
  */
 package database;
 
+import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
+import tools.feeds.Feed;
+import tools.options.Options;
 
 /**
  *
@@ -49,6 +52,10 @@ public class FeedsRecord extends Record {
     if(id > 0){
       String sql = "DELETE FROM feeds WHERE feed_ID = "+id;
       try {
+        File file = new File(Options._USER_DIR_+Feed.FEEDS_PATH+id);
+        if(file.exists()){
+          file.delete();
+        }
         queryUpdate(sql);
         return true;
       } catch (SQLException ex) {

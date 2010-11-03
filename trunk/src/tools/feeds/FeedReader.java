@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package tools.feeds;
 
 import com.sun.syndication.feed.synd.SyndEntryImpl;
@@ -24,6 +23,7 @@ import tools.options.Options;
  * @author lordovol
  */
 public class FeedReader {
+
   private final FeedsRecord feedRecord;
   private Feed feed;
   private final FeedTree tree;
@@ -34,22 +34,24 @@ public class FeedReader {
     _getFeed();
   }
 
-  private void _getFeed(){
+  private void _getFeed() {
     try {
-      File file = new File( Options._USER_DIR_ +Feed.FEEDS_PATH + feedRecord.getFeed_ID());
-      if(!file.exists()){
+      File file = new File(Options._USER_DIR_ + Feed.FEEDS_PATH + feedRecord.getFeed_ID());
+      if (!file.exists()) {
         FeedUpdater fu = new FeedUpdater(tree, feedRecord);
         fu.run();
       }
       SyndFeedInput input = new SyndFeedInput();
       SyndFeed feedXml = input.build(new XmlReader(file));
       String title = feedXml.getTitle();
-      feedRecord.setTitle(title);
-      feedRecord.save();
+      if (feedRecord.getTitle().equals("")) {
+        feedRecord.setTitle(title);
+        feedRecord.save();
+      }
       List entries = feedXml.getEntries();
       feed = new Feed();
       for (int i = 0; i < entries.size(); i++) {
-       SyndEntryImpl entry = (SyndEntryImpl) entries.get(i);
+        SyndEntryImpl entry = (SyndEntryImpl) entries.get(i);
         getFeed().getEntries().add(entry);
       }
     } catch (SQLException ex) {
@@ -69,5 +71,4 @@ public class FeedReader {
   public Feed getFeed() {
     return feed;
   }
-
 }
