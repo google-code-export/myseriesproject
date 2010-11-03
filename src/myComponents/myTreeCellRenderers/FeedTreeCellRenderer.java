@@ -6,12 +6,13 @@ package myComponents.myTreeCellRenderers;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
+import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeCellRenderer;
+import myComponents.myGUI.MyFont;
 import tools.Skin;
 
 /**
@@ -27,7 +28,16 @@ public class FeedTreeCellRenderer extends DefaultTreeCellRenderer implements Tre
     setLeafIcon(new ImageIcon(getClass().getResource("/images/rss.png")));
     setClosedIcon(new ImageIcon(getClass().getResource("/images/rss_closed.png")));
     setOpenIcon(new ImageIcon(getClass().getResource("/images/rss_opened.png")));
+
   }
+
+  @Override
+  public Font getFont() {
+    Font font = new Font(MyFont.mySmallerFont.getFontName(),Font.PLAIN,MyFont.mySmallerFont.getSize());
+    return font;
+  }
+
+
 
 
   @Override
@@ -42,6 +52,7 @@ public class FeedTreeCellRenderer extends DefaultTreeCellRenderer implements Tre
       setBackground(null);
       setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
     }
+    
     //setPreferredSize(new Dimension(tree.getWidth()-20, 16));
     return this;
   }
