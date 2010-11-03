@@ -203,14 +203,30 @@ public class FeedTree extends javax.swing.JPanel {
   }//GEN-LAST:event_updateActionPerformed
 
   private void treeValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_treeValueChanged
-    DefaultMutableTreeNode node = (DefaultMutableTreeNode) evt.getNewLeadSelectionPath().getLastPathComponent();
-    if (node.isLeaf()) {
-      FeedLeaf leaf = (FeedLeaf) node.getUserObject();
-      FeedsRecord feedsRecord = new FeedsRecord(leaf.id);
-      FeedReader fr = new FeedReader(this, feedsRecord);
-      Feed feed = fr.getFeed();
-      FeedPreviewPanel pp = MySeries.feedPreviewPanel;
-      pp.setFeed(feed);
+    if (evt.getNewLeadSelectionPath() != null) {
+      DefaultMutableTreeNode node = (DefaultMutableTreeNode) evt.getNewLeadSelectionPath().getLastPathComponent();
+      if (node.isLeaf()) {
+        if(node.getUserObject() instanceof FeedLeaf){
+        FeedLeaf leaf = (FeedLeaf) node.getUserObject();
+        FeedsRecord feedsRecord = new FeedsRecord(leaf.id);
+        FeedReader fr = new FeedReader(this, feedsRecord);
+        Feed feed = fr.getFeed();
+        FeedPreviewPanel pp = MySeries.feedPreviewPanel;
+        pp.setFeed(feed);
+        }else {
+          FeedPreviewPanel pp = MySeries.feedPreviewPanel;
+          pp.removeFeeds();
+        }
+      }
+    }else {
+      populate();
+       FeedPreviewPanel pp = MySeries.feedPreviewPanel;
+       pp.removeFeeds();
+      if(tree.getRowCount()>1){
+        tree.setSelectionRow(1);
+      } else {
+        tree.setSelectionRow(0);
+      }
     }
   }//GEN-LAST:event_treeValueChanged
   // Variables declaration - do not modify//GEN-BEGIN:variables

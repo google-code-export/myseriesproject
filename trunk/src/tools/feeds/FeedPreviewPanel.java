@@ -78,6 +78,12 @@ public class FeedPreviewPanel extends javax.swing.JPanel {
     repaint();
   }
 
+  public void removeFeeds(){
+    removeAll();
+    revalidate();
+    repaint();
+  }
+
 
   
   // Variables declaration - do not modify//GEN-BEGIN:variables
