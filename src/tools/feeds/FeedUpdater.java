@@ -37,6 +37,7 @@ public class FeedUpdater implements Runnable {
   }
 
   public void run() {
+    myseries.MySeries.tabsPanel.setSelectedIndex(myseries.MySeries.TABS_PANEL_FEEDS);
     myseries.MySeries.glassPane.activate(null);
     for (Iterator<FeedsRecord> it = feeds.iterator(); it.hasNext();) {
       FeedsRecord feedRecord = it.next();

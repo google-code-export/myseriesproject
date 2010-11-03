@@ -6,6 +6,8 @@
 package myseries.actions;
 
 import database.FeedsRecord;
+import java.util.ArrayList;
+import myseries.MySeriesConstants;
 import tools.feeds.AdminFeed;
 
 /**
@@ -20,6 +22,11 @@ public class FeedsActions {
     AdminFeed a = new AdminFeed(feed_ID==0 ? null :f);
     myseries.MySeries.glassPane.deactivate();
     return a.isFeedSaved;
+  }
+
+  public static void updateFeeds() {
+    ArrayList<FeedsRecord> feeds = FeedsRecord.getAll();
+    myseries.MySeries.feedTree.updateFeeds(feeds);
   }
 
   private FeedsActions() {

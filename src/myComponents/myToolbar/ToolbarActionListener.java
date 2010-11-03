@@ -11,6 +11,7 @@ import myseries.MySeries;
 import myseries.actions.ApplicationActions;
 import myseries.actions.DatabaseActions;
 import myseries.actions.EpisodesActions;
+import myseries.actions.FeedsActions;
 import myseries.actions.SeriesActions;
 import tools.download.torrents.TorrentConstants;
 import tools.internetUpdate.InternetUpdate;
@@ -85,6 +86,9 @@ public class ToolbarActionListener implements ActionListener, ToolbarButtonActio
           break;
         case DELETE_TORRENTS:
           ApplicationActions.deleteTorrents();
+          break;
+        case UPDATE_FEEDS:
+          FeedsActions.updateFeeds();
           break;
         case OPTIONS:
           ApplicationActions.showOptions(ms);
