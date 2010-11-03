@@ -12,15 +12,11 @@ package tools.feeds;
 
 import com.sun.syndication.feed.synd.SyndEntryImpl;
 import java.awt.Color;
-import java.awt.Component;
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
+import java.awt.Dimension;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import myComponents.myGUI.MyScrollableFlowPanel;
+import tools.options.Options;
 
 /**
  *
@@ -28,12 +24,11 @@ import myComponents.myGUI.MyScrollableFlowPanel;
  */
 public class FeedPanel extends javax.swing.JPanel implements Runnable {
 
-  public static final int gridSize = 160;
+  public static final int FEED_WIDTH = 600;
+  public static final int FEED_HEIGHT= 200;
   public static final long serialVersionUID = 235346345645L;
   public static final Color BORDER_HIGHLIGHT_COLOR = Color.BLACK;
   public static final Color BORDER_MEDIUM_COLOR = Color.LIGHT_GRAY;
-  public static final int BORDER_WIDTH = 3;
-  public static final int ICON_WIDTH = 160;
   private MyScrollableFlowPanel feedPanel;
   private int index;
   private SyndEntryImpl entry;
@@ -59,30 +54,25 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
   private void initComponents() {
 
     label_title = new javax.swing.JLabel();
-    label_photo = new javax.swing.JLabel();
+    label_date = new javax.swing.JLabel();
+    scroll = new javax.swing.JScrollPane();
+    ep_content = new javax.swing.JEditorPane();
 
     setBackground(new java.awt.Color(255, 255, 255));
     setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
     label_title.setBackground(new java.awt.Color(255, 255, 255));
-    label_title.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+    label_title.setFont(label_title.getFont().deriveFont(label_title.getFont().getStyle() | java.awt.Font.BOLD, label_title.getFont().getSize()+1));
     label_title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     label_title.setText("jLabel1");
     label_title.setOpaque(true);
 
-    label_photo.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-    label_photo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    label_photo.addMouseListener(new java.awt.event.MouseAdapter() {
-      public void mouseEntered(java.awt.event.MouseEvent evt) {
-        label_photoMouseEntered(evt);
-      }
-      public void mouseExited(java.awt.event.MouseEvent evt) {
-        label_photoMouseExited(evt);
-      }
-      public void mouseReleased(java.awt.event.MouseEvent evt) {
-        label_photoMouseReleased(evt);
-      }
-    });
+    label_date.setFont(label_date.getFont().deriveFont((label_date.getFont().getStyle() | java.awt.Font.ITALIC) | java.awt.Font.BOLD, label_date.getFont().getSize()-1));
+    label_date.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    label_date.setText("jLabel1");
+
+    scroll.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+    scroll.setViewportView(ep_content);
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
     this.setLayout(layout);
@@ -91,42 +81,42 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
         .addContainerGap()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addComponent(label_title, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
-          .addComponent(label_photo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE))
+          .addComponent(label_date, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(label_title, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
+          .addComponent(scroll, javax.swing.GroupLayout.Alignment.LEADING))
         .addContainerGap())
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+      .addGroup(layout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(label_photo, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(label_title)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(label_date)
         .addContainerGap())
     );
   }// </editor-fold>//GEN-END:initComponents
 
-  private void label_photoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_photoMouseEntered
-    label_photo.setBorder(BorderFactory.createLineBorder(BORDER_MEDIUM_COLOR, BORDER_WIDTH));
-  }//GEN-LAST:event_label_photoMouseEntered
-
-  private void label_photoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_photoMouseExited
-    label_photo.setBorder(BorderFactory.createEmptyBorder(BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH));
-  }//GEN-LAST:event_label_photoMouseExited
-
   public void selectFeed() {
   }
 
-  private void label_photoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_photoMouseReleased
-    selectFeed();
-  }//GEN-LAST:event_label_photoMouseReleased
   // Variables declaration - do not modify//GEN-BEGIN:variables
-  private javax.swing.JLabel label_photo;
+  private javax.swing.JEditorPane ep_content;
+  private javax.swing.JLabel label_date;
   private javax.swing.JLabel label_title;
+  private javax.swing.JScrollPane scroll;
   // End of variables declaration//GEN-END:variables
 
   public void run() {
     label_title.setText(entry.getTitle());
+    DateFormat df = new SimpleDateFormat(Options.toString(Options.DATE_FORMAT));
+    label_date.setText(df.format(entry.getPublishedDate()));
+    ep_content.setContentType(entry.getDescription().getType());
+    ep_content.setText(entry.getDescription().getValue());
+    setPreferredSize(new Dimension(FEED_WIDTH,FEED_HEIGHT));
+    setMaximumSize(new Dimension(FEED_WIDTH,FEED_HEIGHT));
     feedPanel.add(this);
     feedPanel.revalidate();
     feedPanel.repaint();
