@@ -720,10 +720,12 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
       }
     });
 
+    splitPane_main.setBackground(Skin.getSkinColor());
     splitPane_main.setDividerLocation(200);
 
     panel_Series.setMaximumSize(new java.awt.Dimension(216, 32767));
     panel_Series.setMinimumSize(new java.awt.Dimension(200, 600));
+    panel_Series.setOpaque(false);
     panel_Series.setPreferredSize(new java.awt.Dimension(216, 584));
     panel_Series.addComponentListener(new java.awt.event.ComponentAdapter() {
       public void componentResized(java.awt.event.ComponentEvent evt) {
@@ -790,6 +792,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
     panel_episodes.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
     panel_episodes.setMaximumSize(new java.awt.Dimension(35000, 30000));
+    panel_episodes.setOpaque(false);
     panel_episodes.setPreferredSize(new java.awt.Dimension(812, 584));
 
     tabsPanel.setToolTipText("");
@@ -1008,6 +1011,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
     tabsPanel.addTab("Ratings", new javax.swing.ImageIcon(getClass().getResource("/images/star.png")), tabpanel_statistics, "Series and episodes ratings"); // NOI18N
 
     tabpanel_schedule.setToolTipText("Schedule");
+    tabpanel_schedule.setOpaque(false);
     tabpanel_schedule.setLayout(new javax.swing.BoxLayout(tabpanel_schedule, javax.swing.BoxLayout.LINE_AXIS));
 
     scheduler.setMaximumSize(new java.awt.Dimension(1000, 800));
@@ -1015,7 +1019,12 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
     tabsPanel.addTab("Schedule", new javax.swing.ImageIcon(getClass().getResource("/images/today.png")), tabpanel_schedule, "Schedule"); // NOI18N
 
+    tabpanel_feeds.setOpaque(false);
+
     feedSplitPanel.setDividerLocation(200);
+    feedSplitPanel.setOpaque(false);
+
+    leftFeedPanel.setOpaque(false);
 
     bt_addRss.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/rss_add.png"))); // NOI18N
     bt_addRss.addActionListener(new java.awt.event.ActionListener() {
@@ -1059,6 +1068,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
 
     feedSplitPanel.setLeftComponent(leftFeedPanel);
 
+    feedPreviewPanel.setOpaque(false);
     feedPreviewPanel.setLayout(new java.awt.BorderLayout());
     feedSplitPanel.setRightComponent(feedPreviewPanel);
 
