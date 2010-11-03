@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
+import myComponents.MyUsefulFunctions;
 import tools.feeds.Feed;
 import tools.options.Options;
 
@@ -93,11 +94,11 @@ public class FeedsRecord extends Record {
   public int save() throws SQLException {
     String sql;
     if (this.feed_ID != 0) {
-      sql = "UPDATE feeds SET title = '" + this.getTitle() + "', url = '" + this.getUrl()
+      sql = "UPDATE feeds SET title = '" + MyUsefulFunctions.escapeString(this.getTitle()) + "', url = '" + this.getUrl()
               + "' WHERE feed_ID = " + this.feed_ID;
     } else {
       sql = "INSERT INTO feeds (title, url) "
-              + "VALUES('" + this.getTitle() + "','" + this.getUrl() + "')";
+              + "VALUES('" + MyUsefulFunctions.escapeString(this.getTitle()) + "','" + this.getUrl() + "')";
     }
     return queryUpdate(sql);
   }

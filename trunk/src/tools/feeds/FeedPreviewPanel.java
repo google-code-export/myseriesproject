@@ -71,8 +71,7 @@ public class FeedPreviewPanel extends javax.swing.JPanel {
     for (Iterator<SyndEntryImpl> it = feed.getEntries().iterator(); it.hasNext();) {
       SyndEntryImpl entry = it.next();
       FeedPanel p = new FeedPanel(feedPanel, entry);
-      Thread t = new Thread(p);
-      t.start();
+      p.run();
       count++;
     }
     revalidate();

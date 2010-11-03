@@ -10,6 +10,7 @@
  */
 package tools.feeds;
 
+import com.sun.syndication.feed.synd.SyndContentImpl;
 import com.sun.syndication.feed.synd.SyndEntryImpl;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -20,6 +21,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import myComponents.MyMessages;
@@ -34,7 +36,7 @@ import tools.options.Options;
 public class FeedPanel extends javax.swing.JPanel implements Runnable {
 
   public static final int FEED_WIDTH = 600;
-  public static final int FEED_HEIGHT= 200;
+  public static final int FEED_HEIGHT = 200;
   public static final long serialVersionUID = 235346345645L;
   public static final Color BORDER_HIGHLIGHT_COLOR = Color.BLACK;
   public static final Color BORDER_MEDIUM_COLOR = Color.LIGHT_GRAY;
@@ -137,20 +139,19 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
   }// </editor-fold>//GEN-END:initComponents
 
   private void bt_linkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_linkActionPerformed
-    if(DesktopSupport.isDesktopSupport()){
+    if (DesktopSupport.isDesktopSupport()) {
       try {
         DesktopSupport.getDesktop().browse(uri);
       } catch (IOException ex) {
         Logger.getLogger(FeedPanel.class.getName()).log(Level.SEVERE, null, ex);
       }
-    }else {
+    } else {
       MyMessages.error("Visit Feed webpage", "Your OS doesn'yt support opening a browser window");
     }
   }//GEN-LAST:event_bt_linkActionPerformed
 
   public void selectFeed() {
   }
-
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton bt_link;
   private javax.swing.JEditorPane ep_content;
@@ -162,17 +163,27 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
   public void run() {
     label_title.setText(entry.getTitle());
     DateFormat df = new SimpleDateFormat(Options.toString(Options.DATE_FORMAT));
-    if(entry.getPublishedDate()!= null){
+    if (entry.getPublishedDate() != null) {
       label_date.setText(df.format(entry.getPublishedDate()));
-    } else if(entry.getUpdatedDate()!= null){
+    } else if (entry.getUpdatedDate() != null) {
       label_date.setText(df.format(entry.getUpdatedDate()));
     } else {
       label_date.setText("");
     }
-    ep_content.setContentType(entry.getDescription().getType());
-    ep_content.setText(entry.getDescription().getValue());
-    setPreferredSize(new Dimension(FEED_WIDTH,FEED_HEIGHT));
-    setMaximumSize(new Dimension(FEED_WIDTH,FEED_HEIGHT));
+    if (entry.getDescription() != null) {
+      ep_content.setContentType(entry.getDescription().getType());
+      ep_content.setText(entry.getDescription().getValue());
+    } else {
+      List con = entry.getContents();
+      if (con.size() > 0) {
+        SyndContentImpl synd = (SyndContentImpl) con.get(0);
+        ep_content.setContentType(synd.getType().indexOf("html") > -1 ? "text/html" : "text");
+        ep_content.setText(synd.getValue());
+      }
+    }
+
+    setPreferredSize(new Dimension(FEED_WIDTH, FEED_HEIGHT));
+    setMaximumSize(new Dimension(FEED_WIDTH, FEED_HEIGHT));
     feedPanel.add(this);
     feedPanel.revalidate();
     feedPanel.repaint();

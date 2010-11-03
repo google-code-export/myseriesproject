@@ -12,8 +12,10 @@ package tools.feeds;
 
 import com.googlecode.svalidators.formcomponents.ValidationGroup;
 import com.googlecode.svalidators.validators.RequiredValidator;
+import com.googlecode.svalidators.validators.SValidator;
 import com.googlecode.svalidators.validators.UrlValidator;
 import database.FeedsRecord;
+import java.awt.Color;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import myComponents.MyMessages;
@@ -40,6 +42,9 @@ public class AdminFeed extends MyDraggable {
       this.feed = new FeedsRecord();
       label_title.setText("Add a new rss feed");
       tf_title.setEnabled(false);
+      tf_title.setVisible(false);
+      label_feedtitle.setVisible(false);
+      tf_title.removeValidator(SValidator.REQUIRED);
     } else {
       this.feed = f;
       label_title.setText("Edit " + f.getTitle());
@@ -132,14 +137,14 @@ public class AdminFeed extends MyDraggable {
         .addContainerGap()
         .addComponent(label_title, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(label_url)
+        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(jPanel1Layout.createSequentialGroup()
             .addComponent(tf_url, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
               .addComponent(tf_title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(label_feedtitle))))
+              .addComponent(label_feedtitle)))
+          .addComponent(label_url))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(bt_cancel)
@@ -155,7 +160,7 @@ public class AdminFeed extends MyDraggable {
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+      .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
     );
 
     pack();
