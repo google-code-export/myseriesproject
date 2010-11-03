@@ -11,14 +11,8 @@
 package myseries;
 
 import com.googlecode.starrating.StarTableCellRenderer;
-import com.sun.syndication.feed.synd.SyndEntryImpl;
-import com.sun.syndication.feed.synd.SyndFeed;
-import com.sun.syndication.io.FeedException;
-import com.sun.syndication.io.SyndFeedInput;
-import com.sun.syndication.io.XmlReader;
 import java.awt.Component;
 import java.awt.event.MouseListener;
-import java.util.List;
 import javax.swing.ComboBoxModel;
 import javax.swing.table.TableModel;
 import myComponents.myEvents.MyEvent;
@@ -32,7 +26,6 @@ import tools.options.Options;
 import myComponents.MyTableModels.MyEpisodesTableModel;
 import javax.swing.event.TableModelEvent;
 import database.EpisodesRecord;
-import database.FeedsRecord;
 import database.SeriesRecord;
 import help.CheckUpdate;
 import java.awt.BorderLayout;
@@ -42,7 +35,6 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
-import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -95,7 +87,6 @@ import myseries.statistics.StatSeries;
 import tools.Skin;
 import tools.download.subtitles.SubtitleConstants;
 import tools.download.torrents.TorrentConstants;
-import tools.feeds.FeedUpdater;
 import tools.internetUpdate.InternetUpdate;
 import tools.languages.LangsList;
 import tools.myLogger;
@@ -104,7 +95,7 @@ import tools.myLogger;
  *
  * @author lordovol
  */
-public class MySeries extends javax.swing.JFrame implements TableModelListener {
+public class MySeries extends javax.swing.JFrame implements TableModelListener, MySeriesConstants {
 
   /**
    * Shortcuts
@@ -1751,8 +1742,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener {
   }//GEN-LAST:event_bt_addRssActionPerformed
 
   private void bt_refreshRssActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_refreshRssActionPerformed
-   ArrayList<FeedsRecord> feeds = FeedsRecord.getAll();
-    feedTree.updateFeeds(feeds);
+   FeedsActions.updateFeeds();
   }//GEN-LAST:event_bt_refreshRssActionPerformed
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
