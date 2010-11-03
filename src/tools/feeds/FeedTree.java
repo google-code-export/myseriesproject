@@ -46,6 +46,7 @@ public class FeedTree extends javax.swing.JPanel {
   ArrayList<FeedLeaf> model = new ArrayList<FeedLeaf>();
   private DefaultTreeModel treemodel;
   private FeedLeaf selectedLeaf;
+  private int selectedRow;
 
   /** Creates new form FeedTree */
   public FeedTree() {
@@ -80,7 +81,7 @@ public class FeedTree extends javax.swing.JPanel {
     return tree.getCellRenderer();
   }
 
-  public void populate() {
+  public void populate(int id) {
     model.clear();
     ArrayList<FeedsRecord> feeds = FeedsRecord.getAll();
     for (Iterator<FeedsRecord> it = feeds.iterator(); it.hasNext();) {
@@ -91,17 +92,24 @@ public class FeedTree extends javax.swing.JPanel {
       l.url = f.getUrl();
       model.add(l);
     }
-    DefaultMutableTreeNode root = createTree();
+    DefaultMutableTreeNode root = createTree(id);
     treemodel = new DefaultTreeModel(root);
     tree.setModel(treemodel);
+    tree.setSelectionRow(selectedRow);
   }
 
-  protected DefaultMutableTreeNode createTree() {
+  protected DefaultMutableTreeNode createTree(int id) {
     DefaultMutableTreeNode root = new DefaultMutableTreeNode("Rss Feeds");
+    int i = 2;
     for (Iterator<FeedLeaf> it = model.iterator(); it.hasNext();) {
       FeedLeaf feedLeaf = it.next();
       DefaultMutableTreeNode listNode = new DefaultMutableTreeNode(feedLeaf);
       root.add(listNode);
+      i++;
+      if(id == feedLeaf.id){
+        selectedRow = i;
+      }
+
     }
     return root;
   }
@@ -180,7 +188,7 @@ public class FeedTree extends javax.swing.JPanel {
     if (MyMessages.question("Delete Feed", "Do you really want to delete this feed") == JOptionPane.YES_OPTION) {
       boolean deleteById = FeedsRecord.deleteById(selectedLeaf.id);
       if (deleteById) {
-        populate();
+        populate(-1);
       }
     }
 
@@ -219,7 +227,7 @@ public class FeedTree extends javax.swing.JPanel {
         }
       }
     }else {
-      populate();
+      populate(-1);
        FeedPreviewPanel pp = MySeries.feedPreviewPanel;
        pp.removeFeeds();
       if(tree.getRowCount()>1){

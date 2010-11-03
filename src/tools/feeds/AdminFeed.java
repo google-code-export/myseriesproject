@@ -186,7 +186,7 @@ public class AdminFeed extends MyDraggable {
         fu.run();
         FeedReader fr = new FeedReader(myseries.MySeries.feedTree, feed);
         fu.run();
-        myseries.MySeries.feedTree.populate();
+        myseries.MySeries.feedTree.populate(feed.getFeed_ID());
         dispose();
       } catch (SQLException ex) {
         myseries.MySeries.logger.log(Level.SEVERE, null, ex);
