@@ -49,6 +49,8 @@ public class ApplicationActions {
   public static void exitApplication(MySeries m) {
     int divLocation = MySeries.splitPane_main.getDividerLocation();
     Options.setOption(Options.DIVIDER_LOCATION, divLocation);
+    int feedDivLocation = MySeries.feedSplitPanel.getDividerLocation();
+    Options.setOption(Options.FEED_DIVIDER_LOCATION, feedDivLocation);
     Options.setOption(Options.WINDOW_STATE, m.getExtendedState());
     Options.setOption(Options.WIDTH, m.getWidth());
     Options.setOption(Options.HEIGHT, m.getHeight());

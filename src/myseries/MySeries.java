@@ -292,6 +292,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
     //getContentPane().add(myToolbar, BorderLayout.NORTH);
     splitPane_main.setDividerLocation(Options.toInt(Options.DIVIDER_LOCATION) == 0 ? 250 : Options.toInt(Options.DIVIDER_LOCATION));
+    feedSplitPanel.setDividerLocation(Options.toInt(Options.FEED_DIVIDER_LOCATION) == 0 ? 250 : Options.toInt(Options.FEED_DIVIDER_LOCATION));
     setGlassPane();
     setLocationRelativeTo(null);
     setVisible(true);
