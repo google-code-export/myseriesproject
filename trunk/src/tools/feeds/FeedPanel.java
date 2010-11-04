@@ -36,14 +36,8 @@ import tools.options.Options;
  */
 public class FeedPanel extends javax.swing.JPanel implements Runnable {
 
-  public static final int MIN_WIDTH = 360;
-  public static final int MIN_HEIGHT = 160;
-  public static final int MAX_HEIGHT = 300;
   public static final long serialVersionUID = 235346345645L;
-  public static final Color BORDER_HIGHLIGHT_COLOR = Color.BLACK;
-  public static final Color BORDER_MEDIUM_COLOR = Color.LIGHT_GRAY;
   private MyScrollableFlowPanel feedPanel;
-  private int index;
   private SyndEntryImpl entry;
   private URI uri;
   private boolean isMinimized = true;
@@ -54,6 +48,10 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
   private String contentType = "text";
   private String TextContent = "";
   public static final int TITLE_MAX_LENGTH = 30;
+  public static int min_width;
+  public static int max_width;
+  public static int min_height = 160;
+  public static int max_height = 300;
   public int id = -1;
 
   /** Creates new form PhotoPanel */
@@ -64,6 +62,8 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
   FeedPanel(MyScrollableFlowPanel feedPanel, SyndEntryImpl entry) {
     this.feedPanel = feedPanel;
     this.entry = entry;
+    min_width = myseries.MySeries.feedPreviewPanel.getWidth()/2-20;
+    max_width = myseries.MySeries.feedPreviewPanel.getWidth()-35;
     initComponents();
   }
 
@@ -183,8 +183,8 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
 
   private void bt_maxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_maxActionPerformed
     if (isMinimized) {
-      setPreferredSize(new Dimension(getParent().getWidth(), MAX_HEIGHT));
-      setMaximumSize(new Dimension(getParent().getWidth(), MAX_HEIGHT));
+      setPreferredSize(new Dimension(max_width, max_height));
+      setMaximumSize(new Dimension(max_width, max_height));
       bt_max.setIcon(new ImageIcon(getClass().getResource("/images/minimize.png")));
       label_title.setText(this.title);
       if (id % 2 == 1) {
@@ -196,8 +196,8 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
       showHtml();
       isMinimized = false;
     } else {
-      setPreferredSize(new Dimension(MIN_WIDTH, MIN_HEIGHT));
-      setMaximumSize(new Dimension(MIN_WIDTH, MIN_HEIGHT));
+      setPreferredSize(new Dimension(min_width, min_height));
+      setMaximumSize(new Dimension(min_width, min_height));
       bt_max.setIcon(new ImageIcon(getClass().getResource("/images/maximize.png")));
       label_title.setText(this.titleCut);
       if (id % 2 == 1) {
@@ -231,14 +231,13 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
     label_title.setText(this.titleCut);
     label_date.setText(date);
     showText();
-    setPreferredSize(new Dimension(MIN_WIDTH, MIN_HEIGHT));
-    setMaximumSize(new Dimension(MIN_WIDTH, MIN_HEIGHT));
+    setPreferredSize(new Dimension(min_width, min_height));
+    setMaximumSize(new Dimension(min_width, min_height));
     id = feedPanel.getComponentCount();
     feedPanel.add(this);
     label_id.setText("" + (id+1));
     feedPanel.revalidate();
     feedPanel.repaint();
-
   }
 
   private void getData() {

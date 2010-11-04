@@ -12,6 +12,8 @@ package tools.feeds;
 
 import com.sun.syndication.feed.synd.SyndEntryImpl;
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.Iterator;
 import javax.swing.JScrollPane;
@@ -26,7 +28,8 @@ import myComponents.myGUI.MyScrollableFlowPanel;
 public class FeedPreviewPanel extends javax.swing.JPanel {
 
   public static final long serialVersionUID = 23534634654764L;
-  public MyScrollableFlowPanel feedPanel;
+  public MyScrollableFlowPanel feedPanel = new MyScrollableFlowPanel();;
+  private Feed feed;
 
   /** Creates new form GridPanel */
   public FeedPreviewPanel() {
@@ -57,6 +60,7 @@ public class FeedPreviewPanel extends javax.swing.JPanel {
   }// </editor-fold>//GEN-END:initComponents
 
   public void setFeed(Feed feed) {
+    this.feed = feed;
     removeAll();
     feedPanel = new MyScrollableFlowPanel();
     JScrollPane panel = new JScrollPane(feedPanel);
@@ -75,6 +79,23 @@ public class FeedPreviewPanel extends javax.swing.JPanel {
     }
     revalidate();
     repaint();
+  }
+
+  public void resize(){
+    Component[] comps = feedPanel.getComponents();
+    for (int i = 0; i < comps.length; i++) {
+      Component component = comps[i];
+      if(component instanceof FeedPanel){
+        FeedPanel fp = (FeedPanel) component;
+        FeedPanel.min_width = getWidth()/2-20;
+        FeedPanel.max_width = getWidth() - 35;
+        fp.setPreferredSize(new Dimension(FeedPanel.min_width,FeedPanel.min_height));
+      }
+    }
+  }
+
+  public Feed getFeed(){
+    return feed;
   }
 
   public void removeFeeds(){

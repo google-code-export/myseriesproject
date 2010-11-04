@@ -36,14 +36,14 @@
                       <Component id="bt_link" min="-2" pref="35" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="bt_max" min="-2" pref="35" max="-2" attributes="0"/>
-                      <EmptySpace pref="200" max="32767" attributes="0"/>
+                      <EmptySpace pref="186" max="32767" attributes="0"/>
                       <Component id="label_date" min="-2" pref="76" max="-2" attributes="0"/>
                   </Group>
                   <Component id="scroll" alignment="0" max="32767" attributes="2"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="label_id" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="label_title" pref="308" max="32767" attributes="0"/>
+                      <Component id="label_title" pref="294" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -59,7 +59,7 @@
                   <Component id="label_id" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="scroll" pref="91" max="32767" attributes="0"/>
+              <Component id="scroll" pref="95" max="32767" attributes="0"/>
               <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="label_date" min="-2" pref="13" max="-2" attributes="0"/>
