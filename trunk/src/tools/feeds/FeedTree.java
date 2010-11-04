@@ -67,7 +67,9 @@ public class FeedTree extends javax.swing.JPanel {
         node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
         if (node.isLeaf()) {
           selectedLeaf = (FeedLeaf) node.getUserObject();
-          popup.show(this, evt.getX(), evt.getY());
+          if (selectedLeaf.id > 0) {
+            popup.show(this, evt.getX(), evt.getY());
+          }
         }
       }
     }
@@ -99,14 +101,18 @@ public class FeedTree extends javax.swing.JPanel {
   }
 
   protected DefaultMutableTreeNode createTree(int id) {
-    DefaultMutableTreeNode root = new DefaultMutableTreeNode("Rss Feeds");
+    FeedLeaf rootLeaf = new FeedLeaf();
+    rootLeaf.id = 0;
+    rootLeaf.title = "Rss Feeds";
+    rootLeaf.url = "";
+    DefaultMutableTreeNode root = new DefaultMutableTreeNode(rootLeaf);
     int i = 2;
     for (Iterator<FeedLeaf> it = model.iterator(); it.hasNext();) {
       FeedLeaf feedLeaf = it.next();
       DefaultMutableTreeNode listNode = new DefaultMutableTreeNode(feedLeaf);
       root.add(listNode);
       i++;
-      if(id == feedLeaf.id){
+      if (id == feedLeaf.id) {
         selectedRow = i;
       }
 
@@ -214,23 +220,25 @@ public class FeedTree extends javax.swing.JPanel {
     if (evt.getNewLeadSelectionPath() != null) {
       DefaultMutableTreeNode node = (DefaultMutableTreeNode) evt.getNewLeadSelectionPath().getLastPathComponent();
       if (node.isLeaf()) {
-        if(node.getUserObject() instanceof FeedLeaf){
-        FeedLeaf leaf = (FeedLeaf) node.getUserObject();
-        FeedsRecord feedsRecord = new FeedsRecord(leaf.id);
-        FeedReader fr = new FeedReader(this, feedsRecord);
-        Feed feed = fr.getFeed();
-        FeedPreviewPanel pp = MySeries.feedPreviewPanel;
-        pp.setFeed(feed);
-        }else {
+        if (node.getUserObject() instanceof FeedLeaf) {
+          FeedLeaf leaf = (FeedLeaf) node.getUserObject();
+          if (leaf.id > 0) {
+            FeedsRecord feedsRecord = new FeedsRecord(leaf.id);
+            FeedReader fr = new FeedReader(this, feedsRecord);
+            Feed feed = fr.getFeed();
+            FeedPreviewPanel pp = MySeries.feedPreviewPanel;
+            pp.setFeed(feed);
+          }
+        } else {
           FeedPreviewPanel pp = MySeries.feedPreviewPanel;
           pp.removeFeeds();
         }
       }
-    }else {
+    } else {
       populate(-1);
-       FeedPreviewPanel pp = MySeries.feedPreviewPanel;
-       pp.removeFeeds();
-      if(tree.getRowCount()>1){
+      FeedPreviewPanel pp = MySeries.feedPreviewPanel;
+      pp.removeFeeds();
+      if (tree.getRowCount() > 1) {
         tree.setSelectionRow(1);
       } else {
         tree.setSelectionRow(0);

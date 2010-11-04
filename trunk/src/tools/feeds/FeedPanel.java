@@ -24,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import myComponents.MyMessages;
 import myComponents.myGUI.MyScrollableFlowPanel;
 import tools.DesktopSupport;
@@ -35,7 +36,7 @@ import tools.options.Options;
  */
 public class FeedPanel extends javax.swing.JPanel implements Runnable {
 
-  public static final int FEED_WIDTH = 600;
+  public static final int FEED_WIDTH = 400;
   public static final int FEED_HEIGHT = 200;
   public static final long serialVersionUID = 235346345645L;
   public static final Color BORDER_HIGHLIGHT_COLOR = Color.BLACK;
@@ -44,6 +45,7 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
   private int index;
   private SyndEntryImpl entry;
   private URI uri;
+  private boolean isMinimized = true;
 
   /** Creates new form PhotoPanel */
   public FeedPanel() {
@@ -77,6 +79,7 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
     scroll = new javax.swing.JScrollPane();
     ep_content = new javax.swing.JEditorPane();
     bt_link = new javax.swing.JButton();
+    bt_max = new javax.swing.JButton();
 
     setBackground(new java.awt.Color(255, 255, 255));
     setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -108,19 +111,39 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
       }
     });
 
+    bt_max.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/maximize.png"))); // NOI18N
+    bt_max.setToolTipText("Vist webpage");
+    bt_max.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+    bt_max.setBorderPainted(false);
+    bt_max.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    bt_max.setIconTextGap(0);
+    bt_max.setMargin(new java.awt.Insets(0, 0, 0, 0));
+    bt_max.setOpaque(false);
+    bt_max.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        bt_maxActionPerformed(evt);
+      }
+    });
+
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
     this.setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-        .addContainerGap()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addComponent(scroll, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 591, Short.MAX_VALUE)
-          .addComponent(label_date, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+            .addContainerGap()
+            .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE))
           .addGroup(layout.createSequentialGroup()
-            .addComponent(label_title, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(18, 18, 18)
-            .addComponent(bt_link, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addContainerGap(249, Short.MAX_VALUE)
+            .addComponent(label_date, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+            .addGap(13, 13, 13)
+            .addComponent(label_title, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
+            .addGap(22, 22, 22)
+            .addComponent(bt_link, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(bt_max, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
         .addContainerGap())
     );
     layout.setVerticalGroup(
@@ -129,6 +152,7 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
         .addContainerGap()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addComponent(label_title)
+          .addComponent(bt_max)
           .addComponent(bt_link))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
@@ -146,14 +170,31 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
         Logger.getLogger(FeedPanel.class.getName()).log(Level.SEVERE, null, ex);
       }
     } else {
-      MyMessages.error("Visit Feed webpage", "Your OS doesn'yt support opening a browser window");
+      MyMessages.error("Visit Feed webpage", "Your OS doesn't support opening a browser window");
     }
   }//GEN-LAST:event_bt_linkActionPerformed
+
+  private void bt_maxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_maxActionPerformed
+    if (isMinimized) {
+      setPreferredSize(new Dimension(getParent().getWidth(), 300));
+      setMaximumSize(new Dimension(getParent().getWidth(), 300));
+      bt_max.setIcon(new ImageIcon(getClass().getResource("/images/minimize.png")));
+      isMinimized = false;
+    } else {
+      setPreferredSize(new Dimension(FEED_WIDTH, FEED_HEIGHT));
+      setMaximumSize(new Dimension(FEED_WIDTH, FEED_HEIGHT));
+      bt_max.setIcon(new ImageIcon(getClass().getResource("/images/maximize.png")));
+      isMinimized = true;
+    }
+    revalidate();
+    repaint();
+  }//GEN-LAST:event_bt_maxActionPerformed
 
   public void selectFeed() {
   }
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton bt_link;
+  private javax.swing.JButton bt_max;
   private javax.swing.JEditorPane ep_content;
   private javax.swing.JLabel label_date;
   private javax.swing.JLabel label_title;
