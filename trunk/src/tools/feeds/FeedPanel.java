@@ -36,8 +36,9 @@ import tools.options.Options;
  */
 public class FeedPanel extends javax.swing.JPanel implements Runnable {
 
-  public static final int FEED_WIDTH = 400;
-  public static final int FEED_HEIGHT = 200;
+  public static final int MIN_WIDTH = 360;
+  public static final int MIN_HEIGHT = 160;
+  public static final int MAX_HEIGHT = 300;
   public static final long serialVersionUID = 235346345645L;
   public static final Color BORDER_HIGHLIGHT_COLOR = Color.BLACK;
   public static final Color BORDER_MEDIUM_COLOR = Color.LIGHT_GRAY;
@@ -46,6 +47,13 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
   private SyndEntryImpl entry;
   private URI uri;
   private boolean isMinimized = true;
+  private String title = "";
+  private String titleCut = "";
+  private String date = "";
+  private String content = "";
+  private String contentType = "text";
+  private String TextContent = "";
+  public static final int TITLE_MAX_LENGTH = 30;
 
   /** Creates new form PhotoPanel */
   public FeedPanel() {
@@ -53,16 +61,9 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
   }
 
   FeedPanel(MyScrollableFlowPanel feedPanel, SyndEntryImpl entry) {
-    try {
-      this.feedPanel = feedPanel;
-      this.entry = entry;
-      initComponents();
-      uri = new URL(entry.getLink()).toURI();
-    } catch (URISyntaxException ex) {
-      bt_link.setVisible(false);
-    } catch (MalformedURLException ex) {
-      bt_link.setVisible(false);
-    }
+    this.feedPanel = feedPanel;
+    this.entry = entry;
+    initComponents();
   }
 
   /** This method is called from within the constructor to
@@ -83,10 +84,11 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
 
     setBackground(new java.awt.Color(255, 255, 255));
     setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+    setPreferredSize(new java.awt.Dimension(360, 160));
 
     label_title.setBackground(new java.awt.Color(255, 255, 255));
-    label_title.setFont(label_title.getFont().deriveFont(label_title.getFont().getStyle() | java.awt.Font.BOLD, label_title.getFont().getSize()+1));
-    label_title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+    label_title.setFont(label_title.getFont().deriveFont(label_title.getFont().getStyle() | java.awt.Font.BOLD));
+    label_title.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     label_title.setText("jLabel1");
     label_title.setOpaque(true);
 
@@ -129,35 +131,31 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
     this.setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-            .addContainerGap()
-            .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE))
-          .addGroup(layout.createSequentialGroup()
-            .addContainerGap(249, Short.MAX_VALUE)
-            .addComponent(label_date, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
-          .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-            .addGap(13, 13, 13)
-            .addComponent(label_title, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
-            .addGap(22, 22, 22)
+      .addGroup(layout.createSequentialGroup()
+        .addContainerGap()
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
             .addComponent(bt_link, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(bt_max, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addComponent(bt_max, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 186, Short.MAX_VALUE)
+            .addComponent(label_date, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
+          .addComponent(label_title, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE))
         .addContainerGap())
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addContainerGap()
+        .addGap(12, 12, 12)
+        .addComponent(label_title)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
+        .addGap(1, 1, 1)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(label_title)
-          .addComponent(bt_max)
-          .addComponent(bt_link))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(label_date)
+          .addComponent(label_date, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(bt_link)
+          .addComponent(bt_max))
         .addContainerGap())
     );
   }// </editor-fold>//GEN-END:initComponents
@@ -176,14 +174,18 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
 
   private void bt_maxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_maxActionPerformed
     if (isMinimized) {
-      setPreferredSize(new Dimension(getParent().getWidth(), 300));
-      setMaximumSize(new Dimension(getParent().getWidth(), 300));
+      setPreferredSize(new Dimension(getParent().getWidth(), MAX_HEIGHT));
+      setMaximumSize(new Dimension(getParent().getWidth(), MAX_HEIGHT));
       bt_max.setIcon(new ImageIcon(getClass().getResource("/images/minimize.png")));
+      label_title.setText(this.title);
+      showHtml();
       isMinimized = false;
     } else {
-      setPreferredSize(new Dimension(FEED_WIDTH, FEED_HEIGHT));
-      setMaximumSize(new Dimension(FEED_WIDTH, FEED_HEIGHT));
+      setPreferredSize(new Dimension(MIN_WIDTH, MIN_HEIGHT));
+      setMaximumSize(new Dimension(MIN_WIDTH, MIN_HEIGHT));
       bt_max.setIcon(new ImageIcon(getClass().getResource("/images/maximize.png")));
+      label_title.setText(this.titleCut);
+      showText();
       isMinimized = true;
     }
     revalidate();
@@ -201,33 +203,105 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
   private javax.swing.JScrollPane scroll;
   // End of variables declaration//GEN-END:variables
 
+  @Override
   public void run() {
-    label_title.setText(entry.getTitle());
-    DateFormat df = new SimpleDateFormat(Options.toString(Options.DATE_FORMAT));
-    if (entry.getPublishedDate() != null) {
-      label_date.setText(df.format(entry.getPublishedDate()));
-    } else if (entry.getUpdatedDate() != null) {
-      label_date.setText(df.format(entry.getUpdatedDate()));
-    } else {
-      label_date.setText("");
-    }
-    if (entry.getDescription() != null) {
-      ep_content.setContentType(entry.getDescription().getType());
-      ep_content.setText(entry.getDescription().getValue());
-    } else {
-      List con = entry.getContents();
-      if (con.size() > 0) {
-        SyndContentImpl synd = (SyndContentImpl) con.get(0);
-        ep_content.setContentType(synd.getType().indexOf("html") > -1 ? "text/html" : "text");
-        ep_content.setText(synd.getValue());
-      }
-    }
-
-    setPreferredSize(new Dimension(FEED_WIDTH, FEED_HEIGHT));
-    setMaximumSize(new Dimension(FEED_WIDTH, FEED_HEIGHT));
+    getData();
+    label_title.setText(this.titleCut);
+    label_date.setText(date);
+    showText();
+    setPreferredSize(new Dimension(MIN_WIDTH, MIN_HEIGHT));
+    setMaximumSize(new Dimension(MIN_WIDTH, MIN_HEIGHT));
     feedPanel.add(this);
     feedPanel.revalidate();
     feedPanel.repaint();
 
+  }
+
+  private void getData() {
+    title = entry.getTitle();
+    titleCut = getTitleCut();
+    date = getDate();
+    content = getContent();
+    TextContent = getTextContent();
+    contentType = getContentType();
+    uri = getUri();
+  }
+
+  private String getDate() {
+    DateFormat df = new SimpleDateFormat(Options.toString(Options.DATE_FORMAT));
+    if (entry.getPublishedDate() != null) {
+      return df.format(entry.getPublishedDate());
+    } else if (entry.getUpdatedDate() != null) {
+      return df.format(entry.getUpdatedDate());
+    }
+    return "";
+
+  }
+
+  private String getContent() {
+    if (entry.getDescription() != null) {
+      return entry.getDescription().getValue();
+    } else {
+      List con = entry.getContents();
+      if (con.size() > 0) {
+        SyndContentImpl synd = (SyndContentImpl) con.get(0);
+        return synd.getValue();
+      }
+    }
+    return "";
+  }
+
+  private String getContentType() {
+    if (entry.getDescription() != null) {
+      return entry.getDescription().getType();
+    } else {
+      List con = entry.getContents();
+      if (con.size() > 0) {
+        SyndContentImpl synd = (SyndContentImpl) con.get(0);
+        return synd.getType().indexOf("html") > -1 ? "text/html" : "text";
+      }
+    }
+    return "text";
+  }
+
+  private URI getUri() {
+    try {
+      try {
+        return new URL(entry.getLink()).toURI();
+      } catch (URISyntaxException ex) {
+        myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+        return null;
+      }
+    } catch (MalformedURLException ex) {
+      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      return null;
+    }
+  }
+
+  private String getTextContent() {
+    return content.toString().replaceAll("\\<.*?>", "");
+
+  }
+
+  private void showHtml() {
+    ep_content.setContentType(contentType);
+    ep_content.setText(content);
+  }
+
+  private void showText() {
+    ep_content.setContentType("text");
+    ep_content.setText(TextContent);
+  }
+
+  private String getTitleCut() {
+    String cut = "";
+    String[] titleArr = title.split(" ", -1);
+    for (int i = 0; i < titleArr.length; i++) {
+      String t = titleArr[i];
+      if (cut.length() < TITLE_MAX_LENGTH) {
+        cut += t +" ";
+      }
+    }
+    return cut.trim().length() < title.trim().length() ? cut.trim() + "..." : cut.trim();
   }
 }
