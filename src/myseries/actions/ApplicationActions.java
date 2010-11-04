@@ -146,7 +146,7 @@ public class ApplicationActions {
       } else if (index == MySeries.TAB_FILTERS) {
         Filters.getFilteredSeries();
       } else if (index == MySeries.TAB_STATISTICS) {
-        MySeries.statSeries.refresh(false);
+        MySeries.statSeries.refresh(Options.toBoolean(Options.UNIFIED_SERIES));
         MySeries.statEpisodes.refresh();
       }
 
