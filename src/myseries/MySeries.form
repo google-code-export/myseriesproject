@@ -1447,6 +1447,9 @@
                           <Properties>
                             <Property name="opaque" type="boolean" value="false"/>
                           </Properties>
+                          <Events>
+                            <EventHandler event="componentResized" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="feedPreviewPanelComponentResized"/>
+                          </Events>
                           <Constraints>
                             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout$JSplitPaneConstraintsDescription">
                               <JSplitPaneConstraints position="right"/>

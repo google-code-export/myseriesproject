@@ -87,6 +87,7 @@ import myseries.statistics.StatSeries;
 import tools.Skin;
 import tools.download.subtitles.SubtitleConstants;
 import tools.download.torrents.TorrentConstants;
+import tools.feeds.Feed;
 import tools.internetUpdate.InternetUpdate;
 import tools.languages.LangsList;
 import tools.myLogger;
@@ -180,7 +181,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     if (Options.toString(Options.LOOK_AND_FEEL).equals("")) {
     } else {
       //set look and feel
-     // LookAndFeels.setLookAndFeel(this, Options.toString(Options.LOOK_AND_FEEL));
+      // LookAndFeels.setLookAndFeel(this, Options.toString(Options.LOOK_AND_FEEL));
     }
 
     //Get language list
@@ -196,8 +197,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     MySeries.logger.log(Level.INFO, "Creating database connection");
     DBConnection.createConnection(Options.toString(Options.DB_NAME));
     // Create the GUIs table
-   visibleButtons = Options.toIntegerArray(Options.TOOLBAR_BUTTONS);
-    if(visibleButtons==null){
+    visibleButtons = Options.toIntegerArray(Options.TOOLBAR_BUTTONS);
+    if (visibleButtons == null) {
       visibleButtons = Options.getDefaultToolbarButtons();
     }
     MySeries.logger.log(Level.INFO, "Creating the GUI");
@@ -260,33 +261,33 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     Filters.setTableModel_filterSeries(tableModel_filterSeries);
     Filters.getFilteredSeries();
 
-   
+
     //myToolbar = new Toolbar(visibleButtons);
 
     //Move toolbar to desired position
 
     switch (Options.toInt(Options.TOOLBAR_POSITION)) {
-    case Options._NORTH_:
-    myToolbar.setOrientation(SwingConstants.HORIZONTAL);
-    getContentPane().add(myToolbar, BorderLayout.NORTH);
-    break;
-    case Options._EAST_:
-    myToolbar.setOrientation(SwingConstants.VERTICAL);
-    getContentPane().add(myToolbar, BorderLayout.EAST);
-    break;
-    case Options._SOUTH_:
-    myToolbar.setOrientation(SwingConstants.HORIZONTAL);
-    getContentPane().add(myToolbar, BorderLayout.SOUTH);
-    break;
-    case Options._WEST_:
-    myToolbar.setOrientation(SwingConstants.VERTICAL);
-    getContentPane().add(myToolbar, BorderLayout.WEST);
-    break;
-    case Options._FLOAT_:
-    getContentPane().add(myToolbar, BorderLayout.WEST);
-    ((BasicToolBarUI) myToolbar.getUI()).setFloating(true, new Point(100, 100));
-    myToolbar.setLocation(200, 200);
-    break;
+      case Options._NORTH_:
+        myToolbar.setOrientation(SwingConstants.HORIZONTAL);
+        getContentPane().add(myToolbar, BorderLayout.NORTH);
+        break;
+      case Options._EAST_:
+        myToolbar.setOrientation(SwingConstants.VERTICAL);
+        getContentPane().add(myToolbar, BorderLayout.EAST);
+        break;
+      case Options._SOUTH_:
+        myToolbar.setOrientation(SwingConstants.HORIZONTAL);
+        getContentPane().add(myToolbar, BorderLayout.SOUTH);
+        break;
+      case Options._WEST_:
+        myToolbar.setOrientation(SwingConstants.VERTICAL);
+        getContentPane().add(myToolbar, BorderLayout.WEST);
+        break;
+      case Options._FLOAT_:
+        getContentPane().add(myToolbar, BorderLayout.WEST);
+        ((BasicToolBarUI) myToolbar.getUI()).setFloating(true, new Point(100, 100));
+        myToolbar.setLocation(200, 200);
+        break;
     }
 
     //getContentPane().add(myToolbar, BorderLayout.NORTH);
@@ -304,9 +305,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     if (Options.toBoolean(Options.CHECK_VERSION)) {
       new CheckUpdate(true);
     }
-    
+
   }
- 
 
   private void setGlassPane() {
     //Set the glass pane
@@ -370,7 +370,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     tableFilters.getTableHeader().setCursor(Cursor.getDefaultCursor());
     tableFilters.getColumn(Filters.EPISODERECORD_COLUMN_TITLE).setCellRenderer(new MyTitleCellRenderer(true));
     tableFilters.getColumn(Filters.SUBS_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MySubtitleCellEditor(Filters.EPISODERECORD_COLUMN));
-    tableFilters.getColumn(Filters.SUBS_COLUMN_TITLE).setCellRenderer(new MySubtitlesCellRenderer(Filters.EPISODERECORD_COLUMN));;
+    tableFilters.getColumn(Filters.SUBS_COLUMN_TITLE).setCellRenderer(new MySubtitlesCellRenderer(Filters.EPISODERECORD_COLUMN));
+    ;
     tableFilters.getColumn(Filters.AIRED_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MyJDateChooserCellEditor());
     tableFilters.getColumn(Filters.AIRED_COLUMN_TITLE).setCellRenderer(new MyJDateChooserCellRenderer());
     tableFilters.getColumn(Filters.DOWNLOADED_COLUMN_TITLE).setCellRenderer(new MyDownloadedCellRenderer(Filters.EPISODERECORD_COLUMN));
@@ -394,7 +395,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     //POPULATE FEEDS TREE
     feedTree.setCellRenderer(new FeedTreeCellRenderer());
     feedTree.populate(-1);
-    
+
     setLocationRelativeTo(null);
   }
 
@@ -1060,6 +1061,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     feedSplitPanel.setLeftComponent(leftFeedPanel);
 
     feedPreviewPanel.setOpaque(false);
+    feedPreviewPanel.addComponentListener(new java.awt.event.ComponentAdapter() {
+      public void componentResized(java.awt.event.ComponentEvent evt) {
+        feedPreviewPanelComponentResized(evt);
+      }
+    });
     feedPreviewPanel.setLayout(new java.awt.BorderLayout());
     feedSplitPanel.setRightComponent(feedPreviewPanel);
 
@@ -1670,8 +1676,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
       EpisodesRecord ep = (EpisodesRecord) tableFilters.getValueAt(rowSelected, 2);
       SeriesRecord seriesRec = DBHelper.getSeriesByID(ep.getSeries_ID());
       MyEvent event = new MyEvent(this, MyEventHandler.SET_CURRENT_SERIES);
-        event.setSeries(seriesRec);
-        getEvClass().fireMyEvent(event);
+      event.setSeries(seriesRec);
+      getEvClass().fireMyEvent(event);
       if (evt.getButton() == MouseEvent.BUTTON3) {
         event.setType(MyEventHandler.SET_CURRENT_EPISODE);
         event.setEpisode(ep);
@@ -1679,7 +1685,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
         getEvClass().fireMyEvent(event);
         episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
       } else {
-        
       }
     } catch (SQLException ex) {
       logger.log(Level.SEVERE, null, ex);
@@ -1739,9 +1744,12 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
   }//GEN-LAST:event_bt_addRssActionPerformed
 
   private void bt_refreshRssActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_refreshRssActionPerformed
-   FeedsActions.updateFeeds();
+    FeedsActions.updateFeeds();
   }//GEN-LAST:event_bt_refreshRssActionPerformed
 
+  private void feedPreviewPanelComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_feedPreviewPanelComponentResized
+    feedPreviewPanel.resize();
+  }//GEN-LAST:event_feedPreviewPanelComponentResized
   // Variables declaration - do not modify//GEN-BEGIN:variables
   public static javax.swing.JMenuItem PopUpItem_AddEpisode;
   public static javax.swing.JMenuItem PopUpItem_AddEpisodeInEpisodes;
@@ -1867,14 +1875,14 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
   public void createComboBox_filters() {
     comboBox_filterSubtitles.setModel(new DefaultComboBoxModel(
-        new String[]{
-          SubtitleConstants.NONE,
-          languages.getPrimary().getName(),
-          languages.getSecondary().getName(),
-          SubtitleConstants.BOTH,
-          languages.getPrimary().getName() + " or " + languages.getSecondary().getName(),
-          "Not " + languages.getPrimary().getName()
-        }));
+            new String[]{
+              SubtitleConstants.NONE,
+              languages.getPrimary().getName(),
+              languages.getSecondary().getName(),
+              SubtitleConstants.BOTH,
+              languages.getPrimary().getName() + " or " + languages.getSecondary().getName(),
+              "Not " + languages.getPrimary().getName()
+            }));
   }
 
   public static int getSeriesTableRow(SeriesRecord series) {
@@ -1905,7 +1913,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     this.evClass = evClass;
   }
 
-  public static Class<MySeries> getInstance(){
+  public static Class<MySeries> getInstance() {
     return MySeries.class;
   }
 }
