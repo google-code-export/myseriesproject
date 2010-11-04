@@ -22,6 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import myComponents.myTableCellRenderers.MyDecimalFormatRenderer;
+import tools.options.Options;
 
 /**
  *
@@ -99,6 +100,7 @@ public class StatSeries extends javax.swing.JPanel  {
 
     jLabel2.setText("Mouse over rate to see a list of the series episodes rates");
 
+    cb_unified.setSelected(Options.toBoolean(Options.UNIFIED_SERIES));
     cb_unified.setText("Unified series");
     cb_unified.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
     cb_unified.setOpaque(false);
@@ -144,6 +146,7 @@ public class StatSeries extends javax.swing.JPanel  {
     }else{
       refresh(true);
     }
+    Options.setOption(Options.UNIFIED_SERIES, cb_unified.isSelected());
   }//GEN-LAST:event_cb_unifiedActionPerformed
 
   // Variables declaration - do not modify//GEN-BEGIN:variables

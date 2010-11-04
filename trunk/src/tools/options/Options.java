@@ -122,7 +122,7 @@ public class Options {
    */
   public static String DIVIDER_LOCATION = "DIVIDER_LOCATION";
   /**
-   * The split pane divider's location
+   * The feeds split pane divider's location
    * integer default 250
    */
   public static String FEED_DIVIDER_LOCATION = "FEED_DIVIDER_LOCATION";
@@ -181,6 +181,11 @@ public class Options {
    * boolean default false;
    */
   public static String AUTO_FILE_UPDATING = "AUTO_FILE_UPDATING";
+  /**
+   * If show series stats as unified series
+   * boolean default true;
+   */
+  public static String UNIFIED_SERIES = "UNIFIED_SERIES";
   /**
    * The season separator when renaming episodes
    * String default "SE"
@@ -468,6 +473,7 @@ public class Options {
     out.println(Options.SKIN_COLOR + " =240,240,240");
     out.println(Options.USE_SKIN + " =true");
     out.println(Options.USE_PROXY + " =false");
+    out.println(Options.UNIFIED_SERIES + " =true");
     out.println(Options.PROXY_HOST + " =");
     out.println(Options.PROXY_PORT + " =");
     out.println(Options.DIVIDER_LOCATION + " =250");
