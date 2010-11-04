@@ -65,7 +65,6 @@ public class FeedPreviewPanel extends javax.swing.JPanel {
     feedPanel.setOpaque(false);
     panel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
     add(panel, BorderLayout.CENTER);
-    //photoPanel.setLayout(new GridLayout((datePhotos.size()/4) + 1,4));
     feedPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
     int count = 0;
     for (Iterator<SyndEntryImpl> it = feed.getEntries().iterator(); it.hasNext();) {
