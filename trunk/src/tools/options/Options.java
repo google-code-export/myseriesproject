@@ -122,6 +122,11 @@ public class Options {
    */
   public static String DIVIDER_LOCATION = "DIVIDER_LOCATION";
   /**
+   * The split pane divider's location
+   * integer default 250
+   */
+  public static String FEED_DIVIDER_LOCATION = "FEED_DIVIDER_LOCATION";
+  /**
    * the font to use
    * String default Arial
    */
@@ -466,6 +471,7 @@ public class Options {
     out.println(Options.PROXY_HOST + " =");
     out.println(Options.PROXY_PORT + " =");
     out.println(Options.DIVIDER_LOCATION + " =250");
+    out.println(Options.FEED_DIVIDER_LOCATION + " =250");
     out.println(Options.FONT_FACE + " =Arial");
     out.println(Options.FONT_SIZE + " =12");
     out.println(Options.TABLE_WIDTHS + " =" + getDefaultColumnWidths());
