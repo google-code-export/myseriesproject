@@ -54,6 +54,7 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
   private String contentType = "text";
   private String TextContent = "";
   public static final int TITLE_MAX_LENGTH = 30;
+  public int id = -1;
 
   /** Creates new form PhotoPanel */
   public FeedPanel() {
@@ -81,6 +82,7 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
     ep_content = new javax.swing.JEditorPane();
     bt_link = new javax.swing.JButton();
     bt_max = new javax.swing.JButton();
+    label_id = new javax.swing.JLabel();
 
     setBackground(new java.awt.Color(255, 255, 255));
     setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -127,6 +129,8 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
       }
     });
 
+    label_id.setText("jLabel1");
+
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
     this.setLayout(layout);
     layout.setHorizontalGroup(
@@ -138,17 +142,22 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
             .addComponent(bt_link, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(bt_max, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 186, Short.MAX_VALUE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 200, Short.MAX_VALUE)
             .addComponent(label_date, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
-          .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
-          .addComponent(label_title, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE))
+          .addComponent(scroll)
+          .addGroup(layout.createSequentialGroup()
+            .addComponent(label_id)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addComponent(label_title, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)))
         .addContainerGap())
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
         .addGap(12, 12, 12)
-        .addComponent(label_title)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(label_title)
+          .addComponent(label_id))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
         .addGap(1, 1, 1)
@@ -178,6 +187,12 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
       setMaximumSize(new Dimension(getParent().getWidth(), MAX_HEIGHT));
       bt_max.setIcon(new ImageIcon(getClass().getResource("/images/minimize.png")));
       label_title.setText(this.title);
+      if (id % 2 == 1) {
+        feedPanel.remove(this);
+        feedPanel.add(this, id - 1);
+        feedPanel.validate();
+        feedPanel.repaint();
+      }
       showHtml();
       isMinimized = false;
     } else {
@@ -185,6 +200,12 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
       setMaximumSize(new Dimension(MIN_WIDTH, MIN_HEIGHT));
       bt_max.setIcon(new ImageIcon(getClass().getResource("/images/maximize.png")));
       label_title.setText(this.titleCut);
+      if (id % 2 == 1) {
+        feedPanel.remove(this);
+        feedPanel.add(this, id);
+        feedPanel.validate();
+        feedPanel.repaint();
+      }
       showText();
       isMinimized = true;
     }
@@ -199,6 +220,7 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
   private javax.swing.JButton bt_max;
   private javax.swing.JEditorPane ep_content;
   private javax.swing.JLabel label_date;
+  private javax.swing.JLabel label_id;
   private javax.swing.JLabel label_title;
   private javax.swing.JScrollPane scroll;
   // End of variables declaration//GEN-END:variables
@@ -211,7 +233,9 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
     showText();
     setPreferredSize(new Dimension(MIN_WIDTH, MIN_HEIGHT));
     setMaximumSize(new Dimension(MIN_WIDTH, MIN_HEIGHT));
+    id = feedPanel.getComponentCount();
     feedPanel.add(this);
+    label_id.setText("" + (id+1));
     feedPanel.revalidate();
     feedPanel.repaint();
 
@@ -299,7 +323,7 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
     for (int i = 0; i < titleArr.length; i++) {
       String t = titleArr[i];
       if (cut.length() < TITLE_MAX_LENGTH) {
-        cut += t +" ";
+        cut += t + " ";
       }
     }
     return cut.trim().length() < title.trim().length() ? cut.trim() + "..." : cut.trim();
