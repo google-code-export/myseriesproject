@@ -984,6 +984,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     tabpanel_statistics.setOpaque(false);
 
     statSeries.setPreferredSize(new java.awt.Dimension(400, 121));
+    statSeries.setUnifiedSeries(Options.toBoolean(Options.UNIFIED_SERIES));
 
     javax.swing.GroupLayout tabpanel_statisticsLayout = new javax.swing.GroupLayout(tabpanel_statistics);
     tabpanel_statistics.setLayout(tabpanel_statisticsLayout);

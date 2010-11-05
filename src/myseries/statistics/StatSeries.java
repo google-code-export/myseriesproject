@@ -33,6 +33,7 @@ public class StatSeries extends javax.swing.JPanel  {
   public static int SERIES_COLUMN = 0;
   public static int EPISODES_COLUMN = 1;
   public static int RATE_COLUMN = 2;
+  private boolean unifiedSeries = false;
   private DefaultTableModel model;
 
   /** Creates new form StatSeries */
@@ -100,7 +101,6 @@ public class StatSeries extends javax.swing.JPanel  {
 
     jLabel2.setText("Mouse over rate to see a list of the series episodes rates");
 
-    cb_unified.setSelected(Options.toBoolean(Options.UNIFIED_SERIES));
     cb_unified.setText("Unified series");
     cb_unified.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
     cb_unified.setOpaque(false);
@@ -146,6 +146,7 @@ public class StatSeries extends javax.swing.JPanel  {
     }else{
       refresh(true);
     }
+    unifiedSeries = cb_unified.isSelected();
     Options.setOption(Options.UNIFIED_SERIES, cb_unified.isSelected());
   }//GEN-LAST:event_cb_unifiedActionPerformed
 
@@ -204,5 +205,21 @@ public class StatSeries extends javax.swing.JPanel  {
    */
   public void setModel(DefaultTableModel model) {
     this.model = model;
+  }
+
+  /**
+   * @return the isUnifiedSeries
+   */
+  public boolean isUnifiedSeries() {
+    return unifiedSeries;
+  }
+
+  /**
+   * @param isUnifiedSeries the isUnifiedSeries to set
+   */
+  public void setUnifiedSeries(boolean un) {
+    this.unifiedSeries = un;
+    cb_unified.setSelected(un);
+    refresh(unifiedSeries);
   }
 }
