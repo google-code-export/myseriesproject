@@ -87,9 +87,7 @@ public class FeedPreviewPanel extends javax.swing.JPanel {
       Component component = comps[i];
       if(component instanceof FeedPanel){
         FeedPanel fp = (FeedPanel) component;
-        FeedPanel.min_width = getWidth()/2-20;
-        FeedPanel.max_width = getWidth() - 35;
-        fp.setPreferredSize(new Dimension(FeedPanel.min_width,FeedPanel.min_height));
+        fp.resize(FeedPanel.MINIMIZED);
       }
     }
   }
