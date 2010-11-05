@@ -6,16 +6,11 @@ package myComponents.myTableCellRenderers;
 
 import com.googlecode.scheduler.ScheduleDay;
 import com.googlecode.scheduler.SchedulerCellRenderer;
-import com.googlecode.scheduler.SchedulerMouseListener;
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.event.MouseListener;
 import java.util.Calendar;
-import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JTable;
-import myComponents.MyUsefulFunctions;
 import myseries.schedule.ScheduleDayPanel;
 import tools.Skin;
 

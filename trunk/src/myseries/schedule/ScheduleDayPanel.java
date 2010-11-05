@@ -128,7 +128,11 @@ public class ScheduleDayPanel extends javax.swing.JPanel {
         orIm = getScaledImageIcon(getDefaultImage().getImage());
       } else {
         File sc = new File(Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH + event.getImage());
+        if(sc.exists()){
         orIm = getScaledImageIcon(new ImageIcon(sc.getAbsolutePath()).getImage());
+        } else {
+          orIm = getScaledImageIcon(getDefaultImage().getImage());
+        }
       }
       orIm = addDownloadStatus(orIm, event.getDownloaded());
       eventLabel.setMaximumSize(new Dimension(orIm.getIconWidth(), orIm.getIconHeight()));
@@ -143,33 +147,33 @@ public class ScheduleDayPanel extends javax.swing.JPanel {
   private ImageIcon getScaledImageIcon(Image image) {
     ImageIcon im = null;
     try {
-      int w = image.getWidth(this);
-      int h = image.getHeight(this);
-      double ratio = (double) w / h;
+      double w = image.getWidth(this);
+      double h = image.getHeight(this);
+      double ratio = w / h;
       if (w > (width - NUMBER_LABEL_WIDTH)) {
         w = width - NUMBER_LABEL_WIDTH;
-        h = (int) (w / ratio);
+        h = w / ratio;
       }
       if (h > height) {
         h = height;
-        w = (int) (h * ratio);
+        w =h * ratio;
       }
 
 
-      int newW = 0, newH = 0;
+      double newW = 0, newH = 0;
       if (events.size() == 1) {
         if (w >= h) {
           newW = width - NUMBER_LABEL_WIDTH;
-          newH = h / (w / newW);
+          newH =h / (w / newW);
         } else {
           newH = height;
           newW = w / (h / newH);
         }
       } else {
         newW = ((width - NUMBER_LABEL_WIDTH) / MAX_COLUMNS) - (rows * GAP);
-        newH = h / (w / newW);
+        newH =h / (w / newW);
       }
-      im = new ImageIcon(image.getScaledInstance(newW, newH, Image.SCALE_SMOOTH));
+      im = new ImageIcon(image.getScaledInstance((int)newW,(int) newH, Image.SCALE_SMOOTH));
     } catch (Exception ex) {
       return getScaledImageIcon(getDefaultImage().getImage());
     }
@@ -203,6 +207,9 @@ public class ScheduleDayPanel extends javax.swing.JPanel {
     ImageIcon im = new ImageIcon(getClass().getResource(imagePath));
     int icWidth = imWidth / 3;
     int icHeight = imWidth / 3;
+    if(icHeight==0 || icWidth==0){
+      System.out.println("ddd");
+    }
     Image scaled = im.getImage().getScaledInstance(icWidth, icHeight, Image.SCALE_SMOOTH);
     return new ImageIcon(scaled);
   }
