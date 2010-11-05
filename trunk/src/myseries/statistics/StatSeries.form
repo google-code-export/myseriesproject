@@ -101,9 +101,6 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="cb_unified">
       <Properties>
-        <Property name="selected" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Options.toBoolean(Options.UNIFIED_SERIES)" type="code"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Unified series"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
