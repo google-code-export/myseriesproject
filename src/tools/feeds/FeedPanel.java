@@ -52,10 +52,10 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
   public static final int MAXIMIZED = 1;
   public static int min_width;
   public static int max_width;
-  public static int min_height = 160;
+  public static int min_height = 200;
   public static int max_height = 300;
   public int id = -1;
-  private int numberOfColumns = 2;
+  private int numberOfColumns = Options.toInt(Options.FEED_COLUMNS);
 
   /** Creates new form PhotoPanel */
   public FeedPanel() {
@@ -72,13 +72,14 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
   private void getWidths(int size){
     if(size == MINIMIZED){
       int panelWidth = myseries.MySeries.feedPreviewPanel.getWidth();
-      if(panelWidth > 720){
-        min_width = myseries.MySeries.feedPreviewPanel.getWidth()/2-20;
-        numberOfColumns = 2;
-      } else {
-        min_width = myseries.MySeries.feedPreviewPanel.getWidth() - 35;
-        numberOfColumns = 1;
-      }
+//      if(panelWidth > 720){
+//        min_width = myseries.MySeries.feedPreviewPanel.getWidth()/2-20;
+//        numberOfColumns = 2;
+//      } else {
+//        min_width = myseries.MySeries.feedPreviewPanel.getWidth() - 35;
+//        numberOfColumns = 1;
+//      }
+       min_width = myseries.MySeries.feedPreviewPanel.getWidth()/numberOfColumns-20;
       setPreferredSize(new Dimension(FeedPanel.min_width,FeedPanel.min_height));
     } else {
        max_width = myseries.MySeries.feedPreviewPanel.getWidth() - 35;
@@ -209,9 +210,9 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
       resize(MAXIMIZED);
       bt_max.setIcon(new ImageIcon(getClass().getResource("/images/minimize.png")));
       label_title.setText(this.title);
-      if (id % 2 == 1 && numberOfColumns == 2) {
+      if (id % numberOfColumns !=0 && numberOfColumns > 1) {
         feedPanel.remove(this);
-        feedPanel.add(this, id - 1);
+        feedPanel.add(this, id - id % numberOfColumns );
         feedPanel.validate();
         feedPanel.repaint();
       }
@@ -221,7 +222,7 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
       resize(MINIMIZED);
       bt_max.setIcon(new ImageIcon(getClass().getResource("/images/maximize.png")));
       label_title.setText(this.titleCut);
-      if (id % 2 == 1 && numberOfColumns == 2) {
+      if (id % numberOfColumns !=0 && numberOfColumns > 1) {
         feedPanel.remove(this);
         feedPanel.add(this, id);
         feedPanel.validate();
@@ -329,11 +330,13 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
   private void showHtml() {
     ep_content.setContentType(contentType);
     ep_content.setText(content);
+    setCursorPosition();
   }
 
   private void showText() {
     ep_content.setContentType(contentType);
     ep_content.setText(TextContent);
+    setCursorPosition();
   }
 
   private String getTitleCut() {
@@ -346,5 +349,9 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
       }
     }
     return cut.trim().length() < title.trim().length() ? cut.trim() + "..." : cut.trim();
+  }
+
+  private void setCursorPosition() {
+    ep_content.setCaretPosition(0);
   }
 }
