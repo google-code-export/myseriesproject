@@ -210,6 +210,10 @@ public class Options {
    */
   public static String TOOLBAR_BUTTONS = "TOOLBAR_BUTTONS";
   /**
+   * The number of feed columns
+   */
+  public static String FEED_COLUMNS = "FEED_COLUMNS";
+  /**
    * An array of the options that are selected in combo boxes
    */
   public static String[] _COMBO_OPTIONS_ = {DATE_FORMAT, DEBUG_MODE, LOOK_AND_FEEL,
@@ -494,6 +498,8 @@ public class Options {
     out.println(Options.EPISODE_SEPARATOR + " =x");
     out.println(Options.TOOLBAR_POSITION + " =1");
     out.println(Options.TOOLBAR_BUTTONS + "=" + getDefaultToolbarButtons());
+    out.println(Options.FEED_COLUMNS + "=" + 3);
+
     out.close();
   }
 

@@ -172,6 +172,8 @@ public class OptionsPanel extends MyDraggable {
     combo_primaryLang = new com.googlecode.svalidators.formcomponents.SComboBox();
     jLabel15 = new javax.swing.JLabel();
     combo_secondaryLang = new com.googlecode.svalidators.formcomponents.SComboBox();
+    jLabel2 = new javax.swing.JLabel();
+    spinner_columns = new javax.swing.JSpinner();
     panel_renaming = new javax.swing.JPanel();
     jLabel18 = new javax.swing.JLabel();
     jLabel19 = new javax.swing.JLabel();
@@ -537,6 +539,13 @@ public class OptionsPanel extends MyDraggable {
       }
     });
 
+    jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    jLabel2.setText("No of columns in Feeds :");
+
+    spinner_columns.setModel(new javax.swing.SpinnerNumberModel(2, 1, 5, 1));
+    spinner_columns.setName(Options.FEED_COLUMNS);
+    spinner_columns.setValue(Options.toInt(Options.FEED_COLUMNS));
+
     javax.swing.GroupLayout panel_internetLayout = new javax.swing.GroupLayout(panel_internet);
     panel_internet.setLayout(panel_internetLayout);
     panel_internetLayout.setHorizontalGroup(
@@ -545,28 +554,38 @@ public class OptionsPanel extends MyDraggable {
         .addContainerGap()
         .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(panel_internetLayout.createSequentialGroup()
+            .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addGroup(panel_internetLayout.createSequentialGroup()
+                .addComponent(checkbox_useProxy, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
+                .addGap(128, 128, 128))
+              .addGroup(panel_internetLayout.createSequentialGroup()
+                .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                  .addGroup(panel_internetLayout.createSequentialGroup()
+                    .addGap(27, 27, 27)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE))
+                  .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                  .addComponent(textfield_port, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                  .addComponent(textfield_proxy, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE))))
+            .addGap(220, 220, 220))
+          .addGroup(panel_internetLayout.createSequentialGroup()
             .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-              .addComponent(checkbox_useProxy, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
+              .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
               .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
               .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
               .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(combo_primaryLang, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
-              .addComponent(jCheckBox1)
-              .addComponent(combo_secondaryLang, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE))
-            .addGap(152, 152, 152))
-          .addGroup(panel_internetLayout.createSequentialGroup()
-            .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
               .addGroup(panel_internetLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE))
-              .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))
-            .addGap(18, 18, 18)
-            .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(textfield_port, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
-              .addComponent(textfield_proxy, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE))
-            .addGap(220, 220, 220))))
+                .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                  .addComponent(combo_primaryLang, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+                  .addComponent(jCheckBox1)
+                  .addComponent(combo_secondaryLang, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE))
+                .addGap(152, 152, 152))
+              .addGroup(panel_internetLayout.createSequentialGroup()
+                .addComponent(spinner_columns, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())))))
     );
     panel_internetLayout.setVerticalGroup(
       panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -583,7 +602,11 @@ public class OptionsPanel extends MyDraggable {
         .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
           .addComponent(jLabel15)
           .addComponent(combo_secondaryLang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addGap(33, 33, 33)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(jLabel2)
+          .addComponent(spinner_columns, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addGap(61, 61, 61)
         .addComponent(checkbox_useProxy)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -595,7 +618,7 @@ public class OptionsPanel extends MyDraggable {
             .addComponent(textfield_proxy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(4, 4, 4)
             .addComponent(textfield_port, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        .addGap(143, 143, 143))
+        .addContainerGap())
     );
 
     tabbedPane_options.addTab("Internet", panel_internet);
@@ -906,6 +929,7 @@ public class OptionsPanel extends MyDraggable {
   private javax.swing.JLabel jLabel17;
   private javax.swing.JLabel jLabel18;
   private javax.swing.JLabel jLabel19;
+  private javax.swing.JLabel jLabel2;
   private javax.swing.JLabel jLabel20;
   private javax.swing.JLabel jLabel3;
   private javax.swing.JLabel jLabel4;
@@ -923,6 +947,7 @@ public class OptionsPanel extends MyDraggable {
   private javax.swing.JPanel panel_internet;
   private javax.swing.JPanel panel_options;
   private javax.swing.JPanel panel_renaming;
+  private javax.swing.JSpinner spinner_columns;
   private javax.swing.JSpinner spinner_fontSize;
   private javax.swing.JTabbedPane tabbedPane_options;
   private com.googlecode.svalidators.formcomponents.STextField textfield_port;
