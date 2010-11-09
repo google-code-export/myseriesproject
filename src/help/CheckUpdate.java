@@ -52,7 +52,7 @@ public class CheckUpdate extends MyDraggable {
       up = new Update();
       Thread t = new Thread(up);
       t.start();
-    } else{
+    } else {
       MySeries.glassPane.deactivate();
       return;
     }
@@ -75,15 +75,15 @@ public class CheckUpdate extends MyDraggable {
           currentVersion = MySeries.version;
           label_latestVersion.setText(latestVersion);
           if (currentVersion.compareTo(latestVersion) < 0) {
-            MySeries.logger.log(Level.INFO,"Updated version is found!!!");
+            MySeries.logger.log(Level.INFO, "Updated version is found!!!");
             label_needUpdate.setText("An update is found");
             label_needUpdate1.setText("Click here to go to the download page.");
-             if(onStartUp){
+            if (onStartUp) {
               setVisible(true);
             }
           } else {
             label_needUpdate.setText("You are up to date!!!");
-            MySeries.logger.log(Level.INFO,"You are up to date!!!");
+            MySeries.logger.log(Level.INFO, "You are up to date!!!");
           }
         } else {
           MySeries.logger.log(Level.WARNING, "Can't get the update data");
@@ -292,11 +292,7 @@ public class CheckUpdate extends MyDraggable {
     try {
       URI download = new URI(up.latestVersionUri);
       if (DesktopSupport.isBrowseSupport()) {
-        try {
-          DesktopSupport.getDesktop().browse(download);
-        } catch (IOException ex) {
-          Logger.getLogger(CheckUpdate.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        MyUsefulFunctions.browse(download);
       } else {
         MyMessages.error("Browsing not supported", "Opening a browser window is not supported in your OS");
         MySeries.logger.log(Level.WARNING, "Opening a browser window is not supported in your OS");

@@ -77,15 +77,7 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
       @Override
       public void hyperlinkUpdate(HyperlinkEvent e) {
         if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-          try {
-            try {
-              DesktopSupport.getDesktop().browse(e.getURL().toURI());
-            } catch (IOException ex) {
-              Logger.getLogger(FeedPanel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-          } catch (URISyntaxException ex) {
-            Logger.getLogger(FeedPanel.class.getName()).log(Level.SEVERE, null, ex);
-          }
+         MyUsefulFunctions.browse(e.getURL());
         }
       }
     });
@@ -93,14 +85,6 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
 
   private void getWidths(int size) {
     if (size == MINIMIZED) {
-      int panelWidth = myseries.MySeries.feedPreviewPanel.getWidth();
-//      if(panelWidth > 720){
-//        min_width = myseries.MySeries.feedPreviewPanel.getWidth()/2-20;
-//        numberOfColumns = 2;
-//      } else {
-//        min_width = myseries.MySeries.feedPreviewPanel.getWidth() - 35;
-//        numberOfColumns = 1;
-//      }
       min_width = myseries.MySeries.feedPreviewPanel.getWidth() / numberOfColumns - 20;
       setPreferredSize(new Dimension(FeedPanel.min_width, FeedPanel.min_height));
     } else {
@@ -215,15 +199,8 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
   }// </editor-fold>//GEN-END:initComponents
 
   private void bt_linkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_linkActionPerformed
-    if (DesktopSupport.isDesktopSupport()) {
-      try {
-        DesktopSupport.getDesktop().browse(uri);
-      } catch (IOException ex) {
-        Logger.getLogger(FeedPanel.class.getName()).log(Level.SEVERE, null, ex);
-      }
-    } else {
-      MyMessages.error("Visit Feed webpage", "Your OS doesn't support opening a browser window");
-    }
+    MyUsefulFunctions.browse(uri);
+    
   }//GEN-LAST:event_bt_linkActionPerformed
 
   private void bt_maxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_maxActionPerformed

@@ -81,15 +81,7 @@ public abstract class AbstractDownloadSubtitle {
 
   private void openInBrowser(Subtitle sub) {
     try {
-      Desktop.getDesktop().browse(new URI(sub.url.toString()));
-      form.dispose();
-    } catch (IOException ex) {
-      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
-      MyMessages.error("Error occured!!!", "Could not read input stream");
-      form.dispose();
-    } catch (URISyntaxException ex) {
-      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
-      MyMessages.error("Error occured!!!", "Wrong url");
+      MyUsefulFunctions.browse(sub.url.toString());
       form.dispose();
     } finally {
       myseries.MySeries.glassPane.deactivate();
