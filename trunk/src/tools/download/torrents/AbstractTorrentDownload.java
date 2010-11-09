@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import javax.swing.JProgressBar;
 import myComponents.MyMessages;
+import myComponents.MyUsefulFunctions;
 import tools.options.Options;
 
 /**
@@ -41,7 +42,7 @@ public abstract class AbstractTorrentDownload implements TorrentConstants{
     URI u = torrent.getUri();
     if (u != null) {
       if (isTorrent(torrent)) {
-        Desktop.getDesktop().browse(uri);
+        MyUsefulFunctions.browse(uri);
         form.dispose();
         myseries.MySeries.glassPane.deactivate();
       }

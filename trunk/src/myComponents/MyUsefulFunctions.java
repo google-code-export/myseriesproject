@@ -23,6 +23,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -44,6 +46,7 @@ import myComponents.myGUI.MyFont;
 import myComponents.myTableCellRenderers.MyDownloadedCellRenderer;
 import myComponents.myTableCellRenderers.MySubtitlesCellRenderer;
 import myseries.series.Series;
+import tools.DesktopSupport;
 import tools.Skin;
 import tools.languages.LangsList;
 import tools.languages.Language;
@@ -779,6 +782,46 @@ public class MyUsefulFunctions {
       }else {
         return name.substring(0, name.length()-4);
       }
+    }
+  }
+
+  /**
+   * Opens a uri in the browser
+   * @param uri  The uri to browse
+   */
+  public static void browse(URI uri) {
+    if (DesktopSupport.isDesktopSupport()) {
+      try {
+        DesktopSupport.getDesktop().browse(uri);
+      } catch (IOException ex) {
+        myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      }
+    } else {
+      MyMessages.error("Open browser", "Your OS doesn't support opening a browser window");
+    }
+  }
+
+  /**
+   * Opens  a  url in the browser
+   * @param url The url
+   */
+  public static void browse(URL url) {
+    try {
+      browse(url.toURI());
+    } catch (URISyntaxException ex) {
+      MyMessages.error("Open browser", "This is not a valid url");
+    }
+  }
+
+  /**
+   * Browse a url
+   * @param url The url
+   */
+  public static void browse(String url) {
+    try {
+      browse(new URI(url));
+    } catch (URISyntaxException ex) {
+      MyMessages.error("Open browser", "This is not a valid url");
     }
   }
 

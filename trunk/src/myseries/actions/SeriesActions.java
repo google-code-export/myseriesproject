@@ -16,6 +16,7 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import javax.swing.ImageIcon;
 import myComponents.MyMessages;
+import myComponents.MyUsefulFunctions;
 import myComponents.myEvents.MyEvent;
 import myComponents.myEvents.MyEventHandler;
 import myComponents.myGUI.MyImagePanel;
@@ -110,9 +111,7 @@ public class SeriesActions {
       } else if (site.equals(SubtitleConstants.SUBTITLE_ONLINE_NAME)) {
         uri = new java.net.URI("http://www.subtitleonline.com/" + Series.getCurrentSerial().getSOnlineCode() + "-season-" + Series.getCurrentSerial().getSeason() + "-subtitles.html");
       }
-      DesktopSupport.getDesktop().browse(uri);
-    } catch (IOException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.browse(uri);
     } catch (URISyntaxException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);
     }
