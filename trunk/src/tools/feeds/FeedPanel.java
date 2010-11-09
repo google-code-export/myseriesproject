@@ -26,6 +26,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyScrollableFlowPanel;
@@ -70,6 +72,23 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
     this.entry = entry;
     getWidths(MINIMIZED);
     initComponents();
+    ep_content.addHyperlinkListener(new HyperlinkListener() {
+
+      @Override
+      public void hyperlinkUpdate(HyperlinkEvent e) {
+        if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+          try {
+            try {
+              DesktopSupport.getDesktop().browse(e.getURL().toURI());
+            } catch (IOException ex) {
+              Logger.getLogger(FeedPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+          } catch (URISyntaxException ex) {
+            Logger.getLogger(FeedPanel.class.getName()).log(Level.SEVERE, null, ex);
+          }
+        }
+      }
+    });
   }
 
   private void getWidths(int size) {
@@ -126,6 +145,8 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
     label_date.setText("jLabel1");
 
     scroll.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+    ep_content.setEditable(false);
     scroll.setViewportView(ep_content);
 
     bt_link.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/weblink.png"))); // NOI18N
@@ -353,7 +374,6 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
     for (int i = 0; i < titleArr.length; i++) {
       String t = titleArr[i];
       int w = metrics.stringWidth(cut + t);
-      System.out.println((cut + t) + " " +w);
       if (w < min_width - CUT_TITLE_PADDING) {
         cut += t + " ";
       }
