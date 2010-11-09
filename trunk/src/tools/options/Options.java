@@ -498,7 +498,7 @@ public class Options {
     out.println(Options.EPISODE_SEPARATOR + " =x");
     out.println(Options.TOOLBAR_POSITION + " =1");
     out.println(Options.TOOLBAR_BUTTONS + "=" + getDefaultToolbarButtons());
-    out.println(Options.FEED_COLUMNS + "=" + 3);
+    out.println(Options.FEED_COLUMNS + "=" + 2);
 
     out.close();
   }
@@ -570,7 +570,8 @@ public class Options {
     options.put(Options.EPISODE_SEPARATOR, " x");
     options.put(Options.TOOLBAR_POSITION, new Integer(0));
     options.put(Options.TOOLBAR_BUTTONS, getDefaultToolbarButtons());
-
+    options.put(Options.FEED_DIVIDER_LOCATION, 250);
+    options.put(Options.FEED_COLUMNS, 2);
   }
 
   private Options() {

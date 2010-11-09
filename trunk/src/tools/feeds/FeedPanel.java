@@ -26,6 +26,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import myComponents.MyMessages;
+import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyScrollableFlowPanel;
 import tools.DesktopSupport;
 import tools.options.Options;
@@ -69,8 +70,8 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
     initComponents();
   }
 
-  private void getWidths(int size){
-    if(size == MINIMIZED){
+  private void getWidths(int size) {
+    if (size == MINIMIZED) {
       int panelWidth = myseries.MySeries.feedPreviewPanel.getWidth();
 //      if(panelWidth > 720){
 //        min_width = myseries.MySeries.feedPreviewPanel.getWidth()/2-20;
@@ -79,15 +80,15 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
 //        min_width = myseries.MySeries.feedPreviewPanel.getWidth() - 35;
 //        numberOfColumns = 1;
 //      }
-       min_width = myseries.MySeries.feedPreviewPanel.getWidth()/numberOfColumns-20;
-      setPreferredSize(new Dimension(FeedPanel.min_width,FeedPanel.min_height));
+      min_width = myseries.MySeries.feedPreviewPanel.getWidth() / numberOfColumns - 20;
+      setPreferredSize(new Dimension(FeedPanel.min_width, FeedPanel.min_height));
     } else {
-       max_width = myseries.MySeries.feedPreviewPanel.getWidth() - 35;
-       setPreferredSize(new Dimension(FeedPanel.max_width,FeedPanel.max_height));
+      max_width = myseries.MySeries.feedPreviewPanel.getWidth() - 35;
+      setPreferredSize(new Dimension(FeedPanel.max_width, FeedPanel.max_height));
     }
   }
 
-  public void resize(int size){
+  public void resize(int size) {
     getWidths(size);
   }
 
@@ -210,9 +211,9 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
       resize(MAXIMIZED);
       bt_max.setIcon(new ImageIcon(getClass().getResource("/images/minimize.png")));
       label_title.setText(this.title);
-      if (id % numberOfColumns !=0 && numberOfColumns > 1) {
+      if (id % numberOfColumns != 0 && numberOfColumns > 1) {
         feedPanel.remove(this);
-        feedPanel.add(this, id - id % numberOfColumns );
+        feedPanel.add(this, id - id % numberOfColumns);
         feedPanel.validate();
         feedPanel.repaint();
       }
@@ -222,7 +223,7 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
       resize(MINIMIZED);
       bt_max.setIcon(new ImageIcon(getClass().getResource("/images/maximize.png")));
       label_title.setText(this.titleCut);
-      if (id % numberOfColumns !=0 && numberOfColumns > 1) {
+      if (id % numberOfColumns != 0 && numberOfColumns > 1) {
         feedPanel.remove(this);
         feedPanel.add(this, id);
         feedPanel.validate();
@@ -256,7 +257,7 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
     resize(MINIMIZED);
     id = feedPanel.getComponentCount();
     feedPanel.add(this);
-    label_id.setText("" + (id+1));
+    label_id.setText("" + (id + 1));
     feedPanel.revalidate();
     feedPanel.repaint();
   }
@@ -310,16 +311,21 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
 
   private URI getUri() {
     try {
-      try {
+      if (MyUsefulFunctions.isLink(entry.getLink())) {
         return new URL(entry.getLink()).toURI();
-      } catch (URISyntaxException ex) {
-        myseries.MySeries.logger.log(Level.SEVERE, null, ex);
-        return null;
+      } else if (MyUsefulFunctions.isLink(entry.getUri())) {
+        return new URL(entry.getUri()).toURI();
+      } else if (!entry.getLinks().isEmpty()) {
+        String link = (String) entry.getLinks().get(0);
+        return new URL(link).toURI();
       }
-    } catch (MalformedURLException ex) {
-      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      bt_link.setVisible(false);
+      return null;
+    } catch (Exception ex) {
+      bt_link.setVisible(false);
       return null;
     }
+
   }
 
   private String getTextContent() {
