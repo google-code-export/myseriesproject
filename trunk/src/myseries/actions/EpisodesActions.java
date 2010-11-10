@@ -178,7 +178,7 @@ public class EpisodesActions {
       SeriesRecord series = Series.getCurrentSerial();
       int season = series.getSeason();
       File dir = new File(series.getLocalDir());
-      if(!dir.isDirectory()){
+      if (!dir.isDirectory()) {
         MyMessages.error("Not a directory", "The local directory is not found");
         return;
       }
@@ -263,11 +263,11 @@ public class EpisodesActions {
       }
       if (link != null && !link.equals("")) {
         TvSubtitlesForm d = new TvSubtitlesForm(
-                SubtitleConstants.TV_SUBTITLES_URL + "tvshow-" + link + ".html",
-                Series.getCurrentSerial().getSeason(),
-                Episodes.getCurrentEpisode().getEpisode(),
-                Series.getCurrentSerial().getLocalDir(),
-                Episodes.getCurrentEpisode().getTitle());
+            SubtitleConstants.TV_SUBTITLES_URL + "tvshow-" + link + ".html",
+            Series.getCurrentSerial().getSeason(),
+            Episodes.getCurrentEpisode().getEpisode(),
+            Series.getCurrentSerial().getLocalDir(),
+            Episodes.getCurrentEpisode().getTitle());
       }
     } else if (site.equals(SubtitleConstants.SUBTITLE_ONLINE_NAME)) {
       String sOnlineCode = Series.getCurrentSerial().getSOnlineCode().trim();
@@ -298,20 +298,20 @@ public class EpisodesActions {
 
   private static void getSOnlineSubtitle(String sOnlineCode) {
     SOnlineForm d = new SOnlineForm(
-            sOnlineCode,
-            Series.getCurrentSerial().getSeason(),
-            Episodes.getCurrentEpisode().getEpisode(),
-            Series.getCurrentSerial().getLocalDir(),
-            Episodes.getCurrentEpisode().getTitle());
+        sOnlineCode,
+        Series.getCurrentSerial().getSeason(),
+        Episodes.getCurrentEpisode().getEpisode(),
+        Series.getCurrentSerial().getLocalDir(),
+        Episodes.getCurrentEpisode().getTitle());
   }
 
   public static void downloadEpisodesTorrent(String site) {
     SeriesRecord series = Series.getCurrentSerial();
     EpisodesRecord episode = Episodes.getCurrentEpisode();
-    if(site.equals(TorrentConstants.EZTV_NAME)){
-    new EzTvForm(series, episode);
-    } else if(site.equals(TorrentConstants.ISOHUNT_NAME)){
-    new IsohuntForm(series, episode);
+    if (site.equals(TorrentConstants.EZTV_NAME)) {
+      new EzTvForm(series, episode);
+    } else if (site.equals(TorrentConstants.ISOHUNT_NAME)) {
+      new IsohuntForm(series, episode);
     }
   }
 }
