@@ -10,6 +10,7 @@
  */
 package myseries;
 
+import com.googlecode.scheduler.ScheduleDay;
 import com.googlecode.starrating.StarTableCellRenderer;
 import java.awt.Component;
 import java.awt.event.MouseListener;
@@ -33,6 +34,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.sql.*;
@@ -44,6 +46,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JRootPane;
+import javax.swing.JTable;
 import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
@@ -81,6 +84,7 @@ import myseries.actions.SeriesActions;
 import myseries.episodes.UpdateEpisodesTable;
 import myseries.filters.Filters;
 import myseries.filters.UpdateFiltersTable;
+import myseries.schedule.ScheduleMouseListener;
 import myseries.series.UpdateSeriesTable;
 import myseries.statistics.StatEpisodes;
 import myseries.statistics.StatSeries;
@@ -306,6 +310,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     if (Options.toBoolean(Options.CHECK_VERSION)) {
       new CheckUpdate(true);
     }
+
+    scheduler.getTblCalendar().addMouseListener(new ScheduleMouseListener());
 
   }
 
