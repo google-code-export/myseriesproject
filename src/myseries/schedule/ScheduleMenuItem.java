@@ -8,10 +8,8 @@ import database.EpisodesRecord;
 import database.SeriesRecord;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
 import tools.download.torrents.eztv.EzTvForm;
 
 /**
@@ -25,7 +23,8 @@ class ScheduleMenuItem extends JMenuItem {
   private EpisodesRecord ep;
 
   public ScheduleMenuItem(final SeriesRecord ser, final EpisodesRecord ep) {
-    setText("Download "+ep + " torrent");
+    setText("Download torrent for "+ep);
+    setIcon(new ImageIcon(getClass().getResource("/images/eztv.png")));
     this.ser = ser;
     this.ep = ep;
     addActionListener(new ActionListener() {

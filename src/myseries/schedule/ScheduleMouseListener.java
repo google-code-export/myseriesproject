@@ -29,10 +29,11 @@ import tools.download.torrents.eztv.EzTvForm;
 public class ScheduleMouseListener extends MouseAdapter {
 
   JPopupMenu pop = new JPopupMenu();
+  Vector<EpisodesRecord> episodes = new Vector<EpisodesRecord>();
 
   @Override
   public void mouseClicked(MouseEvent e) {
-    Vector<EpisodesRecord> episodes;
+
     if (e.getButton() == MouseEvent.BUTTON3) {
       JTable table = (JTable) e.getSource();
       Point p = e.getPoint();
@@ -44,15 +45,17 @@ public class ScheduleMouseListener extends MouseAdapter {
           + MyUsefulFunctions.padLeft(val.getDay(), 2, "0");
 
       try {
+        episodes.clear();
+        pop.removeAll();
         episodes = DBHelper.getEpisodesBySql("SELECT * FROM episodes WHERE aired ='" + date + "' AND downloaded = " + EpisodesRecord.NOT_DOWNLOADED);
         if (!episodes.isEmpty()) {
           for (Iterator<EpisodesRecord> it = episodes.iterator(); it.hasNext();) {
             EpisodesRecord ep = it.next();
             SeriesRecord ser = DBHelper.getSeriesByID(ep.getSeries_ID());
-            pop.add(new ScheduleMenuItem(ser,ep));
-           // new EzTvForm(ser, ep);
+            pop.add(new ScheduleMenuItem(ser, ep));
+            // new EzTvForm(ser, ep);
           }
-          
+
           pop.show(table, p.x, p.y);
         }
       } catch (SQLException ex) {
