@@ -41,25 +41,26 @@ public class ScheduleMouseListener extends MouseAdapter {
       int col = table.columnAtPoint(p);
       ScheduleDay val = (ScheduleDay) table.getModel().getValueAt(row, col);
       String date = val.getYear() + "-"
-          + MyUsefulFunctions.padLeft(val.getMonth(), 2, "0") + "-"
-          + MyUsefulFunctions.padLeft(val.getDay(), 2, "0");
+              + MyUsefulFunctions.padLeft(val.getMonth(), 2, "0") + "-"
+              + MyUsefulFunctions.padLeft(val.getDay(), 2, "0");
+      if (MyUsefulFunctions.hasBeenAired(date, true)) {
+        try {
+          episodes.clear();
+          pop.removeAll();
+          episodes = DBHelper.getEpisodesBySql("SELECT * FROM episodes WHERE aired ='" + date + "' AND downloaded = " + EpisodesRecord.NOT_DOWNLOADED);
+          if (!episodes.isEmpty()) {
+            for (Iterator<EpisodesRecord> it = episodes.iterator(); it.hasNext();) {
+              EpisodesRecord ep = it.next();
+              SeriesRecord ser = DBHelper.getSeriesByID(ep.getSeries_ID());
+              pop.add(new ScheduleMenuItem(ser, ep));
+              // new EzTvForm(ser, ep);
+            }
 
-      try {
-        episodes.clear();
-        pop.removeAll();
-        episodes = DBHelper.getEpisodesBySql("SELECT * FROM episodes WHERE aired ='" + date + "' AND downloaded = " + EpisodesRecord.NOT_DOWNLOADED);
-        if (!episodes.isEmpty()) {
-          for (Iterator<EpisodesRecord> it = episodes.iterator(); it.hasNext();) {
-            EpisodesRecord ep = it.next();
-            SeriesRecord ser = DBHelper.getSeriesByID(ep.getSeries_ID());
-            pop.add(new ScheduleMenuItem(ser, ep));
-            // new EzTvForm(ser, ep);
+            pop.show(table, p.x, p.y);
           }
-
-          pop.show(table, p.x, p.y);
+        } catch (SQLException ex) {
+          myseries.MySeries.logger.log(Level.SEVERE, null, ex);
         }
-      } catch (SQLException ex) {
-        myseries.MySeries.logger.log(Level.SEVERE, null, ex);
       }
     }
   }

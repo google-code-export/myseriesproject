@@ -397,7 +397,7 @@ public class MyUsefulFunctions {
 
   /**
    * Checks if an episode has been eired
-   * @param aired The date that the episode is aired
+   * @param aired The date that the episode is aired (yyyy-mm-dd or dd/mm/yyyy)
    * @param includeToday 
    * @return True if it's aired or false
    */
