@@ -16,9 +16,6 @@ import database.EpisodesRecord;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -134,7 +131,7 @@ public class ScheduleDayPanel extends javax.swing.JPanel {
           orIm = getScaledImageIcon(getDefaultImage().getImage());
         }
       }
-      orIm = addDownloadStatus(orIm, event.getDownloaded());
+      orIm = addDownloadStatus(orIm, event.getDownloaded(),event.getSeen());
       eventLabel.setMaximumSize(new Dimension(orIm.getIconWidth(), orIm.getIconHeight()));
       eventLabel.setIcon(orIm);
       eventLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -185,11 +182,11 @@ public class ScheduleDayPanel extends javax.swing.JPanel {
     return im;
   }
 
-  private ImageIcon addDownloadStatus(ImageIcon orIm, int downloaded) {
+  private ImageIcon addDownloadStatus(ImageIcon orIm, int downloaded, int seen) {
     int imWidth = orIm.getIconWidth();
     int imHeight = orIm.getIconHeight();
     ImageIcon indicator = null;
-    if (downloaded == EpisodesRecord.DOWNLOADED) {
+    if (downloaded == EpisodesRecord.DOWNLOADED || seen == EpisodesRecord.SEEN) {
       indicator = getScaledImageIcon("/images/tick_big.png", imWidth, imHeight);
     } else {
       // indicator = getScaledImageIcon("/images/torrent.png", imWidth, imHeight);

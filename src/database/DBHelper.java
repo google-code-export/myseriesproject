@@ -223,7 +223,7 @@ public class DBHelper {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     String date = sdf.format(sDay.getDate());
     String sql = "SELECT series.screenshot as image, episodes.episode AS ep, episodes.title AS title , "
-        + "series.title AS series, episodes.downloaded AS downloaded FROM "
+        + "series.title AS series, episodes.downloaded AS downloaded, episodes.seen AS seen FROM "
         + "episodes JOIN series on episodes.series_ID = series.series_ID WHERE "
         + "aired = '" + date + "' AND deleted = 0";
     try {
@@ -235,6 +235,7 @@ public class DBHelper {
         ev.setEpisode(rs.getString("title"));
         ev.setImage(rs.getString("image"));
         ev.setDownloaded(rs.getInt("downloaded"));
+        ev.setSeen(rs.getInt("seen"));
         events.add(ev);
       }
       return events;
