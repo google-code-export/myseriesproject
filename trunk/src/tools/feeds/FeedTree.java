@@ -66,8 +66,8 @@ public class FeedTree extends javax.swing.JPanel {
         tree.setSelectionPath(selectedPath);
         node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
         if (node.isLeaf()) {
-          selectedLeaf = (FeedLeaf) node.getUserObject();
-          if (selectedLeaf.id > 0) {
+          setSelectedLeaf((FeedLeaf) node.getUserObject());
+          if (getSelectedLeaf().id > 0) {
             popup.show(this, evt.getX(), evt.getY());
           }
         }
@@ -192,7 +192,7 @@ public class FeedTree extends javax.swing.JPanel {
 
   private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
     if (MyMessages.question("Delete Feed", "Do you really want to delete this feed") == JOptionPane.YES_OPTION) {
-      boolean deleteById = FeedsRecord.deleteById(selectedLeaf.id);
+      boolean deleteById = FeedsRecord.deleteById(getSelectedLeaf().id);
       if (deleteById) {
         populate(-1);
       }
@@ -206,11 +206,11 @@ public class FeedTree extends javax.swing.JPanel {
   }//GEN-LAST:event_treeMouseReleased
 
   private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
-    FeedsActions.addFeedPanel(selectedLeaf.id);
+    FeedsActions.addFeedPanel(getSelectedLeaf().id);
   }//GEN-LAST:event_editActionPerformed
 
   private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
-    FeedsRecord feed = new FeedsRecord(selectedLeaf.id);
+    FeedsRecord feed = new FeedsRecord(getSelectedLeaf().id);
     FeedUpdater fu = new FeedUpdater(this, feed);
     Thread t = new Thread(fu);
     t.start();
@@ -258,5 +258,19 @@ public class FeedTree extends javax.swing.JPanel {
     FeedUpdater fu = new FeedUpdater(this, feeds);
     Thread t = new Thread(fu);
     t.start();
+  }
+
+  /**
+   * @return the selectedLeaf
+   */
+  public FeedLeaf getSelectedLeaf() {
+    return selectedLeaf;
+  }
+
+  /**
+   * @param selectedLeaf the selectedLeaf to set
+   */
+  public void setSelectedLeaf(FeedLeaf selectedLeaf) {
+    this.selectedLeaf = selectedLeaf;
   }
 }
