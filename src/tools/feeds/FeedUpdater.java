@@ -14,6 +14,7 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
+import javax.swing.tree.DefaultMutableTreeNode;
 import myComponents.MyMessages;
 import tools.options.Options;
 
@@ -44,12 +45,23 @@ public class FeedUpdater implements Runnable {
       update(feedRecord);
     }
     myseries.MySeries.glassPane.deactivate();
+    
     int[] sel = myseries.MySeries.feedTree.tree.getSelectionRows();
-    if(sel == null || sel[0]==0){
+    myseries.MySeries.feedTree.tree.setSelectionRow(0);
+    if (sel == null || sel[0] == 0) {
       myseries.MySeries.feedTree.tree.setSelectionRow(1);
     } else {
       myseries.MySeries.feedTree.tree.setSelectionRow(sel[0]);
     }
+//    FeedTree ftree = myseries.MySeries.feedTree;
+//    DefaultMutableTreeNode node = (DefaultMutableTreeNode) ftree.tree.getSelectionPath().getLastPathComponent();
+//    if (node.isLeaf()) {
+//      if (node.getUserObject() instanceof FeedLeaf) {
+//        FeedLeaf leaf = (FeedLeaf) node.getUserObject();
+//        FeedsRecord feed = new FeedsRecord(leaf.id);
+//        FeedReader fr = new FeedReader(myseries.MySeries.feedTree, feed);
+//      }
+//    }
   }
 
   private void update(FeedsRecord feed) {
@@ -62,8 +74,8 @@ public class FeedUpdater implements Runnable {
       buf = new byte[1024];
       int ByteRead;
       int ByteWritten = 0;
-      String filename = Options._USER_DIR_ +Feed.FEEDS_PATH + feed.getFeed_ID();
-      outStream = new BufferedOutputStream(new FileOutputStream( filename));
+      String filename = Options._USER_DIR_ + Feed.FEEDS_PATH + feed.getFeed_ID();
+      outStream = new BufferedOutputStream(new FileOutputStream(filename));
       while ((ByteRead = is.read(buf)) != -1) {
         outStream.write(buf, 0, ByteRead);
         ByteWritten += ByteRead;
