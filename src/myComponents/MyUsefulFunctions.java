@@ -772,8 +772,8 @@ public class MyUsefulFunctions {
   }
 
   private static String getBaseName(File file, int type) {
-    if (file == null) {
-      return null;
+    if (file == null || file.isDirectory()) {
+      return "";
     }
     String name = file.getName();
     if (type == VIDEO_FILE) {

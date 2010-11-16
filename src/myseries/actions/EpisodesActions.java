@@ -150,13 +150,16 @@ public class EpisodesActions {
               ext = tokens[tokens.length - 2] + "." + tokens[tokens.length - 1];
             }
           }
-
+          String sample = "";
+          if (name.indexOf("sample") > -1) {
+            sample = "_sample";
+          }
           String newFilename = series.getTitle()
-              + Options.toString(Options.SEASON_SEPARATOR, false) + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0")
-              + Options.toString(Options.EPISODE_SEPARATOR, false) + MyUsefulFunctions.padLeft(episodeRecord.getEpisode(), 2, "0")
-              + Options.toString(Options.TITLE_SEPARATOR, false) + episodeRecord.getTitle();
+                  + Options.toString(Options.SEASON_SEPARATOR, false) + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0")
+                  + Options.toString(Options.EPISODE_SEPARATOR, false) + MyUsefulFunctions.padLeft(episodeRecord.getEpisode(), 2, "0")
+                  + Options.toString(Options.TITLE_SEPARATOR, false) + episodeRecord.getTitle();
 
-          String newName = path + "/" + newFilename + "." + ext;
+          String newName = path + "/" + newFilename + sample + "." + ext;
           File newFile = new File(newName);
           oldNames.add(files[i]);
           newNames.add(episodeRecord);
@@ -206,12 +209,17 @@ public class EpisodesActions {
                 }
               }
 
-              String newFilename = series.getTitle()
-                  + Options.toString(Options.SEASON_SEPARATOR, false) + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0")
-                  + Options.toString(Options.EPISODE_SEPARATOR, false) + MyUsefulFunctions.padLeft(episodesRecord.getEpisode(), 2, "0")
-                  + Options.toString(Options.TITLE_SEPARATOR, false) + episodesRecord.getTitle();
+              String sample = "";
+              if (name.indexOf("sample") > -1) {
+                sample = "_sample";
+              }
 
-              String newName = path + "/" + newFilename + "." + ext;
+              String newFilename = series.getTitle()
+                      + Options.toString(Options.SEASON_SEPARATOR, false) + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0")
+                      + Options.toString(Options.EPISODE_SEPARATOR, false) + MyUsefulFunctions.padLeft(episodesRecord.getEpisode(), 2, "0")
+                      + Options.toString(Options.TITLE_SEPARATOR, false) + episodesRecord.getTitle();
+
+              String newName = path + "/" + newFilename + sample + "." + ext;
               File newFile = new File(newName);
               oldNames.add(files[i]);
               newNames.add(episodesRecord);
@@ -263,11 +271,11 @@ public class EpisodesActions {
       }
       if (link != null && !link.equals("")) {
         TvSubtitlesForm d = new TvSubtitlesForm(
-            SubtitleConstants.TV_SUBTITLES_URL + "tvshow-" + link + ".html",
-            Series.getCurrentSerial().getSeason(),
-            Episodes.getCurrentEpisode().getEpisode(),
-            Series.getCurrentSerial().getLocalDir(),
-            Episodes.getCurrentEpisode().getTitle());
+                SubtitleConstants.TV_SUBTITLES_URL + "tvshow-" + link + ".html",
+                Series.getCurrentSerial().getSeason(),
+                Episodes.getCurrentEpisode().getEpisode(),
+                Series.getCurrentSerial().getLocalDir(),
+                Episodes.getCurrentEpisode().getTitle());
       }
     } else if (site.equals(SubtitleConstants.SUBTITLE_ONLINE_NAME)) {
       String sOnlineCode = Series.getCurrentSerial().getSOnlineCode().trim();
@@ -298,11 +306,11 @@ public class EpisodesActions {
 
   private static void getSOnlineSubtitle(String sOnlineCode) {
     SOnlineForm d = new SOnlineForm(
-        sOnlineCode,
-        Series.getCurrentSerial().getSeason(),
-        Episodes.getCurrentEpisode().getEpisode(),
-        Series.getCurrentSerial().getLocalDir(),
-        Episodes.getCurrentEpisode().getTitle());
+            sOnlineCode,
+            Series.getCurrentSerial().getSeason(),
+            Episodes.getCurrentEpisode().getEpisode(),
+            Series.getCurrentSerial().getLocalDir(),
+            Episodes.getCurrentEpisode().getTitle());
   }
 
   public static void downloadEpisodesTorrent(String site) {
