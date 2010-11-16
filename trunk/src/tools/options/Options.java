@@ -48,7 +48,7 @@ public class Options {
   public static final int _TOTAL_COLUMNS_ = 16;
   /**
    * The regex to use for finding episodes
-   * "(([ xeEX]|(ep)|(EP))|(([ xeEX]|(ep)|(EP))\\d*([- &])))0*"
+   * " ?((?i)([ xe-]|(ep)|)?|(([ xe-]|(ep))?\\d*([- &])))0*"
    */
   public static String _REGEX_ = " ?((?i)([ xe-]|(ep)|)?|(([ xe-]|(ep))?\\d*([- &])))0*";
   /**
