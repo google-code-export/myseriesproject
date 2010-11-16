@@ -633,7 +633,10 @@ public class MyUsefulFunctions {
     for (Iterator<File> it = videos.iterator(); it.hasNext();) {
       String file = it.next().getName();
       String type = file.substring(file.length() - 3, file.length());
-      if (type.equals(MyDownloadedCellRenderer.AVI)) {
+
+      if(file.indexOf(MyDownloadedCellRenderer.SAMPLE) > -1) {
+        types[i++] = MyDownloadedCellRenderer.SAMPLE;
+      } else if(type.equals(MyDownloadedCellRenderer.AVI)) {
         types[i++] = MyDownloadedCellRenderer.AVI;
       } else if (type.equals(MyDownloadedCellRenderer.MKV)) {
         types[i++] = MyDownloadedCellRenderer.MKV;

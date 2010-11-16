@@ -23,6 +23,7 @@ public class MyDownloadedCellRenderer extends DefaultTableCellRenderer {
   private static final long serialVersionUID = 7897867559L;
   public static final String AVI = "avi";
   public static final String MKV = "mkv";
+  public static final String SAMPLE = "sample";
   public static final String OTHER = "other";
   public static final String NONE = "none";
   public static final int IMAGE_WIDTH = 27;
