@@ -214,6 +214,10 @@ public class Options {
    */
   public static String FEED_COLUMNS = "FEED_COLUMNS";
   /**
+   * The application used to open video files
+   */
+  public static String VIDEO_APP = "VIDEO_APP";
+  /**
    * An array of the options that are selected in combo boxes
    */
   public static String[] _COMBO_OPTIONS_ = {DATE_FORMAT, DEBUG_MODE, LOOK_AND_FEEL,
@@ -499,6 +503,7 @@ public class Options {
     out.println(Options.TOOLBAR_POSITION + " =1");
     out.println(Options.TOOLBAR_BUTTONS + "=" + getDefaultToolbarButtons());
     out.println(Options.FEED_COLUMNS + "=" + 2);
+    out.println(Options.VIDEO_APP + "=");
 
     out.close();
   }
@@ -572,6 +577,7 @@ public class Options {
     options.put(Options.TOOLBAR_BUTTONS, getDefaultToolbarButtons());
     options.put(Options.FEED_DIVIDER_LOCATION, 250);
     options.put(Options.FEED_COLUMNS, 2);
+    options.put(Options.VIDEO_APP, "");
   }
 
   private Options() {
