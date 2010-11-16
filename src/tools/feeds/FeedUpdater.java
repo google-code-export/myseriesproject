@@ -53,15 +53,6 @@ public class FeedUpdater implements Runnable {
     } else {
       myseries.MySeries.feedTree.tree.setSelectionRow(sel[0]);
     }
-//    FeedTree ftree = myseries.MySeries.feedTree;
-//    DefaultMutableTreeNode node = (DefaultMutableTreeNode) ftree.tree.getSelectionPath().getLastPathComponent();
-//    if (node.isLeaf()) {
-//      if (node.getUserObject() instanceof FeedLeaf) {
-//        FeedLeaf leaf = (FeedLeaf) node.getUserObject();
-//        FeedsRecord feed = new FeedsRecord(leaf.id);
-//        FeedReader fr = new FeedReader(myseries.MySeries.feedTree, feed);
-//      }
-//    }
   }
 
   private void update(FeedsRecord feed) {
