@@ -64,7 +64,7 @@ public class RenameEpisodes extends MyDraggable {
    * @param series The series record
    */
   public RenameEpisodes(ArrayList<File> oldNames,
-      ArrayList<EpisodesRecord> newNames, SeriesRecord series) {
+          ArrayList<EpisodesRecord> newNames, SeriesRecord series) {
     this.oldNames = oldNames;
     this.newNames = newNames;
     this.series = series;
@@ -452,14 +452,19 @@ public class RenameEpisodes extends MyDraggable {
       }
     }
 
+    String sample = "";
+    if (oldFile.getName().indexOf("sample") > -1) {
+      sample = "_sample";
+    }
+
     String newFilename = series.getTitle() + textfield_season.getText()
-        + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0")
-        + textfield_episode.getText()
-        + MyUsefulFunctions.padLeft(episode.getEpisode(), 2, "0")
-        + textfield_title.getText() + episode.getTitle();
+            + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0")
+            + textfield_episode.getText()
+            + MyUsefulFunctions.padLeft(episode.getEpisode(), 2, "0")
+            + textfield_title.getText() + episode.getTitle();
 
     String newName = series.getLocalDir() + "/"
-        + newFilename.replaceAll("[\\Q/\\?%*:|\"<>.;\\E]", "") + "." + ext;
+            + newFilename.replaceAll("[\\Q/\\?%*:|\"<>.;\\E]", "") + sample + "." + ext;
     return new File(newName);
   }
 }
