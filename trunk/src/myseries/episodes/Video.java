@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import myComponents.MyMessages;
 import myComponents.myFileFilters.VideoFilter;
+import tools.options.Options;
 
 /**
  * Episode video helper class
@@ -76,7 +77,14 @@ public class Video {
    */
   public static void playVideo(File video) {
     try {
-      Desktop.getDesktop().open(video);
+      String app = Options.toString(Options.VIDEO_APP);
+      if(app.equals("")){
+        Desktop.getDesktop().open(video);
+      } else {
+        Runtime rtime = Runtime.getRuntime();
+        String command = "\""+app + "\" \"" + video.getAbsolutePath()+"\"";
+        rtime.exec(command);
+      }
       EpisodesRecord ep = Episodes.getCurrentEpisode();
       ep.setSeen(1);
       ep.save();
