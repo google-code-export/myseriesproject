@@ -122,7 +122,13 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
     label_title.setFont(label_title.getFont().deriveFont(label_title.getFont().getStyle() | java.awt.Font.BOLD));
     label_title.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     label_title.setText("jLabel1");
+    label_title.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     label_title.setOpaque(true);
+    label_title.addMouseListener(new java.awt.event.MouseAdapter() {
+      public void mouseReleased(java.awt.event.MouseEvent evt) {
+        label_titleMouseReleased(evt);
+      }
+    });
 
     label_date.setFont(label_date.getFont().deriveFont((label_date.getFont().getStyle() | java.awt.Font.ITALIC) | java.awt.Font.BOLD, label_date.getFont().getSize()-1));
     label_date.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -170,12 +176,12 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
         .addContainerGap()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addComponent(scroll, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
+          .addComponent(scroll, javax.swing.GroupLayout.Alignment.LEADING)
           .addComponent(label_date, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
             .addComponent(label_id)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(label_title, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
+            .addComponent(label_title, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(bt_link, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -192,7 +198,7 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
           .addComponent(bt_max)
           .addComponent(bt_link))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+        .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(label_date, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE))
     );
@@ -233,6 +239,10 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
     feedPanel.validate();
     feedPanel.repaint();
   }//GEN-LAST:event_bt_maxActionPerformed
+
+  private void label_titleMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_titleMouseReleased
+    bt_maxActionPerformed(null);
+  }//GEN-LAST:event_label_titleMouseReleased
 
   public void selectFeed() {
   }
