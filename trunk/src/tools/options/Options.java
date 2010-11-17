@@ -502,7 +502,7 @@ public class Options {
     out.println(Options.EPISODE_SEPARATOR + " =x");
     out.println(Options.TOOLBAR_POSITION + " =1");
     out.println(Options.TOOLBAR_BUTTONS + "=" + getDefaultToolbarButtons());
-    out.println(Options.FEED_COLUMNS + "=" + 2);
+    out.println(Options.FEED_COLUMNS + "=" + 1);
     out.println(Options.VIDEO_APP + "=");
 
     out.close();
@@ -550,12 +550,12 @@ public class Options {
   private static void loadDefaultOptions() {
     options.put(Options.DB_NAME, "");
     options.put(Options.DEBUG_MODE, new Integer(0));
-    options.put(Options.MODAL, new Boolean(true));
+    options.put(Options.MODAL, true);
     options.put(Options.DATE_FORMAT, "dd/MM/yyyy");
     options.put(Options.LOOK_AND_FEEL, "");
     options.put(Options.SKIN_COLOR, "240,240,240");
-    options.put(Options.USE_SKIN, new Boolean(true));
-    options.put(Options.USE_PROXY, new Boolean(false));
+    options.put(Options.USE_SKIN, true);
+    options.put(Options.USE_PROXY, false);
     options.put(Options.PROXY_HOST, "");
     options.put(Options.PROXY_PORT, "");
     options.put(Options.DIVIDER_LOCATION, new Integer(250));
@@ -565,18 +565,19 @@ public class Options {
     options.put(Options.WINDOW_STATE, JFrame.NORMAL);
     options.put(Options.WIDTH, new Integer(1000));
     options.put(Options.HEIGHT, new Integer(600));
-    options.put(Options.CHECK_VERSION, new Boolean(true));
+    options.put(Options.CHECK_VERSION, true);
     options.put(Options.PRIMARY_SUB, "Greek");
     options.put(Options.SECONDARY_SUB, "English");
     options.put(Options.SUBTITLE_SITE, SubtitleConstants.SUBTITLE_ONLINE_NAME);
-    options.put(Options.AUTO_FILE_UPDATING, new Boolean(true));
+    options.put(Options.AUTO_FILE_UPDATING, true);
     options.put(Options.SEASON_SEPARATOR, " SE");
     options.put(Options.TITLE_SEPARATOR, "  - ");
     options.put(Options.EPISODE_SEPARATOR, " x");
     options.put(Options.TOOLBAR_POSITION, new Integer(0));
     options.put(Options.TOOLBAR_BUTTONS, getDefaultToolbarButtons());
     options.put(Options.FEED_DIVIDER_LOCATION, 250);
-    options.put(Options.FEED_COLUMNS, 2);
+    options.put(Options.FEED_COLUMNS, 1);
+    options.put(Options.UNIFIED_SERIES, false);
     options.put(Options.VIDEO_APP, "");
   }
 
