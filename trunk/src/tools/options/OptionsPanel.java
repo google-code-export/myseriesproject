@@ -46,7 +46,6 @@ import com.googlecode.svalidators.validators.PositiveNumberValidator;
 import com.googlecode.svalidators.validators.RegularExpressionValidator;
 import com.googlecode.svalidators.validators.SValidator;
 import help.HelpWindow;
-import java.awt.Desktop;
 import java.io.File;
 import javax.swing.JFileChooser;
 import tools.LookAndFeels;
@@ -966,8 +965,6 @@ public class OptionsPanel extends MyDraggable {
       String app = sel.getAbsolutePath();
       tf_videoApp.setText(app);
     }
-
-
   }//GEN-LAST:event_jButton1ActionPerformed
 
   private Font getSelectedFont() {

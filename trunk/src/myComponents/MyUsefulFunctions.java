@@ -34,6 +34,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.Random;
@@ -319,11 +320,11 @@ public class MyUsefulFunctions {
         System.exit(0);
       } else {
         name = JOptionPane.showInputDialog(null,
-                message,
-                title,
-                JOptionPane.PLAIN_MESSAGE,
-                null,
-                files, files[0]);
+            message,
+            title,
+            JOptionPane.PLAIN_MESSAGE,
+            null,
+            files, files[0]);
 
         return String.valueOf(name);
       }
@@ -634,9 +635,9 @@ public class MyUsefulFunctions {
       String file = it.next().getName();
       String type = file.substring(file.length() - 3, file.length());
 
-      if(file.indexOf(MyDownloadedCellRenderer.SAMPLE) > -1) {
+      if (file.indexOf(MyDownloadedCellRenderer.SAMPLE) > -1) {
         types[i++] = MyDownloadedCellRenderer.SAMPLE;
-      } else if(type.equals(MyDownloadedCellRenderer.AVI)) {
+      } else if (type.equals(MyDownloadedCellRenderer.AVI)) {
         types[i++] = MyDownloadedCellRenderer.AVI;
       } else if (type.equals(MyDownloadedCellRenderer.MKV)) {
         types[i++] = MyDownloadedCellRenderer.MKV;
@@ -756,15 +757,15 @@ public class MyUsefulFunctions {
       for (Iterator<File> it1 = subs.iterator(); it1.hasNext();) {
         File sub = it1.next();
         String subBaseName = getBaseName(sub, SUBTITLE_FILE);
-        if(videoBaseName.equals(subBaseName)){
-          results[i] =true;
+        if (videoBaseName.equals(subBaseName)) {
+          results[i] = true;
         }
       }
       i++;
     }
     for (int j = 0; j < results.length; j++) {
       boolean b = results[j];
-      if(!b){
+      if (!b) {
         return false;
       }
     }
@@ -780,10 +781,10 @@ public class MyUsefulFunctions {
       return name.substring(0, name.lastIndexOf("."));
     } else {
       // when theres no lang string interface name
-      if(name.matches(".*\\..{2}\\..{3}")){
-        return name.substring(0, name.length()-7);
-      }else {
-        return name.substring(0, name.length()-4);
+      if (name.matches(".*\\..{2}\\..{3}")) {
+        return name.substring(0, name.length() - 7);
+      } else {
+        return name.substring(0, name.length() - 4);
       }
     }
   }
@@ -826,6 +827,12 @@ public class MyUsefulFunctions {
     } catch (URISyntaxException ex) {
       MyMessages.error("Open browser", "This is not a valid url");
     }
+  }
+
+  public static void removeDuplicate(ArrayList<Object> arlList) {
+    HashSet<Object> h = new HashSet<Object>(arlList);
+    arlList.clear();
+    arlList.addAll(h);
   }
 
   private MyUsefulFunctions() {
