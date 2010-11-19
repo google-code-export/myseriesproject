@@ -11,6 +11,7 @@
 package tools.feeds;
 
 import com.sun.syndication.feed.synd.SyndContentImpl;
+import com.sun.syndication.feed.synd.SyndEnclosureImpl;
 import com.sun.syndication.feed.synd.SyndEntryImpl;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -51,6 +52,7 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
   private String content = "";
   private String contentType = "text";
   private String TextContent = "";
+  private SyndEnclosureImpl enclosure;
   public static final int TITLE_MAX_LENGTH = 30;
   public static final int MINIMIZED = 0;
   public static final int MAXIMIZED = 1;
@@ -77,7 +79,7 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
       @Override
       public void hyperlinkUpdate(HyperlinkEvent e) {
         if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-         MyUsefulFunctions.browse(e.getURL());
+          MyUsefulFunctions.browse(e.getURL());
         }
       }
     });
@@ -113,6 +115,7 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
     bt_link = new javax.swing.JButton();
     bt_max = new javax.swing.JButton();
     label_id = new javax.swing.JLabel();
+    bt_att = new javax.swing.JButton();
 
     setBackground(new java.awt.Color(255, 255, 255));
     setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -169,6 +172,20 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
 
     label_id.setText("jLabel1");
 
+    bt_att.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/attachment.png"))); // NOI18N
+    bt_att.setToolTipText("Download attachment");
+    bt_att.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+    bt_att.setBorderPainted(false);
+    bt_att.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    bt_att.setIconTextGap(0);
+    bt_att.setMargin(new java.awt.Insets(0, 0, 0, 0));
+    bt_att.setOpaque(false);
+    bt_att.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        bt_attActionPerformed(evt);
+      }
+    });
+
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
     this.setLayout(layout);
     layout.setHorizontalGroup(
@@ -178,10 +195,12 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
           .addComponent(scroll, javax.swing.GroupLayout.Alignment.LEADING)
           .addComponent(label_date, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+          .addGroup(layout.createSequentialGroup()
             .addComponent(label_id)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(label_title, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+            .addComponent(label_title, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(bt_att, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(bt_link, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -191,14 +210,15 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addGap(13, 13, 13)
+        .addContainerGap()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
           .addComponent(label_id)
           .addComponent(label_title)
           .addComponent(bt_max)
-          .addComponent(bt_link))
+          .addComponent(bt_link)
+          .addComponent(bt_att))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
+        .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(label_date, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE))
     );
@@ -206,7 +226,7 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
 
   private void bt_linkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_linkActionPerformed
     MyUsefulFunctions.browse(uri);
-    
+
   }//GEN-LAST:event_bt_linkActionPerformed
 
   private void bt_maxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_maxActionPerformed
@@ -244,9 +264,14 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
     bt_maxActionPerformed(null);
   }//GEN-LAST:event_label_titleMouseReleased
 
+  private void bt_attActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_attActionPerformed
+    MyUsefulFunctions.browse(enclosure.getUrl());
+  }//GEN-LAST:event_bt_attActionPerformed
+
   public void selectFeed() {
   }
   // Variables declaration - do not modify//GEN-BEGIN:variables
+  private javax.swing.JButton bt_att;
   private javax.swing.JButton bt_link;
   private javax.swing.JButton bt_max;
   private javax.swing.JEditorPane ep_content;
@@ -279,6 +304,7 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
     TextContent = getTextContent();
     contentType = getContentType();
     uri = getUri();
+    enclosure = getEnclosure();
   }
 
   private String getDate() {
@@ -370,5 +396,18 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
 
   private void setCursorPosition() {
     ep_content.setCaretPosition(0);
+  }
+
+  private SyndEnclosureImpl getEnclosure() {
+    if (!entry.getEnclosures().isEmpty()) {
+      SyndEnclosureImpl enc = (SyndEnclosureImpl) entry.getEnclosures().get(0);
+      long size = enc.getLength();
+      String type = enc.getType();
+      bt_att.setToolTipText(type + " " + MyUsefulFunctions.createFileSize(size));
+      return enc;
+    } else {
+      bt_att.setVisible(false);
+      return null;
+    }
   }
 }
