@@ -39,6 +39,10 @@ public interface SubtitleConstants {
    */
   public static final String BOTH = "Both";
   /**
+   * The subtitle unaware state
+   */
+  public static String UNAWARE = "";
+  /**
    * The tv subtitles name : "Tvsubtitles.net"
    */
   public static final String TV_SUBTITLES_NAME = "TvSubtitles.net";
@@ -54,5 +58,6 @@ public interface SubtitleConstants {
    * The subtitle online url : "http://www.subtitleonline.com/"
    */
   public static String SUBTITLE_ONLINE_URL = "http://www.subtitleonline.com/";
+
 
 }

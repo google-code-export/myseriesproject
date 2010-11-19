@@ -252,6 +252,8 @@ public class Filters {
         return " AND (subs = " + myseries.MySeries.languages.getPrimary().getId() + " OR subs = " + myseries.MySeries.languages.getSecondary().getId() + ")";
       case 5:
         return " AND subs <> " + myseries.MySeries.languages.getPrimary().getId();
+      case 6:
+        return "";
     }
     return "";
 
