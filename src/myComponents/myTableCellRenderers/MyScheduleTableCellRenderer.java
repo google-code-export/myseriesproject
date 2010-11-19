@@ -34,8 +34,8 @@ public class MyScheduleTableCellRenderer extends SchedulerCellRenderer {
     panel = new ScheduleDayPanel(value, dayLabel, cellHeight, cellWidth);
     panel.setBorder(BorderFactory.createEmptyBorder());
     if (isSelected) {
-      panel.setBackground(Skin.getColor_5());
-      dayLabel.setForeground(Skin.getColor_1());
+      panel.setBackground(Skin.getSkinColor());
+      dayLabel.setForeground(Skin.getColor_5());
     } else {
       panel.setBackground(Skin.getColor_1());
       dayLabel.setForeground(dayLabel.getForeground());
@@ -43,7 +43,8 @@ public class MyScheduleTableCellRenderer extends SchedulerCellRenderer {
     if (value instanceof ScheduleDay) {
       ScheduleDay s = (ScheduleDay) value;
       if (Calendar.getInstance().get(Calendar.DATE) == s.getDay()) {
-        panel.setBackground(Skin.getSkinColor());
+        panel.setBackground(Skin.getColor_5());
+        dayLabel.setForeground(Skin.getColor_1());
       }
     }
 
