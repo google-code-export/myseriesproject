@@ -821,9 +821,13 @@ public class MyUsefulFunctions {
    * Browse a url
    * @param url The url
    */
-  public static void browse(String url) {
+  public static void browse(String strUrl) {
     try {
-      browse(new URI(url));
+      URL url = new URL(strUrl);
+      URI uri = new URI(url.getProtocol(), url.getHost(), url.getPath(), url.getQuery(), null);
+      browse(uri);
+    } catch (MalformedURLException ex) {
+      MyMessages.error("Open browser", "This is not a valid url");
     } catch (URISyntaxException ex) {
       MyMessages.error("Open browser", "This is not a valid url");
     }
