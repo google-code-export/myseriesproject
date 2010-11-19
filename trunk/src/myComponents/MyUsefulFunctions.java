@@ -811,9 +811,10 @@ public class MyUsefulFunctions {
    */
   public static void browse(URL url) {
     try {
-      browse(url.toURI());
+      URI uri = new URI(url.getProtocol(), url.getHost(), url.getPath(), url.getQuery(), null);
+      browse(uri);
     } catch (URISyntaxException ex) {
-      MyMessages.error("Open browser", "This is not a valid url");
+      MyMessages.error("Open browser", url+ "\nThis is not a valid url");
     }
   }
 
@@ -827,9 +828,9 @@ public class MyUsefulFunctions {
       URI uri = new URI(url.getProtocol(), url.getHost(), url.getPath(), url.getQuery(), null);
       browse(uri);
     } catch (MalformedURLException ex) {
-      MyMessages.error("Open browser", "This is not a valid url");
+      MyMessages.error("Open browser", strUrl+ "\nThis is not a valid url");
     } catch (URISyntaxException ex) {
-      MyMessages.error("Open browser", "This is not a valid url");
+      MyMessages.error("Open browser", strUrl+ "\nThis is not a valid url");
     }
   }
 
