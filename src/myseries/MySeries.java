@@ -1886,7 +1886,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
               languages.getSecondary().getName(),
               SubtitleConstants.BOTH,
               languages.getPrimary().getName() + " or " + languages.getSecondary().getName(),
-              "Not " + languages.getPrimary().getName()
+              "Not " + languages.getPrimary().getName(),
+              SubtitleConstants.UNAWARE
             }));
   }
 
