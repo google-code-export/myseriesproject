@@ -154,9 +154,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
   private Integer[] filtersTableWidths;
   public static LangsList languages;
   private static int CELL_MARGIN = 3;
-  public static int TAB_SERIES = 0;
-  public static int TAB_FILTERS = 1;
-  public static int TAB_STATISTICS = 2;
   public StatSeries table_stat_series;
   public StatEpisodes table_stat_episodes;
   public static boolean isHelp = false;
