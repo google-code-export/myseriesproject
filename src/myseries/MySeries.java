@@ -912,15 +912,14 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
       }
     });
 
-    combobox_downloaded.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Not downloaded", "Downloaded", "" }));
-    combobox_downloaded.setSelectedIndex(1);
+    combobox_downloaded.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "No Video File", "With Video File", " " }));
     combobox_downloaded.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         combobox_downloadedActionPerformed(evt);
       }
     });
 
-    comboBox_seen.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Not Seen", "Seen", "" }));
+    comboBox_seen.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Not Watched", "Watched", " " }));
     comboBox_seen.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         comboBox_seenActionPerformed(evt);
