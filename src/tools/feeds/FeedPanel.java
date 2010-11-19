@@ -13,26 +13,23 @@ package tools.feeds;
 import com.sun.syndication.feed.synd.SyndContentImpl;
 import com.sun.syndication.feed.synd.SyndEnclosureImpl;
 import com.sun.syndication.feed.synd.SyndEntryImpl;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FontMetrics;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JEditorPane;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
-import myComponents.MyMessages;
+import javax.swing.text.EditorKit;
+import javax.swing.text.html.HTMLDocument;
+import javax.swing.text.html.HTMLEditorKit;
+import javax.swing.text.html.StyleSheet;
 import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyScrollableFlowPanel;
-import tools.DesktopSupport;
 import tools.options.Options;
 
 /**
@@ -83,6 +80,17 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
         }
       }
     });
+  }
+
+  private void getData() {
+    title = entry.getTitle();
+    titleCut = getTitleCut();
+    date = getDate();
+    enclosure = getEnclosure();
+    contentType = getContentType();
+    content = getContent();
+    TextContent = getTextContent();
+    uri = getUri();
   }
 
   private void getWidths(int size) {
@@ -140,6 +148,7 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
     scroll.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
     ep_content.setEditable(false);
+    ep_content.setEditorKit(new HTMLEditorKit());
     scroll.setViewportView(ep_content);
 
     bt_link.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/weblink.png"))); // NOI18N
@@ -193,7 +202,7 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
         .addContainerGap()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addComponent(scroll, javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(scroll, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
           .addComponent(label_date, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addGroup(layout.createSequentialGroup()
             .addComponent(label_id)
@@ -296,17 +305,6 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
     feedPanel.repaint();
   }
 
-  private void getData() {
-    title = entry.getTitle();
-    titleCut = getTitleCut();
-    date = getDate();
-    content = getContent();
-    TextContent = getTextContent();
-    contentType = getContentType();
-    uri = getUri();
-    enclosure = getEnclosure();
-  }
-
   private String getDate() {
     DateFormat df = new SimpleDateFormat(Options.toString(Options.DATE_FORMAT));
     if (entry.getPublishedDate() != null) {
@@ -319,16 +317,34 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
   }
 
   private String getContent() {
+    String cont = "";
     if (entry.getDescription() != null) {
-      return entry.getDescription().getValue();
+      cont = entry.getDescription().getValue();
     } else {
       List con = entry.getContents();
       if (con.size() > 0) {
         SyndContentImpl synd = (SyndContentImpl) con.get(0);
-        return synd.getValue();
+        cont =  synd.getValue();
       }
     }
-    return "";
+    if(enclosure!=null){
+      cont += addEnclosure();
+    }
+    return cont;
+  }
+
+  private String addEnclosure(){
+    HTMLEditorKit kit = (HTMLEditorKit) ep_content.getEditorKit();
+    StyleSheet css = kit.getStyleSheet();
+    css.addRule("div {background-color:#DDDDDD;margin:10px;padding:10px;}");
+    String e = "<div>";
+    String img = getClass().getResource("/images/attachment.png").toString();
+    e += "<a href='"+enclosure.getUrl()+"'><img border=0 src='"+img+"'></a>";
+    e +="&nbsp;&nbsp;&nbsp;";
+    e += "<b>"+enclosure.getUrl() + "</b> " + MyUsefulFunctions.createFileSize(enclosure.getLength());
+    e += "</div>";
+
+    return e;
   }
 
   private String getContentType() {
