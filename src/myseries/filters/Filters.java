@@ -15,6 +15,7 @@ import java.util.Vector;
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 import myComponents.MyTableModels.MyFilteredSeriesTableModel;
+import myComponents.MyUsefulFunctions;
 import tools.download.subtitles.Subtitle;
 import tools.languages.LangsList;
 import tools.languages.Language;
@@ -150,7 +151,8 @@ public class Filters {
     String sql = "SELECT e.* FROM episodes e JOIN series s on "
         + "e.series_ID = s.series_ID WHERE s.hidden = "
         + SeriesRecord.NOT_HIDDEN + " AND s.deleted = "
-        + SeriesRecord.NOT_DELETED + " " + where + " ORDER BY aired ASC";
+        + SeriesRecord.NOT_DELETED + " AND aired < date( julianday(date('now'))) AND aired <> '0000-00-00' "
+        + where + " ORDER BY aired ASC";
     ResultSet rs = DBConnection.stmt.executeQuery(sql);
     SeriesRecord ser;
     while (rs.next()) {

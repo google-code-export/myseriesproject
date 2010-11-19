@@ -142,12 +142,14 @@ public class ApplicationActions {
     JTabbedPane tabs = (JTabbedPane) evt.getSource();
     int index = tabs.getSelectedIndex();
     try {
-      if (index == MySeries.TAB_SERIES) {
-      } else if (index == MySeries.TAB_FILTERS) {
+      if (index == MySeries.TABS_PANEL_EPISODES) {
+      } else if (index == MySeries.TABS_PANEL_FILTERS) {
         Filters.getFilteredSeries();
-      } else if (index == MySeries.TAB_STATISTICS) {
+      } else if (index == MySeries.TABS_PANEL_RATINGS) {
         MySeries.statSeries.refresh(Options.toBoolean(Options.UNIFIED_SERIES));
         MySeries.statEpisodes.refresh();
+      } else if (index == MySeries.TABS_PANEL_SCHEDULE) {
+        //MySeries.scheduler.refreshCalendar(MySeries.scheduler.getRealMonth(),MySeries.scheduler.getRealYear());
       }
 
     } catch (SQLException ex) {
