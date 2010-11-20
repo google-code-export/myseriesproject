@@ -840,6 +840,15 @@ public class MyUsefulFunctions {
     arlList.addAll(h);
   }
 
+  public static String getBaseUrl(String url) {
+    try {
+      URL u = new URL(url);
+      return u.getHost();
+    } catch (MalformedURLException ex) {
+      return url;
+    }
+  }
+
   private MyUsefulFunctions() {
   }
 }

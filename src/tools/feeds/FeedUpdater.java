@@ -6,7 +6,6 @@ package tools.feeds;
 
 import database.FeedsRecord;
 import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,7 +14,6 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
-import javax.swing.tree.DefaultMutableTreeNode;
 import myComponents.MyMessages;
 import tools.options.Options;
 
@@ -41,8 +39,10 @@ public class FeedUpdater implements Runnable {
   public void run() {
     myseries.MySeries.tabsPanel.setSelectedIndex(myseries.MySeries.TABS_PANEL_FEEDS);
     myseries.MySeries.glassPane.activate(null);
+    int id = -1;
     for (Iterator<FeedsRecord> it = feeds.iterator(); it.hasNext();) {
       FeedsRecord feedRecord = it.next();
+      id = feedRecord.getFeed_ID();
       update(feedRecord);
     }
     myseries.MySeries.glassPane.deactivate();
@@ -75,6 +75,7 @@ public class FeedUpdater implements Runnable {
       is.close();
       outStream.close();
     } catch (IOException ex) {
+      //MyMessages.error("Feed reader", "Could not read feed from: " + feed.getUrl());
       myseries.MySeries.logger.log(Level.SEVERE, null, ex);
     }
   }

@@ -83,6 +83,7 @@ public class Video {
       } else {
         Runtime rtime = Runtime.getRuntime();
         String command = "\""+app + "\" \"" + video.getAbsolutePath()+"\"";
+        myseries.MySeries.logger.log(Level.INFO, "Executing command {0}", command);
         rtime.exec(command);
       }
       EpisodesRecord ep = Episodes.getCurrentEpisode();

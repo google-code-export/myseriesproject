@@ -83,6 +83,10 @@ public class FeedTree extends javax.swing.JPanel {
     return tree.getCellRenderer();
   }
 
+  public void populate(){
+    populate(selectedRow);
+  }
+
   public void populate(int id) {
     model.clear();
     ArrayList<FeedsRecord> feeds = FeedsRecord.getAll();
@@ -106,7 +110,7 @@ public class FeedTree extends javax.swing.JPanel {
     rootLeaf.title = "Rss Feeds";
     rootLeaf.url = "";
     DefaultMutableTreeNode root = new DefaultMutableTreeNode(rootLeaf);
-    int i = 2;
+    int i = 0;
     for (Iterator<FeedLeaf> it = model.iterator(); it.hasNext();) {
       FeedLeaf feedLeaf = it.next();
       DefaultMutableTreeNode listNode = new DefaultMutableTreeNode(feedLeaf);
@@ -115,7 +119,7 @@ public class FeedTree extends javax.swing.JPanel {
       if (id == feedLeaf.id) {
         selectedRow = i;
       }
-
+      
     }
     return root;
   }
@@ -222,7 +226,9 @@ public class FeedTree extends javax.swing.JPanel {
       if (node.isLeaf()) {
         if (node.getUserObject() instanceof FeedLeaf) {
           FeedLeaf leaf = (FeedLeaf) node.getUserObject();
+          System.out.println("changing to leaf " + leaf);
           if (leaf.id > 0) {
+            selectedRow = tree.getSelectionRows()[0];
             FeedsRecord feedsRecord = new FeedsRecord(leaf.id);
             FeedReader fr = new FeedReader(this, feedsRecord);
             Feed feed = fr.getFeed();
@@ -235,14 +241,14 @@ public class FeedTree extends javax.swing.JPanel {
         }
       }
     } else {
-      populate(-1);
-      FeedPreviewPanel pp = MySeries.feedPreviewPanel;
-      pp.removeFeeds();
-      if (tree.getRowCount() > 1) {
-        tree.setSelectionRow(1);
-      } else {
-        tree.setSelectionRow(0);
-      }
+//      populate(selectedRow);
+//      FeedPreviewPanel pp = MySeries.feedPreviewPanel;
+//      pp.removeFeeds();
+//      if (tree.getRowCount() > 1) {
+//        tree.setSelectionRow(1);
+//      } else {
+//        tree.setSelectionRow(0);
+//      }
     }
   }//GEN-LAST:event_treeValueChanged
   // Variables declaration - do not modify//GEN-BEGIN:variables
