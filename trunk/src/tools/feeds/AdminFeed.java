@@ -19,6 +19,7 @@ import java.awt.Color;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import myComponents.MyMessages;
+import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyDraggable;
 
 /**
@@ -175,7 +176,9 @@ public class AdminFeed extends MyDraggable {
     if (val.validate()) {
       String url = tf_url.getText().trim();
       feed.setUrl(url);
-      feed.setTitle(tf_title.getText().trim());
+      String title = tf_title.getText().trim();
+      String baseUrl = MyUsefulFunctions.getBaseUrl(url);
+      feed.setTitle(title.equals("")?baseUrl:title);
       try {
         int id = feed.save();
         if(feed.getFeed_ID() ==0){
@@ -184,12 +187,12 @@ public class AdminFeed extends MyDraggable {
         isFeedSaved = true;
         FeedUpdater fu = new FeedUpdater(myseries.MySeries.feedTree, feed);
         fu.run();
-        FeedReader fr = new FeedReader(myseries.MySeries.feedTree, feed);
         myseries.MySeries.feedTree.populate(feed.getFeed_ID());
-        dispose();
       } catch (SQLException ex) {
         myseries.MySeries.logger.log(Level.SEVERE, null, ex);
         MyMessages.error("Feed Saving", "An error occured and the feed is not saved");
+      }finally {
+        dispose();
       }
 
     } else {

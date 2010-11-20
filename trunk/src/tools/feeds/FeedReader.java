@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import myComponents.MyMessages;
 import tools.options.Options;
 
 /**
@@ -25,7 +26,7 @@ import tools.options.Options;
 public class FeedReader {
 
   private final FeedsRecord feedRecord;
-  private Feed feed;
+  private Feed feed = new Feed();
   private final FeedTree tree;
 
   public FeedReader(FeedTree tree, FeedsRecord feedRecord) {
@@ -41,10 +42,11 @@ public class FeedReader {
         FeedUpdater fu = new FeedUpdater(tree, feedRecord);
         fu.run();
       }
+      
       SyndFeedInput input = new SyndFeedInput();
       SyndFeed feedXml = input.build(new XmlReader(file));
       String title = feedXml.getTitle();
-      if (feedRecord.getTitle().equals("")) {
+      if (feedRecord.getUrl().indexOf(feedRecord.getTitle())>-1 && !title.equals("")) {
         feedRecord.setTitle(title);
         feedRecord.save();
       }
@@ -56,12 +58,16 @@ public class FeedReader {
       }
     } catch (SQLException ex) {
       myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      MyMessages.error("Feed", "Could not save feed to database");
     } catch (FeedException ex) {
       myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      MyMessages.error("Feed", "Could not read feed from "+feedRecord.getUrl());
     } catch (IOException ex) {
       myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      MyMessages.error("Feed", "Could not read feed from "+feedRecord.getUrl());
     } catch (IllegalArgumentException ex) {
       myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      MyMessages.error("Feed", "Could not read feed from "+feedRecord.getUrl());
     }
   }
 
