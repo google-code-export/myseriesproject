@@ -13,7 +13,7 @@ import java.io.FilenameFilter;
  */
 public class VideoFilter implements FilenameFilter {
 
-  public static final String[] EXTENSIONS = {"avi", "mkv"};
+  public static final String[] EXTENSIONS = {"avi", "mkv","mpg"};
 
 
   public boolean accept(File dir, String name) {
