@@ -641,6 +641,8 @@ public class MyUsefulFunctions {
         types[i++] = MyDownloadedCellRenderer.AVI;
       } else if (type.equals(MyDownloadedCellRenderer.MKV)) {
         types[i++] = MyDownloadedCellRenderer.MKV;
+      } else if (type.equals(MyDownloadedCellRenderer.MPG)) {
+        types[i++] = MyDownloadedCellRenderer.MPG;
       } else {
         types[i++] = MyDownloadedCellRenderer.OTHER;
       }
