@@ -25,15 +25,17 @@ public class FeedUpdater implements Runnable {
 
   private ArrayList<FeedsRecord> feeds = new ArrayList<FeedsRecord>();
   private FeedTree tree;
+  private boolean readFeeds = true;
 
   public FeedUpdater(FeedTree tree, FeedsRecord feedRecord) {
     feeds.add(feedRecord);
     this.tree = tree;
   }
 
-  public FeedUpdater(FeedTree tree, ArrayList<FeedsRecord> feeds) {
+  public FeedUpdater(FeedTree tree, ArrayList<FeedsRecord> feeds, boolean readFeeds) {
     this.feeds = feeds;
     this.tree = tree;
+    this.readFeeds = readFeeds;
   }
 
   public void run() {
@@ -48,7 +50,7 @@ public class FeedUpdater implements Runnable {
     myseries.MySeries.glassPane.deactivate();
     
     int[] sel = myseries.MySeries.feedTree.tree.getSelectionRows();
-    myseries.MySeries.feedTree.tree.setSelectionRow(0);
+   // myseries.MySeries.feedTree.tree.setSelectionRow(0);
     if (sel == null || sel[0] == 0) {
       myseries.MySeries.feedTree.tree.setSelectionRow(1);
     } else {

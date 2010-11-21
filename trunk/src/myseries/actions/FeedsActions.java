@@ -6,12 +6,7 @@ package myseries.actions;
 
 import database.FeedsRecord;
 import java.util.ArrayList;
-import javax.swing.tree.DefaultMutableTreeNode;
-import myseries.MySeriesConstants;
 import tools.feeds.AdminFeed;
-import tools.feeds.FeedLeaf;
-import tools.feeds.FeedReader;
-import tools.feeds.FeedTree;
 
 /**
  *
@@ -29,7 +24,7 @@ public class FeedsActions {
 
   public static void updateFeeds() {
     ArrayList<FeedsRecord> feeds = FeedsRecord.getAll();
-    myseries.MySeries.feedTree.updateFeeds(feeds);
+    myseries.MySeries.feedTree.updateFeeds(feeds, false);
   }
 
   private FeedsActions() {
