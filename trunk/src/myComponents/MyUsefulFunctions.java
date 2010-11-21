@@ -753,7 +753,7 @@ public class MyUsefulFunctions {
     int i = 0;
     for (Iterator<File> it = videos.iterator(); it.hasNext();) {
       File video = it.next();
-      String videoBaseName = getBaseName(video, VIDEO_FILE);
+      String videoBaseName = getBaseName(video, VIDEO_FILE).replace("_sample", "");
       for (Iterator<File> it1 = subs.iterator(); it1.hasNext();) {
         File sub = it1.next();
         String subBaseName = getBaseName(sub, SUBTITLE_FILE);
