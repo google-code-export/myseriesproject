@@ -260,8 +260,8 @@ public class FeedTree extends javax.swing.JPanel {
   private javax.swing.JMenuItem update;
   // End of variables declaration//GEN-END:variables
 
-  public void updateFeeds(ArrayList<FeedsRecord> feeds) {
-    FeedUpdater fu = new FeedUpdater(this, feeds);
+  public void updateFeeds(ArrayList<FeedsRecord> feeds, boolean readFeeds) {
+    FeedUpdater fu = new FeedUpdater(this, feeds, readFeeds);
     Thread t = new Thread(fu);
     t.start();
   }
