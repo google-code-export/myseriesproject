@@ -221,11 +221,14 @@ public class Episodes {
 
   private static boolean checkDownloads(int season, int episode, File[] videoFiles) throws SQLException {
     String regex = MyUsefulFunctions.createRegex(season, episode);
+    String regexFake = MyUsefulFunctions.createRegex(season,season*10+ episode);
     Pattern pattern = Pattern.compile(regex);
+    Pattern patternFake = Pattern.compile(regexFake);
     for (int j = 0; j < videoFiles.length; j++) {
       File file = videoFiles[j];
       Matcher matcher = pattern.matcher(file.getName());
-      if (matcher.find()) {
+      Matcher matcherFake = patternFake.matcher(file.getName());
+      if (matcher.find() && !matcherFake.find()) {
         return true;
       }
     }
@@ -237,11 +240,14 @@ public class Episodes {
     int subsFound = 0, totalSubs = 0;
     Language other = LangsList.NONE;
     String regex = MyUsefulFunctions.createRegex(season, episode);
+    String regexFake = MyUsefulFunctions.createRegex(season,season*10+ episode);
     Pattern pattern = Pattern.compile(regex);
+    Pattern patternFake = Pattern.compile(regexFake);
     for (int j = 0; j < subtitleFiles.length; j++) {
       File file = subtitleFiles[j];
       Matcher matcher = pattern.matcher(file.getName());
-      if (matcher.find() && file.isFile()) {
+      Matcher matcherFake = patternFake.matcher(file.getName());
+      if (matcher.find() && file.isFile() && !matcherFake.find()) {
         totalSubs++;
         for (Iterator it = myseries.MySeries.languages.getLangs().iterator(); it.hasNext();) {
           Language lang = (Language) it.next();
