@@ -913,6 +913,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     });
 
     combobox_downloaded.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "No Video File", "With Video File", " " }));
+    combobox_downloaded.setSelectedIndex(1);
     combobox_downloaded.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         combobox_downloadedActionPerformed(evt);
@@ -1581,7 +1582,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 //          } else {
 //            PopUpItem_AddEpisodeInEpisodes.setEnabled(false);
 //          }
-//          episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
+ //         episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
         }
       }
     }
