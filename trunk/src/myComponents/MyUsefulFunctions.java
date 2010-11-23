@@ -583,12 +583,15 @@ public class MyUsefulFunctions {
 
   private static File getVideoFile(SeriesRecord series, EpisodesRecord episode) {
     String regex = MyUsefulFunctions.createRegex(series.getSeason(), episode.getEpisode());
+    String regexFake = MyUsefulFunctions.createRegex(series.getSeason(),series.getSeason()*10+ episode.getEpisode());
     File[] videoFiles = Series.getVideoFiles(series);
     Pattern pattern = Pattern.compile(regex);
+    Pattern patternFake = Pattern.compile(regexFake);
     for (int j = 0; j < videoFiles.length; j++) {
       File file = videoFiles[j];
       Matcher matcher = pattern.matcher(file.getName());
-      if (matcher.find()) {
+      Matcher matcherFake = patternFake.matcher(file.getName());
+      if (matcher.find()&& !matcherFake.find()) {
         return file;
       }
     }
@@ -656,16 +659,19 @@ public class MyUsefulFunctions {
 
   private static ArrayList<File> getSubtitles(SeriesRecord series, EpisodesRecord episode) {
     String regex = MyUsefulFunctions.createRegex(series.getSeason(), episode.getEpisode());
+    String regexFake = MyUsefulFunctions.createRegex(series.getSeason(),series.getSeason()*10+ episode.getEpisode());
     ArrayList<File> subs = new ArrayList<File>();
     File[] subtitles = Series.getSubtitleFiles(series);
     Pattern pattern = Pattern.compile(regex);
+    Pattern patternFake = Pattern.compile(regexFake);
     if (subtitles == null) {
       return subs;
     }
     for (int j = 0; j < subtitles.length; j++) {
       File file = subtitles[j];
       Matcher matcher = pattern.matcher(file.getName());
-      if (matcher.find()) {
+      Matcher matcherFake = patternFake.matcher(file.getName());
+      if (matcher.find() && !matcherFake.find()) {
         subs.add(file);
       }
     }

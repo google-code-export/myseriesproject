@@ -85,7 +85,8 @@ public class EpisodesActions {
     int season = Series.getCurrentSerial().getSeason();
     int episode = Episodes.getCurrentEpisode().getEpisode();
     String regex = MyUsefulFunctions.createRegex(season, episode);
-    Video.getVideos(localDir, regex);
+    String regexFake = MyUsefulFunctions.createRegex(season,season*10+ episode);
+    Video.getVideos(localDir, regex, regexFake);
   }
 
   public static void deleteEpisode() {

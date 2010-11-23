@@ -29,14 +29,16 @@ public class Video {
    * @param directory The directory to scan
    * @param regex The regex to use
    */
-  public static void getVideos(File directory, String regex) {
+  public static void getVideos(File directory, String regex, String regexFake) {
     ArrayList<File> videos = new ArrayList<File>();
     File[] files = directory.listFiles(new VideoFilter());
     Pattern sPattern = Pattern.compile(regex);
+    Pattern sPatternFake = Pattern.compile(regexFake);
     for (int i = 0; i < files.length; i++) {
       File file = files[i];
       Matcher sMatcher = sPattern.matcher(file.getName());
-      if (sMatcher.find()) {
+      Matcher sMatcherFake = sPatternFake.matcher(file.getName());
+      if (sMatcher.find() && !sMatcherFake.find()) {
         videos.add(file);
       }
     }
@@ -46,9 +48,9 @@ public class Video {
       if (!video.isDirectory()) {
         playVideo(video);
       } else {
-        getVideos(video, regex);
+        getVideos(video, regex,regexFake);
       }
-    } else if (videos.size() == 0) {
+    } else if (videos.isEmpty()) {
       MyMessages.error("No file found", "Episode was not found");
     } else {
       String[] videosArray = new String[videos.size()];
