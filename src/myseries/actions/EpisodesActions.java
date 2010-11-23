@@ -136,14 +136,17 @@ public class EpisodesActions {
     String path;
     int episode = episodeRecord.getEpisode();
     String regex = MyUsefulFunctions.createRegex(season, episode);
+    String regexFake = MyUsefulFunctions.createRegex(season,season*10+ episode);
     Pattern pattern = Pattern.compile(regex);
+    Pattern patternFake = Pattern.compile(regexFake);
     for (int i = 0; i < files.length; i++) {
       File file = files[i];
       if (file != null && file.isFile()) {
         path = file.getParent();
         String name = file.getName();
         Matcher matcher = pattern.matcher(name);
-        if (matcher.find()) {
+        Matcher matcherFake = patternFake.matcher(name);
+        if (matcher.find() &&!matcherFake.find()) {
           String[] tokens = name.split("\\.", -1);
           String ext = tokens[tokens.length - 1];
           if (ext.equals("srt") || ext.equals("sub")) {
@@ -194,14 +197,17 @@ public class EpisodesActions {
         EpisodesRecord episodesRecord = it.next();
         int episode = episodesRecord.getEpisode();
         String regex = MyUsefulFunctions.createRegex(season, episode);
-        Pattern pattern = Pattern.compile(regex);
+        String regexFake = MyUsefulFunctions.createRegex(season,season*10+ episode);
+       Pattern pattern = Pattern.compile(regex);
+       Pattern patternFake = Pattern.compile(regexFake);
         for (int i = 0; i < files.length; i++) {
           File file = files[i];
           if (file != null && file.isFile()) {
             path = file.getParent();
             String name = file.getName();
             Matcher matcher = pattern.matcher(name);
-            if (matcher.find()) {
+            Matcher matcherFake = patternFake.matcher(name);
+            if (matcher.find() &&!matcherFake.find()) {
               String[] tokens = name.split("\\.", -1);
               String ext = tokens[tokens.length - 1];
               if (ext.equals("srt") || ext.equals("sub")) {
