@@ -4,6 +4,8 @@
  */
 package myseries.episodes;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import myseries.series.Series;
 import database.DBConnection;
 import database.EpisodesRecord;
@@ -219,7 +221,21 @@ public class Episodes {
     return eps;
   }
 
+  public static boolean checkDownloads(SeriesRecord series, EpisodesRecord e) {
+   int season = series.getSeason();
+   int episode = e.getEpisode();
+    File[] videoFiles = Series.getVideoFiles(series);
+    try {
+      return checkDownloads(season, episode, videoFiles);
+    } catch (SQLException ex) {
+      return false;
+    }
+  }
+
   private static boolean checkDownloads(int season, int episode, File[] videoFiles) throws SQLException {
+    if(videoFiles == null){
+      return false;
+    }
     String regex = MyUsefulFunctions.createRegex(season, episode);
     String regexFake = MyUsefulFunctions.createRegex(season,season*10+ episode);
     Pattern pattern = Pattern.compile(regex);

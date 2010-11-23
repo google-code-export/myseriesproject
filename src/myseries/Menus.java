@@ -6,8 +6,9 @@ package myseries;
 
 import database.EpisodesRecord;
 import database.SeriesRecord;
-import myComponents.myToolbar.Toolbar;
+import myComponents.MyUsefulFunctions;
 import myComponents.myToolbar.ToolbarButtonActions;
+import myseries.episodes.Episodes;
 import tools.DesktopSupport;
 
 /**
@@ -43,11 +44,11 @@ public class Menus {
             : "Delete selected episodes");
 
     //VIEW EPISODE
-    MySeries.popUpItem_viewEpisode.setEnabled(!localDir.equals("") && singleEpisode);
+    MySeries.popUpItem_viewEpisode.setEnabled(!localDir.equals("") && singleEpisode && Episodes.checkDownloads(series,episode));
     MySeries.popUpItem_viewEpisode.setText("View episode " + episodeTitle);
 
     //RENAME EPISODE
-    MySeries.popUpItem_renameEpisode.setEnabled(!localDir.equals("") && singleEpisode);
+    MySeries.popUpItem_renameEpisode.setEnabled(!localDir.equals("") && singleEpisode && Episodes.checkDownloads(series,episode));
     MySeries.popUpItem_renameEpisode.setText("Rename episode " + episodeTitle);
 
     //DOWNLOAD SUBS
