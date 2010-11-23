@@ -7,6 +7,7 @@ package myseries.episodes;
 import database.EpisodesRecord;
 import java.awt.Desktop;
 import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -81,10 +82,12 @@ public class Video {
       if(app.equals("")){
         Desktop.getDesktop().open(video);
       } else {
-        Runtime rtime = Runtime.getRuntime();
-        String command = "\""+app + "\" \"" + video.getAbsolutePath()+"\"";
-        myseries.MySeries.logger.log(Level.INFO, "Executing command {0}", command);
-        rtime.exec(command);
+        String[] command = {app,  video.getAbsolutePath()};
+        String[] envp = null; // should inherit the environment
+        File startingFolder =  video.getParentFile();
+        Process p = Runtime.getRuntime().exec(command, envp,startingFolder);
+        //myseries.MySeries.logger.log(Level.INFO, "Executing command " + command[0] + " " + command[1]);
+        //rtime.exec(command);
       }
       EpisodesRecord ep = Episodes.getCurrentEpisode();
       ep.setSeen(1);

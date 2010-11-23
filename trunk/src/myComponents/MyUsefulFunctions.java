@@ -597,16 +597,19 @@ public class MyUsefulFunctions {
 
   private static ArrayList<File> getVideoFiles(SeriesRecord series, EpisodesRecord episode) {
     String regex = MyUsefulFunctions.createRegex(series.getSeason(), episode.getEpisode());
+    String regexFake = MyUsefulFunctions.createRegex(series.getSeason(),series.getSeason()*10+ episode.getEpisode());
     ArrayList<File> files = new ArrayList<File>();
     File[] videoFiles = Series.getVideoFiles(series);
     Pattern pattern = Pattern.compile(regex);
+    Pattern patternFake = Pattern.compile(regexFake);
     if (videoFiles == null) {
       return new ArrayList<File>();
     }
     for (int j = 0; j < videoFiles.length; j++) {
       File file = videoFiles[j];
       Matcher matcher = pattern.matcher(file.getName());
-      if (matcher.find()) {
+      Matcher matcherFake = patternFake.matcher(file.getName());
+      if (matcher.find() && !matcherFake.find()) {
         files.add(file);
       }
     }
