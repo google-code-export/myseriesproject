@@ -72,7 +72,7 @@ public class SeriesRecord extends Record {
     } else {
       sql = "INSERT INTO series (title, season, hidden, link, internetUpdate, "
           + "tvrage_ID, localDir, screenshot, sonline, deleted) "
-          + "VALUES('" + this.getTitle() + "', " + this.getSeason() + ", "
+          + "VALUES('" + this.title + "', " + this.getSeason() + ", "
           + this.getHidden() + ", '" + this.getTvSubtitlesCode() + "',"
           + this.getInternetUpdate() + ", " + this.getTvrage_ID() + ", '"
           + this.getLocalDir() + "','" + this.getScreenshot()
