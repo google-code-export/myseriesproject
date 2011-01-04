@@ -860,6 +860,25 @@ public class MyUsefulFunctions {
     }
   }
 
+  public static boolean isNoticableRss(String title) {
+    try {
+      ArrayList<SeriesRecord> series = Series.getSeries(false);
+      for (Iterator<SeriesRecord> it = series.iterator(); it.hasNext();) {
+        SeriesRecord seriesRecord = it.next();
+        String sTitle = seriesRecord.getTitle();
+        String regex = "\\b"+sTitle.toLowerCase()+"\\b";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(title.toLowerCase());
+        if (matcher.find()){
+          return true;
+        }
+      }
+      return false;
+    } catch (SQLException ex) {
+      return false;
+    }
+  }
+
   private MyUsefulFunctions() {
   }
 }

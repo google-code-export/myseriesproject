@@ -13,6 +13,7 @@ package tools.feeds;
 import com.sun.syndication.feed.synd.SyndContentImpl;
 import com.sun.syndication.feed.synd.SyndEnclosureImpl;
 import com.sun.syndication.feed.synd.SyndEntryImpl;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FontMetrics;
 import java.net.URI;
@@ -30,6 +31,7 @@ import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.StyleSheet;
 import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyScrollableFlowPanel;
+import sun.security.pkcs11.wrapper.Functions;
 import tools.options.Options;
 
 /**
@@ -64,6 +66,7 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
   /** Creates new form PhotoPanel */
   public FeedPanel() {
     initComponents();
+    
   }
 
   public FeedPanel(MyScrollableFlowPanel feedPanel, SyndEntryImpl entry) {
@@ -80,10 +83,14 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
         }
       }
     });
+    bt_max.setVisible(false);
   }
 
   private void getData() {
     title = entry.getTitle();
+    if(MyUsefulFunctions.isNoticableRss(title)){
+      setBackground(new Color(60,255,0));
+    }
     titleCut = getTitleCut();
     date = getDate();
     enclosure = getEnclosure();
@@ -134,7 +141,6 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
     label_title.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     label_title.setText("jLabel1");
     label_title.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    label_title.setOpaque(true);
     label_title.addMouseListener(new java.awt.event.MouseAdapter() {
       public void mouseReleased(java.awt.event.MouseEvent evt) {
         label_titleMouseReleased(evt);
