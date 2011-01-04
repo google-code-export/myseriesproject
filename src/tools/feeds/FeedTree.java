@@ -226,7 +226,7 @@ public class FeedTree extends javax.swing.JPanel {
       if (node.isLeaf()) {
         if (node.getUserObject() instanceof FeedLeaf) {
           FeedLeaf leaf = (FeedLeaf) node.getUserObject();
-          System.out.println("changing to leaf " + leaf);
+          //System.out.println("changing to leaf " + leaf);
           if (leaf.id > 0) {
             selectedRow = tree.getSelectionRows()[0];
             FeedsRecord feedsRecord = new FeedsRecord(leaf.id);
