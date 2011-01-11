@@ -22,16 +22,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.ImageIcon;
-import javax.swing.JEditorPane;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
-import javax.swing.text.EditorKit;
-import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.StyleSheet;
 import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyScrollableFlowPanel;
-import sun.security.pkcs11.wrapper.Functions;
 import tools.options.Options;
 
 /**
