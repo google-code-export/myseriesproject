@@ -37,6 +37,7 @@ public class Links {
     links.put("Renaming episodes Panel","episodes_renaming");
     links.put("Internet","internet_update");
     links.put("Episodes pop up menu","episodes_popup");
+    links.put("The Feeds panel:","feeds_panel");
   }
 
   private Links() {
