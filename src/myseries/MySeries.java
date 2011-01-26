@@ -10,7 +10,6 @@
  */
 package myseries;
 
-import com.googlecode.scheduler.ScheduleDay;
 import com.googlecode.starrating.StarTableCellRenderer;
 import java.awt.Component;
 import java.awt.event.MouseListener;
@@ -34,7 +33,6 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.Point;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.sql.*;
@@ -46,7 +44,6 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JRootPane;
-import javax.swing.JTable;
 import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
@@ -91,7 +88,6 @@ import myseries.statistics.StatSeries;
 import tools.Skin;
 import tools.download.subtitles.SubtitleConstants;
 import tools.download.torrents.TorrentConstants;
-import tools.feeds.Feed;
 import tools.internetUpdate.InternetUpdate;
 import tools.languages.LangsList;
 import tools.myLogger;
@@ -142,8 +138,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
   public MyEpisodesTableModel tableModel_episodes;
   private MyFilteredSeriesTableModel tableModel_filterSeries;
   public ComboBoxModel comboBoxModel_filters;
-  public static String version = "1.4";
-  public String date = "2011-01-22";
+  public static String version = "1.4(r573)";
+  public String date = "2011-01-26";
   public static MyDisabledGlassPane glassPane;
   public static Logger logger;
   public static final long serialVersionUID = 234563636363L;
