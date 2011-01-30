@@ -403,13 +403,18 @@ public class MyUsefulFunctions {
    * @return True if it's aired or false
    */
   public static boolean hasBeenAired(String aired, boolean includeToday) {
-    if (aired.equals("0000-00-00")) {
-      return false;
-    }
+   
+      if(aired.length()!=10){
+          return false;
+      }
+
     //Check aired format
     if (aired.substring(2, 3).equals("/")) {
       String[] d = aired.split("/");
       aired = d[2] + "-" + d[1] + "-" + d[0];
+    }
+     if (!isValidDate(aired)) {
+      return false;
     }
 
     if (includeToday) {
