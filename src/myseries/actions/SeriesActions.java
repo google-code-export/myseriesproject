@@ -26,6 +26,7 @@ import myseries.series.AdminSeries;
 import myseries.series.Series;
 import tools.DesktopSupport;
 import tools.download.subtitles.SubtitleConstants;
+import tools.download.subtitles.tvsubtitles.TvSubtitlesForm;
 import tools.download.torrents.TorrentConstants;
 import tools.download.torrents.eztv.EzTvForm;
 import tools.download.torrents.isohunt.IsohuntForm;
@@ -190,6 +191,19 @@ public class SeriesActions {
       InternetUpdate iu = new InternetUpdate(m, cSeries, site);
     }
     MySeries.glassPane.deactivate();
+  }
+
+  public static void downloadSeasonSubtitles() {
+    SeriesRecord series = Series.getCurrentSerial();
+    String code = series.getTvSubtitlesCode().trim();
+    String lang = myseries.MySeries.languages.getPrimary().getCode();
+    String link = SubtitleConstants.TV_SUBTITLES_URL + "download-"
+        + code + "-" + lang + ".html";
+    TvSubtitlesForm d = new TvSubtitlesForm(
+                link,
+                Series.getCurrentSerial().getSeason(),
+                Series.getCurrentSerial().getLocalDir()
+                );
   }
 
   private SeriesActions() {

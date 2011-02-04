@@ -32,4 +32,16 @@ public class TvSubtitlesForm extends AbstractDownloadForm {
     t.start();
     setVisible(true);
   }
+
+  public TvSubtitlesForm(String link, int season,  String localDir) {
+    super.init();
+    label_title.setText("Download whole season subtitles from TVSubtitles.net");
+    label_subtitle.setText("Whole season");
+    setLocationRelativeTo(null);
+    DownloadTvSubtitles d = new DownloadTvSubtitles(link, season,-1 , this);
+    d.setLocalDir(localDir);
+    Thread t = new Thread(d);
+    t.start();
+    setVisible(true);
+  }
 }

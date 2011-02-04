@@ -15,6 +15,7 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.zip.ZipEntry;
@@ -53,6 +54,7 @@ public abstract class AbstractDownloadSubtitle {
       try {
         byte[] buf;
         HttpURLConnection uCon = (HttpURLConnection) sub.url.openConnection();
+        int resp = uCon.getResponseCode();
         String header = uCon.getHeaderField(0);
         if (!header.equals("HTTP/1.1 200 OK")) {
           MyMessages.error("Access denied", "Direct access to subtitle is denied.Opening browser");

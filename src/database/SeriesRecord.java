@@ -154,6 +154,9 @@ public class SeriesRecord extends Record {
    * @return the link
    */
   public String getTvSubtitlesCode() {
+    if(tvSubtitlesCode==null || tvSubtitlesCode.equals("null")){
+      return "";
+    }
     return tvSubtitlesCode;
   }
 
@@ -201,7 +204,11 @@ public class SeriesRecord extends Record {
    * @return the localDir
    */
   public String getLocalDir() {
+    if(isValidLocalDir()){
     return localDir;
+    } else {
+      return "";
+    }
   }
 
   /**
@@ -254,7 +261,7 @@ public class SeriesRecord extends Record {
   }
 
   public boolean isValidLocalDir() {
-    if(!this.getLocalDir().equals("") && (new File(this.getLocalDir()).isDirectory())){
+    if(!this.localDir.equals("") && (new File(this.localDir).isDirectory())){
       return true;
     }
     return false;
