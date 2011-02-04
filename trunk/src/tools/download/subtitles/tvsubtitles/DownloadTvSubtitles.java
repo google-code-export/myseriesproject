@@ -11,6 +11,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
@@ -24,7 +25,7 @@ import tools.download.subtitles.SubtitleConstants;
  * Download from tvSubtitles
  * @author lordovol
  */
-public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Runnable , SubtitleConstants{
+public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Runnable, SubtitleConstants {
 
   private final String link;
 
@@ -46,9 +47,18 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
   public void run() {
     progress.setIndeterminate(true);
     progress.setString("Searching for subtitles");
-    getSubtitle();
+    if (episode != -1) {
+      getSubtitle();
+    } else {
+      try {
+        subs.add(new Subtitle("Whole season subtitles", new URL(link)));
+      } catch (MalformedURLException ex) {
+        myseries.MySeries.logger.log(Level.WARNING, "Malformed url: " + link);
+         MyMessages.error("Download whole season subtitles", "Malformed url: " + link);
+      }
+    }
     progress.setIndeterminate(false);
-    if (subs.size() == 0) {
+    if (subs.isEmpty()) {
       form.dispose();
       if (!cancel) {
         MyMessages.error("Subtitle not found", "The subtitle was not found");
@@ -130,8 +140,8 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
 
   private String getLink(String buff, boolean primary) {
     String lang = "";
-    lang = primary ? myseries.MySeries.languages.getPrimary().getCode() :
-      myseries.MySeries.languages.getSecondary().getCode();
+    lang = primary ? myseries.MySeries.languages.getPrimary().getCode()
+        : myseries.MySeries.languages.getSecondary().getCode();
 
     int pos = buff.indexOf("<img src=\"images/flags/" + lang + ".gif\"");
     int i = pos;
