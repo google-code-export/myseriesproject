@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import myseries.series.Series;
 import database.DBConnection;
+import database.Database;
 import database.EpisodesRecord;
 import database.SeriesRecord;
 import java.io.File;
@@ -117,7 +118,7 @@ public class Episodes {
    */
   public static void setCurrentEpisode(int episode) throws SQLException {
     String sql = "SELECT * FROM episodes "
-            + "WHERE series_ID = " + Series.getCurrentSerial().getSeries_ID() + " AND episode = " + episode;
+        + "WHERE series_ID = " + Series.getCurrentSerial().getSeries_ID() + " AND episode = " + episode;
     ResultSet rs = EpisodesRecord.query(sql);
     if (rs.next()) {
       currentEpisode = new EpisodesRecord();
@@ -159,7 +160,7 @@ public class Episodes {
     if (Series.getCurrentSerial() == null) {
     }
     String sql = "SELECT * FROM episodes WHERE series_ID = " + Series.getCurrentSerial().getSeries_ID()
-            + " ORDER BY CAST(episode AS UNSIGNED) ASC";
+        + " ORDER BY CAST(episode AS UNSIGNED) ASC";
     Statement stmt = DBConnection.conn.createStatement();
     ResultSet rs = stmt.executeQuery(sql);
     while (rs.next()) {
@@ -178,7 +179,7 @@ public class Episodes {
       e.setSubs(LangsList.getLanguageById(rs.getInt("subs")));
       boolean newDownloadedStatus = download;
       Language cSubs = e.getSubs();
-      if (MyUsefulFunctions.hasBeenAired(e.getAired(),true)) {
+      if (MyUsefulFunctions.hasBeenAired(e.getAired(), true)) {
         seen = rs.getBoolean("seen");
         //Video files
         if (videoFiles != null) {
@@ -210,20 +211,20 @@ public class Episodes {
       eps.add(e);
     }
     rs.close();
+    Database.beginTransaction();
     for (Iterator<EpisodesRecord> it = updated.iterator(); it.hasNext();) {
       EpisodesRecord episodesRecord = it.next();
       episodesRecord.save();
-
     }
-
+    Database.endTransaction();
     table_episodesList.setModel(getTableModel_episodes());
 
     return eps;
   }
 
   public static boolean checkDownloads(SeriesRecord series, EpisodesRecord e) {
-   int season = series.getSeason();
-   int episode = e.getEpisode();
+    int season = series.getSeason();
+    int episode = e.getEpisode();
     File[] videoFiles = Series.getVideoFiles(series);
     try {
       return checkDownloads(season, episode, videoFiles);
@@ -233,11 +234,11 @@ public class Episodes {
   }
 
   private static boolean checkDownloads(int season, int episode, File[] videoFiles) throws SQLException {
-    if(videoFiles == null){
+    if (videoFiles == null) {
       return false;
     }
     String regex = MyUsefulFunctions.createRegex(season, episode);
-    String regexFake = MyUsefulFunctions.createRegex(season,season*10+ episode);
+    String regexFake = MyUsefulFunctions.createRegex(season, season * 10 + episode);
     Pattern pattern = Pattern.compile(regex);
     Pattern patternFake = Pattern.compile(regexFake);
     for (int j = 0; j < videoFiles.length; j++) {
@@ -256,7 +257,7 @@ public class Episodes {
     int subsFound = 0, totalSubs = 0;
     Language other = LangsList.NONE;
     String regex = MyUsefulFunctions.createRegex(season, episode);
-    String regexFake = MyUsefulFunctions.createRegex(season,season*10+ episode);
+    String regexFake = MyUsefulFunctions.createRegex(season, season * 10 + episode);
     Pattern pattern = Pattern.compile(regex);
     Pattern patternFake = Pattern.compile(regexFake);
     for (int j = 0; j < subtitleFiles.length; j++) {
