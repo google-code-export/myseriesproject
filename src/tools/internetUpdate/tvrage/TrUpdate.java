@@ -5,6 +5,7 @@
 package tools.internetUpdate.tvrage;
 
 import database.DBHelper;
+import database.Database;
 import database.EpisodesRecord;
 import database.SeriesRecord;
 import java.io.IOException;
@@ -104,6 +105,7 @@ public class TrUpdate extends AbstractUpdate implements Runnable {
           MySeries.logger.log(Level.INFO, "Importing episodes of " + curSeries);
           header = false;
         }
+        Database.beginTransaction();
         for (int e = 0; e < curSeries.episodes.size(); e++) {
           boolean save = false;
           TrEpisode episode = curSeries.episodes.get(e);
@@ -136,6 +138,7 @@ public class TrUpdate extends AbstractUpdate implements Runnable {
             episodeRecord.save();
           }
         }
+        Database.endTransaction();
          if(newEpisodes == 0 && updEpisodes ==0){
             append("No new or updated episodes");
          } else {
