@@ -7,7 +7,10 @@ package database;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.sql.SQLException;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import tools.options.Options;
 
@@ -35,6 +38,21 @@ public class Database implements DatabaseConstants {
       databases.addElement(files[i].getName().replace(EXT, ""));
     }
     return databases;
+  }
+
+  public static void endTransaction() {
+    try {
+      database.DBConnection.stmt.execute("END TRANSACTION");
+    } catch (SQLException ex) {
+      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+    }
+  }
+  public static void beginTransaction() {
+    try {
+      database.DBConnection.stmt.execute("BEGIN TRANSACTION");
+    } catch (SQLException ex) {
+      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+    }
   }
 
 
