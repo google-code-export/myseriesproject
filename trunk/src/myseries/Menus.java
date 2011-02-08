@@ -33,7 +33,10 @@ public class Menus {
     String seriesTitle = series != null ? series.getFullTitle() : "";
     String episodeTitle = episode != null ? episode.getTitle() : "";
     String localDir = series != null ? series.getLocalDir() : "";
-    boolean hasBeenAired = MyUsefulFunctions.hasBeenAired(episode.getAired(), true);
+     boolean hasBeenAired = false;
+    if (singleEpisode) {
+       hasBeenAired= MyUsefulFunctions.hasBeenAired(episode.getAired(), true);
+    }
     //ADD EPISODE
     MySeries.PopUpItem_AddEpisodeInEpisodes.setEnabled(singleEpisode);
     MySeries.PopUpItem_AddEpisodeInEpisodes.setText("Add new episode to " + seriesTitle);
