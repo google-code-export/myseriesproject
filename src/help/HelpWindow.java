@@ -103,7 +103,7 @@ public class HelpWindow extends MyDraggable {
         label_title = new javax.swing.JLabel();
         inner_panel = new javax.swing.JScrollPane();
         content = new javax.swing.JEditorPane();
-        myButton1 = new myComponents.myGUI.MyButton();
+        myButton1 = new myComponents.myGUI.buttons.MyButtonCancel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
@@ -174,6 +174,6 @@ public class HelpWindow extends MyDraggable {
     private javax.swing.JScrollPane inner_panel;
     private javax.swing.JLabel label_title;
     private javax.swing.JPanel main_panel;
-    private myComponents.myGUI.MyButton myButton1;
+    private myComponents.myGUI.buttons.MyButtonCancel myButton1;
     // End of variables declaration//GEN-END:variables
 }

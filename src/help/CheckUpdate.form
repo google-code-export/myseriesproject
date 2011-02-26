@@ -52,13 +52,13 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="inner_panel" pref="334" max="32767" attributes="0"/>
+                          <Component id="inner_panel" pref="368" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="jLabel1" min="-2" pref="304" max="-2" attributes="0"/>
+                          <Component id="jLabel1" min="-2" pref="342" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="myButton1" min="-2" max="-2" attributes="0"/>
+                          <Component id="bt_exit" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -69,7 +69,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <Group type="103" groupAlignment="2" attributes="0">
                       <Component id="jLabel1" alignment="2" min="-2" max="-2" attributes="0"/>
-                      <Component id="myButton1" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="bt_exit" alignment="2" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="inner_panel" min="-2" pref="161" max="-2" attributes="0"/>
@@ -104,11 +104,11 @@
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="label_currentVersion" alignment="0" pref="194" max="32767" attributes="0"/>
-                                  <Component id="label_latestVersion" alignment="0" pref="194" max="32767" attributes="0"/>
+                                  <Component id="label_currentVersion" alignment="0" pref="228" max="32767" attributes="0"/>
+                                  <Component id="label_latestVersion" alignment="0" pref="228" max="32767" attributes="0"/>
                               </Group>
                           </Group>
-                          <Component id="progressBar_checkUpdates" alignment="1" pref="312" max="32767" attributes="0"/>
+                          <Component id="progressBar_checkUpdates" alignment="1" pref="346" max="32767" attributes="0"/>
                           <Component id="jPanel3" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -177,9 +177,9 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="label_needUpdate" alignment="0" pref="302" max="32767" attributes="1"/>
+                              <Component id="label_needUpdate" alignment="0" pref="336" max="32767" attributes="1"/>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="label_needUpdate1" pref="292" max="32767" attributes="1"/>
+                                  <Component id="label_needUpdate1" pref="326" max="32767" attributes="1"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -237,14 +237,16 @@
             <Property name="verticalAlignment" type="int" value="3"/>
           </Properties>
         </Component>
-        <Component class="myComponents.myGUI.MyButton" name="myButton1">
+        <Component class="myComponents.myGUI.buttons.MyButtonCancel" name="bt_exit">
           <Properties>
             <Property name="text" type="java.lang.String" value=""/>
-            <Property name="focusPainted" type="boolean" value="false"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="myButton1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_exitActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new myComponents.myGUI.buttons.MyButtonCancel()"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

@@ -38,7 +38,7 @@ public class MyDisabledGlassPane extends JComponent implements KeyListener {
         setOpaque(false);
         //Color base = UIManager.getColor("inactiveCaptionBorder");
         Color base = Color.BLACK;
-        Color background = new Color(base.getRed(), base.getGreen(), base.getBlue(), 128);
+        Color background = new Color(base.getRed(), base.getGreen(), base.getBlue(), 200);
         setBackground(background);
         setLayout(new GridBagLayout());
 

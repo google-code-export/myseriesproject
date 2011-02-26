@@ -106,7 +106,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="myComponents.myGUI.MyButton" name="myButton1">
+        <Component class="myComponents.myGUI.buttons.MyButtonCancel" name="myButton1">
           <Properties>
             <Property name="text" type="java.lang.String" value=""/>
           </Properties>

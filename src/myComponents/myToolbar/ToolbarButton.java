@@ -5,13 +5,10 @@
 
 package myComponents.myToolbar;
 
-import java.awt.Dimension;
+import java.awt.Cursor;
 import java.awt.Point;
-import java.awt.dnd.DropTarget;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.TransferHandler;
 
 /**
  *
@@ -43,6 +40,7 @@ public class ToolbarButton extends JButton implements ToolbarButtonActions {
     }else{
     this.setIcon(new ImageIcon(getClass().getResource("../../images/"+image)));
     }
+    setCursor(new Cursor(Cursor.HAND_CURSOR));
     addActionListener(new ToolbarActionListener());
   }
 
