@@ -26,7 +26,7 @@ import myseries.episodes.Video;
 import myseries.filters.Filters;
 import myseries.series.Series;
 import tools.download.subtitles.SubtitleConstants;
-import tools.download.subtitles.sonline.GetSOnlineCode;
+import tools.download.subtitles.sonline.GetSubtitleOnlineCode;
 import tools.download.subtitles.sonline.SOnlineForm;
 import tools.download.subtitles.tvsubtitles.GetTvSubtitlesCode;
 import tools.download.subtitles.tvsubtitles.TvSubtitlesForm;
@@ -287,8 +287,8 @@ public class EpisodesActions {
     } else if (site.equals(SubtitleConstants.SUBTITLE_ONLINE_NAME)) {
       String sOnlineCode = Series.getCurrentSerial().getSOnlineCode().trim();
       if (sOnlineCode.equals("")) {
-        GetSOnlineCode s = new GetSOnlineCode(Series.getCurrentSerial());
-        sOnlineCode = s.sOnlineCode;
+        GetSubtitleOnlineCode s = new GetSubtitleOnlineCode(Series.getCurrentSerial());
+        sOnlineCode = s.subtitleOnlineCode;
         if (!sOnlineCode.equals("")) {
           SeriesRecord ser = Series.getCurrentSerial();
           ser.setSOnlineCode(sOnlineCode);

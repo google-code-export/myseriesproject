@@ -52,6 +52,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelListener;
 import javax.swing.plaf.basic.BasicToolBarUI;
+import myComponents.MyMessages;
 import myComponents.MyTableModels.MyFilteredSeriesTableModel;
 import myComponents.MyTableModels.MySeriesTableModel;
 import myComponents.MyUsefulFunctions;
@@ -305,7 +306,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     }
 
     scheduler.getTblCalendar().addMouseListener(new ScheduleMouseListener());
-
   }
 
   private void setGlassPane() {
