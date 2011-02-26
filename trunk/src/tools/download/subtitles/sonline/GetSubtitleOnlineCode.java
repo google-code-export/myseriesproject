@@ -12,11 +12,9 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
-import tools.download.subtitles.Subtitle;
 import tools.download.subtitles.SubtitleCode;
 import tools.download.subtitles.SubtitleConstants;
 
@@ -26,7 +24,7 @@ import tools.download.subtitles.SubtitleConstants;
  */
 public class GetSubtitleOnlineCode implements SubtitleConstants{
 
-  public String tSubCode;
+  public String subtitleOnlineCode;
   private SeriesRecord series;
   private ArrayList<SCode> sLinks;
 
@@ -49,11 +47,11 @@ public class GetSubtitleOnlineCode implements SubtitleConstants{
       if (sLinks.size() == 0) {
         MyMessages.message("Series not found", "The series " + series.getFullTitle() + " is not found in SubtitleOnline");
       } else if (sLinks.size() == 1) {
-        this.tSubCode = sLinks.get(0).getCode();
+        this.subtitleOnlineCode = sLinks.get(0).getCode();
       } else {
         SCode tl = (SCode) JOptionPane.showInputDialog(null, "Multiple series found", "Choose the right series", JOptionPane.QUESTION_MESSAGE, null, sLinks.toArray(), 0);
         if (tl != null) {
-          this.tSubCode = tl.getCode();
+          this.subtitleOnlineCode = tl.getCode();
         }
       }
     } else {

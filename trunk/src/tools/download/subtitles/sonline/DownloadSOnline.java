@@ -61,7 +61,8 @@ public class DownloadSOnline extends AbstractDownloadSubtitle implements Runnabl
       download(subs.get(0));
       form.dispose();
     } else {
-      Subtitle sub = (Subtitle) JOptionPane.showInputDialog(null, "Choose the subtitle to download", "Choose subtitle", JOptionPane.QUESTION_MESSAGE, null, subs.toArray(), 0);
+      //Subtitle sub = (Subtitle) JOptionPane.showInputDialog(null, "Choose the subtitle to download", "Choose subtitle", JOptionPane.QUESTION_MESSAGE, null, subs.toArray(), 0);
+      Subtitle sub = (Subtitle) MyMessages.ask("Choose subtitle","Choose the subtitle to download", null , subs.toArray(),null);
       if (sub != null) {
         download(sub);
         form.dispose();
