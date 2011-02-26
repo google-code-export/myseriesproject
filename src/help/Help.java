@@ -62,7 +62,6 @@ setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"
         mainContent = new javax.swing.JEditorPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         tree_help = new javax.swing.JTree();
-        button_close = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -117,7 +116,7 @@ setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"
             panel_rightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_rightLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -217,13 +216,6 @@ setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"
 
         splitPanel.setLeftComponent(jScrollPane1);
 
-        button_close.setText("Close");
-        button_close.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_closeActionPerformed(evt);
-            }
-        });
-
         jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getStyle() | java.awt.Font.BOLD, jLabel1.getFont().getSize()+2));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("MySerieS Help");
@@ -236,8 +228,7 @@ setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"
                 .addContainerGap()
                 .addGroup(panel_helpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(splitPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1086, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1086, Short.MAX_VALUE)
-                    .addComponent(button_close, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1086, Short.MAX_VALUE))
                 .addContainerGap())
         );
         panel_helpLayout.setVerticalGroup(
@@ -246,9 +237,7 @@ setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(splitPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 459, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(button_close)
+                .addComponent(splitPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 488, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -265,11 +254,6 @@ setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void button_closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_closeActionPerformed
-      MySeries.isHelp = false;
-      dispose();
-}//GEN-LAST:event_button_closeActionPerformed
 
     private void tree_helpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tree_helpMouseClicked
       selectedSection = tree_help.getSelectionPath().getLastPathComponent().toString();
@@ -361,7 +345,6 @@ setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"
     }
   }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton button_close;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private help.ScrollablePanel jScrollPane2;
