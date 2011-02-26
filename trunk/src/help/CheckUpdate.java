@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyDraggable;
+import myComponents.myGUI.buttons.MyButtonCancel;
 import myseries.*;
 import tools.DesktopSupport;
 import tools.Skin;
@@ -151,7 +152,7 @@ public class CheckUpdate extends MyDraggable {
         label_needUpdate = new javax.swing.JLabel();
         label_needUpdate1 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        myButton1 = new myComponents.myGUI.MyButton();
+        bt_exit = new myComponents.myGUI.buttons.MyButtonCancel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Check for  updates");
@@ -199,9 +200,9 @@ public class CheckUpdate extends MyDraggable {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(label_needUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
+                    .addComponent(label_needUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(label_needUpdate1, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
+                        .addComponent(label_needUpdate1, javax.swing.GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
                         .addContainerGap())))
         );
         jPanel3Layout.setVerticalGroup(
@@ -226,9 +227,9 @@ public class CheckUpdate extends MyDraggable {
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(inner_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(label_currentVersion, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
-                            .addComponent(label_latestVersion, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)))
-                    .addComponent(progressBar_checkUpdates, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
+                            .addComponent(label_currentVersion, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+                            .addComponent(label_latestVersion, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)))
+                    .addComponent(progressBar_checkUpdates, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -256,11 +257,10 @@ public class CheckUpdate extends MyDraggable {
         jLabel1.setText("MySeries - Checking for updates");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
-        myButton1.setText("");
-        myButton1.setFocusPainted(false);
-        myButton1.addActionListener(new java.awt.event.ActionListener() {
+        bt_exit.setText("");
+        bt_exit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                myButton1ActionPerformed(evt);
+                bt_exitActionPerformed(evt);
             }
         });
 
@@ -272,19 +272,19 @@ public class CheckUpdate extends MyDraggable {
                 .addContainerGap()
                 .addGroup(main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(main_panelLayout.createSequentialGroup()
-                        .addComponent(inner_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE)
+                        .addComponent(inner_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(main_panelLayout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(myButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(bt_exit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         main_panelLayout.setVerticalGroup(
             main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(main_panelLayout.createSequentialGroup()
                 .addGroup(main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel1)
-                    .addComponent(myButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bt_exit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(inner_panel, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -329,12 +329,13 @@ public class CheckUpdate extends MyDraggable {
       downloadUpdate();
     }//GEN-LAST:event_label_needUpdate1MouseReleased
 
-    private void myButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myButton1ActionPerformed
+    private void bt_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_exitActionPerformed
         dispose();
         MySeries.glassPane.deactivate();
-    }//GEN-LAST:event_myButton1ActionPerformed
+    }//GEN-LAST:event_bt_exitActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private myComponents.myGUI.buttons.MyButtonCancel bt_exit;
     private javax.swing.JPanel inner_panel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -345,7 +346,6 @@ public class CheckUpdate extends MyDraggable {
     private javax.swing.JLabel label_needUpdate;
     private javax.swing.JLabel label_needUpdate1;
     private javax.swing.JPanel main_panel;
-    private myComponents.myGUI.MyButton myButton1;
     private javax.swing.JProgressBar progressBar_checkUpdates;
     // End of variables declaration//GEN-END:variables
 }
