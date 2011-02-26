@@ -154,9 +154,7 @@ public class MyUsefulFunctions {
      */
     public static String getInput(String title, String message) {
         //String answer = JOptionPane.showInputDialog(null, message, title, JOptionPane.QUESTION_MESSAGE);
-        Ask a = new Ask(title, message, null, null,null);
-        a.showDialog();
-        return (String) a.selection;
+        return MyMessages.ask(title,message);
     }
 
     /**
@@ -328,10 +326,7 @@ public class MyUsefulFunctions {
 //            JOptionPane.PLAIN_MESSAGE,
 //            null,
 //            files, files[0]);
-                Ask a = new Ask(title, message, null, files,Options.toString(Options.DB_NAME));
-                a.showDialog();
-                name = a.selection;
-                return String.valueOf(name);
+                return (String) MyMessages.ask(title,message,null,files,Options.toString(Options.DB_NAME));
             }
 
             return null;

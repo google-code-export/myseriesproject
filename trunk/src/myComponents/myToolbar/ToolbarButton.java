@@ -41,7 +41,7 @@ public class ToolbarButton extends JButton implements ToolbarButtonActions {
     if(image.equals("")){
      // setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
     }else{
-    this.setIcon(new ImageIcon(getClass().getResource("/images/"+image)));
+    this.setIcon(new ImageIcon(getClass().getResource("../../images/"+image)));
     }
     addActionListener(new ToolbarActionListener());
   }

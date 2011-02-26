@@ -60,13 +60,14 @@ public class Video {
         videosArray[z] = video.getName();
         z++;
       }
-      String choice = (String) JOptionPane.showInputDialog(
-              null,
-              "Multiple files found. Select the one you want to view.",
-              "Multiple files found",
-              JOptionPane.QUESTION_MESSAGE,
-              null,
-              videosArray, videosArray[0]);
+      String choice = (String) MyMessages.ask("Multiple files found",  "Multiple files found. Select the one you want to view.", null, videosArray, videosArray[0]);
+//      String choice = (String) JOptionPane.showInputDialog(
+//              null,
+//              "Multiple files found. Select the one you want to view.",
+//              "Multiple files found",
+//              JOptionPane.QUESTION_MESSAGE,
+//              null,
+//              videosArray, videosArray[0]);
       if (choice != null) {
         playVideo(new File(directory + "/" + choice));
       }

@@ -672,10 +672,10 @@ public class AdminSeries extends MyDraggable {
       setModalityType(ModalityType.MODELESS);
       setVisible(false);
       GetSubtitleOnlineCode c = new GetSubtitleOnlineCode(seriesRecord);
-      String id = c.tSubCode;
+      String id = c.subtitleOnlineCode;
       if (id == null) {
       } else {
-        textfield_subsOnline.setText(c.tSubCode);
+        textfield_subsOnline.setText(c.subtitleOnlineCode);
         label_message.setText("");
         label_message.setText("");
       }

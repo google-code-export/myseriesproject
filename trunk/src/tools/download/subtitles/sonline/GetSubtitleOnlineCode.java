@@ -49,7 +49,8 @@ public class GetSubtitleOnlineCode implements SubtitleConstants{
       } else if (sLinks.size() == 1) {
         this.subtitleOnlineCode = sLinks.get(0).getCode();
       } else {
-        SCode tl = (SCode) JOptionPane.showInputDialog(null, "Multiple series found", "Choose the right series", JOptionPane.QUESTION_MESSAGE, null, sLinks.toArray(), 0);
+        SCode tl = (SCode) MyMessages.ask("Choose the right series", "Multiple series found", null, sLinks.toArray(), null);
+        //SCode tl = (SCode) JOptionPane.showInputDialog(null, "Multiple series found", "Choose the right series", JOptionPane.QUESTION_MESSAGE, null, sLinks.toArray(), 0);
         if (tl != null) {
           this.subtitleOnlineCode = tl.getCode();
         }

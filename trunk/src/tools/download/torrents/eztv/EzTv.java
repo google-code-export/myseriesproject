@@ -119,6 +119,8 @@ public class EzTv extends AbstractTorrentDownload implements Runnable, TorrentCo
 
   @Override
   protected AbstractTorrent getSelectedTorrent(ArrayList<AbstractTorrent> torrents) {
-    return (AbstractTorrent) JOptionPane.showInputDialog(null, "Choose the torrent to download", "Choose torrent", JOptionPane.QUESTION_MESSAGE, null, torrents.toArray(), 0);
+    return (AbstractTorrent) MyMessages.ask( "Choose torrent", "Choose the torrent to download", null , torrents.toArray(),null);
+
+    
   }
 }
