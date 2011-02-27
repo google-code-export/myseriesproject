@@ -11,7 +11,7 @@ import buttons.Button;
  *
  * @author lordovol
  */
-public class MyButtonCancel extends Button{
+public class MyButtonCancel extends AbstractButton{
     private static final long serialVersionUID = 346457645764674L;
 
     public MyButtonCancel() {

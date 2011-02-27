@@ -16,13 +16,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
-import javax.swing.event.EventListenerList;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import myComponents.myEvents.MyEvent;
 import myComponents.myEvents.MyEventHandler;
-import myComponents.myEvents.MyEventListener;
-import myComponents.myEvents.MyEventListenerInterface;
 import myComponents.myEvents.MyEventsClass;
 import myComponents.myGUI.MyDraggable;
 import tools.Skin;
@@ -127,6 +124,7 @@ public class RestoreSeries extends MyDraggable  {
             }
         });
 
+        myButtonHelp1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         myButtonHelp1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 myButtonHelp1ActionPerformed(evt);
