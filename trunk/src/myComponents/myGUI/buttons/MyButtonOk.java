@@ -5,13 +5,11 @@
 
 package myComponents.myGUI.buttons;
 
-import buttons.Button;
-
 /**
  *
  * @author lordovol
  */
-public class MyButtonOk extends Button{
+public class MyButtonOk extends AbstractButton{
     private static final long serialVersionUID = 346457645764674L;
 
     public MyButtonOk() {
@@ -21,6 +19,8 @@ public class MyButtonOk extends Button{
    public MyButtonOk(String type){
        super(type);
    }
+
+
 
 
 
