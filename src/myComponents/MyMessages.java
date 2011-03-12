@@ -5,6 +5,8 @@
 package myComponents;
 
 import javax.swing.JOptionPane;
+import myComponents.myGUI.buttons.MyButtonCancel;
+import myComponents.myGUI.buttons.MyButtonOk;
 import sdialogs.Ask;
 import sdialogs.Confirm;
 import sdialogs.Info;
@@ -21,11 +23,11 @@ public class MyMessages {
      * @param message The message text
      */
     public static void message(String title, String message) {
-//    JOptionPane.showMessageDialog(null,
-//            message,
-//            title,
-//            JOptionPane.INFORMATION_MESSAGE);
-        new Info(title, message, Info.INFO_MESS);
+        //    JOptionPane.showMessageDialog(null,
+        //            message,
+        //            title,
+        //            JOptionPane.INFORMATION_MESSAGE);
+        Info info = new Info(title, message, Info.INFO_MESS);
     }
 
     /**

@@ -169,10 +169,7 @@
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="jLabel10" pref="105" max="32767" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="jLabel10" pref="105" max="32767" attributes="0"/>
                               <Group type="102" alignment="1" attributes="0">
                                   <Group type="103" groupAlignment="1" attributes="0">
                                       <Component id="jLabel3" alignment="1" pref="101" max="32767" attributes="2"/>
@@ -183,17 +180,9 @@
                                   </Group>
                                   <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel16" pref="105" max="32767" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="jLabel11" alignment="1" pref="105" max="32767" attributes="0"/>
-                                      <Component id="jLabel17" alignment="1" pref="105" max="32767" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="jLabel16" alignment="0" pref="105" max="32767" attributes="0"/>
+                              <Component id="jLabel11" alignment="1" pref="105" max="32767" attributes="0"/>
+                              <Component id="jLabel17" alignment="1" pref="105" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -201,10 +190,7 @@
                               <Group type="103" alignment="1" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="1" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="combobox_fonts" min="-2" pref="183" max="-2" attributes="0"/>
-                                          </Group>
+                                          <Component id="combobox_fonts" min="-2" pref="183" max="-2" attributes="0"/>
                                           <Group type="103" alignment="1" groupAlignment="0" attributes="0">
                                               <Component id="button_BGColor" alignment="0" pref="183" max="32767" attributes="0"/>
                                               <Component id="combobox_laf" alignment="0" pref="183" max="32767" attributes="2"/>
