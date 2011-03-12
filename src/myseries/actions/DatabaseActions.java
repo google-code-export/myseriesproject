@@ -31,7 +31,7 @@ public class DatabaseActions {
     try {
       String[] filter = {".db"};
       String load = MyUsefulFunctions.getSelectedFile(database.Database.PATH, filter, "Load Database", "Select the database to load");
-      if (!load.equals("null") && !load.equals(Options.toString(Options.DB_NAME))) {
+      if (load!= null && !load.equals("null") && !load.equals(Options.toString(Options.DB_NAME))) {
         if (DBConnection.checkDatabase(load)) {
           Options.setOption(Options.DB_NAME, load);
           Options.save();
