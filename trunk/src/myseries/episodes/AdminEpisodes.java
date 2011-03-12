@@ -371,7 +371,7 @@ public class AdminEpisodes extends MyDraggable {
             if (group.validate()) {
                 addTheEpisode();
             } else {
-                group.errorMessage(true);
+                MyMessages.error("Add new episode",group.getErrorMessage());
             }
         } catch (IOException ex) {
             MySeries.logger.log(Level.SEVERE, null, ex);
