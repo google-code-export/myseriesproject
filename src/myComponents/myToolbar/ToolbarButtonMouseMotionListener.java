@@ -19,31 +19,31 @@ import javax.swing.JPanel;
  */
 public class ToolbarButtonMouseMotionListener extends MouseAdapter {
 
-  private final JPanel panelUsed;
-  private final JPanel panelUnused;
+    private final JPanel panelUsed;
+    private final JPanel panelUnused;
 
-  ToolbarButtonMouseMotionListener(JPanel panelUsed, JPanel panelUnused) {
-    this.panelUsed = panelUsed;
-    this.panelUnused = panelUnused;
+    ToolbarButtonMouseMotionListener(JPanel panelUsed, JPanel panelUnused) {
+        this.panelUsed = panelUsed;
+        this.panelUnused = panelUnused;
 
-  }
-
-  @Override
-  public void mouseDragged(MouseEvent e) {
-    Component c = (Component) e.getSource();
-
-    int order = c.getParent().getComponentZOrder(c);
-    if (c instanceof ToolbarButton) {
-      ToolbarButton t = (ToolbarButton) c;
-      t.getTopLevelAncestor().setComponentZOrder(t, 0);
-      Point p = c.getLocation();
-      c.setLocation(p.x + e.getX() - t.origin.x, p.y + e.getY() - t.origin.y);
-
-    } else {
-      ToolbarSeperator t = (ToolbarSeperator) c;
-      t.getTopLevelAncestor().setComponentZOrder(t, 0);
-      Point p = c.getLocation();
-      c.setLocation(p.x + e.getX() - t.origin.x, p.y + e.getY() - t.origin.y);
     }
-  }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        Component c = (Component) e.getSource();
+
+        int order = c.getParent().getComponentZOrder(c);
+        if (c instanceof ToolbarButton) {
+            ToolbarButton t = (ToolbarButton) c;
+                t.getTopLevelAncestor().setComponentZOrder(t, 0);
+            Point p = c.getLocation();
+            c.setLocation(p.x + e.getX() - t.origin.x, p.y + e.getY() - t.origin.y);
+
+        } else {
+            ToolbarSeperator t = (ToolbarSeperator) c;
+            t.getTopLevelAncestor().setComponentZOrder(t, 0);
+            Point p = c.getLocation();
+            c.setLocation(p.x + e.getX() - t.origin.x, p.y + e.getY() - t.origin.y);
+        }
+    }
 }
