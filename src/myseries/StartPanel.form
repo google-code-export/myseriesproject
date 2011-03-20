@@ -48,8 +48,8 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <Component id="label_title" pref="327" max="32767" attributes="1"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="label_title" pref="321" max="32767" attributes="1"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="bt_help" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="bt_cancel" min="-2" max="-2" attributes="0"/>
@@ -255,6 +255,10 @@
           </Events>
         </Component>
         <Component class="myComponents.myGUI.buttons.MyButtonHelp" name="bt_help">
+          <Properties>
+            <Property name="text" type="java.lang.String" value=""/>
+            <Property name="toolTipText" type="java.lang.String" value="Help"/>
+          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_helpActionPerformed"/>
           </Events>

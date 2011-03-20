@@ -59,7 +59,6 @@ public class ToolbarButtonMouseListener extends MouseAdapter {
       t.startPoint.x = t.getX();
       t.startPoint.y = t.getY();
     }
-
   }
 
 

@@ -59,9 +59,9 @@
                           <Component id="myButtonOk1" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="title" min="-2" pref="366" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="myButtonHelp1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="myButtonHelp1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                               <Component id="myButtonCancel1" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -74,8 +74,8 @@
               <Group type="102" alignment="0" attributes="0">
                   <Group type="103" groupAlignment="2" attributes="0">
                       <Component id="title" alignment="2" min="-2" max="-2" attributes="0"/>
-                      <Component id="myButtonHelp1" alignment="2" min="-2" max="-2" attributes="0"/>
                       <Component id="myButtonCancel1" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="myButtonHelp1" alignment="2" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="scroll" min="-2" pref="222" max="-2" attributes="0"/>
@@ -142,6 +142,8 @@
                 <EmptyBorder/>
               </Border>
             </Property>
+            <Property name="text" type="java.lang.String" value=""/>
+            <Property name="toolTipText" type="java.lang.String" value="Help"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="myButtonHelp1ActionPerformed"/>

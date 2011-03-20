@@ -510,6 +510,10 @@
           </Events>
         </Component>
         <Component class="myComponents.myGUI.buttons.MyButtonHelp" name="myButtonHelp1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value=""/>
+            <Property name="toolTipText" type="java.lang.String" value="Help"/>
+          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="myButtonHelp1ActionPerformed"/>
           </Events>

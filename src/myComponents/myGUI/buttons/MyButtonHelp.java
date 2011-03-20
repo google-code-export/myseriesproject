@@ -10,12 +10,9 @@ import buttons.Button;
  *
  * @author lordovol
  */
-public class MyButtonHelp extends AbstractButton {
+public class MyButtonHelp extends MyAbstractButton {
 
     public MyButtonHelp() {
-        super();
-        setText("");
-        setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/help.png")));
-
+        super(HELP);
     }
 }
