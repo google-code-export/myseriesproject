@@ -5,16 +5,14 @@
 
 package myComponents.myGUI.buttons;
 
-import buttons.Button;
-
 /**
  *
  * @author lordovol
  */
-public class MyButtonCancel extends MyAbstractButton{
+public class MyButtonRemove extends MyAbstractButton{
     private static final long serialVersionUID = 346457645764674L;
 
-    public MyButtonCancel() {
-        super(CANCEL);
+    public MyButtonRemove() {
+        super(REMOVE_ALL);
     }
 }

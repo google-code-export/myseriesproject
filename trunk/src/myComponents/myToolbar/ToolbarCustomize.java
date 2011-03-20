@@ -16,9 +16,7 @@ import java.util.Arrays;
 import javax.swing.JDialog;
 import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyDraggable;
-import myComponents.myGUI.buttons.MyButtonCancel;
 import myseries.MySeries;
-import tools.Skin;
 import tools.options.Options;
 
 /**
@@ -50,22 +48,17 @@ public class ToolbarCustomize extends JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        main_panel = new javax.swing.JPanel();
         inner_panel = new javax.swing.JPanel();
         panelUsed = new javax.swing.JPanel();
         panelUnused = new javax.swing.JPanel();
+        bt_close = new javax.swing.JButton();
         bt_addAll = new javax.swing.JButton();
         bt_removeAll = new javax.swing.JButton();
-        myButton1 = new myComponents.myGUI.buttons.MyButtonCancel();
-        jLabel1 = new javax.swing.JLabel();
-        myButtonOk1 = new myComponents.myGUI.buttons.MyButtonOk();
+        bt_cancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
         setUndecorated(true);
-
-        main_panel.setBackground(Skin.getColor_5());
-        main_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         inner_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
@@ -79,6 +72,13 @@ public class ToolbarCustomize extends JDialog {
         addUnusedButtons();
         panelUnused.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEADING, 2, 2));
 
+        bt_close.setText("OK");
+        bt_close.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_closeActionPerformed(evt);
+            }
+        });
+
         bt_addAll.setText("Add All");
         bt_addAll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -90,6 +90,13 @@ public class ToolbarCustomize extends JDialog {
         bt_removeAll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bt_removeAllActionPerformed(evt);
+            }
+        });
+
+        bt_cancel.setText("Cancel");
+        bt_cancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_cancelActionPerformed(evt);
             }
         });
 
@@ -106,8 +113,12 @@ public class ToolbarCustomize extends JDialog {
                     .addGroup(inner_panelLayout.createSequentialGroup()
                         .addComponent(bt_addAll)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(bt_removeAll)))
-                .addContainerGap(21, Short.MAX_VALUE))
+                        .addComponent(bt_removeAll))
+                    .addGroup(inner_panelLayout.createSequentialGroup()
+                        .addComponent(bt_close)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bt_cancel)))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
         inner_panelLayout.setVerticalGroup(
             inner_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,70 +131,33 @@ public class ToolbarCustomize extends JDialog {
                     .addComponent(bt_removeAll))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelUnused, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
-        );
-
-        myButton1.setText("");
-        myButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                myButton1ActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getStyle() | java.awt.Font.BOLD, jLabel1.getFont().getSize()+2));
-        jLabel1.setForeground(Skin.getColor_1());
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Customize the toolbar");
-
-        myButtonOk1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                myButtonOk1ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout main_panelLayout = new javax.swing.GroupLayout(main_panel);
-        main_panel.setLayout(main_panelLayout);
-        main_panelLayout.setHorizontalGroup(
-            main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(main_panelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(main_panelLayout.createSequentialGroup()
-                        .addComponent(inner_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(10, 10, 10))
-                    .addGroup(main_panelLayout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 856, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(myButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(myButtonOk1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
-        main_panelLayout.setVerticalGroup(
-            main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(main_panelLayout.createSequentialGroup()
-                .addGroup(main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(myButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(main_panelLayout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addComponent(jLabel1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(inner_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(myButtonOk1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(inner_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bt_close)
+                    .addComponent(bt_cancel))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(main_panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(inner_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(main_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(inner_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+  private void bt_closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_closeActionPerformed
+    dispose();
+    myseries.MySeries.glassPane.deactivate();
+    getNewVisibleButtons();
+    Toolbar.customize = false;
+  }//GEN-LAST:event_bt_closeActionPerformed
 
  private void addRemove(){
    ctoolbar.buttons.clear();
@@ -206,26 +180,17 @@ public class ToolbarCustomize extends JDialog {
     addRemove();
   }//GEN-LAST:event_bt_removeAllActionPerformed
 
-  private void myButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myButton1ActionPerformed
-      dispose();
+  private void bt_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelActionPerformed
+    dispose();
     myseries.MySeries.glassPane.deactivate();
-  }//GEN-LAST:event_myButton1ActionPerformed
-
-  private void myButtonOk1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myButtonOk1ActionPerformed
-           dispose();
-    myseries.MySeries.glassPane.deactivate();
-    getNewVisibleButtons();
-    Toolbar.customize = false;
-  }//GEN-LAST:event_myButtonOk1ActionPerformed
+  }//GEN-LAST:event_bt_cancelActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_addAll;
+    private javax.swing.JButton bt_cancel;
+    private javax.swing.JButton bt_close;
     private javax.swing.JButton bt_removeAll;
     private javax.swing.JPanel inner_panel;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel main_panel;
-    private myComponents.myGUI.buttons.MyButtonCancel myButton1;
-    private myComponents.myGUI.buttons.MyButtonOk myButtonOk1;
     private javax.swing.JPanel panelUnused;
     private javax.swing.JPanel panelUsed;
     // End of variables declaration//GEN-END:variables

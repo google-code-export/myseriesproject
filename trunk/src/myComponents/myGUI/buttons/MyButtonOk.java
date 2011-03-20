@@ -9,19 +9,10 @@ package myComponents.myGUI.buttons;
  *
  * @author lordovol
  */
-public class MyButtonOk extends AbstractButton{
+public class MyButtonOk extends MyAbstractButton{
     private static final long serialVersionUID = 346457645764674L;
 
     public MyButtonOk() {
         super(OK);
     }
-
-   public MyButtonOk(String type){
-       super(type);
-   }
-
-
-
-
-
 }

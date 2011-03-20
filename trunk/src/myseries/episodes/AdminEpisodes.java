@@ -248,6 +248,7 @@ public class AdminEpisodes extends MyDraggable {
             }
         });
 
+        myButtonHelp1.setText("");
         myButtonHelp1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 myButtonHelp1ActionPerformed(evt);
