@@ -65,6 +65,7 @@ public class RenameEpisodes extends MyDraggable {
      */
     public RenameEpisodes(ArrayList<File> oldNames,
             ArrayList<EpisodesRecord> newNames, SeriesRecord series) {
+        myseries.MySeries.glassPane.activate(null);
         this.oldNames = oldNames;
         this.newNames = newNames;
         this.series = series;
@@ -102,10 +103,10 @@ public class RenameEpisodes extends MyDraggable {
         textfield_season = new com.googlecode.svalidators.formcomponents.STextField();
         textfield_episode = new com.googlecode.svalidators.formcomponents.STextField();
         textfield_title = new com.googlecode.svalidators.formcomponents.STextField();
-        button_apply = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         checkBox_checkAll = new javax.swing.JCheckBox();
-        button_save = new javax.swing.JButton();
+        bt_apply = new myComponents.myGUI.buttons.MyButtonApply();
+        bt_save = new myComponents.myGUI.buttons.MyButtonSave();
         jLabel1 = new javax.swing.JLabel();
         bt_cancel = new myComponents.myGUI.buttons.MyButtonCancel();
         bt_ok = new myComponents.myGUI.buttons.MyButtonOk();
@@ -156,13 +157,6 @@ public class RenameEpisodes extends MyDraggable {
             }
         });
 
-        button_apply.setText("Apply");
-        button_apply.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_applyActionPerformed(evt);
-            }
-        });
-
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel6.setText("Check/Uncheck  all :");
 
@@ -173,10 +167,17 @@ public class RenameEpisodes extends MyDraggable {
             }
         });
 
-        button_save.setText("Save");
-        button_save.addActionListener(new java.awt.event.ActionListener() {
+        bt_apply.setText("");
+        bt_apply.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_saveActionPerformed(evt);
+                bt_applyActionPerformed(evt);
+            }
+        });
+
+        bt_save.setText("");
+        bt_save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_saveActionPerformed(evt);
             }
         });
 
@@ -205,11 +206,11 @@ public class RenameEpisodes extends MyDraggable {
                             .addComponent(jLabel5)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(textfield_title, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(button_apply, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_save, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)))))
-                .addGap(231, 231, 231))
+                                .addComponent(bt_apply, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(bt_save, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(287, 287, 287))
         );
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {textfield_episode, textfield_season, textfield_title});
@@ -223,13 +224,13 @@ public class RenameEpisodes extends MyDraggable {
                     .addComponent(jLabel5)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(textfield_season, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textfield_episode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textfield_title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_apply)
-                    .addComponent(button_save))
+                    .addComponent(bt_apply, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bt_save, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(checkBox_checkAll, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -344,41 +345,21 @@ public class RenameEpisodes extends MyDraggable {
         }
     }
 
-  private void button_applyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_applyActionPerformed
-      if (evt == null) {
-          createTableModel();
-      } else if (validateValues()) {
-          createTableModel();
-      }
-
-
-  }//GEN-LAST:event_button_applyActionPerformed
-
   private void checkBox_checkAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBox_checkAllActionPerformed
       checkAll = checkBox_checkAll.isSelected();
       createTableModel();
   }//GEN-LAST:event_checkBox_checkAllActionPerformed
 
-  private void button_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_saveActionPerformed
-      if (validateValues()) {
-          Options.setOption(Options.SEASON_SEPARATOR, textfield_season.getText());
-          Options.setOption(Options.EPISODE_SEPARATOR, textfield_episode.getText());
-          Options.setOption(Options.TITLE_SEPARATOR, textfield_title.getText());
-          Options.save();
-          MyMessages.message("Saving options", "Options saved");
-      }
-  }//GEN-LAST:event_button_saveActionPerformed
-
   private void textfield_seasonKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textfield_seasonKeyReleased
-      button_applyActionPerformed(null);
+      bt_applyActionPerformed(null);
   }//GEN-LAST:event_textfield_seasonKeyReleased
 
   private void textfield_episodeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textfield_episodeKeyReleased
-      button_applyActionPerformed(null);
+      bt_applyActionPerformed(null);
   }//GEN-LAST:event_textfield_episodeKeyReleased
 
   private void textfield_titleKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textfield_titleKeyReleased
-      button_applyActionPerformed(null);
+      bt_applyActionPerformed(null);
   }//GEN-LAST:event_textfield_titleKeyReleased
 
   private void bt_helpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_helpActionPerformed
@@ -413,13 +394,33 @@ public class RenameEpisodes extends MyDraggable {
       }
       dispose();
       MyMessages.message("Renaming episodes", renames + " episodes renamed and " + fails + " episodes failed");
+      myseries.MySeries.glassPane.deactivate();
   }//GEN-LAST:event_bt_okActionPerformed
+
+  private void bt_applyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_applyActionPerformed
+      if (evt == null) {
+          createTableModel();
+      } else if (validateValues()) {
+          createTableModel();
+      }
+
+  }//GEN-LAST:event_bt_applyActionPerformed
+
+  private void bt_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_saveActionPerformed
+      if (validateValues()) {
+          Options.setOption(Options.SEASON_SEPARATOR, textfield_season.getText());
+          Options.setOption(Options.EPISODE_SEPARATOR, textfield_episode.getText());
+          Options.setOption(Options.TITLE_SEPARATOR, textfield_title.getText());
+          Options.save();
+          MyMessages.message("Saving options", "Options saved");
+      }
+  }//GEN-LAST:event_bt_saveActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private myComponents.myGUI.buttons.MyButtonApply bt_apply;
     private myComponents.myGUI.buttons.MyButtonCancel bt_cancel;
     private myComponents.myGUI.buttons.MyButtonHelp bt_help;
     private myComponents.myGUI.buttons.MyButtonOk bt_ok;
-    private javax.swing.JButton button_apply;
-    private javax.swing.JButton button_save;
+    private myComponents.myGUI.buttons.MyButtonSave bt_save;
     private javax.swing.JCheckBox checkBox_checkAll;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -446,9 +447,11 @@ public class RenameEpisodes extends MyDraggable {
         renameEpisodesModel.addColumn("Rename");
         table_rename.setModel(renameEpisodesModel);
         table_rename.getColumn("ID").setPreferredWidth(30);
+        table_rename.getColumn("ID").setMaxWidth(30);
         table_rename.getColumn("Old Name").setPreferredWidth(200);
         table_rename.getColumn("New Name").setPreferredWidth(200);
         table_rename.getColumn("Rename").setPreferredWidth(60);
+        table_rename.getColumn("Rename").setMaxWidth(60);
         if (oldNames.size() != newNames.size()) {
             myseries.MySeries.logger.log(Level.WARNING, "An error occured, old names size != new names size");
             MyMessages.error("Error", "An error occured, old names size != new names size");
