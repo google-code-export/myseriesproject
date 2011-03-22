@@ -176,15 +176,15 @@
                                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="textfield_title" linkSize="1" min="-2" pref="62" max="-2" attributes="0"/>
-                                          <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                                          <Component id="button_apply" max="32767" attributes="0"/>
-                                          <EmptySpace min="-2" max="-2" attributes="0"/>
-                                          <Component id="button_save" pref="57" max="32767" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="bt_apply" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="bt_save" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
                           </Group>
-                          <EmptySpace min="-2" pref="231" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="287" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -198,13 +198,13 @@
                               <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="textfield_season" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="textfield_episode" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="textfield_title" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="button_apply" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="button_save" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="2" attributes="0">
+                              <Component id="textfield_season" alignment="2" min="-2" max="-2" attributes="0"/>
+                              <Component id="textfield_episode" alignment="2" min="-2" max="-2" attributes="0"/>
+                              <Component id="textfield_title" alignment="2" min="-2" max="-2" attributes="0"/>
+                              <Component id="bt_apply" alignment="2" min="-2" max="-2" attributes="0"/>
+                              <Component id="bt_save" alignment="2" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel2" alignment="2" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -270,14 +270,6 @@
                     <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="textfield_titleKeyReleased"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="button_apply">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Apply"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_applyActionPerformed"/>
-                  </Events>
-                </Component>
                 <Component class="javax.swing.JLabel" name="jLabel6">
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="4"/>
@@ -292,12 +284,20 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="checkBox_checkAllActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="button_save">
+                <Component class="myComponents.myGUI.buttons.MyButtonApply" name="bt_apply">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Save"/>
+                    <Property name="text" type="java.lang.String" value=""/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_saveActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_applyActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="myComponents.myGUI.buttons.MyButtonSave" name="bt_save">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value=""/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_saveActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>
