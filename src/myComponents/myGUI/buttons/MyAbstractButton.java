@@ -21,6 +21,8 @@ public abstract class MyAbstractButton extends Button {
     public static final String HELP = "help";
     public static final String ADD_ALL = "addall";
     public static final String REMOVE_ALL = "removeall";
+    public static final String APPLY = "apply";
+    public static final String SAVE = "save";
 
     private class Adapter extends MouseAdapter{
         
