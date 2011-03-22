@@ -416,6 +416,9 @@
                 <Property name="text" type="java.lang.String" value="Delete Series"/>
                 <Property name="toolTipText" type="java.lang.String" value="Delete current series"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItem_deleteSeriesActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuItem_restore">
               <Properties>
