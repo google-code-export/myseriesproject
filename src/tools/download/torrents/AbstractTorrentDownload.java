@@ -37,6 +37,7 @@ public abstract class AbstractTorrentDownload implements TorrentConstants{
       progress.setString("Downloading the torrent");
       progress.setIndeterminate(true);
       downloadTorrent(torrent);
+       myseries.MySeries.glassPane.deactivate();
       return;
     }
     URI u = torrent.getUri();
