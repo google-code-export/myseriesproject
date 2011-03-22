@@ -1030,6 +1030,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
         leftFeedPanel.setOpaque(false);
 
         bt_addRss.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/rss_add.png"))); // NOI18N
+        bt_addRss.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         bt_addRss.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bt_addRssActionPerformed(evt);
@@ -1037,6 +1038,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
         });
 
         bt_refreshRss.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/rss_refresh.png"))); // NOI18N
+        bt_refreshRss.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         bt_refreshRss.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bt_refreshRssActionPerformed(evt);
