@@ -101,13 +101,11 @@ public abstract class AbstractUpdate {
      * @throws IllegalArgumentException
      */
     protected void append(String str) throws IllegalArgumentException {
-        try {
-            currentMessages += str + "<br />";
-            iu.editor_messages.setText(currentMessages);
-            int messagesLength = iu.editor_messages.getDocument().getLength();
+        currentMessages += str + "<br />";
+        iu.editor_messages.setText(currentMessages);
+        int messagesLength = iu.editor_messages.getDocument().getLength();
+        if (messagesLength > 0) {
             iu.editor_messages.setCaretPosition(messagesLength - 1);
-        } catch (IllegalArgumentException ex) {
-            myseries.MySeries.logger.log(Level.WARNING, ex.getMessage(), ex);
         }
     }
 
