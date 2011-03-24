@@ -471,9 +471,10 @@ public class RenameEpisodes extends MyDraggable {
     }
 
     private File createFile(EpisodesRecord episode, File oldFile) {
-        String[] tokens = oldFile.getName().split("\\.", -1);
+        String oldName = oldFile.getName();
+        String[] tokens = oldName.split("\\.", -1);
         String ext = tokens[tokens.length - 1];
-        if (ext.equals("srt") || ext.equals("sub")) {
+        if (MyUsefulFunctions.isSubtitle(oldName)) {
             if (LangsList.isLanguageCode(tokens[tokens.length - 2])) {
                 ext = tokens[tokens.length - 2] + "." + tokens[tokens.length - 1];
             }

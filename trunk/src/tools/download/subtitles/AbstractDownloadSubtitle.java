@@ -98,7 +98,7 @@ public abstract class AbstractDownloadSubtitle {
       while (zipEntry != null) {
         //for each entry to be extracted
         String entryName = zipEntry.getName();
-        if (entryName.toLowerCase().endsWith(".srt")) {
+        if (MyUsefulFunctions.isSubtitle(entryName)) {
           int n;
           FileOutputStream fileoutputstream;
           File newFile = new File(entryName);
@@ -122,7 +122,7 @@ public abstract class AbstractDownloadSubtitle {
       zipInputStream.close();
       new File(filename).delete();
     } catch (Exception ex) {
-      myseries.MySeries.logger.log(Level.WARNING, "Could not extract srt file", ex);
+      myseries.MySeries.logger.log(Level.WARNING, "Could not extract subtitle file", ex);
     }
   }
 
