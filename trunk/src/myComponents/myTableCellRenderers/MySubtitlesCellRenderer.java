@@ -41,10 +41,10 @@ public class MySubtitlesCellRenderer extends DefaultTableCellRenderer {
 
   @Override
   public Component getTableCellRendererComponent(
-          JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+      JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
     super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-    String[] langs;
-    String tooltip="";
+    String[][] langs;
+    String tooltip = "";
     setIcon(null);
     if (value instanceof Language) {
       Language val = (Language) value;
@@ -57,7 +57,8 @@ public class MySubtitlesCellRenderer extends DefaultTableCellRenderer {
           setIcon(createIcon(langs));
         } else {
           tooltip = ep.getSubs().getName();
-          setIcon(createIcon(new String[]{ep.getSubs().getCode()}));
+          String[][] l = {{ep.getSubs().getCode()}, {"srt"}};
+          setIcon(createIcon(l));
         }
       } else {
         setIcon(null);
@@ -70,34 +71,41 @@ public class MySubtitlesCellRenderer extends DefaultTableCellRenderer {
     return this;
   }
 
-  private Icon createIcon(String[] langs) {
+  private Icon createIcon(String[][] langs) {
     if (langs.length == 1 && langs[0].equals(NONE)) {
-     langs[0] = "other";
+      langs[0][0] = "other";
     }
     if (langs.length == 1 && langs[0].equals("")) {
-     langs[0] = "multiple";
+      langs[0][0] = "multiple";
     }
-    
+
     BufferedImage buff = new BufferedImage(langs.length * IMAGE_WIDTH + langs.length * GAP, IMAGE_HEIGHT, BufferedImage.TYPE_INT_ARGB);
     for (int i = 0; i < langs.length; i++) {
-      if (langs[i].equals(OTHER)) {
-     langs[i] = myseries.MySeries.languages.getPrimary().getCode();
-    }
-      ImageIcon im = new ImageIcon(getClass().getResource("/images/langs/" + langs[i] + ".png"));
-      buff.getGraphics().drawImage(im.getImage(), (i * IMAGE_WIDTH) + (i * GAP), 0,IMAGE_WIDTH,IMAGE_HEIGHT, this);
+      if (langs[i][0].equals(OTHER)) {
+        langs[i][0] = myseries.MySeries.languages.getPrimary().getCode();
+      }
+      ImageIcon im = new ImageIcon(getClass().getResource("/images/langs/" + langs[i][0] + ".png"));
+      buff.getGraphics().drawImage(im.getImage(), (i * IMAGE_WIDTH) + (i * GAP), 0, IMAGE_WIDTH, IMAGE_HEIGHT, this);
+      if (langs[i][1].toLowerCase().equals("zip".toLowerCase())) {
+        ImageIcon imZ = new ImageIcon(getClass().getResource("/images/langs/zip.png"));
+        buff.getGraphics().drawImage(imZ.getImage(), (i * IMAGE_WIDTH) + (i * GAP) , 0, IMAGE_WIDTH, IMAGE_HEIGHT, this);
+      }
     }
 
     return new ImageIcon(buff);
   }
 
-  private String createToolTip(String[] langs) {
+  private String createToolTip(String[][] langs) {
     String[] tooltip = new String[langs.length];
     for (int i = 0; i < langs.length; i++) {
-      String lang = langs[i];
-      if(lang.equals(OTHER)){
+      String lang = langs[i][0];
+      if (lang.equals(OTHER)) {
         lang = myseries.MySeries.languages.getPrimary().getCode();
       }
       tooltip[i] = LangsList.getLanguageByCode(lang).getName();
+       if (langs[i][1].toLowerCase().equals("zip".toLowerCase())) {
+         tooltip[i] += " (zip) ";
+       }
     }
     return Arrays.toString(tooltip);
   }
