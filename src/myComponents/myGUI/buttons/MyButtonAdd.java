@@ -14,5 +14,6 @@ public class MyButtonAdd extends MyAbstractButton{
 
     public MyButtonAdd() {
         super(ADD_ALL);
+        setToolTipText("Add all the buttons");
     }
 }

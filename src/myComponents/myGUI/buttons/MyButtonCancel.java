@@ -16,5 +16,6 @@ public class MyButtonCancel extends MyAbstractButton{
 
     public MyButtonCancel() {
         super(CANCEL);
+        setToolTipText("Cancel");
     }
 }

@@ -14,5 +14,6 @@ public class MyButtonRemove extends MyAbstractButton{
 
     public MyButtonRemove() {
         super(REMOVE_ALL);
+        setToolTipText("Remove all the buttons");
     }
 }

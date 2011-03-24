@@ -14,5 +14,6 @@ public class MyButtonApply extends MyAbstractButton{
 
     public MyButtonApply() {
         super(APPLY);
+        setToolTipText("Apply");
     }
 }

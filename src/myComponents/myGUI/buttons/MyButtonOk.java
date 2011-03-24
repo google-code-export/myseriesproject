@@ -14,5 +14,6 @@ public class MyButtonOk extends MyAbstractButton{
 
     public MyButtonOk() {
         super(OK);
+        setToolTipText("OK");
     }
 }

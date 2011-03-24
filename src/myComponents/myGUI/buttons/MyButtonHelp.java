@@ -14,5 +14,6 @@ public class MyButtonHelp extends MyAbstractButton {
 
     public MyButtonHelp() {
         super(HELP);
+        setToolTipText("Help");
     }
 }

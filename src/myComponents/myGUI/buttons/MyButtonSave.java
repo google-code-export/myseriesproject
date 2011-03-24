@@ -14,5 +14,6 @@ public class MyButtonSave extends MyAbstractButton{
 
     public MyButtonSave() {
         super(SAVE);
+        setToolTipText("Save");
     }
 }
