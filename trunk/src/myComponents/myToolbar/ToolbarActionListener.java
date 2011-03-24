@@ -108,6 +108,9 @@ public class ToolbarActionListener implements ActionListener, ToolbarButtonActio
         case ABOUT:
           ApplicationActions.about(ms);
           break;
+        case EXIT:
+          ApplicationActions.exitApplication(ms);
+          break;
       }
     }
   }

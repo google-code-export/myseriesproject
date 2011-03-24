@@ -43,6 +43,7 @@ public abstract class AbstractToolbar extends JToolBar implements ToolbarButtonA
   protected ToolbarButton about;
   protected ToolbarButton deleteTorrents;
   protected ToolbarButton updateFeeds;
+  protected ToolbarButton exit;
   protected Integer[] visibleButtons;
 
   public AbstractToolbar() {
@@ -87,6 +88,7 @@ public abstract class AbstractToolbar extends JToolBar implements ToolbarButtonA
       viewLogs = new ToolbarButton(ToolbarButtonActions.VIEW_LOGS, "View the log file", "viewLogs.png");
       clearLogs = new ToolbarButton(ToolbarButtonActions.CLEAR_LOGS, "Clear the log files", "clearLogs.png");
       about = new ToolbarButton(ToolbarButtonActions.ABOUT, "About MySeries", "info.png");
+      exit = new ToolbarButton(ToolbarButtonActions.EXIT, "Quit MySeries", "exit.png");
   }
   public void addButtons(){
     buttons.put(ToolbarButtonActions.CREATE_DB, createDb);
@@ -115,6 +117,7 @@ public abstract class AbstractToolbar extends JToolBar implements ToolbarButtonA
     buttons.put(ToolbarButtonActions.VIEW_LOGS, viewLogs);
     buttons.put(ToolbarButtonActions.CLEAR_LOGS, clearLogs);
     buttons.put(ToolbarButtonActions.ABOUT, about);
+    buttons.put(ToolbarButtonActions.EXIT, exit);
 
     populateToolbar();
   }

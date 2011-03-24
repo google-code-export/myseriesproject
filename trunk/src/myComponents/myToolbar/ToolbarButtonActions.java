@@ -41,5 +41,7 @@ public interface ToolbarButtonActions {
   public static int VIEW_LOGS = 23;
   public static int CLEAR_LOGS = 24;
   public static int ABOUT = 25;
+  public static int EXIT = 26;
+
 
 }
