@@ -149,7 +149,7 @@ public class EpisodesActions {
         if (matcher.find() &&!matcherFake.find()) {
           String[] tokens = name.split("\\.", -1);
           String ext = tokens[tokens.length - 1];
-          if (ext.equals("srt") || ext.equals("sub")) {
+          if (MyUsefulFunctions.isSubtitle(name)) {
             if (tokens[tokens.length - 2].equals("gr") || tokens[tokens.length - 2].equals("en")) {
               ext = tokens[tokens.length - 2] + "." + tokens[tokens.length - 1];
             }
@@ -210,7 +210,7 @@ public class EpisodesActions {
             if (matcher.find() &&!matcherFake.find()) {
               String[] tokens = name.split("\\.", -1);
               String ext = tokens[tokens.length - 1];
-              if (ext.equals("srt") || ext.equals("sub")) {
+              if (MyUsefulFunctions.isSubtitle(name)) {
                 if (tokens[tokens.length - 2].equals("gr") || tokens[tokens.length - 2].equals("en")) {
                   ext = tokens[tokens.length - 2] + "." + tokens[tokens.length - 1];
                 }

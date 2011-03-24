@@ -50,6 +50,7 @@ import myseries.series.Series;
 import sdialogs.Ask;
 import tools.DesktopSupport;
 import tools.Skin;
+import tools.download.subtitles.SubtitleConstants;
 import tools.languages.LangsList;
 import tools.languages.Language;
 import tools.options.Options;
@@ -555,6 +556,21 @@ public class MyUsefulFunctions {
     }
 
     /**
+     * Checks if a value is in an array
+     * @param array The array to check against
+     * @param value The value to search
+     * @return True if value is in array else false
+     */
+    public static boolean isInArray(String[] array, String value) {
+        for (int i = 0; i < array.length; i++) {
+            if (array[i].toLowerCase().equals(value.toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * List an array elements
      * @param array The array to list
      * @param newLine If new line should be used
@@ -882,6 +898,12 @@ public class MyUsefulFunctions {
         } catch (SQLException ex) {
             return false;
         }
+    }
+
+    public static boolean isSubtitle(String filename){
+      int p = filename.lastIndexOf(".");
+      String ext = filename.substring(p+1);
+      return isInArray(SubtitleConstants.EXTENSIONS, filename);
     }
 
     private MyUsefulFunctions() {

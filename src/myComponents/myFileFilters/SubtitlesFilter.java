@@ -6,6 +6,7 @@ package myComponents.myFileFilters;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import myComponents.MyUsefulFunctions;
 import tools.download.subtitles.SubtitleConstants;
 
 /**
@@ -19,12 +20,6 @@ public class SubtitlesFilter implements FilenameFilter, SubtitleConstants {
     if(new File(dir + "/" + name).isDirectory()){
       return true;
     }
-    for (int i = 0; i < EXTENSIONS.length; i++) {
-      String ext = EXTENSIONS[i];
-      if (name.endsWith(ext)) {
-        return true;
-      }
-    }
-    return false;
+    return MyUsefulFunctions.isSubtitle(name);
   }
 }
