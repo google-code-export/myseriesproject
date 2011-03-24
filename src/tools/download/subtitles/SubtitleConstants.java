@@ -59,5 +59,10 @@ public interface SubtitleConstants {
    */
   public static String SUBTITLE_ONLINE_URL = "http://www.subtitleonline.com/";
 
+  /**
+   * The subtitle extensions (srt, sub)
+   */
+  public static final String[] EXTENSIONS = {"srt", "sub"};
+
 
 }

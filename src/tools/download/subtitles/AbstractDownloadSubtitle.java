@@ -98,7 +98,7 @@ public abstract class AbstractDownloadSubtitle {
       while (zipEntry != null) {
         //for each entry to be extracted
         String entryName = zipEntry.getName();
-        if (entryName.endsWith(".srt")) {
+        if (entryName.toLowerCase().endsWith(".srt")) {
           int n;
           FileOutputStream fileoutputstream;
           File newFile = new File(entryName);
