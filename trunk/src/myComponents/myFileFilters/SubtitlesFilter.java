@@ -6,14 +6,13 @@ package myComponents.myFileFilters;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import tools.download.subtitles.SubtitleConstants;
 
 /**
  * The subtitles filter
  * @author lordovol
  */
-public class SubtitlesFilter implements FilenameFilter {
-
-  public static final String[] EXTENSIONS = {"srt", "sub"};
+public class SubtitlesFilter implements FilenameFilter, SubtitleConstants {
 
 
   public boolean accept(File dir, String name) {
