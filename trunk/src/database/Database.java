@@ -20,6 +20,8 @@ import tools.options.Options;
  */
 public class Database implements DatabaseConstants {
 
+  public static boolean inTransaction;
+
   /**
    * Get All Databases
    * @return A vector of all the databases
@@ -43,12 +45,17 @@ public class Database implements DatabaseConstants {
   public static void endTransaction() {
     try {
       database.DBConnection.stmt.execute("END TRANSACTION");
+      inTransaction=false;
     } catch (SQLException ex) {
       myseries.MySeries.logger.log(Level.SEVERE, null, ex);
     }
   }
   public static void beginTransaction() {
     try {
+      while (inTransaction){
+        
+      }
+      inTransaction=true;
       database.DBConnection.stmt.execute("BEGIN TRANSACTION");
     } catch (SQLException ex) {
       myseries.MySeries.logger.log(Level.SEVERE, null, ex);
