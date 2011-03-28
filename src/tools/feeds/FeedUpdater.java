@@ -42,7 +42,7 @@ public class FeedUpdater implements Runnable {
 
   @Override
   public void run() {
-    myseries.MySeries.tabsPanel.setSelectedIndex(myseries.MySeries.TABS_PANEL_FEEDS);
+    //myseries.MySeries.tabsPanel.setSelectedIndex(myseries.MySeries.TABS_PANEL_FEEDS);
     //myseries.MySeries.glassPane.activate(null);
     int id = -1;
     updating = true;

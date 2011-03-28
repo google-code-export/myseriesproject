@@ -305,6 +305,9 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     if (Options.toBoolean(Options.CHECK_VERSION)) {
       new CheckUpdate(true);
     }
+    if (Options.toBoolean(Options.UPDATE_FEEDS)) {
+      FeedsActions.updateFeeds();
+    }
 
     scheduler.getTblCalendar().addMouseListener(new ScheduleMouseListener());
   }
@@ -1609,7 +1612,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 //          } else {
 //            PopUpItem_AddEpisodeInEpisodes.setEnabled(false);
 //          }
- //         episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
+          //         episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
         }
       }
     }
@@ -1780,13 +1783,12 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
   }//GEN-LAST:event_popUpItem_WholeSeasonSubsActionPerformed
 
   private void bt_rssUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_rssUpdateActionPerformed
-     FeedsActions.updateFeeds();
+    FeedsActions.updateFeeds();
   }//GEN-LAST:event_bt_rssUpdateActionPerformed
 
   private void bt_rssAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_rssAddActionPerformed
     boolean isFeedSaved = FeedsActions.addFeedPanel(0);
 }//GEN-LAST:event_bt_rssAddActionPerformed
-
   // Variables declaration - do not modify//GEN-BEGIN:variables
   public static javax.swing.JMenuItem PopUpItem_AddEpisode;
   public static javax.swing.JMenuItem PopUpItem_AddEpisodeInEpisodes;
@@ -1914,15 +1916,15 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
   public void createComboBox_filters() {
     comboBox_filterSubtitles.setModel(new DefaultComboBoxModel(
-            new String[]{
-              SubtitleConstants.NONE,
-              languages.getPrimary().getName(),
-              languages.getSecondary().getName(),
-              SubtitleConstants.BOTH,
-              languages.getPrimary().getName() + " or " + languages.getSecondary().getName(),
-              "Not " + languages.getPrimary().getName(),
-              SubtitleConstants.UNAWARE
-            }));
+        new String[]{
+          SubtitleConstants.NONE,
+          languages.getPrimary().getName(),
+          languages.getSecondary().getName(),
+          SubtitleConstants.BOTH,
+          languages.getPrimary().getName() + " or " + languages.getSecondary().getName(),
+          "Not " + languages.getPrimary().getName(),
+          SubtitleConstants.UNAWARE
+        }));
   }
 
   public static int getSeriesTableRow(SeriesRecord series) {
