@@ -598,24 +598,31 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="1" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jLabel2" alignment="1" pref="155" max="32767" attributes="0"/>
                                           <Component id="jLabel15" alignment="1" pref="155" max="32767" attributes="0"/>
                                           <Component id="jLabel13" alignment="1" pref="155" max="32767" attributes="0"/>
                                           <Component id="jLabel12" alignment="1" pref="155" max="32767" attributes="0"/>
+                                          <Component id="jLabel21" alignment="0" pref="155" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="combo_primaryLang" pref="193" max="32767" attributes="0"/>
-                                                  <Component id="jCheckBox1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="combo_secondaryLang" pref="193" max="32767" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" attributes="0">
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <Component id="combo_primaryLang" pref="193" max="32767" attributes="0"/>
+                                                      <Component id="jCheckBox1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="combo_secondaryLang" pref="193" max="32767" attributes="0"/>
+                                                  </Group>
+                                                  <EmptySpace min="-2" pref="152" max="-2" attributes="0"/>
                                               </Group>
-                                              <EmptySpace min="-2" pref="152" max="-2" attributes="0"/>
+                                              <Group type="102" attributes="0">
+                                                  <Component id="spinner_columns" min="-2" pref="41" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                              </Group>
                                           </Group>
-                                          <Group type="102" attributes="0">
-                                              <Component id="spinner_columns" min="-2" pref="41" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="cb_updateFeeds" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
@@ -667,8 +674,15 @@
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="spinner_columns" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Component id="spinner_columns" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="2" attributes="0">
+                                          <Component id="jLabel21" alignment="2" min="-2" max="-2" attributes="0"/>
+                                          <Component id="cb_updateFeeds" alignment="2" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="checkbox_useProxy" min="-2" max="-2" attributes="0"/>
@@ -859,6 +873,26 @@
                         <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                           <Connection code="Options.toInt(Options.FEED_COLUMNS)" type="code"/>
                         </Property>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel21">
+                      <Properties>
+                        <Property name="horizontalAlignment" type="int" value="4"/>
+                        <Property name="text" type="java.lang.String" value="Update feeds on startup :"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JCheckBox" name="cb_updateFeeds">
+                      <Properties>
+                        <Property name="selected" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="Options.toBoolean(Options.UPDATE_FEEDS)" type="code"/>
+                        </Property>
+                        <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                          <Insets value="[0, 0, 0, 0]"/>
+                        </Property>
+                        <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="Options.UPDATE_FEEDS" type="code"/>
+                        </Property>
+                        <Property name="opaque" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                   </SubComponents>
