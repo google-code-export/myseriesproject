@@ -23,6 +23,8 @@ public abstract class MyAbstractButton extends Button {
     public static final String REMOVE_ALL = "removeall";
     public static final String APPLY = "apply";
     public static final String SAVE = "save";
+    public static final String DIRECTORY = "dir";
+    public static final String INTERNET = "internet";
 
     private class Adapter extends MouseAdapter{
         
