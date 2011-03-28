@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import myComponents.MyMessages;
+import myComponents.MyUsefulFunctions;
 import tools.options.Options;
 
 /**
@@ -26,6 +27,7 @@ public class FeedUpdater implements Runnable {
   private ArrayList<FeedsRecord> feeds = new ArrayList<FeedsRecord>();
   private FeedTree tree;
   private boolean readFeeds = true;
+  public static boolean updating = false;
 
   public FeedUpdater(FeedTree tree, FeedsRecord feedRecord) {
     feeds.add(feedRecord);
@@ -38,16 +40,25 @@ public class FeedUpdater implements Runnable {
     this.readFeeds = readFeeds;
   }
 
+  @Override
   public void run() {
     myseries.MySeries.tabsPanel.setSelectedIndex(myseries.MySeries.TABS_PANEL_FEEDS);
-    myseries.MySeries.glassPane.activate(null);
+    //myseries.MySeries.glassPane.activate(null);
     int id = -1;
+    updating = true;
+    myseries.MySeries.lb_rssUpdating.setVisible(true);
     for (Iterator<FeedsRecord> it = feeds.iterator(); it.hasNext();) {
       FeedsRecord feedRecord = it.next();
       id = feedRecord.getFeed_ID();
+      if(MyUsefulFunctions.hasInternetConnection(feedRecord.getUrl())){
       update(feedRecord);
+      } else {
+        MyMessages.error("Feed update", "Could not connect to " + feedRecord.getUrl());
+      }
     }
-    myseries.MySeries.glassPane.deactivate();
+    updating = false;
+    myseries.MySeries.lb_rssUpdating.setVisible(false);
+    //myseries.MySeries.glassPane.deactivate();
     
     int[] sel = myseries.MySeries.feedTree.tree.getSelectionRows();
    // myseries.MySeries.feedTree.tree.setSelectionRow(0);

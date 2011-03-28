@@ -65,6 +65,7 @@ public class MyUsefulFunctions {
 
   public static final int VIDEO_FILE = 0;
   public static final int SUBTITLE_FILE = 1;
+  public static final String GOOGLE = "http://www.google.com";
 
   /**
    * Converts a date from the database (YYYY-MM-DD) to the Options._DATE_FORMAT_
