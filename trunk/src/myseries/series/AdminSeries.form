@@ -26,12 +26,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="main_panel" min="-2" max="-2" attributes="0"/>
+          <Component id="main_panel" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="main_panel" min="-2" max="-2" attributes="0"/>
+          <Component id="main_panel" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -51,39 +51,35 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="label_Title" alignment="0" min="-2" pref="463" max="-2" attributes="1"/>
-                      <Component id="inner_panel" alignment="1" min="-2" max="-2" attributes="1"/>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="label_Title" pref="445" max="32767" attributes="3"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="myButtonHelp1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Component id="myButtonCancel1" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="myButtonOk1" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="inner_panel" min="-2" pref="501" max="-2" attributes="2"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="516" max="32767" attributes="0"/>
-                  <Component id="myButtonHelp1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="myButtonCancel1" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="myButtonOk1" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="label_Title" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="myButtonCancel1" min="-2" max="-2" attributes="0"/>
-                      <Component id="myButtonHelp1" min="-2" max="-2" attributes="0"/>
+              <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="2" attributes="0">
+                      <Component id="label_Title" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="myButtonHelp1" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="myButtonCancel1" alignment="2" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="inner_panel" min="-2" pref="257" max="-2" attributes="0"/>
+                  <Component id="inner_panel" min="-2" pref="295" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="myButtonOk1" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -93,9 +89,6 @@
       <SubComponents>
         <Container class="javax.swing.JPanel" name="inner_panel">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                 <LineBorder roundedCorners="true" thickness="2"/>
@@ -106,8 +99,8 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" max="-2" attributes="0">
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="label_tvrageId" min="-2" max="-2" attributes="0"/>
                           <Component id="label_season" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -118,125 +111,108 @@
                           <Component id="label_subOnlineId" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="textField_Serial" alignment="0" pref="214" max="32767" attributes="1"/>
+                                  <Component id="textField_Serial" alignment="0" pref="194" max="32767" attributes="1"/>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="spinner_season" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="165" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="textfield_localDir" alignment="0" pref="214" max="32767" attributes="1"/>
-                                  <Component id="textfield_screenshot" alignment="0" pref="214" max="32767" attributes="1"/>
+                                  <Component id="textfield_localDir" alignment="0" pref="194" max="32767" attributes="1"/>
+                                  <Component id="textfield_screenshot" alignment="0" pref="194" max="32767" attributes="1"/>
                               </Group>
+                              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="bt_iuScreenshot" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="button_browseLocalDir" min="-2" max="-2" attributes="0"/>
+                                      <Component id="bt_screenshot" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                                      <Component id="button_browseScreenshot" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="button_getScreenshot" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="bt_localDir" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="148" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                          <Component id="textfield_tvRageID" alignment="0" max="32767" attributes="1"/>
-                                          <Component id="textfield_subsOnline" alignment="0" max="32767" attributes="1"/>
-                                          <Component id="textfield_tvSubsId" alignment="0" min="-2" pref="148" max="-2" attributes="1"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="button_getTvSubtitlesId" min="-2" max="-2" attributes="0"/>
-                                          <Component id="button_getSubOnlineId" min="-2" max="-2" attributes="0"/>
-                                          <Component id="button_getTvRageID" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="10" pref="10" max="10" attributes="0"/>
-                                      <Component id="checkbox_updateEpisodes" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="textfield_tvRageID" alignment="0" max="32767" attributes="1"/>
+                                  <Component id="textfield_subsOnline" alignment="0" max="32767" attributes="1"/>
+                                  <Component id="textfield_tvSubsId" alignment="0" min="-2" pref="148" max="-2" attributes="1"/>
+                              </Group>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="bt_subsOn" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="bt_tvSubs" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="bt_tvRage" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="scrPanel" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="checkbox_updateEpisodes" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
+                  <Group type="102" alignment="1" max="-2" attributes="0">
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="2" attributes="0">
+                          <Component id="label_title" alignment="2" min="-2" max="-2" attributes="0"/>
+                          <Component id="textField_Serial" alignment="2" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="2" attributes="0">
+                          <Component id="label_season" alignment="2" min="-2" max="-2" attributes="0"/>
+                          <Component id="spinner_season" alignment="2" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="2" attributes="0">
+                          <Component id="label_localDir" alignment="2" min="-2" max="-2" attributes="0"/>
+                          <Component id="textfield_localDir" alignment="2" min="-2" max="-2" attributes="0"/>
+                          <Component id="bt_localDir" alignment="2" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="2" attributes="0">
+                          <Component id="label_screenshot" alignment="2" min="-2" max="-2" attributes="0"/>
+                          <Component id="textfield_screenshot" alignment="2" min="-2" max="-2" attributes="0"/>
+                          <Component id="bt_screenshot" alignment="2" min="-2" max="-2" attributes="0"/>
+                          <Component id="bt_iuScreenshot" alignment="2" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="2" attributes="0">
-                                  <Component id="label_title" alignment="2" min="-2" max="-2" attributes="0"/>
-                                  <Component id="textField_Serial" alignment="2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="label_tvsubsId" alignment="2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="textfield_tvSubsId" alignment="2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="bt_tvSubs" alignment="2" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="2" attributes="0">
-                                  <Component id="label_season" alignment="2" min="-2" max="-2" attributes="0"/>
-                                  <Component id="spinner_season" alignment="2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="label_subOnlineId" alignment="2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="textfield_subsOnline" alignment="2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="bt_subsOn" alignment="2" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="2" attributes="0">
-                                  <Component id="label_localDir" alignment="2" min="-2" max="-2" attributes="0"/>
-                                  <Component id="textfield_localDir" alignment="2" min="-2" max="-2" attributes="0"/>
-                                  <Component id="button_browseLocalDir" alignment="2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="label_tvrageId" alignment="2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="textfield_tvRageID" alignment="2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="bt_tvRage" alignment="2" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="2" attributes="0">
-                                  <Component id="textfield_screenshot" alignment="2" min="-2" max="-2" attributes="0"/>
-                                  <Component id="button_browseScreenshot" alignment="2" min="-2" max="-2" attributes="0"/>
-                                  <Component id="button_getScreenshot" alignment="2" min="-2" pref="25" max="-2" attributes="0"/>
-                              </Group>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="2" attributes="0">
-                                          <Component id="label_tvsubsId" alignment="2" min="-2" max="-2" attributes="0"/>
-                                          <Component id="textfield_tvSubsId" alignment="2" min="-2" max="-2" attributes="0"/>
-                                          <Component id="button_getTvSubtitlesId" alignment="2" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="2" attributes="0">
-                                          <Component id="label_subOnlineId" alignment="2" min="-2" max="-2" attributes="0"/>
-                                          <Component id="textfield_subsOnline" alignment="2" min="-2" max="-2" attributes="0"/>
-                                          <Component id="button_getSubOnlineId" alignment="2" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="2" attributes="0">
-                                          <Component id="label_tvrageId" alignment="2" min="-2" max="-2" attributes="0"/>
-                                          <Component id="textfield_tvRageID" alignment="2" min="-2" max="-2" attributes="0"/>
-                                          <Component id="button_getTvRageID" alignment="2" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="checkbox_updateEpisodes" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="scrPanel" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="checkbox_updateEpisodes" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
-                              <Component id="label_screenshot" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="scrPanel" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -290,27 +266,6 @@
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JButton" name="button_getTvRageID">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/internet_update_small.png"/>
-                </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Get ID for TvRage.com"/>
-                <Property name="iconTextGap" type="int" value="2"/>
-                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[31, 25]"/>
-                </Property>
-                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[31, 25]"/>
-                </Property>
-                <Property name="opaque" type="boolean" value="false"/>
-              </Properties>
-              <Events>
-                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="button_getTvRageIDMouseEntered"/>
-                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="button_getTvRageIDMouseExited"/>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_getTvRageIDActionPerformed"/>
-              </Events>
-            </Component>
             <Component class="javax.swing.JLabel" name="label_localDir">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="4"/>
@@ -323,69 +278,11 @@
                 <Property name="text" type="java.lang.String" value="Screenshot :"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="button_browseScreenshot">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/localDir_small.png"/>
-                </Property>
-                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[31, 25]"/>
-                </Property>
-                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[31, 25]"/>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_browseScreenshotActionPerformed"/>
-              </Events>
-            </Component>
             <Component class="javax.swing.JLabel" name="label_subOnlineId">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="4"/>
                 <Property name="text" type="java.lang.String" value="SubtitleOnline ID :"/>
               </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="button_getTvSubtitlesId">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/internet_update_small.png"/>
-                </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Get ID for TvSubtitles.net"/>
-                <Property name="iconTextGap" type="int" value="2"/>
-                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[31, 25]"/>
-                </Property>
-                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[31, 25]"/>
-                </Property>
-                <Property name="opaque" type="boolean" value="false"/>
-              </Properties>
-              <Events>
-                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="button_getTvSubtitlesIdMouseEntered"/>
-                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="button_getTvSubtitlesIdMouseExited"/>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_getTvSubtitlesIdActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="button_getSubOnlineId">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/internet_update_small.png"/>
-                </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Get ID for SubtitleOnline.com"/>
-                <Property name="iconTextGap" type="int" value="2"/>
-                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[31, 25]"/>
-                </Property>
-                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[31, 25]"/>
-                </Property>
-                <Property name="opaque" type="boolean" value="false"/>
-              </Properties>
-              <Events>
-                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="button_getSubOnlineIdMouseEntered"/>
-                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="button_getSubOnlineIdMouseExited"/>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_getSubOnlineIdActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="label_message">
             </Component>
@@ -396,22 +293,6 @@
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new com.googlecode.svalidators.formcomponents.STextField(new FileValidator(&quot;&quot;,FileValidator.Type.DIR,true))"/>
               </AuxValues>
-            </Component>
-            <Component class="javax.swing.JButton" name="button_browseLocalDir">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/localDir_small.png"/>
-                </Property>
-                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[31, 25]"/>
-                </Property>
-                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[31, 25]"/>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_browseLocalDirActionPerformed"/>
-              </Events>
             </Component>
             <Component class="com.googlecode.svalidators.formcomponents.STextField" name="textfield_screenshot">
               <Properties>
@@ -458,27 +339,6 @@
                 <Property name="opaque" type="boolean" value="false"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="button_getScreenshot">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/internet_update_small.png"/>
-                </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Download a screenshot from tvrage"/>
-                <Property name="iconTextGap" type="int" value="2"/>
-                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[31, 25]"/>
-                </Property>
-                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[31, 25]"/>
-                </Property>
-                <Property name="opaque" type="boolean" value="false"/>
-              </Properties>
-              <Events>
-                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="button_getScreenshotMouseEntered"/>
-                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="button_getScreenshotMouseExited"/>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_getScreenshotActionPerformed"/>
-              </Events>
-            </Component>
             <Container class="myComponents.myGUI.MyImagePanel" name="scrPanel">
               <Properties>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -489,16 +349,70 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="178" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="139" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="108" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="104" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
             </Container>
+            <Component class="myComponents.myGUI.buttons.MyButtonDir" name="bt_localDir">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=""/>
+                <Property name="toolTipText" type="java.lang.String" value="Browse for the local Directory"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_localDirActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="myComponents.myGUI.buttons.MyButtonDir" name="bt_screenshot">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=""/>
+                <Property name="toolTipText" type="java.lang.String" value="Browse for a screenshot"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_screenshotActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="myComponents.myGUI.buttons.MyButtonInternet" name="bt_iuScreenshot">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=""/>
+                <Property name="toolTipText" type="java.lang.String" value="Download screenshot"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_iuScreenshotActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="myComponents.myGUI.buttons.MyButtonInternet" name="bt_tvSubs">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=""/>
+                <Property name="toolTipText" type="java.lang.String" value="Get TvSubtitles ID"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_tvSubsActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="myComponents.myGUI.buttons.MyButtonInternet" name="bt_subsOn">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=""/>
+                <Property name="toolTipText" type="java.lang.String" value="Get subtitleOnline ID"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_subsOnActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="myComponents.myGUI.buttons.MyButtonInternet" name="bt_tvRage">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=""/>
+                <Property name="toolTipText" type="java.lang.String" value="Get TvRage ID"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_tvRageActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
         <Component class="myComponents.myGUI.buttons.MyButtonCancel" name="myButtonCancel1">
@@ -512,7 +426,6 @@
         <Component class="myComponents.myGUI.buttons.MyButtonHelp" name="myButtonHelp1">
           <Properties>
             <Property name="text" type="java.lang.String" value=""/>
-            <Property name="toolTipText" type="java.lang.String" value="Help"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="myButtonHelp1ActionPerformed"/>
