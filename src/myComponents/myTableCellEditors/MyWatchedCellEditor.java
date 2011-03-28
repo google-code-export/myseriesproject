@@ -5,45 +5,30 @@
 package myComponents.myTableCellEditors;
 
 import database.EpisodesRecord;
-import database.SeriesRecord;
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.SQLException;
 import java.util.EventObject;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.AbstractCellEditor;
+import javax.swing.DefaultCellEditor;
 import javax.swing.JCheckBox;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableCellEditor;
 import myComponents.MyUsefulFunctions;
-import myseries.series.Series;
-import tools.options.Options;
 
 /**
  *
  * @author lordovol
  */
-public class MyWatchedCellEditor extends AbstractCellEditor implements TableCellEditor {
+public class MyWatchedCellEditor extends DefaultCellEditor implements TableCellEditor {
 
   public static final long serialVersionUID = 2352352525L;
-  private JCheckBox cb = new JCheckBox();
   private final int episodeColumn;
 
   public MyWatchedCellEditor(int episodeColumn) {
+    super(new JCheckBox());
     this.episodeColumn = episodeColumn;
-     cb.addMouseListener(new MouseAdapter() {
-
-      @Override
-      public void mouseExited(MouseEvent e) {
-        stopCellEditing();
-      }
-
-    });
   }
 
   @Override
@@ -66,12 +51,9 @@ public class MyWatchedCellEditor extends AbstractCellEditor implements TableCell
     return true;
   }
 
-  public Object getCellEditorValue() {
-    return (Boolean) cb.isSelected();
-  }
-
   public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-    cb.setHorizontalAlignment(SwingConstants.CENTER);
-    return cb;
+    super.getTableCellEditorComponent(table,value,isSelected,row,column);
+    ((JCheckBox)editorComponent).setHorizontalAlignment(SwingConstants.CENTER);
+    return editorComponent;
   }
 }
