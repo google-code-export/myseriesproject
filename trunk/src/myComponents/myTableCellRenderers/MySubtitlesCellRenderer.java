@@ -57,7 +57,9 @@ public class MySubtitlesCellRenderer extends DefaultTableCellRenderer {
           setIcon(createIcon(langs));
         } else {
           tooltip = ep.getSubs().getName();
-          String[][] l = {{ep.getSubs().getCode()}, {"srt"}};
+          String[][] l = new String[1][2];
+          l[0][0] = ep.getSubs().getCode();
+          l[0][1]="srt";
           setIcon(createIcon(l));
         }
       } else {
@@ -72,10 +74,10 @@ public class MySubtitlesCellRenderer extends DefaultTableCellRenderer {
   }
 
   private Icon createIcon(String[][] langs) {
-    if (langs.length == 1 && langs[0].equals(NONE)) {
+    if (langs.length == 1 && langs[0][0].equals(NONE)) {
       langs[0][0] = "other";
     }
-    if (langs.length == 1 && langs[0].equals("")) {
+    if (langs.length == 1 && langs[0][0].equals("")) {
       langs[0][0] = "multiple";
     }
 

@@ -4,15 +4,12 @@
  */
 package myComponents.myTableCellRenderers;
 
-import database.EpisodesRecord;
 import java.awt.Component;
-import java.awt.image.BufferedImage;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
-import myComponents.MyUsefulFunctions;
 
 /**
  *
@@ -32,7 +29,7 @@ public class MyWatchedCellRenderer extends DefaultTableCellRenderer {
     if (value instanceof Boolean) {
       Boolean val = (Boolean) value;
       setText("");
-         setIcon(createIcon(val));
+      setIcon(createIcon(val));
     }
     //setHorizontalAlignment(SwingConstants.CENTER);
     setHorizontalAlignment(SwingConstants.CENTER);
