@@ -145,11 +145,16 @@ public class SeriesActions {
   }
 
   public static void updateFiles(MySeries m) {
-    if (!Options.toBoolean(Options.AUTO_FILE_UPDATING)) {
-      MyMessages.error("Auto file updating disabled", "Auto file updating is disabled in the options.\n"
-          + "Enable it and try again");
-      return;
-    }
+    boolean update = Options.toBoolean(Options.AUTO_FILE_UPDATING);
+    boolean unzip = Options.toBoolean(Options.AUTO_EXTRACT_ZIPS);
+    Options.setOption(Options.AUTO_FILE_UPDATING, true);
+    Options.setOption(Options.AUTO_EXTRACT_ZIPS, true);
+    //if (!Options.toBoolean(Options.AUTO_FILE_UPDATING)) {
+      
+      //MyMessages.error("Auto file updating disabled", "Auto file updating is disabled in the options.\n"
+      //    + "Enable it and try again");
+      //return;
+    //}
     try {
       SeriesRecord origSeries = Series.getCurrentSerial();
       ArrayList<SeriesRecord> series = Series.getSeries(false);
@@ -164,9 +169,13 @@ public class SeriesActions {
       MyEvent evt = new MyEvent(m, MyEventHandler.SET_CURRENT_SERIES);
       evt.setSeries(origSeries);
       m.getEvClass().fireMyEvent(evt);
+      
       MyMessages.message("Update finished", "Updating of series files finished.");
     } catch (SQLException ex) {
       MySeries.logger.log(Level.SEVERE, null, ex);
+    } finally {
+      Options.setOption(Options.AUTO_FILE_UPDATING, update);
+      Options.setOption(Options.AUTO_EXTRACT_ZIPS, unzip);
     }
 
   }
