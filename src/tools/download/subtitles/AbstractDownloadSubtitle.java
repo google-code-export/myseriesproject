@@ -23,6 +23,7 @@ import java.util.zip.ZipInputStream;
 import javax.swing.JProgressBar;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
+import tools.Unziper;
 
 /**
  *
@@ -38,7 +39,7 @@ public abstract class AbstractDownloadSubtitle {
   protected AbstractDownloadForm form;
   protected String srtFilename = "";
   protected boolean cancel = false;
-  
+
   protected void download(Subtitle sub) {
     if (localDir.equals("")) {
       progress.setIndeterminate(false);
@@ -72,7 +73,19 @@ public abstract class AbstractDownloadSubtitle {
           is.close();
           outStream.close();
           progress.setString("Opening zip File");
-          openZip(filename);
+          Unziper z = new Unziper(getLocalDir(), new File(filename),true,Unziper.SUBTITLES);
+          try {
+            z.unzip();
+            if(z.unzippedFiles.size()==1){
+              srtFilename = z.unzippedFiles.get(0);
+            }else{
+            srtFilename = z.unzippedFiles.toString();
+            }
+            form.label_message.setText("Subtitle downloaded and extracted");
+          } catch (Exception ex) {
+            myseries.MySeries.logger.log(Level.WARNING, "Could not extract subtitle file", ex);
+          }
+          //openZip(filename);
         }
       } catch (IOException ex) {
         MyMessages.error("Access denied", "Direct access to subtitle is denied.Opening browser");
@@ -90,43 +103,7 @@ public abstract class AbstractDownloadSubtitle {
     }
   }
 
-  private void openZip(String filename) throws IOException {
-    try {
-      byte[] buf = new byte[1024];
-      ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(filename));
-      ZipEntry zipEntry = zipInputStream.getNextEntry();
-      while (zipEntry != null) {
-        //for each entry to be extracted
-        String entryName = zipEntry.getName();
-        if (MyUsefulFunctions.isSubtitle(entryName)) {
-          int n;
-          FileOutputStream fileoutputstream;
-          File newFile = new File(entryName);
-          String directory = newFile.getParent();
-          if (directory == null) {
-            if (newFile.isDirectory()) {
-              break;
-            }
-          }
-          fileoutputstream = new FileOutputStream(getLocalDir() + "/" + entryName);
-          while ((n = zipInputStream.read(buf, 0, 1024)) > -1) {
-            fileoutputstream.write(buf, 0, n);
-          }
-          fileoutputstream.close();
-          zipInputStream.closeEntry();
-          srtFilename = entryName;
-          form.label_message.setText("Subtitle downloaded and extracted");
-        }
-        zipEntry = zipInputStream.getNextEntry();
-      }//while
-      zipInputStream.close();
-      new File(filename).delete();
-    } catch (Exception ex) {
-      myseries.MySeries.logger.log(Level.WARNING, "Could not extract subtitle file", ex);
-    }
-  }
-
-  /**
+   /**
    * @return the localDir
    */
   public String getLocalDir() {
