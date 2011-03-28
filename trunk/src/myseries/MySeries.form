@@ -1411,9 +1411,12 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="feedTree" alignment="0" pref="179" max="32767" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Component id="bt_addRss" min="-2" pref="35" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="bt_refreshRss" min="-2" pref="35" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                                              <Component id="bt_rssAdd" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                                              <Component id="bt_rssUpdate" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Component id="lb_rssUpdating" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
@@ -1423,13 +1426,21 @@
                             <DimensionLayout dim="1">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="bt_addRss" min="-2" max="-2" attributes="0"/>
-                                          <Component id="bt_refreshRss" min="-2" max="-2" attributes="0"/>
+                                          <Group type="102" attributes="0">
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="bt_rssUpdate" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="bt_rssAdd" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                                              <Component id="lb_rssUpdating" min="-2" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="feedTree" pref="445" max="32767" attributes="0"/>
+                                      <Component id="feedTree" pref="444" max="32767" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -1438,31 +1449,39 @@
                           <SubComponents>
                             <Component class="tools.feeds.FeedTree" name="feedTree">
                             </Component>
-                            <Component class="javax.swing.JButton" name="bt_addRss">
+                            <Component class="javax.swing.JLabel" name="lb_rssUpdating">
                               <Properties>
                                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                                  <Image iconType="3" name="/images/rss_add.png"/>
-                                </Property>
-                                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                                  <Color id="Hand Cursor"/>
+                                  <Image iconType="3" name="/images/rss_loading.gif"/>
                                 </Property>
                               </Properties>
-                              <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_addRssActionPerformed"/>
-                              </Events>
+                              <AuxValues>
+                                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="lb_rssUpdating.setVisible(false);"/>
+                              </AuxValues>
                             </Component>
-                            <Component class="javax.swing.JButton" name="bt_refreshRss">
+                            <Component class="myComponents.myGUI.buttons.MyDefaultButton" name="bt_rssAdd">
                               <Properties>
-                                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                                  <Image iconType="3" name="/images/rss_refresh.png"/>
-                                </Property>
-                                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                                  <Color id="Hand Cursor"/>
-                                </Property>
+                                <Property name="text" type="java.lang.String" value=""/>
+                                <Property name="toolTipText" type="java.lang.String" value=""/>
                               </Properties>
                               <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_refreshRssActionPerformed"/>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_rssAddActionPerformed"/>
                               </Events>
+                              <AuxValues>
+                                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new myComponents.myGUI.buttons.MyDefaultButton(MyAbstractButton.RSS_ADD,&quot;Add a new rss feed&quot;)"/>
+                              </AuxValues>
+                            </Component>
+                            <Component class="myComponents.myGUI.buttons.MyDefaultButton" name="bt_rssUpdate">
+                              <Properties>
+                                <Property name="text" type="java.lang.String" value=""/>
+                                <Property name="toolTipText" type="java.lang.String" value=""/>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_rssUpdateActionPerformed"/>
+                              </Events>
+                              <AuxValues>
+                                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new myComponents.myGUI.buttons.MyDefaultButton(MyAbstractButton.RSS_REFRESH,&quot;Refresh all rss feeds&quot;)"/>
+                              </AuxValues>
                             </Component>
                           </SubComponents>
                         </Container>

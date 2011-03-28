@@ -6,6 +6,8 @@ package myseries.actions;
 
 import database.FeedsRecord;
 import java.util.ArrayList;
+import myComponents.MyMessages;
+import myComponents.MyUsefulFunctions;
 import tools.feeds.AdminFeed;
 
 /**
@@ -23,8 +25,12 @@ public class FeedsActions {
   }
 
   public static void updateFeeds() {
-    ArrayList<FeedsRecord> feeds = FeedsRecord.getAll();
-    myseries.MySeries.feedTree.updateFeeds(feeds, false);
+    if (MyUsefulFunctions.hasInternetConnection(MyUsefulFunctions.GOOGLE)) {
+      ArrayList<FeedsRecord> feeds = FeedsRecord.getAll();
+      myseries.MySeries.feedTree.updateFeeds(feeds, false);
+    } else {
+      MyMessages.internetError();
+    }
   }
 
   private FeedsActions() {
