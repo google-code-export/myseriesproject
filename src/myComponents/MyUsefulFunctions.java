@@ -42,6 +42,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 import javax.swing.JOptionPane;
 import myComponents.myGUI.MyFont;
 import myComponents.myTableCellRenderers.MyDownloadedCellRenderer;
@@ -720,7 +722,7 @@ public class MyUsefulFunctions {
     for (Iterator<File> it = subtitles.iterator(); it.hasNext();) {
       String name = it.next().getName();
       String[] tokens = name.split("\\.", -1);
-      String ext = tokens[tokens.length-1];
+      String ext = tokens[tokens.length - 1];
       if (tokens.length < 3) {
         i++;
         types[i][0] = MySubtitlesCellRenderer.OTHER;
@@ -913,6 +915,6 @@ public class MyUsefulFunctions {
     return isInArray(SubtitleConstants.EXTENSIONS, ext);
   }
 
-   private MyUsefulFunctions() {
+  private MyUsefulFunctions() {
   }
 }
