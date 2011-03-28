@@ -24,6 +24,9 @@ import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 import myComponents.MyTableModels.MyEpisodesTableModel;
 import myComponents.MyUsefulFunctions;
+import myComponents.myFileFilters.SubtitlesFilter;
+import myComponents.myFileFilters.ZipFilter;
+import tools.Unziper;
 import tools.languages.LangsList;
 import tools.languages.Language;
 import tools.options.Options;
@@ -108,6 +111,29 @@ public class Episodes {
     }
   }
 
+  private static void unzipSubtitleFiles(SeriesRecord series) {
+    if (!series.isValidLocalDir()) {
+      return;
+    }
+    File dir = new File(series.getLocalDir());
+    File[] subs = dir.listFiles(new ZipFilter());
+    for (int i = 0; i < subs.length; i++) {
+      File file = subs[i];
+      if (file.isFile()) {
+        Unziper u = new Unziper(series.getLocalDir(), file, true, Unziper.SUBTITLES);
+        try {
+          if (u.unzip()) {
+            if (!u.unzippedFiles.isEmpty()) {
+              myseries.MySeries.logger.log(Level.INFO, "Unzipped " + u.unzippedFiles);
+            }
+          }
+        } catch (Exception ex) {
+          myseries.MySeries.logger.log(Level.SEVERE, "Could not unzip " + file, ex);
+        }
+      }
+    }
+  }
+
   private Episodes() {
   }
 
@@ -153,7 +179,11 @@ public class Episodes {
     Language subs;
     emptyEpisodes();
     SeriesRecord series = Series.getCurrentSerial();
+
     if (Options.toBoolean(Options.AUTO_FILE_UPDATING) && series.isValidLocalDir()) {
+      if (Options.toBoolean(Options.AUTO_EXTRACT_ZIPS)) {
+        unzipSubtitleFiles(series);
+      }
       subtitleFiles = Series.getSubtitleFiles(series);
       videoFiles = Series.getVideoFiles(series);
     }
@@ -189,7 +219,6 @@ public class Episodes {
         // Subs fuiles
         if (subtitleFiles != null) {
           cSubs = checkSubs(Series.getCurrentSerial().getSeason(), e.getEpisode(), subtitleFiles);
-
         }
       } else {
         newDownloadedStatus = false;
@@ -211,12 +240,14 @@ public class Episodes {
       eps.add(e);
     }
     rs.close();
-    Database.beginTransaction();
-    for (Iterator<EpisodesRecord> it = updated.iterator(); it.hasNext();) {
-      EpisodesRecord episodesRecord = it.next();
-      episodesRecord.save();
+    if (!updated.isEmpty()) {
+      Database.beginTransaction();
+      for (Iterator<EpisodesRecord> it = updated.iterator(); it.hasNext();) {
+        EpisodesRecord episodesRecord = it.next();
+        episodesRecord.save();
+      }
+      Database.endTransaction();
     }
-    Database.endTransaction();
     table_episodesList.setModel(getTableModel_episodes());
 
     return eps;
