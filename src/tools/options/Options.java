@@ -218,6 +218,10 @@ public class Options {
    */
   public static String VIDEO_APP = "VIDEO_APP";
   /**
+   * Auto extract zip files
+   */
+  public static String AUTO_EXTRACT_ZIPS = "AUTO_EXTRACT_ZIPS";
+  /**
    * An array of the options that are selected in combo boxes
    */
   public static String[] _COMBO_OPTIONS_ = {DATE_FORMAT, DEBUG_MODE, LOOK_AND_FEEL,
@@ -504,6 +508,7 @@ public class Options {
     out.println(Options.TOOLBAR_BUTTONS + "=" + getDefaultToolbarButtons());
     out.println(Options.FEED_COLUMNS + "=" + 1);
     out.println(Options.VIDEO_APP + "=");
+    out.println(Options.AUTO_EXTRACT_ZIPS + "=false");
 
     out.close();
   }
@@ -579,6 +584,7 @@ public class Options {
     options.put(Options.FEED_COLUMNS, 1);
     options.put(Options.UNIFIED_SERIES, false);
     options.put(Options.VIDEO_APP, "");
+    options.put(Options.AUTO_EXTRACT_ZIPS, false);
   }
 
   private Options() {
