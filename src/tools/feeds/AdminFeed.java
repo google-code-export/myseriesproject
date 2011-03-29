@@ -196,7 +196,7 @@ public class AdminFeed extends MyDraggable {
       }
 
     } else {
-      val.errorMessage(true);
+      MyMessages.error("Feeds Form", val.getErrorMessage());
     }
 
   }//GEN-LAST:event_bt_okActionPerformed

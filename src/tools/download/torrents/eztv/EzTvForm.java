@@ -316,7 +316,7 @@ public class EzTvForm extends AbstractTorrentForm {
               t.start();
           }
       } else {
-          group.errorMessage(true);
+          MyMessages.error("EzTv Search Form", group.getErrorMessage());
       }
       //myseries.MySeries.glassPane.deactivate();
       //dispose();

@@ -329,7 +329,7 @@ public class IsohuntForm extends AbstractTorrentForm implements TorrentConstants
                 t.start();
             }
         } else {
-            group.errorMessage(true);
+            MyMessages.error("IsoHunt Search Form", group.getErrorMessage());
         }
     }//GEN-LAST:event_bt_okActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
