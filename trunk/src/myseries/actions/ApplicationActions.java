@@ -11,6 +11,7 @@ import help.CheckUpdate;
 import help.Help;
 import java.awt.Desktop;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -59,6 +60,22 @@ public class ApplicationActions {
     Options.setOption(Options.TABLE_WIDTHS, w);
     MySeries.logger.log(Level.INFO, "Saving options");
     Options.save();
+    MySeries.logger.log(Level.INFO, "Delete JVM log files");
+    File[] logs = (new File(Options._USER_DIR_)).listFiles(new FileFilter() {
+
+      @Override
+      public boolean accept(File pathname) {
+        if (pathname.getName().startsWith("hs_err")) {
+          return true;
+        }
+        return false;
+      }
+    });
+    for (int i = 0; i < logs.length; i++) {
+      File file = logs[i];
+      file.delete();
+    }
+    MySeries.logger.log(Level.INFO, "JVM log files deleted");
     MySeries.logger.log(Level.INFO, "Application exiting...");
     System.exit(0);
   }
