@@ -186,7 +186,9 @@ public class EpisodesActions {
       int season = series.getSeason();
       File dir = new File(series.getLocalDir());
       if (!dir.isDirectory()) {
+        myseries.MySeries.glassPane.activate(null);
         MyMessages.error("Not a directory", "The local directory is not found");
+        myseries.MySeries.glassPane.deactivate();
         return;
       }
       File[] files = dir.listFiles();
@@ -238,7 +240,9 @@ public class EpisodesActions {
       if (oldNames.size() > 0) {
         RenameEpisodes r = new RenameEpisodes(oldNames, newNames, series);
       } else {
+        myseries.MySeries.glassPane.activate(null);
         MyMessages.message("No files to rename", "There are no available files to rename");
+        myseries.MySeries.glassPane.deactivate();
       }
     } catch (SQLException ex) {
       myseries.MySeries.logger.log(Level.SEVERE, null, ex);
