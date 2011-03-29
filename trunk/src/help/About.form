@@ -35,11 +35,11 @@
     <Container class="javax.swing.JPanel" name="main_panel">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Skin.getColor_5()" type="code"/>
+          <Connection code="Skin.getOuterColor()" type="code"/>
         </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-            <LineBorder thickness="2"/>
+            <LineBorder/>
           </Border>
         </Property>
       </Properties>
@@ -55,7 +55,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="jLabel6" pref="623" max="32767" attributes="0"/>
+                          <Component id="jLabel6" pref="625" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="bt_cancel" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -97,6 +97,9 @@
         </Component>
         <Container class="javax.swing.JPanel" name="inner_panel">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="Skin.getInnerColor()" type="code"/>
+            </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                 <LineBorder/>
@@ -110,7 +113,7 @@
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jScrollPane2" alignment="0" pref="627" max="32767" attributes="0"/>
+                          <Component id="jScrollPane2" alignment="0" pref="629" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
@@ -132,7 +135,7 @@
                           <Component id="jPanel2" min="-2" max="-2" attributes="1"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane2" pref="330" max="32767" attributes="0"/>
+                      <Component id="jScrollPane2" pref="332" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -159,7 +162,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <EmptySpace min="17" pref="17" max="17" attributes="0"/>
-                                  <Component id="jScrollPane1" pref="348" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane1" pref="350" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="1" attributes="0">
@@ -170,7 +173,7 @@
                                   <EmptySpace min="-2" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="label_version" min="-2" pref="95" max="-2" attributes="0"/>
-                                      <Component id="jLabel5" alignment="0" pref="299" max="32767" attributes="0"/>
+                                      <Component id="jLabel5" alignment="0" pref="301" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
@@ -243,9 +246,6 @@
                   <SubComponents>
                     <Component class="javax.swing.JTextArea" name="textArea_contact">
                       <Properties>
-                        <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="Skin.getSkinColor()" type="code"/>
-                        </Property>
                         <Property name="columns" type="int" value="20"/>
                         <Property name="editable" type="boolean" value="false"/>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.editors2.FontEditor">
@@ -335,7 +335,7 @@
               </FontInfo>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="Skin.getSkinColor()" type="code"/>
+              <Connection code="Skin.getTitleColor()" type="code"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="About MySeries"/>
