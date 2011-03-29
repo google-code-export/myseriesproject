@@ -20,6 +20,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -47,6 +48,10 @@ import com.googlecode.svalidators.validators.RegularExpressionValidator;
 import com.googlecode.svalidators.validators.SValidator;
 import help.HelpWindow;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import javax.swing.JFileChooser;
 import tools.LookAndFeels;
 import tools.Skin;
@@ -75,6 +80,7 @@ public class OptionsPanel extends MyDraggable {
   private ComboBoxModel secondarySubtitlesModel = new DefaultComboBoxModel(SubtitleConstants.SUBTITLE_LANG);
   private ComboBoxModel subtitleSitesModel = new DefaultComboBoxModel(SubtitleConstants.SUBTITLE_SITES);
   private String sepRegex = "^[^/\\\\?%*:|\\\"<>\\.]*$";
+  private String[] fonts;
 
   /** Creates new form OptionsPanel
    * @param m MySeries main form
@@ -120,13 +126,43 @@ public class OptionsPanel extends MyDraggable {
 
   private void createModelFonts() {
     System.out.println(System.currentTimeMillis());
-    GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
-    String[] fonts = env.getAvailableFontFamilyNames();
+    fonts =  getCachedFonts();
     model_fonts = new DefaultComboBoxModel(fonts);
     combobox_fonts.setModel(model_fonts);
     model_fonts.setSelectedItem(Options.toString(Options.FONT_FACE));
     combobox_fonts.addValidator(new ListValidator("", fonts, false));
     System.out.println(System.currentTimeMillis());
+  }
+
+  private String[] getCachedFonts() {
+    File c = new File(Options._USER_DIR_ + "/f.obj");
+    if (c.exists()) {
+      try {
+        FileInputStream fin = new FileInputStream(c);
+        ObjectInputStream ois = new ObjectInputStream(fin);
+        String[] f = (String[]) ois.readObject();
+        ois.close();
+        return f;
+      } catch (Exception ex) {
+        myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+        return null;
+      }
+    } else {
+      GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+      String[] f = env.getAvailableFontFamilyNames();
+      FileOutputStream fout;
+      try {
+        fout = new FileOutputStream(Options._USER_DIR_ + "/f.obj");
+        ObjectOutputStream oos = new ObjectOutputStream(fout);
+        oos.writeObject(f);
+        oos.close();
+      } catch (IOException ex) {
+        myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+        return null;
+      }
+      return f;
+    }
+
   }
 
   /** This method is called from within the constructor to
