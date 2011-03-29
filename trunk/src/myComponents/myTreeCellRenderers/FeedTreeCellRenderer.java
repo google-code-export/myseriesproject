@@ -33,12 +33,9 @@ public class FeedTreeCellRenderer extends DefaultTreeCellRenderer implements Tre
 
   @Override
   public Font getFont() {
-    Font font = new Font(MyFont.mySmallerFont.getFontName(),Font.PLAIN,MyFont.mySmallerFont.getSize());
+    Font font = new Font(MyFont.mySmallerFont.getFontName(), Font.PLAIN, MyFont.mySmallerFont.getSize());
     return font;
   }
-
-
-
 
   @Override
   public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
@@ -46,15 +43,16 @@ public class FeedTreeCellRenderer extends DefaultTreeCellRenderer implements Tre
     if (selected) {
       setForeground(Color.BLACK);
       setBackground(Skin.getSkinColor());
+      setOpaque(true);
       setBorder(BorderFactory.createLineBorder(Skin.getColor_5(), 1));
     } else {
       setForeground(Color.BLACK);
-      setBackground(null);
+      setBackground(Color.WHITE);
+      setOpaque(false);
       setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
     }
-    
+
     //setPreferredSize(new Dimension(tree.getWidth()-20, 16));
     return this;
   }
-
 }
