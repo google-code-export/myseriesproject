@@ -951,7 +951,7 @@ public class OptionsPanel extends MyDraggable {
     group.addComponent(tf_seasonSep);
     group.addComponent(tf_videoApp);
     if (!group.validate()) {
-      group.errorMessage(true);
+      MyMessages.error("Options Form", group.getErrorMessage());
       return;
     }
     try {

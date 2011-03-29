@@ -548,7 +548,7 @@ public class AdminSeries extends MyDraggable {
       group.addComponent(textfield_localDir);
       group.addComponent(textfield_screenshot);
       if (!group.validate()) {
-        group.errorMessage(true);
+        MyMessages.error("Series Form", group.getErrorMessage());
         return;
       }
       addSeries();

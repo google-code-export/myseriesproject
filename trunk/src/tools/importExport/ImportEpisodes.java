@@ -349,7 +349,7 @@ public class ImportEpisodes extends MyDraggable {
       group.addComponent(textfield_file);
       group.addComponent(textfield_newSeriesTitle);
       if(!group.validate()){
-        group.errorMessage(true);
+       MyMessages.error("Import Episodes Form", group.getErrorMessage());
         return;
       }
       try {

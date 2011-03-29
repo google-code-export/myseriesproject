@@ -340,7 +340,7 @@ public class RenameEpisodes extends MyDraggable {
         if (group.validate()) {
             return true;
         } else {
-            group.errorMessage(true);
+            MyMessages.error("Renaming Episodes Form", group.getErrorMessage());
             return false;
         }
     }
