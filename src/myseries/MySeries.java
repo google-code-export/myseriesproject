@@ -740,11 +740,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
       }
     });
 
-    scrollPane_series.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
     scrollPane_series.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
     scrollPane_series.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
     scrollPane_series.setMaximumSize(new java.awt.Dimension(30000, 30000));
     scrollPane_series.setMinimumSize(new java.awt.Dimension(200, 400));
+    scrollPane_series.setOpaque(false);
     scrollPane_series.setPreferredSize(new java.awt.Dimension(200, 400));
     scrollPane_series.addMouseListener(new java.awt.event.MouseAdapter() {
       public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -752,10 +752,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
       }
     });
 
-    tableSeries.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
     tableSeries.setModel(tableModel_series);
     tableSeries.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
-    tableSeries.setOpaque(false);
     tableSeries.setSelectionBackground(tableSeries.getSelectionBackground());
     tableSeries.setSelectionForeground(tableSeries.getSelectionForeground());
     tableSeries.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -813,11 +811,9 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
     tabpanel_episodesList.setBackground(new java.awt.Color(255, 255, 255));
     tabpanel_episodesList.setToolTipText("List of episodes");
-    tabpanel_episodesList.setOpaque(false);
     tabpanel_episodesList.setPreferredSize(new java.awt.Dimension(460, 460));
 
     panel_episodesList.setBackground(new java.awt.Color(255, 255, 255));
-    panel_episodesList.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
     panel_episodesList.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
     panel_episodesList.setAutoscrolls(true);
     panel_episodesList.setOpaque(false);
@@ -829,7 +825,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
     tableEpisodes.setAutoCreateRowSorter(true);
     tableEpisodes.setBackground(tableSeries.getBackground());
-    tableEpisodes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
     tableEpisodes.setModel(tableModel_episodes);
     tableEpisodes.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
     tableEpisodes.setRowHeight(24);
@@ -867,20 +862,16 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
     tabpanel_FilteredSeries.setBackground(new java.awt.Color(255, 255, 255));
     tabpanel_FilteredSeries.setToolTipText("Filter series episodes");
-    tabpanel_FilteredSeries.setOpaque(false);
     tabpanel_FilteredSeries.setPreferredSize(new java.awt.Dimension(460, 464));
 
     panel_allSeriesEpisodes.setBackground(new java.awt.Color(255, 255, 255));
-    panel_allSeriesEpisodes.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
     panel_allSeriesEpisodes.setEnabled(false);
     panel_allSeriesEpisodes.setOpaque(false);
 
     tableFilters.setAutoCreateRowSorter(true);
     tableFilters.setBackground(tableSeries.getBackground());
-    tableFilters.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
     tableFilters.setModel(tableModel_filterSeries);
     tableFilters.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
-    tableFilters.setOpaque(false);
     tableFilters.setSelectionBackground(tableSeries.getSelectionBackground());
     tableFilters.setSelectionForeground(tableSeries.getSelectionForeground());
     tableFilters.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -995,8 +986,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
     tabsPanel.addTab("Filter Series", new javax.swing.ImageIcon(getClass().getResource("/images/filter.png")), tabpanel_FilteredSeries, "Filter series"); // NOI18N
 
-    tabpanel_statistics.setOpaque(false);
-
     statSeries.setPreferredSize(new java.awt.Dimension(400, 121));
     statSeries.setUnifiedSeries(Options.toBoolean(Options.UNIFIED_SERIES));
 
@@ -1019,7 +1008,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     tabsPanel.addTab("Ratings", new javax.swing.ImageIcon(getClass().getResource("/images/star.png")), tabpanel_statistics, "Series and episodes ratings"); // NOI18N
 
     tabpanel_schedule.setToolTipText("Schedule");
-    tabpanel_schedule.setOpaque(false);
     tabpanel_schedule.setLayout(new javax.swing.BoxLayout(tabpanel_schedule, javax.swing.BoxLayout.LINE_AXIS));
 
     scheduler.setMaximumSize(new java.awt.Dimension(1000, 800));
@@ -1027,10 +1015,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
     tabsPanel.addTab("Schedule", new javax.swing.ImageIcon(getClass().getResource("/images/today.png")), tabpanel_schedule, "Schedule"); // NOI18N
 
-    tabpanel_feeds.setOpaque(false);
-
     feedSplitPanel.setDividerLocation(200);
-    feedSplitPanel.setOpaque(false);
 
     leftFeedPanel.setOpaque(false);
 

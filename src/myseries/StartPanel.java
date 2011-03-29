@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.LookAndFeel;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -31,6 +32,7 @@ import myComponents.myGUI.MyDraggable;
 import myComponents.myGUI.MyFont;
 import myComponents.myGUI.MyImagePanel;
 import tools.DesktopSupport;
+import tools.LookAndFeels;
 import tools.options.Options;
 import tools.Skin;
 import tools.download.torrents.AbstractTorrent;
@@ -46,9 +48,9 @@ public class StartPanel extends MyDraggable {
   private final static long serialVersionUID = 45346793847632L;
   public MySeries m = null;
   DefaultComboBoxModel databasesModel = new DefaultComboBoxModel();
- // Dimension big = new Dimension(428, 210);
- // Dimension small = new Dimension(428, 160);
- // Dimension smaller = new Dimension(428, 140);
+  // Dimension big = new Dimension(428, 210);
+  // Dimension small = new Dimension(428, 160);
+  // Dimension smaller = new Dimension(428, 140);
   public String dbName;
   private boolean createNewDB;
 
@@ -96,7 +98,7 @@ public class StartPanel extends MyDraggable {
     label_title.setText("Create database");
     setLocationRelativeTo(null);
     panel_loadDatabase.setVisible(false);
-  //  setSize(smaller);
+    //  setSize(smaller);
     pack();
     setVisible(true);
   }
@@ -301,7 +303,7 @@ public class StartPanel extends MyDraggable {
     }//GEN-LAST:event_combobox_databasesActionPerformed
 
     private void bt_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelActionPerformed
-         if (m == null) {
+      if (m == null) {
         System.exit(0);
       } else {
         MySeries.glassPane.deactivate();
@@ -310,11 +312,11 @@ public class StartPanel extends MyDraggable {
     }//GEN-LAST:event_bt_cancelActionPerformed
 
     private void bt_helpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_helpActionPerformed
-        new HelpWindow(HelpWindow.START_APPLICATION);
+      new HelpWindow(HelpWindow.START_APPLICATION);
     }//GEN-LAST:event_bt_helpActionPerformed
 
     private void bt_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_okActionPerformed
-        bt_ok.requestFocus();
+      bt_ok.requestFocus();
       dbName = "";
       Boolean loadDemoData = false;
       //Load database
@@ -373,8 +375,7 @@ public class StartPanel extends MyDraggable {
   public static void main(String[] args) {
     String[] lafs;
     try {
-      // Set look and feel
-      //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+
       // Get options
       Options.getOptions();
       //Create the logger
@@ -386,12 +387,25 @@ public class StartPanel extends MyDraggable {
         Skin skin = new Skin(Options.toColor(Options.SKIN_COLOR));
         Skin.applySkin();
       } else {
+        // Set look and feel
+        String laf = Options.toString(Options.LOOK_AND_FEEL);
+        if (!laf.equals("")) {
+          String className = LookAndFeels.getClassName(laf);
+          if (className != null) {
+            UIManager.setLookAndFeel(className);
+          } else {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+          }
+        } else {
+          UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        }
+
         Skin skin = new Skin();
-        Skin.applySkin();
-        UIManager.put("TabbedPane.contentAreaColor", Color.WHITE);
-        UIManager.put("TabbedPane.selected", Color.WHITE);
-        UIManager.put("TabbedPane.unselectedBackground", Color.GRAY);
-        UIManager.put("TabbedPane.foreground", Color.BLACK);
+        //Skin.applySkin();
+//        UIManager.put("TabbedPane.contentAreaColor", Color.WHITE);
+//        UIManager.put("TabbedPane.selected", Color.WHITE);
+//        UIManager.put("TabbedPane.unselectedBackground", Color.GRAY);
+//        UIManager.put("TabbedPane.foreground", Color.BLACK);
 
       }
       //Set Font
@@ -401,7 +415,7 @@ public class StartPanel extends MyDraggable {
       DesktopSupport ds = new DesktopSupport();
 
       ToolTipManager.sharedInstance().setDismissDelay(50000);
-      
+
       //create dirs
       MySeries.logger.log(Level.INFO, "Checking directories");
       MyUsefulFunctions.checkDir(Options._USER_DIR_ + Database.PATH);
@@ -410,9 +424,9 @@ public class StartPanel extends MyDraggable {
       MyUsefulFunctions.checkDir(Options._USER_DIR_ + Feed.FEEDS_PATH);
       // Create the default db if not exists and create the conn, stmt
 
-      if (Options.toString(Options.DB_NAME).equals("") ||
-          Options.toString(Options.DB_NAME).equals("null") ||
-          !DBConnection.databaseExists(Options.toString(Options.DB_NAME))) {
+      if (Options.toString(Options.DB_NAME).equals("")
+          || Options.toString(Options.DB_NAME).equals("null")
+          || !DBConnection.databaseExists(Options.toString(Options.DB_NAME))) {
         StartPanel s = new StartPanel();
       } else {
         // Check if database is in the right format
@@ -454,5 +468,4 @@ public class StartPanel extends MyDraggable {
     private javax.swing.JPanel panel_newDB;
     public com.googlecode.svalidators.formcomponents.STextField textbox_name;
     // End of variables declaration//GEN-END:variables
-
 }

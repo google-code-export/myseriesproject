@@ -64,7 +64,6 @@ public class StatSeries extends javax.swing.JPanel  {
 
     setOpaque(false);
 
-    jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
     jScrollPane1.setOpaque(false);
 
     table_stat_series.setAutoCreateRowSorter(true);
@@ -92,7 +91,6 @@ public class StatSeries extends javax.swing.JPanel  {
       }
     });
     table_stat_series.setName("seriesStats"); // NOI18N
-    table_stat_series.setOpaque(false);
     jScrollPane1.setViewportView(table_stat_series);
 
     jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getStyle() | java.awt.Font.BOLD, jLabel1.getFont().getSize()+2));
