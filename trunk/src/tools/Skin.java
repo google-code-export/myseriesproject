@@ -33,7 +33,7 @@ public class Skin {
   public Skin() {
     skinColor = new Color(240, 240, 240);
     brightness = getBrightness();
-    skinColor = fixColor(skinColor);
+    //skinColor = fixColor(skinColor);
 
   }
 

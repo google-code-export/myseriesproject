@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package tools;
 
 import java.util.HashMap;
@@ -19,7 +18,12 @@ import myseries.MySeries;
  * @author lordovol
  */
 public class LookAndFeels {
-  static Map<String,LookAndFeelInfo> lafMap;
+
+  public static Map<String, LookAndFeelInfo> lafMap;
+
+  {
+    getLookAndFeels();
+  }
 
   /**
    * Sets the look and feel for the application form
@@ -27,30 +31,40 @@ public class LookAndFeels {
    * @param strLaf The lookAndFeel
    */
   public static void setLookAndFeel(MySeries m, String strLaf) {
-    getLookAndFeels();
+
     setLookAndFeel(m, lafMap.get(strLaf));
   }
 
   public LookAndFeels() {
-        
-        
-    }
+  }
 
   /**
    * Gets the supported look and feels info
    * @return a n array of LookAndFeels info
    */
-  public static LookAndFeelInfo[] getLookAndFeels(){
+  public static LookAndFeelInfo[] getLookAndFeels() {
     UIManager.LookAndFeelInfo[] lookAndFeelInfos = UIManager.getInstalledLookAndFeels();
     LookAndFeelInfo laf[] = new LookAndFeelInfo[lookAndFeelInfos.length];
-    lafMap = new HashMap<String,LookAndFeelInfo>();
-        for (int i = 0; i < lookAndFeelInfos.length; i++) {
-            UIManager.LookAndFeelInfo lookAndFeelInfo = lookAndFeelInfos[i];
-            lafMap.put(lookAndFeelInfo.getName(), lookAndFeelInfo);
-            laf[i] = lookAndFeelInfo;
-            
-        }
-   return laf;
+    lafMap = new HashMap<String, LookAndFeelInfo>();
+    for (int i = 0; i < lookAndFeelInfos.length; i++) {
+      UIManager.LookAndFeelInfo lookAndFeelInfo = lookAndFeelInfos[i];
+      lafMap.put(lookAndFeelInfo.getName(), lookAndFeelInfo);
+      laf[i] = lookAndFeelInfo;
+
+    }
+    return laf;
+  }
+
+  public static String getClassName(String laf) {
+    UIManager.LookAndFeelInfo[] lookAndFeelInfos = UIManager.getInstalledLookAndFeels();
+    lafMap = new HashMap<String, LookAndFeelInfo>();
+    for (int i = 0; i < lookAndFeelInfos.length; i++) {
+      UIManager.LookAndFeelInfo lookAndFeelInfo = lookAndFeelInfos[i];
+      if (lookAndFeelInfo.getName().equals(laf)) {
+        return lookAndFeelInfo.getClassName();
+      }
+    }
+    return null;
   }
 
   /**
@@ -73,5 +87,4 @@ public class LookAndFeels {
       MySeries.logger.log(Level.SEVERE, null, ex);
     }
   }
-  
 }

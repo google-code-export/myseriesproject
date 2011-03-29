@@ -397,7 +397,10 @@ public class OptionsPanel extends MyDraggable {
               .addComponent(combobox_debugMode, 0, 257, Short.MAX_VALUE)
               .addComponent(cb_autoUpdate)
               .addComponent(label_preview, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
-              .addComponent(combobox_fonts, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addGroup(panel_generalLayout.createSequentialGroup()
+                .addComponent(combobox_fonts, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(spinner_fontSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
               .addComponent(button_BGColor, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
               .addComponent(combobox_laf, 0, 257, Short.MAX_VALUE)
               .addComponent(combobox_dateFormat, 0, 257, Short.MAX_VALUE)
@@ -407,10 +410,7 @@ public class OptionsPanel extends MyDraggable {
               .addComponent(button_dateFormatHelp, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
               .addGroup(panel_generalLayout.createSequentialGroup()
                 .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(90, 90, 90))
-              .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_generalLayout.createSequentialGroup()
-                .addComponent(spinner_fontSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(141, 141, 141))))
+                .addGap(90, 90, 90))))
           .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addGroup(panel_generalLayout.createSequentialGroup()
             .addGap(21, 21, 21)
@@ -448,9 +448,9 @@ public class OptionsPanel extends MyDraggable {
           .addComponent(button_BGColor))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-            .addComponent(spinner_fontSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(combobox_fonts, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addComponent(combobox_fonts, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(spinner_fontSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
           .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
@@ -650,14 +650,14 @@ public class OptionsPanel extends MyDraggable {
           .addComponent(jLabel15)
           .addComponent(combo_secondaryLang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jLabel2)
+        .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(panel_internetLayout.createSequentialGroup()
             .addComponent(spinner_columns, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
               .addComponent(jLabel21)
-              .addComponent(cb_updateFeeds))))
+              .addComponent(cb_updateFeeds)))
+          .addComponent(jLabel2))
         .addGap(18, 18, 18)
         .addComponent(checkbox_useProxy)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -921,18 +921,18 @@ public class OptionsPanel extends MyDraggable {
   }//GEN-LAST:event_spinner_fontSizeStateChanged
 
   private void cb_autoUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_autoUpdateActionPerformed
-    if(!cb_autoUpdate.isSelected()){
+    if (!cb_autoUpdate.isSelected()) {
       cb_autoUnzip.setSelected(false);
     }
   }//GEN-LAST:event_cb_autoUpdateActionPerformed
 
   private void bt_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelActionPerformed
-     dispose();
+    dispose();
     MySeries.glassPane.deactivate();
   }//GEN-LAST:event_bt_cancelActionPerformed
 
   private void bt_helpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_helpActionPerformed
-     if (tabbedPane_options.getSelectedIndex() == 0) {
+    if (tabbedPane_options.getSelectedIndex() == 0) {
       new HelpWindow(HelpWindow.GENERAL_OPTIONS);
     } else if (tabbedPane_options.getSelectedIndex() == 1) {
       new HelpWindow(HelpWindow.INTERNET_OPTIONS);
@@ -992,9 +992,9 @@ public class OptionsPanel extends MyDraggable {
   }//GEN-LAST:event_bt_okActionPerformed
 
   private void bt_dirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_dirActionPerformed
-     File folder;
+    File folder;
     String os = System.getProperty("os.name");
-    if(os.toLowerCase().indexOf("windows") > -1){
+    if (os.toLowerCase().indexOf("windows") > -1) {
       folder = new File("C:\\Program Files");
     } else {
       folder = new File(System.getProperty("user.home"));

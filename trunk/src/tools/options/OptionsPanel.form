@@ -185,7 +185,11 @@
                                           <Component id="combobox_debugMode" alignment="0" pref="257" max="32767" attributes="0"/>
                                           <Component id="cb_autoUpdate" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="label_preview" alignment="0" pref="257" max="32767" attributes="0"/>
-                                          <Component id="combobox_fonts" alignment="0" min="-2" pref="183" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="combobox_fonts" min="-2" pref="183" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="spinner_fontSize" min="-2" max="-2" attributes="0"/>
+                                          </Group>
                                           <Component id="button_BGColor" alignment="0" pref="257" max="32767" attributes="0"/>
                                           <Component id="combobox_laf" alignment="0" pref="257" max="32767" attributes="2"/>
                                           <Component id="combobox_dateFormat" alignment="0" pref="257" max="32767" attributes="2"/>
@@ -197,10 +201,6 @@
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="jLabel7" max="32767" attributes="0"/>
                                               <EmptySpace min="90" pref="90" max="90" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <Component id="spinner_fontSize" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="141" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -251,9 +251,9 @@
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="103" groupAlignment="2" attributes="0">
-                                      <Component id="spinner_fontSize" alignment="2" min="-2" max="-2" attributes="0"/>
-                                      <Component id="combobox_fonts" alignment="2" min="-2" pref="21" max="-2" attributes="0"/>
+                                  <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                                      <Component id="combobox_fonts" alignment="3" min="-2" pref="21" max="-2" attributes="0"/>
+                                      <Component id="spinner_fontSize" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="jLabel10" min="-2" pref="20" max="-2" attributes="0"/>
                               </Group>
@@ -673,9 +673,8 @@
                                   <Component id="combo_secondaryLang" alignment="2" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                                  <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
                                       <Component id="spinner_columns" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="2" attributes="0">
@@ -683,6 +682,7 @@
                                           <Component id="cb_updateFeeds" alignment="2" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
+                                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="checkbox_useProxy" min="-2" max="-2" attributes="0"/>
