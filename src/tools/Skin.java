@@ -9,6 +9,7 @@ import javax.swing.BorderFactory;
 import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
+import tools.options.Options;
 
 /**
  * Skin class
@@ -31,7 +32,8 @@ public class Skin {
    * Create the default skin
    */
   public Skin() {
-    skinColor = new Color(240, 240, 240);
+    //skinColor = new Color(240, 240, 240);
+    skinColor = null;
     brightness = getBrightness();
     //skinColor = fixColor(skinColor);
 
@@ -81,6 +83,9 @@ public class Skin {
    * @return the brightness of the main skin color
    */
   public float getBrightness() {
+    if(skinColor == null){
+      return 1;
+    }
     float[] hsbVals = new float[3];
     Color.RGBtoHSB(skinColor.getRed(), skinColor.getGreen(), skinColor.getBlue(), hsbVals);
     brightness = hsbVals[2];
@@ -91,28 +96,28 @@ public class Skin {
    * @return the brighter
    */
   public static Color getColor_2() {
-    return skinColor.brighter();
+    return !Options.toBoolean(Options.USE_SKIN) ? null : skinColor.brighter();
   }
 
   /**
    * @return the brightest
    */
   public static Color getColor_1() {
-    return skinColor.brighter().brighter();
+    return !Options.toBoolean(Options.USE_SKIN) ? null : skinColor.brighter().brighter();
   }
 
   /**
    * @return the darker
    */
   public static Color getColor_4() {
-    return skinColor.darker();
+    return !Options.toBoolean(Options.USE_SKIN) ? null : skinColor.darker();
   }
 
   /**
    * @return the darkest
    */
   public static Color getColor_5() {
-    return skinColor.darker().darker();
+    return !Options.toBoolean(Options.USE_SKIN) ? null : skinColor.darker().darker();
   }
 
   /**
@@ -137,7 +142,7 @@ public class Skin {
   }
 
   public static Color getSkinColor() {
-    return skinColor;
+    return !Options.toBoolean(Options.USE_SKIN) ? null : skinColor;
   }
 
   public static Color getButtonForegroundColor() {
@@ -146,6 +151,17 @@ public class Skin {
 
   public static Color getSpinnerForegroundColor() {
     return getForeGroundColor(Color.white);
+  }
+
+  public static Color getOuterColor(){
+    return !Options.toBoolean(Options.USE_SKIN) ? null : getColor_5();
+  }
+  public static Color getInnerColor(){
+    return !Options.toBoolean(Options.USE_SKIN) ? Color.WHITE : getColor_1();
+  }
+
+  public static Color getTitleColor(){
+    return !Options.toBoolean(Options.USE_SKIN) ? Color.BLACK : getColor_1();
   }
 
   private static Color getForeGroundColor(Color color) {

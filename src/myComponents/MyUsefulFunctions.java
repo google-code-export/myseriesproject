@@ -324,12 +324,6 @@ public class MyUsefulFunctions {
         MyMessages.error("Select File", "No files to select");
         System.exit(0);
       } else {
-//        name = JOptionPane.showInputDialog(null,
-//            message,
-//            title,
-//            JOptionPane.PLAIN_MESSAGE,
-//            null,
-//            files, files[0]);
         return (String) MyMessages.ask(title, message, null, files, Options.toString(Options.DB_NAME));
       }
 

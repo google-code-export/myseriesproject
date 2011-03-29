@@ -11,6 +11,7 @@
 package tools.download.subtitles;
 
 import myComponents.myGUI.MyDraggable;
+import tools.Skin;
 
 /**
  *
@@ -38,11 +39,12 @@ public abstract class AbstractDownloadForm extends MyDraggable {
   private void initComponents() {
 
     jPanel1 = new javax.swing.JPanel();
-    label_title = new javax.swing.JLabel();
+    innerPanel = new javax.swing.JPanel();
     progress = new javax.swing.JProgressBar();
     label_message = new javax.swing.JLabel();
     label_subtitle = new javax.swing.JLabel();
-    button_close = new javax.swing.JButton();
+    label_title = new javax.swing.JLabel();
+    myButtonCancel1 = new myComponents.myGUI.buttons.MyButtonCancel();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
     addWindowListener(new java.awt.event.WindowAdapter() {
@@ -51,20 +53,49 @@ public abstract class AbstractDownloadForm extends MyDraggable {
       }
     });
 
+    jPanel1.setBackground(Skin.getOuterColor());
     jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-    label_title.setFont(label_title.getFont().deriveFont(label_title.getFont().getStyle() | java.awt.Font.BOLD, label_title.getFont().getSize()+2));
-    label_title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-    label_title.setText("Downloading Subtitles");
+    innerPanel.setBackground(Skin.getInnerColor());
+    innerPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
     progress.setStringPainted(true);
 
     label_subtitle.setFont(label_subtitle.getFont().deriveFont(label_subtitle.getFont().getSize()+2f));
 
-    button_close.setText("Close");
-    button_close.addActionListener(new java.awt.event.ActionListener() {
+    javax.swing.GroupLayout innerPanelLayout = new javax.swing.GroupLayout(innerPanel);
+    innerPanel.setLayout(innerPanelLayout);
+    innerPanelLayout.setHorizontalGroup(
+      innerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(innerPanelLayout.createSequentialGroup()
+        .addContainerGap()
+        .addGroup(innerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(label_subtitle, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+          .addComponent(progress, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+          .addComponent(label_message, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE))
+        .addContainerGap())
+    );
+    innerPanelLayout.setVerticalGroup(
+      innerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, innerPanelLayout.createSequentialGroup()
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addComponent(label_subtitle, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(label_message, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addComponent(progress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(34, 34, 34))
+    );
+
+    label_title.setFont(label_title.getFont().deriveFont(label_title.getFont().getStyle() | java.awt.Font.BOLD, label_title.getFont().getSize()+2));
+    label_title.setForeground(Skin.getTitleColor());
+    label_title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+    label_title.setText("Downloading Subtitles");
+
+    myButtonCancel1.setText("");
+    myButtonCancel1.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
-        button_closeActionPerformed(evt);
+        myButtonCancel1ActionPerformed(evt);
       }
     });
 
@@ -75,26 +106,22 @@ public abstract class AbstractDownloadForm extends MyDraggable {
       .addGroup(jPanel1Layout.createSequentialGroup()
         .addContainerGap()
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(label_subtitle, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
-          .addComponent(progress, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
-          .addComponent(label_title, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
-          .addComponent(label_message, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
-          .addComponent(button_close))
-        .addContainerGap())
+          .addGroup(jPanel1Layout.createSequentialGroup()
+            .addComponent(innerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addContainerGap())
+          .addGroup(jPanel1Layout.createSequentialGroup()
+            .addComponent(label_title, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
+            .addGap(60, 60, 60))
+          .addComponent(myButtonCancel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
     );
     jPanel1Layout.setVerticalGroup(
       jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(jPanel1Layout.createSequentialGroup()
-        .addContainerGap()
-        .addComponent(label_title)
+        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+          .addComponent(myButtonCancel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(label_title))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(label_subtitle, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(label_message, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addComponent(progress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addComponent(button_close)
+        .addComponent(innerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
@@ -106,27 +133,26 @@ public abstract class AbstractDownloadForm extends MyDraggable {
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+      .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
     );
 
     pack();
   }// </editor-fold>//GEN-END:initComponents
 
-  private void button_closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_closeActionPerformed
-    
-    dispose();
-  }//GEN-LAST:event_button_closeActionPerformed
-
   private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
     myseries.MySeries.glassPane.deactivate();
   }//GEN-LAST:event_formWindowClosed
 
+  private void myButtonCancel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myButtonCancel1ActionPerformed
+    dispose();
+  }//GEN-LAST:event_myButtonCancel1ActionPerformed
   // Variables declaration - do not modify//GEN-BEGIN:variables
-  private javax.swing.JButton button_close;
+  private javax.swing.JPanel innerPanel;
   private javax.swing.JPanel jPanel1;
   public javax.swing.JLabel label_message;
   public javax.swing.JLabel label_subtitle;
   protected javax.swing.JLabel label_title;
+  private myComponents.myGUI.buttons.MyButtonCancel myButtonCancel1;
   public javax.swing.JProgressBar progress;
   // End of variables declaration//GEN-END:variables
 }
