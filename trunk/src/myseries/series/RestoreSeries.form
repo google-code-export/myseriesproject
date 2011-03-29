@@ -36,11 +36,11 @@
     <Container class="javax.swing.JPanel" name="jPanel1">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Skin.getColor_5()" type="code"/>
+          <Connection code="Skin.getOuterColor()" type="code"/>
         </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-            <LineBorder thickness="2"/>
+            <LineBorder/>
           </Border>
         </Property>
       </Properties>
@@ -79,7 +79,7 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="scroll" min="-2" pref="222" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="8" max="32767" attributes="0"/>
                   <Component id="myButtonOk1" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -94,7 +94,7 @@
               </FontInfo>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="Skin.getColor_1()" type="code"/>
+              <Connection code="Skin.getTitleColor()" type="code"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="Restore Series"/>
@@ -143,7 +143,6 @@
               </Border>
             </Property>
             <Property name="text" type="java.lang.String" value=""/>
-            <Property name="toolTipText" type="java.lang.String" value="Help"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="myButtonHelp1ActionPerformed"/>

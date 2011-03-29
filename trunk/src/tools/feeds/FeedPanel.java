@@ -157,6 +157,7 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
     bt_link.setToolTipText("Vist webpage");
     bt_link.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
     bt_link.setBorderPainted(false);
+    bt_link.setContentAreaFilled(false);
     bt_link.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     bt_link.setIconTextGap(0);
     bt_link.setMargin(new java.awt.Insets(0, 0, 0, 0));
@@ -171,6 +172,7 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
     bt_max.setToolTipText("Vist webpage");
     bt_max.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
     bt_max.setBorderPainted(false);
+    bt_max.setContentAreaFilled(false);
     bt_max.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     bt_max.setIconTextGap(0);
     bt_max.setMargin(new java.awt.Insets(0, 0, 0, 0));
@@ -187,6 +189,7 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
     bt_att.setToolTipText("Download attachment");
     bt_att.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
     bt_att.setBorderPainted(false);
+    bt_att.setContentAreaFilled(false);
     bt_att.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     bt_att.setIconTextGap(0);
     bt_att.setMargin(new java.awt.Insets(0, 0, 0, 0));

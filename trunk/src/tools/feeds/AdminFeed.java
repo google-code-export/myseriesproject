@@ -21,6 +21,7 @@ import java.util.logging.Level;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyDraggable;
+import tools.Skin;
 
 /**
  *
@@ -65,36 +66,23 @@ public class AdminFeed extends MyDraggable {
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
 
-    jPanel1 = new javax.swing.JPanel();
-    label_title = new javax.swing.JLabel();
-    bt_ok = new javax.swing.JButton();
-    bt_cancel = new javax.swing.JButton();
+    outerPanel = new javax.swing.JPanel();
+    innerPanel = new javax.swing.JPanel();
     label_url = new javax.swing.JLabel();
     tf_url = new com.googlecode.svalidators.formcomponents.STextField(new UrlValidator());
     label_feedtitle = new javax.swing.JLabel();
     tf_title = new com.googlecode.svalidators.formcomponents.STextField(new RequiredValidator());
+    label_title = new javax.swing.JLabel();
+    bt_cancel = new myComponents.myGUI.buttons.MyButtonCancel();
+    bt_ok = new myComponents.myGUI.buttons.MyButtonOk();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
-    jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+    outerPanel.setBackground(Skin.getOuterColor());
+    outerPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-    label_title.setFont(label_title.getFont().deriveFont(label_title.getFont().getStyle() | java.awt.Font.BOLD, label_title.getFont().getSize()+2));
-    label_title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-    label_title.setText("title");
-
-    bt_ok.setText("OK");
-    bt_ok.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        bt_okActionPerformed(evt);
-      }
-    });
-
-    bt_cancel.setText("Cancel");
-    bt_cancel.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        bt_cancelActionPerformed(evt);
-      }
-    });
+    innerPanel.setBackground(Skin.getInnerColor());
+    innerPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
     label_url.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     label_url.setText("Feed URL :");
@@ -106,111 +94,116 @@ public class AdminFeed extends MyDraggable {
 
     tf_title.setName("Feed url"); // NOI18N
 
-    javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-    jPanel1.setLayout(jPanel1Layout);
-    jPanel1Layout.setHorizontalGroup(
-      jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(jPanel1Layout.createSequentialGroup()
-        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(jPanel1Layout.createSequentialGroup()
-            .addContainerGap()
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(label_title, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
-              .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                  .addComponent(label_feedtitle, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                  .addComponent(tf_title, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                  .addComponent(label_url, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                  .addComponent(tf_url, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-          .addGroup(jPanel1Layout.createSequentialGroup()
-            .addGap(16, 16, 16)
-            .addComponent(bt_ok)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(bt_cancel)))
-        .addContainerGap())
-    );
-    jPanel1Layout.setVerticalGroup(
-      jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(jPanel1Layout.createSequentialGroup()
+    javax.swing.GroupLayout innerPanelLayout = new javax.swing.GroupLayout(innerPanel);
+    innerPanel.setLayout(innerPanelLayout);
+    innerPanelLayout.setHorizontalGroup(
+      innerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(innerPanelLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(label_title, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(jPanel1Layout.createSequentialGroup()
+        .addGroup(innerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+          .addGroup(javax.swing.GroupLayout.Alignment.LEADING, innerPanelLayout.createSequentialGroup()
+            .addComponent(label_feedtitle, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(tf_title, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+          .addGroup(javax.swing.GroupLayout.Alignment.LEADING, innerPanelLayout.createSequentialGroup()
+            .addComponent(label_url, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(tf_url, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        .addContainerGap(16, Short.MAX_VALUE))
+    );
+    innerPanelLayout.setVerticalGroup(
+      innerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(innerPanelLayout.createSequentialGroup()
+        .addContainerGap()
+        .addGroup(innerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(innerPanelLayout.createSequentialGroup()
             .addComponent(tf_url, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addGroup(innerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
               .addComponent(tf_title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
               .addComponent(label_feedtitle)))
           .addComponent(label_url))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(bt_cancel)
-          .addComponent(bt_ok))
         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+    );
+
+    label_title.setFont(label_title.getFont().deriveFont(label_title.getFont().getStyle() | java.awt.Font.BOLD, label_title.getFont().getSize()+2));
+    label_title.setForeground(Skin.getTitleColor());
+    label_title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+    label_title.setText("title");
+
+    bt_cancel.setText("");
+    bt_cancel.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        bt_cancelActionPerformed(evt);
+      }
+    });
+
+    bt_ok.setText("");
+    bt_ok.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        bt_okActionPerformed(evt);
+      }
+    });
+
+    javax.swing.GroupLayout outerPanelLayout = new javax.swing.GroupLayout(outerPanel);
+    outerPanel.setLayout(outerPanelLayout);
+    outerPanelLayout.setHorizontalGroup(
+      outerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, outerPanelLayout.createSequentialGroup()
+        .addGap(20, 20, 20)
+        .addComponent(label_title, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(bt_cancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+      .addGroup(outerPanelLayout.createSequentialGroup()
+        .addContainerGap()
+        .addComponent(innerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addContainerGap())
+      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, outerPanelLayout.createSequentialGroup()
+        .addContainerGap()
+        .addComponent(bt_ok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+    );
+    outerPanelLayout.setVerticalGroup(
+      outerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(outerPanelLayout.createSequentialGroup()
+        .addGroup(outerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+          .addComponent(label_title, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(bt_cancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(innerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(bt_ok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
     );
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+      .addComponent(outerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+      .addComponent(outerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
     );
 
     pack();
   }// </editor-fold>//GEN-END:initComponents
 
   private void bt_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_okActionPerformed
-    ValidationGroup val = new ValidationGroup();
-    val.addComponent(tf_url);
-    if (tf_title.isEnabled()) {
-      val.addComponent(tf_title);
-    }
-    if (val.validate()) {
-      String url = tf_url.getText().trim();
-      feed.setUrl(url);
-      String title = tf_title.getText().trim();
-      String baseUrl = MyUsefulFunctions.getBaseUrl(url);
-      feed.setTitle(title.equals("")?baseUrl:title);
-      try {
-        int id = feed.save();
-        if(feed.getFeed_ID() ==0){
-          feed.setFeed_ID(id);
-        }
-        isFeedSaved = true;
-        FeedUpdater fu = new FeedUpdater(myseries.MySeries.feedTree, feed);
-        fu.run();
-        myseries.MySeries.feedTree.populate(feed.getFeed_ID());
-      } catch (SQLException ex) {
-        myseries.MySeries.logger.log(Level.SEVERE, null, ex);
-        MyMessages.error("Feed Saving", "An error occured and the feed is not saved");
-      }finally {
-        dispose();
-      }
-
-    } else {
-      MyMessages.error("Feeds Form", val.getErrorMessage());
-    }
-
+    // TODO add your handling code here:
   }//GEN-LAST:event_bt_okActionPerformed
 
   private void bt_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelActionPerformed
-    dispose();
+     dispose();
   }//GEN-LAST:event_bt_cancelActionPerformed
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
-  private javax.swing.JButton bt_cancel;
-  private javax.swing.JButton bt_ok;
-  private javax.swing.JPanel jPanel1;
+  private myComponents.myGUI.buttons.MyButtonCancel bt_cancel;
+  private myComponents.myGUI.buttons.MyButtonOk bt_ok;
+  private javax.swing.JPanel innerPanel;
   private javax.swing.JLabel label_feedtitle;
   private javax.swing.JLabel label_title;
   private javax.swing.JLabel label_url;
+  private javax.swing.JPanel outerPanel;
   private com.googlecode.svalidators.formcomponents.STextField tf_title;
   private com.googlecode.svalidators.formcomponents.STextField tf_url;
   // End of variables declaration//GEN-END:variables

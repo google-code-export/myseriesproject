@@ -186,10 +186,11 @@ public class AdminSeries extends MyDraggable {
     setBackground(new java.awt.Color(102, 102, 102));
     setResizable(false);
 
-    main_panel.setBackground(Skin.getColor_5());
+    main_panel.setBackground(Skin.getOuterColor());
     main_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-    inner_panel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+    inner_panel.setBackground(Skin.getInnerColor());
+    inner_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
     label_title.setFont(label_title.getFont());
     label_title.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);

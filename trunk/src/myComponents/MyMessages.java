@@ -9,6 +9,7 @@ import sdialogs.Ask;
 import sdialogs.Confirm;
 import sdialogs.Info;
 import tools.Skin;
+import tools.options.Options;
 
 /**
  * The messages helper class
@@ -78,9 +79,10 @@ public class MyMessages {
   }
 
   private static void setColors(MyDraggable drag) {
-    drag.setOuterColor(Skin.getColor_5());
-    drag.setInnerColor(Skin.getColor_1());
-    drag.setTitleColor(Skin.getColor_1());
+    drag.setOuterColor(Skin.getOuterColor());
+    drag.setInnerColor(Skin.getInnerColor());
+    drag.setTitleColor(Skin.getTitleColor());
+    drag.setTextColor(Skin.getColor_5());
   }
 
   private MyMessages() {

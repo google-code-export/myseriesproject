@@ -218,9 +218,10 @@ public class OptionsPanel extends MyDraggable {
     setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
     setUndecorated(true);
 
-    jPanel1.setBackground(Skin.getColor_5());
+    jPanel1.setBackground(Skin.getOuterColor());
     jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+    panel_options.setBackground(Skin.getInnerColor());
     panel_options.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
     button_BGColor.setBackground(Options.toColor(Options.SKIN_COLOR));
@@ -752,7 +753,7 @@ public class OptionsPanel extends MyDraggable {
     );
 
     jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getStyle() | java.awt.Font.BOLD, jLabel1.getFont().getSize()+2));
-    jLabel1.setForeground(Skin.getColor_1());
+    jLabel1.setForeground(Skin.getTitleColor());
     jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     jLabel1.setText("Options");
 
