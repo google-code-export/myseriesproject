@@ -45,7 +45,7 @@ public class MyEventHandler implements MyEventListener {
         Series.setCurrentSerial(series);
 
         //TABS
-        MySeries.tabsPanel.setTitleAt(0, series.getFullTitle());
+        MySeries.tabsPanel.setTitleAt(MySeries.tabsPanel.getIndexByName(MySeries.TABS_PANEL_EPISODES), series.getFullTitle());
         if (evt.isSeriesPanel()) {
           MySeries.tabsPanel.setSelectedIndex(0);
         }

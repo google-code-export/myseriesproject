@@ -26,6 +26,7 @@ import myComponents.MyTableModels.MyEpisodesTableModel;
 import myComponents.MyUsefulFunctions;
 import myComponents.myFileFilters.SubtitlesFilter;
 import myComponents.myFileFilters.ZipFilter;
+import myComponents.myGUI.MyDnDTabbedPane;
 import tools.Unziper;
 import tools.languages.LangsList;
 import tools.languages.Language;
@@ -72,7 +73,7 @@ public class Episodes {
   /** The episodes table   */
   private static JTable table_episodesList = new JTable();
   /** The tabbed pane   */
-  private static final JTabbedPane tabsPanel = myseries.MySeries.tabsPanel;
+  private static final MyDnDTabbedPane tabsPanel = myseries.MySeries.tabsPanel;
   /** The current episode   */
   private static EpisodesRecord currentEpisode;
 

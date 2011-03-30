@@ -157,15 +157,15 @@ public class ApplicationActions {
   public static void changeTab(MySeries m, ChangeEvent evt) {
     Vector<SeriesRecord> series = null;
     JTabbedPane tabs = (JTabbedPane) evt.getSource();
-    int index = tabs.getSelectedIndex();
+    String name = tabs.getSelectedComponent().getName();
     try {
-      if (index == MySeries.TABS_PANEL_EPISODES) {
-      } else if (index == MySeries.TABS_PANEL_FILTERS) {
+      if (name.equals(MySeries.TABS_PANEL_EPISODES)) {
+      } else if (name.equals(MySeries.TABS_PANEL_FILTERS)) {
         Filters.getFilteredSeries();
-      } else if (index == MySeries.TABS_PANEL_RATINGS) {
+      } else if (name.equals(MySeries.TABS_PANEL_RATINGS)) {
         MySeries.statSeries.refresh(Options.toBoolean(Options.UNIFIED_SERIES));
         MySeries.statEpisodes.refresh();
-      } else if (index == MySeries.TABS_PANEL_SCHEDULE) {
+      } else if (name.equals(MySeries.TABS_PANEL_SCHEDULE)) {
         //MySeries.scheduler.refreshCalendar(MySeries.scheduler.getRealMonth(),MySeries.scheduler.getRealYear());
       }
 

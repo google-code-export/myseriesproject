@@ -11,17 +11,14 @@
 package myseries.statistics;
 
 import database.DBConnection;
-import java.awt.Color;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.BorderFactory;
 import javax.swing.table.DefaultTableModel;
 import myComponents.MyUsefulFunctions;
 import myComponents.myTableCellRenderers.MyDecimalFormatRenderer;
-import tools.Skin;
 
 /**
  *
@@ -33,17 +30,9 @@ public class StatEpisodes extends javax.swing.JPanel {
   /** Creates new form StatEpisodes */
   public StatEpisodes() {
     initComponents();
-    scrollpane.getViewport().setOpaque(false);
+    jScrollPane1.getViewport().setOpaque(false);
     model = (DefaultTableModel) table_stat_episodes.getModel();
     table_stat_episodes.getColumnModel().getColumn(2).setCellRenderer(new MyDecimalFormatRenderer());
-    //Hide viewports
-    scrollpane.getViewport().setOpaque(false);
-    //Hide viewport borders
-    scrollpane.setViewportBorder(BorderFactory.createEmptyBorder());
-    //Show table borders
-    table_stat_episodes.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-    //Show header borders
-    table_stat_episodes.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.GRAY));
     setVisible(true);
   }
 
@@ -56,13 +45,13 @@ public class StatEpisodes extends javax.swing.JPanel {
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
 
-    scrollpane = new javax.swing.JScrollPane();
+    jScrollPane1 = new javax.swing.JScrollPane();
     table_stat_episodes = new javax.swing.JTable();
     jLabel1 = new javax.swing.JLabel();
 
     setOpaque(false);
 
-    scrollpane.setOpaque(false);
+    jScrollPane1.setOpaque(false);
 
     table_stat_episodes.setAutoCreateRowSorter(true);
     table_stat_episodes.setModel(new javax.swing.table.DefaultTableModel(
@@ -89,10 +78,9 @@ public class StatEpisodes extends javax.swing.JPanel {
       }
     });
     table_stat_episodes.setName("episodesTable"); // NOI18N
-    scrollpane.setViewportView(table_stat_episodes);
+    jScrollPane1.setViewportView(table_stat_episodes);
 
     jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getStyle() | java.awt.Font.BOLD, jLabel1.getFont().getSize()+2));
-    jLabel1.setForeground(Skin.getTitleColor());
     jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     jLabel1.setText("Episodes Ratings");
 
@@ -103,7 +91,7 @@ public class StatEpisodes extends javax.swing.JPanel {
       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
         .addContainerGap()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addComponent(scrollpane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 564, Short.MAX_VALUE)
+          .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 564, Short.MAX_VALUE)
           .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 564, Short.MAX_VALUE))
         .addContainerGap())
     );
@@ -113,13 +101,13 @@ public class StatEpisodes extends javax.swing.JPanel {
         .addContainerGap()
         .addComponent(jLabel1)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(scrollpane, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
         .addContainerGap())
     );
   }// </editor-fold>//GEN-END:initComponents
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JLabel jLabel1;
-  private javax.swing.JScrollPane scrollpane;
+  private javax.swing.JScrollPane jScrollPane1;
   private javax.swing.JTable table_stat_episodes;
   // End of variables declaration//GEN-END:variables
 
