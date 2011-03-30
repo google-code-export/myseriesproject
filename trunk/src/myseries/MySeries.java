@@ -62,6 +62,7 @@ import myComponents.myEvents.MyEventHandler;
 import myComponents.myEvents.MyEventsClass;
 import myComponents.myGUI.MyImagePanel;
 import myComponents.myGUI.MyDisabledGlassPane;
+import myComponents.myGUI.MyDnDTabbedPane;
 import myComponents.myGUI.MyFont;
 import myComponents.myGUI.buttons.MyAbstractButton;
 import myComponents.myTableCellEditors.MyDownloadedCellEditor;
@@ -397,7 +398,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     tableFilters.getColumn(Filters.EPISODERECORD_COLUMN_TITLE).setCellRenderer(new MyTitleCellRenderer(true));
     tableFilters.getColumn(Filters.SUBS_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MySubtitleCellEditor(Filters.EPISODERECORD_COLUMN));
     tableFilters.getColumn(Filters.SUBS_COLUMN_TITLE).setCellRenderer(new MySubtitlesCellRenderer(Filters.EPISODERECORD_COLUMN));
-    ;
+    
     tableFilters.getColumn(Filters.AIRED_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MyJDateChooserCellEditor());
     tableFilters.getColumn(Filters.AIRED_COLUMN_TITLE).setCellRenderer(new MyJDateChooserCellRenderer());
     tableFilters.getColumn(Filters.DOWNLOADED_COLUMN_TITLE).setCellRenderer(new MyDownloadedCellRenderer(Filters.EPISODERECORD_COLUMN));
@@ -468,7 +469,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     tableSeries = new javax.swing.JTable();
     imageLayerPanel = new javax.swing.JLayeredPane();
     panel_episodes = new javax.swing.JPanel();
-    tabsPanel = new javax.swing.JTabbedPane();
+    tabsPanel = new MyDnDTabbedPane();
     tabpanel_episodesList = new javax.swing.JPanel();
     panel_episodesList = new javax.swing.JScrollPane();
     tableEpisodes = new javax.swing.JTable();
@@ -833,6 +834,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     });
 
     tabpanel_episodesList.setToolTipText("List of episodes");
+    tabpanel_episodesList.setName(MySeries.TABS_PANEL_EPISODES);
     tabpanel_episodesList.setOpaque(false);
     tabpanel_episodesList.setPreferredSize(new java.awt.Dimension(460, 460));
 
@@ -882,6 +884,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     tabsPanel.addTab("                          ", new javax.swing.ImageIcon(getClass().getResource("/images/series.png")), tabpanel_episodesList, ""); // NOI18N
 
     tabpanel_FilteredSeries.setToolTipText("Filter series episodes");
+    tabpanel_FilteredSeries.setName(MySeries.TABS_PANEL_FILTERS);
     tabpanel_FilteredSeries.setOpaque(false);
     tabpanel_FilteredSeries.setPreferredSize(new java.awt.Dimension(460, 464));
 
@@ -1007,6 +1010,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
     tabsPanel.addTab("Filter Series", new javax.swing.ImageIcon(getClass().getResource("/images/filter.png")), tabpanel_FilteredSeries, "Filter series"); // NOI18N
 
+    tabpanel_statistics.setName(MySeries.TABS_PANEL_RATINGS);
     tabpanel_statistics.setOpaque(false);
 
     statSeries.setPreferredSize(new java.awt.Dimension(400, 121));
@@ -1031,6 +1035,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     tabsPanel.addTab("Ratings", new javax.swing.ImageIcon(getClass().getResource("/images/star.png")), tabpanel_statistics, "Series and episodes ratings"); // NOI18N
 
     tabpanel_schedule.setToolTipText("Schedule");
+    tabpanel_schedule.setName(MySeries.TABS_PANEL_SCHEDULE);
     tabpanel_schedule.setOpaque(false);
     tabpanel_schedule.setLayout(new javax.swing.BoxLayout(tabpanel_schedule, javax.swing.BoxLayout.LINE_AXIS));
 
@@ -1039,6 +1044,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
     tabsPanel.addTab("Schedule", new javax.swing.ImageIcon(getClass().getResource("/images/today.png")), tabpanel_schedule, "Schedule"); // NOI18N
 
+    tabpanel_feeds.setName(MySeries.TABS_PANEL_FEEDS);
     tabpanel_feeds.setOpaque(false);
 
     feedSplitPanel.setDividerLocation(200);
@@ -1896,7 +1902,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
   public static javax.swing.JPanel tabpanel_feeds;
   public static javax.swing.JPanel tabpanel_schedule;
   public static javax.swing.JPanel tabpanel_statistics;
-  public static javax.swing.JTabbedPane tabsPanel;
+  public static MyDnDTabbedPane tabsPanel;
   private org.jdesktop.beansbinding.BindingGroup bindingGroup;
   // End of variables declaration//GEN-END:variables
 

@@ -11,10 +11,10 @@ package myseries;
  */
 public interface MySeriesConstants {
 
-  int TABS_PANEL_EPISODES = 0;
-  int TABS_PANEL_FILTERS = 1;
-  int TABS_PANEL_RATINGS = 2;
-  int TABS_PANEL_SCHEDULE = 3;
-  int TABS_PANEL_FEEDS = 4;
+  String TABS_PANEL_EPISODES = "tab_episodes";
+  String TABS_PANEL_FILTERS = "tab_filters";
+  String TABS_PANEL_RATINGS = "tab_ratings";
+  String TABS_PANEL_SCHEDULE = "tab_schedule";
+  String TABS_PANEL_FEEDS = "tab_feeds";
 
 }
