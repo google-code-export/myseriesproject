@@ -41,6 +41,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JRootPane;
@@ -49,6 +50,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.BevelBorder;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelListener;
 import javax.swing.plaf.basic.BasicToolBarUI;
@@ -214,20 +216,40 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     scheduler.setDefaultRenderer(new MyScheduleTableCellRenderer());
     scheduler.setPastYears(2);
 
-//    this.getContentPane().setBackground(Options.getColor(Options.SKIN_COLOR));
+   
+    //Hide viewports
+    panel_episodesList.getViewport().setOpaque(false);
+    scrollPane_series.getViewport().setOpaque(false);
+    panel_allSeriesEpisodes.getViewport().setOpaque(false);
+    //Hide viewport borders
+    panel_episodesList.setViewportBorder(BorderFactory.createEmptyBorder());
+    scrollPane_series.setViewportBorder(BorderFactory.createEmptyBorder());
+    panel_allSeriesEpisodes.setViewportBorder(BorderFactory.createEmptyBorder());
+    //Show table borders
+    tableEpisodes.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+    tableFilters.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+    tableSeries.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+    //Show header borders
+    tableEpisodes.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.GRAY));
+    tableFilters.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.GRAY));
+    tableSeries.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.GRAY));
     if (Options.toBoolean(Options.USE_SKIN)) {
-      scrollPane_series.getViewport().setBackground(Skin.getSkinColor());
-      panel_episodesList.getViewport().setBackground(Skin.getColor_4());
-      panel_allSeriesEpisodes.getViewport().setBackground(Skin.getColor_4());
-      panel_Series.setBackground(Skin.getSkinColor());
-      panel_episodes.setBackground(Skin.getSkinColor());
-      scrollPane_series.setBackground(Skin.getSkinColor());
-      panel_filters.setBackground(Skin.getColor_1());
+      //panel_episodesList.getViewport().setBackground(Skin.getColor_5());
+      //panel_episodesList.getViewport().setOpaque(false);
+      //panel_episodesList.setBorder(BorderFactory.createEmptyBorder());
+      //scrollPane_series.getViewport().setBackground(Skin.getSkinColor());
+      //panel_episodesList.getViewport().setOpaque(true);
+      //tableEpisodes.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
+      //panel_episodesList.getViewport().setBackground(Skin.getSkinColor());
+      //panel_allSeriesEpisodes.getViewport().setBackground(Skin.getColor_4());
+//      panel_Series.setBackground(Skin.getSkinColor());
+//      panel_episodes.setBackground(Skin.getSkinColor());
+//      scrollPane_series.setBackground(Skin.getSkinColor());
+//      panel_filters.setBackground(Skin.getColor_1());
     } else {
       //scrollPane_series.getViewport().setBackground(Color.white);
-      panel_episodesList.getViewport().setBackground(Color.white);
-      panel_allSeriesEpisodes.getViewport().setBackground(Color.white);
-
+//      panel_episodesList.getViewport().setBackground(Color.white);
+//      panel_allSeriesEpisodes.getViewport().setBackground(Color.white);
     }
 
     // Create the next episodes obj
@@ -740,6 +762,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
       }
     });
 
+    scrollPane_series.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
     scrollPane_series.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
     scrollPane_series.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
     scrollPane_series.setMaximumSize(new java.awt.Dimension(30000, 30000));
@@ -809,11 +832,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
       }
     });
 
-    tabpanel_episodesList.setBackground(new java.awt.Color(255, 255, 255));
     tabpanel_episodesList.setToolTipText("List of episodes");
+    tabpanel_episodesList.setOpaque(false);
     tabpanel_episodesList.setPreferredSize(new java.awt.Dimension(460, 460));
 
-    panel_episodesList.setBackground(new java.awt.Color(255, 255, 255));
     panel_episodesList.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
     panel_episodesList.setAutoscrolls(true);
     panel_episodesList.setOpaque(false);
@@ -824,7 +846,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     });
 
     tableEpisodes.setAutoCreateRowSorter(true);
-    tableEpisodes.setBackground(tableSeries.getBackground());
     tableEpisodes.setModel(tableModel_episodes);
     tableEpisodes.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
     tableEpisodes.setRowHeight(24);
@@ -854,22 +875,22 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
       .addGroup(tabpanel_episodesListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(tabpanel_episodesListLayout.createSequentialGroup()
           .addContainerGap()
-          .addComponent(panel_episodesList, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
-          .addGap(51, 51, 51)))
+          .addComponent(panel_episodesList, javax.swing.GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE)
+          .addContainerGap()))
     );
 
     tabsPanel.addTab("                          ", new javax.swing.ImageIcon(getClass().getResource("/images/series.png")), tabpanel_episodesList, ""); // NOI18N
 
-    tabpanel_FilteredSeries.setBackground(new java.awt.Color(255, 255, 255));
     tabpanel_FilteredSeries.setToolTipText("Filter series episodes");
+    tabpanel_FilteredSeries.setOpaque(false);
     tabpanel_FilteredSeries.setPreferredSize(new java.awt.Dimension(460, 464));
 
     panel_allSeriesEpisodes.setBackground(new java.awt.Color(255, 255, 255));
+    panel_allSeriesEpisodes.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
     panel_allSeriesEpisodes.setEnabled(false);
     panel_allSeriesEpisodes.setOpaque(false);
 
     tableFilters.setAutoCreateRowSorter(true);
-    tableFilters.setBackground(tableSeries.getBackground());
     tableFilters.setModel(tableModel_filterSeries);
     tableFilters.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
     tableFilters.setSelectionBackground(tableSeries.getSelectionBackground());
@@ -986,6 +1007,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
     tabsPanel.addTab("Filter Series", new javax.swing.ImageIcon(getClass().getResource("/images/filter.png")), tabpanel_FilteredSeries, "Filter series"); // NOI18N
 
+    tabpanel_statistics.setOpaque(false);
+
     statSeries.setPreferredSize(new java.awt.Dimension(400, 121));
     statSeries.setUnifiedSeries(Options.toBoolean(Options.UNIFIED_SERIES));
 
@@ -1008,6 +1031,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     tabsPanel.addTab("Ratings", new javax.swing.ImageIcon(getClass().getResource("/images/star.png")), tabpanel_statistics, "Series and episodes ratings"); // NOI18N
 
     tabpanel_schedule.setToolTipText("Schedule");
+    tabpanel_schedule.setOpaque(false);
     tabpanel_schedule.setLayout(new javax.swing.BoxLayout(tabpanel_schedule, javax.swing.BoxLayout.LINE_AXIS));
 
     scheduler.setMaximumSize(new java.awt.Dimension(1000, 800));
@@ -1015,9 +1039,14 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
     tabsPanel.addTab("Schedule", new javax.swing.ImageIcon(getClass().getResource("/images/today.png")), tabpanel_schedule, "Schedule"); // NOI18N
 
+    tabpanel_feeds.setOpaque(false);
+
     feedSplitPanel.setDividerLocation(200);
+    feedSplitPanel.setOpaque(false);
 
     leftFeedPanel.setOpaque(false);
+
+    feedTree.setBorder(javax.swing.BorderFactory.createLineBorder(Skin.getSkinColor()));
 
     lb_rssUpdating.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/rss_loading.gif"))); // NOI18N
 

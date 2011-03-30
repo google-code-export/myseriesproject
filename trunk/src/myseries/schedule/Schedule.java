@@ -10,8 +10,10 @@
  */
 package myseries.schedule;
 
+import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.BorderFactory;
 import javax.swing.JTable;
 
 /**
@@ -25,7 +27,6 @@ public class Schedule extends javax.swing.JPanel {
   /** Creates new form Schedule */
   public Schedule() {
     initComponents();
-    
     setVisible(true);
   }
 
@@ -41,6 +42,7 @@ public class Schedule extends javax.swing.JPanel {
     jPanel1 = new javax.swing.JPanel();
     jLabel1 = new javax.swing.JLabel();
     schedule = new com.googlecode.scheduler.Scheduler();
+    schedule.getTblCalendar().getTableHeader().setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
     setOpaque(false);
 
@@ -66,9 +68,9 @@ public class Schedule extends javax.swing.JPanel {
       .addGroup(jPanel1Layout.createSequentialGroup()
         .addContainerGap()
         .addComponent(jLabel1)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         .addComponent(schedule, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(22, Short.MAX_VALUE))
+        .addGap(22, 22, 22))
     );
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

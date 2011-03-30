@@ -79,10 +79,12 @@ public class MyMessages {
   }
 
   private static void setColors(MyDraggable drag) {
-    drag.setOuterColor(Skin.getOuterColor());
-    drag.setInnerColor(Skin.getInnerColor());
-    drag.setTitleColor(Skin.getTitleColor());
-    drag.setTextColor(Skin.getColor_5());
+    if (Options.toBoolean(Options.USE_SKIN) && Skin.getSkinColor() != null) {
+      drag.setOuterColor(Skin.getOuterColor());
+      drag.setInnerColor(Skin.getInnerColor());
+      drag.setTitleColor(Skin.getTitleColor());
+      drag.setTextColor(Skin.getColor_5());
+    }
   }
 
   private MyMessages() {

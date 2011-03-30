@@ -386,6 +386,8 @@ public class StartPanel extends MyDraggable {
         Skin skin = new Skin(Options.toColor(Options.SKIN_COLOR));
         Skin.applySkin();
       } else {
+        
+        //Skin.applySkin();
         // Set look and feel
         String laf = Options.toString(Options.LOOK_AND_FEEL);
         if (!laf.equals("")) {
@@ -398,8 +400,8 @@ public class StartPanel extends MyDraggable {
         } else {
           UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         }
-
-        Skin skin = new Skin();
+        Skin skin = new Skin(Color.LIGHT_GRAY);
+        Skin.applyCommonSkin();
         //Skin.applySkin();
 //        UIManager.put("TabbedPane.contentAreaColor", Color.WHITE);
 //        UIManager.put("TabbedPane.selected", Color.WHITE);

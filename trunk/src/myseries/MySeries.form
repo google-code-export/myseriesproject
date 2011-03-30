@@ -817,6 +817,11 @@
           <SubComponents>
             <Container class="javax.swing.JScrollPane" name="scrollPane_series">
               <Properties>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                    <EmptyBorder/>
+                  </Border>
+                </Property>
                 <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
                 <Property name="verticalScrollBarPolicy" type="int" value="21"/>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -931,10 +936,8 @@
               <SubComponents>
                 <Container class="javax.swing.JPanel" name="tabpanel_episodesList">
                   <Properties>
-                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                    </Property>
                     <Property name="toolTipText" type="java.lang.String" value="List of episodes"/>
+                    <Property name="opaque" type="boolean" value="false"/>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[460, 460]"/>
                     </Property>
@@ -969,9 +972,9 @@
                           <EmptySpace min="0" pref="540" max="32767" attributes="0"/>
                           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" max="-2" attributes="0"/>
-                                  <Component id="panel_episodesList" pref="478" max="32767" attributes="0"/>
-                                  <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="panel_episodesList" pref="518" max="32767" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -980,9 +983,6 @@
                   <SubComponents>
                     <Container class="javax.swing.JScrollPane" name="panel_episodesList">
                       <Properties>
-                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                        </Property>
                         <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
                         <Property name="autoscrolls" type="boolean" value="true"/>
                         <Property name="opaque" type="boolean" value="false"/>
@@ -999,9 +999,6 @@
                         <Component class="javax.swing.JTable" name="tableEpisodes">
                           <Properties>
                             <Property name="autoCreateRowSorter" type="boolean" value="true"/>
-                            <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                              <Connection code="tableSeries.getBackground()" type="code"/>
-                            </Property>
                             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                               <Connection code="tableModel_episodes" type="code"/>
                             </Property>
@@ -1027,10 +1024,8 @@
                 </Container>
                 <Container class="javax.swing.JPanel" name="tabpanel_FilteredSeries">
                   <Properties>
-                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                    </Property>
                     <Property name="toolTipText" type="java.lang.String" value="Filter series episodes"/>
+                    <Property name="opaque" type="boolean" value="false"/>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[460, 464]"/>
                     </Property>
@@ -1078,6 +1073,7 @@
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
+                        <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
                         <Property name="enabled" type="boolean" value="false"/>
                         <Property name="opaque" type="boolean" value="false"/>
                       </Properties>
@@ -1090,9 +1086,6 @@
                         <Component class="javax.swing.JTable" name="tableFilters">
                           <Properties>
                             <Property name="autoCreateRowSorter" type="boolean" value="true"/>
-                            <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                              <Connection code="tableSeries.getBackground()" type="code"/>
-                            </Property>
                             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                               <Connection code="tableModel_filterSeries" type="code"/>
                             </Property>
@@ -1237,6 +1230,9 @@
                   </SubComponents>
                 </Container>
                 <Container class="javax.swing.JPanel" name="tabpanel_statistics">
+                  <Properties>
+                    <Property name="opaque" type="boolean" value="false"/>
+                  </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                       <JTabbedPaneConstraints tabName="Ratings" toolTip="Series and episodes ratings">
@@ -1285,6 +1281,7 @@
                 <Container class="javax.swing.JPanel" name="tabpanel_schedule">
                   <Properties>
                     <Property name="toolTipText" type="java.lang.String" value="Schedule"/>
+                    <Property name="opaque" type="boolean" value="false"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
@@ -1313,6 +1310,9 @@
                   </SubComponents>
                 </Container>
                 <Container class="javax.swing.JPanel" name="tabpanel_feeds">
+                  <Properties>
+                    <Property name="opaque" type="boolean" value="false"/>
+                  </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                       <JTabbedPaneConstraints tabName="Rss Feeds">
@@ -1348,6 +1348,7 @@
                     <Container class="javax.swing.JSplitPane" name="feedSplitPanel">
                       <Properties>
                         <Property name="dividerLocation" type="int" value="200"/>
+                        <Property name="opaque" type="boolean" value="false"/>
                       </Properties>
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout"/>
@@ -1407,6 +1408,15 @@
                           </Layout>
                           <SubComponents>
                             <Component class="tools.feeds.FeedTree" name="feedTree">
+                              <Properties>
+                                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                                  <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                                    <LineBorder>
+                                      <Connection PropertyName="color" code="Skin.getSkinColor()" type="code"/>
+                                    </LineBorder>
+                                  </Border>
+                                </Property>
+                              </Properties>
                             </Component>
                             <Component class="javax.swing.JLabel" name="lb_rssUpdating">
                               <Properties>
