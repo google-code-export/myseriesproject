@@ -49,12 +49,13 @@ public class GetTvSubtitlesCode implements SubtitleConstants{
       BufferedReader in = new BufferedReader(new InputStreamReader(subsUrl.openStream()));
       parseSearchResult(in);
       in.close();
-      if (sLinks.size() == 0) {
+      if (  sLinks.isEmpty()) {
         MyMessages.message("Series not found", "The series " + series.getFullTitle() + " is not found in SubtitleOnline");
       } else if (sLinks.size() == 1) {
         this.tSubCode = sLinks.get(0).getCode();
       } else {
-        TCode tl = (TCode) JOptionPane.showInputDialog(null, "Multiple series found", "Choose the right series", JOptionPane.QUESTION_MESSAGE, null, sLinks.toArray(), 0);
+         TCode tl = (TCode) MyMessages.ask("Choose the right series", "Multiple series found", null, sLinks.toArray(), null);
+            //TCode tl = (TCode) JOptionPane.showInputDialog(null, "Multiple series found", "Choose the right series", JOptionPane.QUESTION_MESSAGE, null, sLinks.toArray(), 0);
         if (tl != null) {
           this.tSubCode = tl.getCode();
         }
