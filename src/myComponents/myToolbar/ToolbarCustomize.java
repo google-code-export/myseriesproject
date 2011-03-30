@@ -96,7 +96,6 @@ public class ToolbarCustomize extends JDialog {
     });
 
     bt_cancel.setText("");
-    bt_cancel.setToolTipText("Cancel");
     bt_cancel.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         bt_cancelActionPerformed(evt);
@@ -130,9 +129,9 @@ public class ToolbarCustomize extends JDialog {
       .addGroup(inner_panelLayout.createSequentialGroup()
         .addComponent(bt_cancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addGap(5, 5, 5)
-        .addComponent(panelUsed, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-        .addComponent(panelUnused, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(panelUsed, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
+        .addGap(20, 20, 20)
+        .addComponent(panelUnused, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(inner_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
           .addComponent(bt_ok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -140,13 +139,11 @@ public class ToolbarCustomize extends JDialog {
           .addComponent(bt_add, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
     );
 
-    inner_panelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {panelUnused, panelUsed});
-
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(inner_panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+      .addComponent(inner_panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

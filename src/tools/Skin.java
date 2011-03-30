@@ -9,6 +9,8 @@ import javax.swing.BorderFactory;
 import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
+import javax.swing.plaf.basic.BasicViewportUI;
+import org.jdesktop.swingbinding.adapters.BeanAdapterBase;
 import tools.options.Options;
 
 /**
@@ -32,10 +34,10 @@ public class Skin {
    * Create the default skin
    */
   public Skin() {
-    //skinColor = new Color(240, 240, 240);
-    skinColor = null;
+    skinColor = new Color(240, 240, 240);
+    //skinColor = null;
     brightness = getBrightness();
-    //skinColor = fixColor(skinColor);
+    skinColor = fixColor(skinColor);
 
   }
 
@@ -83,7 +85,7 @@ public class Skin {
    * @return the brightness of the main skin color
    */
   public float getBrightness() {
-    if(skinColor == null){
+    if (skinColor == null) {
       return 1;
     }
     float[] hsbVals = new float[3];
@@ -96,28 +98,28 @@ public class Skin {
    * @return the brighter
    */
   public static Color getColor_2() {
-    return !Options.toBoolean(Options.USE_SKIN) ? null : skinColor.brighter();
+    return !Options.toBoolean(Options.USE_SKIN) ? skinColor.brighter() : skinColor.brighter();
   }
 
   /**
    * @return the brightest
    */
   public static Color getColor_1() {
-    return !Options.toBoolean(Options.USE_SKIN) ? null : skinColor.brighter().brighter();
+    return !Options.toBoolean(Options.USE_SKIN) ? skinColor.brighter().brighter() : skinColor.brighter().brighter();
   }
 
   /**
    * @return the darker
    */
   public static Color getColor_4() {
-    return !Options.toBoolean(Options.USE_SKIN) ? null : skinColor.darker();
+    return !Options.toBoolean(Options.USE_SKIN) ? skinColor.darker() : skinColor.darker();
   }
 
   /**
    * @return the darkest
    */
   public static Color getColor_5() {
-    return !Options.toBoolean(Options.USE_SKIN) ? null : skinColor.darker().darker();
+    return !Options.toBoolean(Options.USE_SKIN) ? skinColor.darker().darker() : skinColor.darker().darker();
   }
 
   /**
@@ -142,7 +144,7 @@ public class Skin {
   }
 
   public static Color getSkinColor() {
-    return !Options.toBoolean(Options.USE_SKIN) ? null : skinColor;
+    return !Options.toBoolean(Options.USE_SKIN) ? skinColor : skinColor;
   }
 
   public static Color getButtonForegroundColor() {
@@ -153,14 +155,15 @@ public class Skin {
     return getForeGroundColor(Color.white);
   }
 
-  public static Color getOuterColor(){
-    return !Options.toBoolean(Options.USE_SKIN) ? null : getColor_5();
+  public static Color getOuterColor() {
+    return !Options.toBoolean(Options.USE_SKIN) ? getColor_5() : getColor_5();
   }
-  public static Color getInnerColor(){
+
+  public static Color getInnerColor() {
     return !Options.toBoolean(Options.USE_SKIN) ? Color.WHITE : getColor_1();
   }
 
-  public static Color getTitleColor(){
+  public static Color getTitleColor() {
     return !Options.toBoolean(Options.USE_SKIN) ? Color.BLACK : getColor_1();
   }
 
@@ -232,8 +235,8 @@ public class Skin {
 
     UIManager.put("ScrollBar.thumb", getColor_4());
 
-    UIManager.put("ToolBar.floatingBackground",getSkinColor());
-    UIManager.put("ToolBar.background",getSkinColor());
+    UIManager.put("ToolBar.floatingBackground", getSkinColor());
+    UIManager.put("ToolBar.background", getSkinColor());
 
     UIManager.put("MenuBar.background", getColor_4());
     UIManager.put("MenuBar.foreground", getForeGroundColor(getColor_4()));
@@ -249,8 +252,18 @@ public class Skin {
     UIManager.put("PopupMenu.foreground", getForeGroundColor(getColor_4()));
 
     UIManager.put("SplitPane.background", getColor_5());
+    
+
+    applyCommonSkin();
+
+  }
+
+  public static void applyCommonSkin() {
     Border bord = BorderFactory.createBevelBorder(BevelBorder.RAISED, skinColor.brighter(), skinColor.darker());
     UIManager.put("SplitPane.dividerSize", 5);
     UIManager.put("SplitPaneDivider.border", bord);
+    UIManager.put("ScrollPane.border", BorderFactory.createEmptyBorder());
+    UIManager.put("Table.scrollPaneBorder", BorderFactory.createEmptyBorder());
+    UIManager.put("TableHeader.cellBorder", BorderFactory.createLineBorder(Color.GRAY));
   }
 }

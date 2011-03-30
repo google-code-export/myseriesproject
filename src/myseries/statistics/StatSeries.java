@@ -20,15 +20,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
 import javax.swing.table.DefaultTableModel;
 import myComponents.myTableCellRenderers.MyDecimalFormatRenderer;
+import tools.Skin;
 import tools.options.Options;
 
 /**
  *
  * @author ssoldatos
  */
-public class StatSeries extends javax.swing.JPanel  {
+public class StatSeries extends javax.swing.JPanel {
 
   public static int SERIES_COLUMN = 0;
   public static int EPISODES_COLUMN = 1;
@@ -40,9 +42,17 @@ public class StatSeries extends javax.swing.JPanel  {
   public StatSeries() {
     super();
     initComponents();
-    jScrollPane1.getViewport().setOpaque(false);
+    scrollpane.getViewport().setOpaque(false);
     model = (DefaultTableModel) table_stat_series.getModel();
     table_stat_series.getColumnModel().getColumn(RATE_COLUMN).setCellRenderer(new MyDecimalFormatRenderer());
+    //Hide viewports
+    scrollpane.getViewport().setOpaque(false);
+    //Hide viewport borders
+    scrollpane.setViewportBorder(BorderFactory.createEmptyBorder());
+    //Show table borders
+    table_stat_series.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+    //Show header borders
+    table_stat_series.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.GRAY));
     validate();
     setVisible(true);
   }
@@ -56,7 +66,7 @@ public class StatSeries extends javax.swing.JPanel  {
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
 
-    jScrollPane1 = new javax.swing.JScrollPane();
+    scrollpane = new javax.swing.JScrollPane();
     table_stat_series = new javax.swing.JTable();
     jLabel1 = new javax.swing.JLabel();
     jLabel2 = new javax.swing.JLabel();
@@ -64,7 +74,7 @@ public class StatSeries extends javax.swing.JPanel  {
 
     setOpaque(false);
 
-    jScrollPane1.setOpaque(false);
+    scrollpane.setOpaque(false);
 
     table_stat_series.setAutoCreateRowSorter(true);
     table_stat_series.setModel(new javax.swing.table.DefaultTableModel(
@@ -91,14 +101,17 @@ public class StatSeries extends javax.swing.JPanel  {
       }
     });
     table_stat_series.setName("seriesStats"); // NOI18N
-    jScrollPane1.setViewportView(table_stat_series);
+    scrollpane.setViewportView(table_stat_series);
 
     jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getStyle() | java.awt.Font.BOLD, jLabel1.getFont().getSize()+2));
+    jLabel1.setForeground(Skin.getTitleColor());
     jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     jLabel1.setText("Series Ratings");
 
+    jLabel2.setForeground(Skin.getTitleColor());
     jLabel2.setText("Mouse over rate to see a list of the series episodes rates");
 
+    cb_unified.setForeground(Skin.getTitleColor());
     cb_unified.setText("Unified series");
     cb_unified.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
     cb_unified.setOpaque(false);
@@ -115,7 +128,7 @@ public class StatSeries extends javax.swing.JPanel  {
       .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
         .addContainerGap()
         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-          .add(org.jdesktop.layout.GroupLayout.LEADING, jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 557, Short.MAX_VALUE)
+          .add(org.jdesktop.layout.GroupLayout.LEADING, scrollpane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 557, Short.MAX_VALUE)
           .add(jLabel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 557, Short.MAX_VALUE)
           .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
             .add(jLabel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
@@ -133,26 +146,25 @@ public class StatSeries extends javax.swing.JPanel  {
           .add(jLabel2)
           .add(cb_unified))
         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-        .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+        .add(scrollpane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
         .addContainerGap())
     );
   }// </editor-fold>//GEN-END:initComponents
 
   private void cb_unifiedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_unifiedActionPerformed
-    if(!cb_unified.isSelected()){
+    if (!cb_unified.isSelected()) {
       refresh(false);
-    }else{
+    } else {
       refresh(true);
     }
     unifiedSeries = cb_unified.isSelected();
     Options.setOption(Options.UNIFIED_SERIES, cb_unified.isSelected());
   }//GEN-LAST:event_cb_unifiedActionPerformed
-
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JCheckBox cb_unified;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
-  private javax.swing.JScrollPane jScrollPane1;
+  private javax.swing.JScrollPane scrollpane;
   private javax.swing.JTable table_stat_series;
   // End of variables declaration//GEN-END:variables
 
@@ -161,27 +173,26 @@ public class StatSeries extends javax.swing.JPanel  {
     try {
       Statement stmt = DBConnection.stmt;
       String sql;
-      if(!unified){
-      sql = "SELECT series.series_ID AS series_ID, series.title AS series, sum(episodes.rate)/count(1) as rate, count(1) as episodes "
-              + "FROM series join episodes on series.series_ID = episodes.series_ID "
-              + "where episodes.rate > 0 group by series.series_ID order by rate desc";
-      } else{
-         sql = "SELECT series.series_ID AS series_ID, series.title AS series, sum(episodes.rate)/count(1) as rate, count(1) as episodes "
-              + "FROM series join episodes on series.series_ID = episodes.series_ID "
-              + "where episodes.rate > 0 group by series.title order by rate desc";
+      if (!unified) {
+        sql = "SELECT series.series_ID AS series_ID, series.title AS series, sum(episodes.rate)/count(1) as rate, count(1) as episodes "
+            + "FROM series join episodes on series.series_ID = episodes.series_ID "
+            + "where episodes.rate > 0 group by series.series_ID order by rate desc";
+      } else {
+        sql = "SELECT series.series_ID AS series_ID, series.title AS series, sum(episodes.rate)/count(1) as rate, count(1) as episodes "
+            + "FROM series join episodes on series.series_ID = episodes.series_ID "
+            + "where episodes.rate > 0 group by series.title order by rate desc";
       }
       ResultSet rs = stmt.executeQuery(sql);
       while (rs.next()) {
         SeriesRecord series = DBHelper.getSeriesByID(rs.getInt("series_ID"));
         int episodes = rs.getInt("episodes");
         double rate = rs.getDouble("rate");
-        Object[] data = {unified?series.getTitle():series, episodes, rate};
+        Object[] data = {unified ? series.getTitle() : series, episodes, rate};
         getModel().addRow(data);
       }
     } catch (SQLException ex) {
       Logger.getLogger(StatSeries.class.getName()).log(Level.SEVERE, null, ex);
-    } catch(NullPointerException ex){
-
+    } catch (NullPointerException ex) {
     }
   }
 

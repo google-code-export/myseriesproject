@@ -52,9 +52,9 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Component id="schedule" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="22" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -72,6 +72,9 @@
           </Properties>
         </Component>
         <Component class="com.googlecode.scheduler.Scheduler" name="schedule">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="schedule.getTblCalendar().getTableHeader().setBorder(BorderFactory.createLineBorder(Color.GRAY));"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

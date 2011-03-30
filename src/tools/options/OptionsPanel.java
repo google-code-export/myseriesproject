@@ -75,6 +75,7 @@ public class OptionsPanel extends MyDraggable {
   private String oldFontFace;
   private Color oldColor;
   private boolean oldUseSkin;
+  private String oldLaf;
   private ComboBoxModel updateDbModel = new DefaultComboBoxModel(InternetUpdate.DB_UPDATERS);
   private ComboBoxModel primarySubtitlesModel = new DefaultComboBoxModel(SubtitleConstants.SUBTITLE_LANG);
   private ComboBoxModel secondarySubtitlesModel = new DefaultComboBoxModel(SubtitleConstants.SUBTITLE_LANG);
@@ -105,6 +106,7 @@ public class OptionsPanel extends MyDraggable {
     oldFontSize = Options.toString(Options.FONT_SIZE);
     oldColor = Options.toColor(Options.SKIN_COLOR);
     oldUseSkin = Options.toBoolean(Options.USE_SKIN);
+    oldLaf = Options.toString(Options.LOOK_AND_FEEL);
     createModelFonts();
     JTextField t = (JTextField) combobox_fonts.getEditor().getEditorComponent();
     t.setText(Options.toString(Options.FONT_FACE));
@@ -909,8 +911,8 @@ public class OptionsPanel extends MyDraggable {
 }//GEN-LAST:event_button_BGColorActionPerformed
 
   private void checkbox_dontUseSkinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkbox_dontUseSkinActionPerformed
-    Skin.applySkin();
-    UIManager.getLookAndFeel().initialize();
+    //Skin.applySkin();
+    //UIManager.getLookAndFeel().initialize();
   }//GEN-LAST:event_checkbox_dontUseSkinActionPerformed
 
   private void combobox_fontsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combobox_fontsActionPerformed
@@ -1007,18 +1009,21 @@ public class OptionsPanel extends MyDraggable {
       if (!oldColor.equals(Options.toColor(Options.SKIN_COLOR))) {
         mess += "Skin color was changed\n";
       }
-
       if ((!oldUseSkin && checkbox_dontUseSkin.isSelected()) || (oldUseSkin && !checkbox_dontUseSkin.isSelected())) {
         mess += "Skin using has changed\n";
       }
+      if(!oldLaf.equals(Options.toString(Options.LOOK_AND_FEEL))){
+        mess += "Look and feel changed\n";
+      }
       if (!mess.equals("")) {
-        int ans = MyMessages.question("Restart?",
-            mess + "\nRestart The application?");
-        if (ans == 0) {
-          m.dispose();
-          StartPanel.main(null);
-        } else {
-        }
+//        int ans = MyMessages.question("Restart?",
+//            mess + "\nRestart The application?");
+//        if (ans == 0) {
+//          m.dispose();
+//          StartPanel.main(null);
+//        } else {
+//        }
+        MyMessages.message("Options", mess + "\nThese changes will take effect when you restart the application");
       }
 
     } catch (IOException ex) {
