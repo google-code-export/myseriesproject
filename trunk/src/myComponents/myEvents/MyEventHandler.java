@@ -10,9 +10,7 @@ import java.awt.Image;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
-import javax.swing.JTable;
 import myComponents.myGUI.MyImagePanel;
 import myseries.Menus;
 import myseries.MySeries;
@@ -45,9 +43,11 @@ public class MyEventHandler implements MyEventListener {
         Series.setCurrentSerial(series);
 
         //TABS
-        MySeries.tabsPanel.setTitleAt(MySeries.tabsPanel.getIndexByName(MySeries.TABS_PANEL_EPISODES), series.getFullTitle());
+        int epiIndex = MySeries.tabsPanel.getIndexByName(MySeries.TABS_PANEL_EPISODES);
+        MySeries.tabsPanel.setTitleAt(epiIndex, series.getFullTitle());
+        //MySeries.tabsPanel.setTitleAt(0, series.getFullTitle());
         if (evt.isSeriesPanel()) {
-          MySeries.tabsPanel.setSelectedIndex(0);
+          MySeries.tabsPanel.setSelectedIndex(epiIndex);
         }
         //IMAGE SCREENSHOT
         String imagePath = Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH + "/" + series.getScreenshot();
