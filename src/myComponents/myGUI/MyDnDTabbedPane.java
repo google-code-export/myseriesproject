@@ -7,6 +7,7 @@ package myComponents.myGUI;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -51,7 +52,7 @@ public class MyDnDTabbedPane extends JTabbedPane {
   public int getIndexByName(String name){
     int count = getComponentCount();
     for (int i = 0; i < count; i++) {
-      Component tab = getComponent(i);
+      Component tab = getComponentAt(i);
       if(tab.getName().equals(name)){
         return i;
       }
@@ -119,8 +120,17 @@ public class MyDnDTabbedPane extends JTabbedPane {
       @Override
       public void dragOver(DragSourceDragEvent e) {
         Point glassPt = e.getLocation();
-        SwingUtilities.convertPointFromScreen(glassPt, glassPane);
-        int targetIdx = getTargetTabIndex(glassPt);
+        Point tmp = (Point) glassPt.clone();
+        SwingUtilities.convertPointFromScreen(tmp, glassPane);
+        int targetIdx = getTargetTabIndex(tmp);
+        Point parent = getParent().getLocationOnScreen();
+        glassPt.x -= parent.x;
+        glassPt.y -= parent.y;
+        //
+//          System.out.println(getTabAreaBounds());
+//          System.out.println(glassPt);
+//          System.out.println(getTabAreaBounds().contains(glassPt));
+        
         //if(getTabAreaBounds().contains(tabPt) && targetIdx>=0 &&
         if (getTabAreaBounds().contains(glassPt) && targetIdx >= 0
             && targetIdx != dragTabIndex && targetIdx != dragTabIndex + 1) {
@@ -422,7 +432,7 @@ public class MyDnDTabbedPane extends JTabbedPane {
       setOpaque(false);
       composite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
       //http://bugs.sun.com/view_bug.do?bug_id=6700748
-      //setCursor(null);
+      
     }
 
     public void setImage(BufferedImage draggingGhost) {

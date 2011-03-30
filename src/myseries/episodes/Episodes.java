@@ -72,8 +72,6 @@ public class Episodes {
   private static MyEpisodesTableModel tableModel_episodes;
   /** The episodes table   */
   private static JTable table_episodesList = new JTable();
-  /** The tabbed pane   */
-  private static final MyDnDTabbedPane tabsPanel = myseries.MySeries.tabsPanel;
   /** The current episode   */
   private static EpisodesRecord currentEpisode;
 
@@ -355,7 +353,7 @@ public class Episodes {
    * @return the tabsPanel
    */
   public static JTabbedPane getTabsPanel() {
-    return tabsPanel;
+    return myseries.MySeries.tabsPanel;
   }
 
 //  /**
