@@ -380,15 +380,11 @@ public class StartPanel extends MyDraggable {
       //Create the logger
       MySeries.createLogger();
       MySeries.logger.log(Level.INFO, "=========================");
-
-      // Create the skin
       if (Options.toBoolean(Options.USE_SKIN)) {
         Skin skin = new Skin(Options.toColor(Options.SKIN_COLOR));
         Skin.applySkin();
       } else {
-        
-        //Skin.applySkin();
-        // Set look and feel
+        Skin skin = new Skin();
         String laf = Options.toString(Options.LOOK_AND_FEEL);
         if (!laf.equals("")) {
           String className = LookAndFeels.getClassName(laf);
@@ -400,15 +396,26 @@ public class StartPanel extends MyDraggable {
         } else {
           UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         }
-        Skin skin = new Skin(Color.LIGHT_GRAY);
-        Skin.applyCommonSkin();
-        //Skin.applySkin();
+      }
+
+
+      // Create the skin
+      //if (Options.toBoolean(Options.USE_SKIN)) {
+
+      //} else {
+
+      //Skin.applySkin();
+      // Set look and feel
+
+      //Skin skin = new Skin(Color.LIGHT_GRAY);
+      //Skin.applySkin();
+      //Skin.applySkin();
 //        UIManager.put("TabbedPane.contentAreaColor", Color.WHITE);
 //        UIManager.put("TabbedPane.selected", Color.WHITE);
 //        UIManager.put("TabbedPane.unselectedBackground", Color.GRAY);
 //        UIManager.put("TabbedPane.foreground", Color.BLACK);
 
-      }
+      // }
       //Set Font
       MyFont.SetMyFont();
 
