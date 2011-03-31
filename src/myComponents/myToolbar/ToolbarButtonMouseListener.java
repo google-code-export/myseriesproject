@@ -17,6 +17,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.TransferHandler;
 import javax.swing.border.Border;
+import tools.Skin;
 
 /**
  *
@@ -72,6 +73,7 @@ public class ToolbarButtonMouseListener extends MouseAdapter {
       border = t.getBorder();
       t.setBorder(BorderFactory.createLineBorder(Color.RED));
       t.setCursor(new Cursor(Cursor.MOVE_CURSOR));
+      t.setBackground(Skin.getSkinColor());
     } else {
       ToolbarSeperator t = (ToolbarSeperator) c;
       border = t.getBorder();
@@ -88,6 +90,7 @@ public class ToolbarButtonMouseListener extends MouseAdapter {
       ToolbarButton t = (ToolbarButton) c;
       t.setBorder(border);
       t.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+      t.setBackground(Skin.getColor_1());
     } else {
       ToolbarSeperator t = (ToolbarSeperator) c;
       t.setBorder(border);

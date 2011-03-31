@@ -5,10 +5,14 @@
 
 package myComponents.myToolbar;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Point;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.border.BevelBorder;
+import tools.Skin;
 
 /**
  *
@@ -42,6 +46,8 @@ public class ToolbarButton extends JButton implements ToolbarButtonActions {
     }
     setCursor(new Cursor(Cursor.HAND_CURSOR));
     addActionListener(new ToolbarActionListener());
+    //setBackground(Skin.getSkinColor());
+    //setOpaque(false);
   }
 
   /**
