@@ -43,7 +43,7 @@ public class MyEventHandler implements MyEventListener {
         Series.setCurrentSerial(series);
 
         //TABS
-        int epiIndex = MySeries.tabsPanel.getIndexByName(MySeries.TABS_PANEL_EPISODES);
+        int epiIndex = MySeries.tabsPanel.getIndexByName(String.valueOf(MySeries.TAB_EPISODES_ID));
         MySeries.tabsPanel.setTitleAt(epiIndex, series.getFullTitle());
         //MySeries.tabsPanel.setTitleAt(0, series.getFullTitle());
         if (evt.isSeriesPanel()) {

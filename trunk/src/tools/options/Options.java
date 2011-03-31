@@ -226,6 +226,10 @@ public class Options {
    */
   public static String UPDATE_FEEDS = "UPDATE_FEEDS";
   /**
+   * The order of the tabs
+   */
+  public static String TABS_ORDER = "TABS_ORDER";
+  /**
    * An array of the options that are selected in combo boxes
    */
   public static String[] _COMBO_OPTIONS_ = {DATE_FORMAT, DEBUG_MODE, LOOK_AND_FEEL,
@@ -514,6 +518,7 @@ public class Options {
     out.println(Options.VIDEO_APP + "=");
     out.println(Options.AUTO_EXTRACT_ZIPS + "=false");
     out.println(Options.UPDATE_FEEDS + "=false");
+    out.println(Options.TABS_ORDER + "=" + getDefaultTabsOrder());
 
     out.close();
   }
@@ -557,6 +562,10 @@ public class Options {
     return new Integer[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26};
   }
 
+   private static Integer[] getDefaultTabsOrder() {
+    return new Integer[]{0,1,2,3,4};
+  }
+
   private static void loadDefaultOptions() {
     options.put(Options.DB_NAME, "");
     options.put(Options.DEBUG_MODE, new Integer(0));
@@ -591,7 +600,10 @@ public class Options {
     options.put(Options.VIDEO_APP, "");
     options.put(Options.AUTO_EXTRACT_ZIPS, false);
     options.put(Options.UPDATE_FEEDS, false);
+    options.put(Options.TABS_ORDER, getDefaultTabsOrder());
   }
+
+ 
 
   private Options() {
   }
