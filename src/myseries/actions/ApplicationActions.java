@@ -4,7 +4,6 @@
  */
 package myseries.actions;
 
-import database.DBHelper;
 import database.SeriesRecord;
 import help.About;
 import help.CheckUpdate;
@@ -14,12 +13,10 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
@@ -27,7 +24,6 @@ import javax.swing.table.TableColumnModel;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myseries.MySeries;
-import myseries.episodes.Episodes;
 import myseries.filters.Filters;
 import myseries.series.RestoreSeries;
 import myseries.series.Series;
@@ -157,15 +153,18 @@ public class ApplicationActions {
   public static void changeTab(MySeries m, ChangeEvent evt) {
     Vector<SeriesRecord> series = null;
     JTabbedPane tabs = (JTabbedPane) evt.getSource();
-    String name = tabs.getSelectedComponent().getName();
+    if(tabs.getComponentCount() == 0 || tabs.getSelectedComponent() == null){
+      return;
+    }
+    int name = Integer.parseInt(tabs.getSelectedComponent().getName());
     try {
-      if (name.equals(MySeries.TABS_PANEL_EPISODES)) {
-      } else if (name.equals(MySeries.TABS_PANEL_FILTERS)) {
+      if (name == MySeries.TAB_EPISODES_ID) {
+      } else if (name == MySeries.TAB_FILTERS_ID) {
         Filters.getFilteredSeries();
-      } else if (name.equals(MySeries.TABS_PANEL_RATINGS)) {
+      } else if (name == MySeries.TAB_RATINGS_ID) {
         MySeries.statSeries.refresh(Options.toBoolean(Options.UNIFIED_SERIES));
         MySeries.statEpisodes.refresh();
-      } else if (name.equals(MySeries.TABS_PANEL_SCHEDULE)) {
+      } else if (name  == MySeries.TAB_SCHEDULE_ID) {
         //MySeries.scheduler.refreshCalendar(MySeries.scheduler.getRealMonth(),MySeries.scheduler.getRealYear());
       }
 

@@ -29,12 +29,17 @@ import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 import java.awt.dnd.InvalidDnDOperationException;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import javax.swing.ActionMap;
 import javax.swing.Icon;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
+import tools.options.Options;
 
 /**
  *
@@ -42,6 +47,7 @@ import javax.swing.SwingUtilities;
  */
 public class MyDnDTabbedPane extends JTabbedPane {
 
+  private static final long serialVersionUID = 2352534534535L;
   private static final int LINEWIDTH = 3;
   private static final String NAME = "test";
   private final GhostGlassPane glassPane = new GhostGlassPane();
@@ -49,11 +55,11 @@ public class MyDnDTabbedPane extends JTabbedPane {
   private final Color lineColor = new Color(0, 100, 255);
   private int dragTabIndex = -1;
 
-  public int getIndexByName(String name){
-    int count = getComponentCount();
+  public int getIndexByName(String name) {
+    int count = getTabCount();
     for (int i = 0; i < count; i++) {
       Component tab = getComponentAt(i);
-      if(tab.getName().equals(name)){
+      if (tab.getName().equals(name)) {
         return i;
       }
     }
@@ -130,7 +136,7 @@ public class MyDnDTabbedPane extends JTabbedPane {
 //          System.out.println(getTabAreaBounds());
 //          System.out.println(glassPt);
 //          System.out.println(getTabAreaBounds().contains(glassPt));
-        
+
         //if(getTabAreaBounds().contains(tabPt) && targetIdx>=0 &&
         if (getTabAreaBounds().contains(glassPt) && targetIdx >= 0
             && targetIdx != dragTabIndex && targetIdx != dragTabIndex + 1) {
@@ -147,6 +153,7 @@ public class MyDnDTabbedPane extends JTabbedPane {
         lineRect.setRect(0, 0, 0, 0);
         dragTabIndex = -1;
         glassPane.setVisible(false);
+        saveOrder();
         if (hasGhost()) {
           glassPane.setVisible(false);
           glassPane.setImage(null);
@@ -155,6 +162,17 @@ public class MyDnDTabbedPane extends JTabbedPane {
 
       @Override
       public void dropActionChanged(DragSourceDragEvent e) {
+      }
+
+      private void saveOrder() {
+        int tabCount = getComponentCount();
+        ArrayList<Integer> order = new ArrayList<Integer>();
+        for (int i = 0; i < tabCount; i++) {
+          int id = Integer.parseInt(getComponentAt(i).getName());
+          order.add(id);
+        }
+        Options.setOption(Options.TABS_ORDER, order);
+        Options.save();
       }
     };
     final Transferable t = new Transferable() {
@@ -204,6 +222,63 @@ public class MyDnDTabbedPane extends JTabbedPane {
         new CDropTargetListener(), true);
     new DragSource().createDefaultDragGestureRecognizer(
         this, DnDConstants.ACTION_COPY_OR_MOVE, dgl);
+    addMouseListener(new MouseAdapter() {
+
+      @Override
+      public void mouseEntered(MouseEvent e) {
+        Point Pt = e.getLocationOnScreen();
+        Point parent = getParent().getLocationOnScreen();
+        Pt.x -= parent.x;
+        Pt.y -= parent.y;
+        Rectangle r = getTabAreaBounds();
+        if(r.contains(Pt)){
+          setCursor(new Cursor(Cursor.HAND_CURSOR));
+        } else {
+          setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        }
+      }
+
+      @Override
+      public void mouseExited(MouseEvent e) {
+        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+      }
+
+
+    });
+  }
+
+  public void setOrder(Integer[] order) {
+    TabComponent[] comps = new TabComponent[getTabCount()];
+    for (int i = 0; i < order.length; i++) {
+      String name = String.valueOf(order[i]);
+      int ind = getIndexByName(name);
+      comps[i] = new TabComponent(
+          getComponentAt(ind),
+          getTitleAt(ind),
+          getIconAt(ind),
+          getToolTipTextAt(ind));
+    }
+    removeAll();
+    for (int i = 0; i < comps.length; i++) {
+      TabComponent component = comps[i];
+      insertTab(component.title, component.icon, component.component, component.toolTipText, i);
+    }
+  }
+
+  class TabComponent {
+
+    private final Component component;
+    private final String title;
+    private final Icon icon;
+    private final String toolTipText;
+
+    private TabComponent(Component component, String title, Icon icon, String toolTipText) {
+      this.component = component;
+      this.title = title;
+      this.icon = icon;
+      this.toolTipText = toolTipText;
+
+    }
   }
 
   class CDropTargetListener implements DropTargetListener {
@@ -432,7 +507,7 @@ public class MyDnDTabbedPane extends JTabbedPane {
       setOpaque(false);
       composite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
       //http://bugs.sun.com/view_bug.do?bug_id=6700748
-      
+
     }
 
     public void setImage(BufferedImage draggingGhost) {
