@@ -22,6 +22,7 @@ public class MyDraggable extends JDialog {
     this.setUndecorated(true);
     this.setModal(Options.toBoolean(Options.MODAL));
     getContentPane().setBackground(Skin.getOuterColor());
+
     this.addMouseListener(new MouseAdapter() {
 
       @Override
