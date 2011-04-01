@@ -96,8 +96,8 @@ public class About extends MyDraggable {
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
-    main_panel.setBackground(Skin.getOuterColor());
     main_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+    main_panel.setOpaque(false);
 
     bt_cancel.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
     bt_cancel.setText("");

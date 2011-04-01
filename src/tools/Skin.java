@@ -627,9 +627,9 @@ public class Skin {
     UIManager.put("Tree.foreground", getForeGroundColor(getColor_1()));
     UIManager.put("Tree.hash", Skin.getSkinColor());
     UIManager.put("Tree.line", Skin.getColor_5());
-    UIManager.put("Tree.selectionBackground", Skin.getColor_4());
+    UIManager.put("Tree.selectionBackground", getSkinColor());
     UIManager.put("Tree.selectionBorderColor", Skin.getColor_5());
-    UIManager.put("Tree.selectionForeground", getForeGroundColor(getColor_4()));
+    UIManager.put("Tree.selectionForeground", getForeGroundColor(getSkinColor()));
     UIManager.put("Tree.textBackground", getColor_1());
     UIManager.put("Tree.textForeground", getForeGroundColor(getColor_1()));
     /**
