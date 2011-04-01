@@ -215,8 +215,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
     //SCHEDULE
     //scheduler.setDatabase(Options._USER_DIR_ +Database.PATH + DBConnection.db);
-    scheduler.setDefaultRenderer(new MyScheduleTableCellRenderer());
-    scheduler.setPastYears(2);
+    scheduler.getSchedule().setDefaultRenderer(new MyScheduleTableCellRenderer());
+    scheduler.getSchedule().setPastYears(2);
 
    
     //Hide viewports
@@ -322,11 +322,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     tabsPanel.setOrder(order);
     setLocationRelativeTo(null);
     setVisible(true);
-    MouseListener[] list = scheduler.getTblCalendar().getMouseListeners();
+    MouseListener[] list = scheduler.getSchedule().getTblCalendar().getMouseListeners();
     if (list.length == 1) {
-      scheduler.getTblCalendar().removeMouseListener(list[0]);
+      scheduler.getSchedule().getTblCalendar().removeMouseListener(list[0]);
     }
-    scheduler.goToToday();
+    scheduler.getSchedule().goToToday();
     //Check for updates
     MyUsefulFunctions.initInternetConnection();
     if (Options.toBoolean(Options.CHECK_VERSION)) {
@@ -336,7 +336,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
       FeedsActions.updateFeeds();
     }
 
-    scheduler.getTblCalendar().addMouseListener(new ScheduleMouseListener());
+    scheduler.getSchedule().getTblCalendar().addMouseListener(new ScheduleMouseListener());
   }
 
   private void setGlassPane() {
@@ -375,7 +375,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     //EPISODES TABLE
     //table_episodesList.removeColumn(table_episodesList.getColumnModel().getColumn(6));
     tableEpisodes.getModel().addTableModelListener(this);
-    tableEpisodes.getTableHeader().setReorderingAllowed(false);
     tableEpisodes.getColumn(Episodes.DOWNLOADED_COLUMN_TITLE).setCellRenderer(new MyDownloadedCellRenderer(Episodes.EPISODERECORD_COLUMN));
     tableEpisodes.getColumn(Episodes.DOWNLOADED_COLUMN_TITLE).setCellEditor(new MyDownloadedCellEditor(Episodes.EPISODERECORD_COLUMN));
     tableEpisodes.getColumn(Episodes.SUBS_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MySubtitleCellEditor(Episodes.EPISODERECORD_COLUMN));
@@ -396,9 +395,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
     //FILTERS TABLE
     tableFilters.getModel().addTableModelListener(this);
-    tableFilters.getTableHeader().setReorderingAllowed(false);
     tableFilters.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    tableFilters.getTableHeader().setCursor(Cursor.getDefaultCursor());
     tableFilters.getColumn(Filters.EPISODERECORD_COLUMN_TITLE).setCellRenderer(new MyTitleCellRenderer(true));
     tableFilters.getColumn(Filters.SUBS_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MySubtitleCellEditor(Filters.EPISODERECORD_COLUMN));
     tableFilters.getColumn(Filters.SUBS_COLUMN_TITLE).setCellRenderer(new MySubtitlesCellRenderer(Filters.EPISODERECORD_COLUMN));
@@ -415,8 +412,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
     //SERIES TABLE
     tableSeries.getModel().addTableModelListener(this);
-    tableSeries.getTableHeader().setReorderingAllowed(false);
-    tableSeries.getTableHeader().setCursor(Cursor.getDefaultCursor());
     tableSeries.getColumn(Series.HIDDEN_COLUMN_TITLE).setCellRenderer(new MySeriesBooleanCellRenderer());
     tableSeries.getColumn(Series.UPDATE_COLUMN_TITLE).setCellRenderer(new MySeriesBooleanCellRenderer());
     tableSeries.setRowHeight(fontHeight + CELL_MARGIN);
@@ -482,23 +477,23 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     tableFilters = new javax.swing.JTable();
     panel_filters = new javax.swing.JPanel();
     combobox_filters = new javax.swing.JComboBox();
-    button_saveFilter = new javax.swing.JButton();
-    button_deleteFilter = new javax.swing.JButton();
     comboBox_filterSubtitles = new javax.swing.JComboBox();
     combobox_downloaded = new javax.swing.JComboBox();
     comboBox_seen = new javax.swing.JComboBox();
+    bt_save = new myComponents.myGUI.buttons.MyButtonSave();
+    bt_delete = new myComponents.myGUI.buttons.MyButtonCancel();
     tabpanel_statistics = new javax.swing.JPanel();
     statSeries = new myseries.statistics.StatSeries();
     statEpisodes = new myseries.statistics.StatEpisodes();
     tabpanel_schedule = new javax.swing.JPanel();
-    scheduler = new com.googlecode.scheduler.Scheduler(Options._USER_DIR_ +Database.PATH + DBConnection.db);
+    scheduler = new myseries.schedule.Schedule();
     tabpanel_feeds = new javax.swing.JPanel();
     feedSplitPanel = new javax.swing.JSplitPane();
     leftFeedPanel = new javax.swing.JPanel();
     feedTree = new tools.feeds.FeedTree();
-    lb_rssUpdating = new javax.swing.JLabel();
     bt_rssAdd = new myComponents.myGUI.buttons.MyDefaultButton(MyAbstractButton.RSS_ADD,"Add a new rss feed");
     bt_rssUpdate = new myComponents.myGUI.buttons.MyDefaultButton(MyAbstractButton.RSS_REFRESH,"Refresh all rss feeds");
+    pr_rssUpdating = new javax.swing.JProgressBar();
     feedPreviewPanel = new tools.feeds.FeedPreviewPanel();
     myToolbar = new myComponents.myToolbar.Toolbar(this, visibleButtons);
     menuBar = new javax.swing.JMenuBar();
@@ -754,12 +749,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
       }
     });
 
-    splitPane_main.setBackground(Skin.getSkinColor());
     splitPane_main.setDividerLocation(200);
 
     panel_Series.setMaximumSize(new java.awt.Dimension(216, 32767));
     panel_Series.setMinimumSize(new java.awt.Dimension(200, 600));
-    panel_Series.setOpaque(false);
     panel_Series.setPreferredSize(new java.awt.Dimension(216, 584));
     panel_Series.addComponentListener(new java.awt.event.ComponentAdapter() {
       public void componentResized(java.awt.event.ComponentEvent evt) {
@@ -769,10 +762,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
     scrollPane_series.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
     scrollPane_series.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-    scrollPane_series.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
     scrollPane_series.setMaximumSize(new java.awt.Dimension(30000, 30000));
     scrollPane_series.setMinimumSize(new java.awt.Dimension(200, 400));
-    scrollPane_series.setOpaque(false);
     scrollPane_series.setPreferredSize(new java.awt.Dimension(200, 400));
     scrollPane_series.addMouseListener(new java.awt.event.MouseAdapter() {
       public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -782,8 +773,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
     tableSeries.setModel(tableModel_series);
     tableSeries.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
-    tableSeries.setSelectionBackground(tableSeries.getSelectionBackground());
-    tableSeries.setSelectionForeground(tableSeries.getSelectionForeground());
+    tableSeries.getTableHeader().setReorderingAllowed(false);
     tableSeries.addMouseListener(new java.awt.event.MouseAdapter() {
       public void mouseClicked(java.awt.event.MouseEvent evt) {
         tableSeriesMouseClicked(evt);
@@ -825,13 +815,12 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
     panel_episodes.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
     panel_episodes.setMaximumSize(new java.awt.Dimension(35000, 30000));
-    panel_episodes.setOpaque(false);
     panel_episodes.setPreferredSize(new java.awt.Dimension(812, 584));
 
     tabsPanel.setToolTipText("");
     tabsPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
     tabsPanel.setMinimumSize(new java.awt.Dimension(120, 460));
-    tabsPanel.setPaintGhost(true);
+    tabsPanel.setPaintGhost(false);
     tabsPanel.setPreferredSize(new java.awt.Dimension(400, 463));
     tabsPanel.addChangeListener(new javax.swing.event.ChangeListener() {
       public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -856,9 +845,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     tableEpisodes.setAutoCreateRowSorter(true);
     tableEpisodes.setModel(tableModel_episodes);
     tableEpisodes.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
-    tableEpisodes.setRowHeight(24);
-    tableEpisodes.setSelectionBackground(tableSeries.getSelectionBackground());
-    tableEpisodes.setSelectionForeground(tableSeries.getSelectionForeground());
+    tableEpisodes.getTableHeader().setReorderingAllowed(false);
     tableEpisodes.addMouseListener(new java.awt.event.MouseAdapter() {
       public void mouseReleased(java.awt.event.MouseEvent evt) {
         tableEpisodesMouseReleased(evt);
@@ -887,14 +874,13 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
           .addContainerGap()))
     );
 
-    tabsPanel.addTab("                          ", new javax.swing.ImageIcon(getClass().getResource("/images/series.png")), tabpanel_episodesList, ""); // NOI18N
+    tabsPanel.addTab("                          ", new javax.swing.ImageIcon(getClass().getResource("/images/series.png")), tabpanel_episodesList, "List of Episodes"); // NOI18N
 
     tabpanel_FilteredSeries.setToolTipText("Filter series episodes");
     tabpanel_FilteredSeries.setName(String.valueOf(MySeries.TAB_FILTERS_ID));
     tabpanel_FilteredSeries.setOpaque(false);
     tabpanel_FilteredSeries.setPreferredSize(new java.awt.Dimension(460, 464));
 
-    panel_allSeriesEpisodes.setBackground(new java.awt.Color(255, 255, 255));
     panel_allSeriesEpisodes.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
     panel_allSeriesEpisodes.setEnabled(false);
     panel_allSeriesEpisodes.setOpaque(false);
@@ -902,8 +888,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     tableFilters.setAutoCreateRowSorter(true);
     tableFilters.setModel(tableModel_filterSeries);
     tableFilters.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
-    tableFilters.setSelectionBackground(tableSeries.getSelectionBackground());
-    tableFilters.setSelectionForeground(tableSeries.getSelectionForeground());
+    tableFilters.getTableHeader().setReorderingAllowed(false);
     tableFilters.addMouseListener(new java.awt.event.MouseAdapter() {
       public void mouseReleased(java.awt.event.MouseEvent evt) {
         tableFiltersMouseReleased(evt);
@@ -911,30 +896,13 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     });
     panel_allSeriesEpisodes.setViewportView(tableFilters);
 
-    panel_filters.setBackground(new java.awt.Color(255, 255, 255));
-    panel_filters.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+    panel_filters.setOpaque(false);
 
     combobox_filters.setEditable(true);
     combobox_filters.setModel(comboBoxModel_filters);
     combobox_filters.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         combobox_filtersActionPerformed(evt);
-      }
-    });
-
-    button_saveFilter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/save.png"))); // NOI18N
-    button_saveFilter.setToolTipText("Save Filter");
-    button_saveFilter.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        button_saveFilterActionPerformed(evt);
-      }
-    });
-
-    button_deleteFilter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
-    button_deleteFilter.setToolTipText("Delete filter");
-    button_deleteFilter.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        button_deleteFilterActionPerformed(evt);
       }
     });
 
@@ -959,6 +927,21 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
       }
     });
 
+    bt_save.setText("");
+    bt_save.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        bt_saveActionPerformed(evt);
+      }
+    });
+
+    bt_delete.setText("");
+    bt_delete.setToolTipText("Delete");
+    bt_delete.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        bt_deleteActionPerformed(evt);
+      }
+    });
+
     javax.swing.GroupLayout panel_filtersLayout = new javax.swing.GroupLayout(panel_filters);
     panel_filters.setLayout(panel_filtersLayout);
     panel_filtersLayout.setHorizontalGroup(
@@ -971,26 +954,22 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(comboBox_filterSubtitles, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(combobox_filters, 0, 333, Short.MAX_VALUE)
+        .addComponent(combobox_filters, 0, 369, Short.MAX_VALUE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(button_saveFilter)
+        .addComponent(bt_save, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(button_deleteFilter)
+        .addComponent(bt_delete, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addContainerGap())
     );
     panel_filtersLayout.setVerticalGroup(
       panel_filtersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(panel_filtersLayout.createSequentialGroup()
-        .addGap(7, 7, 7)
-        .addGroup(panel_filtersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(panel_filtersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-            .addComponent(combobox_downloaded, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(comboBox_seen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(comboBox_filterSubtitles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-          .addComponent(button_deleteFilter)
-          .addComponent(button_saveFilter)
-          .addComponent(combobox_filters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+      .addGroup(panel_filtersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+        .addComponent(combobox_downloaded, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(comboBox_seen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(comboBox_filterSubtitles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(combobox_filters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(bt_save, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(bt_delete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
     );
 
     javax.swing.GroupLayout tabpanel_FilteredSeriesLayout = new javax.swing.GroupLayout(tabpanel_FilteredSeries);
@@ -1008,8 +987,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
       tabpanel_FilteredSeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(tabpanel_FilteredSeriesLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(panel_filters, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addComponent(panel_filters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(17, 17, 17)
         .addComponent(panel_allSeriesEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
         .addGap(21, 21, 21))
     );
@@ -1044,8 +1023,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     tabpanel_schedule.setName(String.valueOf(MySeries.TAB_SCHEDULE_ID));
     tabpanel_schedule.setOpaque(false);
     tabpanel_schedule.setLayout(new javax.swing.BoxLayout(tabpanel_schedule, javax.swing.BoxLayout.LINE_AXIS));
-
-    scheduler.setMaximumSize(new java.awt.Dimension(1000, 800));
     tabpanel_schedule.add(scheduler);
 
     tabsPanel.addTab("Schedule", new javax.swing.ImageIcon(getClass().getResource("/images/today.png")), tabpanel_schedule, "Schedule"); // NOI18N
@@ -1059,8 +1036,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     leftFeedPanel.setOpaque(false);
 
     feedTree.setBorder(javax.swing.BorderFactory.createLineBorder(Skin.getSkinColor()));
-
-    lb_rssUpdating.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/rss_loading.gif"))); // NOI18N
 
     bt_rssAdd.setText("");
     bt_rssAdd.setToolTipText("");
@@ -1078,6 +1053,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
       }
     });
 
+    pr_rssUpdating.setIndeterminate(true);
+    pr_rssUpdating.setString("Feeds Updating");
+    pr_rssUpdating.setStringPainted(true);
+
     javax.swing.GroupLayout leftFeedPanelLayout = new javax.swing.GroupLayout(leftFeedPanel);
     leftFeedPanel.setLayout(leftFeedPanelLayout);
     leftFeedPanelLayout.setHorizontalGroup(
@@ -1091,28 +1070,22 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
             .addComponent(bt_rssAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(3, 3, 3)
             .addComponent(bt_rssUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(lb_rssUpdating)))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(pr_rssUpdating, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)))
         .addContainerGap())
     );
     leftFeedPanelLayout.setVerticalGroup(
       leftFeedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(leftFeedPanelLayout.createSequentialGroup()
-        .addGroup(leftFeedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(leftFeedPanelLayout.createSequentialGroup()
-            .addContainerGap()
-            .addGroup(leftFeedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(bt_rssUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(bt_rssAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-          .addGroup(leftFeedPanelLayout.createSequentialGroup()
-            .addGap(22, 22, 22)
-            .addComponent(lb_rssUpdating)))
+        .addContainerGap()
+        .addGroup(leftFeedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+          .addComponent(bt_rssAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(bt_rssUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(pr_rssUpdating, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(feedTree, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
         .addContainerGap())
     );
-
-    lb_rssUpdating.setVisible(false);
 
     feedSplitPanel.setLeftComponent(leftFeedPanel);
 
@@ -1585,14 +1558,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     ApplicationActions.about(this);
   }//GEN-LAST:event_menuItem_AboutActionPerformed
 
-  private void button_saveFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_saveFilterActionPerformed
-    FiltersActions.saveFilter(this);
-}//GEN-LAST:event_button_saveFilterActionPerformed
-
-  private void button_deleteFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_deleteFilterActionPerformed
-    FiltersActions.deleteFilter(this);
-}//GEN-LAST:event_button_deleteFilterActionPerformed
-
   private void combobox_filtersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combobox_filtersActionPerformed
     FiltersActions.applyFilter(this);
   }//GEN-LAST:event_combobox_filtersActionPerformed
@@ -1815,16 +1780,25 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
   private void bt_rssAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_rssAddActionPerformed
     boolean isFeedSaved = FeedsActions.addFeedPanel(0);
 }//GEN-LAST:event_bt_rssAddActionPerformed
+
+  private void bt_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_saveActionPerformed
+     FiltersActions.saveFilter(this);
+  }//GEN-LAST:event_bt_saveActionPerformed
+
+  private void bt_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_deleteActionPerformed
+     FiltersActions.deleteFilter(this);
+  }//GEN-LAST:event_bt_deleteActionPerformed
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
   public static javax.swing.JMenuItem PopUpItem_AddEpisode;
   public static javax.swing.JMenuItem PopUpItem_AddEpisodeInEpisodes;
   public static javax.swing.JMenuItem PopUpItem_AddSeries;
   public static javax.swing.JMenuItem PopUpItem_DeleteSerial;
   public static javax.swing.JMenuItem PopUpItem_EditSerial;
+  public static myComponents.myGUI.buttons.MyButtonCancel bt_delete;
   public static myComponents.myGUI.buttons.MyDefaultButton bt_rssAdd;
   public static myComponents.myGUI.buttons.MyDefaultButton bt_rssUpdate;
-  public static javax.swing.JButton button_deleteFilter;
-  public static javax.swing.JButton button_saveFilter;
+  public static myComponents.myGUI.buttons.MyButtonSave bt_save;
   public static javax.swing.JComboBox comboBox_filterSubtitles;
   public static javax.swing.JComboBox comboBox_seen;
   public static javax.swing.JComboBox combobox_downloaded;
@@ -1840,7 +1814,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
   public static javax.swing.JSeparator jSeparator1;
   public static javax.swing.JSeparator jSeparator2;
   public static javax.swing.JSeparator jSeparator3;
-  public static javax.swing.JLabel lb_rssUpdating;
   public static javax.swing.JPanel leftFeedPanel;
   public static javax.swing.JMenuBar menuBar;
   public static javax.swing.JMenuItem menuItem_About;
@@ -1894,7 +1867,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
   public static javax.swing.JMenu popUpMenu_downloadSubtitles;
   public static javax.swing.JMenu popUpMenu_downloadTorrent;
   public static javax.swing.JMenu popUpMenu_internetUpdate;
-  public static com.googlecode.scheduler.Scheduler scheduler;
+  public static javax.swing.JProgressBar pr_rssUpdating;
+  public static myseries.schedule.Schedule scheduler;
   public static javax.swing.JScrollPane scrollPane_series;
   public static javax.swing.JPopupMenu seriesPopUp;
   public static javax.swing.JSplitPane splitPane_main;

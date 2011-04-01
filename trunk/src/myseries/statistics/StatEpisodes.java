@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import myComponents.MyUsefulFunctions;
 import myComponents.myTableCellRenderers.MyDecimalFormatRenderer;
+import tools.Skin;
 
 /**
  *
@@ -33,6 +34,7 @@ public class StatEpisodes extends javax.swing.JPanel {
     jScrollPane1.getViewport().setOpaque(false);
     model = (DefaultTableModel) table_stat_episodes.getModel();
     table_stat_episodes.getColumnModel().getColumn(2).setCellRenderer(new MyDecimalFormatRenderer());
+    table_stat_episodes.getTableHeader().setReorderingAllowed(false);
     setVisible(true);
   }
 
@@ -81,6 +83,7 @@ public class StatEpisodes extends javax.swing.JPanel {
     jScrollPane1.setViewportView(table_stat_episodes);
 
     jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getStyle() | java.awt.Font.BOLD, jLabel1.getFont().getSize()+2));
+    jLabel1.setForeground(Skin.getTitleColor());
     jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     jLabel1.setText("Episodes Ratings");
 

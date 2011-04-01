@@ -99,24 +99,33 @@ public class HelpWindow extends MyDraggable {
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
 
+    jPanel1 = new javax.swing.JPanel();
     main_panel = new javax.swing.JPanel();
-    label_title = new javax.swing.JLabel();
     inner_panel = new javax.swing.JScrollPane();
     content = new javax.swing.JEditorPane();
     myButton1 = new myComponents.myGUI.buttons.MyButtonCancel();
+    label_title = new javax.swing.JLabel();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
-    main_panel.setBackground(Skin.getOuterColor());
-    main_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+    jPanel1.setBackground(Skin.getOuterColor());
+    jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-    label_title.setFont(label_title.getFont().deriveFont(label_title.getFont().getStyle() | java.awt.Font.BOLD, label_title.getFont().getSize()+2));
-    label_title.setForeground(Skin.getTitleColor());
-    label_title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-    label_title.setText("jLabel1");
+    main_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
     inner_panel.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
     inner_panel.setViewportView(content);
+
+    javax.swing.GroupLayout main_panelLayout = new javax.swing.GroupLayout(main_panel);
+    main_panel.setLayout(main_panelLayout);
+    main_panelLayout.setHorizontalGroup(
+      main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addComponent(inner_panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 828, Short.MAX_VALUE)
+    );
+    main_panelLayout.setVerticalGroup(
+      main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addComponent(inner_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+    );
 
     myButton1.setText("");
     myButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -125,29 +134,34 @@ public class HelpWindow extends MyDraggable {
       }
     });
 
-    javax.swing.GroupLayout main_panelLayout = new javax.swing.GroupLayout(main_panel);
-    main_panel.setLayout(main_panelLayout);
-    main_panelLayout.setHorizontalGroup(
-      main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(main_panelLayout.createSequentialGroup()
+    label_title.setFont(label_title.getFont().deriveFont(label_title.getFont().getStyle() | java.awt.Font.BOLD, label_title.getFont().getSize()+2));
+    label_title.setForeground(Skin.getTitleColor());
+    label_title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+    label_title.setText("jLabel1");
+
+    javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+    jPanel1.setLayout(jPanel1Layout);
+    jPanel1Layout.setHorizontalGroup(
+      jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(jPanel1Layout.createSequentialGroup()
         .addContainerGap()
-        .addGroup(main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(main_panelLayout.createSequentialGroup()
-            .addComponent(inner_panel)
+        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(jPanel1Layout.createSequentialGroup()
+            .addComponent(main_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGap(10, 10, 10))
-          .addGroup(main_panelLayout.createSequentialGroup()
-            .addComponent(label_title, javax.swing.GroupLayout.PREFERRED_SIZE, 760, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-            .addComponent(myButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+          .addComponent(myButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addGroup(jPanel1Layout.createSequentialGroup()
+            .addComponent(label_title, javax.swing.GroupLayout.PREFERRED_SIZE, 797, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap())))
     );
-    main_panelLayout.setVerticalGroup(
-      main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(main_panelLayout.createSequentialGroup()
-        .addGroup(main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-          .addComponent(label_title)
-          .addComponent(myButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+    jPanel1Layout.setVerticalGroup(
+      jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(jPanel1Layout.createSequentialGroup()
+        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+          .addComponent(myButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(label_title))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(inner_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
+        .addComponent(main_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         .addContainerGap())
     );
 
@@ -155,11 +169,11 @@ public class HelpWindow extends MyDraggable {
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(main_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+      .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(main_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+      .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
     );
 
     pack();
@@ -172,6 +186,7 @@ public class HelpWindow extends MyDraggable {
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JEditorPane content;
   private javax.swing.JScrollPane inner_panel;
+  private javax.swing.JPanel jPanel1;
   private javax.swing.JLabel label_title;
   private javax.swing.JPanel main_panel;
   private myComponents.myGUI.buttons.MyButtonCancel myButton1;

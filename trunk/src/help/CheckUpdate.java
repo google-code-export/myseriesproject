@@ -160,7 +160,6 @@ public class CheckUpdate extends MyDraggable {
     main_panel.setBackground(Skin.getOuterColor());
     main_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-    inner_panel.setBackground(Skin.getInnerColor());
     inner_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
     inner_panel.setPreferredSize(new java.awt.Dimension(300, 196));
 

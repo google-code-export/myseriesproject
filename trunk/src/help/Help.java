@@ -74,7 +74,6 @@ setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"
       }
     });
 
-    panel_help.setBackground(Skin.getOuterColor());
     panel_help.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
     panel_help.setOpaque(false);
     panel_help.setPreferredSize(new java.awt.Dimension(800, 546));
@@ -218,7 +217,6 @@ setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"
     splitPanel.setLeftComponent(jScrollPane1);
 
     jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getStyle() | java.awt.Font.BOLD, jLabel1.getFont().getSize()+2));
-    jLabel1.setForeground(Skin.getTitleColor());
     jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     jLabel1.setText("MySerieS Help");
 

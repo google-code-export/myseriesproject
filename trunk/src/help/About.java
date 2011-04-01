@@ -108,7 +108,6 @@ public class About extends MyDraggable {
       }
     });
 
-    inner_panel.setBackground(Skin.getInnerColor());
     inner_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
     jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo.png"))); // NOI18N
@@ -133,6 +132,7 @@ public class About extends MyDraggable {
     textArea_contact.setRows(5);
     textArea_contact.setText("For any comments or suggestions\nmail me at lordovol@hotmail.com");
     textArea_contact.setBorder(null);
+    textArea_contact.setOpaque(false);
     textArea_contact.addMouseListener(new java.awt.event.MouseAdapter() {
       public void mouseEntered(java.awt.event.MouseEvent evt) {
         textArea_contactMouseEntered(evt);
@@ -163,9 +163,6 @@ public class About extends MyDraggable {
         .addContainerGap()
         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(jPanel2Layout.createSequentialGroup()
-            .addGap(17, 17, 17)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE))
-          .addGroup(jPanel2Layout.createSequentialGroup()
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
               .addComponent(jLabel4)
               .addComponent(jLabel2)
@@ -174,7 +171,8 @@ public class About extends MyDraggable {
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
               .addComponent(label_version, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
               .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE))
-            .addContainerGap())))
+            .addContainerGap())
+          .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)))
     );
     jPanel2Layout.setVerticalGroup(
       jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

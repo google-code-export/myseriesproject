@@ -40,17 +40,17 @@ public class FeedTreeCellRenderer extends DefaultTreeCellRenderer implements Tre
   @Override
   public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
     super.getTreeCellRendererComponent(tree, value, selected, expanded, leaf, row, hasFocus);
-    if (selected) {
-      setForeground(Color.BLACK);
-      setBackground(Skin.getSkinColor());
-      setOpaque(true);
-      setBorder(BorderFactory.createLineBorder(Skin.getColor_5(), 1));
-    } else {
-      setForeground(Color.BLACK);
-      setBackground(Color.WHITE);
-      setOpaque(false);
-      setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
-    }
+//    if (selected) {
+//      setForeground(Color.BLACK);
+//      setBackground(Skin.getSkinColor());
+//      setOpaque(true);
+//      setBorder(BorderFactory.createLineBorder(Skin.getColor_5(), 1));
+//    } else {
+//      setForeground(Color.BLACK);
+//      setBackground(Color.WHITE);
+//      setOpaque(false);
+//      setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
+//    }
 
     //setPreferredSize(new Dimension(tree.getWidth()-20, 16));
     return this;

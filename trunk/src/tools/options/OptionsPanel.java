@@ -259,7 +259,6 @@ public class OptionsPanel extends MyDraggable {
     jPanel1.setBackground(Skin.getOuterColor());
     jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-    panel_options.setBackground(Skin.getInnerColor());
     panel_options.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
     button_BGColor.setBackground(Options.toColor(Options.SKIN_COLOR));

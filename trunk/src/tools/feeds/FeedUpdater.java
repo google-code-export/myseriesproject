@@ -46,7 +46,7 @@ public class FeedUpdater implements Runnable {
     //myseries.MySeries.glassPane.activate(null);
     int id = -1;
     updating = true;
-    myseries.MySeries.lb_rssUpdating.setVisible(true);
+    myseries.MySeries.pr_rssUpdating.setVisible(true);
     for (Iterator<FeedsRecord> it = feeds.iterator(); it.hasNext();) {
       FeedsRecord feedRecord = it.next();
       id = feedRecord.getFeed_ID();
@@ -57,7 +57,7 @@ public class FeedUpdater implements Runnable {
       }
     }
     updating = false;
-    myseries.MySeries.lb_rssUpdating.setVisible(false);
+    myseries.MySeries.pr_rssUpdating.setVisible(false);
     //myseries.MySeries.glassPane.deactivate();
     
     int[] sel = myseries.MySeries.feedTree.tree.getSelectionRows();
