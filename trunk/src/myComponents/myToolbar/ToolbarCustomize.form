@@ -76,9 +76,9 @@
               <Group type="102" attributes="0">
                   <Component id="bt_cancel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                  <Component id="panelUsed" pref="89" max="32767" attributes="0"/>
+                  <Component id="panelUsed" pref="113" max="32767" attributes="0"/>
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                  <Component id="panelUnused" pref="89" max="32767" attributes="0"/>
+                  <Component id="panelUnused" pref="113" max="32767" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="2" attributes="0">
                       <Component id="bt_ok" alignment="2" min="-2" max="-2" attributes="0"/>

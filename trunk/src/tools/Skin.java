@@ -20,7 +20,7 @@ import tools.options.Options;
 public class Skin {
 
   private static final long limit = -4289918;
-  private static Color skinColor;
+  private static Color skinColor = new Color(240, 240, 240);;
   private static Color color_1;
   private static Color color_2;
   private static Color color_4;
@@ -97,28 +97,28 @@ public class Skin {
    * @return the brighter
    */
   public static Color getColor_2() {
-    return skinColor.brighter();
+    return Options.toBoolean(Options.USE_SKIN) ? skinColor.brighter():null;
   }
 
   /**
    * @return the brightest
    */
   public static Color getColor_1() {
-    return skinColor.brighter().brighter();
+    return Options.toBoolean(Options.USE_SKIN) ? skinColor.brighter().brighter():null;
   }
 
   /**
    * @return the darker
    */
   public static Color getColor_4() {
-    return skinColor.darker();
+    return Options.toBoolean(Options.USE_SKIN) ? skinColor.darker():null;
   }
 
   /**
    * @return the darkest
    */
   public static Color getColor_5() {
-    return skinColor.darker().darker();
+    return Options.toBoolean(Options.USE_SKIN) ? skinColor.darker().darker():null;
   }
 
   /**
@@ -147,26 +147,29 @@ public class Skin {
   }
 
   public static Color getButtonForegroundColor() {
-    return getForeGroundColor(Color.white);
+    return Options.toBoolean(Options.USE_SKIN) ? getForeGroundColor(Color.white):null;
   }
 
   public static Color getSpinnerForegroundColor() {
-    return getForeGroundColor(Color.white);
+    return Options.toBoolean(Options.USE_SKIN) ? getForeGroundColor(Color.white):null;
   }
 
   public static Color getOuterColor() {
-    return getColor_5();
+    return Options.toBoolean(Options.USE_SKIN) ? getColor_5():Color.GRAY;
   }
 
   public static Color getInnerColor() {
-    return getColor_1();
+    return Options.toBoolean(Options.USE_SKIN) ? getColor_1():null;
   }
 
   public static Color getTitleColor() {
-    return getColor_1();
+    return Options.toBoolean(Options.USE_SKIN) ? getColor_1() : Color.WHITE;
   }
 
-  private static Color getForeGroundColor(Color color) {
+  public static Color getForeGroundColor(Color color) {
+     if(!Options.toBoolean(Options.USE_SKIN)){
+         return null;
+     }
     float[] hsbVals = new float[3];
     Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), hsbVals);
     brightness = hsbVals[2];
