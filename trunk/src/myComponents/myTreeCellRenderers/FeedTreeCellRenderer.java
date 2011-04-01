@@ -24,7 +24,7 @@ public class FeedTreeCellRenderer extends DefaultTreeCellRenderer implements Tre
   private static final long serialVersionUID = 534646765786987L;
 
   public FeedTreeCellRenderer() {
-    setOpaque(true);
+   // setOpaque(true);
     setLeafIcon(new ImageIcon(getClass().getResource("/images/rss.png")));
     setClosedIcon(new ImageIcon(getClass().getResource("/images/rss_closed.png")));
     setOpenIcon(new ImageIcon(getClass().getResource("/images/rss_opened.png")));
