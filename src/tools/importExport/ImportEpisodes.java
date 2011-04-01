@@ -116,7 +116,6 @@ public class ImportEpisodes extends MyDraggable {
     jPanel1.setBackground(Skin.getOuterColor());
     jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-    panel_newSeries.setBackground(Skin.getInnerColor());
     panel_newSeries.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
     panel_newSeries.setMaximumSize(new java.awt.Dimension(334, 74));
     panel_newSeries.setPreferredSize(new java.awt.Dimension(334, 74));
@@ -263,10 +262,10 @@ public class ImportEpisodes extends MyDraggable {
     jPanel1Layout.setHorizontalGroup(
       jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(jPanel1Layout.createSequentialGroup()
-        .addContainerGap()
+        .addContainerGap(83, Short.MAX_VALUE)
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
           .addGroup(jPanel1Layout.createSequentialGroup()
-            .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, 402, Short.MAX_VALUE)
+            .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(bt_help, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

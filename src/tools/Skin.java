@@ -35,7 +35,6 @@ public class Skin {
    */
   public Skin() {
     skinColor = new Color(240, 240, 240);
-    //skinColor = null;
     brightness = getBrightness();
     skinColor = fixColor(skinColor);
 
@@ -98,28 +97,28 @@ public class Skin {
    * @return the brighter
    */
   public static Color getColor_2() {
-    return !Options.toBoolean(Options.USE_SKIN) ? skinColor.brighter() : skinColor.brighter();
+    return skinColor.brighter();
   }
 
   /**
    * @return the brightest
    */
   public static Color getColor_1() {
-    return !Options.toBoolean(Options.USE_SKIN) ? skinColor.brighter().brighter() : skinColor.brighter().brighter();
+    return skinColor.brighter().brighter();
   }
 
   /**
    * @return the darker
    */
   public static Color getColor_4() {
-    return !Options.toBoolean(Options.USE_SKIN) ? skinColor.darker() : skinColor.darker();
+    return skinColor.darker();
   }
 
   /**
    * @return the darkest
    */
   public static Color getColor_5() {
-    return !Options.toBoolean(Options.USE_SKIN) ? skinColor.darker().darker() : skinColor.darker().darker();
+    return skinColor.darker().darker();
   }
 
   /**
@@ -144,7 +143,7 @@ public class Skin {
   }
 
   public static Color getSkinColor() {
-    return !Options.toBoolean(Options.USE_SKIN) ? skinColor : skinColor;
+    return skinColor;
   }
 
   public static Color getButtonForegroundColor() {
@@ -156,15 +155,15 @@ public class Skin {
   }
 
   public static Color getOuterColor() {
-    return !Options.toBoolean(Options.USE_SKIN) ? getColor_5() : getColor_5();
+    return getColor_5();
   }
 
   public static Color getInnerColor() {
-    return !Options.toBoolean(Options.USE_SKIN) ? Color.WHITE : getColor_1();
+    return getColor_1();
   }
 
   public static Color getTitleColor() {
-    return !Options.toBoolean(Options.USE_SKIN) ? Color.BLACK : getColor_1();
+    return getColor_1();
   }
 
   private static Color getForeGroundColor(Color color) {
@@ -495,34 +494,35 @@ public class Skin {
     /**
      * Tabbed Panel
      */
-    UIManager.put("TabbedPane.background", Skin.getColor_4());
+    UIManager.put("TabbedPane.background", getColor_5()); // The unselected tabs tab bg
+    UIManager.put("TabbedPane.foreground", getForeGroundColor(getColor_5()));// The unselected tabs tab fg
+    UIManager.put("TabbedPane.selected", getColor_4()); // The selected tabs tab bg
+    UIManager.put("TabbedPane.tabAreaBackground", getSkinColor()); // The bg of the tab area
+    UIManager.put("TabbedPane.contentAreaColor", Skin.getColor_4()); // The visible tab main panel color
+    UIManager.put("TabbedPane.light", getSkinColor()); // Tabs tab border
+    UIManager.put("TabbedPane.highlight", Skin.getColor_2());
+    UIManager.put("TabbedPane.selectHighlight", Skin.getColor_1()); // The selected tabs tab border
     UIManager.put("TabbedPane.borderHightlightColor", Skin.getColor_1());
-    UIManager.put("TabbedPane.contentAreaColor", Skin.getColor_4());
     UIManager.put("TabbedPane.darkShadow", Skin.getColor_5());
     UIManager.put("TabbedPane.focus", Skin.getColor_2());
-    UIManager.put("TabbedPane.foreground", getForeGroundColor(getColor_4()));
-    UIManager.put("TabbedPane.highlight", Skin.getColor_1());
-    UIManager.put("TabbedPane.light", Skin.getColor_2());
-    UIManager.put("TabbedPane.selected", Skin.getColor_4());
-    UIManager.put("TabbedPane.selectHighlight", Skin.getColor_2());
     UIManager.put("TabbedPane.shadow", Skin.getColor_4());
-    UIManager.put("TabbedPane.tabAreaBackground", Skin.getColor_1());
     UIManager.put("TabbedPane.unselectedBackground", Skin.getColor_5());
 
     /**
      * Table
      */
     UIManager.put("Table.background", Skin.getColor_1());
+    UIManager.put("Table.foreground", getForeGroundColor(getColor_1()));
+    UIManager.put("Table.selectionBackground", Skin.getColor_4());
+    UIManager.put("Table.selectionForeground", getForeGroundColor(getColor_4()));
+    UIManager.put("Table.gridColor", Skin.getColor_5());
+    UIManager.put("Table.sortIconColor", Skin.getColor_1());
     UIManager.put("Table.dropCellBackground", Skin.getColor_2());
     UIManager.put("Table.dropLineColor", Skin.getColor_4());
     UIManager.put("Table.dropLineShortColor", Skin.getColor_4());
     UIManager.put("Table.focusCellBackground", Skin.getColor_4());
     UIManager.put("Table.focusCellForeground", getForeGroundColor(getColor_4()));
-    UIManager.put("Table.foreground", getForeGroundColor(getColor_1()));
-    UIManager.put("Table.gridColor", Skin.getColor_5());
-    UIManager.put("Table.selectionBackground", Skin.getColor_4());
-    UIManager.put("Table.selectionForeground", getForeGroundColor(getColor_4()));
-    UIManager.put("Table.sortIconColor", Skin.getColor_1());
+ 
 
     /**
      * Table header

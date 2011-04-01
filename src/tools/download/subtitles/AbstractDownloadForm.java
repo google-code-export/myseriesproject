@@ -56,7 +56,6 @@ public abstract class AbstractDownloadForm extends MyDraggable {
     jPanel1.setBackground(Skin.getOuterColor());
     jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-    innerPanel.setBackground(Skin.getInnerColor());
     innerPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
     progress.setStringPainted(true);
@@ -109,10 +108,10 @@ public abstract class AbstractDownloadForm extends MyDraggable {
           .addGroup(jPanel1Layout.createSequentialGroup()
             .addComponent(innerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addContainerGap())
-          .addGroup(jPanel1Layout.createSequentialGroup()
-            .addComponent(label_title, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
-            .addGap(60, 60, 60))
-          .addComponent(myButtonCancel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+          .addComponent(myButtonCancel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addComponent(label_title, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(34, 34, 34))))
     );
     jPanel1Layout.setVerticalGroup(
       jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

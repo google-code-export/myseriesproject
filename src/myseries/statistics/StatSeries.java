@@ -22,6 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import myComponents.myTableCellRenderers.MyDecimalFormatRenderer;
+import tools.Skin;
 import tools.options.Options;
 
 /**
@@ -43,6 +44,7 @@ public class StatSeries extends javax.swing.JPanel  {
     jScrollPane1.getViewport().setOpaque(false);
     model = (DefaultTableModel) table_stat_series.getModel();
     table_stat_series.getColumnModel().getColumn(RATE_COLUMN).setCellRenderer(new MyDecimalFormatRenderer());
+    table_stat_series.getTableHeader().setReorderingAllowed(false);
     validate();
     setVisible(true);
   }
@@ -94,11 +96,14 @@ public class StatSeries extends javax.swing.JPanel  {
     jScrollPane1.setViewportView(table_stat_series);
 
     jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getStyle() | java.awt.Font.BOLD, jLabel1.getFont().getSize()+2));
+    jLabel1.setForeground(Skin.getTitleColor());
     jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     jLabel1.setText("Series Ratings");
 
+    jLabel2.setForeground(Skin.getTitleColor());
     jLabel2.setText("Mouse over rate to see a list of the series episodes rates");
 
+    cb_unified.setForeground(Skin.getTitleColor());
     cb_unified.setText("Unified series");
     cb_unified.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
     cb_unified.setOpaque(false);

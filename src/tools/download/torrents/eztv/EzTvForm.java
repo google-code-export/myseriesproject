@@ -117,7 +117,6 @@ public class EzTvForm extends AbstractTorrentForm {
     jPanel2.setBackground(Skin.getOuterColor());
     jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-    jPanel1.setBackground(Skin.getInnerColor());
     jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
     jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -257,8 +256,8 @@ public class EzTvForm extends AbstractTorrentForm {
           .addGroup(jPanel2Layout.createSequentialGroup()
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addContainerGap())
-          .addGroup(jPanel2Layout.createSequentialGroup()
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
+          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(bt_help, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

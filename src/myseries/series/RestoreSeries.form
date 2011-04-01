@@ -55,15 +55,13 @@
                           <Component id="scroll" pref="434" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
-                      <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                          <Component id="myButtonOk1" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="title" min="-2" pref="366" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="myButtonHelp1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
-                              <Component id="myButtonCancel1" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                      <Component id="myButtonOk1" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="title" min="-2" pref="311" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="myButtonHelp1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                          <Component id="myButtonCancel1" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>

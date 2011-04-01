@@ -17,6 +17,7 @@ import javax.swing.JDialog;
 import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyDraggable;
 import myseries.MySeries;
+import tools.Skin;
 import tools.options.Options;
 
 /**
@@ -64,6 +65,7 @@ public class ToolbarCustomize extends JDialog {
 
     panelUsed.setBorder(javax.swing.BorderFactory.createTitledBorder("Used Buttons"));
     panelUsed.setMaximumSize(new java.awt.Dimension(800, 32767));
+    panelUsed.setOpaque(false);
     addUsedButtons();
     panelUsed.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEADING, 2, 2));
 
