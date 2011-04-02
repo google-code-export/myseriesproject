@@ -63,8 +63,6 @@ public class DatabaseActions {
     }
 
     public static void saveDatase() {
-        MySeries.glassPane.activate(null);
         new SaveDatabase();
-        MySeries.glassPane.deactivate();
     }
 }
