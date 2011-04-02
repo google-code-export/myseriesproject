@@ -29,6 +29,7 @@ public class SaveDatabase {
      */
     public SaveDatabase() {
         try {
+            myseries.MySeries.glassPane.activate(null);
             showSavePane();
         } catch (FileNotFoundException ex) {
             MySeries.logger.log(Level.SEVERE, "Could not save database", ex);
@@ -36,6 +37,8 @@ public class SaveDatabase {
         } catch (IOException ex) {
             MySeries.logger.log(Level.SEVERE, "Could not save database", ex);
             MyMessages.error("Database not saved!!!", "The database could not be saved (" + ex.getMessage() + ")");
+        } finally {
+            myseries.MySeries.glassPane.deactivate();
         }
     }
 

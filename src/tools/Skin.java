@@ -30,6 +30,8 @@ public class Skin {
   private static int skinBlue;
   private static float brightness;
 
+
+
   /**
    * Create the default skin
    */
@@ -155,15 +157,15 @@ public class Skin {
   }
 
   public static Color getOuterColor() {
-    return Options.toBoolean(Options.USE_SKIN) ? getColor_5():Color.GRAY;
+    return Options.toBoolean(Options.USE_SKIN) ? getColor_5():null;
   }
 
   public static Color getInnerColor() {
-    return Options.toBoolean(Options.USE_SKIN) ? getColor_1():null;
+    return Options.toBoolean(Options.USE_SKIN) ? getColor_1():getLafTextAreaColor();
   }
 
   public static Color getTitleColor() {
-    return Options.toBoolean(Options.USE_SKIN) ? getColor_1() : Color.WHITE;
+    return Options.toBoolean(Options.USE_SKIN) ? getColor_1() : null;
   }
 
   public static Color getForeGroundColor(Color color) {
@@ -662,4 +664,10 @@ public class Skin {
     UIManager.put("Table.scrollPaneBorder", BorderFactory.createEmptyBorder());
     UIManager.put("TableHeader.cellBorder", BorderFactory.createLineBorder(Color.GRAY));
   }
+
+  private static Color getLafTextAreaColor() {
+        Color col =  (Color) UIManager.get("EditorPane.background");
+        System.out.println(col.toString());
+        return col;
+    }
 }
