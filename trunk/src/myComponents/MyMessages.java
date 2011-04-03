@@ -105,7 +105,7 @@ public class MyMessages {
     }
 
     private static void hideMessage() {
-        if(!glassPaneActive){
+        if (!glassPaneActive) {
             myseries.MySeries.glassPane.deactivate();
         }
     }

@@ -666,8 +666,7 @@ public class Skin {
   }
 
   private static Color getLafTextAreaColor() {
-        Color col =  (Color) UIManager.get("EditorPane.background");
-        System.out.println(col.toString());
+        Color col =  (Color) UIManager.get("TextArea.background");
         return col;
     }
 }

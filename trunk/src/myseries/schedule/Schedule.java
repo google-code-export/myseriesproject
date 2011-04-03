@@ -25,7 +25,6 @@ public class Schedule extends javax.swing.JPanel {
   /** Creates new form Schedule */
   public Schedule() {
     initComponents();
-    schedule.setTextColor(Skin.getForeGroundColor(Skin.getColor_4()));
     setVisible(true);
  }
 
@@ -39,7 +38,7 @@ public class Schedule extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lb_title = new javax.swing.JLabel();
         schedule = new com.googlecode.scheduler.Scheduler();
         schedule.getTblCalendar().getTableHeader().setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
@@ -47,10 +46,9 @@ public class Schedule extends javax.swing.JPanel {
 
         jPanel1.setOpaque(false);
 
-        jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getStyle() | java.awt.Font.BOLD, jLabel1.getFont().getSize()+2));
-        jLabel1.setForeground(Skin.getTitleColor());
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Schedule");
+        lb_title.setFont(lb_title.getFont().deriveFont(lb_title.getFont().getStyle() | java.awt.Font.BOLD, lb_title.getFont().getSize()+2));
+        lb_title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb_title.setText("Schedule");
 
         schedule.setDatabase("");
         schedule.setTextColor(Skin.getSkinColor());
@@ -62,7 +60,7 @@ public class Schedule extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
+                    .addComponent(lb_title, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
                     .addComponent(schedule, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -70,7 +68,7 @@ public class Schedule extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(lb_title)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(schedule, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(22, 22, 22))
@@ -88,8 +86,8 @@ public class Schedule extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lb_title;
     private com.googlecode.scheduler.Scheduler schedule;
     // End of variables declaration//GEN-END:variables
 
@@ -98,5 +96,9 @@ public class Schedule extends javax.swing.JPanel {
    */
   public com.googlecode.scheduler.Scheduler getSchedule() {
     return schedule;
+  }
+
+  public void setTextColor(Color color){
+      lb_title.setForeground(color);
   }
 }

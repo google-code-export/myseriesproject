@@ -1238,9 +1238,13 @@
                       </Properties>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="statSeries.setUnifiedSeries(Options.toBoolean(Options.UNIFIED_SERIES));"/>
+                        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="statSeries.setTextColor(Skin.getTitleColor());"/>
                       </AuxValues>
                     </Component>
                     <Component class="myseries.statistics.StatEpisodes" name="statEpisodes">
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="statEpisodes.setTextColor(Skin.getTitleColor());"/>
+                      </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -1281,6 +1285,9 @@
                           <Dimension value="[800, 600]"/>
                         </Property>
                       </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="scheduler.setTextColor(Skin.getTitleColor());"/>
+                      </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>

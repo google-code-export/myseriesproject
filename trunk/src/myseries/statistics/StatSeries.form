@@ -23,9 +23,9 @@
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="jScrollPane1" alignment="0" pref="557" max="32767" attributes="0"/>
-                  <Component id="jLabel1" alignment="1" pref="557" max="32767" attributes="0"/>
+                  <Component id="lb_title" alignment="1" pref="557" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jLabel2" pref="286" max="32767" attributes="0"/>
+                      <Component id="lb_tip" pref="286" max="32767" attributes="0"/>
                       <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                       <Component id="cb_unified" min="-2" pref="227" max="-2" attributes="0"/>
                   </Group>
@@ -38,10 +38,10 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+              <Component id="lb_title" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lb_tip" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="cb_unified" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -77,33 +77,24 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="lb_title">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.editors2.FontEditor">
           <FontInfo relative="true">
-            <Font bold="true" component="jLabel1" property="font" relativeSize="true" size="2"/>
+            <Font bold="true" component="lb_title" property="font" relativeSize="true" size="2"/>
           </FontInfo>
-        </Property>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Skin.getTitleColor()" type="code"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="Series Ratings"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel2">
+    <Component class="javax.swing.JLabel" name="lb_tip">
       <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Skin.getTitleColor()" type="code"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Mouse over rate to see a list of the series episodes rates"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JCheckBox" name="cb_unified">
       <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Skin.getTitleColor()" type="code"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Unified series"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
