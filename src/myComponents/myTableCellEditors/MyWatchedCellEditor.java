@@ -51,7 +51,7 @@ public class MyWatchedCellEditor extends DefaultCellEditor implements TableCellE
     return true;
   }
 
-  public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+   public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
     super.getTableCellEditorComponent(table,value,isSelected,row,column);
     ((JCheckBox)editorComponent).setHorizontalAlignment(SwingConstants.CENTER);
     return editorComponent;
