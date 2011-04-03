@@ -998,8 +998,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
         tabpanel_statistics.setName(String.valueOf(MySeries.TAB_RATINGS_ID));
         tabpanel_statistics.setOpaque(false);
 
+        statSeries.setTextColor(Skin.getTitleColor());
         statSeries.setPreferredSize(new java.awt.Dimension(400, 121));
         statSeries.setUnifiedSeries(Options.toBoolean(Options.UNIFIED_SERIES));
+
+        statEpisodes.setTextColor(Skin.getTitleColor());
 
         javax.swing.GroupLayout tabpanel_statisticsLayout = new javax.swing.GroupLayout(tabpanel_statistics);
         tabpanel_statistics.setLayout(tabpanel_statisticsLayout);
@@ -1022,8 +1025,9 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
         tabpanel_schedule.setToolTipText("Schedule");
         tabpanel_schedule.setName(String.valueOf(MySeries.TAB_SCHEDULE_ID));
         tabpanel_schedule.setOpaque(false);
-        tabpanel_schedule.setLayout(new java.awt.GridLayout());
+        tabpanel_schedule.setLayout(new java.awt.GridLayout(1, 0));
 
+        scheduler.setTextColor(Skin.getTitleColor());
         scheduler.setMaximumSize(new java.awt.Dimension(1200, 800));
         scheduler.setMinimumSize(new java.awt.Dimension(800, 600));
         scheduler.setPreferredSize(new java.awt.Dimension(800, 600));

@@ -1000,27 +1000,29 @@ public class OptionsPanel extends MyDraggable {
       return;
     }
     try {
-      String mess = "";
+      String mess ="";
       saveOptions();
       MySeries.languages.setPrimary((Language) combo_primaryLang.getSelectedItem());
       MySeries.languages.setSecondary((Language) combo_secondaryLang.getSelectedItem());
       MyUsefulFunctions.initInternetConnection();
       m.createComboBox_filters();
       if (!oldFontFace.equals(Options.toString(Options.FONT_FACE))) {
-        mess = "Font face was changed\n";
+        mess = "Font face, ";
       }
       if (!oldFontSize.equals(Options.toString(Options.FONT_SIZE))) {
-        mess += "Font size was changed\n";
+        mess += "Font size, ";
       }
       if (!oldColor.equals(Options.toColor(Options.SKIN_COLOR))) {
-        mess += "Skin color was changed\n";
+        mess += "Skin color, ";
       }
       if ((!oldUseSkin && checkbox_dontUseSkin.isSelected()) || (oldUseSkin && !checkbox_dontUseSkin.isSelected())) {
-        mess += "Skin using has changed\n";
+        mess += "Skin, ";
       }
       if(!oldLaf.equals(Options.toString(Options.LOOK_AND_FEEL))){
-        mess += "Look and feel changed\n";
+        mess += "Look and Feel, ";
       }
+      mess = mess.trim();
+      mess = mess.substring(0, mess.length()-1)+" changes ";
       if (!mess.equals("")) {
 //        int ans = MyMessages.question("Restart?",
 //            mess + "\nRestart The application?");
@@ -1029,7 +1031,7 @@ public class OptionsPanel extends MyDraggable {
 //          StartPanel.main(null);
 //        } else {
 //        }
-        MyMessages.message("Options", mess + "\nThese changes will take effect when you restart the application");
+        MyMessages.message("Options", mess + "will take effect when you restart the application");
       }
 
     } catch (IOException ex) {

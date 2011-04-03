@@ -49,7 +49,7 @@ public abstract class AbstractDownloadSubtitle {
       //System.out.println(sub.url);
       progress.setIndeterminate(true);
       progress.setString("Downloading subtitles");
-      form.label_message.setText("Downloading file from " + sub.url);
+      form.label_message.setText("Downloading Started");
       InputStream is = null;
       BufferedOutputStream outStream = null;
       try {
