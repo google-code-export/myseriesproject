@@ -140,8 +140,8 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                      <Component id="tabbedPane_options" pref="361" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="tabbedPane_options" pref="420" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -166,44 +166,39 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel3" alignment="1" pref="101" max="32767" attributes="2"/>
-                                  <Component id="jLabel6" alignment="1" pref="101" max="32767" attributes="0"/>
-                                  <Component id="jLabel4" alignment="1" pref="101" max="32767" attributes="0"/>
-                                  <Component id="jLabel5" alignment="1" pref="101" max="32767" attributes="0"/>
-                                  <Component id="checkbox_dontUseSkin" alignment="1" max="32767" attributes="2"/>
-                                  <Component id="jLabel10" alignment="1" pref="101" max="32767" attributes="0"/>
-                                  <Component id="jLabel16" alignment="1" pref="101" max="32767" attributes="0"/>
-                                  <Component id="jLabel17" alignment="1" pref="101" max="32767" attributes="0"/>
-                                  <Component id="jLabel11" alignment="1" pref="101" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="jLabel3" alignment="1" pref="135" max="32767" attributes="2"/>
+                                  <Component id="jLabel6" alignment="1" pref="135" max="32767" attributes="0"/>
+                                  <Component id="jLabel4" alignment="1" pref="135" max="32767" attributes="0"/>
+                                  <Component id="jLabel5" alignment="1" pref="135" max="32767" attributes="0"/>
+                                  <Component id="checkbox_dontUseSkin" alignment="1" pref="135" max="32767" attributes="2"/>
+                                  <Component id="jLabel10" alignment="1" pref="135" max="32767" attributes="0"/>
+                                  <Component id="jLabel16" alignment="1" pref="135" max="32767" attributes="0"/>
+                                  <Component id="jLabel17" alignment="1" pref="135" max="32767" attributes="0"/>
+                                  <Component id="jLabel11" alignment="1" pref="135" max="32767" attributes="0"/>
+                                  <Component id="jLabel7" alignment="1" pref="135" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="combobox_debugMode" alignment="0" pref="257" max="32767" attributes="0"/>
+                                          <Component id="combobox_debugMode" alignment="0" pref="303" max="32767" attributes="0"/>
                                           <Component id="cb_autoUpdate" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="label_preview" alignment="0" pref="257" max="32767" attributes="0"/>
+                                          <Component id="label_preview" alignment="0" pref="303" max="32767" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="combobox_fonts" min="-2" pref="183" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="spinner_fontSize" min="-2" max="-2" attributes="0"/>
                                           </Group>
-                                          <Component id="button_BGColor" alignment="0" pref="257" max="32767" attributes="0"/>
-                                          <Component id="combobox_laf" alignment="0" pref="257" max="32767" attributes="2"/>
-                                          <Component id="combobox_dateFormat" alignment="0" pref="257" max="32767" attributes="2"/>
+                                          <Component id="button_BGColor" alignment="0" pref="303" max="32767" attributes="0"/>
+                                          <Component id="combobox_laf" alignment="0" pref="303" max="32767" attributes="2"/>
+                                          <Component id="combobox_dateFormat" alignment="0" pref="303" max="32767" attributes="2"/>
                                           <Component id="checkBox_modal" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="button_dateFormatHelp" min="-2" pref="44" max="-2" attributes="0"/>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jLabel7" max="32767" attributes="0"/>
-                                              <EmptySpace min="90" pref="90" max="90" attributes="0"/>
-                                          </Group>
-                                      </Group>
+                                      <Component id="button_dateFormatHelp" min="-2" pref="44" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="jLabel14" alignment="0" min="-2" pref="253" max="-2" attributes="1"/>
                                   <Group type="102" alignment="0" attributes="0">
@@ -213,7 +208,12 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="tf_videoApp" min="-2" pref="234" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="bt_dir" min="-2" max="-2" attributes="0"/>
+                                      <Component id="bt_videoViewer" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="tf_mainDir" min="-2" pref="232" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="bt_mainDirectory" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -243,7 +243,6 @@
                               <Group type="103" groupAlignment="2" attributes="0">
                                   <Component id="jLabel5" linkSize="2" alignment="2" min="-2" max="-2" attributes="0"/>
                                   <Component id="combobox_laf" alignment="2" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel7" alignment="2" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="2" attributes="0">
@@ -274,11 +273,17 @@
                               <Group type="103" groupAlignment="2" attributes="0">
                                   <Component id="tf_videoApp" alignment="2" min="-2" max="-2" attributes="1"/>
                                   <Component id="jLabel11" alignment="2" min="-2" max="-2" attributes="1"/>
-                                  <Component id="bt_dir" alignment="2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="bt_videoViewer" alignment="2" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="2" attributes="0">
+                                  <Component id="jLabel7" alignment="2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="tf_mainDir" alignment="2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="bt_mainDirectory" alignment="2" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -417,12 +422,6 @@
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_allCodePost" type="java.lang.String" value="createLafModel();&#xa;combobox_laf.setSelectedItem(Options.toString(Options.LOOK_AND_FEEL));"/>
                       </AuxValues>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel7">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="(Not Available yet)"/>
-                        <Property name="name" type="java.lang.String" value="noname" noResource="true"/>
-                      </Properties>
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="checkbox_dontUseSkin">
                       <Properties>
@@ -566,6 +565,9 @@
                             <Font component="cb_autoUnzip" italic="true" property="font" relativeSize="true" size="-1"/>
                           </FontInfo>
                         </Property>
+                        <Property name="selected" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="Options.toBoolean(Options.AUTO_EXTRACT_ZIPS)" type="code"/>
+                        </Property>
                         <Property name="text" type="java.lang.String" value="(Also extract subtitles in zip files and delete the zip)"/>
                         <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                           <Connection code="Options.AUTO_EXTRACT_ZIPS" type="code"/>
@@ -576,12 +578,41 @@
                         <BindingProperty name="enabled" source="cb_autoUpdate" sourcePath="${selected}" target="cb_autoUnzip" targetPath="enabled" updateStrategy="0" immediately="false"/>
                       </BindingProperties>
                     </Component>
-                    <Component class="myComponents.myGUI.buttons.MyButtonDir" name="bt_dir">
+                    <Component class="myComponents.myGUI.buttons.MyButtonDir" name="bt_videoViewer">
                       <Properties>
                         <Property name="text" type="java.lang.String" value=""/>
+                        <Property name="toolTipText" type="java.lang.String" value="Browse for video viewer"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_dirActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_videoViewerActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel7">
+                      <Properties>
+                        <Property name="horizontalAlignment" type="int" value="4"/>
+                        <Property name="text" type="java.lang.String" value="Main Series Directory:"/>
+                      </Properties>
+                    </Component>
+                    <Component class="com.googlecode.svalidators.formcomponents.STextField" name="tf_mainDir">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="Options.toString(Options.MAIN_DIRECTORY)" type="code"/>
+                        </Property>
+                        <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="Options.MAIN_DIRECTORY" type="code"/>
+                        </Property>
+                      </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new com.googlecode.svalidators.formcomponents.STextField(new FileValidator(&quot;&quot;,FileValidator.Type.DIR ,true))"/>
+                      </AuxValues>
+                    </Component>
+                    <Component class="myComponents.myGUI.buttons.MyButtonDir" name="bt_mainDirectory">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value=""/>
+                        <Property name="toolTipText" type="java.lang.String" value="Browse for main directory"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_mainDirectoryActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>
@@ -706,7 +737,7 @@
                                       <Component id="textfield_port" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace min="-2" pref="136" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="150" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -960,7 +991,7 @@
                                   <Component id="jLabel20" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="tf_titleSep" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="250" max="32767" attributes="0"/>
+                              <EmptySpace pref="309" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
