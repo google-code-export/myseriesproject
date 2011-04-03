@@ -60,94 +60,94 @@ import tools.options.Options;
  */
 public class AdminSeries extends MyDraggable {
 
-  private MyEventsClass evClass = new MyEventsClass();
-  private final static long serialVersionUID = 43547453657578L;
-  /**
-   * MySeries main form
-   */
-  private MySeries m;
-  /**
-   * The series season
-   */
-  private int season;
-  /**
-   * The series title
-   */
-  private String serial;
-  /**
-   * The series record
-   */
-  private SeriesRecord seriesRecord;
-  /**
-   * The screenshot
-   */
-  private String screenshot;
+    private MyEventsClass evClass = new MyEventsClass();
+    private final static long serialVersionUID = 43547453657578L;
+    /**
+     * MySeries main form
+     */
+    private MySeries m;
+    /**
+     * The series season
+     */
+    private int season;
+    /**
+     * The series title
+     */
+    private String serial;
+    /**
+     * The series record
+     */
+    private SeriesRecord seriesRecord;
+    /**
+     * The screenshot
+     */
+    private String screenshot;
 
-  /**
-   * Creates the adminSeries form
-   * @param m The main mySeries form
-   * @throws java.sql.SQLException
-   */
-  public AdminSeries(MySeries m) throws SQLException {
-    this(m, new SeriesRecord());
+    /**
+     * Creates the adminSeries form
+     * @param m The main mySeries form
+     * @throws java.sql.SQLException
+     */
+    public AdminSeries(MySeries m) throws SQLException {
+        this(m, new SeriesRecord());
 
-  }
-
-  /**
-   * Creates the adminSeries form
-   * @param m The main mySeries form
-   * @param seriesRecord The series to edit.If null it creates a new series
-   * @throws java.sql.SQLException
-   */
-  public AdminSeries(MySeries m, SeriesRecord seriesRecord) throws SQLException {
-    this.m = m;
-    this.seriesRecord = seriesRecord;
-    initComponents();
-    setLocationRelativeTo(m);
-    spinner_season.setModel(new SpinnerNumberModel(Series.DEFAULT_SEASON, Series.MINIMUM_SEASON, Series.MAXIMUM_SEASON, Series.SEASON_STEP));
-    if (seriesRecord.getSeries_ID() > 0) {
-      spinner_season.setValue(seriesRecord.getSeason());
-      textField_Serial.setText(seriesRecord.getTitle());
-      label_Title.setText("Edit Series " + seriesRecord.getTitle()
-          + " S" + MyUsefulFunctions.padLeft(seriesRecord.getSeason(), 2, "0"));
-      textfield_tvSubsId.setText(seriesRecord.getTvSubtitlesCode());
-      textfield_tvRageID.setText(String.valueOf(seriesRecord.getTvrage_ID()));
-      textfield_localDir.setText(seriesRecord.getLocalDir());
-
-      textfield_screenshot.setText(seriesRecord.getScreenshot().equals("") ? "" : Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH + seriesRecord.getScreenshot());
-      setScreenshot();
-      textfield_tvSubsId.setText(seriesRecord.getTvSubtitlesCode());
-      textfield_subsOnline.setText(seriesRecord.getSOnlineCode());
-      // button_Add.setText("Edit");
-    } else {
-      label_Title.setText("Add New Series");
     }
-    textfield_screenshot.getDocument().addDocumentListener(new DocumentListener() {
 
-      @Override
-      public void insertUpdate(DocumentEvent e) {
-        setScreenshot();
-      }
+    /**
+     * Creates the adminSeries form
+     * @param m The main mySeries form
+     * @param seriesRecord The series to edit.If null it creates a new series
+     * @throws java.sql.SQLException
+     */
+    public AdminSeries(MySeries m, SeriesRecord seriesRecord) throws SQLException {
+        this.m = m;
+        this.seriesRecord = seriesRecord;
+        initComponents();
+        setLocationRelativeTo(m);
+        spinner_season.setModel(new SpinnerNumberModel(Series.DEFAULT_SEASON, Series.MINIMUM_SEASON, Series.MAXIMUM_SEASON, Series.SEASON_STEP));
+        if (seriesRecord.getSeries_ID() > 0) {
+            spinner_season.setValue(seriesRecord.getSeason());
+            textField_Serial.setText(seriesRecord.getTitle());
+            label_Title.setText("Edit Series " + seriesRecord.getTitle()
+                    + " S" + MyUsefulFunctions.padLeft(seriesRecord.getSeason(), 2, "0"));
+            textfield_tvSubsId.setText(seriesRecord.getTvSubtitlesCode());
+            textfield_tvRageID.setText(String.valueOf(seriesRecord.getTvrage_ID()));
+            textfield_localDir.setText(seriesRecord.getLocalDir());
 
-      @Override
-      public void removeUpdate(DocumentEvent e) {
-        setScreenshot();
-      }
+            textfield_screenshot.setText(seriesRecord.getScreenshot().equals("") ? "" : Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH + seriesRecord.getScreenshot());
+            setScreenshot();
+            textfield_tvSubsId.setText(seriesRecord.getTvSubtitlesCode());
+            textfield_subsOnline.setText(seriesRecord.getSOnlineCode());
+            // button_Add.setText("Edit");
+        } else {
+            label_Title.setText("Add New Series");
+        }
+        textfield_screenshot.getDocument().addDocumentListener(new DocumentListener() {
 
-      @Override
-      public void changedUpdate(DocumentEvent e) {
-        setScreenshot();
-      }
-    });
-    setVisible(true);
-  }
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                setScreenshot();
+            }
 
-  /** This method is called from within the constructor to
-   * initialize the form.
-   * WARNING: Do NOT modify this code. The content of this method is
-   * always regenerated by the Form Editor.
-   */
-  @SuppressWarnings("unchecked")
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                setScreenshot();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                setScreenshot();
+            }
+        });
+        setVisible(true);
+    }
+
+    /** This method is called from within the constructor to
+     * initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is
+     * always regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -466,184 +466,197 @@ public class AdminSeries extends MyDraggable {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-  /**
-   * Adds the series in the database
-   * @throws java.io.IOException
-   */
-  private void addSeries() {
-    MyEvent ev;
+    /**
+     * Adds the series in the database
+     * @throws java.io.IOException
+     */
+    private void addSeries() {
+        MyEvent ev;
 
-    try {
-      int tvRageID = 0;
-      try {
-        tvRageID = Integer.parseInt(textfield_tvRageID.getText());
-      } catch (NumberFormatException ex) {
-      }
-      screenshot = textfield_screenshot.getText().trim();
-      season = Integer.parseInt(String.valueOf(spinner_season.getValue()).trim());
-      serial = textField_Serial.getText().trim();
-      if (Series.getCurrentSerial().getSeries_ID() == 0) {
-        seriesRecord = new SeriesRecord();
-      }
-      seriesRecord.setTitle(serial);
-      seriesRecord.setSeason(season);
-      seriesRecord.setTvSubtitlesCode(textfield_tvSubsId.getText().trim());
-      seriesRecord.setTvrage_ID(tvRageID);
-      seriesRecord.setLocalDir(textfield_localDir.getText());
-      seriesRecord.setTvSubtitlesCode(textfield_tvSubsId.getText().trim());
-      seriesRecord.setSOnlineCode(textfield_subsOnline.getText().trim());
-      File sc = null;
-      if (!screenshot.equals("")) {
-        sc = new File(screenshot);
-        if (sc.isFile() && !screenshot.startsWith("./images")) {
-          CopyScreenshot c = new CopyScreenshot(screenshot);
-          Thread t = new Thread(c);
-          t.start();
-          seriesRecord.setScreenshot(sc.getName());
-        } else {
-          seriesRecord.setScreenshot(sc.getName());
-        }
-        Image im = new ImageIcon(sc.getAbsolutePath()).getImage();
-        MySeries.imagePanel.setImage(im, false);
+        try {
+            int tvRageID = 0;
+            try {
+                tvRageID = Integer.parseInt(textfield_tvRageID.getText());
+            } catch (NumberFormatException ex) {
+            }
+            screenshot = textfield_screenshot.getText().trim();
+            season = Integer.parseInt(String.valueOf(spinner_season.getValue()).trim());
+            serial = textField_Serial.getText().trim();
+            if (Series.getCurrentSerial().getSeries_ID() == 0) {
+                seriesRecord = new SeriesRecord();
+            }
+            seriesRecord.setTitle(serial);
+            seriesRecord.setSeason(season);
+            seriesRecord.setTvSubtitlesCode(textfield_tvSubsId.getText().trim());
+            seriesRecord.setTvrage_ID(tvRageID);
+            seriesRecord.setLocalDir(textfield_localDir.getText());
+            seriesRecord.setTvSubtitlesCode(textfield_tvSubsId.getText().trim());
+            seriesRecord.setSOnlineCode(textfield_subsOnline.getText().trim());
+            File sc = null;
+            if (!screenshot.equals("")) {
+                sc = new File(screenshot);
+                if (sc.isFile() && !screenshot.startsWith("./images")) {
+                    CopyScreenshot c = new CopyScreenshot(screenshot);
+                    Thread t = new Thread(c);
+                    t.start();
+                    seriesRecord.setScreenshot(sc.getName());
+                } else {
+                    seriesRecord.setScreenshot(sc.getName());
+                }
+                Image im = new ImageIcon(sc.getAbsolutePath()).getImage();
+                MySeries.imagePanel.setImage(im, false);
 
-      } else {
-        seriesRecord.setScreenshot("");
-        MySeries.imagePanel.setImage(null, true);
-      }
-      try {
-        int series_ID = seriesRecord.save();
-        if (series_ID > 0) {
-          seriesRecord.setSeries_ID(series_ID);
+            } else {
+                seriesRecord.setScreenshot("");
+                MySeries.imagePanel.setImage(null, true);
+            }
+            try {
+                int series_ID = seriesRecord.save();
+                if (series_ID > 0) {
+                    seriesRecord.setSeries_ID(series_ID);
+                }
+                ev = new MyEvent(this, MyEventHandler.SERIES_UPDATE);
+                evClass.fireMyEvent(ev);
+                MySeries.glassPane.deactivate();
+                dispose();
+                ev.setType(MyEventHandler.SET_CURRENT_SERIES);
+                ev.setSeries(seriesRecord);
+                m.getEvClass().fireMyEvent(ev);
+                if (checkbox_updateEpisodes.isSelected()) {
+                    SeriesActions.internetUpdateSeries(m, InternetUpdate.TV_RAGE_NAME);
+                }
+            } catch (SQLException ex) {
+                MySeries.logger.log(Level.SEVERE, "SQL error occured", ex);
+            }
+        } catch (NumberFormatException ex) {
+            MySeries.logger.log(Level.WARNING, "Season must be a number", ex);
+            MyMessages.error("Season not a number!!!", "Season must be a number");
         }
-        ev = new MyEvent(this, MyEventHandler.SERIES_UPDATE);
-        evClass.fireMyEvent(ev);
-        MySeries.glassPane.deactivate();
-        dispose();
-        ev.setType(MyEventHandler.SET_CURRENT_SERIES);
-        ev.setSeries(seriesRecord);
-        m.getEvClass().fireMyEvent(ev);
-        if (checkbox_updateEpisodes.isSelected()) {
-          SeriesActions.internetUpdateSeries(m, InternetUpdate.TV_RAGE_NAME);
-        }
-      } catch (SQLException ex) {
-        MySeries.logger.log(Level.SEVERE, "SQL error occured", ex);
-      }
-    } catch (NumberFormatException ex) {
-      MySeries.logger.log(Level.WARNING, "Season must be a number", ex);
-      MyMessages.error("Season not a number!!!", "Season must be a number");
     }
-  }
 
     private void myButtonHelp1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myButtonHelp1ActionPerformed
-      new HelpWindow(HelpWindow.ADMIN_SERIES);
+        new HelpWindow(HelpWindow.ADMIN_SERIES);
     }//GEN-LAST:event_myButtonHelp1ActionPerformed
 
     private void myButtonCancel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myButtonCancel1ActionPerformed
-      MySeries.glassPane.deactivate();
-      dispose();
+        MySeries.glassPane.deactivate();
+        dispose();
     }//GEN-LAST:event_myButtonCancel1ActionPerformed
 
     private void myButtonOk1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myButtonOk1ActionPerformed
-      ValidationGroup group = new ValidationGroup();
-      group.addComponent(textField_Serial);
-      group.addComponent(textfield_subsOnline);
-      group.addComponent(textfield_tvSubsId);
-      group.addComponent(textfield_tvRageID);
-      group.addComponent(textfield_localDir);
-      group.addComponent(textfield_screenshot);
-      if (!group.validate()) {
-        MyMessages.error("Series Form", group.getErrorMessage());
-        return;
-      }
-      addSeries();
+        ValidationGroup group = new ValidationGroup();
+        group.addComponent(textField_Serial);
+        group.addComponent(textfield_subsOnline);
+        group.addComponent(textfield_tvSubsId);
+        group.addComponent(textfield_tvRageID);
+        group.addComponent(textfield_localDir);
+        group.addComponent(textfield_screenshot);
+        if (!group.validate()) {
+            MyMessages.error("Series Form", group.getErrorMessage());
+            return;
+        }
+        addSeries();
     }//GEN-LAST:event_myButtonOk1ActionPerformed
 
     private void bt_localDirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_localDirActionPerformed
-      JFileChooser fc = new JFileChooser();
-      fc.setCurrentDirectory(new File(textfield_localDir.getText()));
-      fc.setDialogTitle("Choose the Series directory");
-      fc.setDialogType(JFileChooser.OPEN_DIALOG);
-      fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-      fc.showOpenDialog(this);
-      File localDir = fc.getSelectedFile();
-      textfield_localDir.setText(localDir.getAbsolutePath());
+        JFileChooser fc = new JFileChooser();
+        String md = textfield_localDir.getText().equals("") ? Options.toString(Options.MAIN_DIRECTORY) : textfield_localDir.getText();
+        fc.setCurrentDirectory(new File(md));
+        fc.setDialogTitle("Choose the Series directory");
+        fc.setDialogType(JFileChooser.OPEN_DIALOG);
+        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        fc.showOpenDialog(this);
+        if (fc.getSelectedFile() != null) {
+            File localDir = fc.getSelectedFile();
+            textfield_localDir.setText(localDir.getAbsolutePath());
+        }
     }//GEN-LAST:event_bt_localDirActionPerformed
 
     private void bt_screenshotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_screenshotActionPerformed
-      JFileChooser fc = new JFileChooser();
-      fc.setCurrentDirectory(new File("./"));
-      fc.setDialogTitle("Choose the Series screenshot");
-      fc.setDialogType(JFileChooser.OPEN_DIALOG);
-      fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-      fc.setFileFilter(new ScreenshotFilter());
-      fc.showOpenDialog(this);
-      File fScreenshot = fc.getSelectedFile();
-      textfield_screenshot.setText(fScreenshot.getAbsolutePath());
+        JFileChooser fc = new JFileChooser();
+        File d;
+        if (textfield_screenshot.getText().trim().equals("")) {
+            d = new File(Options.toString(Options.MAIN_DIRECTORY));
+        } else {
+            d = new File(textfield_screenshot.getText().trim()).getParentFile();
+        }
+        fc.setCurrentDirectory(d);
+        fc.setDialogTitle("Choose the Series screenshot");
+        fc.setDialogType(JFileChooser.OPEN_DIALOG);
+        fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fc.setFileFilter(new ScreenshotFilter());
+        fc.showOpenDialog(this);
+        File fScreenshot = fc.getSelectedFile();
+        if (fScreenshot != null) {
+            textfield_screenshot.setText(fScreenshot.getAbsolutePath());
+        }
     }//GEN-LAST:event_bt_screenshotActionPerformed
 
     private void bt_iuScreenshotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_iuScreenshotActionPerformed
-      if (textfield_tvRageID.getText().equals("") || textfield_tvRageID.getText().equals("0")) {
-        setModalityType(ModalityType.MODELESS);
-        dispose();
-        TrGetId g = new TrGetId(this, textField_Serial.getText().trim(), true);
-      } else if (MyUsefulFunctions.isNumeric(textfield_tvRageID.getText())) {
-        setVisible(false);
-        int tvRageId = Integer.parseInt(textfield_tvRageID.getText());
-        if (tvRageId > 0) {
-          DownloadScreenshot g = new DownloadScreenshot(Integer.parseInt(textfield_tvRageID.getText()));
-          if (g.isSuccess()) {
-            textfield_screenshot.setText(g.getFilename());
-            MyMessages.message("Downloading screenshot", "The screenshot was saved in the images folder");
-          } else {
-            MyMessages.error("Downloading screenshot", "No screenshot was found");
-    }//GEN-LAST:event_bt_iuScreenshotActionPerformed
-      }
-    }
-  }
-          private void bt_tvSubsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_tvSubsActionPerformed
-            if (seriesRecord.getSeries_ID() == 0) {
-              if (textField_Serial.getText().trim().equals("")) {
-                MyMessages.error("Empty title", "The series title shouldn't be empty");
-                return;
-              } else {
-                seriesRecord = new SeriesRecord();
-                seriesRecord.setTitle(textField_Serial.getText().trim());
-                seriesRecord.setSeason(Integer.parseInt(String.valueOf(spinner_season.getValue())));
-              }
-            }
+        if (textfield_tvRageID.getText().equals("") || textfield_tvRageID.getText().equals("0")) {
             setModalityType(ModalityType.MODELESS);
+            dispose();
+            TrGetId g = new TrGetId(this, textField_Serial.getText().trim(), true);
+        } else if (MyUsefulFunctions.isNumeric(textfield_tvRageID.getText())) {
             setVisible(false);
-            GetTvSubtitlesCode c = new GetTvSubtitlesCode(seriesRecord);
-            String id = c.tSubCode;
-            if (id == null) {
-            } else {
-              textfield_tvSubsId.setText(c.tSubCode);
-              label_message.setText("");
-              label_message.setText("");
+            int tvRageId = Integer.parseInt(textfield_tvRageID.getText());
+            if (tvRageId > 0) {
+                DownloadScreenshot g = new DownloadScreenshot(Integer.parseInt(textfield_tvRageID.getText()));
+                if (g.isSuccess()) {
+                    textfield_screenshot.setText(g.getFilename());
+                    MyMessages.message("Downloading screenshot", "The screenshot was saved in the images folder");
+                } else {
+                    MyMessages.error("Downloading screenshot", "No screenshot was found");
+    }//GEN-LAST:event_bt_iuScreenshotActionPerformed
+
             }
             setVisible(true);
+        }
+    }
+          private void bt_tvSubsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_tvSubsActionPerformed
+              if (seriesRecord.getSeries_ID() == 0) {
+                  if (textField_Serial.getText().trim().equals("")) {
+                      MyMessages.error("Empty title", "The series title shouldn't be empty");
+                      return;
+                  } else {
+                      seriesRecord = new SeriesRecord();
+                      seriesRecord.setTitle(textField_Serial.getText().trim());
+                      seriesRecord.setSeason(Integer.parseInt(String.valueOf(spinner_season.getValue())));
+                  }
+              }
+              setModalityType(ModalityType.MODELESS);
+              setVisible(false);
+              GetTvSubtitlesCode c = new GetTvSubtitlesCode(seriesRecord);
+              String id = c.tSubCode;
+              if (id == null) {
+              } else {
+                  textfield_tvSubsId.setText(c.tSubCode);
+                  label_message.setText("");
+                  label_message.setText("");
+              }
+              setVisible(true);
           }//GEN-LAST:event_bt_tvSubsActionPerformed
 
           private void bt_subsOnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_subsOnActionPerformed
-            setModalityType(ModalityType.MODELESS);
-            setVisible(false);
-            GetSubtitleOnlineCode c = new GetSubtitleOnlineCode(seriesRecord);
-            String id = c.subtitleOnlineCode;
-            if (id == null) {
-            } else {
-              textfield_subsOnline.setText(c.subtitleOnlineCode);
-              label_message.setText("");
-              label_message.setText("");
-            }
-            setVisible(true);
+              setModalityType(ModalityType.MODELESS);
+              setVisible(false);
+              GetSubtitleOnlineCode c = new GetSubtitleOnlineCode(seriesRecord);
+              String id = c.subtitleOnlineCode;
+              if (id == null) {
+              } else {
+                  textfield_subsOnline.setText(c.subtitleOnlineCode);
+                  label_message.setText("");
+                  label_message.setText("");
+              }
+              setVisible(true);
           }//GEN-LAST:event_bt_subsOnActionPerformed
 
           private void bt_tvRageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_tvRageActionPerformed
-            setModalityType(ModalityType.MODELESS);
-            dispose();
-            TrGetId g = new TrGetId(this, textField_Serial.getText().trim());
-            //setVisible(true);
-            //textfield_tvRageID.setText(String.valueOf(g.tvRageID));
+              setModalityType(ModalityType.MODELESS);
+              dispose();
+              TrGetId g = new TrGetId(this, textField_Serial.getText().trim());
+              //setVisible(true);
+              //textfield_tvRageID.setText(String.valueOf(g.tvRageID));
           }//GEN-LAST:event_bt_tvRageActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private myComponents.myGUI.buttons.MyButtonInternet bt_iuScreenshot;
@@ -678,23 +691,23 @@ public class AdminSeries extends MyDraggable {
     private com.googlecode.svalidators.formcomponents.STextField textfield_tvSubsId;
     // End of variables declaration//GEN-END:variables
 
-  private void setScreenshot() {
-    String sc = textfield_screenshot.getText().trim();
-    if (!sc.equals("")) {
-      File f = new File(sc);
-      if (f.isFile()) {
-        MyScaledImage im = new MyScaledImage(new ImageIcon(sc).getImage());
-        im.fitImageIn(scrPanel.getWidth(), scrPanel.getHeight());
-        scrPanel.setPreferredSize(new Dimension(im.getWidth(), im.getHeight()));
-        scrPanel.repaint();
-        scrPanel.revalidate();
-        scrPanel.changeSize(im.getImage(), im.getWidth(), im.getHeight());
-      } else {
-        scrPanel.changeSize(null, scrPanel.getWidth(), scrPanel.getHeight());
-      }
-    } else {
-      scrPanel.changeSize(null, scrPanel.getWidth(), scrPanel.getHeight());
-    }
+    private void setScreenshot() {
+        String sc = textfield_screenshot.getText().trim();
+        if (!sc.equals("")) {
+            File f = new File(sc);
+            if (f.isFile()) {
+                MyScaledImage im = new MyScaledImage(new ImageIcon(sc).getImage());
+                im.fitImageIn(scrPanel.getWidth(), scrPanel.getHeight());
+                scrPanel.setPreferredSize(new Dimension(im.getWidth(), im.getHeight()));
+                scrPanel.repaint();
+                scrPanel.revalidate();
+                scrPanel.changeSize(im.getImage(), im.getWidth(), im.getHeight());
+            } else {
+                scrPanel.changeSize(null, scrPanel.getWidth(), scrPanel.getHeight());
+            }
+        } else {
+            scrPanel.changeSize(null, scrPanel.getWidth(), scrPanel.getHeight());
+        }
 
-  }
+    }
 }

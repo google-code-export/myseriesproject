@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import myComponents.MyUsefulFunctions;
 import myseries.*;
@@ -229,6 +230,10 @@ public class Options {
    * The order of the tabs
    */
   public static String TABS_ORDER = "TABS_ORDER";
+  /**
+   * The main series directory
+   */
+   public static String MAIN_DIRECTORY = "MAIN_DIRECTORY";
   /**
    * An array of the options that are selected in combo boxes
    */
@@ -519,6 +524,7 @@ public class Options {
     out.println(Options.AUTO_EXTRACT_ZIPS + "=false");
     out.println(Options.UPDATE_FEEDS + "=false");
     out.println(Options.TABS_ORDER + "=" + getDefaultTabsOrder());
+    out.println(Options.MAIN_DIRECTORY + "="+ getDefaultMainDirectory());
 
     out.close();
   }
@@ -601,7 +607,17 @@ public class Options {
     options.put(Options.AUTO_EXTRACT_ZIPS, false);
     options.put(Options.UPDATE_FEEDS, false);
     options.put(Options.TABS_ORDER, getDefaultTabsOrder());
+    options.put(Options.MAIN_DIRECTORY, getDefaultMainDirectory());
   }
+
+    private static Object getDefaultMainDirectory() {
+       File d = new File(_USER_DIR_);
+        try {
+            return d.getCanonicalPath();
+        } catch (IOException ex) {
+            return "";
+        }
+    }
 
  
 

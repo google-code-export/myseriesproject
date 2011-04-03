@@ -1341,7 +1341,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
         menuItem_uploadFiles.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
         menuItem_uploadFiles.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/updateFiles.png"))); // NOI18N
-        menuItem_uploadFiles.setText("Update Files");
+        menuItem_uploadFiles.setText("Update & Unzip Files");
         menuItem_uploadFiles.setToolTipText("Scans local dirs and update the file and subtitles statuses");
         menuItem_uploadFiles.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

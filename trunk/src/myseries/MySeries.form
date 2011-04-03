@@ -583,7 +583,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/images/updateFiles.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Update Files"/>
+                <Property name="text" type="java.lang.String" value="Update &amp; Unzip Files"/>
                 <Property name="toolTipText" type="java.lang.String" value="Scans local dirs and update the file and subtitles statuses"/>
               </Properties>
               <Events>
