@@ -13,6 +13,7 @@ import java.io.File;
 import java.sql.SQLException;
 import java.util.EventObject;
 import javax.swing.AbstractCellEditor;
+import javax.swing.DefaultCellEditor;
 import javax.swing.JCheckBox;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
@@ -24,21 +25,14 @@ import tools.options.Options;
  *
  * @author lordovol
  */
-public class MyDownloadedCellEditor extends AbstractCellEditor implements TableCellEditor {
+public class MyDownloadedCellEditor extends DefaultCellEditor implements TableCellEditor {
 
   public static final long serialVersionUID = 2352352525L;
   private JCheckBox cb = new JCheckBox();
   private final int episodeColumn;
 
   public MyDownloadedCellEditor(int episodeColumn) {
-    cb.addMouseListener(new MouseAdapter() {
-
-      @Override
-      public void mouseExited(MouseEvent e) {
-        stopCellEditing();
-      }
-
-    });
+    super(new JCheckBox());
     this.episodeColumn = episodeColumn;
   }
 
@@ -75,12 +69,11 @@ public class MyDownloadedCellEditor extends AbstractCellEditor implements TableC
     return true;
   }
 
-  public Object getCellEditorValue() {
-    return (Boolean) cb.isSelected();
-  }
+ 
 
   public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-    cb.setHorizontalAlignment(SwingConstants.CENTER);
-    return cb;
+    super.getTableCellEditorComponent(table,value,isSelected,row,column);
+    ((JCheckBox)editorComponent).setHorizontalAlignment(SwingConstants.CENTER);
+    return editorComponent;
   }
 }
