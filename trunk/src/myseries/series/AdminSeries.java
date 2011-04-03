@@ -601,7 +601,7 @@ public class AdminSeries extends MyDraggable {
             setVisible(false);
             int tvRageId = Integer.parseInt(textfield_tvRageID.getText());
             if (tvRageId > 0) {
-                DownloadScreenshot g = new DownloadScreenshot(Integer.parseInt(textfield_tvRageID.getText()));
+                DownloadScreenshot g = new DownloadScreenshot(Integer.parseInt(textfield_tvRageID.getText()),textField_Serial.getText().trim());
                 if (g.isSuccess()) {
                     textfield_screenshot.setText(g.getFilename());
                     MyMessages.message("Downloading screenshot", "The screenshot was saved in the images folder");

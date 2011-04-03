@@ -910,6 +910,10 @@ public class MyUsefulFunctions {
     return isInArray(SubtitleConstants.EXTENSIONS, ext);
   }
 
+    public static String sanitize(String str) {
+       return  str.replaceAll("[\\\\ /:*?\"<>|]", "_");
+    }
+
   private MyUsefulFunctions() {
   }
 }

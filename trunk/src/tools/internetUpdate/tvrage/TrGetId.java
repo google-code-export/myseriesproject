@@ -257,7 +257,7 @@ public class TrGetId extends MyDraggable {
           adminSeries.textfield_tvRageID.setText(String.valueOf(tvRageID));
           if (screenshot) {
             setVisible(false);
-            DownloadScreenshot g = new DownloadScreenshot(tvRageID);
+            DownloadScreenshot g = new DownloadScreenshot(tvRageID,title);
             dispose();
             if (g.isSuccess()) {
               adminSeries.textfield_screenshot.setText(g.getFilename());
