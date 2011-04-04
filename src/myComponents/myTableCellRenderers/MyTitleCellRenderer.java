@@ -49,9 +49,6 @@ public class MyTitleCellRenderer extends DefaultTableCellRenderer {
       String date = (String) table.getModel().getValueAt(row, Episodes.AIRED_COLUMN);
       this.setFont(MyUsefulFunctions.getCellFont(this.getFont(), downloaded, seen, sub));
       this.setForeground(MyUsefulFunctions.getCellColor(isSelected, seen, date, downloaded));
-      //String size = MyUsefulFunctions.getVideoFileSize((EpisodesRecord)value);
-      //String size = "";
-      
       }else {
         downloaded = (Boolean) table.getModel().getValueAt(row, Filters.DOWNLOADED_COLUMN);
         sub = (Language) table.getModel().getValueAt(row, Filters.SUBS_COLUMN);

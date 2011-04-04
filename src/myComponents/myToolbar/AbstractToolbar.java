@@ -7,7 +7,9 @@ package myComponents.myToolbar;
 import java.awt.Component;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 import javax.swing.JToolBar;
+import tools.MySeriesLogger;
 import tools.options.Options;
 
 /**
@@ -62,6 +64,7 @@ public abstract class AbstractToolbar extends JToolBar implements ToolbarButtonA
 
 
   public void createButtons() {
+      MySeriesLogger.logger.log(Level.INFO, "Creating toolbar buttons");
       createDb = new ToolbarButton(ToolbarButtonActions.CREATE_DB, "Add Database", "database.png");
       loadDb = new ToolbarButton(ToolbarButtonActions.LOAD_DB, "Load Database", "load_database.png");
       saveDb = new ToolbarButton(ToolbarButtonActions.SAVE_DB, "Save Database As...", "database_save.png");
@@ -89,8 +92,10 @@ public abstract class AbstractToolbar extends JToolBar implements ToolbarButtonA
       clearLogs = new ToolbarButton(ToolbarButtonActions.CLEAR_LOGS, "Clear the log files", "clearLogs.png");
       about = new ToolbarButton(ToolbarButtonActions.ABOUT, "About MySeries", "info.png");
       exit = new ToolbarButton(ToolbarButtonActions.EXIT, "Quit MySeries", "exit.png");
+      MySeriesLogger.logger.log(Level.FINE, "All toolbar buttons created");
   }
   public void addButtons(){
+      MySeriesLogger.logger.log(Level.INFO, "Adding buttons to map");
     buttons.put(ToolbarButtonActions.CREATE_DB, createDb);
     buttons.put(ToolbarButtonActions.LOAD_DB, loadDb);
     buttons.put(ToolbarButtonActions.SAVE_DB, saveDb);
@@ -118,7 +123,7 @@ public abstract class AbstractToolbar extends JToolBar implements ToolbarButtonA
     buttons.put(ToolbarButtonActions.CLEAR_LOGS, clearLogs);
     buttons.put(ToolbarButtonActions.ABOUT, about);
     buttons.put(ToolbarButtonActions.EXIT, exit);
-
+      MySeriesLogger.logger.log(Level.FINE, "All buttons added");
     populateToolbar();
   }
 
