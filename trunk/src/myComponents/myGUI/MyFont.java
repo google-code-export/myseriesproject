@@ -5,7 +5,9 @@
 package myComponents.myGUI;
 
 import java.awt.Font;
+import java.util.logging.Level;
 import javax.swing.UIManager;
+import tools.MySeriesLogger;
 import tools.options.Options;
 
 /**

@@ -76,6 +76,7 @@ public class MyImagePanel extends JPanel {
    * @param height 
    */
   public void changeSize(Image image, int width, int height) {
+      MySeriesLogger.logger.log(Level.INFO, "Resizing screenshot to {1} x {2}",new Object[]{width, height});
     this.defaultImage = false;
     if (image == null) {
       this.image = new ImageIcon(getClass().getResource(MyImagePanel.LOGO)).getImage();
@@ -90,6 +91,7 @@ public class MyImagePanel extends JPanel {
     try {
       Thread.sleep(100);
       try {
+
         int width = MySeries.splitPane_main.getDividerLocation() - 26;
         int height = (int) (image.getHeight(this) * ((double) width / (double) image.getWidth(this)));
 
@@ -98,9 +100,11 @@ public class MyImagePanel extends JPanel {
           yPos = 50;
         }
         //imageLayerPanel.setBounds(0, yPos, width, height);
+        MySeriesLogger.logger.log(Level.INFO, "Relocating screenshot to {0},{1}", new Object[] {0,yPos});
         MySeries.imagePanel.setBounds(0, yPos, width, height);
         MySeries.imagePanel.changeSize(image, width, height);
       } catch (NullPointerException ex) {
+          MySeriesLogger.logger.log(Level.WARNING, "Null Screenshot");
       }
     } catch (InterruptedException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, null, ex);
@@ -108,6 +112,7 @@ public class MyImagePanel extends JPanel {
   }
 
   public void setImage(Image image, boolean defaultImage) {
+      MySeriesLogger.logger.log(Level.INFO, "Setting the screnshot to {0}", (defaultImage ? " the default image" : " series screenshot"));
     this.defaultImage = defaultImage;
     if (image == null) {
       this.image = new ImageIcon(getClass().getResource(LOGO)).getImage();
