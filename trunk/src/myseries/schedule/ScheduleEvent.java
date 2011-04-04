@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package myseries.schedule;
 
 /**
@@ -10,6 +9,7 @@ package myseries.schedule;
  * @author ssoldatos
  */
 public class ScheduleEvent {
+
   private String series;
   private int episodeNumber;
   private String episode;
@@ -101,4 +101,8 @@ public class ScheduleEvent {
     this.seen = seen;
   }
 
+  @Override
+  public String toString() {
+    return getSeries() + " ep. " + getEpisodeNumber() + "-" + getEpisode();
+  }
 }
