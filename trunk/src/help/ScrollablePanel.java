@@ -21,24 +21,29 @@ public class ScrollablePanel extends JScrollPane implements Scrollable {
   public ScrollablePanel() {
   }
 
+  @Override
   public Dimension getPreferredScrollableViewportSize() {
     return new Dimension(600, 400);
   }
 
+  @Override
   public int getScrollableUnitIncrement(
           Rectangle visibleRect, int orientation, int direction) {
     return 20;
   }
 
+  @Override
   public int getScrollableBlockIncrement(
           Rectangle visibleRect, int orientation, int direction) {
     return 60;
   }
 
+  @Override
   public boolean getScrollableTracksViewportWidth() {
     return true;
   }
 
+  @Override
   public boolean getScrollableTracksViewportHeight() {
     return false;
   }

@@ -23,13 +23,14 @@ import myseries.MySeries;
 import tools.DesktopSupport;
 import tools.Skin;
 import tools.MySeriesLogger;
+
 /**
  * About
  * @author lordovol
  */
 public class About extends MyDraggable {
-  private static final long serialVersionUID = 543546475L;
 
+  private static final long serialVersionUID = 543546475L;
   /**
    * MySeries main form
    */
@@ -44,7 +45,9 @@ public class About extends MyDraggable {
    */
   public About(MySeries m) {
     this.m = m;
+    MySeriesLogger.logger.log(Level.INFO, "Initializing components");
     initComponents();
+    MySeriesLogger.logger.log(Level.FINE, "Components initialized");
     getProperties();
     setLocationRelativeTo(m);
     setVisible(true);
@@ -54,8 +57,8 @@ public class About extends MyDraggable {
    * Gets the system properties
    */
   private void getProperties() {
+    MySeriesLogger.logger.log(Level.INFO, "Getting system properties");
     Properties props = System.getProperties();
-
     // Enumerate all system properties
     Enumeration<?> enumer = props.propertyNames();
     propertyString = "<table width=\"100\" cellspacing=\"0\" cellpadding=\"0\">";
@@ -285,23 +288,28 @@ public class About extends MyDraggable {
   }//GEN-LAST:event_textArea_contactMouseExited
 
   private void textArea_contactMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textArea_contactMouseReleased
-    try {
-      try {
-        DesktopSupport.getDesktop().mail(
-                new URI("mailto:lordovol@hotmail.com?subject=MySeries%20v" + MySeries.version));
-      } catch (URISyntaxException ex) {
-        MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-      }
-    } catch (IOException ex) {
-      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+    if (!DesktopSupport.isMailSupport()) {
+      MySeriesLogger.logger.log(Level.WARNING, "Emailing is not supported by the OS");
     }
+    try {
+      MySeriesLogger.logger.log(Level.INFO, "Opening email application");
+
+      DesktopSupport.getDesktop().mail(
+          new URI("mailto:lordovol@hotmail.com?subject=MySeries%20v" + MySeries.version));
+      MySeriesLogger.logger.log(Level.FINE, "Email application opened");
+    } catch (URISyntaxException ex) {
+      MySeriesLogger.logger.log(Level.SEVERE, "There's an error interface the email subject", ex);
+    } catch (IOException ex) {
+      MySeriesLogger.logger.log(Level.SEVERE, "I/O Error", ex);
+    }
+
   }//GEN-LAST:event_textArea_contactMouseReleased
 
   private void bt_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelActionPerformed
-      dispose();
-      MySeries.glassPane.deactivate();
+    MySeriesLogger.logger.log(Level.INFO, "Closing window");
+    dispose();
+    MySeries.glassPane.deactivate();
   }//GEN-LAST:event_bt_cancelActionPerformed
-
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private buttons.Button bt_cancel;
   private javax.swing.JPanel inner_panel;
