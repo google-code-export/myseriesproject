@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import myComponents.myGUI.MyDraggable;
+import tools.MySeriesLogger;
 import tools.Skin;
 
 /**
@@ -36,7 +37,11 @@ public class HelpWindow extends MyDraggable {
 
   public HelpWindow(int page) {
     String url = null;
+
+    MySeriesLogger.logger.log(Level.INFO, "Initializing components");
     initComponents();
+    MySeriesLogger.logger.log(Level.FINE, "Components initialized");
+    MySeriesLogger.logger.log(Level.INFO, "Setting page to {0}",page);
     switch (page) {
       case ADMIN_SERIES:
         label_title.setText("Series Administration");
@@ -81,7 +86,9 @@ public class HelpWindow extends MyDraggable {
     }
     java.net.URL helpURL = Help.class.getResource("/help/html/"+url+".html");
     try {
+      MySeriesLogger.logger.log(Level.INFO, "Setting content to url {0}",helpURL);
       content.setPage(helpURL);
+      MySeriesLogger.logger.log(Level.FINE, "Content succesfuly set");
     } catch (IOException ex) {
       Logger.getLogger(HelpWindow.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -180,7 +187,8 @@ public class HelpWindow extends MyDraggable {
     }// </editor-fold>//GEN-END:initComponents
 
   private void myButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myButton1ActionPerformed
-      dispose();
+    MySeriesLogger.logger.log(Level.INFO, "Closing window");
+    dispose();
   }//GEN-LAST:event_myButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

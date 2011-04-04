@@ -7,6 +7,8 @@ package help;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import tools.MySeriesLogger;
 
 /**
  * A map of Help textt => Help links for opening the help html files by clicking on
@@ -17,6 +19,7 @@ public class Links {
   static Map<String,String> links;
 
   static void createLinksMap() {
+    MySeriesLogger.logger.log(Level.INFO, "Creating the links map");
     links = new HashMap<String,String>();
     links.put("MySeries Help", "MySerieS Help");
     links.put("Application", "Start Application");
@@ -38,6 +41,7 @@ public class Links {
     links.put("Internet","internet_update");
     links.put("Episodes pop up menu","episodes_popup");
     links.put("The Feeds panel:","feeds_panel");
+    MySeriesLogger.logger.log(Level.FINE, "Links map created");
   }
 
   private Links() {

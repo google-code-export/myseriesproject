@@ -17,6 +17,7 @@ import javax.swing.text.BadLocationException;
 import myseries.MySeries;
 import myComponents.MyUsefulFunctions;
 import tools.MySeriesLogger;
+
 /**
  * Help
  * @author ssoldatos
@@ -35,9 +36,10 @@ public class Help extends JFrame {
     MySeries.isHelp = true;
     //Create the links map
     Links.createLinksMap();
+    MySeriesLogger.logger.log(Level.INFO, "Initializing components");
     initComponents();
-setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/help.png")).getImage());
-
+    MySeriesLogger.logger.log(Level.FINE, "Components initialized");
+    setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/help.png")).getImage());
     setLocationRelativeTo(m);
     tree_help.setSelectionPath(tree_help.getPathForRow(0));
     setVisible(true);
@@ -281,9 +283,11 @@ setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"
     }//GEN-LAST:event_formWindowClosing
 
   private void followHyperLink() throws BadLocationException, IOException {
+    MySeriesLogger.logger.log(Level.INFO, "Following link");
     int pos = mainContent.getCaretPosition();
     if (isLink(pos)) {
       String link = getLink(pos);
+      MySeriesLogger.logger.log(Level.INFO, "Link is {0}", link);
       if (Links.links.get(link) != null) {
         setMainContent(Links.links.get(link));
       } else {
@@ -294,7 +298,7 @@ setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"
   }
 
   private void followHyperLink(String link) {
-
+    MySeriesLogger.logger.log(Level.INFO, "Following link {0)",link);
     if (Links.links.get(link) != null) {
       setMainContent(Links.links.get(link));
     } else {
@@ -303,26 +307,33 @@ setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"
   }
 
   private String getLink(int pos) throws BadLocationException {
+    MySeriesLogger.logger.log(Level.INFO, "Getting link from position {0}",pos);
     String link = "";
     for (int i = pos; i > 2 && link.equals(""); i--) {
       if (mainContent.getText(i, 1).equals("[")) {
         link = mainContent.getText(i + 1, pos - i - 1);
+        
       }
     }
     for (int i = pos; i < mainContent.getText().length() - 2; i++) {
       if (mainContent.getText(i, 1).equals("]")) {
         link += mainContent.getText(pos, i - pos);
+        MySeriesLogger.logger.log(Level.FINE, "Found link: {0}",link);
         return link;
       }
     }
+    MySeriesLogger.logger.log(Level.FINE, "Found link: {0}",link);
     return link;
   }
 
   private boolean isLink(int caretPosition) throws BadLocationException {
+    MySeriesLogger.logger.log(Level.INFO, "Check if there's a link");
     for (int i = caretPosition; i > 0; i--) {
       if (mainContent.getText(i, 1).equals("]")) {
+        MySeriesLogger.logger.log(Level.INFO, "No link found");
         return false;
       } else if (mainContent.getText(i, 1).equals("[")) {
+        MySeriesLogger.logger.log(Level.FINE, "There's a link");
         return true;
       }
     }
@@ -331,11 +342,16 @@ setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"
 
   private void setMainContent(String section) {
     try {
+      MySeriesLogger.logger.log(Level.INFO, "Setting the main content to section {0}",section);
       java.net.URL helpURL = Help.class.getResource("/help/html/" + section.toLowerCase().replaceAll(" ", "_") + ".html");
+      MySeriesLogger.logger.log(Level.INFO, "Setting the content to help url : {0}",helpURL);
       mainContent.setPage(helpURL);
+      MySeriesLogger.logger.log(Level.FINE, "Content succesfuly set");
+      MySeriesLogger.logger.log(Level.INFO, "Setting caret position to the start of the document");
       mainContent.setCaretPosition(0);
     } catch (IOException ex) {
       MySeriesLogger.logger.log(Level.INFO, "Could not set help content to file " + section, ex);
+      MySeriesLogger.logger.log(Level.INFO, "Stting content to empty page", ex);
       mainContent.setText("");
       mainContent.setCaretPosition(0);
     }
@@ -350,5 +366,4 @@ setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"
   private javax.swing.JSplitPane splitPanel;
   private javax.swing.JTree tree_help;
   // End of variables declaration//GEN-END:variables
-
 }

@@ -47,10 +47,11 @@ public class CheckUpdate extends MyDraggable {
    * @param onStartUp 
    */
   public CheckUpdate(boolean onStartUp) {
+    MySeriesLogger.logger.log(Level.INFO, "Initializing components");
     initComponents();
+    MySeriesLogger.logger.log(Level.FINE, "Components initialized");
     this.onStartUp = onStartUp;
     if (check()) {
-      MySeriesLogger.logger.log(Level.INFO, "Checking updates");
       up = new Update();
       Thread t = new Thread(up);
       t.start();
@@ -72,6 +73,7 @@ public class CheckUpdate extends MyDraggable {
 
     public void run() {
       try {
+        MySeriesLogger.logger.log(Level.INFO, "Checking for updates");
         latestVersion = getLatestVersion();
         if (latestVersion != null) {
           currentVersion = MySeries.version;
@@ -101,6 +103,7 @@ public class CheckUpdate extends MyDraggable {
     }
 
     private String getLatestVersion() throws MalformedURLException, IOException {
+      MySeriesLogger.logger.log(Level.INFO, "Getting the latest version");
       URL v = new URL(MYSERIESPROJECT_URL);
       BufferedReader in = new BufferedReader(new InputStreamReader(v.openStream()));
       label_needUpdate.setText("Connected to server!!!");
@@ -115,6 +118,7 @@ public class CheckUpdate extends MyDraggable {
           in.close();
           progressBar_checkUpdates.setIndeterminate(false);
           progressBar_checkUpdates.setString("");
+          MySeriesLogger.logger.log(Level.FINE, "Latest version found");
           return inputLine;
         }
       }
@@ -125,7 +129,6 @@ public class CheckUpdate extends MyDraggable {
   private boolean check() {
     isConected = MyUsefulFunctions.hasInternetConnection(MYSERIESPROJECT_URL);
     if (!isConected) {
-      MySeriesLogger.logger.log(Level.WARNING, "Could not connect to internet");
       MyMessages.internetError();
       return false;
     }
@@ -309,6 +312,7 @@ public class CheckUpdate extends MyDraggable {
 
   private void downloadUpdate() {
     try {
+      MySeriesLogger.logger.log(Level.INFO, "Downloading update");
       URI download = new URI(up.latestVersionUri);
       if (DesktopSupport.isBrowseSupport()) {
         MyUsefulFunctions.browse(download);
@@ -317,7 +321,7 @@ public class CheckUpdate extends MyDraggable {
         MySeriesLogger.logger.log(Level.WARNING, "Opening a browser window is not supported in your OS");
       }
     } catch (URISyntaxException ex) {
-      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, "Wrong URL address", ex);
     }
   }
     private void label_needUpdate1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_needUpdate1MouseEntered
