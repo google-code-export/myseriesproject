@@ -69,7 +69,7 @@ public class MySeriesLogger {
       // Add to the desired logger
       logger = Logger.getLogger(logName);
       logger.addHandler(fh);
-      logger.setLevel(Level.ALL);
+      logger.setLevel(Level.OFF);
     } catch (IOException ex) {
       Logger.getLogger(MySeriesLogger.class.getName()).log(Level.SEVERE, null, ex);
     } catch (SecurityException ex) {
@@ -110,6 +110,5 @@ public class MySeriesLogger {
         1);
   }
 
-  private MySeriesLogger() {
-  }
+ 
 }
