@@ -28,7 +28,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,17 +38,12 @@ import java.util.Iterator;
 import java.util.Properties;
 import java.util.Random;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-import javax.swing.JOptionPane;
 import myComponents.myGUI.MyFont;
 import myComponents.myTableCellRenderers.MyDownloadedCellRenderer;
 import myComponents.myTableCellRenderers.MySubtitlesCellRenderer;
 import myseries.series.Series;
-import sdialogs.Ask;
 import tools.DesktopSupport;
 import tools.MySeriesLogger;
 import tools.Skin;
@@ -74,30 +68,37 @@ public class MyUsefulFunctions {
    * @return
    */
   public static String convertDateForRendering(String date) {
+      MySeriesLogger.logger.log(Level.INFO, "Converting date {0} for rendering",date);
     SimpleDateFormat sdf = new SimpleDateFormat(Options.toString(Options.DATE_FORMAT));
     try {
       Date dateD = sdf.parse(date);
       sdf = new SimpleDateFormat(EpisodesRecord.MYSQL_DATE_FORMAT);
       date = sdf.format(dateD);
     } catch (ParseException ex) {
+        MySeriesLogger.logger.log(Level.SEVERE, "Parse exception while parsing date " + date, ex);
     }
     if (date.equals("")) {
+        MySeriesLogger.logger.log(Level.WARNING, "Empty date");
       return "";
     }
     try {
       String[] d = date.split("-", -1);
-
       if (d[1].equals("00") || d[2].equals("00")) {
+          MySeriesLogger.logger.log(Level.WARNING, "Zero date");
         return "";
       }
     } catch (ArrayIndexOutOfBoundsException ex) {
+        MySeriesLogger.logger.log(Level.SEVERE, "Wrong date format: " + date , ex);
     }
     try {
       DateFormat df = new SimpleDateFormat(EpisodesRecord.MYSQL_DATE_FORMAT);
       Date sDate = df.parse(date);
       SimpleDateFormat f = new SimpleDateFormat(Options.toString(Options.DATE_FORMAT));
-      return f.format(sDate);
+      String formatedDate = f.format(sDate);
+      MySeriesLogger.logger.log(Level.FINE, "Date converted to {0}",formatedDate);
+      return formatedDate;
     } catch (ParseException ex) {
+        MySeriesLogger.logger.log(Level.SEVERE, "Parse exception. Returning the original date : " + date, ex);
       return date;
     }
   }
