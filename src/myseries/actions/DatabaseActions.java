@@ -15,6 +15,7 @@ import myComponents.MyUsefulFunctions;
 import myseries.MySeries;
 import myseries.StartPanel;
 import tools.options.Options;
+import tools.MySeriesLogger;
 
 /**
  *
@@ -39,24 +40,24 @@ public class DatabaseActions {
                     m.dispose();
                     new MySeries();
                 } else {
-                    MyUsefulFunctions.log(Level.WARNING, "Selected database is invlid.Not loading...");
+                    MySeriesLogger.logger.log(Level.WARNING, "Selected database is invlid.Not loading...");
                     MyMessages.error("Invalid Database", "The database you selected is invalid");
                     loadDatabase(m);
                 }
             } else {
             }
         } catch (ClassNotFoundException ex) {
-            MyUsefulFunctions.log(Level.SEVERE, null, ex);
+            MySeriesLogger.logger.log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            MyUsefulFunctions.log(Level.SEVERE, null, ex);
+            MySeriesLogger.logger.log(Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            MyUsefulFunctions.log(Level.SEVERE, null, ex);
+            MySeriesLogger.logger.log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            MyUsefulFunctions.log(Level.SEVERE, null, ex);
+            MySeriesLogger.logger.log(Level.SEVERE, null, ex);
         } catch (UnsupportedLookAndFeelException ex) {
-            MyUsefulFunctions.log(Level.SEVERE, null, ex);
+            MySeriesLogger.logger.log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            MyUsefulFunctions.log(Level.SEVERE, null, ex);
+            MySeriesLogger.logger.log(Level.SEVERE, null, ex);
         } finally {
             MySeries.glassPane.deactivate();
         }

@@ -11,6 +11,7 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import myseries.MySeries;
 import myComponents.MyUsefulFunctions;
+import tools.MySeriesLogger;
 /**
  * The base class for SQLite Records
  * @author lordovol
@@ -28,7 +29,7 @@ public class Record {
       this.conn = DBConnection.conn;
       Record.stmt = conn.createStatement();
     } catch (SQLException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, "Could not create the connection to the database", ex);
+      MySeriesLogger.logger.log(Level.SEVERE, "Could not create the connection to the database", ex);
     }
 
   }

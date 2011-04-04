@@ -8,6 +8,7 @@ package tools.internetUpdate.tvrage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import tools.MySeriesLogger;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Vector;
@@ -37,7 +38,7 @@ class SearchTvRage implements Runnable {
      private TrGetId tr;
 
     public SearchTvRage(String title, TrGetId tr) {
-      MyUsefulFunctions.log(Level.INFO, "Search");
+      MySeriesLogger.logger.log(Level.INFO, "Search");
       this.title = title;
       this.tr = tr;
       // run();
@@ -51,20 +52,20 @@ class SearchTvRage implements Runnable {
         tr.progress.setIndeterminate(false);
         tr.progress.setString("Found  " + results.size() + " results");
       } catch (SAXException ex) {
-        MyUsefulFunctions.log(Level.WARNING, "Could not parse XML file", ex);
+        MySeriesLogger.logger.log(Level.WARNING, "Could not parse XML file", ex);
       } catch (ParserConfigurationException ex) {
-        MyUsefulFunctions.log(Level.WARNING, "Could not parse XML file", ex);
+        MySeriesLogger.logger.log(Level.WARNING, "Could not parse XML file", ex);
       } catch (IOException ex) {
-        MyUsefulFunctions.log(Level.WARNING, "Could not find the url for " + title, ex);
+        MySeriesLogger.logger.log(Level.WARNING, "Could not find the url for " + title, ex);
       }
     }
 
     private void search() throws MalformedURLException, IOException, ParserConfigurationException, SAXException {
       InputStream in = null;
-      MyUsefulFunctions.log(Level.INFO, "Getting the url");
+      MySeriesLogger.logger.log(Level.INFO, "Getting the url");
       String url = InternetUpdate.TV_RAGE_SEARCH_SHOW_URL;
       url = url + URLEncoder.encode(title, "UTF-8");
-      MyUsefulFunctions.log(Level.INFO, "Reading URL: " + url);
+      MySeriesLogger.logger.log(Level.INFO, "Reading URL: " + url);
       URL tvRage = new URL(url);
       in = tvRage.openStream();
       readXML(in);
@@ -73,7 +74,7 @@ class SearchTvRage implements Runnable {
 
     private void readXML(InputStream in) throws ParserConfigurationException, SAXException, IOException {
 
-      MyUsefulFunctions.log(Level.INFO, "Parsing XML");
+      MySeriesLogger.logger.log(Level.INFO, "Parsing XML");
       DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
       DocumentBuilder db = dbf.newDocumentBuilder();
       Document doc = db.parse(in);

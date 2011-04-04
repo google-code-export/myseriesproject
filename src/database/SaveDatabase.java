@@ -14,6 +14,7 @@ import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myseries.MySeries;
 import tools.options.Options;
+import tools.MySeriesLogger;
 
 /**
  * Save database class
@@ -32,10 +33,10 @@ public class SaveDatabase {
             myseries.MySeries.glassPane.activate(null);
             showSavePane();
         } catch (FileNotFoundException ex) {
-            MyUsefulFunctions.log(Level.SEVERE, "Could not save database", ex);
+            MySeriesLogger.logger.log(Level.SEVERE, "Could not save database", ex);
             MyMessages.error("Database not saved!!!", "The database could not be saved (" + ex.getMessage() + ")");
         } catch (IOException ex) {
-            MyUsefulFunctions.log(Level.SEVERE, "Could not save database", ex);
+            MySeriesLogger.logger.log(Level.SEVERE, "Could not save database", ex);
             MyMessages.error("Database not saved!!!", "The database could not be saved (" + ex.getMessage() + ")");
         } finally {
             myseries.MySeries.glassPane.deactivate();
@@ -51,7 +52,7 @@ public class SaveDatabase {
             String source = Options._USER_DIR_ + Database.PATH + dbName;
             String dest = Options._USER_DIR_ + Database.PATH + dbName + Database.BACK_UP_EXT;
             if (MyUsefulFunctions.copyfile(source, dest)) {
-                MyUsefulFunctions.log(Level.INFO, "Database backed up!!!");
+                MySeriesLogger.logger.log(Level.INFO, "Database backed up!!!");
                 MyMessages.message("Database backed up", "A back up of the older database was taken");
                 backUp = true;
                 return;
@@ -79,16 +80,16 @@ public class SaveDatabase {
             String source = Options._USER_DIR_ + Database.PATH + Options.toString(Options.DB_NAME);
             String dest = Options._USER_DIR_ + Database.PATH + name + Database.EXT;
             if (MyUsefulFunctions.copyfile(source, dest)) {
-                MyUsefulFunctions.log(Level.INFO, "Database saved");
+                MySeriesLogger.logger.log(Level.INFO, "Database saved");
                 MyMessages.message("Database saved", "The database was saved with the name " + name + Database.EXT);
                 return;
             } else {
             }
         } catch (FileNotFoundException ex) {
-            MyUsefulFunctions.log(Level.SEVERE, "The database could not be saved", ex);
+            MySeriesLogger.logger.log(Level.SEVERE, "The database could not be saved", ex);
             MyMessages.error("Database not saved!!!", "The database could not be saved (" + ex.getMessage() + ")");
         } catch (IOException ex) {
-            MyUsefulFunctions.log(Level.SEVERE, "The database could not be saved", ex);
+            MySeriesLogger.logger.log(Level.SEVERE, "The database could not be saved", ex);
             MyMessages.error("Database not saved!!!", "The database could not be saved (" + ex.getMessage() + ")");
         }
 
@@ -98,12 +99,12 @@ public class SaveDatabase {
         name = MyUsefulFunctions.getInput("Save Database", "Save Database As ");
         if (name == null) {
             MyMessages.error("Save Database", "Save Database aborted");
-            MyUsefulFunctions.log(Level.INFO, "Save Database aborted");
+            MySeriesLogger.logger.log(Level.INFO, "Save Database aborted");
         } else {
             if (!overwriteDatabase()) {
                 if ((name).equals(Options.toString(Options.DB_NAME).replace(Database.EXT, ""))) {
                     MyMessages.error("Error", "Cannot save the database on itself!!!");
-                    MyUsefulFunctions.log(Level.WARNING, "Cannot save the database on itself!!!");
+                    MySeriesLogger.logger.log(Level.WARNING, "Cannot save the database on itself!!!");
                 } else {
                     commitSave();
                 }

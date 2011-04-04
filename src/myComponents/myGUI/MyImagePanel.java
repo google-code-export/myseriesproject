@@ -17,6 +17,8 @@ import javax.swing.JPanel;
 import myseries.MySeries;
 import myseries.actions.ApplicationActions;
 import myComponents.MyUsefulFunctions;
+import tools.MySeriesLogger;
+
 /**
  * The screenshot panel
  * @author ssoldatos
@@ -101,7 +103,7 @@ public class MyImagePanel extends JPanel {
       } catch (NullPointerException ex) {
       }
     } catch (InterruptedException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     }
   }
 

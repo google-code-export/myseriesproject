@@ -8,6 +8,7 @@ import database.EpisodesRecord;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import javax.swing.event.TableModelEvent;
+import tools.MySeriesLogger;
 import javax.swing.table.TableModel;
 import myComponents.MyMessages;
 import myseries.MySeries;
@@ -57,7 +58,7 @@ public class UpdateEpisodesTable {
      // NextEpisodes.createNextEpisodes();
      // NextEpisodes.show();
     } catch (SQLException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
 
 
     } catch (NumberFormatException ex) {

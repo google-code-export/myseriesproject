@@ -27,6 +27,7 @@ import org.xml.sax.SAXException;
 import tools.download.torrents.AbstractTorrentDownload;
 import tools.download.torrents.AbstractTorrent;
 import tools.download.torrents.TorrentConstants;
+import tools.MySeriesLogger;
 
 /**
  * Downloads a torrent from EzTv
@@ -81,7 +82,7 @@ public class EzTv extends AbstractTorrentDownload implements Runnable, TorrentCo
     ArrayList<AbstractTorrent> torrents = new ArrayList<AbstractTorrent>();
     try {
       progress.setString("Reading the rss data");
-      MyUsefulFunctions.log(Level.INFO, "Parsing XML");
+      MySeriesLogger.logger.log(Level.INFO, "Parsing XML");
       DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
       DocumentBuilder db = dbf.newDocumentBuilder();
       Document doc = db.parse(in);

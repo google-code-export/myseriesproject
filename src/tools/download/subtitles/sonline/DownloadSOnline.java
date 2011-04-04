@@ -5,6 +5,7 @@
 package tools.download.subtitles.sonline;
 
 import java.io.FileNotFoundException;
+import tools.MySeriesLogger;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -48,7 +49,7 @@ public class DownloadSOnline extends AbstractDownloadSubtitle implements Runnabl
     try {
       getSubtitle();
     } catch (IOException ex) {
-      MyUsefulFunctions.log(Level.WARNING, "Could not read input stream", ex);
+      MySeriesLogger.logger.log(Level.WARNING, "Could not read input stream", ex);
       MyMessages.error("IO error", "Could not read from input stream");
     }
     progress.setIndeterminate(false);

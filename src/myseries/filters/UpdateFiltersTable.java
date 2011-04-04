@@ -11,6 +11,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.table.TableModel;
 import tools.languages.Language;
 import myComponents.MyUsefulFunctions;
+import tools.MySeriesLogger;
 /**
  *
  * @author lordovol
@@ -38,9 +39,9 @@ public class UpdateFiltersTable {
           Thread.sleep(100);
           Filters.getFilteredSeries();
         } catch (SQLException ex) {
-          MyUsefulFunctions.log(Level.WARNING, null, ex);
+          MySeriesLogger.logger.log(Level.WARNING, null, ex);
         } catch (InterruptedException ex) {
-          MyUsefulFunctions.log(Level.SEVERE, null, ex);
+          MySeriesLogger.logger.log(Level.SEVERE, null, ex);
         }
       }
     }

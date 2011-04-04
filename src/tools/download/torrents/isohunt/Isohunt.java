@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URI;
+import tools.MySeriesLogger;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -113,10 +114,10 @@ public class Isohunt extends AbstractTorrentDownload implements Runnable, Torren
       }
       return torrents;
     } catch (JSONException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
       return torrents;
     } catch (IOException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
       return torrents;
     }
 

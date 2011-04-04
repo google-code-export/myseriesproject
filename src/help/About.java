@@ -22,7 +22,7 @@ import myComponents.myGUI.MyDraggable;
 import myseries.MySeries;
 import tools.DesktopSupport;
 import tools.Skin;
-
+import tools.MySeriesLogger;
 /**
  * About
  * @author lordovol
@@ -290,10 +290,10 @@ public class About extends MyDraggable {
         DesktopSupport.getDesktop().mail(
                 new URI("mailto:lordovol@hotmail.com?subject=MySeries%20v" + MySeries.version));
       } catch (URISyntaxException ex) {
-        MyUsefulFunctions.log(Level.SEVERE, null, ex);
+        MySeriesLogger.logger.log(Level.SEVERE, null, ex);
       }
     } catch (IOException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     }
   }//GEN-LAST:event_textArea_contactMouseReleased
 

@@ -15,6 +15,7 @@ import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyImagePanel;
 import tools.internetUpdate.InternetUpdate;
 import tools.options.Options;
+import tools.MySeriesLogger;
 
 /**
  *
@@ -48,7 +49,7 @@ public class DownloadScreenshot {
                 return;
             }
         } catch (IOException ex) {
-            MyUsefulFunctions.log(Level.SEVERE, null, ex);
+            MySeriesLogger.logger.log(Level.SEVERE, null, ex);
         }
 
     }
@@ -68,7 +69,7 @@ public class DownloadScreenshot {
             outStream.close();
             setSuccess(true);
         } catch (IOException ex) {
-            MyUsefulFunctions.log(Level.SEVERE, null, ex);
+            MySeriesLogger.logger.log(Level.SEVERE, null, ex);
         }
     }
 

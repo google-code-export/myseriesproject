@@ -7,6 +7,7 @@ package myseries.episodes;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import myseries.series.Series;
+import tools.MySeriesLogger;
 import database.DBConnection;
 import database.Database;
 import database.EpisodesRecord;
@@ -124,11 +125,11 @@ public class Episodes {
         try {
           if (u.unzip()) {
             if (!u.unzippedFiles.isEmpty()) {
-              MyUsefulFunctions.log(Level.INFO, "Unzipped " + u.unzippedFiles);
+              MySeriesLogger.logger.log(Level.INFO, "Unzipped " + u.unzippedFiles);
             }
           }
         } catch (Exception ex) {
-          MyUsefulFunctions.log(Level.SEVERE, "Could not unzip " + file, ex);
+          MySeriesLogger.logger.log(Level.SEVERE, "Could not unzip " + file, ex);
         }
       }
     }

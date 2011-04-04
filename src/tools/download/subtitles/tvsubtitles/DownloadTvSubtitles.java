@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
+import tools.MySeriesLogger;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.logging.Level;
@@ -53,7 +54,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
       try {
         subs.add(new Subtitle("Whole season subtitles", new URL(link)));
       } catch (MalformedURLException ex) {
-        MyUsefulFunctions.log(Level.WARNING, "Malformed url: " + link);
+        MySeriesLogger.logger.log(Level.WARNING, "Malformed url: " + link);
          MyMessages.error("Download whole season subtitles", "Malformed url: " + link);
       }
     }
@@ -76,7 +77,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
           sub.url = new URL(TV_SUBTITLES_URL + newPath);
         } catch (MalformedURLException ex) {
           MyMessages.error("Error occured!!!", "Wrong url : " + sub.url);
-          MyUsefulFunctions.log(Level.SEVERE, null, ex);
+          MySeriesLogger.logger.log(Level.SEVERE, null, ex);
           form.dispose();
         }
         download(sub);
@@ -107,11 +108,11 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
         form.dispose();
       }
     } catch (MalformedURLException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
       MyMessages.error("Error occured!!!", "Wrong url");
       form.dispose();
     } catch (IOException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
       MyMessages.error("Error occured!!!", "Could not read input stream");
       form.dispose();
     }

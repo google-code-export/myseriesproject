@@ -16,13 +16,11 @@ import database.DBConnection;
 import database.Database;
 import help.HelpWindow;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.LookAndFeel;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -33,9 +31,9 @@ import myComponents.myGUI.MyFont;
 import myComponents.myGUI.MyImagePanel;
 import tools.DesktopSupport;
 import tools.LookAndFeels;
+import tools.MySeriesLogger;
 import tools.options.Options;
 import tools.Skin;
-import tools.download.torrents.AbstractTorrent;
 import tools.download.torrents.TorrentConstants;
 import tools.feeds.Feed;
 
@@ -48,15 +46,14 @@ public class StartPanel extends MyDraggable {
   private final static long serialVersionUID = 45346793847632L;
   public MySeries m = null;
   DefaultComboBoxModel databasesModel = new DefaultComboBoxModel();
-  // Dimension big = new Dimension(428, 210);
-  // Dimension small = new Dimension(428, 160);
-  // Dimension smaller = new Dimension(428, 140);
   public String dbName;
   private boolean createNewDB;
 
   /** Creates new form startPanel */
   public StartPanel() {
+    MySeriesLogger.logger.log(Level.INFO, "Initializing components");
     initComponents();
+    MySeriesLogger.logger.log(Level.FINE, "Components initialized");
     //panel_loadDatabase.setVisible(false);
     //panel_newDB.setVisible(false);
     textbox_name.addValidator(new RequiredValidator());
@@ -70,22 +67,7 @@ public class StartPanel extends MyDraggable {
     setVisible(true);
   }
 
-  /**
-   * Cretates the start panel
-   * @param m MySeries main form
-   */
-//  StartPanel(MySeries m) {
-//    this.m = m;
-//    initComponents();
-//    textbox_name.addValidator(new RequiredValidator());
-//    getRootPane().setDefaultButton(bt_ok);
-//    setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/subtitles.png")).getImage());
-//    //progress.setVisible(false);
-//    label_title.setText("Create database");
-//    setLocationRelativeTo(null);
-//    setVisible(true);
-//  }
-
+ 
   /**
    * The start panel to create a database
    * @param m The myseries form
@@ -94,7 +76,9 @@ public class StartPanel extends MyDraggable {
   public StartPanel(MySeries m, boolean createNewDB) {
     this.m = m;
     this.createNewDB = createNewDB;
+    MySeriesLogger.logger.log(Level.INFO, "Initializing components");
     initComponents();
+    MySeriesLogger.logger.log(Level.FINE, "Components initialized");
     textbox_name.addValidator(new RequiredValidator());
     getRootPane().setDefaultButton(bt_ok);
     //progress.setVisible(false);
@@ -294,11 +278,11 @@ public class StartPanel extends MyDraggable {
    */
     private void combobox_databasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combobox_databasesActionPerformed
       if (combobox_databases.getSelectedIndex() > 0) {
+        MySeriesLogger.logger.log(Level.INFO, "Existing database selection");
         panel_newDB.setVisible(false);
-        //setSize(small);
       } else {
+        MySeriesLogger.logger.log(Level.INFO, "New database selection");
         panel_newDB.setVisible(true);
-        //setSize(big);
       }
       validate();
       pack();
@@ -306,14 +290,17 @@ public class StartPanel extends MyDraggable {
 
     private void bt_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelActionPerformed
       if (m == null) {
+        MySeriesLogger.logger.log(Level.INFO, "Exiting application");
         System.exit(0);
       } else {
+        MySeriesLogger.logger.log(Level.INFO, "Closing window");
         MySeries.glassPane.deactivate();
         dispose();
       }
     }//GEN-LAST:event_bt_cancelActionPerformed
 
     private void bt_helpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_helpActionPerformed
+      MySeriesLogger.logger.log(Level.INFO, "Opening help window");
       new HelpWindow(HelpWindow.START_APPLICATION);
     }//GEN-LAST:event_bt_helpActionPerformed
 
@@ -334,19 +321,20 @@ public class StartPanel extends MyDraggable {
 
       if (new RequiredValidator(dbName).validate()) {
         try {
+          MySeriesLogger.logger.log(Level.INFO, "Create the connection to the database");
           CreateDatabase d = new CreateDatabase(this, dbName, createNewDB);
           Thread t = new Thread(d);
           t.start();
           dispose();
         } catch (ClassNotFoundException ex) {
-          MyUsefulFunctions.log(Level.SEVERE, null, ex);
+          MySeriesLogger.logger.log(Level.SEVERE, "Database library not found", ex);
         } catch (SQLException ex) {
-          MyUsefulFunctions.log(Level.SEVERE, null, ex);
+          MySeriesLogger.logger.log(Level.SEVERE, "An sql exception occured", ex);
         } catch (IOException ex) {
-          MyUsefulFunctions.log(Level.SEVERE, null, ex);
+          MySeriesLogger.logger.log(Level.SEVERE, "Could not read/write to database", ex);
         }
       } else {
-        MyUsefulFunctions.log(Level.WARNING, "The database name should not be empty");
+        MySeriesLogger.logger.log(Level.WARNING, "The database name should not be empty");
         MyMessages.error("Empty name", "The database name should not be empty");
       }
     }//GEN-LAST:event_bt_okActionPerformed
@@ -361,10 +349,14 @@ public class StartPanel extends MyDraggable {
    * @throws javax.swing.UnsupportedLookAndFeelException
    */
   public void startMySeries() throws IOException, ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+    MySeriesLogger.logger.log(Level.INFO, "Setting the database to " + dbName);
     Options.setOption(Options.DB_NAME, dbName);
+    MySeriesLogger.logger.log(Level.INFO, "Saving options");
     Options.save();
-    MyUsefulFunctions.log(Level.INFO, "MySerieS loading...");
+    MySeriesLogger.logger.log(Level.FINE, "Options saved");
+    MySeriesLogger.logger.log(Level.INFO, "MySerieS loading...");
     MySeries mySeries = new MySeries();
+    MySeriesLogger.logger.log(Level.INFO, "Closing window");
     dispose();
   }
 
@@ -377,56 +369,69 @@ public class StartPanel extends MyDraggable {
   public static void main(String[] args) {
     String[] lafs;
     try {
-
       // Get options
       Options.getOptions();
       //Create the logger
       MySeries.createLogger();
-      MyUsefulFunctions.log(Level.INFO, "=========================");
+      MySeriesLogger.logger.log(Level.FINE, "Logger created");
       if (Options.toBoolean(Options.USE_SKIN)) {
+        MySeriesLogger.logger.log(Level.INFO, "Create Skin");
         Skin skin = new Skin(Options.toColor(Options.SKIN_COLOR));
+        MySeriesLogger.logger.log(Level.FINE, "Skin created");
+        MySeriesLogger.logger.log(Level.INFO, "Apply skin");
         Skin.applySkin();
+        MySeriesLogger.logger.log(Level.FINE, "Skin applied");
       } else {
+        MySeriesLogger.logger.log(Level.INFO, "No Skin is used");
         Skin skin = new Skin(Color.GRAY);
-        //Skin.applySkin();
+        MySeriesLogger.logger.log(Level.INFO, "Loading look and feel");
         String laf = Options.toString(Options.LOOK_AND_FEEL);
         if (!laf.equals("")) {
           String className = LookAndFeels.getClassName(laf);
           if (className != null) {
             UIManager.setLookAndFeel(className);
+            MySeriesLogger.logger.log(Level.FINE, laf + " look and feel loaded");
           } else {
+            MySeriesLogger.logger.log(Level.WARNING, "Could not load " + laf + " look and feel");
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            MySeriesLogger.logger.log(Level.FINE, "Default look and feel loaded");
           }
         } else {
+          MySeriesLogger.logger.log(Level.WARNING, "No look and feel defined");
           UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+          MySeriesLogger.logger.log(Level.FINE, "Default look and feel loaded");
         }
-
-
       }
-
+      MySeriesLogger.logger.log(Level.INFO, "Setting font and font sizes");
       MyFont.SetMyFont();
+      MySeriesLogger.logger.log(Level.FINE, "Font and font sizes are set to "
+          + Options.toString(Options.FONT_FACE) + " " + Options.toFloat(Options.FONT_SIZE) + "pts");
 
       //Check Desktop supported
+      MySeriesLogger.logger.log(Level.INFO, "Checking desktop support");
       DesktopSupport ds = new DesktopSupport();
-
+      MySeriesLogger.logger.log(Level.FINE, "Desktop is supported by the OS");
+      MySeriesLogger.logger.log(Level.INFO, "Setting tooltip delay");
       ToolTipManager.sharedInstance().setDismissDelay(50000);
 
       //create dirs
-      MyUsefulFunctions.log(Level.INFO, "Checking directories");
+      MySeriesLogger.logger.log(Level.INFO, "Checking and creating directories");
       MyUsefulFunctions.checkDir(Options._USER_DIR_ + Database.PATH);
       MyUsefulFunctions.checkDir(Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH);
       MyUsefulFunctions.checkDir(Options._USER_DIR_ + TorrentConstants.TORRENTS_PATH);
       MyUsefulFunctions.checkDir(Options._USER_DIR_ + Feed.FEEDS_PATH);
-      // Create the default db if not exists and create the conn, stmt
 
+      // Create the default db if not exists and create the conn, stmt
+      MySeriesLogger.logger.log(Level.INFO, "Checking if database exists or not");
       if (Options.toString(Options.DB_NAME).equals("")
           || Options.toString(Options.DB_NAME).equals("null")
           || !DBConnection.databaseExists(Options.toString(Options.DB_NAME))) {
         StartPanel s = new StartPanel();
       } else {
         // Check if database is in the right format
+        MySeriesLogger.logger.log(Level.INFO, "Check database format");
         if (DBConnection.checkDatabase(Options.toString(Options.DB_NAME))) {
-          MyUsefulFunctions.log(Level.INFO, "MySerieS loading...");
+          MySeriesLogger.logger.log(Level.INFO, "MySerieS loading...");
           MySeries m = new MySeries();
         } else {
           MyMessages.error("Invalid Database", "The selected database seems to be invalid.\nPlease select another one or create a new one.");
@@ -434,19 +439,19 @@ public class StartPanel extends MyDraggable {
         }
       }
     } catch (ClassNotFoundException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     } catch (SQLException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     } catch (InstantiationException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     } catch (IllegalAccessException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     } catch (UnsupportedLookAndFeelException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     } catch (FileNotFoundException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     } catch (IOException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     }
   }
     // Variables declaration - do not modify//GEN-BEGIN:variables

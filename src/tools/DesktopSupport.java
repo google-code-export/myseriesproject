@@ -29,7 +29,7 @@ public class DesktopSupport {
         browseSupport = desktop.isSupported(Desktop.Action.BROWSE);
         mailSupport = desktop.isSupported(Desktop.Action.MAIL);
       } catch (UnsupportedOperationException ex) {
-        MyUsefulFunctions.log(Level.WARNING, "Desktop is not supported in the current OS");
+        MySeriesLogger.logger.log(Level.WARNING, "Desktop is not supported in the current OS");
       }
   }
 

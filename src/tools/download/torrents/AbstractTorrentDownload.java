@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
+import tools.MySeriesLogger;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -69,7 +70,7 @@ public abstract class AbstractTorrentDownload implements TorrentConstants{
         }
       }
     } catch (IOException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     } finally {
       //myseries.MySeries.glassPane.deactivate();
     }
@@ -105,7 +106,7 @@ public abstract class AbstractTorrentDownload implements TorrentConstants{
       Desktop.getDesktop().open(new File(filename));
       form.dispose();
     } catch (IOException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     } finally {
       myseries.MySeries.glassPane.deactivate();
     }

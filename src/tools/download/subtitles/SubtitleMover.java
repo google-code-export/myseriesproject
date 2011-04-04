@@ -9,14 +9,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+import tools.MySeriesLogger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import myComponents.MyUsefulFunctions;
 import myComponents.myFileFilters.SubtitlesFilter;
 import tools.options.Options;
 import myComponents.MyUsefulFunctions;
@@ -77,16 +74,16 @@ public class SubtitleMover {
   private boolean move(File sub, String localDir) {
     try {
       if (MyUsefulFunctions.copyfile(sub.getCanonicalPath(), localDir + "/" + sub.getName())) {
-        MyUsefulFunctions.log(Level.INFO, "Move subtitle " + sub.getName() + " to local folder" );
+        MySeriesLogger.logger.log(Level.INFO, "Move subtitle " + sub.getName() + " to local folder" );
         sub.delete();
         return true;
       } else {
-        MyUsefulFunctions.log(Level.WARNING, "Could not move subtitle " + sub.getName());
+        MySeriesLogger.logger.log(Level.WARNING, "Could not move subtitle " + sub.getName());
       }
     } catch (FileNotFoundException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     } catch (IOException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     }
     return false;
   }

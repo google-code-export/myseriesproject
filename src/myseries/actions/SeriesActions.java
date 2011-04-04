@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import javax.swing.ImageIcon;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
+import tools.MySeriesLogger;
 import myComponents.myEvents.MyEvent;
 import myComponents.myEvents.MyEventHandler;
 import myComponents.myGUI.MyImagePanel;
@@ -45,7 +46,7 @@ public class SeriesActions {
       MySeries.glassPane.activate(null);
       AdminSeries a = new AdminSeries(m, Series.getCurrentSerial());
     } catch (SQLException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     }
 
   }
@@ -58,7 +59,7 @@ public class SeriesActions {
       evt.setSeries(null);
       m.getEvClass().fireMyEvent(evt);
     } catch (SQLException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     }
 
   }
@@ -94,7 +95,7 @@ public class SeriesActions {
         }
         Episodes.updateEpisodesTable();
       } catch (SQLException ex) {
-        MyUsefulFunctions.log(Level.SEVERE, null, ex);
+        MySeriesLogger.logger.log(Level.SEVERE, null, ex);
       }
     }
   }
@@ -102,7 +103,7 @@ public class SeriesActions {
   public static void goToSubtitlePage(MySeries m, String site) {
     try {
       if (!DesktopSupport.isBrowseSupport()) {
-        MyUsefulFunctions.log(Level.WARNING, "Browse is not supported in the current OS");
+        MySeriesLogger.logger.log(Level.WARNING, "Browse is not supported in the current OS");
         MyMessages.error("Browse Error!!!", "Browse is not supported");
         return;
       }
@@ -114,7 +115,7 @@ public class SeriesActions {
       }
       MyUsefulFunctions.browse(uri);
     } catch (URISyntaxException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     }
   }
 
@@ -124,12 +125,12 @@ public class SeriesActions {
       if (f.isDirectory()) {
         DesktopSupport.getDesktop().open(f);
       } else {
-        MyUsefulFunctions.log(Level.WARNING, f.getCanonicalPath() + " is not a directory");
+        MySeriesLogger.logger.log(Level.WARNING, f.getCanonicalPath() + " is not a directory");
         MyMessages.error("Directory error", f.getCanonicalPath() + " is not a directory");
         return;
       }
     } catch (Exception ex) {
-      MyUsefulFunctions.log(Level.WARNING, "Browse is not supported in the current OS");
+      MySeriesLogger.logger.log(Level.WARNING, "Browse is not supported in the current OS");
       MyMessages.error("Browse Error!!!", "Browse is not supported");
       return;
     }
@@ -172,7 +173,7 @@ public class SeriesActions {
       
       MyMessages.message("Update finished", "Updating of series files finished.");
     } catch (SQLException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     } finally {
       Options.setOption(Options.AUTO_FILE_UPDATING, update);
       Options.setOption(Options.AUTO_EXTRACT_ZIPS, unzip);
@@ -194,7 +195,7 @@ public class SeriesActions {
         cSeries.setTvrage_ID(g.tvRageID);
         cSeries.save();
       } catch (SQLException ex) {
-        MyUsefulFunctions.log(Level.SEVERE, null, ex);
+        MySeriesLogger.logger.log(Level.SEVERE, null, ex);
       }
     } else {
       InternetUpdate iu = new InternetUpdate(m, cSeries, site);

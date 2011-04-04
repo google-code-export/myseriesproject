@@ -12,7 +12,7 @@ import java.util.logging.Level;
 import myComponents.MyUsefulFunctions;
 import tools.feeds.Feed;
 import tools.options.Options;
-
+import tools.MySeriesLogger;
 /**
  *
  * @author lordovol
@@ -43,7 +43,7 @@ public class FeedsRecord extends Record {
           this.title = rs.getString("title");
         }
       } catch (SQLException ex) {
-        MyUsefulFunctions.log(Level.SEVERE, null, ex);
+        MySeriesLogger.logger.log(Level.SEVERE, null, ex);
       }
 
     }
@@ -60,7 +60,7 @@ public class FeedsRecord extends Record {
         queryUpdate(sql);
         return true;
       } catch (SQLException ex) {
-        MyUsefulFunctions.log(Level.SEVERE, null, ex);
+        MySeriesLogger.logger.log(Level.SEVERE, null, ex);
         return false;
       }
     }
@@ -81,7 +81,7 @@ public class FeedsRecord extends Record {
       }
       return feeds;
     } catch (SQLException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
       return null;
     }
   }

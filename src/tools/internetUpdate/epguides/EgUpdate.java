@@ -5,6 +5,7 @@
 package tools.internetUpdate.epguides;
 
 import database.DBHelper;
+import tools.MySeriesLogger;
 import database.Database;
 import database.EpisodesRecord;
 import database.SeriesRecord;
@@ -49,7 +50,7 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
     URL epGuides;
     StringBuffer buf = new StringBuffer();
     if (!isConected) {
-      MyUsefulFunctions.log(Level.WARNING, "Could not connect to internet");
+      MySeriesLogger.logger.log(Level.WARNING, "Could not connect to internet");
       MyMessages.internetError();
       return false;
     }
@@ -59,7 +60,7 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
       in = new BufferedReader(new InputStreamReader(epGuides.openStream()));
     } catch (IOException ex) {
       append("<span style='color:red'>(" + series.getFullTitle() + ") could not  find webpage: " + InternetUpdate.EP_GUIDES_URL + series.getTitle().replaceAll(" ", "") + "/" + " </span>");
-      MyUsefulFunctions.log(Level.WARNING, "(" + series.getTitle() + ") could not " + InternetUpdate.EP_GUIDES_URL + series.getTitle().replaceAll(" ", "") + "/", ex);
+      MySeriesLogger.logger.log(Level.WARNING, "(" + series.getTitle() + ") could not " + InternetUpdate.EP_GUIDES_URL + series.getTitle().replaceAll(" ", "") + "/", ex);
       if (series.getTitle().toLowerCase().startsWith("the")) {
         String newTitle = series.getTitle().toLowerCase().replaceFirst(" ", "").replaceAll("((?i)^the)|( )", "");
         try {
@@ -68,10 +69,10 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
           in = new BufferedReader(new InputStreamReader(epGuides.openStream()));
         } catch (IOException ex1) {
           append("<span style='color:red'>(" + series.getFullTitle() + ") could not  find webpage: " + InternetUpdate.EP_GUIDES_URL + newTitle + "/" + " </span>");
-          MyUsefulFunctions.log(Level.WARNING, "(" + series.getTitle() + ") could not " + InternetUpdate.EP_GUIDES_URL + newTitle + "/", ex);
+          MySeriesLogger.logger.log(Level.WARNING, "(" + series.getTitle() + ") could not " + InternetUpdate.EP_GUIDES_URL + newTitle + "/", ex);
           return false;
         } catch (IllegalArgumentException ex1) {
-          MyUsefulFunctions.log(Level.SEVERE, "Illegal argument exception.Possibly the update was cancelled", ex);
+          MySeriesLogger.logger.log(Level.SEVERE, "Illegal argument exception.Possibly the update was cancelled", ex);
           return false;
         }
       }
@@ -116,10 +117,10 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
       append("<span style='color:green'>(" + series.getFullTitle() + ") - OK</span>");
     } catch (IOException ex) {
       append("<span style='color:red'>(" + series.getFullTitle() + ") could not  find webpage: " + InternetUpdate.EP_GUIDES_URL + series.getTitle().replaceAll(" ", "") + "/" + " </span>");
-      MyUsefulFunctions.log(Level.WARNING, "(" + series.getTitle() + ") could not " + InternetUpdate.EP_GUIDES_URL + series.getTitle().replaceAll(" ", "") + "/", ex);
+      MySeriesLogger.logger.log(Level.WARNING, "(" + series.getTitle() + ") could not " + InternetUpdate.EP_GUIDES_URL + series.getTitle().replaceAll(" ", "") + "/", ex);
     } catch (NullPointerException ex) {
     } catch (IllegalArgumentException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, "Illegal argument exception.Possibly the update was cancelled", ex);
+      MySeriesLogger.logger.log(Level.SEVERE, "Illegal argument exception.Possibly the update was cancelled", ex);
       return false;
     }
     return true;
@@ -171,7 +172,7 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
         if (header) {
           iu.label_update_series.setText("Importing episodes of " + curSeries);
           append("<span><b>Importing episodes of " + curSeries + "</b></span>");
-          MyUsefulFunctions.log(Level.INFO, "Importing episodes of " + curSeries);
+          MySeriesLogger.logger.log(Level.INFO, "Importing episodes of " + curSeries);
           header = false;
         }
         Database.beginTransaction();
