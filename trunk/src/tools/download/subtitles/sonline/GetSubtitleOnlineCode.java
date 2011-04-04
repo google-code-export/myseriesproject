@@ -6,6 +6,7 @@ package tools.download.subtitles.sonline;
 
 import database.SeriesRecord;
 import java.io.BufferedReader;
+import tools.MySeriesLogger;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -33,7 +34,7 @@ public class GetSubtitleOnlineCode implements SubtitleConstants{
     try {
       getCode();
     } catch (IOException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
       MyMessages.error("I/O Error", "could not read from input stream");
     }
   }

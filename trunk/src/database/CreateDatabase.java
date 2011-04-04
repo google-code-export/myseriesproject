@@ -16,6 +16,7 @@ import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myseries.MySeries;
 import myseries.StartPanel;
+import tools.MySeriesLogger;
 import tools.options.Options;
 
 /**
@@ -44,13 +45,16 @@ public class CreateDatabase implements Runnable {
     } else {
       DBConnection.db = db;
     }
-
+    MySeriesLogger.logger.log(Level.INFO, "Creating connection with " + db);
     DBConnection.createConnection(DBConnection.db);
+    MySeriesLogger.logger.log(Level.FINE, "Connection created");
     this.stmt = DBConnection.stmt;
     this.startPanel = startPanelForm;
     this.createNewDb = createNewDB;
     if (!createNewDB) {
+      MySeriesLogger.logger.log(Level.INFO, "Checking database");
       DBConnection.checkDatabase(DBConnection.db);
+      MySeriesLogger.logger.log(Level.FINE, "Database checked");
     }
   }
 
@@ -62,31 +66,34 @@ public class CreateDatabase implements Runnable {
       File dbFile = new File(Options._USER_DIR_ + Database.PATH + DBConnection.db);
       if (dbFile.exists() && dbFile.length() > 1 && createNewDb) {
         MyMessages.error("DB Exists!!!", "DB File " + DBConnection.db + " already exists\nAborting...");
-        MyUsefulFunctions.log(Level.WARNING, "DB File already exists");
+        MySeriesLogger.logger.log(Level.WARNING, "DB File already exists");
       } else {
         commit();
       }
     } catch (IOException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, "Could not create the db file", ex);
+      MySeriesLogger.logger.log(Level.SEVERE, "Could not create the db file", ex);
 
     } catch (SQLException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, "SQL exception", ex);
+      MySeriesLogger.logger.log(Level.SEVERE, "SQL exception", ex);
     } catch (ClassNotFoundException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     } catch (InstantiationException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     } catch (IllegalAccessException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     } catch (UnsupportedLookAndFeelException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     } catch (ParseException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     }
   }
 
   private void commit() throws IOException, SQLException, FileNotFoundException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, ParseException {
-    MyUsefulFunctions.log(Level.INFO, "Loading the Database");
+    MySeriesLogger.logger.log(Level.INFO, "Loading the Database");
+    MySeriesLogger.logger.log(Level.INFO, "Creating the tables");
     createTables();
+    MySeriesLogger.logger.log(Level.FINE, "Tables were created");
+    MySeriesLogger.logger.log(Level.INFO, "Starting the application");
     startProgram();
   }
 
@@ -94,13 +101,15 @@ public class CreateDatabase implements Runnable {
     if (startPanel.m == null) {
       startPanel.startMySeries();
     } else {
-      MyUsefulFunctions.log(Level.INFO, "Setting database");
+      MySeriesLogger.logger.log(Level.INFO, "Setting option for database");
       Options.setOption(Options.DB_NAME, startPanel.dbName.trim());
-      MyUsefulFunctions.log(Level.INFO, "Saving options");
+      MySeriesLogger.logger.log(Level.INFO, "Saving options");
       Options.save();
+      MySeriesLogger.logger.log(Level.INFO, "Closing starting panel");
       startPanel.dispose();
+      MySeriesLogger.logger.log(Level.INFO, "Closing Main Window");
       startPanel.m.dispose();
-      MyUsefulFunctions.log(Level.INFO, "Loading MySerieS");
+      MySeriesLogger.logger.log(Level.INFO, "Loading MySerieS");
       new MySeries();
     }
   }
@@ -111,7 +120,7 @@ public class CreateDatabase implements Runnable {
    * @throws IOException
    */
   public void createTables() throws SQLException, IOException {
-    MyUsefulFunctions.log(Level.INFO, "Creating table episodes");
+    MySeriesLogger.logger.log(Level.INFO, "Creating table episodes");
     stmt.executeUpdate("CREATE TABLE IF NOT EXISTS [episodes] "
             + "([episode_ID] INTEGER NOT NULL PRIMARY KEY UNIQUE,"
             + "  [episode] VARCHAR DEFAULT 0,"
@@ -123,8 +132,8 @@ public class CreateDatabase implements Runnable {
             + " [subs] INTEGER DEFAULT 0,"
             + " [seen] INTEGER DEFAULT 0,"
             + " [rate] BOOLEAN DEFAULT 0.0)");
-    MyUsefulFunctions.log(Level.FINE, "Episodes table created");
-    MyUsefulFunctions.log(Level.INFO, "Creating table series");
+    MySeriesLogger.logger.log(Level.FINE, "Episodes table created");
+    MySeriesLogger.logger.log(Level.INFO, "Creating table series");
     stmt.executeUpdate("CREATE TABLE IF NOT EXISTS [series] "
             + "([series_ID] INTEGER NOT NULL ON CONFLICT ABORT "
             + "PRIMARY KEY ON CONFLICT ABORT AUTOINCREMENT UNIQUE ON CONFLICT ABORT, "
@@ -138,14 +147,14 @@ public class CreateDatabase implements Runnable {
             + "[sonline] VARCHAR DEFAULT '',"
             + "[screenshot] VARCHAR DEFAULT '',"
             + "[deleted]INTEGER DEFAULT 0)");
-    MyUsefulFunctions.log(Level.INFO, "Creating table filters");
+    MySeriesLogger.logger.log(Level.INFO, "Creating table filters");
     stmt.executeUpdate("CREATE  TABLE IF NOT EXISTS [filters] "
             + "([filter_ID] INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , "
             + "[title] VARCHAR NOT NULL  DEFAULT 'filter', "
             + "[downloaded] INTEGER NOT NULL  DEFAULT 0, "
             + "[seen] INTEGER NOT NULL  DEFAULT 0, "
             + "[subtitles] INTEGER NOT NULL  DEFAULT 0)");
-    MyUsefulFunctions.log(Level.INFO, "Creating table feeds");
+    MySeriesLogger.logger.log(Level.INFO, "Creating table feeds");
     stmt.executeUpdate("CREATE TABLE IF NOT EXISTS  [feeds]"
             + "([feed_ID] INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE ,"
             + "[title] VARCHAR NOT NULL , "

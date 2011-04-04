@@ -8,6 +8,7 @@ import database.EpisodesRecord;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.InputStream;
+import tools.MySeriesLogger;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -89,7 +90,7 @@ public class Video {
         String[] envp = null; // should inherit the environment
         File startingFolder =  video.getParentFile();
         Process p = Runtime.getRuntime().exec(command, envp,startingFolder);
-        //MyUsefulFunctions.log(Level.INFO, "Executing command " + command[0] + " " + command[1]);
+        //MySeriesLogger.logger.log(Level.INFO, "Executing command " + command[0] + " " + command[1]);
         //rtime.exec(command);
       }
       EpisodesRecord ep = Episodes.getCurrentEpisode();
@@ -97,7 +98,7 @@ public class Video {
       ep.save();
       Episodes.updateEpisodesTable();
     } catch (Exception ex) {
-      MyUsefulFunctions.log(Level.WARNING, "Playing videos is not supported", ex);
+      MySeriesLogger.logger.log(Level.WARNING, "Playing videos is not supported", ex);
       MyMessages.error("Not supported", "Playing videos is not supported by your OS");
     }
   }

@@ -17,6 +17,7 @@ import java.util.logging.SimpleFormatter;
  * @author ssoldatos
  */
 public class MySeriesLogger {
+  public static Logger logger;
 
   /**
    * Cretates a default HTML logger

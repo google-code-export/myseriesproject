@@ -35,6 +35,7 @@ import tools.download.subtitles.Subtitle;
 import tools.languages.LangsList;
 import tools.languages.Language;
 import tools.options.Options;
+import tools.MySeriesLogger;
 
 /**
  * The admin episodes panel
@@ -92,7 +93,7 @@ public class AdminEpisodes extends MyDraggable {
      * @throws java.io.IOException
      */
     private void getLatestEpisode() throws SQLException, IOException {
-        MyUsefulFunctions.log(Level.INFO, "Get the latest episode");
+        MySeriesLogger.logger.log(Level.INFO, "Get the latest episode");
         Vector<EpisodesRecord> episodes = DBHelper.getEpisodesBySql(
                 "select * from episodes where series_ID = "
                 + seriesRecord.getSeries_ID() + " order by CAST(episode AS INT) desc limit 1");
@@ -311,12 +312,12 @@ public class AdminEpisodes extends MyDraggable {
         try {
             episodeRecord.setEpisode(Integer.parseInt(spinner_episode.getValue().toString()));
         } catch (NumberFormatException ex) {
-            MyUsefulFunctions.log(Level.WARNING, "Episode must be an integer");
+            MySeriesLogger.logger.log(Level.WARNING, "Episode must be an integer");
             MyMessages.error("Not an integer", "Episode must be an integer");
             return;
         }
         if (textfield_title.getText().trim().equals("")) {
-            MyUsefulFunctions.log(Level.WARNING, "Episode title must not be blank");
+            MySeriesLogger.logger.log(Level.WARNING, "Episode title must not be blank");
             MyMessages.error("No Title!!!", "The episode title must not be blank");
             return;
         }
@@ -326,7 +327,7 @@ public class AdminEpisodes extends MyDraggable {
         SimpleDateFormat f = new SimpleDateFormat(EpisodesRecord.MYSQL_DATE_FORMAT);
         String aired;
         try {
-            MyUsefulFunctions.log(Level.INFO, "Adding episode " + episodeRecord.getTitle());
+            MySeriesLogger.logger.log(Level.INFO, "Adding episode " + episodeRecord.getTitle());
             if (dateChooser.getDate() == null) {
                 aired = f.format(Calendar.getInstance().getTime());
             } else {
@@ -337,12 +338,12 @@ public class AdminEpisodes extends MyDraggable {
             Episodes.getCurrentSeriesEpisodes();
             dispose();
             MySeries.glassPane.deactivate();
-            MyUsefulFunctions.log(Level.INFO, "Episode added");
+            MySeriesLogger.logger.log(Level.INFO, "Episode added");
         } catch (SQLException ex) {
-            MyUsefulFunctions.log(Level.SEVERE, "There was an error while writting the episode to the database", ex);
+            MySeriesLogger.logger.log(Level.SEVERE, "There was an error while writting the episode to the database", ex);
             MyMessages.error("SQL Error!!!", "There was an error while writting the episode to the database");
         } catch (NullPointerException ex) {
-            MyUsefulFunctions.log(Level.WARNING, "The date is not in the right format");
+            MySeriesLogger.logger.log(Level.WARNING, "The date is not in the right format");
             MyMessages.error("Date Error!!!", "The date is not in the right format");
         }
     }
@@ -370,7 +371,7 @@ public class AdminEpisodes extends MyDraggable {
                 MyMessages.error("Episodes Form",group.getErrorMessage());
             }
         } catch (IOException ex) {
-            MyUsefulFunctions.log(Level.SEVERE, null, ex);
+            MySeriesLogger.logger.log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
             Logger.getLogger(AdminEpisodes.class.getName()).log(Level.SEVERE, null, ex);
         }

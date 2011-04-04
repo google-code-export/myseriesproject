@@ -11,6 +11,7 @@ import database.SeriesRecord;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import tools.MySeriesLogger;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Vector;
@@ -59,7 +60,7 @@ public class ScheduleMouseListener extends MouseAdapter {
             pop.show(table, p.x, p.y);
           }
         } catch (SQLException ex) {
-          MyUsefulFunctions.log(Level.SEVERE, null, ex);
+          MySeriesLogger.logger.log(Level.SEVERE, null, ex);
         }
       }
     }

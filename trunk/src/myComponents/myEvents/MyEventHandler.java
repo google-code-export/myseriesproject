@@ -18,6 +18,7 @@ import myseries.episodes.Episodes;
 import myseries.series.Series;
 import tools.options.Options;
 import myComponents.MyUsefulFunctions;
+import tools.MySeriesLogger;
 /**
  *
  * @author ssoldatos
@@ -78,7 +79,7 @@ public class MyEventHandler implements MyEventListener {
         Menus.setEpisodesPopup(evt.getSeries(), evt.getEpisode(), evt.isSingleEpisode(), evt.isEpisodesPanel());
       }
     } catch (SQLException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     }
   }
 }

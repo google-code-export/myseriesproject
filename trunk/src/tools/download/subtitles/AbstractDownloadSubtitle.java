@@ -12,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import tools.MySeriesLogger;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLConnection;
@@ -83,7 +84,7 @@ public abstract class AbstractDownloadSubtitle {
             }
             form.label_message.setText("Subtitle downloaded and extracted");
           } catch (Exception ex) {
-            MyUsefulFunctions.log(Level.WARNING, "Could not extract subtitle file", ex);
+            MySeriesLogger.logger.log(Level.WARNING, "Could not extract subtitle file", ex);
           }
           //openZip(filename);
         }

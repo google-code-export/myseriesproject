@@ -13,6 +13,7 @@ package tools.internetUpdate.tvrage;
 import database.DBHelper;
 import database.SeriesRecord;
 import java.awt.Dialog.ModalityType;
+import tools.MySeriesLogger;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import javax.swing.ComboBoxModel;
@@ -103,7 +104,7 @@ public class TrGetId extends MyDraggable {
 
   private void getID() {
     if (!isConected) {
-      MyUsefulFunctions.log(Level.WARNING, "Could not connect to internet");
+      MySeriesLogger.logger.log(Level.WARNING, "Could not connect to internet");
       MyMessages.internetError();
       bt_cancelActionPerformed(null);
       return;
@@ -115,7 +116,7 @@ public class TrGetId extends MyDraggable {
     setModalityType(ModalityType.MODELESS);
     pack();
     setVisible(true);
-    MyUsefulFunctions.log(Level.INFO, "Searching for series " + title);
+    MySeriesLogger.logger.log(Level.INFO, "Searching for series " + title);
     SearchTvRage s = new SearchTvRage(title, this);
     Thread t = new Thread(s);
     t.start();
@@ -300,7 +301,7 @@ public class TrGetId extends MyDraggable {
         event.setSeries(cSeries);
         evClass.fireMyEvent(event);
       } catch (SQLException ex) {
-        MyUsefulFunctions.log(Level.SEVERE, null, ex);
+        MySeriesLogger.logger.log(Level.SEVERE, null, ex);
         MyMessages.error("SQL Error", "TvRage ID could not be saved in database");
       }
     }

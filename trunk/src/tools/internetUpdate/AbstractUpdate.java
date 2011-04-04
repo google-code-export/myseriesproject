@@ -9,6 +9,7 @@ import database.EpisodesRecord;
 import database.SeriesRecord;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import tools.MySeriesLogger;
 import java.util.Vector;
 import java.util.logging.Level;
 import myComponents.MyMessages;
@@ -65,7 +66,7 @@ public abstract class AbstractUpdate {
 
     public void run() {
         start = System.currentTimeMillis();
-        MyUsefulFunctions.log(Level.INFO, "Updating...");
+        MySeriesLogger.logger.log(Level.INFO, "Updating...");
         update();
         if (!isConected) {
             MySeries.glassPane.deactivate();
@@ -135,14 +136,14 @@ public abstract class AbstractUpdate {
             if (list.size() > 0) {
                 updateEpisodes();
             } else {
-                MyUsefulFunctions.log(Level.WARNING, "Nothing to update");
+                MySeriesLogger.logger.log(Level.WARNING, "Nothing to update");
                 MyMessages.error("No Update!!!", "Nothing to update");
                 MySeries.glassPane.deactivate();
                 iu.dispose();
             }
 
         } catch (SQLException ex) {
-            MyUsefulFunctions.log(Level.WARNING, "Could not get the series from the database", ex);
+            MySeriesLogger.logger.log(Level.WARNING, "Could not get the series from the database", ex);
             MyMessages.error("SQL Error!!!", "Could not get the series from the database");
         }
     }

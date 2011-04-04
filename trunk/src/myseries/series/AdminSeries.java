@@ -13,6 +13,7 @@ package myseries.series;
 import java.util.logging.Logger;
 import javax.swing.event.DocumentEvent;
 import myComponents.myGUI.CopyScreenshot;
+import tools.MySeriesLogger;
 import java.io.IOException;
 import myComponents.MyUsefulFunctions;
 import database.SeriesRecord;
@@ -526,10 +527,10 @@ public class AdminSeries extends MyDraggable {
                     SeriesActions.internetUpdateSeries(m, InternetUpdate.TV_RAGE_NAME);
                 }
             } catch (SQLException ex) {
-                MyUsefulFunctions.log(Level.SEVERE, "SQL error occured", ex);
+                MySeriesLogger.logger.log(Level.SEVERE, "SQL error occured", ex);
             }
         } catch (NumberFormatException ex) {
-            MyUsefulFunctions.log(Level.WARNING, "Season must be a number", ex);
+            MySeriesLogger.logger.log(Level.WARNING, "Season must be a number", ex);
             MyMessages.error("Season not a number!!!", "Season must be a number");
         }
     }

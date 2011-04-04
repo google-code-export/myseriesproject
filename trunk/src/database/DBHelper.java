@@ -14,7 +14,7 @@ import java.util.logging.Level;
 import myseries.schedule.ScheduleEvent;
 import tools.languages.LangsList;
 import myComponents.MyUsefulFunctions;
-
+import tools.MySeriesLogger;
 /**
  *
  * @author lordovol
@@ -211,7 +211,7 @@ public class DBHelper {
     try {
       return getEpisodesBySql(sql);
     } catch (SQLException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
       return null;
     }
 
@@ -239,7 +239,7 @@ public class DBHelper {
       }
       return events;
     } catch (SQLException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
       return events;
     }
   }
@@ -252,7 +252,7 @@ public class DBHelper {
     try {
       return getEpisodesBySql(sql);
     } catch (SQLException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
       return null;
     }
   }
@@ -263,7 +263,7 @@ public class DBHelper {
       ResultSet rs = DBConnection.conn.createStatement().executeQuery(sql);
       return rs.getInt("season");
     } catch (SQLException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
       return 0;
     }
   }

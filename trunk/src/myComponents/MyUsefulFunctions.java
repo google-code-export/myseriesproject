@@ -51,6 +51,7 @@ import myComponents.myTableCellRenderers.MySubtitlesCellRenderer;
 import myseries.series.Series;
 import sdialogs.Ask;
 import tools.DesktopSupport;
+import tools.MySeriesLogger;
 import tools.Skin;
 import tools.download.subtitles.SubtitleConstants;
 import tools.languages.LangsList;
@@ -530,9 +531,9 @@ public class MyUsefulFunctions {
   public static void checkDir(String dirPath) {
     if (!new File(dirPath).isDirectory()) {
       if (new File(dirPath).mkdir()) {
-        MyUsefulFunctions.log(Level.INFO, "Created directory " + dirPath);
+        MySeriesLogger.logger.log(Level.INFO, "Created directory " + dirPath);
       } else {
-        MyUsefulFunctions.log(Level.SEVERE, "Could not create directory " + dirPath);
+        MySeriesLogger.logger.log(Level.SEVERE, "Could not create directory " + dirPath);
       }
     }
   }
@@ -834,7 +835,7 @@ public class MyUsefulFunctions {
       try {
         DesktopSupport.getDesktop().browse(uri);
       } catch (IOException ex) {
-        MyUsefulFunctions.log(Level.SEVERE, null, ex);
+        MySeriesLogger.logger.log(Level.SEVERE, null, ex);
       }
     } else {
       MyMessages.error("Open browser", "Your OS doesn't support opening a browser window");
@@ -914,13 +915,6 @@ public class MyUsefulFunctions {
     return str.replaceAll("[\\\\ /:*?\"<>|]", "_");
   }
 
-  public static void log(Level l, String message,Throwable ex){
-    myseries.MySeries.logger.log(l, message, ex);
-  }
-
-  public static void log(Level l, String message){
-    myseries.MySeries.logger.log(l, message);
-  }
 
   private MyUsefulFunctions() {
   }

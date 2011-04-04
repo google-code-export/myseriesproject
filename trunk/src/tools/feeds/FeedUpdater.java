@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import tools.options.Options;
+import tools.MySeriesLogger;
 
 /**
  *
@@ -89,7 +90,7 @@ public class FeedUpdater implements Runnable {
       outStream.close();
     } catch (IOException ex) {
       //MyMessages.error("Feed reader", "Could not read feed from: " + feed.getUrl());
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     }
   }
 }

@@ -15,6 +15,7 @@ import com.googlecode.svalidators.formcomponents.ValidationGroup;
 import com.googlecode.svalidators.validators.RequiredValidator;
 import database.EpisodesRecord;
 import database.SeriesRecord;
+import tools.MySeriesLogger;
 import help.HelpWindow;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -374,13 +375,13 @@ public class IsohuntForm extends AbstractTorrentForm implements TorrentConstants
             return new URI(address + query);
         } catch (URISyntaxException ex) {
             MyMessages.error("Wrong url", "Wrong url " + address + query);
-            MyUsefulFunctions.log(Level.SEVERE, null, ex);
+            MySeriesLogger.logger.log(Level.SEVERE, null, ex);
             return null;
         } catch (UnsupportedEncodingException ex) {
-            MyUsefulFunctions.log(Level.SEVERE, null, ex);
+            MySeriesLogger.logger.log(Level.SEVERE, null, ex);
             return null;
         } catch (IOException ex) {
-            MyUsefulFunctions.log(Level.SEVERE, null, ex);
+            MySeriesLogger.logger.log(Level.SEVERE, null, ex);
             return null;
         }
     }

@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.util.Iterator;
 import java.util.Vector;
 import java.util.logging.Level;
+import tools.MySeriesLogger;
 import myComponents.myEvents.MyEvent;
 import myComponents.myEvents.MyEventHandler;
 import myComponents.myEvents.MyEventsClass;
@@ -34,9 +35,9 @@ class insertEpisodesInDB implements Runnable {
     try {
       insert();
     } catch (SQLException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     } catch (ParseException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     }
   }
 

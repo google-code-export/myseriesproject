@@ -8,6 +8,7 @@ import database.SeriesRecord;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import tools.MySeriesLogger;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class GetTvSubtitlesCode implements SubtitleConstants{
       this.series = series;
       getCode();
     } catch (IOException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
       MyMessages.error("I/O Error", "could not read from input stream");
     }
   }

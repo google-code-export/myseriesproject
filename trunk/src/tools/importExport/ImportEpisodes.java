@@ -12,6 +12,7 @@ package tools.importExport;
 
 import Exceptions.EpisodeImportFormatException;
 import database.EpisodesRecord;
+import tools.MySeriesLogger;
 import database.SeriesRecord;
 import java.io.BufferedReader;
 import java.io.File;
@@ -330,7 +331,7 @@ public class ImportEpisodes extends MyDraggable {
       try {
         browse();
       } catch (IOException ex) {
-        MyUsefulFunctions.log(Level.SEVERE, "Could not open file", ex);
+        MySeriesLogger.logger.log(Level.SEVERE, "Could not open file", ex);
       }
 }//GEN-LAST:event_button_browseActionPerformed
 
@@ -355,16 +356,16 @@ public class ImportEpisodes extends MyDraggable {
         importEpisodes();
       } catch (FileNotFoundException ex) {
         MyMessages.error("Error!!!", "Could not find episodes file");
-        MyUsefulFunctions.log(Level.SEVERE, "Could not find episodes file", ex);
+        MySeriesLogger.logger.log(Level.SEVERE, "Could not find episodes file", ex);
       } catch (EpisodeImportFormatException ex) {
         MyMessages.error("Error!!!", ex.getMessage());
-        MyUsefulFunctions.log(Level.SEVERE, ex.getMessage(), ex);
+        MySeriesLogger.logger.log(Level.SEVERE, ex.getMessage(), ex);
       } catch (SQLException ex) {
         MyMessages.error("Error!!!", "Could not insert episodes in Database");
-        MyUsefulFunctions.log(Level.SEVERE, "Could not insert episodes in Database", ex);
+        MySeriesLogger.logger.log(Level.SEVERE, "Could not insert episodes in Database", ex);
       } catch (IOException ex) {
         MyMessages.error("Error!!!", "Could not read from file");
-        MyUsefulFunctions.log(Level.SEVERE, "Could not read from file", ex);
+        MySeriesLogger.logger.log(Level.SEVERE, "Could not read from file", ex);
       }
 
     }//GEN-LAST:event_bt_okActionPerformed
@@ -391,7 +392,7 @@ public class ImportEpisodes extends MyDraggable {
         Thread t = new Thread(i);
         t.start();
       } else {
-        MyUsefulFunctions.log(Level.WARNING, "No file selected");
+        MySeriesLogger.logger.log(Level.WARNING, "No file selected");
         MyMessages.error("No file!!!", "No File selected!!!");
       }
     } else {
@@ -450,12 +451,12 @@ public class ImportEpisodes extends MyDraggable {
 
     int returnVal = f.showOpenDialog(null);
     if (returnVal == JFileChooser.CANCEL_OPTION) {
-      MyUsefulFunctions.log(Level.INFO, "Importing aborted");
+      MySeriesLogger.logger.log(Level.INFO, "Importing aborted");
     } else {
       file = f.getSelectedFile();
       textfield_file.setText(file.getCanonicalPath());
       textfield_file.validateValue();
-      MyUsefulFunctions.log(Level.INFO, "Importing episodes in file " + file.getName());
+      MySeriesLogger.logger.log(Level.INFO, "Importing episodes in file " + file.getName());
     }
   }
     // Variables declaration - do not modify//GEN-BEGIN:variables

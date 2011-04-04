@@ -15,6 +15,7 @@ import tools.internetUpdate.tvrage.TrUpdate;
 import database.SeriesRecord;
 import java.util.Vector;
 import java.util.logging.Level;
+import tools.MySeriesLogger;
 import javax.swing.JOptionPane;
 import myComponents.MyMessages;
 import myComponents.myGUI.MyDraggable;
@@ -206,7 +207,7 @@ public class InternetUpdate extends MyDraggable {
     } else {
       return;
     }
-    MyUsefulFunctions.log(Level.INFO, "Starting update");
+    MySeriesLogger.logger.log(Level.INFO, "Starting update");
     t = new Thread(task);
     t.start();
   }

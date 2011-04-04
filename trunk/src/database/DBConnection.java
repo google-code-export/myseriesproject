@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import myComponents.MyMessages;
-import myComponents.MyUsefulFunctions;
+import tools.MySeriesLogger;
 import tools.options.Options;
 
 /**
@@ -121,7 +121,7 @@ public class DBConnection {
           stmt.execute(sqlEpisodes);
         }
         if (!feeds) {
-          MyUsefulFunctions.log(Level.INFO, "Creating table feeds");
+          MySeriesLogger.logger.log(Level.INFO, "Creating table feeds");
           stmt.executeUpdate("CREATE TABLE IF NOT EXISTS  [feeds]"
                   + "([feed_ID] INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE ,"
                   + "[title] VARCHAR NOT NULL , "
@@ -132,12 +132,12 @@ public class DBConnection {
         return true;
       } else {
         MyMessages.error("No Update", "Could not update the database");
-        MyUsefulFunctions.log(Level.SEVERE, "Could not update the database.Exiting...");
+        MySeriesLogger.logger.log(Level.SEVERE, "Could not update the database.Exiting...");
         System.exit(1);
         return false;
       }
     } catch (SQLException ex1) {
-      MyUsefulFunctions.log(Level.SEVERE, "SQL Error.Exiting...", ex1);
+      MySeriesLogger.logger.log(Level.SEVERE, "SQL Error.Exiting...", ex1);
       System.exit(1);
       return true;
     }
@@ -149,7 +149,7 @@ public class DBConnection {
    */
   public static void createConnection(String db) {
     try {
-      MyUsefulFunctions.log(Level.INFO, "Creating database connection");
+      MySeriesLogger.logger.log(Level.INFO, "Creating database connection");
       if (!db.endsWith(Database.EXT)) {
         DBConnection.db = db + Database.EXT;
       } else {
@@ -159,9 +159,9 @@ public class DBConnection {
       conn = DriverManager.getConnection("jdbc:sqlite:" + Options._USER_DIR_ + Database.PATH + DBConnection.db);
       stmt = conn.createStatement();
     } catch (SQLException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, "Could not connect to the SQLite database", ex);
+      MySeriesLogger.logger.log(Level.SEVERE, "Could not connect to the SQLite database", ex);
     } catch (ClassNotFoundException ex) {
-      MyUsefulFunctions.log(Level.SEVERE, "Could not find SQLite class", ex);
+      MySeriesLogger.logger.log(Level.SEVERE, "Could not find SQLite class", ex);
     }
   }
 

@@ -11,6 +11,7 @@
 package tools.download.torrents.eztv;
 
 import database.EpisodesRecord;
+import tools.MySeriesLogger;
 import database.SeriesRecord;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -376,13 +377,13 @@ public class EzTvForm extends AbstractTorrentForm {
             return new URI(address + query);
         } catch (URISyntaxException ex) {
             MyMessages.error("Wrong url", "Wrong url " + address + query);
-            MyUsefulFunctions.log(Level.SEVERE, null, ex);
+            MySeriesLogger.logger.log(Level.SEVERE, null, ex);
             return null;
         } catch (UnsupportedEncodingException ex) {
-            MyUsefulFunctions.log(Level.SEVERE, null, ex);
+            MySeriesLogger.logger.log(Level.SEVERE, null, ex);
             return null;
         } catch (IOException ex) {
-            MyUsefulFunctions.log(Level.SEVERE, null, ex);
+            MySeriesLogger.logger.log(Level.SEVERE, null, ex);
             return null;
         }
     }

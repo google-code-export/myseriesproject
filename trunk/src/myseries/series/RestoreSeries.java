@@ -14,6 +14,7 @@ import database.SeriesRecord;
 import help.HelpWindow;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import tools.MySeriesLogger;
 import java.util.Iterator;
 import java.util.logging.Level;
 import javax.swing.table.DefaultTableModel;
@@ -195,7 +196,7 @@ public class RestoreSeries extends MyDraggable  {
           ser.setDeleted(0);
           ser.save();
         } catch (SQLException ex) {
-          MyUsefulFunctions.log(Level.SEVERE, null, ex);
+          MySeriesLogger.logger.log(Level.SEVERE, null, ex);
         }
       }
     }

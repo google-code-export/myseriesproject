@@ -7,6 +7,7 @@ package tools.internetUpdate.epguides;
 import java.util.logging.Level;
 import myComponents.MyUsefulFunctions;
 import myseries.*;
+import tools.MySeriesLogger;
 
 /**
  *
@@ -35,7 +36,7 @@ public class EgEpisode {
     try {
       return Integer.parseInt(epStr.trim());
     } catch (NumberFormatException ex) {
-      MyUsefulFunctions.log(Level.WARNING, "Wrong episode number : '" + ep + "'");
+      MySeriesLogger.logger.log(Level.WARNING, "Wrong episode number : '" + ep + "'");
       return -1;
     }
   }
@@ -55,7 +56,7 @@ public class EgEpisode {
 
     String[] arr = date.split("[/ ]", -1);
     if (arr.length != 3) {
-      MyUsefulFunctions.log(Level.WARNING, "Wrong episode date : '" + date + "'");
+      MySeriesLogger.logger.log(Level.WARNING, "Wrong episode date : '" + date + "'");
       return "";
     }
     String day = MyUsefulFunctions.padLeft(arr[0].trim(), 2, "0");
@@ -63,16 +64,16 @@ public class EgEpisode {
     try {
       year = Integer.parseInt(arr[2].trim()) < 50 ? "20" + arr[2].trim() : "19" + arr[2].trim();
     } catch (NumberFormatException ex) {
-      MyUsefulFunctions.log(Level.WARNING, "Wrong episode date : '" + date + "'");
+      MySeriesLogger.logger.log(Level.WARNING, "Wrong episode date : '" + date + "'");
       return "";
     }
     String month = arr[1].equals("Jan") ? "01" : arr[1].equals("Feb") ? "02" : arr[1].equals("Mar") ? "03" : arr[1].equals("Apr") ? "04" : arr[1].equals("May") ? "05" : arr[1].equals("Jun") ? "06" : arr[1].equals("Jul") ? "07" : arr[1].equals("Aug") ? "08" : arr[1].equals("Sep") ? "09" : arr[1].equals("Oct") ? "10" : arr[1].equals("Nov") ? "11" : arr[1].equals("Dec") ? "12" : "-1";
     
     if (Integer.parseInt(day) > 31 || Integer.parseInt(day) < 1) {
-      MyUsefulFunctions.log(Level.WARNING, "Wrong episode date : '" + date + "'");
+      MySeriesLogger.logger.log(Level.WARNING, "Wrong episode date : '" + date + "'");
       return "";
     } else if (Integer.parseInt(month) == -1) {
-      MyUsefulFunctions.log(Level.WARNING, "Wrong episode date : '" + date + "'");
+      MySeriesLogger.logger.log(Level.WARNING, "Wrong episode date : '" + date + "'");
       return "";
     } else {
       airDate = year + "-" + month + "-" + day;
