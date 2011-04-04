@@ -16,7 +16,7 @@ import java.util.logging.SimpleFormatter;
  *
  * @author ssoldatos
  */
-public class myLogger {
+public class MySeriesLogger {
 
   /**
    * Cretates a default HTML logger
@@ -70,9 +70,9 @@ public class myLogger {
       logger.addHandler(fh);
       logger.setLevel(Level.ALL);
     } catch (IOException ex) {
-      Logger.getLogger(myLogger.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(MySeriesLogger.class.getName()).log(Level.SEVERE, null, ex);
     } catch (SecurityException ex) {
-      Logger.getLogger(myLogger.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(MySeriesLogger.class.getName()).log(Level.SEVERE, null, ex);
     }
     return logger;
   }
@@ -109,6 +109,6 @@ public class myLogger {
         1);
   }
 
-  private myLogger() {
+  private MySeriesLogger() {
   }
 }

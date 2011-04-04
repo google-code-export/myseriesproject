@@ -910,9 +910,17 @@ public class MyUsefulFunctions {
     return isInArray(SubtitleConstants.EXTENSIONS, ext);
   }
 
-    public static String sanitize(String str) {
-       return  str.replaceAll("[\\\\ /:*?\"<>|]", "_");
-    }
+  public static String sanitize(String str) {
+    return str.replaceAll("[\\\\ /:*?\"<>|]", "_");
+  }
+
+  public static void log(Level l, String message,Throwable ex){
+    myseries.MySeries.logger.log(l, message, ex);
+  }
+
+  public static void log(Level l, String message){
+    myseries.MySeries.logger.log(l, message);
+  }
 
   private MyUsefulFunctions() {
   }

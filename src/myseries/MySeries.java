@@ -96,7 +96,7 @@ import tools.download.subtitles.SubtitleConstants;
 import tools.download.torrents.TorrentConstants;
 import tools.internetUpdate.InternetUpdate;
 import tools.languages.LangsList;
-import tools.myLogger;
+import tools.MySeriesLogger;
 
 /**
  *
@@ -349,7 +349,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
   public static void createLogger() {
     //Create the JVM logger
-    logger = myLogger.createHtmlLogger("MYSERIES", Options._USER_DIR_ + "MySeriesLogs", 262144, true, 1);
+    logger = MySeriesLogger.createHtmlLogger("MYSERIES", Options._USER_DIR_ + "MySeriesLogs", 262144, true, 1);
     logger.setLevel(Level.parse(Options.toString(Options.DEBUG_MODE)));
   }
 
