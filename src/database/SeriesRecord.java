@@ -9,6 +9,8 @@ import myComponents.MyUsefulFunctions;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
+import java.util.logging.Level;
+import tools.MySeriesLogger;
 
 /**
  * The series database record
@@ -61,6 +63,7 @@ public class SeriesRecord extends Record {
    */
   public int save() throws SQLException {
     String sql;
+    MySeriesLogger.logger.log(Level.INFO, "Saving series : {0}",getFullTitle());
     if (this.series_ID != 0) {
       sql = "UPDATE series SET title = '" + this.title + "', season = " + this.getSeason()
           + ", hidden = " + this.getHidden() + ", link ='" + this.getTvSubtitlesCode() + "', internetUpdate  ="

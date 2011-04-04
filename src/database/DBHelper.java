@@ -15,11 +15,13 @@ import myseries.schedule.ScheduleEvent;
 import tools.languages.LangsList;
 import myComponents.MyUsefulFunctions;
 import tools.MySeriesLogger;
+
 /**
  *
  * @author lordovol
  */
 public class DBHelper {
+
   /**
    * The limit of the episodes to fetch 
    */
@@ -33,7 +35,7 @@ public class DBHelper {
    */
   public static EpisodesRecord getEpisodeByID(int episode_ID) throws SQLException {
     String sql = "SELECT * FROM episodes WHERE episode_ID = " + episode_ID;
-    
+    MySeriesLogger.logger.log(Level.INFO, "Getting episode {0}", episode_ID);
     Vector<EpisodesRecord> episodes = getEpisodesBySql(sql);
     return episodes.size() == 1 ? episodes.get(0) : null;
   }
@@ -44,6 +46,7 @@ public class DBHelper {
    * @throws SQLException
    */
   public static Vector<EpisodesRecord> getAllEpisodes() throws SQLException {
+    MySeriesLogger.logger.log(Level.INFO, "Getting all episodes");
     String sql = "SELECT * FROM episodes ";
     return getEpisodesBySql(sql);
   }
@@ -57,6 +60,8 @@ public class DBHelper {
   public static Vector<EpisodesRecord> getEpisodesBySql(String sql) throws SQLException {
     ResultSet rs = DBConnection.conn.createStatement().executeQuery(sql);
     Vector<EpisodesRecord> a = new Vector<EpisodesRecord>();
+    MySeriesLogger.logger.log(Level.INFO, "Getting episodes by sql");
+    MySeriesLogger.logger.log(Level.INFO, sql);
     try {
       while (rs.next()) {
         EpisodesRecord er = new EpisodesRecord();
@@ -70,6 +75,7 @@ public class DBHelper {
         er.setSeen(rs.getInt("seen"));
         er.setRate(rs.getDouble("rate"));
         a.add(er);
+        MySeriesLogger.logger.log(Level.FINE, "Found episode : {0}",er);
       }
       rs.close();
       return a;
@@ -86,6 +92,7 @@ public class DBHelper {
    * @throws SQLException
    */
   public static Vector<FilterRecord> getSavedFilterRecords() throws SQLException {
+    MySeriesLogger.logger.log(Level.INFO, "Getting all filters");
     Vector<FilterRecord> recs = getFilterRecordBySql("SELECT * FROM filters ORDER BY title");
     return recs;
   }
@@ -97,6 +104,7 @@ public class DBHelper {
    * @throws SQLException
    */
   public static FilterRecord getFilterByTitle(String title) throws SQLException {
+    MySeriesLogger.logger.log(Level.INFO, "Get filter : {0}", title);
     Vector<FilterRecord> a = getFilterRecordBySql("SELECT * FROM filters WHERE title = '" + title + "' LIMIT 1");
     if (a.size() == 1) {
       return a.get(0);
@@ -113,7 +121,8 @@ public class DBHelper {
    */
   public static Vector<FilterRecord> getFilterRecordBySql(String sql) throws SQLException {
     ResultSet rs = null;
-
+    MySeriesLogger.logger.log(Level.INFO, "Geting filter record by sql");
+    MySeriesLogger.logger.log(Level.INFO, sql);
     try {
       rs = database.DBConnection.conn.createStatement().executeQuery(sql);
       Vector<FilterRecord> a = new Vector<FilterRecord>();
@@ -124,6 +133,7 @@ public class DBHelper {
         s.setSeen(rs.getInt("seen"));
         s.setSubtitles(rs.getInt("subtitles"));
         s.setTitle(rs.getString("title"));
+        MySeriesLogger.logger.log(Level.FINE, "Found filter: {0}",s);
         a.add(s);
       }
       rs.close();
@@ -141,10 +151,12 @@ public class DBHelper {
    * @throws SQLException
    */
   public static String[] getFiltersTitlesList() throws SQLException {
+    MySeriesLogger.logger.log(Level.INFO, "Getting titles of saved filters");
     Vector<FilterRecord> sfr = getSavedFilterRecords();
     String[] filters = new String[sfr.size()];
     for (int i = 0; i < sfr.size(); i++) {
       filters[i] = sfr.get(i).getTitle();
+      MySeriesLogger.logger.log(Level.FINE, "Found filter title {0}",filters[i]);
     }
     return filters;
   }
@@ -157,7 +169,8 @@ public class DBHelper {
    */
   public static Vector<SeriesRecord> getSeriesBySql(String sql) throws SQLException {
     ResultSet rs = null;
-
+    MySeriesLogger.logger.log(Level.INFO, "Getting series by sql");
+    MySeriesLogger.logger.log(Level.INFO, sql);
     try {
       rs = DBConnection.conn.createStatement().executeQuery(sql);
       Vector<SeriesRecord> a = new Vector<SeriesRecord>();
@@ -172,6 +185,7 @@ public class DBHelper {
         s.setLocalDir(rs.getString("localDir"));
         s.setScreenshot(rs.getString("screenshot"));
         s.setSOnlineCode(rs.getString("sonline"));
+        MySeriesLogger.logger.log(Level.FINE, "Found series: {0}" , s);
         a.add(s);
       }
       rs.close();
@@ -190,6 +204,7 @@ public class DBHelper {
    * @throws SQLException
    */
   public static SeriesRecord getSeriesByID(int series_ID) throws SQLException {
+    MySeriesLogger.logger.log(Level.INFO, "Getting series : {0}", series_ID);
     Vector<SeriesRecord> series = new Vector<SeriesRecord>();
     series = getSeriesBySql("SELECT * FROM series WHERE series_ID = " + series_ID);
     return series.size() == 1 ? series.get(0) : null;
@@ -201,12 +216,14 @@ public class DBHelper {
    * @throws SQLException
    */
   public static Vector<SeriesRecord> getAllSeries() throws SQLException {
-    return getSeriesBySql("SELECT * FROM series WHERE hidden = " + 
-        SeriesRecord.NOT_HIDDEN + " AND deleted = " + SeriesRecord.NOT_DELETED);
+    MySeriesLogger.logger.log(Level.INFO, "Getting all series");
+    return getSeriesBySql("SELECT * FROM series WHERE hidden = "
+        + SeriesRecord.NOT_HIDDEN + " AND deleted = " + SeriesRecord.NOT_DELETED);
 
   }
 
   public static Vector<EpisodesRecord> getSeriesEpisodesByRate(int series_ID) {
+    MySeriesLogger.logger.log(Level.INFO, "Getting series {0} episodes by rating", series_ID);
     String sql = "SELECT * FROM episodes WHERE series_ID = " + series_ID + " AND rate > 0 ORDER BY rate DESC";
     try {
       return getEpisodesBySql(sql);
@@ -221,6 +238,7 @@ public class DBHelper {
     ArrayList<ScheduleEvent> events = new ArrayList<ScheduleEvent>();
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     String date = sdf.format(sDay.getDate());
+    MySeriesLogger.logger.log(Level.INFO, "Getting day events for date : {0}", date);
     String sql = "SELECT series.screenshot as image, episodes.episode AS ep, episodes.title AS title , "
         + "series.title AS series, episodes.downloaded AS downloaded, episodes.seen AS seen FROM "
         + "episodes JOIN series on episodes.series_ID = series.series_ID WHERE "
@@ -228,6 +246,7 @@ public class DBHelper {
     try {
       ResultSet rs = DBConnection.conn.createStatement().executeQuery(sql);
       while (rs.next()) {
+
         ScheduleEvent ev = new ScheduleEvent();
         ev.setSeries(rs.getString("series"));
         ev.setEpisodeNumber(rs.getInt("ep"));
@@ -235,20 +254,21 @@ public class DBHelper {
         ev.setImage(rs.getString("image"));
         ev.setDownloaded(rs.getInt("downloaded"));
         ev.setSeen(rs.getInt("seen"));
+        MySeriesLogger.logger.log(Level.FINE, "Found event : {0}",ev);
         events.add(ev);
       }
       return events;
     } catch (SQLException ex) {
-      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, "Sql exception occured", ex);
       return events;
     }
   }
 
   public static Vector<EpisodesRecord> getSeriesEpisodesByRate(String seriesTitle) {
-
-       String sql = "SELECT episodes.* FROM episodes  JOIN series ON "
-           + "series.series_ID = episodes.series_ID "
-           + "WHERE series.title = '" + seriesTitle + "' AND rate > 0 ORDER BY rate DESC LIMIT "+LIMIT;
+    MySeriesLogger.logger.log(Level.INFO, "Getting series {0} episodes by rate", seriesTitle);
+    String sql = "SELECT episodes.* FROM episodes  JOIN series ON "
+        + "series.series_ID = episodes.series_ID "
+        + "WHERE series.title = '" + seriesTitle + "' AND rate > 0 ORDER BY rate DESC LIMIT " + LIMIT;
     try {
       return getEpisodesBySql(sql);
     } catch (SQLException ex) {
@@ -258,6 +278,7 @@ public class DBHelper {
   }
 
   public static int getSeasonByEpisodeId(int episode_ID) {
+    MySeriesLogger.logger.log(Level.INFO, "Getting season by episode id: {0}", episode_ID);
     try {
       String sql = "SELECT series.season FROM series join episodes ON " + "series.series_ID=episodes.series_ID WHERE episodes.episode_ID=" + episode_ID;
       ResultSet rs = DBConnection.conn.createStatement().executeQuery(sql);

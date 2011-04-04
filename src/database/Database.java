@@ -28,6 +28,7 @@ public class Database implements DatabaseConstants {
    * @return A vector of all the databases
    */
   public static Vector<String> getDatabases() {
+    MySeriesLogger.logger.log(Level.INFO, "Getting databases");
     Vector<String> databases = new Vector<String>();
     File dir = new File(Options._USER_DIR_ + Database.PATH);
     File[] files = dir.listFiles(new FilenameFilter() {
@@ -39,12 +40,14 @@ public class Database implements DatabaseConstants {
     databases.addElement("");
     for (int i = 0; i < files.length; i++) {
       databases.addElement(files[i].getName().replace(EXT, ""));
+      MySeriesLogger.logger.log(Level.FINE, "Found database: {0}" , files[i]);
     }
     return databases;
   }
 
   public static void endTransaction() {
     try {
+      MySeriesLogger.logger.log(Level.INFO, "Ending transaction");
       database.DBConnection.stmt.execute("END TRANSACTION");
       inTransaction=false;
     } catch (SQLException ex) {
@@ -57,6 +60,7 @@ public class Database implements DatabaseConstants {
         
       }
       inTransaction=true;
+      MySeriesLogger.logger.log(Level.INFO, "Beggining transaction");
       database.DBConnection.stmt.execute("BEGIN TRANSACTION");
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, null, ex);

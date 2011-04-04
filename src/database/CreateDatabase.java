@@ -45,16 +45,12 @@ public class CreateDatabase implements Runnable {
     } else {
       DBConnection.db = db;
     }
-    MySeriesLogger.logger.log(Level.INFO, "Creating connection with " + db);
     DBConnection.createConnection(DBConnection.db);
-    MySeriesLogger.logger.log(Level.FINE, "Connection created");
     this.stmt = DBConnection.stmt;
     this.startPanel = startPanelForm;
     this.createNewDb = createNewDB;
     if (!createNewDB) {
-      MySeriesLogger.logger.log(Level.INFO, "Checking database");
       DBConnection.checkDatabase(DBConnection.db);
-      MySeriesLogger.logger.log(Level.FINE, "Database checked");
     }
   }
 
@@ -89,11 +85,7 @@ public class CreateDatabase implements Runnable {
   }
 
   private void commit() throws IOException, SQLException, FileNotFoundException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, ParseException {
-    MySeriesLogger.logger.log(Level.INFO, "Loading the Database");
-    MySeriesLogger.logger.log(Level.INFO, "Creating the tables");
     createTables();
-    MySeriesLogger.logger.log(Level.FINE, "Tables were created");
-    MySeriesLogger.logger.log(Level.INFO, "Starting the application");
     startProgram();
   }
 
@@ -101,9 +93,7 @@ public class CreateDatabase implements Runnable {
     if (startPanel.m == null) {
       startPanel.startMySeries();
     } else {
-      MySeriesLogger.logger.log(Level.INFO, "Setting option for database");
       Options.setOption(Options.DB_NAME, startPanel.dbName.trim());
-      MySeriesLogger.logger.log(Level.INFO, "Saving options");
       Options.save();
       MySeriesLogger.logger.log(Level.INFO, "Closing starting panel");
       startPanel.dispose();

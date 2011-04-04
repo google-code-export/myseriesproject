@@ -51,6 +51,7 @@ public class SaveDatabase {
         try {
             String source = Options._USER_DIR_ + Database.PATH + dbName;
             String dest = Options._USER_DIR_ + Database.PATH + dbName + Database.BACK_UP_EXT;
+            MySeriesLogger.logger.log(Level.INFO, "Taking a backup of the database");
             if (MyUsefulFunctions.copyfile(source, dest)) {
                 MySeriesLogger.logger.log(Level.INFO, "Database backed up!!!");
                 MyMessages.message("Database backed up", "A back up of the older database was taken");
@@ -59,15 +60,16 @@ public class SaveDatabase {
             } else {
             }
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(SaveDatabase.class.getName()).log(Level.SEVERE, null, ex);
+            MySeriesLogger.logger.log(Level.SEVERE, "Database file was not found", ex);
         } catch (IOException ex) {
-            Logger.getLogger(SaveDatabase.class.getName()).log(Level.SEVERE, null, ex);
+            MySeriesLogger.logger.log(Level.SEVERE, "Could not read/write to database", ex);
         }
     }
 
     private boolean overwriteDatabase() {
         File db = new File(Options._USER_DIR_ + Database.PATH + name + Database.EXT);
         if (db.isFile()) {
+          MySeriesLogger.logger.log(Level.INFO, "Overwrite database?");
             return MyMessages.question("File Exists",
                     "File already exists.\nOverwrite it?") == JOptionPane.NO_OPTION ? true : false;
         } else {
@@ -79,6 +81,7 @@ public class SaveDatabase {
         try {
             String source = Options._USER_DIR_ + Database.PATH + Options.toString(Options.DB_NAME);
             String dest = Options._USER_DIR_ + Database.PATH + name + Database.EXT;
+            MySeriesLogger.logger.log(Level.INFO, "Saving database");
             if (MyUsefulFunctions.copyfile(source, dest)) {
                 MySeriesLogger.logger.log(Level.INFO, "Database saved");
                 MyMessages.message("Database saved", "The database was saved with the name " + name + Database.EXT);
@@ -97,6 +100,7 @@ public class SaveDatabase {
 
     private void showSavePane() throws FileNotFoundException, IOException {
         name = MyUsefulFunctions.getInput("Save Database", "Save Database As ");
+        MySeriesLogger.logger.log(Level.INFO, "Saving database {0}",name);
         if (name == null) {
             MyMessages.error("Save Database", "Save Database aborted");
             MySeriesLogger.logger.log(Level.INFO, "Save Database aborted");
