@@ -7,8 +7,10 @@ package myComponents.myGUI.buttons;
 import buttons.Button;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.logging.Level;
 import javax.swing.BorderFactory;
 import javax.swing.border.BevelBorder;
+import tools.MySeriesLogger;
 
 /**
  *
@@ -50,6 +52,8 @@ public abstract class MyAbstractButton extends Button {
 
         @Override
         public void mousePressed(MouseEvent e) {
+            Button b = (buttons.Button)e.getSource();
+            MySeriesLogger.logger.log(Level.INFO, "Button {0} was pressed",b.getType());
             MyAbstractButton.this.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
         }
     }
