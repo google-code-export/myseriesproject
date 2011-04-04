@@ -17,6 +17,7 @@ import java.net.URISyntaxException;
 import java.util.Enumeration;
 import java.util.Properties;
 import java.util.logging.Level;
+import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyDraggable;
 import myseries.MySeries;
 import tools.DesktopSupport;
@@ -289,10 +290,10 @@ public class About extends MyDraggable {
         DesktopSupport.getDesktop().mail(
                 new URI("mailto:lordovol@hotmail.com?subject=MySeries%20v" + MySeries.version));
       } catch (URISyntaxException ex) {
-        MySeries.logger.log(Level.SEVERE, null, ex);
+        MyUsefulFunctions.log(Level.SEVERE, null, ex);
       }
     } catch (IOException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     }
   }//GEN-LAST:event_textArea_contactMouseReleased
 

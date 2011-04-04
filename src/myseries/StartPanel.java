@@ -339,14 +339,14 @@ public class StartPanel extends MyDraggable {
           t.start();
           dispose();
         } catch (ClassNotFoundException ex) {
-          MySeries.logger.log(Level.SEVERE, null, ex);
+          MyUsefulFunctions.log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-          MySeries.logger.log(Level.SEVERE, null, ex);
+          MyUsefulFunctions.log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-          MySeries.logger.log(Level.SEVERE, null, ex);
+          MyUsefulFunctions.log(Level.SEVERE, null, ex);
         }
       } else {
-        MySeries.logger.log(Level.WARNING, "The database name should not be empty");
+        MyUsefulFunctions.log(Level.WARNING, "The database name should not be empty");
         MyMessages.error("Empty name", "The database name should not be empty");
       }
     }//GEN-LAST:event_bt_okActionPerformed
@@ -363,7 +363,7 @@ public class StartPanel extends MyDraggable {
   public void startMySeries() throws IOException, ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
     Options.setOption(Options.DB_NAME, dbName);
     Options.save();
-    MySeries.logger.log(Level.INFO, "MySerieS loading...");
+    MyUsefulFunctions.log(Level.INFO, "MySerieS loading...");
     MySeries mySeries = new MySeries();
     dispose();
   }
@@ -382,7 +382,7 @@ public class StartPanel extends MyDraggable {
       Options.getOptions();
       //Create the logger
       MySeries.createLogger();
-      MySeries.logger.log(Level.INFO, "=========================");
+      MyUsefulFunctions.log(Level.INFO, "=========================");
       if (Options.toBoolean(Options.USE_SKIN)) {
         Skin skin = new Skin(Options.toColor(Options.SKIN_COLOR));
         Skin.applySkin();
@@ -412,7 +412,7 @@ public class StartPanel extends MyDraggable {
       ToolTipManager.sharedInstance().setDismissDelay(50000);
 
       //create dirs
-      MySeries.logger.log(Level.INFO, "Checking directories");
+      MyUsefulFunctions.log(Level.INFO, "Checking directories");
       MyUsefulFunctions.checkDir(Options._USER_DIR_ + Database.PATH);
       MyUsefulFunctions.checkDir(Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH);
       MyUsefulFunctions.checkDir(Options._USER_DIR_ + TorrentConstants.TORRENTS_PATH);
@@ -426,7 +426,7 @@ public class StartPanel extends MyDraggable {
       } else {
         // Check if database is in the right format
         if (DBConnection.checkDatabase(Options.toString(Options.DB_NAME))) {
-          MySeries.logger.log(Level.INFO, "MySerieS loading...");
+          MyUsefulFunctions.log(Level.INFO, "MySerieS loading...");
           MySeries m = new MySeries();
         } else {
           MyMessages.error("Invalid Database", "The selected database seems to be invalid.\nPlease select another one or create a new one.");
@@ -434,19 +434,19 @@ public class StartPanel extends MyDraggable {
         }
       }
     } catch (ClassNotFoundException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     } catch (SQLException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     } catch (InstantiationException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     } catch (IllegalAccessException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     } catch (UnsupportedLookAndFeelException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     } catch (FileNotFoundException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     } catch (IOException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     }
   }
     // Variables declaration - do not modify//GEN-BEGIN:variables

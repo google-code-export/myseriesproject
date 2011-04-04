@@ -53,7 +53,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
       try {
         subs.add(new Subtitle("Whole season subtitles", new URL(link)));
       } catch (MalformedURLException ex) {
-        myseries.MySeries.logger.log(Level.WARNING, "Malformed url: " + link);
+        MyUsefulFunctions.log(Level.WARNING, "Malformed url: " + link);
          MyMessages.error("Download whole season subtitles", "Malformed url: " + link);
       }
     }
@@ -76,7 +76,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
           sub.url = new URL(TV_SUBTITLES_URL + newPath);
         } catch (MalformedURLException ex) {
           MyMessages.error("Error occured!!!", "Wrong url : " + sub.url);
-          myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+          MyUsefulFunctions.log(Level.SEVERE, null, ex);
           form.dispose();
         }
         download(sub);
@@ -107,11 +107,11 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
         form.dispose();
       }
     } catch (MalformedURLException ex) {
-      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
       MyMessages.error("Error occured!!!", "Wrong url");
       form.dispose();
     } catch (IOException ex) {
-      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
       MyMessages.error("Error occured!!!", "Could not read input stream");
       form.dispose();
     }

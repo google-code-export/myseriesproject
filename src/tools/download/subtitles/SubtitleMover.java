@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 import myComponents.MyUsefulFunctions;
 import myComponents.myFileFilters.SubtitlesFilter;
 import tools.options.Options;
-
+import myComponents.MyUsefulFunctions;
 /**
  *
  * @author ssoldatos
@@ -77,16 +77,16 @@ public class SubtitleMover {
   private boolean move(File sub, String localDir) {
     try {
       if (MyUsefulFunctions.copyfile(sub.getCanonicalPath(), localDir + "/" + sub.getName())) {
-        myseries.MySeries.logger.log(Level.INFO, "Move subtitle {0} to local folder", sub.getName());
+        MyUsefulFunctions.log(Level.INFO, "Move subtitle " + sub.getName() + " to local folder" );
         sub.delete();
         return true;
       } else {
-        myseries.MySeries.logger.log(Level.WARNING, "Could not move subtitle {0}", sub.getName());
+        MyUsefulFunctions.log(Level.WARNING, "Could not move subtitle " + sub.getName());
       }
     } catch (FileNotFoundException ex) {
-      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     } catch (IOException ex) {
-      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     }
     return false;
   }

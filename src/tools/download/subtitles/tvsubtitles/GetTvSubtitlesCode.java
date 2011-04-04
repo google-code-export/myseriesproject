@@ -38,7 +38,7 @@ public class GetTvSubtitlesCode implements SubtitleConstants{
       this.series = series;
       getCode();
     } catch (IOException ex) {
-      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
       MyMessages.error("I/O Error", "could not read from input stream");
     }
   }

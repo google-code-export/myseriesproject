@@ -10,17 +10,12 @@
  */
 package help;
 
-import java.awt.Dimension;
-import java.awt.Rectangle;
 import java.io.IOException;
 import java.util.logging.Level;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.Scrollable;
 import javax.swing.text.BadLocationException;
 import myseries.MySeries;
-import tools.Skin;
-
+import myComponents.MyUsefulFunctions;
 /**
  * Help
  * @author ssoldatos
@@ -264,9 +259,9 @@ setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"
       try {
         followHyperLink();
       } catch (BadLocationException ex) {
-        MySeries.logger.log(Level.SEVERE, "Wrong hyperlink", ex);
+        MyUsefulFunctions.log(Level.SEVERE, "Wrong hyperlink", ex);
       } catch (IOException ex) {
-        MySeries.logger.log(Level.SEVERE, "Could not find the help file", ex);
+        MyUsefulFunctions.log(Level.SEVERE, "Could not find the help file", ex);
       }
     }//GEN-LAST:event_mainContentMouseClicked
 
@@ -276,7 +271,7 @@ setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"
         sel = sel.split(",")[sel.split(",").length - 1].replaceAll("\\[", "").replaceAll("\\]", "");
         setMainContent(sel.trim());
       } catch (NullPointerException ex) {
-        MySeries.logger.log(Level.WARNING, "Null pointer when selecting help tree ", ex);
+        MyUsefulFunctions.log(Level.WARNING, "Null pointer when selecting help tree ", ex);
       }
     }//GEN-LAST:event_tree_helpValueChanged
 
@@ -339,7 +334,7 @@ setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"
       mainContent.setPage(helpURL);
       mainContent.setCaretPosition(0);
     } catch (IOException ex) {
-      MySeries.logger.log(Level.INFO, "Could not set help content to file " + section, ex);
+      MyUsefulFunctions.log(Level.INFO, "Could not set help content to file " + section, ex);
       mainContent.setText("");
       mainContent.setCaretPosition(0);
     }

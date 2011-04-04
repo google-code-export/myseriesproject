@@ -530,9 +530,9 @@ public class MyUsefulFunctions {
   public static void checkDir(String dirPath) {
     if (!new File(dirPath).isDirectory()) {
       if (new File(dirPath).mkdir()) {
-        myseries.MySeries.logger.log(Level.INFO, "Created directory " + dirPath);
+        MyUsefulFunctions.log(Level.INFO, "Created directory " + dirPath);
       } else {
-        myseries.MySeries.logger.log(Level.SEVERE, "Could not create directory " + dirPath);
+        MyUsefulFunctions.log(Level.SEVERE, "Could not create directory " + dirPath);
       }
     }
   }
@@ -834,7 +834,7 @@ public class MyUsefulFunctions {
       try {
         DesktopSupport.getDesktop().browse(uri);
       } catch (IOException ex) {
-        myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+        MyUsefulFunctions.log(Level.SEVERE, null, ex);
       }
     } else {
       MyMessages.error("Open browser", "Your OS doesn't support opening a browser window");

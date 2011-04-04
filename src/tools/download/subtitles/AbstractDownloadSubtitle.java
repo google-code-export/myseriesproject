@@ -83,7 +83,7 @@ public abstract class AbstractDownloadSubtitle {
             }
             form.label_message.setText("Subtitle downloaded and extracted");
           } catch (Exception ex) {
-            myseries.MySeries.logger.log(Level.WARNING, "Could not extract subtitle file", ex);
+            MyUsefulFunctions.log(Level.WARNING, "Could not extract subtitle file", ex);
           }
           //openZip(filename);
         }

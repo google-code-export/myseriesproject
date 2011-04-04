@@ -59,7 +59,7 @@ public class ScheduleMouseListener extends MouseAdapter {
             pop.show(table, p.x, p.y);
           }
         } catch (SQLException ex) {
-          myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+          MyUsefulFunctions.log(Level.SEVERE, null, ex);
         }
       }
     }

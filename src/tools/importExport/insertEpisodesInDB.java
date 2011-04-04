@@ -12,7 +12,7 @@ import myComponents.myEvents.MyEventHandler;
 import myComponents.myEvents.MyEventsClass;
 import myseries.episodes.Episodes;
 import myseries.*;
-
+import myComponents.MyUsefulFunctions;
 /**
  * The task used to import the episodes in the DB
  */
@@ -34,9 +34,9 @@ class insertEpisodesInDB implements Runnable {
     try {
       insert();
     } catch (SQLException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     } catch (ParseException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     }
   }
 

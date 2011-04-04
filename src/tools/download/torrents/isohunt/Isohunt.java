@@ -113,10 +113,10 @@ public class Isohunt extends AbstractTorrentDownload implements Runnable, Torren
       }
       return torrents;
     } catch (JSONException ex) {
-      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
       return torrents;
     } catch (IOException ex) {
-      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
       return torrents;
     }
 

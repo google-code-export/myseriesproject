@@ -148,7 +148,7 @@ public class OptionsPanel extends MyDraggable {
         ois.close();
         return f;
       } catch (Exception ex) {
-        myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+        MyUsefulFunctions.log(Level.SEVERE, null, ex);
         return null;
       }
     } else {
@@ -161,7 +161,7 @@ public class OptionsPanel extends MyDraggable {
         oos.writeObject(f);
         oos.close();
       } catch (IOException ex) {
-        myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+        MyUsefulFunctions.log(Level.SEVERE, null, ex);
         return null;
       }
       return f;
@@ -906,12 +906,12 @@ public class OptionsPanel extends MyDraggable {
       dispose();
       MySeries.glassPane.deactivate();
     } catch (FileNotFoundException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     } catch (IOException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     } catch (IllegalArgumentException ex) {
       MyMessages.error("Wrong Arguments", "The date format pattern you provided is invalid");
-      MySeries.logger.log(Level.WARNING, "The date format "
+      MyUsefulFunctions.log(Level.WARNING, "The date format "
           + String.valueOf(combobox_dateFormat.getSelectedItem())
           + " pattern you provided is invalid", ex);
     }
@@ -921,7 +921,7 @@ public class OptionsPanel extends MyDraggable {
     try {
       DateFormatHelp dfh = new DateFormatHelp();
     } catch (IOException ex) {
-      MySeries.logger.log(Level.SEVERE, "Could not find date format help file", ex);
+      MyUsefulFunctions.log(Level.SEVERE, "Could not find date format help file", ex);
     }
 }//GEN-LAST:event_button_dateFormatHelpActionPerformed
 
@@ -1057,9 +1057,9 @@ public class OptionsPanel extends MyDraggable {
       }
 
     } catch (IOException ex) {
-      MySeries.logger.log(Level.SEVERE, "Could not write to options file", ex);
+      MyUsefulFunctions.log(Level.SEVERE, "Could not write to options file", ex);
     } catch (ParseException ex) {
-      MySeries.logger.log(Level.SEVERE, "Could not parse options objects", ex);
+      MyUsefulFunctions.log(Level.SEVERE, "Could not parse options objects", ex);
     }
   }//GEN-LAST:event_bt_okActionPerformed
 

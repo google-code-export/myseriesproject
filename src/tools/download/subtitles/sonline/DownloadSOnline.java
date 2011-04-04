@@ -48,7 +48,7 @@ public class DownloadSOnline extends AbstractDownloadSubtitle implements Runnabl
     try {
       getSubtitle();
     } catch (IOException ex) {
-      myseries.MySeries.logger.log(Level.WARNING, "Could not read input stream", ex);
+      MyUsefulFunctions.log(Level.WARNING, "Could not read input stream", ex);
       MyMessages.error("IO error", "Could not read from input stream");
     }
     progress.setIndeterminate(false);

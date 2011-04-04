@@ -197,14 +197,14 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     }
 
     // Create connection
-    MySeries.logger.log(Level.INFO, "Creating database connection");
+    MyUsefulFunctions.log(Level.INFO, "Creating database connection");
     DBConnection.createConnection(Options.toString(Options.DB_NAME));
     // Create the GUIs table
     visibleButtons = Options.toIntegerArray(Options.TOOLBAR_BUTTONS);
     if (visibleButtons == null) {
       visibleButtons = Options.getDefaultToolbarButtons();
     }
-    MySeries.logger.log(Level.INFO, "Creating the GUI");
+    MyUsefulFunctions.log(Level.INFO, "Creating the GUI");
     createGUI();
     table_stat_series = new StatSeries();
     table_stat_episodes = new StatEpisodes();
@@ -255,10 +255,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     }
 
     // Create the next episodes obj
-    MySeries.logger.log(Level.INFO, "Creating Next Episodes Object");
+    MyUsefulFunctions.log(Level.INFO, "Creating Next Episodes Object");
 
     //create the series data
-    MySeries.logger.log(Level.INFO, "Creating series data");
+    MyUsefulFunctions.log(Level.INFO, "Creating series data");
     Series.setTableModel_series(tableModel_series);
     Series.updateSeriesTable(false);
     tableModel_series = Series.getTableModel_series();
@@ -269,7 +269,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     imagePanel.setImage(scrImage, true);
 
     //Create the episodes data
-    MySeries.logger.log(Level.INFO, "Creating episodes data");
+    MyUsefulFunctions.log(Level.INFO, "Creating episodes data");
     Episodes.setTableModel_episodes(tableModel_episodes);
     //Episodes.setTabsPanel(tabsPanel);
     Series.selectSeries(this, 0);
@@ -280,7 +280,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     tableEpisodes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
     //Create the filteredSeries data
-    MySeries.logger.log(Level.INFO, "Creating filters data");
+    MyUsefulFunctions.log(Level.INFO, "Creating filters data");
     Filters.setTableModel_filterSeries(tableModel_filterSeries);
     Filters.getFilteredSeries();
 
@@ -341,7 +341,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
   private void setGlassPane() {
     //Set the glass pane
-    MySeries.logger.log(Level.INFO, "Creating the glass pane");
+    MyUsefulFunctions.log(Level.INFO, "Creating the glass pane");
     glassPane = new MyDisabledGlassPane();
     JRootPane root = SwingUtilities.getRootPane(this);
     root.setGlassPane(glassPane);
@@ -1444,7 +1444,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     try {
       seriesMouseReleased(evt);
     } catch (IOException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     }
 }//GEN-LAST:event_tableSeriesMouseClicked
 
@@ -1459,7 +1459,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     try {
       seriesMouseReleased(evt);
     } catch (IOException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     }
 }//GEN-LAST:event_tableSeriesMouseReleased
 
@@ -1605,7 +1605,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
           episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
         } catch (SQLException ex) {
-          MySeries.logger.log(Level.SEVERE, null, ex);
+          MyUsefulFunctions.log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
 //          if (Series.getCurrentSerial().getSeries_ID() > 0) {
 //            PopUpItem_AddEpisodeInEpisodes.setEnabled(true);

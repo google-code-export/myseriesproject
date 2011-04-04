@@ -18,7 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import myComponents.MyMessages;
 import tools.options.Options;
-
+import myComponents.MyUsefulFunctions;
 /**
  *
  * @author lordovol
@@ -57,16 +57,16 @@ public class FeedReader {
         getFeed().getEntries().add(entry);
       }
     } catch (SQLException ex) {
-      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
       MyMessages.error("Feed", "Could not save feed to database");
     } catch (FeedException ex) {
-      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
       MyMessages.error("Feed", "Could not read feed from "+feedRecord.getUrl());
     } catch (IOException ex) {
-      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
       MyMessages.error("Feed", "Could not read feed from "+feedRecord.getUrl());
     } catch (IllegalArgumentException ex) {
-      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
       MyMessages.error("Feed", "Could not read feed from "+feedRecord.getUrl());
     }
   }

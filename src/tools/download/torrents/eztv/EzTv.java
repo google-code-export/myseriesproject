@@ -81,7 +81,7 @@ public class EzTv extends AbstractTorrentDownload implements Runnable, TorrentCo
     ArrayList<AbstractTorrent> torrents = new ArrayList<AbstractTorrent>();
     try {
       progress.setString("Reading the rss data");
-      myseries.MySeries.logger.log(Level.INFO, "Parsing XML");
+      MyUsefulFunctions.log(Level.INFO, "Parsing XML");
       DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
       DocumentBuilder db = dbf.newDocumentBuilder();
       Document doc = db.parse(in);

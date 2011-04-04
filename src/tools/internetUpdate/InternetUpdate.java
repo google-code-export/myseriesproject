@@ -21,7 +21,7 @@ import myComponents.myGUI.MyDraggable;
 import myseries.MySeries;
 import tools.Skin;
 import tools.options.Options;
-
+import myComponents.MyUsefulFunctions;
 /**
  * The internet update form
  * @author lordovol
@@ -206,7 +206,7 @@ public class InternetUpdate extends MyDraggable {
     } else {
       return;
     }
-    MySeries.logger.log(Level.INFO, "Starting update");
+    MyUsefulFunctions.log(Level.INFO, "Starting update");
     t = new Thread(task);
     t.start();
   }

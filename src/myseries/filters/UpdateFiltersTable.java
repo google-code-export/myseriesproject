@@ -9,9 +9,8 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.TableModel;
-import myseries.MySeries;
 import tools.languages.Language;
-
+import myComponents.MyUsefulFunctions;
 /**
  *
  * @author lordovol
@@ -39,9 +38,9 @@ public class UpdateFiltersTable {
           Thread.sleep(100);
           Filters.getFilteredSeries();
         } catch (SQLException ex) {
-          MySeries.logger.log(Level.WARNING, null, ex);
+          MyUsefulFunctions.log(Level.WARNING, null, ex);
         } catch (InterruptedException ex) {
-          MySeries.logger.log(Level.SEVERE, null, ex);
+          MyUsefulFunctions.log(Level.SEVERE, null, ex);
         }
       }
     }

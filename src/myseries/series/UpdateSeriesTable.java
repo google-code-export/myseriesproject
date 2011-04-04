@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.TableModel;
 import myseries.MySeries;
-
+import myComponents.MyUsefulFunctions;
 /**
  *
  * @author lordovol
@@ -30,7 +30,7 @@ public class UpdateSeriesTable {
       try {
         updateSeries(rec);
       } catch (SQLException ex) {
-        MySeries.logger.log(Level.SEVERE, null, ex);
+        MyUsefulFunctions.log(Level.SEVERE, null, ex);
       }
     } else if (e.getType() == -1) {
       //workaround to update the screenshot position when series are added /deleted

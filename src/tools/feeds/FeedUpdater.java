@@ -89,7 +89,7 @@ public class FeedUpdater implements Runnable {
       outStream.close();
     } catch (IOException ex) {
       //MyMessages.error("Feed reader", "Could not read feed from: " + feed.getUrl());
-      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     }
   }
 }

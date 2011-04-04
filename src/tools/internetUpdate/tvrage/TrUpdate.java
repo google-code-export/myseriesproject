@@ -59,9 +59,9 @@ public class TrUpdate extends AbstractUpdate implements Runnable {
       this.series = series;
       list.add(new TrSeriesToUpdate(series));
       InputStream in = null;
-      MySeries.logger.log(Level.INFO, "Getting the url");
+      MyUsefulFunctions.log(Level.INFO, "Getting the url");
       String url = InternetUpdate.TV_RAGE_EPISODE_LIST_URL + series.getTvrage_ID();
-      MySeries.logger.log(Level.INFO, "Reading URL: " + url);
+      MyUsefulFunctions.log(Level.INFO, "Reading URL: " + url);
       URL tvRage = new URL(url);
       in = tvRage.openStream();
       readXML(in);
@@ -69,19 +69,19 @@ public class TrUpdate extends AbstractUpdate implements Runnable {
       append("<span style='color:green'>(" + series.getFullTitle() + ") - OK</span>");
       return true;
     } catch (ParserConfigurationException ex) {
-      MySeries.logger.log(Level.SEVERE, "Could not parse XML", ex);
+      MyUsefulFunctions.log(Level.SEVERE, "Could not parse XML", ex);
       append("<span style='color:red'>(" + series.getFullTitle() + ") could not  get episodes </span>");
       return true;
     } catch (SAXException ex) {
-      MySeries.logger.log(Level.SEVERE, "Could not parse XML", ex);
+      MyUsefulFunctions.log(Level.SEVERE, "Could not parse XML", ex);
       append("<span style='color:red'>(" + series.getFullTitle() + ") could not  get episodes </span>");
       return true;
     } catch (IOException ex) {
-      MySeries.logger.log(Level.SEVERE, "Could not read from tvrage", ex);
+      MyUsefulFunctions.log(Level.SEVERE, "Could not read from tvrage", ex);
       append("<span style='color:red'>(" + series.getFullTitle() + ") could not  get episodes </span>");
       return true;
     } catch (IllegalArgumentException ex){
-      MySeries.logger.log(Level.SEVERE, "Illegal argument exception.Possibly the update was cancelled", ex);
+      MyUsefulFunctions.log(Level.SEVERE, "Illegal argument exception.Possibly the update was cancelled", ex);
       return false;
     }
   }
@@ -102,7 +102,7 @@ public class TrUpdate extends AbstractUpdate implements Runnable {
         if (header) {
           iu.label_update_series.setText("Importing episodes of " + curSeries);
           append("<span><b>Importing episodes of " + curSeries + "</b></span>");
-          MySeries.logger.log(Level.INFO, "Importing episodes of " + curSeries);
+          MyUsefulFunctions.log(Level.INFO, "Importing episodes of " + curSeries);
           header = false;
         }
         Database.beginTransaction();
@@ -155,7 +155,7 @@ public class TrUpdate extends AbstractUpdate implements Runnable {
 
   @SuppressWarnings("unchecked")
   private void readXML(InputStream in) throws ParserConfigurationException, SAXException, IOException {
-    MySeries.logger.log(Level.INFO, "Parsing XML");
+    MyUsefulFunctions.log(Level.INFO, "Parsing XML");
     DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
     DocumentBuilder db = dbf.newDocumentBuilder();
     Document doc = db.parse(in);

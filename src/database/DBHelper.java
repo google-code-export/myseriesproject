@@ -11,10 +11,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
-import java.util.logging.Logger;
-import myComponents.myTableCellRenderers.MyScheduleTableCellRenderer;
 import myseries.schedule.ScheduleEvent;
 import tools.languages.LangsList;
+import myComponents.MyUsefulFunctions;
 
 /**
  *
@@ -212,7 +211,7 @@ public class DBHelper {
     try {
       return getEpisodesBySql(sql);
     } catch (SQLException ex) {
-      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
       return null;
     }
 
@@ -240,7 +239,7 @@ public class DBHelper {
       }
       return events;
     } catch (SQLException ex) {
-      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
       return events;
     }
   }
@@ -253,7 +252,7 @@ public class DBHelper {
     try {
       return getEpisodesBySql(sql);
     } catch (SQLException ex) {
-      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
       return null;
     }
   }
@@ -264,7 +263,7 @@ public class DBHelper {
       ResultSet rs = DBConnection.conn.createStatement().executeQuery(sql);
       return rs.getInt("season");
     } catch (SQLException ex) {
-      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
       return 0;
     }
   }
