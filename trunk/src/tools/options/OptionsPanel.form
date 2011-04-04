@@ -318,11 +318,11 @@
                       <Properties>
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                           <StringArray count="5">
-                            <StringItem index="0" value="OFF"/>
-                            <StringItem index="1" value="ALL"/>
-                            <StringItem index="2" value="SEVERE"/>
-                            <StringItem index="3" value="WARNING"/>
-                            <StringItem index="4" value="INFO"/>
+                            <StringItem index="0" value="ALL"/>
+                            <StringItem index="1" value="SEVERE"/>
+                            <StringItem index="2" value="WARNING"/>
+                            <StringItem index="3" value="INFO"/>
+                            <StringItem index="4" value="OFF"/>
                           </StringArray>
                         </Property>
                         <Property name="selectedItem" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">

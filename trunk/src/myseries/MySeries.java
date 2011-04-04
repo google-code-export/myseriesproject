@@ -349,7 +349,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
   public static void createLogger() {
     //Create the JVM logger
     MySeriesLogger.logger = MySeriesLogger.createHtmlLogger("MYSERIES", Options._USER_DIR_ + "MySeriesLogs", 262144, true, 1);
-    MySeriesLogger.logger.setLevel(Level.parse(Options.toString(Options.DEBUG_MODE)));
+    try{
+        MySeriesLogger.logger.setLevel(Level.parse(Options.toString(Options.DEBUG_MODE)));
+      } catch(IllegalArgumentException ex){
+          MySeriesLogger.logger.setLevel(Level.OFF);
+      }
   }
 
   private void createGUI() throws SQLException {
