@@ -19,67 +19,77 @@ import myseries.series.Series;
 import tools.options.Options;
 import myComponents.MyUsefulFunctions;
 import tools.MySeriesLogger;
+
 /**
  *
  * @author ssoldatos
  */
 public class MyEventHandler implements MyEventListener {
 
-  public static final int SERIES_UPDATE = 0;
-  public static final int EPISODES_UPDATE = 1;
-  public static final int SET_CURRENT_SERIES = 2;
-  public static final int SET_CURRENT_EPISODE = 3;
+    public static final int SERIES_UPDATE = 0;
+    public static final int EPISODES_UPDATE = 1;
+    public static final int SET_CURRENT_SERIES = 2;
+    public static final int SET_CURRENT_EPISODE = 3;
 
-  @Override
-  public void myEventOccured(MyEvent evt) {
-    try {
-      //Add event responses here
-      if (evt.getType() == SERIES_UPDATE) {
-        Series.updateSeriesTable(false);
-      } else if (evt.getType() == SET_CURRENT_SERIES) {
-        SeriesRecord series = evt.getSeries();
-        if (series == null) {
-          series = new SeriesRecord();
-        }
-        Series.setCurrentSerial(series);
+    @Override
+    public void myEventOccured(MyEvent evt) {
+        try {
+            //Add event responses here
+            if (evt.getType() == SERIES_UPDATE) {
+                MySeriesLogger.logger.log(Level.INFO, "Series update event occured");
+                Series.updateSeriesTable(false);
+            } else if (evt.getType() == SET_CURRENT_SERIES) {
+                MySeriesLogger.logger.log(Level.INFO, "Series select event occured");
+                SeriesRecord series = evt.getSeries();
+                if (series == null) {
+                    MySeriesLogger.logger.log(Level.FINE, "New Series event");
+                    series = new SeriesRecord();
+                }
+                Series.setCurrentSerial(series);
 
-        //TABS
-        int epiIndex = MySeries.tabsPanel.getIndexByName(String.valueOf(MySeries.TAB_EPISODES_ID));
-        MySeries.tabsPanel.setTitleAt(epiIndex, series.getFullTitle());
-        //MySeries.tabsPanel.setTitleAt(0, series.getFullTitle());
-        if (evt.isSeriesPanel()) {
-          MySeries.tabsPanel.setSelectedIndex(epiIndex);
-        }
-        //IMAGE SCREENSHOT
-        String imagePath = Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH + "/" + series.getScreenshot();
-        if (new File(imagePath).isFile()) {
-          Image im = new ImageIcon(imagePath).getImage();
-          MySeries.imagePanel.setImage(im, false);
-        } else {
-          Image image = new ImageIcon(getClass().getResource(MyImagePanel.LOGO)).getImage();
-          MySeries.imagePanel.setImage(image, true);
-        }
+                //TABS
+                MySeriesLogger.logger.log(Level.INFO, "Updating series tab");
+                int epiIndex = MySeries.tabsPanel.getIndexByName(String.valueOf(MySeries.TAB_EPISODES_ID));
+                MySeries.tabsPanel.setTitleAt(epiIndex, series.getFullTitle());
+                //MySeries.tabsPanel.setTitleAt(0, series.getFullTitle());
+                if (evt.isSeriesPanel()) {
+                    MySeriesLogger.logger.log(Level.INFO, "Select the tab");
+                    MySeries.tabsPanel.setSelectedIndex(epiIndex);
+                }
+                //IMAGE SCREENSHOT
+                MySeriesLogger.logger.log(Level.INFO, "Updating series screenshot");
+                String imagePath = Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH + "/" + series.getScreenshot();
+                if (new File(imagePath).isFile()) {
+                    Image image = new ImageIcon(imagePath).getImage();
+                    MySeriesLogger.logger.log(Level.FINE, "Screenshot exists. Setting screenshot to {0}", series.getScreenshot());
+                    MySeries.imagePanel.setImage(image, false);
+                } else {
+                    MySeriesLogger.logger.log(Level.FINE, "No screenshot. Setting screenshot to default image");
+                    Image image = new ImageIcon(getClass().getResource(MyImagePanel.LOGO)).getImage();
+                    MySeries.imagePanel.setImage(image, true);
+                }
 
-        Episodes.updateEpisodesTable();
-        int row = MySeries.getSeriesTableRow(series);
-        if (row > -1) {
-          MySeries.tableSeries.setRowSelectionInterval(row, row);
-        } else {
-          if(MySeries.tableSeries.getRowCount()>0){
-          MySeries.tableSeries.removeRowSelectionInterval(0, MySeries.tableSeries.getRowCount() - 1);
-          }
+                Episodes.updateEpisodesTable();
+                int row = MySeries.getSeriesTableRow(series);
+                if (row > -1) {
+                    MySeries.tableSeries.setRowSelectionInterval(row, row);
+                } else {
+                    if (MySeries.tableSeries.getRowCount() > 0) {
+                        MySeries.tableSeries.removeRowSelectionInterval(0, MySeries.tableSeries.getRowCount() - 1);
+                    }
+                }
+                Menus.setSeriesMenus(series);
+            } else if (evt.getType() == SET_CURRENT_EPISODE) {
+                MySeriesLogger.logger.log(Level.INFO, "Episode select event occured");
+                if (!evt.isSingleEpisode()) {
+                } else {
+                    EpisodesRecord episode = evt.getEpisode();
+                    Episodes.setCurrentEpisode(episode.getEpisode());
+                }
+                Menus.setEpisodesPopup(evt.getSeries(), evt.getEpisode(), evt.isSingleEpisode(), evt.isEpisodesPanel());
+            }
+        } catch (SQLException ex) {
+            MySeriesLogger.logger.log(Level.SEVERE, null, ex);
         }
-        Menus.setSeriesMenus(series);
-      } else if (evt.getType() == SET_CURRENT_EPISODE) {
-        if (!evt.isSingleEpisode()) {
-        } else {
-          EpisodesRecord episode = evt.getEpisode();
-          Episodes.setCurrentEpisode(episode.getEpisode());
-        }
-        Menus.setEpisodesPopup(evt.getSeries(), evt.getEpisode(), evt.isSingleEpisode(), evt.isEpisodesPanel());
-      }
-    } catch (SQLException ex) {
-      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     }
-  }
 }
