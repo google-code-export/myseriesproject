@@ -54,13 +54,16 @@ public class Record {
   public static int queryUpdate(String sql) throws SQLException {
     ResultSet rs = null;
     try {
+      MySeriesLogger.logger.log(Level.INFO, "Running update query {0}",sql);
      // System.out.println("save " + sql);
       stmt.executeUpdate(sql);
       rs = stmt.executeQuery("SELECT last_insert_rowid() AS id");
       int ai;
       if (rs.next()) {
         ai = rs.getInt("id");
+        MySeriesLogger.logger.log(Level.FINE, "Row with id {0} was inserted",ai);
       } else {
+        MySeriesLogger.logger.log(Level.FINE, "Row was updated or deleted");
         ai = -1;
       }
       rs.close();

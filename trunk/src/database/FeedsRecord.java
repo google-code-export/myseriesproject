@@ -35,12 +35,14 @@ public class FeedsRecord extends Record {
     super();
     if(feed_ID > 0){
       try {
+        MySeriesLogger.logger.log(Level.INFO, "Getting feed: {0}",feed_ID);
         String sql = "SELECT * FROM feeds WHERE feed_ID = " + feed_ID;
         ResultSet rs = query(sql);
         while (rs.next()) {
           this.feed_ID = feed_ID;
           this.url = rs.getString("url");
           this.title = rs.getString("title");
+          MySeriesLogger.logger.log(Level.FINE, "Feed found : {0}",title);
         }
       } catch (SQLException ex) {
         MySeriesLogger.logger.log(Level.SEVERE, null, ex);
@@ -51,16 +53,19 @@ public class FeedsRecord extends Record {
 
   public static boolean deleteById(int id) {
     if(id > 0){
+      MySeriesLogger.logger.log(Level.INFO, "Deleting feed : {0}",id);
       String sql = "DELETE FROM feeds WHERE feed_ID = "+id;
       try {
         File file = new File(Options._USER_DIR_+Feed.FEEDS_PATH+id);
         if(file.exists()){
+          MySeriesLogger.logger.log(Level.INFO, "Deleting feed file : {0}" , file.getName());
           file.delete();
+          MySeriesLogger.logger.log(Level.FINE, "Feed file deleted");
         }
         queryUpdate(sql);
         return true;
       } catch (SQLException ex) {
-        MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+        MySeriesLogger.logger.log(Level.SEVERE, "Sql exception occured", ex);
         return false;
       }
     }
@@ -70,6 +75,7 @@ public class FeedsRecord extends Record {
   public static ArrayList<FeedsRecord> getAll() {
     ArrayList<FeedsRecord> feeds = new ArrayList<FeedsRecord>();
     try {
+      MySeriesLogger.logger.log(Level.INFO, "Getting all feeds");
       String sql = "SELECT * FROM feeds ORDER BY title";
       ResultSet rs = query(sql);
       while(rs.next()){
@@ -78,6 +84,7 @@ public class FeedsRecord extends Record {
         f.title = rs.getString("title");
         f.url = rs.getString("url");
         feeds.add(f);
+        MySeriesLogger.logger.log(Level.FINE, "Feed found : {0}",f.title);
       }
       return feeds;
     } catch (SQLException ex) {
@@ -93,6 +100,7 @@ public class FeedsRecord extends Record {
    */
   public int save() throws SQLException {
     String sql;
+    MySeriesLogger.logger.log(Level.INFO, "Saving feed");
     if (this.feed_ID != 0) {
       sql = "UPDATE feeds SET title = '" + MyUsefulFunctions.escapeString(this.getTitle()) + "', url = '" + this.getUrl()
               + "' WHERE feed_ID = " + this.feed_ID;

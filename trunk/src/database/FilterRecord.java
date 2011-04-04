@@ -7,7 +7,9 @@ package database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
+import java.util.logging.Level;
 import myComponents.MyUsefulFunctions;
+import tools.MySeriesLogger;
 
 /**
  * A filters record
@@ -40,6 +42,7 @@ public class FilterRecord extends Record {
   public int delete() throws SQLException {
     String sql = "";
     if (this.getFilter_ID() != 0) {
+      MySeriesLogger.logger.log(Level.INFO, "Deleting filter: {0} ",getTitle());
       sql = "DELETE FROM filters WHERE filter_ID = " + this.getFilter_ID();
       return queryUpdate(sql);
     }
@@ -54,6 +57,7 @@ public class FilterRecord extends Record {
   public int save() throws SQLException {
     int result = 0;
     String sql;
+    MySeriesLogger.logger.log(Level.INFO, "Saving filter : {0}",getTitle());
     if (this.getFilter_ID() != 0) {
       sql = "UPDATE filters SET title = '" + this.getTitle() + "', downloaded = " + this.getDownloaded()
               + ", seen = " + this.getSeen() + ", subtitles = " + this.getSubtitles() + " WHERE filter_ID = " + this.getFilter_ID();
