@@ -14,9 +14,6 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import myComponents.MyUsefulFunctions;
-import tools.download.subtitles.Subtitle;
-import tools.download.subtitles.SubtitleCode;
-import tools.download.subtitles.SubtitleConstants;
 import tools.languages.LangsList;
 import tools.languages.Language;
 

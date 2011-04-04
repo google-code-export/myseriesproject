@@ -12,12 +12,9 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Rectangle2D;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
-import javax.swing.TransferHandler;
 import javax.swing.border.Border;
-import tools.Skin;
 
 /**
  *

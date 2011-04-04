@@ -5,9 +5,7 @@
 package myComponents.myTableCellRenderers;
 
 import java.awt.Component;
-import javax.swing.BorderFactory;
 import javax.swing.JTable;
-import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import myComponents.MyUsefulFunctions;
 import tools.download.torrents.isohunt.IsohuntTorrent;
