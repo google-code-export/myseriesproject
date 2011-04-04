@@ -28,6 +28,7 @@ import myComponents.myFileFilters.SubtitlesFilter;
 import myComponents.myFileFilters.ZipFilter;
 import myComponents.myGUI.MyDnDTabbedPane;
 import tools.Unziper;
+import tools.download.subtitles.SubtitleMover;
 import tools.languages.LangsList;
 import tools.languages.Language;
 import tools.options.Options;
@@ -180,6 +181,10 @@ public class Episodes {
     SeriesRecord series = Series.getCurrentSerial();
 
     if (Options.toBoolean(Options.AUTO_FILE_UPDATING) && series.isValidLocalDir()) {
+      ArrayList<SeriesRecord> list = new ArrayList<SeriesRecord>();
+      list.add(series);
+      SubtitleMover sm = new SubtitleMover(list);
+      sm.move();
       if (Options.toBoolean(Options.AUTO_EXTRACT_ZIPS)) {
         unzipSubtitleFiles(series);
       }
