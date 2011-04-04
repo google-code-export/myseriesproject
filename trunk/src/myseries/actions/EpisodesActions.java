@@ -49,9 +49,9 @@ public class EpisodesActions {
       MySeries.glassPane.activate(null);
       AdminEpisodes e = new AdminEpisodes(m, Series.getCurrentSerial(), null);
     } catch (IOException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     } catch (SQLException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     }
   }
 
@@ -60,9 +60,9 @@ public class EpisodesActions {
       MySeries.glassPane.activate(null);
       AdminEpisodes e = new AdminEpisodes(m, Series.getCurrentSerial(), null);
     } catch (IOException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     } catch (SQLException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     }
   }
 
@@ -75,7 +75,7 @@ public class EpisodesActions {
       MySeries.glassPane.activate(null);
       new ImportEpisodes(m);
     } catch (SQLException ex) {
-      MySeries.logger.log(Level.WARNING, "Error while importing the episodes", ex);
+      MyUsefulFunctions.log(Level.WARNING, "Error while importing the episodes", ex);
       MyMessages.error("SQL Error", "There was an error when importing the episodes");
     }
   }
@@ -99,7 +99,7 @@ public class EpisodesActions {
         DBConnection.stmt.execute(sql);
         Episodes.updateEpisodesTable();
       } catch (SQLException ex) {
-        MySeries.logger.log(Level.SEVERE, null, ex);
+        MyUsefulFunctions.log(Level.SEVERE, null, ex);
       }
     } else {
     }
@@ -114,13 +114,13 @@ public class EpisodesActions {
         try {
           DBConnection.stmt.execute(sql);
         } catch (SQLException ex) {
-          MySeries.logger.log(Level.SEVERE, null, ex);
+          MyUsefulFunctions.log(Level.SEVERE, null, ex);
         }
       }
       try {
         Episodes.updateEpisodesTable();
       } catch (SQLException ex) {
-        MySeries.logger.log(Level.SEVERE, null, ex);
+        MyUsefulFunctions.log(Level.SEVERE, null, ex);
       }
     }
   }
@@ -245,7 +245,7 @@ public class EpisodesActions {
         myseries.MySeries.glassPane.deactivate();
       }
     } catch (SQLException ex) {
-      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     }
   }
 
@@ -277,7 +277,7 @@ public class EpisodesActions {
           series.save();
         } catch (SQLException ex) {
           MyMessages.error("SQL Error", "Could not update series link");
-          myseries.MySeries.logger.log(Level.WARNING, "Could not update series link", ex);
+          MyUsefulFunctions.log(Level.WARNING, "Could not update series link", ex);
         }
       }
       if (link != null && !link.equals("")) {
@@ -299,7 +299,7 @@ public class EpisodesActions {
           try {
             ser.save();
           } catch (SQLException ex) {
-            myseries.MySeries.logger.log(Level.WARNING, "Could not save sOnlineCode", ex);
+            MyUsefulFunctions.log(Level.WARNING, "Could not save sOnlineCode", ex);
           }
           getSOnlineSubtitle(sOnlineCode);
         }
@@ -311,7 +311,7 @@ public class EpisodesActions {
       Episodes.updateEpisodesTable();
       Filters.getFilteredSeries();
     } catch (SQLException ex) {
-      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     }
   }
 

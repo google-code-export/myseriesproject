@@ -103,7 +103,7 @@ public class TrGetId extends MyDraggable {
 
   private void getID() {
     if (!isConected) {
-      MySeries.logger.log(Level.WARNING, "Could not connect to internet");
+      MyUsefulFunctions.log(Level.WARNING, "Could not connect to internet");
       MyMessages.internetError();
       bt_cancelActionPerformed(null);
       return;
@@ -115,7 +115,7 @@ public class TrGetId extends MyDraggable {
     setModalityType(ModalityType.MODELESS);
     pack();
     setVisible(true);
-    MySeries.logger.log(Level.INFO, "Searching for series " + title);
+    MyUsefulFunctions.log(Level.INFO, "Searching for series " + title);
     SearchTvRage s = new SearchTvRage(title, this);
     Thread t = new Thread(s);
     t.start();
@@ -300,7 +300,7 @@ public class TrGetId extends MyDraggable {
         event.setSeries(cSeries);
         evClass.fireMyEvent(event);
       } catch (SQLException ex) {
-        MySeries.logger.log(Level.SEVERE, null, ex);
+        MyUsefulFunctions.log(Level.SEVERE, null, ex);
         MyMessages.error("SQL Error", "TvRage ID could not be saved in database");
       }
     }

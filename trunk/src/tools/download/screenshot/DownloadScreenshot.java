@@ -48,7 +48,7 @@ public class DownloadScreenshot {
                 return;
             }
         } catch (IOException ex) {
-            myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+            MyUsefulFunctions.log(Level.SEVERE, null, ex);
         }
 
     }
@@ -68,7 +68,7 @@ public class DownloadScreenshot {
             outStream.close();
             setSuccess(true);
         } catch (IOException ex) {
-            myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+            MyUsefulFunctions.log(Level.SEVERE, null, ex);
         }
     }
 

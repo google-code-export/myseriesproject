@@ -15,7 +15,7 @@ import java.util.logging.Level;
 import myComponents.MyMessages;
 import tools.options.Options;
 import myseries.MySeries;
-
+import myComponents.MyUsefulFunctions;
 /**
  * Copy a series screenshot to the screenshots directory
  * @author lordovol
@@ -34,10 +34,10 @@ public class CopyScreenshot implements Runnable {
     try {
       start();
     } catch (FileNotFoundException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
       MyMessages.error("I/O error", "Screenshot could not be found");
     } catch (IOException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
       MyMessages.error("I/O error", "Screenshot could not be read or written");
     }
   }

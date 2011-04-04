@@ -8,7 +8,7 @@ package tools;
 import java.awt.Desktop;
 import java.util.logging.Level;
 import myseries.*;
-
+import myComponents.MyUsefulFunctions;
 /**
  * Desktop support for the OS
  * @author lordovol
@@ -29,7 +29,7 @@ public class DesktopSupport {
         browseSupport = desktop.isSupported(Desktop.Action.BROWSE);
         mailSupport = desktop.isSupported(Desktop.Action.MAIL);
       } catch (UnsupportedOperationException ex) {
-        MySeries.logger.log(Level.WARNING, "Desktop is not supported in the current OS");
+        MyUsefulFunctions.log(Level.WARNING, "Desktop is not supported in the current OS");
       }
   }
 

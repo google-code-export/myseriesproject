@@ -124,11 +124,11 @@ public class Episodes {
         try {
           if (u.unzip()) {
             if (!u.unzippedFiles.isEmpty()) {
-              myseries.MySeries.logger.log(Level.INFO, "Unzipped " + u.unzippedFiles);
+              MyUsefulFunctions.log(Level.INFO, "Unzipped " + u.unzippedFiles);
             }
           }
         } catch (Exception ex) {
-          myseries.MySeries.logger.log(Level.SEVERE, "Could not unzip " + file, ex);
+          MyUsefulFunctions.log(Level.SEVERE, "Could not unzip " + file, ex);
         }
       }
     }

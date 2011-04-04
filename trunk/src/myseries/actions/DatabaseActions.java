@@ -39,24 +39,24 @@ public class DatabaseActions {
                     m.dispose();
                     new MySeries();
                 } else {
-                    MySeries.logger.log(Level.WARNING, "Selected database is invlid.Not loading...");
+                    MyUsefulFunctions.log(Level.WARNING, "Selected database is invlid.Not loading...");
                     MyMessages.error("Invalid Database", "The database you selected is invalid");
                     loadDatabase(m);
                 }
             } else {
             }
         } catch (ClassNotFoundException ex) {
-            MySeries.logger.log(Level.SEVERE, null, ex);
+            MyUsefulFunctions.log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            MySeries.logger.log(Level.SEVERE, null, ex);
+            MyUsefulFunctions.log(Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            MySeries.logger.log(Level.SEVERE, null, ex);
+            MyUsefulFunctions.log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            MySeries.logger.log(Level.SEVERE, null, ex);
+            MyUsefulFunctions.log(Level.SEVERE, null, ex);
         } catch (UnsupportedLookAndFeelException ex) {
-            MySeries.logger.log(Level.SEVERE, null, ex);
+            MyUsefulFunctions.log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            MySeries.logger.log(Level.SEVERE, null, ex);
+            MyUsefulFunctions.log(Level.SEVERE, null, ex);
         } finally {
             MySeries.glassPane.deactivate();
         }

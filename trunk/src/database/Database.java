@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import tools.options.Options;
+import myComponents.MyUsefulFunctions;
 
 /**
  * Database helper class
@@ -47,7 +48,7 @@ public class Database implements DatabaseConstants {
       database.DBConnection.stmt.execute("END TRANSACTION");
       inTransaction=false;
     } catch (SQLException ex) {
-      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     }
   }
   public static void beginTransaction() {
@@ -58,7 +59,7 @@ public class Database implements DatabaseConstants {
       inTransaction=true;
       database.DBConnection.stmt.execute("BEGIN TRANSACTION");
     } catch (SQLException ex) {
-      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     }
   }
 

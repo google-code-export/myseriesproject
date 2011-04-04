@@ -303,7 +303,7 @@ public class Options {
       try {
         throw new OptionFormatException("Table widths is null");
       } catch (OptionFormatException ex) {
-        MySeries.logger.log(Level.WARNING, ex.getMessage(), ex);
+        MyUsefulFunctions.log(Level.WARNING, ex.getMessage(), ex);
         return getDefaultColumnWidths();
       }
     }
@@ -322,7 +322,7 @@ public class Options {
       try {
         throw new OptionFormatException("Table width is not an integer");
       } catch (OptionFormatException ex1) {
-        MySeries.logger.log(Level.WARNING, ex.getMessage(), ex);
+        MyUsefulFunctions.log(Level.WARNING, ex.getMessage(), ex);
         return getDefaultColumnWidths();
       }
     }
@@ -349,7 +349,7 @@ public class Options {
       try {
         throw new OptionFormatException("Wrong color format for " + value + "- R, G and B not present : '" + strColor + "'");
       } catch (OptionFormatException ex) {
-        MySeries.logger.log(Level.WARNING, ex.getMessage(), ex);
+        MyUsefulFunctions.log(Level.WARNING, ex.getMessage(), ex);
         Options.setOption(Options.SKIN_COLOR, "240,240,240");
         Options.save();
         return c;
@@ -361,7 +361,7 @@ public class Options {
       try {
         throw new OptionFormatException("Wrong color format for " + value + "  - R,G or B not an integer: '" + strColor + "'");
       } catch (OptionFormatException ex1) {
-        MySeries.logger.log(Level.WARNING, ex1.getMessage(), ex1);
+        MyUsefulFunctions.log(Level.WARNING, ex1.getMessage(), ex1);
         Options.setOption(Options.SKIN_COLOR, "240,240,240");
         Options.save();
         return c;
@@ -389,7 +389,7 @@ public class Options {
       try {
         throw new OptionFormatException("value " + String.valueOf(options.get(key)).trim() + " of " + key + " is not an integer, setting it to 0");
       } catch (OptionFormatException ex1) {
-        MySeries.logger.log(Level.WARNING, ex1.getMessage(), ex1);
+        MyUsefulFunctions.log(Level.WARNING, ex1.getMessage(), ex1);
         Options.setOption(key, 0);
         Options.save();
         return 0;
@@ -417,7 +417,7 @@ public class Options {
       try {
         throw new OptionFormatException("value " + String.valueOf(options.get(key)).trim() + " of " + key + " is not a float, setting it to 0.0");
       } catch (OptionFormatException ex1) {
-        MySeries.logger.log(Level.WARNING, ex1.getMessage(), ex1);
+        MyUsefulFunctions.log(Level.WARNING, ex1.getMessage(), ex1);
         Options.setOption(key, 0.0F);
         Options.save();
         return 0.0F;
@@ -440,7 +440,7 @@ public class Options {
       try {
         throw new OptionFormatException(key + " is not a boolean, setting it to false '" + value + "'");
       } catch (OptionFormatException ex1) {
-        MySeries.logger.log(Level.WARNING, ex1.getMessage(), ex1);
+        MyUsefulFunctions.log(Level.WARNING, ex1.getMessage(), ex1);
         Options.setOption(key, "false");
         Options.save();
         return false;
@@ -479,7 +479,7 @@ public class Options {
     try {
       options.put(key, value);
     } catch (NullPointerException ex) {
-      MySeries.logger.log(Level.WARNING, "Null pointer exception", ex);
+      MyUsefulFunctions.log(Level.WARNING, "Null pointer exception", ex);
     }
 
   }
@@ -558,7 +558,7 @@ public class Options {
       }
       out.close();
     } catch (IOException ex) {
-      MySeries.logger.log(Level.SEVERE, "Cannot write the ini file", ex);
+      MyUsefulFunctions.log(Level.SEVERE, "Cannot write the ini file", ex);
     } finally {
       out.close();
     }

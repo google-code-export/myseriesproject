@@ -14,7 +14,7 @@ import javax.swing.JComboBox;
 import myComponents.MyMessages;
 import myseries.filters.Filters;
 import myseries.MySeries;
-
+import myComponents.MyUsefulFunctions;
 /**
  *
  * @author ssoldatos
@@ -25,7 +25,7 @@ public static void filterSubtitles(JComboBox comboBox_subtitles) {
       //Filters.setSubtitles(comboBox_subtitles.getSelectedIndex());
       Filters.getFilteredSeries();
     } catch (SQLException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     }
   }
 
@@ -34,7 +34,7 @@ public static void filterSubtitles(JComboBox comboBox_subtitles) {
       //Filters.setSeen(comboBox_seen.getSelectedIndex());
       Filters.getFilteredSeries();
     } catch (SQLException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     }
   }
   public static void filterDownloaded(JComboBox combobox_downloaded) {
@@ -42,7 +42,7 @@ public static void filterSubtitles(JComboBox comboBox_subtitles) {
       //Filters.setDownloaded(combobox_downloaded.getSelectedIndex());
       Filters.getFilteredSeries();
     } catch (SQLException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     }
   }
    public static void saveFilter(MySeries m) {
@@ -66,7 +66,7 @@ public static void filterSubtitles(JComboBox comboBox_subtitles) {
         m.comboBoxModel_filters = new DefaultComboBoxModel(DBHelper.getFiltersTitlesList());
         MySeries.combobox_filters.setModel(m.comboBoxModel_filters);
       } catch (SQLException ex) {
-        MySeries.logger.log(Level.WARNING, "Error while saving filter", ex);
+        MyUsefulFunctions.log(Level.WARNING, "Error while saving filter", ex);
         MyMessages.error("SQL Error", "There was an error when saving the filter");
       }
     }
@@ -89,7 +89,7 @@ public static void filterSubtitles(JComboBox comboBox_subtitles) {
         m.comboBoxModel_filters = new DefaultComboBoxModel(DBHelper.getFiltersTitlesList());
         MySeries.combobox_filters.setModel(m.comboBoxModel_filters);
       } catch (SQLException ex) {
-        MySeries.logger.log(Level.WARNING, "Error while deleting filter", ex);
+        MyUsefulFunctions.log(Level.WARNING, "Error while deleting filter", ex);
         MyMessages.error("SQL Error", "There was an error when deleting the filter");
       }
     }
@@ -106,7 +106,7 @@ public static void filterSubtitles(JComboBox comboBox_subtitles) {
         MySeries.comboBox_filterSubtitles.setSelectedIndex(f.getSubtitles());
       }
     } catch (SQLException ex) {
-      MySeries.logger.log(Level.WARNING, "Error while applying the  filter", ex);
+      MyUsefulFunctions.log(Level.WARNING, "Error while applying the  filter", ex);
       MyMessages.error("SQL Error", "There was an error when applying the filter");
     }
   }

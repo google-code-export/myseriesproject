@@ -69,7 +69,7 @@ public abstract class AbstractTorrentDownload implements TorrentConstants{
         }
       }
     } catch (IOException ex) {
-      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     } finally {
       //myseries.MySeries.glassPane.deactivate();
     }
@@ -105,7 +105,7 @@ public abstract class AbstractTorrentDownload implements TorrentConstants{
       Desktop.getDesktop().open(new File(filename));
       form.dispose();
     } catch (IOException ex) {
-      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     } finally {
       myseries.MySeries.glassPane.deactivate();
     }

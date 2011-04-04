@@ -13,6 +13,7 @@ import java.text.ParseException;
 import java.util.logging.Level;
 import javax.swing.UnsupportedLookAndFeelException;
 import myComponents.MyMessages;
+import myComponents.MyUsefulFunctions;
 import myseries.MySeries;
 import myseries.StartPanel;
 import tools.options.Options;
@@ -61,30 +62,30 @@ public class CreateDatabase implements Runnable {
       File dbFile = new File(Options._USER_DIR_ + Database.PATH + DBConnection.db);
       if (dbFile.exists() && dbFile.length() > 1 && createNewDb) {
         MyMessages.error("DB Exists!!!", "DB File " + DBConnection.db + " already exists\nAborting...");
-        MySeries.logger.log(Level.WARNING, "DB File already exists");
+        MyUsefulFunctions.log(Level.WARNING, "DB File already exists");
       } else {
         commit();
       }
     } catch (IOException ex) {
-      MySeries.logger.log(Level.SEVERE, "Could not create the db file", ex);
+      MyUsefulFunctions.log(Level.SEVERE, "Could not create the db file", ex);
 
     } catch (SQLException ex) {
-      myseries.MySeries.logger.log(Level.SEVERE, "SQL exception", ex);
+      MyUsefulFunctions.log(Level.SEVERE, "SQL exception", ex);
     } catch (ClassNotFoundException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     } catch (InstantiationException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     } catch (IllegalAccessException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     } catch (UnsupportedLookAndFeelException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     } catch (ParseException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     }
   }
 
   private void commit() throws IOException, SQLException, FileNotFoundException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, ParseException {
-    MySeries.logger.log(Level.INFO, "Loading the Database");
+    MyUsefulFunctions.log(Level.INFO, "Loading the Database");
     createTables();
     startProgram();
   }
@@ -93,13 +94,13 @@ public class CreateDatabase implements Runnable {
     if (startPanel.m == null) {
       startPanel.startMySeries();
     } else {
-      MySeries.logger.log(Level.INFO, "Setting database");
+      MyUsefulFunctions.log(Level.INFO, "Setting database");
       Options.setOption(Options.DB_NAME, startPanel.dbName.trim());
-      MySeries.logger.log(Level.INFO, "Saving options");
+      MyUsefulFunctions.log(Level.INFO, "Saving options");
       Options.save();
       startPanel.dispose();
       startPanel.m.dispose();
-      MySeries.logger.log(Level.INFO, "Loading MySerieS");
+      MyUsefulFunctions.log(Level.INFO, "Loading MySerieS");
       new MySeries();
     }
   }
@@ -110,7 +111,7 @@ public class CreateDatabase implements Runnable {
    * @throws IOException
    */
   public void createTables() throws SQLException, IOException {
-    MySeries.logger.log(Level.INFO, "Creating table episodes");
+    MyUsefulFunctions.log(Level.INFO, "Creating table episodes");
     stmt.executeUpdate("CREATE TABLE IF NOT EXISTS [episodes] "
             + "([episode_ID] INTEGER NOT NULL PRIMARY KEY UNIQUE,"
             + "  [episode] VARCHAR DEFAULT 0,"
@@ -122,8 +123,8 @@ public class CreateDatabase implements Runnable {
             + " [subs] INTEGER DEFAULT 0,"
             + " [seen] INTEGER DEFAULT 0,"
             + " [rate] BOOLEAN DEFAULT 0.0)");
-    myseries.MySeries.logger.log(Level.FINE, "Episodes table created");
-    MySeries.logger.log(Level.INFO, "Creating table series");
+    MyUsefulFunctions.log(Level.FINE, "Episodes table created");
+    MyUsefulFunctions.log(Level.INFO, "Creating table series");
     stmt.executeUpdate("CREATE TABLE IF NOT EXISTS [series] "
             + "([series_ID] INTEGER NOT NULL ON CONFLICT ABORT "
             + "PRIMARY KEY ON CONFLICT ABORT AUTOINCREMENT UNIQUE ON CONFLICT ABORT, "
@@ -137,14 +138,14 @@ public class CreateDatabase implements Runnable {
             + "[sonline] VARCHAR DEFAULT '',"
             + "[screenshot] VARCHAR DEFAULT '',"
             + "[deleted]INTEGER DEFAULT 0)");
-    MySeries.logger.log(Level.INFO, "Creating table filters");
+    MyUsefulFunctions.log(Level.INFO, "Creating table filters");
     stmt.executeUpdate("CREATE  TABLE IF NOT EXISTS [filters] "
             + "([filter_ID] INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , "
             + "[title] VARCHAR NOT NULL  DEFAULT 'filter', "
             + "[downloaded] INTEGER NOT NULL  DEFAULT 0, "
             + "[seen] INTEGER NOT NULL  DEFAULT 0, "
             + "[subtitles] INTEGER NOT NULL  DEFAULT 0)");
-    MySeries.logger.log(Level.INFO, "Creating table feeds");
+    MyUsefulFunctions.log(Level.INFO, "Creating table feeds");
     stmt.executeUpdate("CREATE TABLE IF NOT EXISTS  [feeds]"
             + "([feed_ID] INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE ,"
             + "[title] VARCHAR NOT NULL , "

@@ -380,12 +380,12 @@ public class RenameEpisodes extends MyDraggable {
           if (Boolean.parseBoolean(String.valueOf(model.getValueAt(i, 3)))) {
               File oldFile = new File(series.getLocalDir() + "/" + model.getValueAt(i, 1));
               File newFile = new File(series.getLocalDir() + "/" + model.getValueAt(i, 2));
-              myseries.MySeries.logger.log(Level.INFO, "Renaming :" + oldFile + " to " + newFile);
+              MyUsefulFunctions.log(Level.INFO, "Renaming :" + oldFile + " to " + newFile);
               if (oldFile.renameTo(newFile)) {
-                  myseries.MySeries.logger.log(Level.INFO, "Renamed :" + oldFile + " to " + newFile);
+                  MyUsefulFunctions.log(Level.INFO, "Renamed :" + oldFile + " to " + newFile);
                   renames++;
               } else {
-                  myseries.MySeries.logger.log(Level.INFO, "Fail to rename :" + oldFile + " to " + newFile);
+                  MyUsefulFunctions.log(Level.INFO, "Fail to rename :" + oldFile + " to " + newFile);
                   fails++;
               }
           }
@@ -451,7 +451,7 @@ public class RenameEpisodes extends MyDraggable {
         table_rename.getColumn("Rename").setPreferredWidth(60);
         table_rename.getColumn("Rename").setMaxWidth(60);
         if (oldNames.size() != newNames.size()) {
-            myseries.MySeries.logger.log(Level.WARNING, "An error occured, old names size != new names size");
+            MyUsefulFunctions.log(Level.WARNING, "An error occured, old names size != new names size");
             MyMessages.error("Error", "An error occured, old names size != new names size");
             dispose();
         }

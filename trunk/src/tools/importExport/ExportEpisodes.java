@@ -18,7 +18,7 @@ import myComponents.MyMessages;
 import myComponents.myFileFilters.EpisodesExportFilter;
 import myseries.episodes.Episodes;
 import myseries.series.Series;
-
+import myComponents.MyUsefulFunctions;
 /**
  * Export episodes to a file
  * @author lordovol
@@ -33,7 +33,7 @@ public class ExportEpisodes {
    * It exports the episode number, the episode title and the date when the episodes was aired
    */
   public ExportEpisodes() {
-    MySeries.logger.log(Level.INFO, "Exporting episodes of " + Series.getCurrentSerial().getFullTitle());
+    MyUsefulFunctions.log(Level.INFO, "Exporting episodes of " + Series.getCurrentSerial().getFullTitle());
     JFileChooser f = new JFileChooser();
     f.setApproveButtonText("Export");
     f.setDialogTitle("Export episodes of " + Series.getCurrentSerial().getFullTitle());
@@ -42,14 +42,14 @@ public class ExportEpisodes {
     int returnVal = f.showDialog(null, "Export");
     f.setApproveButtonText("Export");
     if (returnVal == JFileChooser.CANCEL_OPTION) {
-      MySeries.logger.log(Level.INFO, "Exporting aborted");
+      MyUsefulFunctions.log(Level.INFO, "Exporting aborted");
     } else {
       file = f.getSelectedFile();
-      MySeries.logger.log(Level.INFO, "Exporting episodes to " + file.getName());
+      MyUsefulFunctions.log(Level.INFO, "Exporting episodes to " + file.getName());
       try {
         exportEpisodesToFile(file);
       } catch (IOException ex) {
-        MySeries.logger.log(Level.SEVERE, "Could not write to file", ex);
+        MyUsefulFunctions.log(Level.SEVERE, "Could not write to file", ex);
       } catch (SQLException ex) {
         Logger.getLogger(ExportEpisodes.class.getName()).log(Level.SEVERE, "Could not fetch the episodes from the database", ex);
       }

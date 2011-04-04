@@ -23,7 +23,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import tools.internetUpdate.InternetUpdate;
-
+import myComponents.MyUsefulFunctions;
 
 
 /**
@@ -37,7 +37,7 @@ class SearchTvRage implements Runnable {
      private TrGetId tr;
 
     public SearchTvRage(String title, TrGetId tr) {
-      MySeries.logger.log(Level.INFO, "Search");
+      MyUsefulFunctions.log(Level.INFO, "Search");
       this.title = title;
       this.tr = tr;
       // run();
@@ -51,20 +51,20 @@ class SearchTvRage implements Runnable {
         tr.progress.setIndeterminate(false);
         tr.progress.setString("Found  " + results.size() + " results");
       } catch (SAXException ex) {
-        MySeries.logger.log(Level.WARNING, "Could not parse XML file", ex);
+        MyUsefulFunctions.log(Level.WARNING, "Could not parse XML file", ex);
       } catch (ParserConfigurationException ex) {
-        MySeries.logger.log(Level.WARNING, "Could not parse XML file", ex);
+        MyUsefulFunctions.log(Level.WARNING, "Could not parse XML file", ex);
       } catch (IOException ex) {
-        MySeries.logger.log(Level.WARNING, "Could not find the url for " + title, ex);
+        MyUsefulFunctions.log(Level.WARNING, "Could not find the url for " + title, ex);
       }
     }
 
     private void search() throws MalformedURLException, IOException, ParserConfigurationException, SAXException {
       InputStream in = null;
-      MySeries.logger.log(Level.INFO, "Getting the url");
+      MyUsefulFunctions.log(Level.INFO, "Getting the url");
       String url = InternetUpdate.TV_RAGE_SEARCH_SHOW_URL;
       url = url + URLEncoder.encode(title, "UTF-8");
-      MySeries.logger.log(Level.INFO, "Reading URL: " + url);
+      MyUsefulFunctions.log(Level.INFO, "Reading URL: " + url);
       URL tvRage = new URL(url);
       in = tvRage.openStream();
       readXML(in);
@@ -73,7 +73,7 @@ class SearchTvRage implements Runnable {
 
     private void readXML(InputStream in) throws ParserConfigurationException, SAXException, IOException {
 
-      MySeries.logger.log(Level.INFO, "Parsing XML");
+      MyUsefulFunctions.log(Level.INFO, "Parsing XML");
       DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
       DocumentBuilder db = dbf.newDocumentBuilder();
       Document doc = db.parse(in);

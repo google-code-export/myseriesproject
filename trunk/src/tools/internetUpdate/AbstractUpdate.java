@@ -15,7 +15,7 @@ import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myseries.*;
 import tools.options.Options;
-
+import myComponents.MyUsefulFunctions;
 /**
  * The series updater abstract class
  * @author ssoldatos
@@ -65,7 +65,7 @@ public abstract class AbstractUpdate {
 
     public void run() {
         start = System.currentTimeMillis();
-        MySeries.logger.log(Level.INFO, "Updating...");
+        MyUsefulFunctions.log(Level.INFO, "Updating...");
         update();
         if (!isConected) {
             MySeries.glassPane.deactivate();
@@ -135,14 +135,14 @@ public abstract class AbstractUpdate {
             if (list.size() > 0) {
                 updateEpisodes();
             } else {
-                MySeries.logger.log(Level.WARNING, "Nothing to update");
+                MyUsefulFunctions.log(Level.WARNING, "Nothing to update");
                 MyMessages.error("No Update!!!", "Nothing to update");
                 MySeries.glassPane.deactivate();
                 iu.dispose();
             }
 
         } catch (SQLException ex) {
-            MySeries.logger.log(Level.WARNING, "Could not get the series from the database", ex.getMessage());
+            MyUsefulFunctions.log(Level.WARNING, "Could not get the series from the database", ex);
             MyMessages.error("SQL Error!!!", "Could not get the series from the database");
         }
     }

@@ -13,7 +13,7 @@ import myComponents.MyMessages;
 import myseries.MySeries;
 import tools.download.subtitles.Subtitle;
 import tools.languages.Language;
-
+import myComponents.MyUsefulFunctions;
 /**
  * Updates the episodes table
  * @author lordovol
@@ -57,7 +57,7 @@ public class UpdateEpisodesTable {
      // NextEpisodes.createNextEpisodes();
      // NextEpisodes.show();
     } catch (SQLException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
 
 
     } catch (NumberFormatException ex) {

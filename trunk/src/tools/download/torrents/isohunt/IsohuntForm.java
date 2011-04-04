@@ -374,13 +374,13 @@ public class IsohuntForm extends AbstractTorrentForm implements TorrentConstants
             return new URI(address + query);
         } catch (URISyntaxException ex) {
             MyMessages.error("Wrong url", "Wrong url " + address + query);
-            myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+            MyUsefulFunctions.log(Level.SEVERE, null, ex);
             return null;
         } catch (UnsupportedEncodingException ex) {
-            myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+            MyUsefulFunctions.log(Level.SEVERE, null, ex);
             return null;
         } catch (IOException ex) {
-            myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+            MyUsefulFunctions.log(Level.SEVERE, null, ex);
             return null;
         }
     }

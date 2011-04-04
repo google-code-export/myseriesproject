@@ -50,7 +50,7 @@ public class CheckUpdate extends MyDraggable {
     initComponents();
     this.onStartUp = onStartUp;
     if (check()) {
-      MySeries.logger.log(Level.INFO, "Checking updates");
+      MyUsefulFunctions.log(Level.INFO, "Checking updates");
       up = new Update();
       Thread t = new Thread(up);
       t.start();
@@ -77,7 +77,7 @@ public class CheckUpdate extends MyDraggable {
           currentVersion = MySeries.version;
           label_latestVersion.setText(latestVersion);
           if (currentVersion.compareTo(latestVersion) < 0) {
-            MySeries.logger.log(Level.INFO, "Updated version is found!!!");
+            MyUsefulFunctions.log(Level.INFO, "Updated version is found!!!");
             label_needUpdate.setText("An update is found");
             label_needUpdate1.setText("Click here to go to the download page.");
             if (onStartUp) {
@@ -85,17 +85,17 @@ public class CheckUpdate extends MyDraggable {
             }
           } else {
             label_needUpdate.setText("You are up to date!!!");
-            MySeries.logger.log(Level.INFO, "You are up to date!!!");
+            MyUsefulFunctions.log(Level.INFO, "You are up to date!!!");
           }
         } else {
-          MySeries.logger.log(Level.WARNING, "Can't get the update data");
+          MyUsefulFunctions.log(Level.WARNING, "Can't get the update data");
           label_needUpdate.setText("Can't get the update data!!!");
         }
       } catch (MalformedURLException ex) {
-        MySeries.logger.log(Level.WARNING, null, ex);
+        MyUsefulFunctions.log(Level.WARNING, null, ex);
         label_needUpdate.setText("Can't connect to server!!!");
       } catch (IOException ex) {
-        MySeries.logger.log(Level.WARNING, null, ex);
+        MyUsefulFunctions.log(Level.WARNING, null, ex);
         label_needUpdate.setText("Can't connect to server!!!");
       }
     }
@@ -125,7 +125,7 @@ public class CheckUpdate extends MyDraggable {
   private boolean check() {
     isConected = MyUsefulFunctions.hasInternetConnection(MYSERIESPROJECT_URL);
     if (!isConected) {
-      MySeries.logger.log(Level.WARNING, "Could not connect to internet");
+      MyUsefulFunctions.log(Level.WARNING, "Could not connect to internet");
       MyMessages.internetError();
       return false;
     }
@@ -314,10 +314,10 @@ public class CheckUpdate extends MyDraggable {
         MyUsefulFunctions.browse(download);
       } else {
         MyMessages.error("Browsing not supported", "Opening a browser window is not supported in your OS");
-        MySeries.logger.log(Level.WARNING, "Opening a browser window is not supported in your OS");
+        MyUsefulFunctions.log(Level.WARNING, "Opening a browser window is not supported in your OS");
       }
     } catch (URISyntaxException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     }
   }
     private void label_needUpdate1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_needUpdate1MouseEntered

@@ -31,7 +31,7 @@ import tools.download.torrents.TorrentConstants;
 import tools.internetUpdate.tvrage.TrGetId;
 import tools.options.Options;
 import tools.options.OptionsPanel;
-
+import myComponents.MyUsefulFunctions;
 /**
  *
  * @author ssoldatos
@@ -54,9 +54,9 @@ public class ApplicationActions {
     Options.setOption(Options.TOOLBAR_POSITION, m.getToolbarPosition());
     ArrayList<Integer> w = getTablesWidths(m);
     Options.setOption(Options.TABLE_WIDTHS, w);
-    MySeries.logger.log(Level.INFO, "Saving options");
+    MyUsefulFunctions.log(Level.INFO, "Saving options");
     Options.save();
-    MySeries.logger.log(Level.INFO, "Delete JVM log files");
+    MyUsefulFunctions.log(Level.INFO, "Delete JVM log files");
     File[] logs = (new File(Options._USER_DIR_)).listFiles(new FileFilter() {
 
       @Override
@@ -71,8 +71,8 @@ public class ApplicationActions {
       File file = logs[i];
       file.delete();
     }
-    MySeries.logger.log(Level.INFO, "JVM log files deleted");
-    MySeries.logger.log(Level.INFO, "Application exiting...");
+    MyUsefulFunctions.log(Level.INFO, "JVM log files deleted");
+    MyUsefulFunctions.log(Level.INFO, "Application exiting...");
     System.exit(0);
   }
 
@@ -143,7 +143,7 @@ public class ApplicationActions {
         try {
           d.open(new File("MySeriesLogs_0.html"));
         } catch (IOException ex) {
-          MySeries.logger.log(Level.SEVERE, "Could not read the log file", ex);
+          MyUsefulFunctions.log(Level.SEVERE, "Could not read the log file", ex);
           MyMessages.error("View Log", "Couldn't find the log file");
         }
       }
@@ -169,7 +169,7 @@ public class ApplicationActions {
       }
 
     } catch (SQLException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     }
   }
 
@@ -190,7 +190,7 @@ public class ApplicationActions {
         new RestoreSeries(series);
       }
     } catch (SQLException ex) {
-      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     }
   }
 
@@ -212,13 +212,13 @@ public class ApplicationActions {
         }
         for (int i = 0; i < torrents.length; i++) {
           File tor = torrents[i];
-          myseries.MySeries.logger.log(Level.INFO, "Deleting torrent {0}", tor.getName());
+          MyUsefulFunctions.log(Level.INFO, "Deleting torrent " + tor.getName());
           if (tor.delete()) {
             del++;
-            myseries.MySeries.logger.log(Level.FINE, "Torrent {0} deleted", tor.getName());
+            MyUsefulFunctions.log(Level.FINE, "Torrent " + tor.getName() + " deleted");
           } else {
             notDel++;
-            myseries.MySeries.logger.log(Level.WARNING, "Torrent {0} could not be deleted", tor.getName());
+            MyUsefulFunctions.log(Level.WARNING, "Torrent " +tor.getName()+"  could not be deleted" );
           }
         }
         MyMessages.message("Delete torrents", del + " torrents deleted and " + notDel + "  torrents could not be deleted");

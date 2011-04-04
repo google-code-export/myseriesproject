@@ -526,10 +526,10 @@ public class AdminSeries extends MyDraggable {
                     SeriesActions.internetUpdateSeries(m, InternetUpdate.TV_RAGE_NAME);
                 }
             } catch (SQLException ex) {
-                MySeries.logger.log(Level.SEVERE, "SQL error occured", ex);
+                MyUsefulFunctions.log(Level.SEVERE, "SQL error occured", ex);
             }
         } catch (NumberFormatException ex) {
-            MySeries.logger.log(Level.WARNING, "Season must be a number", ex);
+            MyUsefulFunctions.log(Level.WARNING, "Season must be a number", ex);
             MyMessages.error("Season not a number!!!", "Season must be a number");
         }
     }

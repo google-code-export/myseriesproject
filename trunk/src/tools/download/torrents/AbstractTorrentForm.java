@@ -16,7 +16,7 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import myComponents.myGUI.MyDraggable;
 import myseries.series.Series;
-
+import myComponents.MyUsefulFunctions;
 /**
  *
  * @author lordovol
@@ -39,7 +39,7 @@ public abstract class AbstractTorrentForm extends MyDraggable implements Torrent
       seriesModel = new DefaultComboBoxModel(v);
       qualityModel = new DefaultComboBoxModel(QUALITIES);
     } catch (SQLException ex) {
-      myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+      MyUsefulFunctions.log(Level.SEVERE, null, ex);
     }
   }
 

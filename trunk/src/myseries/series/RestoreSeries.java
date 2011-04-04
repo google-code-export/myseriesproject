@@ -23,7 +23,7 @@ import myComponents.myEvents.MyEventHandler;
 import myComponents.myEvents.MyEventsClass;
 import myComponents.myGUI.MyDraggable;
 import tools.Skin;
-
+import myComponents.MyUsefulFunctions;
 /**
  *
  * @author ssoldatos
@@ -195,7 +195,7 @@ public class RestoreSeries extends MyDraggable  {
           ser.setDeleted(0);
           ser.save();
         } catch (SQLException ex) {
-          myseries.MySeries.logger.log(Level.SEVERE, null, ex);
+          MyUsefulFunctions.log(Level.SEVERE, null, ex);
         }
       }
     }
