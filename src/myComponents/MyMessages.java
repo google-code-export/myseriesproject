@@ -6,12 +6,13 @@ package myComponents;
 
 import components.MyDraggable;
 import java.awt.Color;
+import java.util.logging.Level;
 import myComponents.myGUI.MyDisabledGlassPane;
 import sdialogs.Ask;
 import sdialogs.Confirm;
 import sdialogs.Info;
+import tools.MySeriesLogger;
 import tools.Skin;
-import tools.options.Options;
 
 /**
  * The messages helper class
@@ -34,7 +35,7 @@ public class MyMessages {
      * @param message The message text
      */
     public static void message(String title, String message) {
-
+        MySeriesLogger.logger.log(Level.INFO, "Displaying info dialog : {0}",message);
         Info i = new Info(title, message, Info.INFO_MESS);
         setColors(i);
         i.showDialog();
@@ -47,6 +48,7 @@ public class MyMessages {
      * @param message The message
      */
     public static void error(String title, String message) {
+        MySeriesLogger.logger.log(Level.INFO, "Displaying error dialog : {0}",message);
         Info i = new Info(title, message, Info.ERROR_MESS);
         setColors(i);
         i.showDialog();
@@ -68,6 +70,7 @@ public class MyMessages {
      * @return The users decision
      */
     public static int question(String title, String message) {
+        MySeriesLogger.logger.log(Level.INFO, "Displaying confirm dialog : {0}",message);
         Confirm c = new Confirm(title, message);
         setColors(c);
         c.showDialog();
@@ -84,11 +87,14 @@ public class MyMessages {
     }
 
     public static String ask(String title, String message) {
+        MySeriesLogger.logger.log(Level.INFO, "Show ask dialog : {0}", message);
+        String answer = (String) ask(title, message, null, null, null);
         hideMessage();
-        return (String) ask(title, message, null, null, null);
+        return answer;
     }
 
     public static Object ask(String title, String message, String errorMessage, Object[] collection, Object defaultSelection) {
+        MySeriesLogger.logger.log(Level.INFO, "Show ask dialog : {0}", message);
         Ask a = new Ask(title, message, null, collection, defaultSelection);
         setColors(a);
         a.showDialog();
