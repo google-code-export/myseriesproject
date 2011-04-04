@@ -478,7 +478,9 @@ public class Options {
   @SuppressWarnings("unchecked")
   public static void setOption(String key, Object value) {
     try {
+      MySeriesLogger.logger.log(Level.INFO, "Setting option {0} to value {1}", new Object[]{key, value});
       options.put(key, value);
+      MySeriesLogger.logger.log(Level.FINE, "Option set");
     } catch (NullPointerException ex) {
       MySeriesLogger.logger.log(Level.WARNING, "Null pointer exception", ex);
     }
@@ -536,7 +538,7 @@ public class Options {
   public static void save() {
     PrintWriter out = null;
     ArrayList<String> arr;
-
+    MySeriesLogger.logger.log(Level.INFO, "Saving options");
     try {
       out = MyUsefulFunctions.createOutputStream(new File(Options._USER_DIR_ + "MySeries.ini"), false);
       Iterator<String> it = options.keySet().iterator();
@@ -558,6 +560,7 @@ public class Options {
         out.println(key + "=" + value);
       }
       out.close();
+      MySeriesLogger.logger.log(Level.FINE, "Options saved");
     } catch (IOException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, "Cannot write the ini file", ex);
     } finally {

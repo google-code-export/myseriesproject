@@ -349,12 +349,8 @@ public class StartPanel extends MyDraggable {
    * @throws javax.swing.UnsupportedLookAndFeelException
    */
   public void startMySeries() throws IOException, ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
-    MySeriesLogger.logger.log(Level.INFO, "Setting the database to " + dbName);
     Options.setOption(Options.DB_NAME, dbName);
-    MySeriesLogger.logger.log(Level.INFO, "Saving options");
     Options.save();
-    MySeriesLogger.logger.log(Level.FINE, "Options saved");
-    MySeriesLogger.logger.log(Level.INFO, "MySerieS loading...");
     MySeries mySeries = new MySeries();
     MySeriesLogger.logger.log(Level.INFO, "Closing window");
     dispose();
