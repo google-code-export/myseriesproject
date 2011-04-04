@@ -13,6 +13,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.EventObject;
+import java.util.logging.Level;
 import javax.swing.AbstractCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -20,6 +21,7 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import myComponents.MyUsefulFunctions;
 import myComponents.myTableCellRenderers.MySubtitleListRenderer;
+import tools.MySeriesLogger;
 import tools.languages.LangsList;
 import tools.languages.Language;
 import tools.options.Options;
@@ -81,6 +83,7 @@ public class MySubtitleCellEditor extends AbstractCellEditor implements TableCel
       try {
         series = database.DBHelper.getSeriesByID(sid);
       } catch (SQLException ex) {
+          MySeriesLogger.logger.log(Level.SEVERE, "SQL error while getting series " + sid, ex);
         return true;
       }
     }

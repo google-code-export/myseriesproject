@@ -29,9 +29,6 @@ public class MyRateEditor extends StarTableCellEditor {
   public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
     rating.setRate(Double.parseDouble(String.valueOf(value)));
     seen = (Boolean) table.getModel().getValueAt(row, Episodes.SEEN_COLUMN);
-    //if (!seen) {
-    //  rating.setRatingEnabled(false);
-    // }
     return rating;
   }
 
