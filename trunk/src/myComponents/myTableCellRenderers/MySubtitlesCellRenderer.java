@@ -14,6 +14,8 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import myComponents.MyUsefulFunctions;
+import myComponents.myFileFilters.ZipFilter;
+import tools.download.subtitles.SubtitleConstants;
 import tools.languages.LangsList;
 import tools.languages.Language;
 
@@ -85,7 +87,7 @@ public class MySubtitlesCellRenderer extends DefaultTableCellRenderer {
       }
       ImageIcon im = new ImageIcon(getClass().getResource("/images/langs/" + langs[i][0] + ".png"));
       buff.getGraphics().drawImage(im.getImage(), (i * IMAGE_WIDTH) + (i * GAP), 0, IMAGE_WIDTH, IMAGE_HEIGHT, this);
-      if (langs[i][1].toLowerCase().equals("zip".toLowerCase())) {
+      if (MyUsefulFunctions.isInArray(ZipFilter.ZIP_EXT, langs[i][1].toLowerCase())) {
         ImageIcon imZ = new ImageIcon(getClass().getResource("/images/langs/zip.png"));
         buff.getGraphics().drawImage(imZ.getImage(), (i * IMAGE_WIDTH) + (i * GAP) , 0, IMAGE_WIDTH, IMAGE_HEIGHT, this);
       }
@@ -102,7 +104,8 @@ public class MySubtitlesCellRenderer extends DefaultTableCellRenderer {
         lang = myseries.MySeries.languages.getPrimary().getCode();
       }
       tooltip[i] = LangsList.getLanguageByCode(lang).getName();
-       if (langs[i][1].toLowerCase().equals("zip".toLowerCase())) {
+      String ext = langs[i][1].toLowerCase();
+       if (MyUsefulFunctions.isInArray(ZipFilter.ZIP_EXT, ext)) {
          tooltip[i] += " (zip) ";
        }
     }

@@ -125,7 +125,7 @@ public class Episodes {
         try {
           if (u.unzip()) {
             if (!u.unzippedFiles.isEmpty()) {
-              MySeriesLogger.logger.log(Level.INFO, "Unzipped " + u.unzippedFiles);
+              MySeriesLogger.logger.log(Level.INFO, "Unzipped {0}", u.unzippedFiles);
             }
           }
         } catch (Exception ex) {
