@@ -75,7 +75,7 @@ public class MyUsefulFunctions {
       sdf = new SimpleDateFormat(EpisodesRecord.MYSQL_DATE_FORMAT);
       date = sdf.format(dateD);
     } catch (ParseException ex) {
-        MySeriesLogger.logger.log(Level.SEVERE, "Parse exception while parsing date " + date, ex);
+        //MySeriesLogger.logger.log(Level.SEVERE, "Parse exception while parsing date " + date, ex);
     }
     if (date.equals("")) {
         MySeriesLogger.logger.log(Level.WARNING, "Empty date");
@@ -914,6 +914,15 @@ public class MyUsefulFunctions {
 
   public static String sanitize(String str) {
     return str.replaceAll("[\\\\ /:*?\"<>|]", "_");
+  }
+
+  public static String getExtension(File file) {
+    return getExtension(file.getAbsolutePath());
+  }
+
+  public static String getExtension(String file) {
+    String[] tok = file.split("\\.");
+    return tok[tok.length-1].toLowerCase();
   }
 
 

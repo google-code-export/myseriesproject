@@ -16,7 +16,9 @@ import tools.download.subtitles.SubtitleConstants;
 public class ZipFilter implements FilenameFilter, SubtitleConstants {
 
 
+  @Override
   public boolean accept(File dir, String name) {
-    return name.toLowerCase().endsWith("zip");
+    String ext = MyUsefulFunctions.getExtension(name);
+    return MyUsefulFunctions.isInArray(ZIP_EXT, ext.toLowerCase());
   }
 }
