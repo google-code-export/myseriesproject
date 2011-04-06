@@ -46,6 +46,7 @@ public class Unziper {
   public boolean unzip() throws Exception {
     boolean res = ext.equals(ZIP) ? unzipZipFile() : unzipRarFile();
     if (delete && !unzippedFiles.isEmpty()) {
+
       if (file.delete()) {
         MySeriesLogger.logger.log(Level.INFO, "Original zipped file {0} deleted",file);
       } else {
@@ -115,7 +116,7 @@ public class Unziper {
             unzippedFiles.add(name);
           }
         }
-
+        rarFile.close();
       } catch (Exception e) {
         throw new IOException();
       }
