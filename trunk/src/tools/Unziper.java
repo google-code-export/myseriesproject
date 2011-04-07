@@ -10,12 +10,23 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import myComponents.MyUsefulFunctions;
+import net.sf.sevenzipjbinding.ExtractAskMode;
+import net.sf.sevenzipjbinding.ExtractOperationResult;
+import net.sf.sevenzipjbinding.IArchiveExtractCallback;
+import net.sf.sevenzipjbinding.ISequentialOutStream;
+import net.sf.sevenzipjbinding.ISevenZipInArchive;
+import net.sf.sevenzipjbinding.PropID;
+import net.sf.sevenzipjbinding.SevenZip;
+import net.sf.sevenzipjbinding.SevenZipException;
+import net.sf.sevenzipjbinding.impl.RandomAccessFileInStream;
 
 /**
  *
@@ -34,6 +45,7 @@ public class Unziper {
   public static final int SUBTITLES = 1;
   public static final String ZIP = "zip";
   public static final String RAR = "rar";
+  public static final String SEVEN_ZIP = "7z";
 
   public Unziper(String directory, File file, boolean delete, int type) {
     this.directory = directory;
@@ -44,13 +56,20 @@ public class Unziper {
   }
 
   public boolean unzip() throws Exception {
-    boolean res = ext.equals(ZIP) ? unzipZipFile() : unzipRarFile();
-    if (delete && !unzippedFiles.isEmpty()) {
+    boolean res = false;
+    if (ext.equals(ZIP)) {
+      res = unzipZipFile();
+    } else if (ext.equals(RAR)) {
+      res = unzipRarFile();
+    } else if (ext.equals(SEVEN_ZIP)) {
+      res = unzipSevenZipFile();
+    }
 
+    if (delete && !unzippedFiles.isEmpty()) {
       if (file.delete()) {
-        MySeriesLogger.logger.log(Level.INFO, "Original zipped file {0} deleted",file);
+        MySeriesLogger.logger.log(Level.INFO, "Original zipped file {0} deleted", file);
       } else {
-        MySeriesLogger.logger.log(Level.WARNING, "Original zipped file {0} could not be deleted",file);
+        MySeriesLogger.logger.log(Level.WARNING, "Original zipped file {0} could not be deleted", file);
       }
     }
     return res;
@@ -85,16 +104,14 @@ public class Unziper {
         zipEntry = zipInputStream.getNextEntry();
       }//while
       zipInputStream.close();
-      if (delete && !unzippedFiles.isEmpty()) {
-        file.delete();
-      }
+     
     } catch (Exception ex) {
-      throw new Exception(ex);
+      throw ex;
     }
     return true;
   }
 
-  private boolean unzipRarFile() {
+  private boolean unzipRarFile() throws Exception {
 
     try {
       FileInputStream f = new FileInputStream(this.file);
@@ -105,24 +122,43 @@ public class Unziper {
       if (!"Rar!".equals(rarHeader)) {
         throw new IOException();
       }
-      try {
-        Archive rarFile = new Archive(file);
-        List<FileHeader> headers = rarFile.getFileHeaders();
-        for (FileHeader fileHeader : headers) {
-          String name = fileHeader.getFileNameString();
-          if (shouldUnzip(name)) {
-            FileOutputStream os = new FileOutputStream(directory + "/" + name);
-            rarFile.extractFile(fileHeader, os);
-            unzippedFiles.add(name);
-          }
+
+      Archive rarFile = new Archive(file);
+      List<FileHeader> headers = rarFile.getFileHeaders();
+      for (FileHeader fileHeader : headers) {
+        String name = fileHeader.getFileNameString();
+        if (shouldUnzip(name)) {
+          FileOutputStream os = new FileOutputStream(directory + "/" + name);
+          rarFile.extractFile(fileHeader, os);
+          unzippedFiles.add(name);
         }
-        rarFile.close();
-      } catch (Exception e) {
-        throw new IOException();
       }
+      rarFile.close();
+
     } catch (Exception ex) {
+      throw ex;
     }
     return true;
+  }
+
+  private boolean unzipSevenZipFile() throws Exception {
+    try {
+      //SevenZip.initSevenZipFromPlatformJAR(ext, file);
+      ISevenZipInArchive inArchive = null;
+      RandomAccessFile randomAccessFile = null;
+      randomAccessFile = new RandomAccessFile(file, "r");
+      inArchive = SevenZip.openInArchive(null, new RandomAccessFileInStream(randomAccessFile));
+      inArchive.extract(null, false, new MyExtractCallback(inArchive, file.getParent()));
+      if (inArchive != null) {
+        inArchive.close();
+      }
+      if (randomAccessFile != null) {
+        randomAccessFile.close();
+      }
+      return true;
+    } catch (Exception ex) {
+      throw ex;
+    }
   }
 
   private boolean shouldUnzip(String entryName) {
@@ -135,5 +171,62 @@ public class Unziper {
         return MyUsefulFunctions.isSubtitle(entryName);
     }
     return false;
+  }
+
+  public class MyExtractCallback implements IArchiveExtractCallback {
+
+    private final ISevenZipInArchive inArchive;
+    private final String extractPath;
+
+    public MyExtractCallback(ISevenZipInArchive inArchive, String extractPath) {
+      this.inArchive = inArchive;
+      this.extractPath = extractPath;
+    }
+
+    @Override
+    public ISequentialOutStream getStream(final int index, ExtractAskMode extractAskMode) throws SevenZipException {
+      return new ISequentialOutStream() {
+
+        @Override
+        public int write(byte[] data) throws SevenZipException {
+          String filePath = inArchive.getStringProperty(index, PropID.PATH);
+
+          FileOutputStream fos = null;
+          try {
+            if (shouldUnzip(filePath)) {
+              fos = new FileOutputStream(extractPath + "/" + filePath, true);
+              fos.write(data);
+              unzippedFiles.add(filePath);
+            }
+          } catch (IOException e) {
+          } finally {
+            try {
+              if (fos != null) {
+                fos.flush();
+                fos.close();
+              }
+            } catch (IOException e) {
+            }
+          }
+          return data.length;
+        }
+      };
+    }
+
+    @Override
+    public void prepareOperation(ExtractAskMode extractAskMode) throws SevenZipException {
+    }
+
+    @Override
+    public void setOperationResult(ExtractOperationResult extractOperationResult) throws SevenZipException {
+    }
+
+    @Override
+    public void setCompleted(long completeValue) throws SevenZipException {
+    }
+
+    @Override
+    public void setTotal(long total) throws SevenZipException {
+    }
   }
 }

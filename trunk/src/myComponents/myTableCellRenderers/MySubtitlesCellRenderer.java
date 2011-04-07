@@ -106,7 +106,7 @@ public class MySubtitlesCellRenderer extends DefaultTableCellRenderer {
       tooltip[i] = LangsList.getLanguageByCode(lang).getName();
       String ext = langs[i][1].toLowerCase();
        if (MyUsefulFunctions.isInArray(ZipFilter.ZIP_EXT, ext)) {
-         tooltip[i] += " (zip) ";
+         tooltip[i] += " ("+ext+") ";
        }
     }
     return Arrays.toString(tooltip);
