@@ -304,7 +304,9 @@ public class Options {
       try {
         throw new OptionFormatException("Table widths is null");
       } catch (OptionFormatException ex) {
+        if(MySeriesLogger.logger != null){
         MySeriesLogger.logger.log(Level.WARNING, ex.getMessage(), ex);
+        }
         return getDefaultColumnWidths();
       }
     }
@@ -323,7 +325,9 @@ public class Options {
       try {
         throw new OptionFormatException("Table width is not an integer");
       } catch (OptionFormatException ex1) {
+          if(MySeriesLogger.logger != null){
         MySeriesLogger.logger.log(Level.WARNING, ex.getMessage(), ex);
+        }
         return getDefaultColumnWidths();
       }
     }
@@ -350,7 +354,9 @@ public class Options {
       try {
         throw new OptionFormatException("Wrong color format for " + value + "- R, G and B not present : '" + strColor + "'");
       } catch (OptionFormatException ex) {
+        if(MySeriesLogger.logger != null){
         MySeriesLogger.logger.log(Level.WARNING, ex.getMessage(), ex);
+        }
         Options.setOption(Options.SKIN_COLOR, "240,240,240");
         Options.save();
         return c;
@@ -362,7 +368,9 @@ public class Options {
       try {
         throw new OptionFormatException("Wrong color format for " + value + "  - R,G or B not an integer: '" + strColor + "'");
       } catch (OptionFormatException ex1) {
+        if(MySeriesLogger.logger != null){
         MySeriesLogger.logger.log(Level.WARNING, ex1.getMessage(), ex1);
+        }
         Options.setOption(Options.SKIN_COLOR, "240,240,240");
         Options.save();
         return c;
@@ -390,7 +398,9 @@ public class Options {
       try {
         throw new OptionFormatException("value " + String.valueOf(options.get(key)).trim() + " of " + key + " is not an integer, setting it to 0");
       } catch (OptionFormatException ex1) {
+        if(MySeriesLogger.logger != null){
         MySeriesLogger.logger.log(Level.WARNING, ex1.getMessage(), ex1);
+        }
         Options.setOption(key, 0);
         Options.save();
         return 0;
@@ -418,7 +428,9 @@ public class Options {
       try {
         throw new OptionFormatException("value " + String.valueOf(options.get(key)).trim() + " of " + key + " is not a float, setting it to 0.0");
       } catch (OptionFormatException ex1) {
+        if(MySeriesLogger.logger != null){
         MySeriesLogger.logger.log(Level.WARNING, ex1.getMessage(), ex1);
+        }
         Options.setOption(key, 0.0F);
         Options.save();
         return 0.0F;
@@ -441,7 +453,9 @@ public class Options {
       try {
         throw new OptionFormatException(key + " is not a boolean, setting it to false '" + value + "'");
       } catch (OptionFormatException ex1) {
+        if(MySeriesLogger.logger != null){
         MySeriesLogger.logger.log(Level.WARNING, ex1.getMessage(), ex1);
+        }
         Options.setOption(key, "false");
         Options.save();
         return false;
@@ -478,11 +492,17 @@ public class Options {
   @SuppressWarnings("unchecked")
   public static void setOption(String key, Object value) {
     try {
+      if(MySeriesLogger.logger != null){
       MySeriesLogger.logger.log(Level.INFO, "Setting option {0} to value {1}", new Object[]{key, value});
+      }
       options.put(key, value);
+      if(MySeriesLogger.logger != null){
       MySeriesLogger.logger.log(Level.FINE, "Option set");
+      }
     } catch (NullPointerException ex) {
+      if(MySeriesLogger.logger != null){
       MySeriesLogger.logger.log(Level.WARNING, "Null pointer exception", ex);
+      }
     }
 
   }
@@ -538,7 +558,9 @@ public class Options {
   public static void save() {
     PrintWriter out = null;
     ArrayList<String> arr;
-    MySeriesLogger.logger.log(Level.INFO, "Saving options");
+    if(MySeriesLogger.logger != null){
+      MySeriesLogger.logger.log(Level.INFO, "Saving options");
+    }
     try {
       out = MyUsefulFunctions.createOutputStream(new File(Options._USER_DIR_ + "MySeries.ini"), false);
       Iterator<String> it = options.keySet().iterator();
@@ -560,9 +582,13 @@ public class Options {
         out.println(key + "=" + value);
       }
       out.close();
+      if(MySeriesLogger.logger != null){
       MySeriesLogger.logger.log(Level.FINE, "Options saved");
+      }
     } catch (IOException ex) {
+      if(MySeriesLogger.logger != null){
       MySeriesLogger.logger.log(Level.SEVERE, "Cannot write the ini file", ex);
+      }
     } finally {
       out.close();
     }

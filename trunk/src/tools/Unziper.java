@@ -14,10 +14,10 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import myComponents.MyUsefulFunctions;
+import net.sf.sevenzipjbinding.ArchiveFormat;
 import net.sf.sevenzipjbinding.ExtractAskMode;
 import net.sf.sevenzipjbinding.ExtractOperationResult;
 import net.sf.sevenzipjbinding.IArchiveExtractCallback;
@@ -57,11 +57,14 @@ public class Unziper {
 
   public boolean unzip() throws Exception {
     boolean res = false;
-    if (ext.equals(ZIP)) {
+    if (ext.toLowerCase().equals(ZIP)) {
+      MySeriesLogger.logger.log(Level.INFO, "Unziping file {0} (zip compression)", file);
       res = unzipZipFile();
-    } else if (ext.equals(RAR)) {
+    } else if (ext.toLowerCase().equals(RAR)) {
+      MySeriesLogger.logger.log(Level.INFO, "Unziping file {0} (rar compression)", file);
       res = unzipRarFile();
-    } else if (ext.equals(SEVEN_ZIP)) {
+    } else {
+      MySeriesLogger.logger.log(Level.INFO, "Unziping file {0} (7zip compression)", file);
       res = unzipSevenZipFile();
     }
 
@@ -104,7 +107,7 @@ public class Unziper {
         zipEntry = zipInputStream.getNextEntry();
       }//while
       zipInputStream.close();
-     
+
     } catch (Exception ex) {
       throw ex;
     }
@@ -131,8 +134,10 @@ public class Unziper {
           FileOutputStream os = new FileOutputStream(directory + "/" + name);
           rarFile.extractFile(fileHeader, os);
           unzippedFiles.add(name);
+          os.close();
         }
       }
+
       rarFile.close();
 
     } catch (Exception ex) {
