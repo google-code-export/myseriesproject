@@ -79,7 +79,7 @@ public class MyDnDTabbedPane extends JTabbedPane {
   private static Rectangle rBackward = new Rectangle();
   private static Rectangle rForward = new Rectangle();
   private static int rwh = 20;
-  private static int buttonsize = 30;//XXX: magic number of scroll button size
+  private static int buttonsize = 30;// magic number of scroll button size
 
   private void autoScrollTest(Point glassPt) {
     Rectangle r = getTabAreaBounds();
