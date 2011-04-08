@@ -29,6 +29,7 @@ import myComponents.myFileFilters.VideoFilter;
 import myComponents.myGUI.MyImagePanel;
 import myseries.MySeries;
 import myseries.episodes.Episodes;
+import tools.MySeriesLogger;
 import tools.options.Options;
 
 /**
@@ -70,7 +71,6 @@ public class Series {
   /** The series video files */
   private static File[] videoFiles;
 
-  
   private Series() {
   }
 
@@ -83,9 +83,9 @@ public class Series {
    * @throws java.sql.SQLException
    */
   public static void updateSeriesTable(boolean deleted) throws SQLException {
+    MySeriesLogger.logger.log(Level.INFO, "Updating series table");
     emptySeries();
     ArrayList<SeriesRecord> series = getSeries(false);
-
     for (Iterator<SeriesRecord> it = series.iterator(); it.hasNext();) {
       SeriesRecord s = it.next();
       Object[] data = {s, s.getHidden() == 1 ? true : false, s.getInternetUpdate() == 1 ? true : false};
@@ -112,6 +112,7 @@ public class Series {
    */
   public static ArrayList<SeriesRecord> getSeries(boolean deleted) throws SQLException {
     int d = deleted ? 1 : 0;
+    MySeriesLogger.logger.log(Level.INFO, "Getting all the {0} series", deleted ? "deleted" : "");
     ArrayList<SeriesRecord> series = new ArrayList<SeriesRecord>();
     String sql = "SELECT * FROM series  WHERE deleted = " + d + " ORDER BY title , season";
     ResultSet rs = DBConnection.stmt.executeQuery(sql);
@@ -134,6 +135,7 @@ public class Series {
       deleted = rs.getBoolean("deleted");
       s.setDeleted(rs.getInt("deleted"));
       series.add(s);
+      MySeriesLogger.logger.log(Level.FINE, "Found series {0}", s.getFullTitle());
     }
     rs.close();
     return series;
@@ -150,13 +152,16 @@ public class Series {
     SeriesRecord series = null;
     MyEvent evt = new MyEvent(m, MyEventHandler.SET_CURRENT_SERIES);
     if (table_series.getRowCount() > 0 && s > -1) {
+
       table_series.setColumnSelectionAllowed(false);
       table_series.setRowSelectionAllowed(true);
       table_series.setRowSelectionInterval(s, s);
       series = getCurrentSerial(m, s, true);
+      MySeriesLogger.logger.log(Level.INFO, "Select series {0}", series.getFullTitle());
       evt.setSeries(series);
       m.getEvClass().fireMyEvent(evt);
     } else {
+      MySeriesLogger.logger.log(Level.INFO, "No series selected");
       series = getCurrentSerial(m, -1, true);
       evt.setSeries(series);
       m.getEvClass().fireMyEvent(evt);
@@ -179,22 +184,12 @@ public class Series {
    * @throws java.sql.SQLException
    */
   public static SeriesRecord getCurrentSerial(MySeries m, int s, boolean showEpisodes) throws SQLException {
+    MySeriesLogger.logger.log(Level.INFO, "Get series at row {0}", s);
     if (s == -1) {
-//      currentSeries = new SeriesRecord();
-//      currentSeries.setSeries_ID(0);
-//      currentSeries.setTvrage_ID(0);
-//      currentSeries.setSeason(0);
-//      currentSeries.setTitle("");
-//      currentSeries.setTvSubtitlesCode("");
-//      currentSeries.setLocalDir("");
-//      currentSeries.setScreenshot("");
-//      currentSeries.setInternetUpdate(SeriesRecord.INTERNET_UPDATE);
-//      currentSeries.setSOnlineCode("");
-//      currentSeries.setHidden(SeriesRecord.NOT_HIDDEN);
-//      currentSeries.setDeleted(SeriesRecord.NOT_DELETED);
       currentSeries = null;
     } else {
       currentSeries = (SeriesRecord) table_series.getModel().getValueAt(s, Series.SERIESRECORD_COLUMN);
+      MySeriesLogger.logger.log(Level.FINE, "Found series {0}", currentSeries.getFullTitle());
     }
     MyEvent evt = new MyEvent(m, MyEventHandler.SET_CURRENT_SERIES);
     evt.setSeries(currentSeries);
@@ -206,6 +201,7 @@ public class Series {
    * Empty the series table
    */
   private static void emptySeries() {
+    MySeriesLogger.logger.log(Level.INFO, "Emptying series table");
     getTableModel_series().setRowCount(0);
   }
 
@@ -254,27 +250,24 @@ public class Series {
    */
   public static void setCurrentSerial(SeriesRecord series) {
     try {
+      MySeriesLogger.logger.log(Level.INFO, "Setting the current serial");
       //Update data
-     // Image image = new ImageIcon(MySeries.class.getResource(MyImagePanel.LOGO)).getImage();
+      // Image image = new ImageIcon(MySeries.class.getResource(MyImagePanel.LOGO)).getImage();
       if (series != null) {
         int series_id = series.getSeries_ID();
         currentSeries = DBHelper.getSeriesByID(series_id);
+        MySeriesLogger.logger.log(Level.INFO, "Current serial set to {0}",currentSeries.getFullTitle());
       } else {
         currentSeries = null;
         return;
       }
-      //if (!currentSeries.getScreenshot().equals("")) {
-      //  File sc = new File(Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH + currentSeries.getScreenshot());
-      //  if (sc.isFile()) {
-      //    image = new ImageIcon(sc.getAbsolutePath()).getImage();
-      //  }
-     // }
-     // MySeries.imagePanel.setImage(image, true);
     } catch (SQLException ex) {
+      MySeriesLogger.logger.log(Level.SEVERE, "Sql exception occured", ex);
       currentSeries = null;
     }
   }
 
+  //TO DO LOGGING
   /**
    * @return the subtitleFiles
    */
