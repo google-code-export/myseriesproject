@@ -20,7 +20,6 @@ import myseries.episodes.Episodes;
 import myseries.series.Series;
 import database.DBConnection;
 import database.DBHelper;
-import database.Database;
 import tools.languages.Language;
 import tools.options.Options;
 import myComponents.MyTableModels.MyEpisodesTableModel;
@@ -30,7 +29,6 @@ import database.SeriesRecord;
 import help.CheckUpdate;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
@@ -40,7 +38,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -50,11 +47,9 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.border.BevelBorder;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelListener;
 import javax.swing.plaf.basic.BasicToolBarUI;
-import myComponents.MyMessages;
 import myComponents.MyTableModels.MyFilteredSeriesTableModel;
 import myComponents.MyTableModels.MySeriesTableModel;
 import myComponents.MyUsefulFunctions;
@@ -62,8 +57,6 @@ import myComponents.myEvents.MyEventHandler;
 import myComponents.myEvents.MyEventsClass;
 import myComponents.myGUI.MyImagePanel;
 import myComponents.myGUI.MyDisabledGlassPane;
-import myComponents.myGUI.MyDnDTabbedPane;
-import javax.swing.JTabbedPane;
 import myComponents.myGUI.MyFont;
 import myComponents.myGUI.buttons.MyAbstractButton;
 import myComponents.myTableCellEditors.MyDownloadedCellEditor;
@@ -104,336 +97,335 @@ import tools.MySeriesLogger;
  */
 public class MySeries extends javax.swing.JFrame implements TableModelListener, MySeriesConstants {
 
-  /**
-   * Shortcuts
-   * MySeries
-   *    Create Database:Ctrl - C
-   *    Load Database : Ctrl - L
-   *    Save Database : Ctrl - S
-   *    Exit Database : Ctrl - Q
-   *
-   * Edit
-   *    Add Series    : Ctrl - A
-   *    Edit Series   : Ctrl - E
-   *    Delete Series : Ctrl - D
-   *    Restore Series: Ctrl - R
-   *    Add Episode   : Ctrl - P
-   *
-   * Tools
-   *    Export Episodes : Ctrl - X
-   *    Import Episodes : Ctrl - I
-   *    Download Torrent:
-   *        EzTv        : Ctrl - Shift - E
-   *        Isohunt     : Ctrl - Shift - I
-   *    Internet Update :
-   *        TvRage      : Ctrl - Shift - T
-   *        EpGuides    : Ctrl - Shift - G
-   *    Update Downloads: Ctrl - U
-   *    Delete Torrents : Ctrl - T
-   *    Options         : Ctrl - O
-   *
-   * Help
-   *    Help            : F1
-   *    Check Updates   : F5
-   *    View Log File   : F12
-   *    About           : F11
-   *
-   *
-   */
-  private MySeriesTableModel tableModel_series;
-  public MyEpisodesTableModel tableModel_episodes;
-  private MyFilteredSeriesTableModel tableModel_filterSeries;
-  public ComboBoxModel comboBoxModel_filters;
-  public static String version = "1.4(r573)";
-  public String date = "2011-01-26";
-  public static MyDisabledGlassPane glassPane;
-  public static final long serialVersionUID = 234563636363L;
-  public static MyImagePanel imagePanel = new MyImagePanel();
-  public Image image;
-  private Integer[] seriesTableWidths;
-  private Integer[] episodesTableWidths;
-  private Integer[] filtersTableWidths;
-  public static LangsList languages;
-  private static int CELL_MARGIN = 3;
-  public StatSeries table_stat_series;
-  public StatEpisodes table_stat_episodes;
-  public static boolean isHelp = false;
-  private EventListenerList listenerList = new EventListenerList();
-  private MyEventsClass evClass = new MyEventsClass();
-  private Integer[] visibleButtons;
-  //public static Toolbar myToolbar;
+    /**
+     * Shortcuts
+     * MySeries
+     *    Create Database:Ctrl - C
+     *    Load Database : Ctrl - L
+     *    Save Database : Ctrl - S
+     *    Exit Database : Ctrl - Q
+     *
+     * Edit
+     *    Add Series    : Ctrl - A
+     *    Edit Series   : Ctrl - E
+     *    Delete Series : Ctrl - D
+     *    Restore Series: Ctrl - R
+     *    Add Episode   : Ctrl - P
+     *
+     * Tools
+     *    Export Episodes : Ctrl - X
+     *    Import Episodes : Ctrl - I
+     *    Download Torrent:
+     *        EzTv        : Ctrl - Shift - E
+     *        Isohunt     : Ctrl - Shift - I
+     *    Internet Update :
+     *        TvRage      : Ctrl - Shift - T
+     *        EpGuides    : Ctrl - Shift - G
+     *    Update Downloads: Ctrl - U
+     *    Delete Torrents : Ctrl - T
+     *    Options         : Ctrl - O
+     *
+     * Help
+     *    Help            : F1
+     *    Check Updates   : F5
+     *    View Log File   : F12
+     *    Clear Log Files : F6
+     *    About           : F11
+     *
+     *
+     */
+    private MySeriesTableModel tableModel_series;
+    public MyEpisodesTableModel tableModel_episodes;
+    private MyFilteredSeriesTableModel tableModel_filterSeries;
+    public ComboBoxModel comboBoxModel_filters;
+    public static String version = "1.4(r573)";
+    public String date = "2011-01-26";
+    public static MyDisabledGlassPane glassPane;
+    public static final long serialVersionUID = 234563636363L;
+    public static MyImagePanel imagePanel = new MyImagePanel();
+    public Image image;
+    private Integer[] seriesTableWidths;
+    private Integer[] episodesTableWidths;
+    private Integer[] filtersTableWidths;
+    public static LangsList languages;
+    private static int CELL_MARGIN = 3;
+    public StatSeries table_stat_series;
+    public StatEpisodes table_stat_episodes;
+    public static boolean isHelp = false;
+    private EventListenerList listenerList = new EventListenerList();
+    private MyEventsClass evClass = new MyEventsClass();
+    private Integer[] visibleButtons;
+    //public static Toolbar myToolbar;
 
-  /**
-   *
-   * @throws java.lang.ClassNotFoundException
-   * @throws java.sql.SQLException
-   * @throws java.lang.InstantiationException
-   * @throws java.lang.IllegalAccessException
-   * @throws javax.swing.UnsupportedLookAndFeelException
-   * @throws java.io.IOException
-   */
-  public MySeries() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, IOException {
-    //DEBUG DATABASE
-    if (Options._USER_DIR_.equals("D:\\JavaProjects\\myseriesproject")) {
-      //System.out.println("Copy debug db");
-      //MyUsefulFunctions.copyfile("G:\\TV Series\\MySeries\\databases\\Spyros2009.db", "D:\\JavaProjects\\myseriesproject\\databases\\develop.db");
+    /**
+     *
+     * @throws java.lang.ClassNotFoundException
+     * @throws java.sql.SQLException
+     * @throws java.lang.InstantiationException
+     * @throws java.lang.IllegalAccessException
+     * @throws javax.swing.UnsupportedLookAndFeelException
+     * @throws java.io.IOException
+     */
+    public MySeries() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, IOException {
+
+
+        //Get language list
+        languages = new LangsList();
+        MySeriesLogger.logger.log(Level.INFO, "Setting primary langyage to {0}", Options.toString(Options.PRIMARY_SUB));
+        languages.setPrimary(LangsList.getLanguageByName(Options.toString(Options.PRIMARY_SUB)));
+        MySeriesLogger.logger.log(Level.INFO, "Setting secontary langyage to {0}", Options.toString(Options.SECONDARY_SUB));
+        languages.setSecondary(LangsList.getLanguageByName(Options.toString(Options.SECONDARY_SUB)));
+        for (Iterator<Language> it = languages.getLangs().iterator(); it.hasNext();) {
+            Language language = it.next();
+            MySeriesLogger.logger.log(Level.INFO, "Adding language {0} to language map", language);
+            SubtitleConstants.SUBTITLE_LANG.add(language);
+        }
+
+        // Create connection
+        MySeriesLogger.logger.log(Level.INFO, "Creating database connection");
+        DBConnection.createConnection(Options.toString(Options.DB_NAME));
+
+        visibleButtons = Options.toIntegerArray(Options.TOOLBAR_BUTTONS);
+        if (visibleButtons == null) {
+            visibleButtons = Options.getDefaultToolbarButtons();
+        }
+        MySeriesLogger.logger.log(Level.INFO, "Creating the GUI");
+        // Create the GUIs table
+        createGUI();
+        MySeriesLogger.logger.log(Level.INFO, "Creating series stats");
+        table_stat_series = new StatSeries();
+        MySeriesLogger.logger.log(Level.INFO, "Creating episodes stats");
+        table_stat_episodes = new StatEpisodes();
+        MySeriesLogger.logger.log(Level.INFO, "Creating application icon");
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/subtitles.png")).getImage());
+        MySeriesLogger.logger.log(Level.INFO, "Setting window size to {0}x{1}", new int[]{Options.toInt(Options.WIDTH), Options.toInt(Options.HEIGHT)});
+        setSize(Options.toInt(Options.WIDTH), Options.toInt(Options.HEIGHT));
+        setExtendedState(Options.toInt(Options.WINDOW_STATE));
+        createComboBox_filters();
+
+        //SCHEDULE
+        //scheduler.setDatabase(Options._USER_DIR_ +Database.PATH + DBConnection.db);
+        MySeriesLogger.logger.log(Level.INFO, "Creating the schedule table");
+        scheduler.getSchedule().setDefaultRenderer(new MyScheduleTableCellRenderer());
+        //scheduler.getSchedule().setPastYears(2);
+
+
+        //Hide viewports
+        panel_episodesList.getViewport().setOpaque(false);
+        scrollPane_series.getViewport().setOpaque(false);
+        panel_allSeriesEpisodes.getViewport().setOpaque(false);
+        //Hide viewport borders
+        panel_episodesList.setViewportBorder(BorderFactory.createEmptyBorder());
+        scrollPane_series.setViewportBorder(BorderFactory.createEmptyBorder());
+        panel_allSeriesEpisodes.setViewportBorder(BorderFactory.createEmptyBorder());
+        //Show table borders
+        tableEpisodes.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        tableFilters.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        tableSeries.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        //Show header borders
+        tableEpisodes.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        tableFilters.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        tableSeries.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.GRAY));
+
+        //create the series data
+        MySeriesLogger.logger.log(Level.INFO, "Creating series data");
+        Series.setTableModel_series(tableModel_series);
+        Series.updateSeriesTable(false);
+        tableModel_series = Series.getTableModel_series();
+
+        //Create image pane
+        MySeriesLogger.logger.log(Level.INFO, "Creating the screenshot panel");
+        imageLayerPanel.add(imagePanel);
+        Image scrImage = new ImageIcon(getClass().getResource(MyImagePanel.LOGO)).getImage();
+        imagePanel.setImage(scrImage, true);
+
+        //Create the episodes data
+        MySeriesLogger.logger.log(Level.INFO, "Creating episodes data");
+        Episodes.setTableModel_episodes(tableModel_episodes);
+        //Episodes.setTabsPanel(tabsPanel);
+        MySeriesLogger.logger.log(Level.INFO, "Setting current series to the first one");
+        Series.selectSeries(this, 0);
+        if (!Series.getCurrentSerial().getScreenshot().equals("")) {
+            MySeriesLogger.logger.log(Level.INFO, "Setting the screenshot");
+            imagePanel.setImage(new ImageIcon(Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH + Series.getCurrentSerial().getScreenshot()).getImage(), false);
+        }
+
+        tableEpisodes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
+        //Create the filteredSeries data
+        MySeriesLogger.logger.log(Level.INFO, "Creating filters data");
+        Filters.setTableModel_filterSeries(tableModel_filterSeries);
+        Filters.getFilteredSeries();
+
+        MySeriesLogger.logger.log(Level.INFO, "Creating toolbar");
+        switch (Options.toInt(Options.TOOLBAR_POSITION)) {
+            case Options._NORTH_:
+                myToolbar.setOrientation(SwingConstants.HORIZONTAL);
+                getContentPane().add(myToolbar, BorderLayout.NORTH);
+                MySeriesLogger.logger.log(Level.INFO, "Position tollbar to the North");
+                break;
+            case Options._EAST_:
+                myToolbar.setOrientation(SwingConstants.VERTICAL);
+                getContentPane().add(myToolbar, BorderLayout.EAST);
+                MySeriesLogger.logger.log(Level.INFO, "Position tollbar to the East");
+                break;
+            case Options._SOUTH_:
+                myToolbar.setOrientation(SwingConstants.HORIZONTAL);
+                getContentPane().add(myToolbar, BorderLayout.SOUTH);
+                MySeriesLogger.logger.log(Level.INFO, "Position tollbar to the South");
+                break;
+            case Options._WEST_:
+                myToolbar.setOrientation(SwingConstants.VERTICAL);
+                getContentPane().add(myToolbar, BorderLayout.WEST);
+                MySeriesLogger.logger.log(Level.INFO, "Position tollbar to the West");
+                break;
+            case Options._FLOAT_:
+                getContentPane().add(myToolbar, BorderLayout.WEST);
+                ((BasicToolBarUI) myToolbar.getUI()).setFloating(true, new Point(100, 100));
+                myToolbar.setLocation(200, 200);
+                MySeriesLogger.logger.log(Level.INFO, "Add floating toolbar");
+                break;
+        }
+
+        MySeriesLogger.logger.log(Level.INFO, "Setting main split panel divider location");
+        splitPane_main.setDividerLocation(Options.toInt(Options.DIVIDER_LOCATION) == 0 ? 250 : Options.toInt(Options.DIVIDER_LOCATION));
+        MySeriesLogger.logger.log(Level.INFO, "Setting feeds split panel divider location");
+        feedSplitPanel.setDividerLocation(Options.toInt(Options.FEED_DIVIDER_LOCATION) == 0 ? 250 : Options.toInt(Options.FEED_DIVIDER_LOCATION));
+        setGlassPane();
+        //Seting the order of the tabs
+        MySeriesLogger.logger.log(Level.INFO, "Setting the tabs order");
+        Integer[] order = Options.toIntegerArray(Options.TABS_ORDER);
+        tabsPanel.setOrder(order);
+        setLocationRelativeTo(null);
+        MySeriesLogger.logger.log(Level.INFO, "Showing GUI");
+        setVisible(true);
+        MySeriesLogger.logger.log(Level.INFO, "Getting mouse listeners from schedule table");
+        MouseListener[] list = scheduler.getSchedule().getTblCalendar().getMouseListeners();
+        if (list.length == 1) {
+            MySeriesLogger.logger.log(Level.INFO, "Removing mouse listeners from schedule if there are any");
+            scheduler.getSchedule().getTblCalendar().removeMouseListener(list[0]);
+        }
+        MySeriesLogger.logger.log(Level.INFO, "Setting schedule date to today");
+        scheduler.getSchedule().goToToday();
+        //Check for updates
+        MyUsefulFunctions.initInternetConnection();
+        if (Options.toBoolean(Options.CHECK_VERSION)) {
+            new CheckUpdate(true);
+        }
+        if (Options.toBoolean(Options.UPDATE_FEEDS)) {
+            FeedsActions.updateFeeds();
+        }
+        MySeriesLogger.logger.log(Level.INFO, "Adding schedule mouse listener to schedule");
+        scheduler.getSchedule().getTblCalendar().addMouseListener(new ScheduleMouseListener());
     }
 
-    //Set look and feel
-    if (Options.toString(Options.LOOK_AND_FEEL).equals("")) {
-    } else {
-      //set look and feel
-      // LookAndFeels.setLookAndFeel(this, Options.toString(Options.LOOK_AND_FEEL));
+    private void setGlassPane() {
+        //Set the glass pane
+        MySeriesLogger.logger.log(Level.INFO, "Creating the glass pane");
+        glassPane = new MyDisabledGlassPane();
+        JRootPane root = SwingUtilities.getRootPane(this);
+        root.setGlassPane(glassPane);
     }
 
-    //Get language list
-    languages = new LangsList();
-    languages.setPrimary(LangsList.getLanguageByName(Options.toString(Options.PRIMARY_SUB)));
-    languages.setSecondary(LangsList.getLanguageByName(Options.toString(Options.SECONDARY_SUB)));
-    for (Iterator<Language> it = languages.getLangs().iterator(); it.hasNext();) {
-      Language language = it.next();
-      SubtitleConstants.SUBTITLE_LANG.add(language);
+    public static void createLogger() {
+        //Create the JVM logger
+        MySeriesLogger.logger = MySeriesLogger.createHtmlLogger("MYSERIES", Options._USER_DIR_ + "MySeriesLogs", 262144, true, 1);
+        try {
+            MySeriesLogger.logger.setLevel(Level.parse(Options.toString(Options.DEBUG_MODE)));
+        } catch (IllegalArgumentException ex) {
+            MySeriesLogger.logger.setLevel(Level.OFF);
+        }
     }
 
-    // Create connection
-    MySeriesLogger.logger.log(Level.INFO, "Creating database connection");
-    DBConnection.createConnection(Options.toString(Options.DB_NAME));
-    // Create the GUIs table
-    visibleButtons = Options.toIntegerArray(Options.TOOLBAR_BUTTONS);
-    if (visibleButtons == null) {
-      visibleButtons = Options.getDefaultToolbarButtons();
-    }
-    MySeriesLogger.logger.log(Level.INFO, "Creating the GUI");
-    createGUI();
-    table_stat_series = new StatSeries();
-    table_stat_episodes = new StatEpisodes();
-    setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/subtitles.png")).getImage());
-    setSize(Options.toInt(Options.WIDTH), Options.toInt(Options.HEIGHT));
-    setExtendedState(Options.toInt(Options.WINDOW_STATE));
-    createComboBox_filters();
+    private void createGUI() throws SQLException {
+        // Set column widths
+        MySeriesLogger.logger.log(Level.INFO, "Creating GUI");
+        MySeriesLogger.logger.log(Level.INFO, "Setting tables widths");
+        ArrayList<Integer> widths = Options.toIntegerArrayList(Options.TABLE_WIDTHS);
+        Integer widthsArr[] = new Integer[widths.size()];
+        widthsArr = widths.toArray(widthsArr);
+        seriesTableWidths = Arrays.copyOfRange(widthsArr, 0, 3);
+        episodesTableWidths = Arrays.copyOfRange(widthsArr, 3, 10);
+        filtersTableWidths = Arrays.copyOfRange(widthsArr, 10, 16);
+        //Create tablemodels
+        MySeriesLogger.logger.log(Level.INFO, "Creating table models");
+        tableModel_episodes = new MyEpisodesTableModel();
+        tableModel_filterSeries = new MyFilteredSeriesTableModel();
+        tableModel_series = new MySeriesTableModel();
+        // Get saved filters
+        MySeriesLogger.logger.log(Level.INFO, "Creating filters");
+        comboBoxModel_filters = new DefaultComboBoxModel(DBHelper.getFiltersTitlesList());
+        //Init gui components
+        MySeriesLogger.logger.log(Level.INFO, "Initializong components");
+        initComponents();
+        MySeriesLogger.logger.log(Level.FINE, "Components initialized");
+        int fontHeight = getFontMetrics(MyFont.myFont).getHeight();
+        MySeriesLogger.logger.log(Level.INFO, "Sets selected tab");
+        tabsPanel.setSelectedComponent(tabpanel_FilteredSeries);
 
-    //SCHEDULE
-    //scheduler.setDatabase(Options._USER_DIR_ +Database.PATH + DBConnection.db);
-    scheduler.getSchedule().setDefaultRenderer(new MyScheduleTableCellRenderer());
-    scheduler.getSchedule().setPastYears(2);
-
-   
-    //Hide viewports
-    panel_episodesList.getViewport().setOpaque(false);
-    scrollPane_series.getViewport().setOpaque(false);
-    panel_allSeriesEpisodes.getViewport().setOpaque(false);
-    //Hide viewport borders
-    panel_episodesList.setViewportBorder(BorderFactory.createEmptyBorder());
-    scrollPane_series.setViewportBorder(BorderFactory.createEmptyBorder());
-    panel_allSeriesEpisodes.setViewportBorder(BorderFactory.createEmptyBorder());
-    //Show table borders
-    tableEpisodes.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-    tableFilters.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-    tableSeries.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-    //Show header borders
-    tableEpisodes.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.GRAY));
-    tableFilters.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.GRAY));
-    tableSeries.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.GRAY));
-    if (Options.toBoolean(Options.USE_SKIN)) {
-      //panel_episodesList.getViewport().setBackground(Skin.getColor_5());
-      //panel_episodesList.getViewport().setOpaque(false);
-      //panel_episodesList.setBorder(BorderFactory.createEmptyBorder());
-      //scrollPane_series.getViewport().setBackground(Skin.getSkinColor());
-      //panel_episodesList.getViewport().setOpaque(true);
-      //tableEpisodes.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
-      //panel_episodesList.getViewport().setBackground(Skin.getSkinColor());
-      //panel_allSeriesEpisodes.getViewport().setBackground(Skin.getColor_4());
-//      panel_Series.setBackground(Skin.getSkinColor());
-//      panel_episodes.setBackground(Skin.getSkinColor());
-//      scrollPane_series.setBackground(Skin.getSkinColor());
-//      panel_filters.setBackground(Skin.getColor_1());
-    } else {
-      //scrollPane_series.getViewport().setBackground(Color.white);
-//      panel_episodesList.getViewport().setBackground(Color.white);
-//      panel_allSeriesEpisodes.getViewport().setBackground(Color.white);
-    }
-
-    // Create the next episodes obj
-    MySeriesLogger.logger.log(Level.INFO, "Creating Next Episodes Object");
-
-    //create the series data
-    MySeriesLogger.logger.log(Level.INFO, "Creating series data");
-    Series.setTableModel_series(tableModel_series);
-    Series.updateSeriesTable(false);
-    tableModel_series = Series.getTableModel_series();
-
-    //Create image pane
-    imageLayerPanel.add(imagePanel);
-    Image scrImage = new ImageIcon(getClass().getResource(MyImagePanel.LOGO)).getImage();
-    imagePanel.setImage(scrImage, true);
-
-    //Create the episodes data
-    MySeriesLogger.logger.log(Level.INFO, "Creating episodes data");
-    Episodes.setTableModel_episodes(tableModel_episodes);
-    //Episodes.setTabsPanel(tabsPanel);
-    Series.selectSeries(this, 0);
-    if (!Series.getCurrentSerial().getScreenshot().equals("")) {
-      imagePanel.setImage(new ImageIcon(Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH + Series.getCurrentSerial().getScreenshot()).getImage(), false);
-    }
-
-    tableEpisodes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-
-    //Create the filteredSeries data
-    MySeriesLogger.logger.log(Level.INFO, "Creating filters data");
-    Filters.setTableModel_filterSeries(tableModel_filterSeries);
-    Filters.getFilteredSeries();
+        //EPISODES TABLE
+        //table_episodesList.removeColumn(table_episodesList.getColumnModel().getColumn(6));
+        MySeriesLogger.logger.log(Level.INFO, "Setting cell editors, renderers and listener for episodes table");
+        tableEpisodes.getModel().addTableModelListener(this);
+        tableEpisodes.getColumn(Episodes.DOWNLOADED_COLUMN_TITLE).setCellRenderer(new MyDownloadedCellRenderer(Episodes.EPISODERECORD_COLUMN));
+        tableEpisodes.getColumn(Episodes.DOWNLOADED_COLUMN_TITLE).setCellEditor(new MyDownloadedCellEditor(Episodes.EPISODERECORD_COLUMN));
+        tableEpisodes.getColumn(Episodes.SUBS_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MySubtitleCellEditor(Episodes.EPISODERECORD_COLUMN));
+        tableEpisodes.getColumn(Episodes.SUBS_COLUMN_TITLE).setCellRenderer(new MySubtitlesCellRenderer(Episodes.EPISODERECORD_COLUMN));
+        tableEpisodes.getColumn(Episodes.AIRED_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MyJDateChooserCellEditor());
+        tableEpisodes.getColumn(Episodes.AIRED_COLUMN_TITLE).setCellRenderer(new MyJDateChooserCellRenderer());
+        tableEpisodes.getColumn(Episodes.EPISODERECORD_COLUMN_TITLE).setCellRenderer(new MyTitleCellRenderer(false));
+        tableEpisodes.getColumn(Episodes.EPISODERECORD_COLUMN_TITLE).setCellEditor(new MyTitleCellEditor());
+        tableEpisodes.getColumn(Episodes.SEEN_COLUMN_TITLE).setCellRenderer(new MyWatchedCellRenderer());
+        tableEpisodes.getColumn(Episodes.SEEN_COLUMN_TITLE).setCellEditor(new MyWatchedCellEditor(Episodes.EPISODERECORD_COLUMN));
+        tableEpisodes.getColumn(Episodes.RATE_COLUMN_TITLE).setCellRenderer(new StarTableCellRenderer(true, false));
+        tableEpisodes.getColumn(Episodes.RATE_COLUMN_TITLE).setCellEditor(new MyRateEditor(true));
+        tableEpisodes.getColumn(Episodes.RATE_COLUMN_TITLE).setMinWidth(160);
+        Episodes.setTable_episodes(tableEpisodes);
+        Episodes.setTableWidths(episodesTableWidths);
+        tableEpisodes.setRowHeight(fontHeight + CELL_MARGIN);
 
 
-    //myToolbar = new Toolbar(visibleButtons);
+        //FILTERS TABLE
+        MySeriesLogger.logger.log(Level.INFO, "Setting cell editors, renderers and listener for filters table");
+        tableFilters.getModel().addTableModelListener(this);
+        tableFilters.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tableFilters.getColumn(Filters.EPISODERECORD_COLUMN_TITLE).setCellRenderer(new MyTitleCellRenderer(true));
+        tableFilters.getColumn(Filters.SUBS_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MySubtitleCellEditor(Filters.EPISODERECORD_COLUMN));
+        tableFilters.getColumn(Filters.SUBS_COLUMN_TITLE).setCellRenderer(new MySubtitlesCellRenderer(Filters.EPISODERECORD_COLUMN));
 
-    //Move toolbar to desired position
+        tableFilters.getColumn(Filters.AIRED_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MyJDateChooserCellEditor());
+        tableFilters.getColumn(Filters.AIRED_COLUMN_TITLE).setCellRenderer(new MyJDateChooserCellRenderer());
+        tableFilters.getColumn(Filters.DOWNLOADED_COLUMN_TITLE).setCellRenderer(new MyDownloadedCellRenderer(Filters.EPISODERECORD_COLUMN));
+        tableFilters.getColumn(Filters.DOWNLOADED_COLUMN_TITLE).setCellEditor(new MyDownloadedCellEditor(Filters.EPISODERECORD_COLUMN));
+        tableFilters.getColumn(Filters.SEEN_COLUMN_TITLE).setCellRenderer(new MyWatchedCellRenderer());
+        tableFilters.getColumn(Filters.SEEN_COLUMN_TITLE).setCellEditor(new MyWatchedCellEditor(Filters.EPISODERECORD_COLUMN));
+        Filters.setTableFilters(tableFilters);
+        Filters.setTableWidths(filtersTableWidths);
+        tableFilters.setRowHeight(fontHeight + CELL_MARGIN);
 
-    switch (Options.toInt(Options.TOOLBAR_POSITION)) {
-      case Options._NORTH_:
-        myToolbar.setOrientation(SwingConstants.HORIZONTAL);
-        getContentPane().add(myToolbar, BorderLayout.NORTH);
-        break;
-      case Options._EAST_:
-        myToolbar.setOrientation(SwingConstants.VERTICAL);
-        getContentPane().add(myToolbar, BorderLayout.EAST);
-        break;
-      case Options._SOUTH_:
-        myToolbar.setOrientation(SwingConstants.HORIZONTAL);
-        getContentPane().add(myToolbar, BorderLayout.SOUTH);
-        break;
-      case Options._WEST_:
-        myToolbar.setOrientation(SwingConstants.VERTICAL);
-        getContentPane().add(myToolbar, BorderLayout.WEST);
-        break;
-      case Options._FLOAT_:
-        getContentPane().add(myToolbar, BorderLayout.WEST);
-        ((BasicToolBarUI) myToolbar.getUI()).setFloating(true, new Point(100, 100));
-        myToolbar.setLocation(200, 200);
-        break;
+        //SERIES TABLE
+        MySeriesLogger.logger.log(Level.INFO, "Setting cell editors, renderers and listener for series table");
+        tableSeries.getModel().addTableModelListener(this);
+        tableSeries.getColumn(Series.HIDDEN_COLUMN_TITLE).setCellRenderer(new MySeriesBooleanCellRenderer());
+        tableSeries.getColumn(Series.UPDATE_COLUMN_TITLE).setCellRenderer(new MySeriesBooleanCellRenderer());
+        tableSeries.setRowHeight(fontHeight + CELL_MARGIN);
+        Series.setTable_series(tableSeries);
+        Series.setTableWidths(seriesTableWidths);
+
+        //POPULATE FEEDS TREE
+        MySeriesLogger.logger.log(Level.INFO, "Setting cell renderer for feeds tree");
+        feedTree.setCellRenderer(new FeedTreeCellRenderer());
+        feedTree.populate(-1);
+
+        setLocationRelativeTo(null);
     }
 
-    //getContentPane().add(myToolbar, BorderLayout.NORTH);
-    splitPane_main.setDividerLocation(Options.toInt(Options.DIVIDER_LOCATION) == 0 ? 250 : Options.toInt(Options.DIVIDER_LOCATION));
-    feedSplitPanel.setDividerLocation(Options.toInt(Options.FEED_DIVIDER_LOCATION) == 0 ? 250 : Options.toInt(Options.FEED_DIVIDER_LOCATION));
-    setGlassPane();
-    //Seting the order of the tabs
-    Integer[] order = Options.toIntegerArray(Options.TABS_ORDER);
-    tabsPanel.setOrder(order);
-    setLocationRelativeTo(null);
-    setVisible(true);
-    MouseListener[] list = scheduler.getSchedule().getTblCalendar().getMouseListeners();
-    if (list.length == 1) {
-      scheduler.getSchedule().getTblCalendar().removeMouseListener(list[0]);
-    }
-    scheduler.getSchedule().goToToday();
-    //Check for updates
-    MyUsefulFunctions.initInternetConnection();
-    if (Options.toBoolean(Options.CHECK_VERSION)) {
-      new CheckUpdate(true);
-    }
-    if (Options.toBoolean(Options.UPDATE_FEEDS)) {
-      FeedsActions.updateFeeds();
-    }
-
-    scheduler.getSchedule().getTblCalendar().addMouseListener(new ScheduleMouseListener());
-  }
-
-  private void setGlassPane() {
-    //Set the glass pane
-    MySeriesLogger.logger.log(Level.INFO, "Creating the glass pane");
-    glassPane = new MyDisabledGlassPane();
-    JRootPane root = SwingUtilities.getRootPane(this);
-    root.setGlassPane(glassPane);
-  }
-
-  public static void createLogger() {
-    //Create the JVM logger
-    MySeriesLogger.logger = MySeriesLogger.createHtmlLogger("MYSERIES", Options._USER_DIR_ + "MySeriesLogs", 262144, true, 1);
-    try{
-        MySeriesLogger.logger.setLevel(Level.parse(Options.toString(Options.DEBUG_MODE)));
-      } catch(IllegalArgumentException ex){
-          MySeriesLogger.logger.setLevel(Level.OFF);
-      }
-  }
-
-  private void createGUI() throws SQLException {
-    // Set column widths
-    ArrayList<Integer> widths = Options.toIntegerArrayList(Options.TABLE_WIDTHS);
-    Integer widthsArr[] = new Integer[widths.size()];
-    widthsArr = widths.toArray(widthsArr);
-    seriesTableWidths = Arrays.copyOfRange(widthsArr, 0, 3);
-    episodesTableWidths = Arrays.copyOfRange(widthsArr, 3, 10);
-    filtersTableWidths = Arrays.copyOfRange(widthsArr, 10, 16);
-    //Create tablemodels
-    tableModel_episodes = new MyEpisodesTableModel();
-    tableModel_filterSeries = new MyFilteredSeriesTableModel();
-    tableModel_series = new MySeriesTableModel();
-    // Get saved filters
-    comboBoxModel_filters = new DefaultComboBoxModel(DBHelper.getFiltersTitlesList());
-    //Init gui components
-    initComponents();
-    int fontHeight = getFontMetrics(MyFont.myFont).getHeight();
-    tabsPanel.setSelectedComponent(tabpanel_FilteredSeries);
-
-    //EPISODES TABLE
-    //table_episodesList.removeColumn(table_episodesList.getColumnModel().getColumn(6));
-    tableEpisodes.getModel().addTableModelListener(this);
-    tableEpisodes.getColumn(Episodes.DOWNLOADED_COLUMN_TITLE).setCellRenderer(new MyDownloadedCellRenderer(Episodes.EPISODERECORD_COLUMN));
-    tableEpisodes.getColumn(Episodes.DOWNLOADED_COLUMN_TITLE).setCellEditor(new MyDownloadedCellEditor(Episodes.EPISODERECORD_COLUMN));
-    tableEpisodes.getColumn(Episodes.SUBS_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MySubtitleCellEditor(Episodes.EPISODERECORD_COLUMN));
-    tableEpisodes.getColumn(Episodes.SUBS_COLUMN_TITLE).setCellRenderer(new MySubtitlesCellRenderer(Episodes.EPISODERECORD_COLUMN));
-    tableEpisodes.getColumn(Episodes.AIRED_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MyJDateChooserCellEditor());
-    tableEpisodes.getColumn(Episodes.AIRED_COLUMN_TITLE).setCellRenderer(new MyJDateChooserCellRenderer());
-    tableEpisodes.getColumn(Episodes.EPISODERECORD_COLUMN_TITLE).setCellRenderer(new MyTitleCellRenderer(false));
-    tableEpisodes.getColumn(Episodes.EPISODERECORD_COLUMN_TITLE).setCellEditor(new MyTitleCellEditor());
-    tableEpisodes.getColumn(Episodes.SEEN_COLUMN_TITLE).setCellRenderer(new MyWatchedCellRenderer());
-    tableEpisodes.getColumn(Episodes.SEEN_COLUMN_TITLE).setCellEditor(new MyWatchedCellEditor(Episodes.EPISODERECORD_COLUMN));
-    tableEpisodes.getColumn(Episodes.RATE_COLUMN_TITLE).setCellRenderer(new StarTableCellRenderer(true, false));
-    tableEpisodes.getColumn(Episodes.RATE_COLUMN_TITLE).setCellEditor(new MyRateEditor(true));
-    tableEpisodes.getColumn(Episodes.RATE_COLUMN_TITLE).setMinWidth(160);
-    Episodes.setTable_episodes(tableEpisodes);
-    Episodes.setTableWidths(episodesTableWidths);
-    tableEpisodes.setRowHeight(fontHeight + CELL_MARGIN);
-
-
-    //FILTERS TABLE
-    tableFilters.getModel().addTableModelListener(this);
-    tableFilters.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    tableFilters.getColumn(Filters.EPISODERECORD_COLUMN_TITLE).setCellRenderer(new MyTitleCellRenderer(true));
-    tableFilters.getColumn(Filters.SUBS_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MySubtitleCellEditor(Filters.EPISODERECORD_COLUMN));
-    tableFilters.getColumn(Filters.SUBS_COLUMN_TITLE).setCellRenderer(new MySubtitlesCellRenderer(Filters.EPISODERECORD_COLUMN));
-    
-    tableFilters.getColumn(Filters.AIRED_COLUMN_TITLE).setCellEditor(new myComponents.myTableCellEditors.MyJDateChooserCellEditor());
-    tableFilters.getColumn(Filters.AIRED_COLUMN_TITLE).setCellRenderer(new MyJDateChooserCellRenderer());
-    tableFilters.getColumn(Filters.DOWNLOADED_COLUMN_TITLE).setCellRenderer(new MyDownloadedCellRenderer(Filters.EPISODERECORD_COLUMN));
-    tableFilters.getColumn(Filters.DOWNLOADED_COLUMN_TITLE).setCellEditor(new MyDownloadedCellEditor(Filters.EPISODERECORD_COLUMN));
-    tableFilters.getColumn(Filters.SEEN_COLUMN_TITLE).setCellRenderer(new MyWatchedCellRenderer());
-    tableFilters.getColumn(Filters.SEEN_COLUMN_TITLE).setCellEditor(new MyWatchedCellEditor(Filters.EPISODERECORD_COLUMN));
-    Filters.setTableFilters(tableFilters);
-    Filters.setTableWidths(filtersTableWidths);
-    tableFilters.setRowHeight(fontHeight + CELL_MARGIN);
-
-    //SERIES TABLE
-    tableSeries.getModel().addTableModelListener(this);
-    tableSeries.getColumn(Series.HIDDEN_COLUMN_TITLE).setCellRenderer(new MySeriesBooleanCellRenderer());
-    tableSeries.getColumn(Series.UPDATE_COLUMN_TITLE).setCellRenderer(new MySeriesBooleanCellRenderer());
-    tableSeries.setRowHeight(fontHeight + CELL_MARGIN);
-    Series.setTable_series(tableSeries);
-    Series.setTableWidths(seriesTableWidths);
-
-    //POPULATE FEEDS TREE
-    feedTree.setCellRenderer(new FeedTreeCellRenderer());
-    feedTree.populate(-1);
-
-    setLocationRelativeTo(null);
-  }
-
-  /** This method is called from within the constructor to
-   * initialize the form.
-   * WARNING: Do NOT modify this code. The content of this method is
-   * always regenerated by the Form Editor.
-   */
-  @SuppressWarnings("unchecked")
+    /** This method is called from within the constructor to
+     * initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is
+     * always regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
@@ -520,15 +512,15 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
         menu_InternetUpdate = new javax.swing.JMenu();
         menuItem_IUTvrage = new javax.swing.JMenuItem();
         menuItem_IUEpguides = new javax.swing.JMenuItem();
-        menuItem_uploadFiles = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        menuItem_updateFiles = new javax.swing.JMenuItem();
+        menuItem_deleteTorrents = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JSeparator();
         menuItem_options = new javax.swing.JMenuItem();
         menu_Help = new javax.swing.JMenu();
         menuItem_help = new javax.swing.JMenuItem();
         menuItem_checkUpdate = new javax.swing.JMenuItem();
         menuItem_viewLogs = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        menuItem_clearLogs = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JSeparator();
         menuItem_About = new javax.swing.JMenuItem();
 
@@ -1342,27 +1334,27 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
         menu_Tools.add(menu_InternetUpdate);
 
-        menuItem_uploadFiles.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
-        menuItem_uploadFiles.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/updateFiles.png"))); // NOI18N
-        menuItem_uploadFiles.setText("Update & Unzip Files");
-        menuItem_uploadFiles.setToolTipText("Scans local dirs and update the file and subtitles statuses");
-        menuItem_uploadFiles.addActionListener(new java.awt.event.ActionListener() {
+        menuItem_updateFiles.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
+        menuItem_updateFiles.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/updateFiles.png"))); // NOI18N
+        menuItem_updateFiles.setText("Update & Unzip Files");
+        menuItem_updateFiles.setToolTipText("Scans local dirs and update the file and subtitles statuses");
+        menuItem_updateFiles.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItem_uploadFilesActionPerformed(evt);
+                menuItem_updateFilesActionPerformed(evt);
             }
         });
-        menu_Tools.add(menuItem_uploadFiles);
+        menu_Tools.add(menuItem_updateFiles);
 
-        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/deleteTorrents.png"))); // NOI18N
-        jMenuItem2.setText("Delete Torents");
-        jMenuItem2.setToolTipText("Delete downloaded torrent files");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        menuItem_deleteTorrents.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_MASK));
+        menuItem_deleteTorrents.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/deleteTorrents.png"))); // NOI18N
+        menuItem_deleteTorrents.setText("Delete Torents");
+        menuItem_deleteTorrents.setToolTipText("Delete downloaded torrent files");
+        menuItem_deleteTorrents.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                menuItem_deleteTorrentsActionPerformed(evt);
             }
         });
-        menu_Tools.add(jMenuItem2);
+        menu_Tools.add(menuItem_deleteTorrents);
         menu_Tools.add(jSeparator2);
 
         menuItem_options.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
@@ -1411,16 +1403,16 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
         });
         menu_Help.add(menuItem_viewLogs);
 
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F6, 0));
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clearLogs.png"))); // NOI18N
-        jMenuItem1.setText("Clear Log Files");
-        jMenuItem1.setToolTipText("Clear older log files");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        menuItem_clearLogs.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F6, 0));
+        menuItem_clearLogs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clearLogs.png"))); // NOI18N
+        menuItem_clearLogs.setText("Clear Log Files");
+        menuItem_clearLogs.setToolTipText("Clear older log files");
+        menuItem_clearLogs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                menuItem_clearLogsActionPerformed(evt);
             }
         });
-        menu_Help.add(jMenuItem1);
+        menu_Help.add(menuItem_clearLogs);
         menu_Help.add(jSeparator3);
 
         menuItem_About.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F11, 0));
@@ -1444,363 +1436,424 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     }// </editor-fold>//GEN-END:initComponents
 
   private void tableSeriesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableSeriesMouseClicked
-    try {
-      seriesMouseReleased(evt);
-    } catch (IOException ex) {
-      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-    }
+      try {
+          seriesMouseReleased(evt);
+      } catch (IOException ex) {
+          MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+      }
 }//GEN-LAST:event_tableSeriesMouseClicked
 
-  private void seriesMouseClicked() throws IOException {
-    int selectedRow = tableSeries.getSelectedRow();
-    if (selectedRow > -1) {
-    } else {
+    private void seriesMouseClicked() throws IOException {
+        int selectedRow = tableSeries.getSelectedRow();
+        if (selectedRow > -1) {
+        } else {
+        }
     }
-  }
 
   private void tableSeriesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableSeriesMouseReleased
-    try {
-      seriesMouseReleased(evt);
-    } catch (IOException ex) {
-      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-    }
+      try {
+          seriesMouseReleased(evt);
+      } catch (IOException ex) {
+          MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+      }
 }//GEN-LAST:event_tableSeriesMouseReleased
 
-  private void seriesMouseReleased(java.awt.event.MouseEvent evt) throws IOException {
-    Point p = evt.getPoint();
-    int selectedRow = tableSeries.rowAtPoint(p);
-
-    if (selectedRow > -1) {
-      SeriesRecord series = (SeriesRecord) tableSeries.getValueAt(selectedRow, Series.SERIESRECORD_COLUMN);
-      MyEvent event = new MyEvent(tableSeries, MyEventHandler.SET_CURRENT_SERIES);
-      event.setSeries(series);
-      event.setSeriesPanel(true);
-      getEvClass().fireMyEvent(event);
-
-      if (evt.getButton() == MouseEvent.BUTTON3) {
-        seriesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
-      }
-    } else {
-      if (evt.getButton() == MouseEvent.BUTTON1) {
-        try {
-          tableSeries.removeRowSelectionInterval(0, tableSeries.getRowCount() - 1);
-          MyEvent event = new MyEvent(tableSeries, MyEventHandler.SET_CURRENT_SERIES);
-          event.setSeries(null);
-          event.setSeriesPanel(true);
-          getEvClass().fireMyEvent(event);
-        } catch (IllegalArgumentException ex) {
+    private void seriesMouseReleased(java.awt.event.MouseEvent evt) throws IOException {
+        Point p = evt.getPoint();
+        int selectedRow = tableSeries.rowAtPoint(p);
+        MySeriesLogger.logger.log(Level.INFO, "Series table row {0} selected", selectedRow);
+        if (selectedRow > -1) {
+            SeriesRecord series = (SeriesRecord) tableSeries.getValueAt(selectedRow, Series.SERIESRECORD_COLUMN);
+            MySeriesLogger.logger.log(Level.INFO, "Series {0} selected", series.getFullTitle());
+            MyEvent event = new MyEvent(tableSeries, MyEventHandler.SET_CURRENT_SERIES);
+            event.setSeries(series);
+            event.setSeriesPanel(true);
+            getEvClass().fireMyEvent(event);
+            if (evt.getButton() == MouseEvent.BUTTON3) {
+                MySeriesLogger.logger.log(Level.INFO, "Showing popup menu");
+                seriesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
+            }
+        } else {
+            if (evt.getButton() == MouseEvent.BUTTON1) {
+                try {
+                    MySeriesLogger.logger.log(Level.INFO, "No series selected");
+                    tableSeries.removeRowSelectionInterval(0, tableSeries.getRowCount() - 1);
+                    MyEvent event = new MyEvent(tableSeries, MyEventHandler.SET_CURRENT_SERIES);
+                    event.setSeries(null);
+                    event.setSeriesPanel(true);
+                    getEvClass().fireMyEvent(event);
+                } catch (IllegalArgumentException ex) {
+                }
+            } else if (evt.getButton() == MouseEvent.BUTTON3) {
+                MySeriesLogger.logger.log(Level.INFO, "Showing popup menu");
+                seriesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
+            }
         }
-      } else if (evt.getButton() == MouseEvent.BUTTON3) {
-        seriesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
-      }
     }
-  }
 
   private void PopUpItem_AddSeriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PopUpItem_AddSeriesActionPerformed
-    SeriesActions.addSeries(this);
+      MySeriesLogger.logger.log(Level.INFO, "Add series action");
+      SeriesActions.addSeries(this);
 }//GEN-LAST:event_PopUpItem_AddSeriesActionPerformed
 
   private void PopUpItem_EditSerialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PopUpItem_EditSerialActionPerformed
-    SeriesActions.editSeries(this);
+      MySeriesLogger.logger.log(Level.INFO, "Edit series action");
+      SeriesActions.editSeries(this);
 
 }//GEN-LAST:event_PopUpItem_EditSerialActionPerformed
 
   private void PopUpItem_DeleteSerialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PopUpItem_DeleteSerialActionPerformed
-    SeriesActions.deleteSeries(this);
+      MySeriesLogger.logger.log(Level.INFO, "Delete series action");
+      SeriesActions.deleteSeries(this);
 }//GEN-LAST:event_PopUpItem_DeleteSerialActionPerformed
 
   private void scrollPane_seriesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_scrollPane_seriesMouseReleased
-    tableSeriesMouseReleased(evt);
+      MySeriesLogger.logger.log(Level.INFO, "Series table action");
+      tableSeriesMouseReleased(evt);
 }//GEN-LAST:event_scrollPane_seriesMouseReleased
 
   private void PopUpItem_AddEpisodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PopUpItem_AddEpisodeActionPerformed
-    EpisodesActions.AddEpisode(this);
+      MySeriesLogger.logger.log(Level.INFO, "Add episode action");
+      EpisodesActions.AddEpisode(this);
 }//GEN-LAST:event_PopUpItem_AddEpisodeActionPerformed
 
   private void menuItem_addSeriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_addSeriesActionPerformed
-    PopUpItem_AddSeriesActionPerformed(evt);
+      MySeriesLogger.logger.log(Level.INFO, "Add series action");
+      PopUpItem_AddSeriesActionPerformed(evt);
 }//GEN-LAST:event_menuItem_addSeriesActionPerformed
 
   private void menuItem_deleteSeriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_deleteSeriesActionPerformed
-    PopUpItem_DeleteSerialActionPerformed(evt);
+      MySeriesLogger.logger.log(Level.INFO, "Delete series action");
+      PopUpItem_DeleteSerialActionPerformed(evt);
 }//GEN-LAST:event_menuItem_deleteSeriesActionPerformed
 
   private void menuItem_editSeriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_editSeriesActionPerformed
-    PopUpItem_EditSerialActionPerformed(evt);
+      MySeriesLogger.logger.log(Level.INFO, "Edit series action");
+      PopUpItem_EditSerialActionPerformed(evt);
   }//GEN-LAST:event_menuItem_editSeriesActionPerformed
 
   private void menuItem_editEpisodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_editEpisodeActionPerformed
-    PopUpItem_AddEpisodeActionPerformed(evt);
+      MySeriesLogger.logger.log(Level.INFO, "Add episode action");
+      PopUpItem_AddEpisodeActionPerformed(evt);
 }//GEN-LAST:event_menuItem_editEpisodeActionPerformed
 
   private void comboBox_filterSubtitlesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBox_filterSubtitlesActionPerformed
-    FiltersActions.filterSubtitles(comboBox_filterSubtitles);
+      MySeriesLogger.logger.log(Level.INFO, "Filter series action");
+      FiltersActions.filterSubtitles(comboBox_filterSubtitles);
   }//GEN-LAST:event_comboBox_filterSubtitlesActionPerformed
 
   private void comboBox_seenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBox_seenActionPerformed
-    FiltersActions.filterSeen(comboBox_seen);
+      MySeriesLogger.logger.log(Level.INFO, "Seen combobox action");
+      FiltersActions.filterSeen(comboBox_seen);
 }//GEN-LAST:event_comboBox_seenActionPerformed
 
   private void menuItem_createDBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_createDBActionPerformed
-    DatabaseActions.createDatabase(this, true);
+      MySeriesLogger.logger.log(Level.INFO, "Create database action");
+      DatabaseActions.createDatabase(this, true);
 }//GEN-LAST:event_menuItem_createDBActionPerformed
 
   private void menuItem_loadDatabaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_loadDatabaseActionPerformed
-    DatabaseActions.loadDatabase(this);
+      MySeriesLogger.logger.log(Level.INFO, "Load database action");
+      DatabaseActions.loadDatabase(this);
 }//GEN-LAST:event_menuItem_loadDatabaseActionPerformed
 
   private void combobox_downloadedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combobox_downloadedActionPerformed
-    FiltersActions.filterDownloaded(combobox_downloaded);
+      MySeriesLogger.logger.log(Level.INFO, "Filter downloaded combobox action");
+      FiltersActions.filterDownloaded(combobox_downloaded);
   }//GEN-LAST:event_combobox_downloadedActionPerformed
 
   private void menuItem_optionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_optionsActionPerformed
-    ApplicationActions.showOptions(this);
+      MySeriesLogger.logger.log(Level.INFO, "Show options action");
+      ApplicationActions.showOptions(this);
   }//GEN-LAST:event_menuItem_optionsActionPerformed
 
   private void menuItem_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_exitActionPerformed
-    ApplicationActions.exitApplication(this);
+      MySeriesLogger.logger.log(Level.INFO, "Exit application action");
+      ApplicationActions.exitApplication(this);
 
 }//GEN-LAST:event_menuItem_exitActionPerformed
 
   private void tabsPanelStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabsPanelStateChanged
-    ApplicationActions.changeTab(this, evt);
+      MySeriesLogger.logger.log(Level.INFO, "Change tab action");
+      ApplicationActions.changeTab(this, evt);
   }//GEN-LAST:event_tabsPanelStateChanged
 
   private void menuItem_AboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_AboutActionPerformed
-    ApplicationActions.about(this);
+      MySeriesLogger.logger.log(Level.INFO, "About action");
+      ApplicationActions.about(this);
   }//GEN-LAST:event_menuItem_AboutActionPerformed
 
   private void combobox_filtersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combobox_filtersActionPerformed
-    FiltersActions.applyFilter(this);
+      MySeriesLogger.logger.log(Level.INFO, "Apply filter action");
+      FiltersActions.applyFilter(this);
   }//GEN-LAST:event_combobox_filtersActionPerformed
 
   private void PopUpItem_AddEpisodeInEpisodesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PopUpItem_AddEpisodeInEpisodesActionPerformed
-    EpisodesActions.AddEpisodeInEpisodes(this);
+      MySeriesLogger.logger.log(Level.INFO, "Add episode action");
+      EpisodesActions.AddEpisodeInEpisodes(this);
 
 }//GEN-LAST:event_PopUpItem_AddEpisodeInEpisodesActionPerformed
 
   private void tableEpisodesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableEpisodesMouseReleased
-    SeriesRecord series;
-    MyEvent event = new MyEvent(this, MyEventHandler.SET_CURRENT_EPISODE);
-    if (evt.getButton() == MouseEvent.BUTTON3) {
-      if (tableEpisodes.getSelectedRowCount() > 1) {
-        event.setSingleEpisode(false);
-        evClass.fireMyEvent(event);
-        episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
-      } else {
-        Point p = evt.getPoint();
-        int rowSelected = tableEpisodes.rowAtPoint(p);
-        //init menus
-        try {
-          tableEpisodes.setRowSelectionInterval(rowSelected, rowSelected);
-          EpisodesRecord ep = (EpisodesRecord) tableEpisodes.getValueAt(rowSelected, Episodes.EPISODERECORD_COLUMN);
-          int series_ID = ep.getSeries_ID();
-          series = DBHelper.getSeriesByID(series_ID);
-
-          event.setType(MyEventHandler.SET_CURRENT_SERIES);
-          event.setSeries(series);
-          getEvClass().fireMyEvent(event);
-
-          event.setType(MyEventHandler.SET_CURRENT_EPISODE);
-          event.setEpisode(ep);
-          getEvClass().fireMyEvent(event);
-
-
-          episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
-        } catch (SQLException ex) {
-          MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-//          if (Series.getCurrentSerial().getSeries_ID() > 0) {
-//            PopUpItem_AddEpisodeInEpisodes.setEnabled(true);
-//          } else {
-//            PopUpItem_AddEpisodeInEpisodes.setEnabled(false);
-//          }
-          //         episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
-        }
+      SeriesRecord series;
+      Point p = evt.getPoint();
+      MyEvent event = new MyEvent(this, MyEventHandler.SET_CURRENT_EPISODE);
+      int rowSelected = tableEpisodes.rowAtPoint(p);
+      MySeriesLogger.logger.log(Level.INFO, "Table episodes row {0}  selected", rowSelected);
+      if (evt.getButton() == MouseEvent.BUTTON3) {
+          if (tableEpisodes.getSelectedRowCount() > 1) {
+              MySeriesLogger.logger.log(Level.INFO, "Multiple episodes selected");
+              event.setSingleEpisode(false);
+              evClass.fireMyEvent(event);
+              episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
+          } else {
+              //init menus
+              try {
+                  tableEpisodes.setRowSelectionInterval(rowSelected, rowSelected);
+                  EpisodesRecord ep = (EpisodesRecord) tableEpisodes.getValueAt(rowSelected, Episodes.EPISODERECORD_COLUMN);
+                  MySeriesLogger.logger.log(Level.INFO, "Episode {0} selected", ep.getTitle());
+                  int series_ID = ep.getSeries_ID();
+                  series = DBHelper.getSeriesByID(series_ID);
+                  MySeriesLogger.logger.log(Level.INFO, "Setting current series event");
+                  event.setType(MyEventHandler.SET_CURRENT_SERIES);
+                  event.setSeries(series);
+                  getEvClass().fireMyEvent(event);
+                  MySeriesLogger.logger.log(Level.INFO, "Setting current episode event");
+                  event.setType(MyEventHandler.SET_CURRENT_EPISODE);
+                  event.setEpisode(ep);
+                  getEvClass().fireMyEvent(event);
+                  MySeriesLogger.logger.log(Level.INFO, "Showing episodes popup");
+                  episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
+              } catch (SQLException ex) {
+                  MySeriesLogger.logger.log(Level.SEVERE, "Sql exception occured", ex);
+              } catch (Exception ex) {
+              }
+          }
       }
-    }
   }//GEN-LAST:event_tableEpisodesMouseReleased
 
   private void popUpItem_deleteEpisodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_deleteEpisodeActionPerformed
-    if (tableEpisodes.getSelectedRowCount() < 2) {
-      EpisodesActions.deleteEpisode();
-    } else {
-      ArrayList<EpisodesRecord> episodes = new ArrayList<EpisodesRecord>();
-      int[] selRows = tableEpisodes.getSelectedRows();
-      for (int i = 0; i < selRows.length; i++) {
-        EpisodesRecord ep = (EpisodesRecord) tableEpisodes.getValueAt(selRows[i], 1);
-        episodes.add(ep);
+      if (tableEpisodes.getSelectedRowCount() < 2) {
+          MySeriesLogger.logger.log(Level.INFO, "Deleting single episode");
+          EpisodesActions.deleteEpisode();
+      } else {
+          ArrayList<EpisodesRecord> episodes = new ArrayList<EpisodesRecord>();
+          MySeriesLogger.logger.log(Level.INFO, "Deleting {0} episodes",episodes.size());
+          int[] selRows = tableEpisodes.getSelectedRows();
+          for (int i = 0; i < selRows.length; i++) {
+              EpisodesRecord ep = (EpisodesRecord) tableEpisodes.getValueAt(selRows[i], 1);
+              episodes.add(ep);
+          }
+          EpisodesActions.deleteEpisodes(episodes);
       }
-      EpisodesActions.deleteEpisodes(episodes);
-    }
   }//GEN-LAST:event_popUpItem_deleteEpisodeActionPerformed
 
   private void panel_episodesListMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_episodesListMouseReleased
-    tableEpisodesMouseReleased(evt);
+      MySeriesLogger.logger.log(Level.INFO, "Table episodes event");
+      tableEpisodesMouseReleased(evt);
 }//GEN-LAST:event_panel_episodesListMouseReleased
 
   private void popUpItem_GoToTvSubsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_GoToTvSubsActionPerformed
-    SeriesActions.goToSubtitlePage(this, SubtitleConstants.TV_SUBTITLES_NAME);
+      MySeriesLogger.logger.log(Level.INFO, "Go to subtitles page action");
+      SeriesActions.goToSubtitlePage(this, SubtitleConstants.TV_SUBTITLES_NAME);
   }//GEN-LAST:event_popUpItem_GoToTvSubsActionPerformed
 
   private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-    ApplicationActions.exitApplication(this);
+      MySeriesLogger.logger.log(Level.INFO, "Exit application action");
+      ApplicationActions.exitApplication(this);
   }//GEN-LAST:event_formWindowClosing
 
   private void menuItem_exportEpisodesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_exportEpisodesActionPerformed
-    EpisodesActions.exportEpisodes();
+      MySeriesLogger.logger.log(Level.INFO, "Export episodes action");
+      EpisodesActions.exportEpisodes();
   }//GEN-LAST:event_menuItem_exportEpisodesActionPerformed
 
   private void popUpItem_exportEpisodesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_exportEpisodesActionPerformed
-    EpisodesActions.exportEpisodes();
+      MySeriesLogger.logger.log(Level.INFO, "export episodes action");
+      EpisodesActions.exportEpisodes();
   }//GEN-LAST:event_popUpItem_exportEpisodesActionPerformed
 
   private void menuItem_importEpisodesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_importEpisodesActionPerformed
-    EpisodesActions.importEpisodes(this);
+      MySeriesLogger.logger.log(Level.INFO, "Import episodes action");
+      EpisodesActions.importEpisodes(this);
   }//GEN-LAST:event_menuItem_importEpisodesActionPerformed
 
   private void menuItem_helpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_helpActionPerformed
-    ApplicationActions.showHelp(this);
+      MySeriesLogger.logger.log(Level.INFO, "Help action");
+      ApplicationActions.showHelp(this);
 }//GEN-LAST:event_menuItem_helpActionPerformed
 
   private void menuItem_saveDatabaseAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_saveDatabaseAsActionPerformed
-    DatabaseActions.saveDatase();
+      MySeriesLogger.logger.log(Level.INFO, "Save database action");
+      DatabaseActions.saveDatase();
   }//GEN-LAST:event_menuItem_saveDatabaseAsActionPerformed
 
   private void menuItem_IUTvrageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_IUTvrageActionPerformed
-    SeriesActions.internetUpdate(this, InternetUpdate.TV_RAGE_NAME);
+      MySeriesLogger.logger.log(Level.INFO, "Internet update from tvrage action");
+      SeriesActions.internetUpdate(this, InternetUpdate.TV_RAGE_NAME);
 }//GEN-LAST:event_menuItem_IUTvrageActionPerformed
 
   private void popUpItem_IUTvrageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_IUTvrageActionPerformed
-    SeriesActions.internetUpdateSeries(this, InternetUpdate.TV_RAGE_NAME);
+      MySeriesLogger.logger.log(Level.INFO, "Internet update from tvrage action");
+      SeriesActions.internetUpdateSeries(this, InternetUpdate.TV_RAGE_NAME);
   }//GEN-LAST:event_popUpItem_IUTvrageActionPerformed
 
   private void menuItem_checkUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_checkUpdateActionPerformed
-    ApplicationActions.checkUpdates();
+      MySeriesLogger.logger.log(Level.INFO, "Check updates action");
+      ApplicationActions.checkUpdates();
   }//GEN-LAST:event_menuItem_checkUpdateActionPerformed
 
   private void menuItem_viewLogsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_viewLogsActionPerformed
-    ApplicationActions.viewLog(this);
+      MySeriesLogger.logger.log(Level.INFO, "View log action");
+      ApplicationActions.viewLog(this);
   }//GEN-LAST:event_menuItem_viewLogsActionPerformed
 
   private void popUpItem_GoToLocalDirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_GoToLocalDirActionPerformed
-    SeriesActions.goToLocalDir();
+      MySeriesLogger.logger.log(Level.INFO, "Go to local dir action");
+      SeriesActions.goToLocalDir();
   }//GEN-LAST:event_popUpItem_GoToLocalDirActionPerformed
 
   private void popUpItem_viewEpisodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_viewEpisodeActionPerformed
-    EpisodesActions.viewEpisode();
+      MySeriesLogger.logger.log(Level.INFO, "View episode action");
+      EpisodesActions.viewEpisode();
   }//GEN-LAST:event_popUpItem_viewEpisodeActionPerformed
 
   private void panel_SeriesComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_panel_SeriesComponentResized
-    imagePanel.relocate(this);
+      MySeriesLogger.logger.log(Level.INFO, "Series resized action");
+      imagePanel.relocate(this);
   }//GEN-LAST:event_panel_SeriesComponentResized
 
   private void popUpItem_renameEpisodesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_renameEpisodesActionPerformed
-    EpisodesActions.renameEpisodes();
+      MySeriesLogger.logger.log(Level.INFO, "Rename episodes action");
+      EpisodesActions.renameEpisodes();
   }//GEN-LAST:event_popUpItem_renameEpisodesActionPerformed
 
   private void popUpItem_downloadSubsTvSubsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_downloadSubsTvSubsActionPerformed
-    EpisodesActions.downloadSubtitles(SubtitleConstants.TV_SUBTITLES_NAME);
+      MySeriesLogger.logger.log(Level.INFO, "Download subtitles from tvsubtitles action");
+      EpisodesActions.downloadSubtitles(SubtitleConstants.TV_SUBTITLES_NAME);
   }//GEN-LAST:event_popUpItem_downloadSubsTvSubsActionPerformed
 
   private void popUpItem_downloadEzTvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_downloadEzTvActionPerformed
-    EpisodesActions.downloadEpisodesTorrent(TorrentConstants.EZTV_NAME);
+      MySeriesLogger.logger.log(Level.INFO, "Download eztv torrent action");
+      EpisodesActions.downloadEpisodesTorrent(TorrentConstants.EZTV_NAME);
   }//GEN-LAST:event_popUpItem_downloadEzTvActionPerformed
 
   private void tableFiltersMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableFiltersMouseReleased
-    try {
-      Point p = evt.getPoint();
-      int rowSelected = tableFilters.rowAtPoint(p);
-      EpisodesRecord ep = (EpisodesRecord) tableFilters.getValueAt(rowSelected, 2);
-      SeriesRecord seriesRec = DBHelper.getSeriesByID(ep.getSeries_ID());
-      MyEvent event = new MyEvent(this, MyEventHandler.SET_CURRENT_SERIES);
-      event.setSeries(seriesRec);
-      getEvClass().fireMyEvent(event);
-      if (evt.getButton() == MouseEvent.BUTTON3) {
-        event.setType(MyEventHandler.SET_CURRENT_EPISODE);
-        event.setEpisode(ep);
-        event.setEpisodesPanel(false);
-        getEvClass().fireMyEvent(event);
-        episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
-      } else {
+      try {
+          Point p = evt.getPoint();
+          int rowSelected = tableFilters.rowAtPoint(p);
+          MySeriesLogger.logger.log(Level.INFO, "Filters table row {0} selected",rowSelected);
+          EpisodesRecord ep = (EpisodesRecord) tableFilters.getValueAt(rowSelected, 2);
+          MySeriesLogger.logger.log(Level.INFO, "Episode {0} selected",ep.getTitle());
+          SeriesRecord seriesRec = DBHelper.getSeriesByID(ep.getSeries_ID());
+          MySeriesLogger.logger.log(Level.INFO, "Setting current series event");
+          MyEvent event = new MyEvent(this, MyEventHandler.SET_CURRENT_SERIES);
+          event.setSeries(seriesRec);
+          getEvClass().fireMyEvent(event);
+          if (evt.getButton() == MouseEvent.BUTTON3) {
+              MySeriesLogger.logger.log(Level.INFO, "Setting current episode event");
+              event.setType(MyEventHandler.SET_CURRENT_EPISODE);
+              event.setEpisode(ep);
+              event.setEpisodesPanel(false);
+              getEvClass().fireMyEvent(event);
+              MySeriesLogger.logger.log(Level.INFO, "Showing episodes popup");
+              episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
+          } else {
+          }
+      } catch (SQLException ex) {
+          MySeriesLogger.logger.log(Level.SEVERE, "Sql exception occured", ex);
       }
-    } catch (SQLException ex) {
-      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-    }
   }//GEN-LAST:event_tableFiltersMouseReleased
 
   private void menuItem_downloadEztvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_downloadEztvActionPerformed
-    SeriesActions.downloadTorrent(TorrentConstants.EZTV_NAME);
+      MySeriesLogger.logger.log(Level.INFO, "Download eztv torrent action");
+      SeriesActions.downloadTorrent(TorrentConstants.EZTV_NAME);
   }//GEN-LAST:event_menuItem_downloadEztvActionPerformed
 
   private void popUpItem_IUEpguidesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_IUEpguidesActionPerformed
-    SeriesActions.internetUpdateSeries(this, InternetUpdate.EP_GUIDES_NAME);
+      MySeriesLogger.logger.log(Level.INFO, "Internet update from epguides action");
+      SeriesActions.internetUpdateSeries(this, InternetUpdate.EP_GUIDES_NAME);
   }//GEN-LAST:event_popUpItem_IUEpguidesActionPerformed
 
   private void menuItem_IUEpguidesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_IUEpguidesActionPerformed
-    SeriesActions.internetUpdate(this, InternetUpdate.EP_GUIDES_NAME);
+      MySeriesLogger.logger.log(Level.INFO, "Internet update from epguides action");
+      SeriesActions.internetUpdate(this, InternetUpdate.EP_GUIDES_NAME);
   }//GEN-LAST:event_menuItem_IUEpguidesActionPerformed
 
-  private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-    ApplicationActions.clearLogFiles();
-  }//GEN-LAST:event_jMenuItem1ActionPerformed
+  private void menuItem_clearLogsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_clearLogsActionPerformed
+      MySeriesLogger.logger.log(Level.INFO, "Clear logs action");
+      ApplicationActions.clearLogFiles();
+  }//GEN-LAST:event_menuItem_clearLogsActionPerformed
 
   private void popUpItem_downloadSubsSubOnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_downloadSubsSubOnActionPerformed
-    EpisodesActions.downloadSubtitles(SubtitleConstants.SUBTITLE_ONLINE_NAME);
+      MySeriesLogger.logger.log(Level.INFO, "Download subtitles from subsonline action");
+       EpisodesActions.downloadSubtitles(SubtitleConstants.SUBTITLE_ONLINE_NAME);
   }//GEN-LAST:event_popUpItem_downloadSubsSubOnActionPerformed
 
   private void popUpItem_GoToSubOnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_GoToSubOnActionPerformed
-    SeriesActions.goToSubtitlePage(this, SubtitleConstants.SUBTITLE_ONLINE_NAME);
+      MySeriesLogger.logger.log(Level.INFO, "Download subtitles from subsonline action");
+      SeriesActions.goToSubtitlePage(this, SubtitleConstants.SUBTITLE_ONLINE_NAME);
   }//GEN-LAST:event_popUpItem_GoToSubOnActionPerformed
 
   private void popUpItem_renameEpisodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_renameEpisodeActionPerformed
-    EpisodesActions.renameEpisode();
+      MySeriesLogger.logger.log(Level.INFO, "Rename episode action");
+      EpisodesActions.renameEpisode();
   }//GEN-LAST:event_popUpItem_renameEpisodeActionPerformed
 
   private void menuItem_DownloadIsohuntActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_DownloadIsohuntActionPerformed
-    SeriesActions.downloadTorrent(TorrentConstants.ISOHUNT_NAME);
+      MySeriesLogger.logger.log(Level.INFO, "Download torrent from isohunt action");
+      SeriesActions.downloadTorrent(TorrentConstants.ISOHUNT_NAME);
   }//GEN-LAST:event_menuItem_DownloadIsohuntActionPerformed
 
-  private void menuItem_uploadFilesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_uploadFilesActionPerformed
-    SeriesActions.updateFiles(this);
-  }//GEN-LAST:event_menuItem_uploadFilesActionPerformed
+  private void menuItem_updateFilesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_updateFilesActionPerformed
+      MySeriesLogger.logger.log(Level.INFO, "Update files action");
+      SeriesActions.updateFiles(this);
+  }//GEN-LAST:event_menuItem_updateFilesActionPerformed
 
   private void popUpItem_downloadIsohuntActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_downloadIsohuntActionPerformed
-    EpisodesActions.downloadEpisodesTorrent(TorrentConstants.ISOHUNT_NAME);
+      MySeriesLogger.logger.log(Level.INFO, "Download torrent from isohunt action");
+      EpisodesActions.downloadEpisodesTorrent(TorrentConstants.ISOHUNT_NAME);
   }//GEN-LAST:event_popUpItem_downloadIsohuntActionPerformed
 
   private void menuItem_restoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_restoreActionPerformed
-    ApplicationActions.restoreSeries();
+      MySeriesLogger.logger.log(Level.INFO, "Restore series action");
+      ApplicationActions.restoreSeries();
   }//GEN-LAST:event_menuItem_restoreActionPerformed
 
-  private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-    ApplicationActions.deleteTorrents();
-  }//GEN-LAST:event_jMenuItem2ActionPerformed
+  private void menuItem_deleteTorrentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_deleteTorrentsActionPerformed
+      MySeriesLogger.logger.log(Level.INFO, "Delete torrents action");
+      ApplicationActions.deleteTorrents();
+  }//GEN-LAST:event_menuItem_deleteTorrentsActionPerformed
 
   private void feedPreviewPanelComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_feedPreviewPanelComponentResized
-    feedPreviewPanel.resize();
+      MySeriesLogger.logger.log(Level.INFO, "Feeds preview panel resize action");
+      feedPreviewPanel.resize();
   }//GEN-LAST:event_feedPreviewPanelComponentResized
 
   private void popUpItem_WholeSeasonSubsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpItem_WholeSeasonSubsActionPerformed
-    SeriesActions.downloadSeasonSubtitles();
+      MySeriesLogger.logger.log(Level.INFO, "Download season subtitles action");
+      SeriesActions.downloadSeasonSubtitles();
   }//GEN-LAST:event_popUpItem_WholeSeasonSubsActionPerformed
 
   private void bt_rssUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_rssUpdateActionPerformed
-    FeedsActions.updateFeeds();
+      MySeriesLogger.logger.log(Level.INFO, "Update feeds action");
+      FeedsActions.updateFeeds();
   }//GEN-LAST:event_bt_rssUpdateActionPerformed
 
   private void bt_rssAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_rssAddActionPerformed
-    boolean isFeedSaved = FeedsActions.addFeedPanel(0);
+      MySeriesLogger.logger.log(Level.INFO, "Add feed action");
+      boolean isFeedSaved = FeedsActions.addFeedPanel(0);
 }//GEN-LAST:event_bt_rssAddActionPerformed
 
   private void bt_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_saveActionPerformed
-     FiltersActions.saveFilter(this);
+      MySeriesLogger.logger.log(Level.INFO, "Save filter action");
+      FiltersActions.saveFilter(this);
   }//GEN-LAST:event_bt_saveActionPerformed
 
   private void bt_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_deleteActionPerformed
-     FiltersActions.deleteFilter(this);
+      MySeriesLogger.logger.log(Level.INFO, "Delete filter action");
+      FiltersActions.deleteFilter(this);
   }//GEN-LAST:event_bt_deleteActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JMenuItem PopUpItem_AddEpisode;
     public static javax.swing.JMenuItem PopUpItem_AddEpisodeInEpisodes;
@@ -1821,8 +1874,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     public static tools.feeds.FeedTree feedTree;
     public static javax.swing.JLayeredPane imageLayerPanel;
     public static javax.swing.JMenu jMenu1;
-    public static javax.swing.JMenuItem jMenuItem1;
-    public static javax.swing.JMenuItem jMenuItem2;
     public static javax.swing.JSeparator jSeparator1;
     public static javax.swing.JSeparator jSeparator2;
     public static javax.swing.JSeparator jSeparator3;
@@ -1834,8 +1885,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     public static javax.swing.JMenuItem menuItem_IUTvrage;
     public static javax.swing.JMenuItem menuItem_addSeries;
     public static javax.swing.JMenuItem menuItem_checkUpdate;
+    public static javax.swing.JMenuItem menuItem_clearLogs;
     public static javax.swing.JMenuItem menuItem_createDB;
     public static javax.swing.JMenuItem menuItem_deleteSeries;
+    public static javax.swing.JMenuItem menuItem_deleteTorrents;
     public static javax.swing.JMenuItem menuItem_downloadEztv;
     public static javax.swing.JMenuItem menuItem_editEpisode;
     public static javax.swing.JMenuItem menuItem_editSeries;
@@ -1847,7 +1900,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     public static javax.swing.JMenuItem menuItem_options;
     public static javax.swing.JMenuItem menuItem_restore;
     public static javax.swing.JMenuItem menuItem_saveDatabaseAs;
-    public static javax.swing.JMenuItem menuItem_uploadFiles;
+    public static javax.swing.JMenuItem menuItem_updateFiles;
     public static javax.swing.JMenuItem menuItem_viewLogs;
     public static javax.swing.JMenu menu_Edit;
     public static javax.swing.JMenu menu_Help;
@@ -1898,76 +1951,82 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 
-  public int getToolbarPosition() {
-    BorderLayout layout = (BorderLayout) getContentPane().getLayout();
-    Component[] comps = new Component[4];
-    comps[0] = layout.getLayoutComponent(getContentPane(), BorderLayout.NORTH);
-    comps[1] = layout.getLayoutComponent(getContentPane(), BorderLayout.EAST);
-    comps[2] = layout.getLayoutComponent(getContentPane(), BorderLayout.SOUTH);
-    comps[3] = layout.getLayoutComponent(getContentPane(), BorderLayout.WEST);
-    for (int i = 0; i < comps.length; i++) {
-      Component component = comps[i];
-      if (component instanceof JToolBar) {
-        return i;
-      }
-    }
-    return -1;
-  }
-
-  @Override
-  public void tableChanged(TableModelEvent e) {
-    if (e.getSource() instanceof MyEpisodesTableModel) {
-      new UpdateEpisodesTable(e);
-    } else if (e.getSource() instanceof MySeriesTableModel) {
-      new UpdateSeriesTable(e);
-    } else if (e.getSource() instanceof MyFilteredSeriesTableModel) {
-      new UpdateFiltersTable(e);
+    public int getToolbarPosition() {
+        MySeriesLogger.logger.log(Level.INFO, "Getting the toolbar position");
+        BorderLayout layout = (BorderLayout) getContentPane().getLayout();
+        Component[] comps = new Component[4];
+        comps[0] = layout.getLayoutComponent(getContentPane(), BorderLayout.NORTH);
+        comps[1] = layout.getLayoutComponent(getContentPane(), BorderLayout.EAST);
+        comps[2] = layout.getLayoutComponent(getContentPane(), BorderLayout.SOUTH);
+        comps[3] = layout.getLayoutComponent(getContentPane(), BorderLayout.WEST);
+        for (int i = 0; i < comps.length; i++) {
+            Component component = comps[i];
+            if (component instanceof JToolBar) {
+                MySeriesLogger.logger.log(Level.FINE, "Tollbar position is {0}", i);
+                return i;
+            }
+        }
+        return -1;
     }
 
-  }
+    @Override
+    public void tableChanged(TableModelEvent e) {
+        MySeriesLogger.logger.log(Level.INFO, "Table change event");
+        if (e.getSource() instanceof MyEpisodesTableModel) {
+            MySeriesLogger.logger.log(Level.INFO, "Table that changed is episodes");
+            new UpdateEpisodesTable(e);
+        } else if (e.getSource() instanceof MySeriesTableModel) {
+            MySeriesLogger.logger.log(Level.INFO, "Table that changed is series");
+            new UpdateSeriesTable(e);
+        } else if (e.getSource() instanceof MyFilteredSeriesTableModel) {
+            MySeriesLogger.logger.log(Level.INFO, "Table that changed is filters");
+            new UpdateFiltersTable(e);
+        }
 
-  public void createComboBox_filters() {
-    comboBox_filterSubtitles.setModel(new DefaultComboBoxModel(
-        new String[]{
-          SubtitleConstants.NONE,
-          languages.getPrimary().getName(),
-          languages.getSecondary().getName(),
-          SubtitleConstants.BOTH,
-          languages.getPrimary().getName() + " or " + languages.getSecondary().getName(),
-          "Not " + languages.getPrimary().getName(),
-          SubtitleConstants.UNAWARE
-        }));
-  }
-
-  public static int getSeriesTableRow(SeriesRecord series) {
-    if (series == null) {
-      return -1;
     }
-    TableModel model = tableSeries.getModel();
-    for (int i = 0; i < model.getRowCount(); i++) {
-      SeriesRecord s = (SeriesRecord) model.getValueAt(i, 0);
-      if (s.getSeries_ID() == series.getSeries_ID()) {
-        return i;
-      }
+
+    public void createComboBox_filters() {
+        comboBox_filterSubtitles.setModel(new DefaultComboBoxModel(
+                new String[]{
+                    SubtitleConstants.NONE,
+                    languages.getPrimary().getName(),
+                    languages.getSecondary().getName(),
+                    SubtitleConstants.BOTH,
+                    languages.getPrimary().getName() + " or " + languages.getSecondary().getName(),
+                    "Not " + languages.getPrimary().getName(),
+                    SubtitleConstants.UNAWARE
+                }));
     }
-    return -1;
-  }
 
-  /**
-   * @return the evClass
-   */
-  public MyEventsClass getEvClass() {
-    return evClass;
-  }
+    public static int getSeriesTableRow(SeriesRecord series) {
+        if (series == null) {
+            return -1;
+        }
+        TableModel model = tableSeries.getModel();
+        for (int i = 0; i < model.getRowCount(); i++) {
+            SeriesRecord s = (SeriesRecord) model.getValueAt(i, 0);
+            if (s.getSeries_ID() == series.getSeries_ID()) {
+                return i;
+            }
+        }
+        return -1;
+    }
 
-  /**
-   * @param evClass the evClass to set
-   */
-  public void setEvClass(MyEventsClass evClass) {
-    this.evClass = evClass;
-  }
+    /**
+     * @return the evClass
+     */
+    public MyEventsClass getEvClass() {
+        return evClass;
+    }
 
-  public static Class<MySeries> getInstance() {
-    return MySeries.class;
-  }
+    /**
+     * @param evClass the evClass to set
+     */
+    public void setEvClass(MyEventsClass evClass) {
+        this.evClass = evClass;
+    }
+
+    public static Class<MySeries> getInstance() {
+        return MySeries.class;
+    }
 }

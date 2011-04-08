@@ -16,7 +16,6 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import myComponents.MyUsefulFunctions;
 import myComponents.myTableCellRenderers.MyDecimalFormatRenderer;
@@ -32,9 +31,7 @@ public class StatEpisodes extends javax.swing.JPanel {
 
     /** Creates new form StatEpisodes */
     public StatEpisodes() {
-        MySeriesLogger.logger.log(Level.INFO, "Initializong components");
         initComponents();
-        MySeriesLogger.logger.log(Level.FINE, "Components initialized");
         jScrollPane1.getViewport().setOpaque(false);
         model = (DefaultTableModel) table_stat_episodes.getModel();
         table_stat_episodes.getColumnModel().getColumn(2).setCellRenderer(new MyDecimalFormatRenderer());
@@ -118,7 +115,6 @@ public class StatEpisodes extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     public void refresh() {
-        MySeriesLogger.logger.log(Level.INFO, "Refreshing episodes statistics table");
         clearModel();
         try {
             Statement stmt = DBConnection.stmt;
@@ -133,18 +129,14 @@ public class StatEpisodes extends javax.swing.JPanel {
                 Object[] data = {title, series, rate};
                 model.addRow(data);
             }
-            MySeriesLogger.logger.log(Level.FINE, "Found {0} episodes", model.getRowCount());
         } catch (SQLException ex) {
-            MySeriesLogger.logger.log(Level.SEVERE, "Sql exception occured", ex);
         }
     }
 
     private void clearModel() {
-        MySeriesLogger.logger.log(Level.INFO, "Clearing table");
         for (int i = 0; i < model.getRowCount(); i++) {
             model.removeRow(i);
         }
-        MySeriesLogger.logger.log(Level.FINE, "Table cleared");
     }
 
     public void setTextColor(Color color) {
