@@ -144,6 +144,7 @@ public class Episodes {
    * @throws java.sql.SQLException
    */
   public static void setCurrentEpisode(int episode) throws SQLException {
+    MySeriesLogger.logger.log(Level.INFO, "Setting the current episode");
     String sql = "SELECT * FROM episodes "
         + "WHERE series_ID = " + Series.getCurrentSerial().getSeries_ID() + " AND episode = " + episode;
     ResultSet rs = EpisodesRecord.query(sql);
@@ -158,6 +159,7 @@ public class Episodes {
       getCurrentEpisode().setSubs(LangsList.getLanguageById(rs.getInt("subs")));
       getCurrentEpisode().setSeen(rs.getInt("seen"));
       getCurrentEpisode().setRate(rs.getDouble("rate"));
+      MySeriesLogger.logger.log(Level.FINE, "Current episode set to {0}",getCurrentEpisode().getTitle());
     }
     rs.close();
   }
@@ -180,13 +182,15 @@ public class Episodes {
     Language subs;
     emptyEpisodes();
     SeriesRecord series = Series.getCurrentSerial();
-
+    MySeriesLogger.logger.log(Level.INFO, "Getting episodes of series {0}",series.getFullTitle());
     if (Options.toBoolean(Options.AUTO_FILE_UPDATING) && series.isValidLocalDir()) {
+      MySeriesLogger.logger.log(Level.INFO, "File auto updating is active");
       ArrayList<SeriesRecord> list = new ArrayList<SeriesRecord>();
       list.add(series);
       SubtitleMover sm = new SubtitleMover(list);
       sm.move();
       if (Options.toBoolean(Options.AUTO_EXTRACT_ZIPS)) {
+        MySeriesLogger.logger.log(Level.INFO, "Auto extracting subtitles is active");
         unzipSubtitleFiles(series);
       }
       subtitleFiles = Series.getSubtitleFiles(series);
@@ -245,13 +249,17 @@ public class Episodes {
       eps.add(e);
     }
     rs.close();
+    MySeriesLogger.logger.log(Level.FINE, "Found {0} episodes",eps.size());
     if (!updated.isEmpty()) {
+      MySeriesLogger.logger.log(Level.INFO, "Updating episodes");
       Database.beginTransaction();
       for (Iterator<EpisodesRecord> it = updated.iterator(); it.hasNext();) {
         EpisodesRecord episodesRecord = it.next();
         episodesRecord.save();
+        MySeriesLogger.logger.log(Level.FINE, "Updating {0}",episodesRecord.getTitle());
       }
       Database.endTransaction();
+      MySeriesLogger.logger.log(Level.FINE, "Updating finished");
     }
     table_episodesList.setModel(getTableModel_episodes());
 
@@ -261,27 +269,34 @@ public class Episodes {
   public static boolean checkDownloads(SeriesRecord series, EpisodesRecord e) {
     int season = series.getSeason();
     int episode = e.getEpisode();
+    MySeriesLogger.logger.log(Level.INFO, "Checking downloaded of series {0} episode {1}",
+        new String[] {series.getFullTitle(),e.getTitle()});
     File[] videoFiles = Series.getVideoFiles(series);
     try {
       return checkDownloads(season, episode, videoFiles);
     } catch (SQLException ex) {
+      MySeriesLogger.logger.log(Level.SEVERE, "Sql exception occured", ex);
       return false;
     }
   }
 
   private static boolean checkDownloads(int season, int episode, File[] videoFiles) throws SQLException {
     if (videoFiles == null) {
+      MySeriesLogger.logger.log(Level.WARNING, "No video files found");
       return false;
     }
     String regex = MyUsefulFunctions.createRegex(season, episode);
     String regexFake = MyUsefulFunctions.createRegex(season, season * 10 + episode);
     Pattern pattern = Pattern.compile(regex);
     Pattern patternFake = Pattern.compile(regexFake);
+    MySeriesLogger.logger.log(Level.INFO, "Getting video files  of season {0} episode {1}",
+        new int[] {season,episode});
     for (int j = 0; j < videoFiles.length; j++) {
       File file = videoFiles[j];
       Matcher matcher = pattern.matcher(file.getName());
       Matcher matcherFake = patternFake.matcher(file.getName());
       if (matcher.find() && !matcherFake.find()) {
+        MySeriesLogger.logger.log(Level.FINE, "Video file  found {0}",file.getName());
         return true;
       }
     }
@@ -296,6 +311,8 @@ public class Episodes {
     String regexFake = MyUsefulFunctions.createRegex(season, season * 10 + episode);
     Pattern pattern = Pattern.compile(regex);
     Pattern patternFake = Pattern.compile(regexFake);
+    MySeriesLogger.logger.log(Level.INFO, "Getting subtitle files  of season {0} episode {1}",
+        new int[] {season,episode});
     for (int j = 0; j < subtitleFiles.length; j++) {
       File file = subtitleFiles[j];
       Matcher matcher = pattern.matcher(file.getName());
@@ -324,12 +341,16 @@ public class Episodes {
       hasPrimary = true;
     }
     if (hasPrimary && hasSecondary) {
+      MySeriesLogger.logger.log(Level.INFO, "Found multiple subtitles");
       return LangsList.MULTIPLE;
     } else if (hasPrimary) {
+      MySeriesLogger.logger.log(Level.INFO, "Found primary subtitle");
       return myseries.MySeries.languages.getPrimary();
     } else if (hasSecondary) {
+      MySeriesLogger.logger.log(Level.INFO, "Found secondary subtitle");
       return myseries.MySeries.languages.getSecondary();
     } else if (hasOther) {
+      MySeriesLogger.logger.log(Level.INFO, "Found other subtitle");
       return other;
     }
     return LangsList.NONE;
@@ -340,6 +361,7 @@ public class Episodes {
    * @throws java.sql.SQLException
    */
   public static void updateEpisodesTable() throws SQLException {
+    MySeriesLogger.logger.log(Level.INFO, "Updating episodes table");
     Episodes.setTableModel_episodes(tableModel_episodes);
     // Episodes.setTabsPanel(tabsPanel);
     Episodes.getCurrentSeriesEpisodes();
@@ -351,6 +373,7 @@ public class Episodes {
    * Empty the episodes table and sets the tabbed pane title to empty string
    */
   public static void emptyEpisodes() {
+    MySeriesLogger.logger.log(Level.INFO, "Emptying episodes table");
     getTableModel_episodes().setRowCount(0);
     //getTabsPanel().setTitleAt(0, "");
   }
