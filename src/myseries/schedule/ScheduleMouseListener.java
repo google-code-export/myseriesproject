@@ -56,11 +56,11 @@ public class ScheduleMouseListener extends MouseAdapter {
               pop.add(new ScheduleMenuItem(ser, ep));
               // new EzTvForm(ser, ep);
             }
-
+            MySeriesLogger.logger.log(Level.INFO, "Showing pop up for downloading torrent");
             pop.show(table, p.x, p.y);
           }
         } catch (SQLException ex) {
-          MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+          MySeriesLogger.logger.log(Level.SEVERE, "Sql exception occured", ex);
         }
       }
     }

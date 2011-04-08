@@ -11,7 +11,9 @@
 package myseries.schedule;
 
 import java.awt.Color;
+import java.util.logging.Level;
 import javax.swing.BorderFactory;
+import tools.MySeriesLogger;
 import tools.Skin;
 
 /**
@@ -24,7 +26,9 @@ public class Schedule extends javax.swing.JPanel {
 
   /** Creates new form Schedule */
   public Schedule() {
+    MySeriesLogger.logger.log(Level.INFO, "Initializing components");
     initComponents();
+    MySeriesLogger.logger.log(Level.FINE, "Components initialized");
     setVisible(true);
  }
 
