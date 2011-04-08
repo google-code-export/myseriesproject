@@ -53,11 +53,11 @@
                           <EmptySpace min="55" pref="55" max="55" attributes="0"/>
                           <Component id="label_title" pref="255" max="32767" attributes="2"/>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
-                          <Component id="myButtonHelp1" min="-2" max="-2" attributes="0"/>
+                          <Component id="bt_help" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
-                          <Component id="myButtonCancel1" min="-2" max="-2" attributes="0"/>
+                          <Component id="bt_cancel" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="myButtonOk1" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="bt_ok" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jPanel2" max="32767" attributes="2"/>
                           <EmptySpace min="10" pref="10" max="10" attributes="0"/>
@@ -70,8 +70,8 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="myButtonCancel1" min="-2" max="-2" attributes="0"/>
-                      <Component id="myButtonHelp1" min="-2" max="-2" attributes="0"/>
+                      <Component id="bt_cancel" min="-2" max="-2" attributes="0"/>
+                      <Component id="bt_help" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="label_title" pref="21" max="32767" attributes="0"/>
@@ -80,7 +80,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="myButtonOk1" min="-2" max="-2" attributes="0"/>
+                  <Component id="bt_ok" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -221,9 +221,6 @@
                 <Property name="horizontalTextPosition" type="int" value="10"/>
                 <Property name="opaque" type="boolean" value="false"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="checkbox_downloadedActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="label_Date">
               <Properties>
@@ -246,28 +243,28 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="myComponents.myGUI.buttons.MyButtonCancel" name="myButtonCancel1">
+        <Component class="myComponents.myGUI.buttons.MyButtonCancel" name="bt_cancel">
           <Properties>
             <Property name="text" type="java.lang.String" value=""/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="myButtonCancel1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_cancelActionPerformed"/>
           </Events>
         </Component>
-        <Component class="myComponents.myGUI.buttons.MyButtonOk" name="myButtonOk1">
+        <Component class="myComponents.myGUI.buttons.MyButtonOk" name="bt_ok">
           <Properties>
             <Property name="text" type="java.lang.String" value=""/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="myButtonOk1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_okActionPerformed"/>
           </Events>
         </Component>
-        <Component class="myComponents.myGUI.buttons.MyButtonHelp" name="myButtonHelp1">
+        <Component class="myComponents.myGUI.buttons.MyButtonHelp" name="bt_help">
           <Properties>
             <Property name="text" type="java.lang.String" value=""/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="myButtonHelp1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_helpActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

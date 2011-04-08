@@ -31,6 +31,7 @@ public class Video {
    * @param regex The regex to use
    */
   public static void getVideos(File directory, String regex, String regexFake) {
+    MySeriesLogger.logger.log(Level.INFO, "Getting videos interface directory {0}",directory);
     ArrayList<File> videos = new ArrayList<File>();
     File[] files = directory.listFiles(new VideoFilter());
     Pattern sPattern = Pattern.compile(regex);
@@ -52,8 +53,10 @@ public class Video {
         getVideos(video, regex,regexFake);
       }
     } else if (videos.isEmpty()) {
+      MySeriesLogger.logger.log(Level.INFO, "No videos found");
       MyMessages.error("No file found", "Episode was not found");
     } else {
+      MySeriesLogger.logger.log(Level.FINE, "Found {0} videos",videos.size());
       String[] videosArray = new String[videos.size()];
       int z = 0;
       for (Iterator<File> it = videos.iterator(); it.hasNext();) {
@@ -62,15 +65,10 @@ public class Video {
         z++;
       }
       String choice = (String) MyMessages.ask("Multiple files found",  "Multiple files found. Select the one you want to view.", null, videosArray, videosArray[0]);
-//      String choice = (String) JOptionPane.showInputDialog(
-//              null,
-//              "Multiple files found. Select the one you want to view.",
-//              "Multiple files found",
-//              JOptionPane.QUESTION_MESSAGE,
-//              null,
-//              videosArray, videosArray[0]);
       if (choice != null) {
         playVideo(new File(directory + "/" + choice));
+      } else {
+        MySeriesLogger.logger.log(Level.INFO, "Playing of video aborted");
       }
     }
 
@@ -82,20 +80,23 @@ public class Video {
    */
   public static void playVideo(File video) {
     try {
+       MySeriesLogger.logger.log(Level.INFO, "Playing video {0}",video.getName());
       String app = Options.toString(Options.VIDEO_APP);
       if(app.equals("")){
+        MySeriesLogger.logger.log(Level.INFO, "Using default OS video player");
         Desktop.getDesktop().open(video);
       } else {
+        MySeriesLogger.logger.log(Level.INFO, "Using application",app);
         String[] command = {app,  video.getAbsolutePath()};
         String[] envp = null; // should inherit the environment
         File startingFolder =  video.getParentFile();
         Process p = Runtime.getRuntime().exec(command, envp,startingFolder);
-        //MySeriesLogger.logger.log(Level.INFO, "Executing command " + command[0] + " " + command[1]);
-        //rtime.exec(command);
       }
+      MySeriesLogger.logger.log(Level.INFO, "Setting episode assert watched");
       EpisodesRecord ep = Episodes.getCurrentEpisode();
       ep.setSeen(1);
       ep.save();
+      MySeriesLogger.logger.log(Level.FINE, "Episode set as watched;");
       Episodes.updateEpisodesTable();
     } catch (Exception ex) {
       MySeriesLogger.logger.log(Level.WARNING, "Playing videos is not supported", ex);
