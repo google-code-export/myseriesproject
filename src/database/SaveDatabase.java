@@ -31,6 +31,7 @@ public class SaveDatabase {
     public SaveDatabase() {
         try {
             myseries.MySeries.glassPane.activate(null);
+            MySeriesLogger.logger.log(Level.INFO, "Showing save database panel");
             showSavePane();
         } catch (FileNotFoundException ex) {
             MySeriesLogger.logger.log(Level.SEVERE, "Could not save database", ex);

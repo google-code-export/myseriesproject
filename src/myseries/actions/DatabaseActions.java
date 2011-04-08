@@ -25,6 +25,7 @@ public class DatabaseActions {
 
     public static void createDatabase(MySeries m, boolean createNewDb) {
         MySeries.glassPane.activate(null);
+        MySeriesLogger.logger.log(Level.INFO, "Showing createDatabase panel");
         new StartPanel(m, createNewDb);
     }
 
@@ -32,8 +33,10 @@ public class DatabaseActions {
         try {
             MySeries.glassPane.activate(null);
             String[] filter = {".db"};
+            MySeriesLogger.logger.log(Level.INFO, "Loading database");
             String load = MyUsefulFunctions.getSelectedFile(database.Database.PATH, filter, "Load Database", "Select the database to load");
             if (load != null && !load.equals("null") && !load.equals(Options.toString(Options.DB_NAME))) {
+              MySeriesLogger.logger.log(Level.INFO, "Database to load : {0}",load);
                 if (DBConnection.checkDatabase(load)) {
                     Options.setOption(Options.DB_NAME, load);
                     Options.save();
@@ -47,23 +50,24 @@ public class DatabaseActions {
             } else {
             }
         } catch (ClassNotFoundException ex) {
-            MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+            MySeriesLogger.logger.log(Level.SEVERE, "Database class not found", ex);
         } catch (SQLException ex) {
-            MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+            MySeriesLogger.logger.log(Level.SEVERE, "Sql exception occured", ex);
         } catch (InstantiationException ex) {
-            MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+            MySeriesLogger.logger.log(Level.SEVERE, "Could not instantiate object", ex);
         } catch (IllegalAccessException ex) {
-            MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+            MySeriesLogger.logger.log(Level.SEVERE, "Illegal access exception", ex);
         } catch (UnsupportedLookAndFeelException ex) {
-            MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+            MySeriesLogger.logger.log(Level.SEVERE, "Look and feel not supported", ex);
         } catch (IOException ex) {
-            MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+            MySeriesLogger.logger.log(Level.SEVERE, "I/O exception occured", ex);
         } finally {
             MySeries.glassPane.deactivate();
         }
     }
 
     public static void saveDatase() {
+      MySeriesLogger.logger.log(Level.INFO, "Saving database action");
         new SaveDatabase();
     }
 }
