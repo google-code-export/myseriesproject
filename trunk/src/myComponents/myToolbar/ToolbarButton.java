@@ -65,8 +65,15 @@ public class ToolbarButton extends JButton implements ToolbarButtonActions {
 
   @Override
   public String toString() {
-    return tooltip;
+    return getTooltip();
   }
+
+    /**
+     * @return the tooltip
+     */
+    public String getTooltip() {
+        return tooltip;
+    }
 
 
 
