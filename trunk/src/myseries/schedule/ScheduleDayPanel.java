@@ -21,10 +21,12 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.logging.Level;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import myComponents.myGUI.MyImagePanel;
+import tools.MySeriesLogger;
 import tools.options.Options;
 
 /**
@@ -109,6 +111,7 @@ public class ScheduleDayPanel extends javax.swing.JPanel {
 
   private void createPanel() {
     ImageIcon orIm;
+    MySeriesLogger.logger.log(Level.INFO, "Creating day panel");
     rows = (int) Math.ceil((double) events.size() / MAX_COLUMNS);
     icons.setLayout(new GridLayout(rows, events.size() == 1 ? MIN_COLUMNS : MAX_COLUMNS, GAP, GAP));
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -117,17 +120,21 @@ public class ScheduleDayPanel extends javax.swing.JPanel {
     tip += "<tr><td><b>" + date + "</b></td></tr>";
     for (Iterator<ScheduleEvent> it = events.iterator(); it.hasNext();) {
       ScheduleEvent event = it.next();
+      MySeriesLogger.logger.log(Level.INFO, "Creating event {0}",event.toString());
       JLabel eventLabel = new JLabel();
       tip += "<tr><th>" + event.getSeries() + "</th></tr>";
       tip += "<tr><td>" + event.getEpisodeNumber() + "." + event.getEpisode() + "</td></tr>";
       tip += "<tr><td><hr></td></tr>";
       if (event.getImage().equals("")) {
+        MySeriesLogger.logger.log(Level.INFO, "Setting default screenshot for {0}",event.getSeries());
         orIm = getScaledImageIcon(getDefaultImage().getImage());
       } else {
         File sc = new File(Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH + event.getImage());
         if(sc.exists()){
+        MySeriesLogger.logger.log(Level.INFO, "Setting series screenshot for {0}",event.getSeries());
         orIm = getScaledImageIcon(new ImageIcon(sc.getAbsolutePath()).getImage());
         } else {
+          MySeriesLogger.logger.log(Level.INFO, "Setting default screenshot for {0}",event.getSeries());
           orIm = getScaledImageIcon(getDefaultImage().getImage());
         }
       }
@@ -136,6 +143,7 @@ public class ScheduleDayPanel extends javax.swing.JPanel {
       eventLabel.setIcon(orIm);
       eventLabel.setHorizontalAlignment(SwingConstants.CENTER);
       icons.add(eventLabel);
+      MySeriesLogger.logger.log(Level.FINE, "Event added");
     }
     tip += "</table></html>";
     setToolTipText(tip);
@@ -143,6 +151,7 @@ public class ScheduleDayPanel extends javax.swing.JPanel {
 
   private ImageIcon getScaledImageIcon(Image image) {
     ImageIcon im = null;
+    MySeriesLogger.logger.log(Level.INFO, "Scaling image");
     try {
       double w = image.getWidth(this);
       double h = image.getHeight(this);
@@ -171,7 +180,9 @@ public class ScheduleDayPanel extends javax.swing.JPanel {
         newH =h / (w / newW);
       }
       im = new ImageIcon(image.getScaledInstance((int)newW,(int) newH, Image.SCALE_SMOOTH));
+      MySeriesLogger.logger.log(Level.FINE, "Image scaled");
     } catch (Exception ex) {
+      MySeriesLogger.logger.log(Level.WARNING, "Could not scale image.Using default image");
       return getScaledImageIcon(getDefaultImage().getImage());
     }
     return im;
@@ -183,10 +194,12 @@ public class ScheduleDayPanel extends javax.swing.JPanel {
   }
 
   private ImageIcon addDownloadStatus(ImageIcon orIm, int downloaded, int seen) {
+    MySeriesLogger.logger.log(Level.INFO, "Adding download status");
     int imWidth = orIm.getIconWidth();
     int imHeight = orIm.getIconHeight();
     ImageIcon indicator = null;
     if (downloaded == EpisodesRecord.DOWNLOADED || seen == EpisodesRecord.SEEN) {
+      MySeriesLogger.logger.log(Level.INFO, "Is downloaded");
       indicator = getScaledImageIcon("/images/tick_big.png", imWidth, imHeight);
     } else {
       // indicator = getScaledImageIcon("/images/torrent.png", imWidth, imHeight);
@@ -196,18 +209,21 @@ public class ScheduleDayPanel extends javax.swing.JPanel {
       buff.getGraphics().drawImage(orIm.getImage(), 0, 0, this);
       buff.getGraphics().drawImage(indicator.getImage(), imWidth - indicator.getIconWidth(), imHeight - indicator.getIconHeight(), this);
       orIm = new ImageIcon(buff);
+      MySeriesLogger.logger.log(Level.FINE, "Added downloaded indicator");
     }
     return orIm;
   }
 
   private ImageIcon getScaledImageIcon(String imagePath, int imWidth, int imHeight) {
+    MySeriesLogger.logger.log(Level.INFO, "Getting scaled image icon for {0}",imagePath);
     ImageIcon im = new ImageIcon(getClass().getResource(imagePath));
     int icWidth = imWidth / 3;
     int icHeight = imWidth / 3;
     if(icHeight==0 || icWidth==0){
-      System.out.println("ddd");
+      
     }
     Image scaled = im.getImage().getScaledInstance(icWidth, icHeight, Image.SCALE_SMOOTH);
+    MySeriesLogger.logger.log(Level.FINE, "Image scaled");
     return new ImageIcon(scaled);
   }
 }
