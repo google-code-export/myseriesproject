@@ -118,7 +118,7 @@ public class MyUsefulFunctions {
       MySeriesLogger.logger.log(Level.FINE, "Date formated to {0}", formatedDate);
       return formatedDate;
     } catch (ParseException ex) {
-      MySeriesLogger.logger.log(Level.WARNING, "Could not format date. Returning original value {0}", date);
+      //MySeriesLogger.logger.log(Level.WARNING, "Could not format date. Returning original value {0}", date);
       return date;
     }
   }

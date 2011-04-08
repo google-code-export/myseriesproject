@@ -250,7 +250,7 @@ public class Series {
             if (series != null) {
                 int series_id = series.getSeries_ID();
                 currentSeries = DBHelper.getSeriesByID(series_id);
-                MySeriesLogger.logger.log(Level.INFO, "Current serial set to {0}", currentSeries.getFullTitle());
+                MySeriesLogger.logger.log(Level.INFO, "Current serial set to {0}", currentSeries != null ? currentSeries.getFullTitle() : "none");
             } else {
                 currentSeries = null;
                 return;
