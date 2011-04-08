@@ -39,9 +39,7 @@ public class StatSeries extends javax.swing.JPanel {
     /** Creates new form StatSeries */
     public StatSeries() {
         super();
-        MySeriesLogger.logger.log(Level.INFO, "Initializong components");
         initComponents();
-        MySeriesLogger.logger.log(Level.FINE, "Components initialized");
         jScrollPane1.getViewport().setOpaque(false);
         model = (DefaultTableModel) table_stat_series.getModel();
         table_stat_series.getColumnModel().getColumn(RATE_COLUMN).setCellRenderer(new MyDecimalFormatRenderer());
@@ -159,7 +157,6 @@ public class StatSeries extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     public void refresh(boolean unified) {
-         MySeriesLogger.logger.log(Level.INFO, "Refreshing series statistics table");
         clearModel();
         try {
             Statement stmt = DBConnection.stmt;
@@ -181,15 +178,12 @@ public class StatSeries extends javax.swing.JPanel {
                 Object[] data = {unified ? series.getTitle() : series, episodes, rate};
                 getModel().addRow(data);
             }
-             MySeriesLogger.logger.log(Level.FINE, "Found {0} series", model.getRowCount());
         } catch (SQLException ex) {
-            MySeriesLogger.logger.log(Level.SEVERE, "Sql exception occured", ex);
         } catch (NullPointerException ex) {
         }
     }
 
     private void clearModel() {
-        MySeriesLogger.logger.log(Level.INFO, "Clearing table");
         setModel((DefaultTableModel) table_stat_series.getModel());
         getModel().getDataVector().removeAllElements();
         getModel().fireTableDataChanged();
