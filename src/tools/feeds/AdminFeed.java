@@ -15,12 +15,12 @@ import com.googlecode.svalidators.validators.RequiredValidator;
 import com.googlecode.svalidators.validators.SValidator;
 import com.googlecode.svalidators.validators.UrlValidator;
 import database.FeedsRecord;
-import java.awt.Color;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyDraggable;
+import tools.MySeriesLogger;
 import tools.Skin;
 
 /**
@@ -187,7 +187,37 @@ public class AdminFeed extends MyDraggable {
     }// </editor-fold>//GEN-END:initComponents
 
   private void bt_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_okActionPerformed
-    // TODO add your handling code here:
+        ValidationGroup val = new ValidationGroup();
+    val.addComponent(tf_url);
+    if (tf_title.isEnabled()) {
+      val.addComponent(tf_title);
+    }
+    if (val.validate()) {
+      String url = tf_url.getText().trim();
+      feed.setUrl(url);
+      String title = tf_title.getText().trim();
+      String baseUrl = MyUsefulFunctions.getBaseUrl(url);
+      feed.setTitle(title.equals("")?baseUrl:title);
+      try {
+        int id = feed.save();
+        if(feed.getFeed_ID() ==0){
+          feed.setFeed_ID(id);
+        }
+        isFeedSaved = true;
+        FeedUpdater fu = new FeedUpdater(myseries.MySeries.feedTree, feed);
+        fu.run();
+        myseries.MySeries.feedTree.populate(feed.getFeed_ID());
+      } catch (SQLException ex) {
+       MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+        MyMessages.error("Feed Saving", "An error occured and the feed is not saved");
+      }finally {
+        dispose();
+      }
+
+    } else {
+      MyMessages.error("Feeds Form", val.getErrorMessage());
+    }
+
   }//GEN-LAST:event_bt_okActionPerformed
 
   private void bt_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelActionPerformed
