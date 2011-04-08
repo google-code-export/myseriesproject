@@ -68,37 +68,37 @@ public class MyUsefulFunctions {
    * @return
    */
   public static String convertDateForRendering(String date) {
-      MySeriesLogger.logger.log(Level.INFO, "Converting date {0} for rendering",date);
+    MySeriesLogger.logger.log(Level.INFO, "Converting date {0} for rendering", date);
     SimpleDateFormat sdf = new SimpleDateFormat(Options.toString(Options.DATE_FORMAT));
     try {
       Date dateD = sdf.parse(date);
       sdf = new SimpleDateFormat(EpisodesRecord.MYSQL_DATE_FORMAT);
       date = sdf.format(dateD);
     } catch (ParseException ex) {
-        //MySeriesLogger.logger.log(Level.SEVERE, "Parse exception while parsing date " + date, ex);
+      //MySeriesLogger.logger.log(Level.SEVERE, "Parse exception while parsing date " + date, ex);
     }
     if (date.equals("")) {
-        MySeriesLogger.logger.log(Level.WARNING, "Empty date");
+      MySeriesLogger.logger.log(Level.WARNING, "Empty date");
       return "";
     }
     try {
       String[] d = date.split("-", -1);
       if (d[1].equals("00") || d[2].equals("00")) {
-          MySeriesLogger.logger.log(Level.WARNING, "Zero date");
+        MySeriesLogger.logger.log(Level.WARNING, "Zero date");
         return "";
       }
     } catch (ArrayIndexOutOfBoundsException ex) {
-        MySeriesLogger.logger.log(Level.SEVERE, "Wrong date format: " + date , ex);
+      MySeriesLogger.logger.log(Level.SEVERE, "Wrong date format: " + date, ex);
     }
     try {
       DateFormat df = new SimpleDateFormat(EpisodesRecord.MYSQL_DATE_FORMAT);
       Date sDate = df.parse(date);
       SimpleDateFormat f = new SimpleDateFormat(Options.toString(Options.DATE_FORMAT));
       String formatedDate = f.format(sDate);
-      MySeriesLogger.logger.log(Level.FINE, "Date converted to {0}",formatedDate);
+      MySeriesLogger.logger.log(Level.FINE, "Date converted to {0}", formatedDate);
       return formatedDate;
     } catch (ParseException ex) {
-        MySeriesLogger.logger.log(Level.SEVERE, "Parse exception. Returning the original date : " + date, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, "Parse exception. Returning the original date : " + date, ex);
       return date;
     }
   }
@@ -110,11 +110,15 @@ public class MyUsefulFunctions {
    */
   public static String convertDateForMySQL(String date) {
     try {
+      MySeriesLogger.logger.log(Level.INFO, "Converting date {0} for sql", date);
       DateFormat df = new SimpleDateFormat(Options.toString(Options.DATE_FORMAT));
       Date sDate = df.parse(date);
       SimpleDateFormat f = new SimpleDateFormat(EpisodesRecord.MYSQL_DATE_FORMAT);
-      return f.format(sDate);
+      String formatedDate = f.format(sDate);
+      MySeriesLogger.logger.log(Level.FINE, "Date formated to {0}", formatedDate);
+      return formatedDate;
     } catch (ParseException ex) {
+      MySeriesLogger.logger.log(Level.WARNING, "Could not format date. Returning original value {0}", date);
       return date;
     }
   }
@@ -126,17 +130,19 @@ public class MyUsefulFunctions {
    */
   public static String escapeString(String str) {
     str = str.replaceAll("'", "''");
-
     return str;
   }
 
   public static boolean hasInternetConnection(String address) {
     BufferedReader in = null;
+    MySeriesLogger.logger.log(Level.INFO, "Checking internet availability : {0} ", address);
     try {
       URL url = new URL(address);
       in = new BufferedReader(new InputStreamReader(url.openStream()));
+      MySeriesLogger.logger.log(Level.FINE, "Internet connection established");
       return true;
     } catch (IOException ex) {
+      MySeriesLogger.logger.log(Level.WARNING, "No internet connection");
       return false;
     }
   }
@@ -169,10 +175,12 @@ public class MyUsefulFunctions {
    * @return Today in the given format
    */
   public static String getToday(String dateFormat) {
-
+    MySeriesLogger.logger.log(Level.INFO, "Getting today");
     Calendar cal = Calendar.getInstance();
     SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
-    return sdf.format(cal.getTime());
+    String today = sdf.format(cal.getTime());
+    MySeriesLogger.logger.log(Level.FINE, "Today : {0}", today);
+    return today;
 
   }
 
@@ -183,9 +191,12 @@ public class MyUsefulFunctions {
    */
   public static boolean isLink(String str) {
     try {
+      MySeriesLogger.logger.log(Level.INFO, "Checking if {0} is link", str);
       URL url = new URL(str.trim());
+      MySeriesLogger.logger.log(Level.FINE, "{0} is link", str);
       return true;
     } catch (MalformedURLException ex) {
+      MySeriesLogger.logger.log(Level.WARNING, "{0} is not a link", str);
       return false;
     }
   }
@@ -210,23 +221,22 @@ public class MyUsefulFunctions {
    * @return true if it is or false if it is not
    */
   public static boolean isValidDate(String date) {
+    MySeriesLogger.logger.log(Level.INFO, "Checking valid date {0}", date);
     if (date == null) {
       return false;
     }
-
     //set the format to use as a constructor argument
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
     if (date.trim().length() != dateFormat.toPattern().length()) {
+      MySeriesLogger.logger.log(Level.WARNING, "Wrong date format : {0}", date);
       return false;
     }
-
     dateFormat.setLenient(false);
-
     try {
       //parse the inDate parameter
       dateFormat.parse(date.trim());
     } catch (ParseException pe) {
+      MySeriesLogger.logger.log(Level.WARNING, "Parse exception");
       return false;
     }
     return true;
@@ -274,7 +284,7 @@ public class MyUsefulFunctions {
    * @return true if succedded copying
    */
   public static boolean copyfile(String srFile, String dtFile) throws FileNotFoundException, IOException {
-
+    MySeriesLogger.logger.log(Level.INFO, "Copying file {0} to {1}", new String[]{srFile, dtFile});
     File f1 = new File(srFile);
     File f2 = new File(dtFile);
     InputStream in = new FileInputStream(f1);
@@ -306,8 +316,8 @@ public class MyUsefulFunctions {
     final String[] fileFilter = filter;
     File directory = new File(dir);
     String[] fields;
+    MySeriesLogger.logger.log(Level.INFO, "Prompt file selection interface dir {0}", dir);
     if (directory.isDirectory()) {
-
       files = directory.list(new FilenameFilter() {
 
         @Override
@@ -324,6 +334,7 @@ public class MyUsefulFunctions {
 
       if (files.length == 0) {
         MyMessages.error("Select File", "No files to select");
+        MySeriesLogger.logger.log(Level.WARNING, "No files interface the directory");
         System.exit(0);
       } else {
         return (String) MyMessages.ask(title, message, null, files, Options.toString(Options.DB_NAME));
@@ -331,6 +342,7 @@ public class MyUsefulFunctions {
 
       return null;
     } else {
+      MySeriesLogger.logger.log(Level.WARNING, "{0} is not a directory", dir);
       return null;
     }
   }
@@ -361,15 +373,16 @@ public class MyUsefulFunctions {
    */
   public static void initInternetConnection() {
     if (Options.toBoolean(Options.USE_PROXY)) {
-      Properties props = System.getProperties();
-      props.put("http.proxyHost", Options.toString(Options.PROXY_HOST));
-      props.put("http.proxyPort", Options.toString(Options.PROXY_PORT));
-      System.setProperties(props);
+      MySeriesLogger.logger.log(Level.INFO,
+          "Initializing internet connection with proxy [host:{0},port:{1}]",
+          new String[]{Options.toString(Options.PROXY_HOST), Options.toString(Options.PROXY_PORT)});
+      System.setProperty("http.proxyHost", Options.toString(Options.PROXY_HOST));
+      System.setProperty("http.proxyPort", Options.toString(Options.PROXY_PORT));
     } else {
-      Properties props = System.getProperties();
-      props.put("http.proxyHost", "");
-      props.put("http.proxyPort", "80");
-      System.setProperties(props);
+      MySeriesLogger.logger.log(Level.INFO, "Initializing internet connection");
+      System.setProperty("http.proxyHost", "");
+      System.setProperty("http.proxyPort", "80");
+
     }
   }
 
@@ -403,8 +416,9 @@ public class MyUsefulFunctions {
    * @return True if it's aired or false
    */
   public static boolean hasBeenAired(String aired, boolean includeToday) {
-
+    MySeriesLogger.logger.log(Level.INFO, "Checking if an episode has been aired. Aired date : {0}", aired);
     if (aired.length() != 10) {
+      MySeriesLogger.logger.log(Level.WARNING, "Wrong aired date : {0}", aired);
       return false;
     }
 
@@ -414,18 +428,23 @@ public class MyUsefulFunctions {
       aired = d[2] + "-" + d[1] + "-" + d[0];
     }
     if (!isValidDate(aired)) {
+      MySeriesLogger.logger.log(Level.WARNING, "Invalid date {0}", aired);
       return false;
     }
 
     if (includeToday) {
       if (aired.compareTo(getToday("yyyy-MM-dd")) <= 0) {
+        MySeriesLogger.logger.log(Level.FINE, "Episode has been aired (including today)");
         return true;
       }
+      MySeriesLogger.logger.log(Level.INFO, "Episode has not been aired (including today)");
       return false;
     } else {
       if (aired.compareTo(getToday("yyyy-MM-dd")) < 0) {
+        MySeriesLogger.logger.log(Level.FINE, "Episode has been aired (not including today)");
         return true;
       }
+      MySeriesLogger.logger.log(Level.INFO, "Episode has not been aired (not including today)");
       return false;
     }
 
@@ -530,13 +549,15 @@ public class MyUsefulFunctions {
    * @param dirPath The directory to check
    */
   public static void checkDir(String dirPath) {
+    MySeriesLogger.logger.log(Level.INFO, "Checking need for creation of dir {0}", dirPath);
     if (!new File(dirPath).isDirectory()) {
       if (new File(dirPath).mkdir()) {
-        MySeriesLogger.logger.log(Level.INFO, "Created directory " + dirPath);
+        MySeriesLogger.logger.log(Level.INFO, "Created directory {0}", dirPath);
       } else {
-        MySeriesLogger.logger.log(Level.SEVERE, "Could not create directory " + dirPath);
+        MySeriesLogger.logger.log(Level.SEVERE, "Could not create directory {0}", dirPath);
       }
     }
+    MySeriesLogger.logger.log(Level.INFO, "No need for creating the directory {0}", dirPath);
   }
 
   /**
@@ -546,6 +567,9 @@ public class MyUsefulFunctions {
    * @return True if value is in array else false
    */
   public static boolean isInArray(Object[] array, Object value) {
+    if (array == null) {
+      return false;
+    }
     for (int i = 0; i < array.length; i++) {
       if (array[i].equals(value)) {
         return true;
@@ -561,6 +585,9 @@ public class MyUsefulFunctions {
    * @return True if value is in array else false
    */
   public static boolean isInArray(String[] array, String value) {
+    if (array == null) {
+      return false;
+    }
     for (int i = 0; i < array.length; i++) {
       if (array[i].toLowerCase().equals(value.toLowerCase())) {
         return true;
@@ -575,11 +602,17 @@ public class MyUsefulFunctions {
    * @param newLine If new line should be used
    * @return The string
    */
-  public static String listAray(File[] array, boolean newLine) {
+  public static String listArray(Object[] array, boolean newLine) {
     String list = "";
     for (int i = 0; i < array.length; i++) {
-      File file = array[i];
-      list += file.getName() + (newLine ? "\n" : ", ");
+      String name;
+      if (array[i] instanceof File) {
+        name = ((File) array[i]).getName();
+      } else {
+        name = String.valueOf(array[i]);
+      }
+
+      list += name + (newLine ? "\n" : ", ");
     }
     return list.substring(0, list.length() - (newLine ? 1 : 2));
   }
@@ -602,6 +635,8 @@ public class MyUsefulFunctions {
   }
 
   private static File getVideoFile(SeriesRecord series, EpisodesRecord episode) {
+    MySeriesLogger.logger.log(Level.INFO, "Getting video file for series {0} and episode {1} ",
+        new String[]{series.getFullTitle(), episode.getTitle()});
     String regex = MyUsefulFunctions.createRegex(series.getSeason(), episode.getEpisode());
     String regexFake = MyUsefulFunctions.createRegex(series.getSeason(), series.getSeason() * 10 + episode.getEpisode());
     File[] videoFiles = Series.getVideoFiles(series);
@@ -612,13 +647,18 @@ public class MyUsefulFunctions {
       Matcher matcher = pattern.matcher(file.getName());
       Matcher matcherFake = patternFake.matcher(file.getName());
       if (matcher.find() && !matcherFake.find()) {
+        MySeriesLogger.logger.log(Level.FINE, "Found video file {0}", file.getName());
         return file;
       }
     }
+    MySeriesLogger.logger.log(Level.INFO, "No video files found");
     return null;
   }
 
   private static ArrayList<File> getVideoFiles(SeriesRecord series, EpisodesRecord episode) {
+    MySeriesLogger.logger.log(Level.INFO, "Getting video files for series {0} and episode {1} ",
+        new String[]{series.getFullTitle(), episode.getTitle()});
+
     String regex = MyUsefulFunctions.createRegex(series.getSeason(), episode.getEpisode());
     String regexFake = MyUsefulFunctions.createRegex(series.getSeason(), series.getSeason() * 10 + episode.getEpisode());
     ArrayList<File> files = new ArrayList<File>();
@@ -626,6 +666,7 @@ public class MyUsefulFunctions {
     Pattern pattern = Pattern.compile(regex);
     Pattern patternFake = Pattern.compile(regexFake);
     if (videoFiles == null) {
+      MySeriesLogger.logger.log(Level.INFO, "No video files found");
       return new ArrayList<File>();
     }
     for (int j = 0; j < videoFiles.length; j++) {
@@ -633,17 +674,21 @@ public class MyUsefulFunctions {
       Matcher matcher = pattern.matcher(file.getName());
       Matcher matcherFake = patternFake.matcher(file.getName());
       if (matcher.find() && !matcherFake.find()) {
+        MySeriesLogger.logger.log(Level.FINE, "Found video file {0}", file.getName());
         files.add(file);
       }
     }
+    MySeriesLogger.logger.log(Level.FINE, "Found {0} video files", files.size());
     return files;
   }
 
   public static String[] getVideoFileTypes(EpisodesRecord ep) {
     SeriesRecord series;
+    MySeriesLogger.logger.log(Level.INFO, "Getting video file types for episode : {0}", ep.getTitle());
     try {
       series = database.DBHelper.getSeriesByID(ep.getSeries_ID());
     } catch (SQLException ex) {
+      MySeriesLogger.logger.log(Level.SEVERE, "SQL exception while getting series " + ep.getSeries_ID(), ex);
       return null;
     }
     ArrayList<File> videos = new ArrayList<File>();
@@ -672,12 +717,15 @@ public class MyUsefulFunctions {
       } else {
         types[i++] = MyDownloadedCellRenderer.OTHER;
       }
-
     }
+    MySeriesLogger.logger.log(Level.FINE, "Found {0} types ({1})",
+        new Object[]{types.length, MyUsefulFunctions.listArray(types, false)});
     return types;
   }
 
   private static ArrayList<File> getSubtitles(SeriesRecord series, EpisodesRecord episode) {
+    MySeriesLogger.logger.log(Level.INFO, "Getting subtitles for {0} episode {1}",
+        new String[]{series.getFullTitle(), episode.getTitle()});
     String regex = MyUsefulFunctions.createRegex(series.getSeason(), episode.getEpisode());
     String regexFake = MyUsefulFunctions.createRegex(series.getSeason(), series.getSeason() * 10 + episode.getEpisode());
     ArrayList<File> subs = new ArrayList<File>();
@@ -685,6 +733,7 @@ public class MyUsefulFunctions {
     Pattern pattern = Pattern.compile(regex);
     Pattern patternFake = Pattern.compile(regexFake);
     if (subtitles == null) {
+      MySeriesLogger.logger.log(Level.INFO, "No subtitles found");
       return subs;
     }
     for (int j = 0; j < subtitles.length; j++) {
@@ -695,14 +744,18 @@ public class MyUsefulFunctions {
         subs.add(file);
       }
     }
+    MySeriesLogger.logger.log(Level.FINE, "Found {0} subtitles", subs);
     return subs;
   }
 
   public static String[][] getSubtitleLangs(EpisodesRecord ep) {
+    MySeriesLogger.logger.log(Level.INFO, "Getting subtitle langs episode {1}",
+        ep.getTitle());
     SeriesRecord series;
     try {
       series = database.DBHelper.getSeriesByID(ep.getSeries_ID());
     } catch (SQLException ex) {
+      MySeriesLogger.logger.log(Level.SEVERE, "SQL exception while getting series " + ep.getSeries_ID(), ex);
       return null;
     }
     ArrayList<File> subtitles = new ArrayList<File>();
@@ -737,6 +790,8 @@ public class MyUsefulFunctions {
         }
       }
     }
+    MySeriesLogger.logger.log(Level.FINE, "Found {0} types",
+        types.length);
     return types;
   }
 
@@ -770,9 +825,11 @@ public class MyUsefulFunctions {
       ArrayList<File> videos = new ArrayList<File>();
       ArrayList<File> subs = new ArrayList<File>();
       if (series.isValidLocalDir()) {
+        MySeriesLogger.logger.log(Level.INFO, "Check if episodes need renaming {0}", ep.getTitle());
         videos = getVideoFiles(series, ep);
         subs = getSubtitles(series, ep);
         if (videos.isEmpty() || subs.isEmpty()) {
+          MySeriesLogger.logger.log(Level.INFO, "No video or subtitle files");
           return false;
         } else {
           return !areVideoAndSubsRenamed(videos, subs);
@@ -781,6 +838,7 @@ public class MyUsefulFunctions {
         return false;
       }
     } catch (SQLException ex) {
+      MySeriesLogger.logger.log(Level.SEVERE, "Sql exception occured", ex);
       return false;
     }
 
@@ -804,27 +862,33 @@ public class MyUsefulFunctions {
     for (int j = 0; j < results.length; j++) {
       boolean b = results[j];
       if (!b) {
+        MySeriesLogger.logger.log(Level.INFO, "Episode needs renaming");
         return false;
       }
     }
+    MySeriesLogger.logger.log(Level.INFO, "Episode does not need renaming");
     return true;
   }
 
   private static String getBaseName(File file, int type) {
+    String basename = "";
     if (file == null || file.isDirectory()) {
       return "";
     }
     String name = file.getName();
+    MySeriesLogger.logger.log(Level.INFO, "Getting base name of file {0}", file);
     if (type == VIDEO_FILE) {
-      return name.substring(0, name.lastIndexOf("."));
+      basename = name.substring(0, name.lastIndexOf("."));
     } else {
       // when theres no lang string interface name
       if (name.matches(".*\\..{2}\\..{3}")) {
-        return name.substring(0, name.length() - 7);
+        basename = name.substring(0, name.length() - 7);
       } else {
-        return name.substring(0, name.length() - 4);
+        basename = name.substring(0, name.length() - 4);
       }
     }
+    MySeriesLogger.logger.log(Level.FINE, "Basename is : {0}", basename);
+    return basename;
   }
 
   /**
@@ -834,9 +898,10 @@ public class MyUsefulFunctions {
   public static void browse(URI uri) {
     if (DesktopSupport.isDesktopSupport()) {
       try {
+        MySeriesLogger.logger.log(Level.INFO, "Browsing URI : {0}", uri);
         DesktopSupport.getDesktop().browse(uri);
       } catch (IOException ex) {
-        MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+        MySeriesLogger.logger.log(Level.SEVERE, "IO exception", ex);
       }
     } else {
       MyMessages.error("Open browser", "Your OS doesn't support opening a browser window");
@@ -849,9 +914,11 @@ public class MyUsefulFunctions {
    */
   public static void browse(URL url) {
     try {
+      MySeriesLogger.logger.log(Level.INFO, "Browsing URL : {0}", url);
       URI uri = new URI(url.getProtocol(), url.getHost(), url.getPath(), url.getQuery(), null);
       browse(uri);
     } catch (URISyntaxException ex) {
+      MySeriesLogger.logger.log(Level.SEVERE, "Wrong uri " + url, ex);
       MyMessages.error("Open browser", url + "\nThis is not a valid url");
     }
   }
@@ -866,8 +933,10 @@ public class MyUsefulFunctions {
       URI uri = new URI(url.getProtocol(), url.getHost(), url.getPath(), url.getQuery(), null);
       browse(uri);
     } catch (MalformedURLException ex) {
+      MySeriesLogger.logger.log(Level.SEVERE, "Wrong url " + strUrl, ex);
       MyMessages.error("Open browser", strUrl + "\nThis is not a valid url");
     } catch (URISyntaxException ex) {
+      MySeriesLogger.logger.log(Level.SEVERE, "Wrong url " + strUrl, ex);
       MyMessages.error("Open browser", strUrl + "\nThis is not a valid url");
     }
   }
@@ -880,9 +949,11 @@ public class MyUsefulFunctions {
 
   public static String getBaseUrl(String url) {
     try {
+      MySeriesLogger.logger.log(Level.INFO, "Getting base url of {0}",url);
       URL u = new URL(url);
       return u.getHost();
     } catch (MalformedURLException ex) {
+      MySeriesLogger.logger.log(Level.SEVERE, "Wrong url", ex);
       return url;
     }
   }
@@ -890,6 +961,7 @@ public class MyUsefulFunctions {
   public static boolean isNoticableRss(String title) {
     try {
       ArrayList<SeriesRecord> series = Series.getSeries(false);
+      MySeriesLogger.logger.log(Level.INFO, "Check if feed {0} is a noticable feed",title);
       for (Iterator<SeriesRecord> it = series.iterator(); it.hasNext();) {
         SeriesRecord seriesRecord = it.next();
         String sTitle = seriesRecord.getTitle();
@@ -897,19 +969,28 @@ public class MyUsefulFunctions {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(title.toLowerCase());
         if (matcher.find()) {
+          MySeriesLogger.logger.log(Level.FINE, "Noticable url");
           return true;
         }
       }
       return false;
     } catch (SQLException ex) {
+      MySeriesLogger.logger.log(Level.SEVERE, "Sql exception", ex);
       return false;
     }
   }
 
   public static boolean isSubtitle(String filename) {
+    MySeriesLogger.logger.log(Level.INFO, "Checking if {0} is subtitle",filename);
     int p = filename.lastIndexOf(".");
     String ext = filename.substring(p + 1);
-    return isInArray(SubtitleConstants.EXTENSIONS, ext);
+    boolean is =  isInArray(SubtitleConstants.EXTENSIONS, ext);
+    if(is){
+      MySeriesLogger.logger.log(Level.FINE, "{0} is a subtitle",filename);
+    } else {
+      MySeriesLogger.logger.log(Level.INFO, "{0} is not a subtitle",filename);
+    }
+    return is;
   }
 
   public static String sanitize(String str) {
@@ -922,9 +1003,8 @@ public class MyUsefulFunctions {
 
   public static String getExtension(String file) {
     String[] tok = file.split("\\.");
-    return tok[tok.length-1].toLowerCase();
+    return tok[tok.length - 1].toLowerCase();
   }
-
 
   private MyUsefulFunctions() {
   }
