@@ -59,6 +59,7 @@ public class MyMessages {
      * Displays an internet connection error
      */
     public static void internetError() {
+        MySeriesLogger.logger.log(Level.WARNING, "No internet connection");
         error("No Internet Connection!!!", "Could not connect to internet\nIf you are behind a proxy check your proxy settings in options");
         hideMessage();
     }
