@@ -33,6 +33,7 @@ import tools.download.torrents.TorrentConstants;
 public class Isohunt extends AbstractTorrentDownload implements Runnable, TorrentConstants {
 
   Isohunt(URI uri, IsohuntForm form) {
+      MySeriesLogger.logger.log(Level.INFO, "Downloading torrent from isohunt");
     this.uri = uri;
     this.form = form;
     this.progress = form.progress;
@@ -41,6 +42,7 @@ public class Isohunt extends AbstractTorrentDownload implements Runnable, Torren
   @Override
   public void run() {
     if (MyUsefulFunctions.hasInternetConnection(ISOHUNT_JSON)) {
+        MySeriesLogger.logger.log(Level.INFO, "Getting json data from isohunt");
       progress.setIndeterminate(true);
       progress.setString("Getting json data from " + ISOHUNT_NAME);
       getStream();
@@ -60,7 +62,7 @@ public class Isohunt extends AbstractTorrentDownload implements Runnable, Torren
     ArrayList<AbstractTorrent> torrents = new ArrayList<AbstractTorrent>();
     JSONObject items = null;
     JSONArray list = null;
-
+      MySeriesLogger.logger.log(Level.INFO, "Reading stream from isohunt");
 
     try {
       String line = "";
@@ -82,14 +84,6 @@ public class Isohunt extends AbstractTorrentDownload implements Runnable, Torren
       }
       for (int i = 0; i < list.length(); i++) {
         JSONObject tor = list.getJSONObject(i);
-        //Print all fields
-//         Iterator it = tor.keys();
-//        while(it.hasNext()){
-//          String key =(String) it.next();
-//          String value = (String)tor.get(key);
-//          System.out.println(key + ": :" + value);
-//        }
-
         IsohuntTorrent torrent = new IsohuntTorrent();
         torrent.setTitle(tor.has("title") ? MyUsefulFunctions.stripHTML(tor.getString("title")) : "");
         torrent.setLink(tor.has("enclosure_url") ? tor.getString("enclosure_url") : "");
@@ -107,17 +101,16 @@ public class Isohunt extends AbstractTorrentDownload implements Runnable, Torren
         torrent.setTracker(tor.has("tracker") ? tor.getString("tracker") : "");
         torrent.setVotes(tor.has("votes") ? tor.getInt("votes") : 0);
         if(!torrent.getTitle().equals("")){
+            MySeriesLogger.logger.log(Level.FINE, "Found torrent {0}",torrent.getTitle());
           torrents.add(torrent);
         }
-        
-
       }
       return torrents;
     } catch (JSONException ex) {
-      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, "JSON exception", ex);
       return torrents;
     } catch (IOException ex) {
-      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, "I/O error", ex);
       return torrents;
     }
 
@@ -125,8 +118,8 @@ public class Isohunt extends AbstractTorrentDownload implements Runnable, Torren
 
   @Override
   protected AbstractTorrent getSelectedTorrent(ArrayList<AbstractTorrent> torrents) {
-
     IsohuntResults isoRes = new IsohuntResults(torrents);
+      MySeriesLogger.logger.log(Level.INFO, "{0} torrents found.Select the one to download",torrents.size());
     return isoRes.getSelectedTorrent();
   }
 }

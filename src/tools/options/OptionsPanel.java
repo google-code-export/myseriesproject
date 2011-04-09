@@ -21,7 +21,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -31,17 +30,14 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyDraggable;
 import myseries.MySeries;
-import myseries.StartPanel;
 import com.googlecode.svalidators.formcomponents.ValidationGroup;
 import com.googlecode.svalidators.validators.CompareValidator;
 import com.googlecode.svalidators.validators.FileValidator;
-import com.googlecode.svalidators.validators.FilepathValidator;
 import com.googlecode.svalidators.validators.ListValidator;
 import com.googlecode.svalidators.validators.NoSpaceValidator;
 import com.googlecode.svalidators.validators.NullValidator;
@@ -58,7 +54,6 @@ import javax.swing.JFileChooser;
 import tools.LookAndFeels;
 import tools.Skin;
 import tools.download.subtitles.SubtitleConstants;
-import tools.internetUpdate.InternetUpdate;
 import tools.languages.Language;
 
 /**
@@ -78,10 +73,8 @@ public class OptionsPanel extends MyDraggable {
   private Color oldColor;
   private boolean oldUseSkin;
   private String oldLaf;
-  private ComboBoxModel updateDbModel = new DefaultComboBoxModel(InternetUpdate.DB_UPDATERS);
-  private ComboBoxModel primarySubtitlesModel = new DefaultComboBoxModel(SubtitleConstants.SUBTITLE_LANG);
-  private ComboBoxModel secondarySubtitlesModel = new DefaultComboBoxModel(SubtitleConstants.SUBTITLE_LANG);
-  private ComboBoxModel subtitleSitesModel = new DefaultComboBoxModel(SubtitleConstants.SUBTITLE_SITES);
+  private ComboBoxModel primarySubtitlesModel = new DefaultComboBoxModel(SubtitleConstants.SUBTITLE_LANG.toArray());
+  private ComboBoxModel secondarySubtitlesModel = new DefaultComboBoxModel(SubtitleConstants.SUBTITLE_LANG.toArray());
   private String sepRegex = "^[^/\\\\?%*:|\\\"<>\\.]*$";
   private String[] fonts;
 
