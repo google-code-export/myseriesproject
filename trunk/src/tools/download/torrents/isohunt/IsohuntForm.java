@@ -53,10 +53,13 @@ public class IsohuntForm extends AbstractTorrentForm implements TorrentConstants
      * @param episode
      */
     public IsohuntForm(SeriesRecord series, EpisodesRecord episode) {
+        MySeriesLogger.logger.log(Level.INFO, "Showing download torrent from isohunt form");
         myseries.MySeries.glassPane.activate(null);
         this.series = series;
         this.episode = episode;
+        MySeriesLogger.logger.log(Level.INFO, "Initializong components");
         initComponents();
+        MySeriesLogger.logger.log(Level.FINE, "Components initialized");
         combo_series.setSelectedItem(series.getTitle());
         spinner_episode.setValue(episode.getEpisode());
         spinner_season.setValue(series.getSeason());
@@ -66,8 +69,11 @@ public class IsohuntForm extends AbstractTorrentForm implements TorrentConstants
 
     /** Creates new form IsohuntForm */
     public IsohuntForm() {
+        MySeriesLogger.logger.log(Level.INFO, "Showing download torrent from isohunt form");
         myseries.MySeries.glassPane.activate(null);
+        MySeriesLogger.logger.log(Level.INFO, "Initializong components");
         initComponents();
+        MySeriesLogger.logger.log(Level.FINE, "Components initialized");
         combo_series.setSelectedItem(Series.getCurrentSerial().getTitle());
         setLocationRelativeTo(null);
         setVisible(true);
@@ -311,25 +317,30 @@ public class IsohuntForm extends AbstractTorrentForm implements TorrentConstants
     }//GEN-LAST:event_spinner_episodeStateChanged
 
     private void bt_helpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_helpActionPerformed
+        MySeriesLogger.logger.log(Level.INFO, "Showing help form");
         new HelpWindow(HelpWindow.DOWNLOAD_TORRENT);
     }//GEN-LAST:event_bt_helpActionPerformed
 
     private void bt_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelActionPerformed
         dispose();
+        MySeriesLogger.logger.log(Level.INFO, "Canceled by the user");
         myseries.MySeries.glassPane.deactivate();
     }//GEN-LAST:event_bt_cancelActionPerformed
 
     private void bt_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_okActionPerformed
         ValidationGroup group = new ValidationGroup();
         group.addComponent(combo_series);
+        MySeriesLogger.logger.log(Level.INFO, "Validating user input");
         if (group.validate()) {
             URI uri = createUri();
             if (uri != null) {
+                MySeriesLogger.logger.log(Level.FINE, "Search uri :{0}",uri);
                 Isohunt i = new Isohunt(uri, this);
                 Thread t = new Thread(i);
                 t.start();
             }
         } else {
+            MySeriesLogger.logger.log(Level.WARNING, "Validation failed\nError message : {0}",group.getErrorMessage());
             MyMessages.error("IsoHunt Search Form", group.getErrorMessage());
         }
     }//GEN-LAST:event_bt_okActionPerformed
@@ -357,7 +368,8 @@ public class IsohuntForm extends AbstractTorrentForm implements TorrentConstants
 
     @Override
     protected URI createUri() {
-        String address = ISOHUNT_JSON;
+         MySeriesLogger.logger.log(Level.INFO, "Creating the search uri");
+       String address = ISOHUNT_JSON;
         String query = "";
         ArrayList<String> q = new ArrayList<String>();
         String season = "+S" + MyUsefulFunctions.padLeft(String.valueOf(spinner_season.getValue()), 2, "0");
@@ -375,13 +387,13 @@ public class IsohuntForm extends AbstractTorrentForm implements TorrentConstants
             return new URI(address + query);
         } catch (URISyntaxException ex) {
             MyMessages.error("Wrong url", "Wrong url " + address + query);
-            MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+            MySeriesLogger.logger.log(Level.SEVERE, "Wrong url " + address + query, ex);
             return null;
         } catch (UnsupportedEncodingException ex) {
-            MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+            MySeriesLogger.logger.log(Level.SEVERE, "Unsupported encoding error", ex);
             return null;
         } catch (IOException ex) {
-            MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+            MySeriesLogger.logger.log(Level.SEVERE, "I/O error", ex);
             return null;
         }
     }

@@ -10,7 +10,6 @@ import java.net.URI;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Vector;
 import java.util.logging.Level;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
@@ -29,14 +28,14 @@ public abstract class AbstractTorrentForm extends MyDraggable implements Torrent
   protected ComboBoxModel qualityModel = new DefaultComboBoxModel();
 
   protected void createModels() {
-    Vector<String> v = new Vector<String>();
+    ArrayList<String> v = new ArrayList<String>();
     try {
       ArrayList<SeriesRecord> s = Series.getSeries(false);
       for (Iterator<SeriesRecord> it = s.iterator(); it.hasNext();) {
         SeriesRecord seriesRecord = it.next();
         v.add(seriesRecord.getTitle());
       }
-      seriesModel = new DefaultComboBoxModel(v);
+      seriesModel = new DefaultComboBoxModel(v.toArray());
       qualityModel = new DefaultComboBoxModel(QUALITIES);
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, null, ex);

@@ -66,8 +66,11 @@ public class EzTvForm extends AbstractTorrentForm {
     }
 
     private void showUp() {
+        MySeriesLogger.logger.log(Level.INFO, "Showing download from eztv form");
         myseries.MySeries.glassPane.activate(null);
+        MySeriesLogger.logger.log(Level.INFO, "Initializong components");
         initComponents();
+        MySeriesLogger.logger.log(Level.FINE, "Components initialized");
         combo_series.setSelectedItem(Series.getCurrentSerial().getTitle());
         combo_series.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
 
@@ -299,25 +302,31 @@ public class EzTvForm extends AbstractTorrentForm {
 
   private void bt_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelActionPerformed
       myseries.MySeries.glassPane.deactivate();
+      MySeriesLogger.logger.log(Level.INFO, "Canceled by the user");
       dispose();
       myseries.MySeries.glassPane.deactivate();
   }//GEN-LAST:event_bt_cancelActionPerformed
 
   private void bt_helpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_helpActionPerformed
+      MySeriesLogger.logger.log(Level.INFO, "Showing help form");
       new HelpWindow(HelpWindow.DOWNLOAD_TORRENT);
   }//GEN-LAST:event_bt_helpActionPerformed
 
   private void bt_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_okActionPerformed
       ValidationGroup group = new ValidationGroup();
       group.addComponent(combo_series);
+      MySeriesLogger.logger.log(Level.INFO, "Validating user input");
       if (group.validate()) {
           URI uri = createUri();
+
           if (uri != null) {
+              MySeriesLogger.logger.log(Level.FINE, "Search uri :{0}", uri);
               EzTv e = new EzTv(uri, this);
               Thread t = new Thread(e);
               t.start();
           }
       } else {
+          MySeriesLogger.logger.log(Level.WARNING, "Validation error\nMessage: {0}", group.getErrorMessage());
           MyMessages.error("EzTv Search Form", group.getErrorMessage());
       }
       //myseries.MySeries.glassPane.deactivate();
@@ -356,6 +365,7 @@ public class EzTvForm extends AbstractTorrentForm {
 
     @Override
     protected URI createUri() {
+        MySeriesLogger.logger.log(Level.INFO, "Creating the search uri");
         String address = EZTV_RSS;
         String query = "";
         ArrayList<String> q = new ArrayList<String>();
@@ -377,13 +387,13 @@ public class EzTvForm extends AbstractTorrentForm {
             return new URI(address + query);
         } catch (URISyntaxException ex) {
             MyMessages.error("Wrong url", "Wrong url " + address + query);
-            MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+            MySeriesLogger.logger.log(Level.SEVERE, "Invalid uri", ex);
             return null;
         } catch (UnsupportedEncodingException ex) {
-            MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+            MySeriesLogger.logger.log(Level.SEVERE, "Unsupported encoding", ex);
             return null;
         } catch (IOException ex) {
-            MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+            MySeriesLogger.logger.log(Level.SEVERE, "I/O error", ex);
             return null;
         }
     }

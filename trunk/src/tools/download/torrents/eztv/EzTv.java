@@ -13,7 +13,6 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -41,6 +40,7 @@ public class EzTv extends AbstractTorrentDownload implements Runnable, TorrentCo
    * @param form
    */
   public EzTv(URI uri, EzTvForm form) {
+      MySeriesLogger.logger.log(Level.INFO, "Downloading from eztv");
     this.uri = uri;
     this.form = form;
     this.progress = form.progress;
@@ -63,10 +63,12 @@ public class EzTv extends AbstractTorrentDownload implements Runnable, TorrentCo
       String line;
       while ((line = in.readLine()) != null) {
         if (line.indexOf("Follow the Swarm") > -1) {
+            MySeriesLogger.logger.log(Level.INFO, "Torrent is not available any more");
           MyMessages.error("No Torrents", "Torrent is not available anymore");
           return false;
         }
       }
+        MySeriesLogger.logger.log(Level.FINE, "The url is a valid torrent");
       return true;
     }
     return false;
@@ -81,6 +83,7 @@ public class EzTv extends AbstractTorrentDownload implements Runnable, TorrentCo
     String link = "";
     ArrayList<AbstractTorrent> torrents = new ArrayList<AbstractTorrent>();
     try {
+        MySeriesLogger.logger.log(Level.INFO, "Reading the rss data");
       progress.setString("Reading the rss data");
       MySeriesLogger.logger.log(Level.INFO, "Parsing XML");
       DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -89,6 +92,7 @@ public class EzTv extends AbstractTorrentDownload implements Runnable, TorrentCo
       doc.getDocumentElement().normalize();
       NodeList itemNodeList = doc.getElementsByTagName("item");
       if (itemNodeList.getLength() == 0) {
+          MySeriesLogger.logger.log(Level.INFO, "No torrents found");
         return torrents;
       }
       for (int s = 0; s < itemNodeList.getLength(); s++) {
@@ -103,16 +107,17 @@ public class EzTv extends AbstractTorrentDownload implements Runnable, TorrentCo
           torrent.setTitle(title);
           torrent.setLink(link);
           torrents.add(torrent);
+            MySeriesLogger.logger.log(Level.FINE, "Torrent found {0}",title);
         }
       }
     } catch (SAXException ex) {
-      Logger.getLogger(EzTv.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(EzTv.class.getName()).log(Level.SEVERE, "SAX exception occured", ex);
       return torrents;
     } catch (IOException ex) {
-      Logger.getLogger(EzTv.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(EzTv.class.getName()).log(Level.SEVERE, "I/O exception occured", ex);
       return torrents;
     } catch (ParserConfigurationException ex) {
-      Logger.getLogger(EzTv.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(EzTv.class.getName()).log(Level.SEVERE, "Parser error", ex);
       return torrents;
     }
     return torrents;
@@ -120,7 +125,8 @@ public class EzTv extends AbstractTorrentDownload implements Runnable, TorrentCo
 
   @Override
   protected AbstractTorrent getSelectedTorrent(ArrayList<AbstractTorrent> torrents) {
-    return (AbstractTorrent) MyMessages.ask( "Choose torrent", "Choose the torrent to download", null , torrents.toArray(),null);
+      MySeriesLogger.logger.log(Level.INFO, "{0} torrents found.Select the one to download",torrents.size());
+      return (AbstractTorrent) MyMessages.ask( "Choose torrent", "Choose the torrent to download", null , torrents.toArray(),null);
 
     
   }
