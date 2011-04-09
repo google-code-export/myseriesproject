@@ -4,6 +4,8 @@
  */
 package tools.download.subtitles.tvsubtitles;
 
+import java.util.logging.Level;
+import tools.MySeriesLogger;
 import tools.download.subtitles.AbstractDownloadForm;
 
 /**
@@ -23,6 +25,7 @@ public class TvSubtitlesForm extends AbstractDownloadForm {
    */
   public TvSubtitlesForm(String link, int season, int episode, String localDir, String title) {
     super.init();
+      MySeriesLogger.logger.log(Level.INFO, "Showing download subtitles from Tv Subtitles form for episode {0}",title);
     label_title.setText("Download from TVSubtitles.net");
     label_subtitle.setText(title);
     setLocationRelativeTo(null);
@@ -34,6 +37,7 @@ public class TvSubtitlesForm extends AbstractDownloadForm {
   }
 
   public TvSubtitlesForm(String link, int season,  String localDir) {
+      MySeriesLogger.logger.log(Level.INFO, "Showing download whole season subtitles from Tv Subtitles form");
     super.init();
     label_title.setText("Download whole season subtitles from TVSubtitles.net");
     label_subtitle.setText("Whole season");

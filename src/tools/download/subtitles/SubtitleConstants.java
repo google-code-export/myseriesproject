@@ -5,7 +5,7 @@
 
 package tools.download.subtitles;
 
-import java.util.Vector;
+import java.util.ArrayList;
 import tools.languages.Language;
 
 /**
@@ -16,11 +16,11 @@ public interface SubtitleConstants {
   /**
    * List of web subtitle sites
    */
-  public static Vector<String> SUBTITLE_SITES = new Vector<String>();
+  public static ArrayList<String> SUBTITLE_SITES = new ArrayList<String>();
   /**
    * List of available languages
    */
-  public static Vector<Language> SUBTITLE_LANG = new Vector<Language>();
+  public static ArrayList<Language> SUBTITLE_LANG = new ArrayList<Language>();
 
    /**
    * The greek subtitles language : "Greek"

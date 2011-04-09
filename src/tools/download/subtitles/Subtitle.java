@@ -6,9 +6,7 @@
 package tools.download.subtitles;
 
 import java.net.URL;
-import java.util.Vector;
 import myComponents.MyUsefulFunctions;
-import tools.languages.Language;
 
 /**
  *

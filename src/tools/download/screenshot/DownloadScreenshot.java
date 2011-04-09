@@ -11,7 +11,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.logging.Level;
-import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyImagePanel;
 import tools.internetUpdate.InternetUpdate;
 import tools.options.Options;
@@ -29,6 +28,7 @@ public class DownloadScreenshot {
     private final String series;
 
     public DownloadScreenshot(int tvRageID, String series) {
+        MySeriesLogger.logger.log(Level.INFO, "Downloading screenshot for series {0} with tvrage id {1}",new Object[] {series,tvRageID});
         this.tvRageID = tvRageID;
         this.series = series;
         get();
@@ -49,7 +49,7 @@ public class DownloadScreenshot {
                 return;
             }
         } catch (IOException ex) {
-            MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+            MySeriesLogger.logger.log(Level.SEVERE, "I/O exception occured", ex);
         }
 
     }
@@ -68,8 +68,9 @@ public class DownloadScreenshot {
             in.close();
             outStream.close();
             setSuccess(true);
+            MySeriesLogger.logger.log(Level.FINE, "Screenshot downloaded");
         } catch (IOException ex) {
-            MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+            MySeriesLogger.logger.log(Level.SEVERE, "Could not read from input stream", ex);
         }
     }
 
