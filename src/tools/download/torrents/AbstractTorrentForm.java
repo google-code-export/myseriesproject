@@ -38,7 +38,7 @@ public abstract class AbstractTorrentForm extends MyDraggable implements Torrent
       seriesModel = new DefaultComboBoxModel(v.toArray());
       qualityModel = new DefaultComboBoxModel(QUALITIES);
     } catch (SQLException ex) {
-      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, "Sql exception", ex);
     }
   }
 

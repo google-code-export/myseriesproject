@@ -15,67 +15,72 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import myComponents.MyMessages;
 import tools.options.Options;
-import myComponents.MyUsefulFunctions;
 import tools.MySeriesLogger;
+
 /**
  *
  * @author lordovol
  */
 public class FeedReader {
 
-  private final FeedsRecord feedRecord;
-  private Feed feed = new Feed();
-  private final FeedTree tree;
+    private final FeedsRecord feedRecord;
+    private Feed feed = new Feed();
+    private final FeedTree tree;
 
-  public FeedReader(FeedTree tree, FeedsRecord feedRecord) {
-    this.feedRecord = feedRecord;
-    this.tree = tree;
-    _getFeed();
-  }
-
-  private void _getFeed() {
-    try {
-      File file = new File(Options._USER_DIR_ + Feed.FEEDS_PATH + feedRecord.getFeed_ID());
-      if (!file.exists()) {
-        FeedUpdater fu = new FeedUpdater(tree, feedRecord);
-        fu.run();
-      }
-      
-      SyndFeedInput input = new SyndFeedInput();
-      SyndFeed feedXml = input.build(new XmlReader(file));
-      String title = feedXml.getTitle();
-      if (feedRecord.getUrl().indexOf(feedRecord.getTitle())>-1 && !title.equals("")) {
-        feedRecord.setTitle(title);
-        feedRecord.save();
-      }
-      List entries = feedXml.getEntries();
-      feed = new Feed();
-      for (int i = 0; i < entries.size(); i++) {
-        SyndEntryImpl entry = (SyndEntryImpl) entries.get(i);
-        getFeed().getEntries().add(entry);
-      }
-    } catch (SQLException ex) {
-      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-      MyMessages.error("Feed", "Could not save feed to database");
-    } catch (FeedException ex) {
-      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-      MyMessages.error("Feed", "Could not read feed from "+feedRecord.getUrl());
-    } catch (IOException ex) {
-      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-      MyMessages.error("Feed", "Could not read feed from "+feedRecord.getUrl());
-    } catch (IllegalArgumentException ex) {
-      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-      MyMessages.error("Feed", "Could not read feed from "+feedRecord.getUrl());
+    public FeedReader(FeedTree tree, FeedsRecord feedRecord) {
+        MySeriesLogger.logger.log(Level.INFO, "Reading feeds from {0}", feedRecord.getTitle());
+        this.feedRecord = feedRecord;
+        this.tree = tree;
+        _getFeed();
     }
-  }
 
-  /**
-   * @return the feed
-   */
-  public Feed getFeed() {
-    return feed;
-  }
+    private void _getFeed() {
+        try {
+            File file = new File(Options._USER_DIR_ + Feed.FEEDS_PATH + feedRecord.getFeed_ID());
+            if (!file.exists()) {
+                MySeriesLogger.logger.log(Level.INFO, "Feed file does not exist.Updating feed");
+                FeedUpdater fu = new FeedUpdater(tree, feedRecord);
+                fu.run();
+                MySeriesLogger.logger.log(Level.FINE, "Feed updated");
+            }
+            MySeriesLogger.logger.log(Level.INFO, "Reading feed file");
+            SyndFeedInput input = new SyndFeedInput();
+            SyndFeed feedXml = input.build(new XmlReader(file));
+            String title = feedXml.getTitle();
+            if (feedRecord.getUrl().indexOf(feedRecord.getTitle()) > -1 && !title.equals("")) {
+                MySeriesLogger.logger.log(Level.INFO, "Setting feed title to {0}",title);
+                feedRecord.setTitle(title);
+                feedRecord.save();
+            }
+            List entries = feedXml.getEntries();
+            feed = new Feed();
+            MySeriesLogger.logger.log(Level.INFO, "Getting {0} entries",entries.size());
+            for (int i = 0; i < entries.size(); i++) {
+                SyndEntryImpl entry = (SyndEntryImpl) entries.get(i);
+                getFeed().getEntries().add(entry);
+                MySeriesLogger.logger.log(Level.FINE, "Added entry {0}",entry.getTitle());
+            }
+        } catch (SQLException ex) {
+            MySeriesLogger.logger.log(Level.SEVERE, "Could not save feed to database", ex);
+            MyMessages.error("Feed", "Could not save feed to database");
+        } catch (FeedException ex) {
+            MySeriesLogger.logger.log(Level.SEVERE, "Could not read feed from " + feedRecord.getUrl(), ex);
+            MyMessages.error("Feed", "Could not read feed from " + feedRecord.getUrl());
+        } catch (IOException ex) {
+            MySeriesLogger.logger.log(Level.SEVERE, "Could not read feed from " + feedRecord.getUrl(), ex);
+            MyMessages.error("Feed", "Could not read feed from " + feedRecord.getUrl());
+        } catch (IllegalArgumentException ex) {
+            MySeriesLogger.logger.log(Level.SEVERE, "Could not read feed from " + feedRecord.getUrl(), ex);
+            MyMessages.error("Feed", "Could not read feed from " + feedRecord.getUrl());
+        }
+    }
+
+    /**
+     * @return the feed
+     */
+    public Feed getFeed() {
+        return feed;
+    }
 }
