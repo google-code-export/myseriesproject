@@ -13,12 +13,13 @@ package tools.feeds;
 import com.sun.syndication.feed.synd.SyndEntryImpl;
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.Iterator;
+import java.util.logging.Level;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import myComponents.myGUI.MyScrollableFlowPanel;
+import tools.MySeriesLogger;
 
 
 /**
@@ -33,9 +34,7 @@ public class FeedPreviewPanel extends javax.swing.JPanel {
 
   /** Creates new form GridPanel */
   public FeedPreviewPanel() {
-    initComponents();
-
-
+      initComponents();
   }
 
   /** This method is called from within the constructor to
@@ -60,6 +59,7 @@ public class FeedPreviewPanel extends javax.swing.JPanel {
   }// </editor-fold>//GEN-END:initComponents
 
   public void setFeed(Feed feed) {
+      MySeriesLogger.logger.log(Level.INFO, "Setting feed to {0}",feed);
     this.feed = feed;
     removeAll();
     feedPanel = new MyScrollableFlowPanel();
@@ -71,6 +71,7 @@ public class FeedPreviewPanel extends javax.swing.JPanel {
     add(panel, BorderLayout.CENTER);
     feedPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
     int count = 0;
+      MySeriesLogger.logger.log(Level.INFO, "Creating {0} feed entries",feed.getEntries().size());
     for (Iterator<SyndEntryImpl> it = feed.getEntries().iterator(); it.hasNext();) {
       SyndEntryImpl entry = it.next();
       FeedPanel p = new FeedPanel(feedPanel, entry);
