@@ -119,7 +119,9 @@ public abstract class AbstractUpdate {
                 serVector = DBHelper.getSeriesBySql(
                         "SELECT * FROM series WHERE internetUpdate = 1 AND "
                         + "deleted = " + SeriesRecord.NOT_DELETED);
+                MySeriesLogger.logger.log(Level.INFO, "Updating {0} series",serVector.size());
             } else {
+                MySeriesLogger.logger.log(Level.INFO, "Updating series {0}",iu.getCurrentSeries().getFullTitle());
                 serVector.add(iu.getCurrentSeries());
             }
             iu.progress_bar.setIndeterminate(true);
@@ -162,12 +164,15 @@ public abstract class AbstractUpdate {
     protected abstract void updateEpisodes() throws SQLException;
 
     protected boolean shouldSaveEpisode(EpisodesRecord episodeRecord, String title, String airDate) {
+        MySeriesLogger.logger.log(Level.INFO, "Check if episode {0} should be saved",title);
         String oldTitle = episodeRecord.getTitle().trim().toLowerCase();
         String oldDate = episodeRecord.getAired();
         if (!oldTitle.equals(title.toLowerCase())
                 || (!oldDate.equals(airDate) && MyUsefulFunctions.isValidDate(airDate))) {
+            MySeriesLogger.logger.log(Level.FINE, "Yes");
             return true;
         }
+        MySeriesLogger.logger.log(Level.INFO, "No");
         return false;
     }
 }

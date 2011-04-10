@@ -54,15 +54,15 @@ public class TrUpdate extends AbstractUpdate implements Runnable {
     try {
       isConected = MyUsefulFunctions.hasInternetConnection(InternetUpdate.TV_RAGE_URL);
       if(!isConected){
-        MyMessages.error("No Internet Connection", "Could not connect to the Internet");
         return false;
       }
+        MySeriesLogger.logger.log(Level.INFO, "Updating series {0}",series.getFullTitle());
       this.series = series;
       list.add(new TrSeriesToUpdate(series));
       InputStream in = null;
       MySeriesLogger.logger.log(Level.INFO, "Getting the url");
       String url = InternetUpdate.TV_RAGE_EPISODE_LIST_URL + series.getTvrage_ID();
-      MySeriesLogger.logger.log(Level.INFO, "Reading URL: " + url);
+      MySeriesLogger.logger.log(Level.INFO, "Reading URL: {0}", url);
       URL tvRage = new URL(url);
       in = tvRage.openStream();
       readXML(in);
@@ -103,7 +103,7 @@ public class TrUpdate extends AbstractUpdate implements Runnable {
         if (header) {
           iu.label_update_series.setText("Importing episodes of " + curSeries);
           append("<span><b>Importing episodes of " + curSeries + "</b></span>");
-          MySeriesLogger.logger.log(Level.INFO, "Importing episodes of " + curSeries);
+          MySeriesLogger.logger.log(Level.INFO, "Importing episodes of {0}", curSeries);
           header = false;
         }
         Database.beginTransaction();
@@ -116,7 +116,7 @@ public class TrUpdate extends AbstractUpdate implements Runnable {
           Vector<EpisodesRecord> episodes = DBHelper.getEpisodesBySql("SELECT * FROM episodes WHERE series_ID = " + series.getSeries_ID()
                   + " AND episode = " + number + " LIMIT 1");
           EpisodesRecord episodeRecord;
-          if (episodes.size() == 0) {
+          if (episodes.isEmpty()) {
             newEpisodes++;
             save = true;
             episodeRecord = new EpisodesRecord();
@@ -141,8 +141,10 @@ public class TrUpdate extends AbstractUpdate implements Runnable {
         }
         Database.endTransaction();
          if(newEpisodes == 0 && updEpisodes ==0){
+             MySeriesLogger.logger.log(Level.INFO, "No new or updated episodes");
             append("No new or updated episodes");
          } else {
+             MySeriesLogger.logger.log(Level.INFO, "{0} new episodes and {1} updates", new Object[]{newEpisodes, updEpisodes});
             append(newEpisodes + " new episodes and " + updEpisodes + " updates");
          }
       }
@@ -151,6 +153,7 @@ public class TrUpdate extends AbstractUpdate implements Runnable {
     iu.progress_bar.setString("100%");
     Episodes.updateEpisodesTable();
     append("<br><br>Internet update of series completed in " + calcExecTime());
+      MySeriesLogger.logger.log(Level.INFO, "<br><br>Internet update of series completed in {0}", calcExecTime());
     iu.finished = true;
   }
 
