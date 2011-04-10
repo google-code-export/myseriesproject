@@ -21,78 +21,82 @@ import myComponents.MyMessages;
 import myComponents.myGUI.MyDraggable;
 import myseries.MySeries;
 import tools.Skin;
-import tools.options.Options;
-import myComponents.MyUsefulFunctions;
+
 /**
  * The internet update form
  * @author lordovol
  */
 public class InternetUpdate extends MyDraggable {
 
-  /** Tv rage name : "TvRage"   */
-  public static final String TV_RAGE_NAME = "TvRage";
-  /** EpGuides name : "EpGuides"   */
-  public static final String EP_GUIDES_NAME = "EpGuides";
-  /** List of web series databases   */
-  public static Vector<String> DB_UPDATERS = new Vector<String>();
-  /** The epguides url : "http://www.epguides.com/" **/
-  public static final String EP_GUIDES_URL = "http://www.epguides.com/";
-  /** The tvrage url : "http://www.tvrage.com **/
-  public static final String TV_RAGE_URL = "http://www.tvrage.com/";
-  /** The search show rss url : "http://services.tvrage.com/feeds/search.php?show=" **/
-  public static final String TV_RAGE_SEARCH_SHOW_URL = "http://services.tvrage.com/feeds/search.php?show=";
-  /** The tvrage epoisodes list rss url : "http://services.tvrage.com/feeds/episode_list.php?sid=" **/
-  public static final String TV_RAGE_EPISODE_LIST_URL = "http://services.tvrage.com/feeds/episode_list.php?sid=";
-  /** tvrage images url : "http://images.tvrage.com/"; */
-  public static String TV_RAGE_IMAGES_URL = "http://images.tvrage.com/";
+    /** Tv rage name : "TvRage"   */
+    public static final String TV_RAGE_NAME = "TvRage";
+    /** EpGuides name : "EpGuides"   */
+    public static final String EP_GUIDES_NAME = "EpGuides";
+    /** List of web series databases   */
+    public static Vector<String> DB_UPDATERS = new Vector<String>();
+    /** The epguides url : "http://www.epguides.com/" **/
+    public static final String EP_GUIDES_URL = "http://www.epguides.com/";
+    /** The tvrage url : "http://www.tvrage.com **/
+    public static final String TV_RAGE_URL = "http://www.tvrage.com/";
+    /** The search show rss url : "http://services.tvrage.com/feeds/search.php?show=" **/
+    public static final String TV_RAGE_SEARCH_SHOW_URL = "http://services.tvrage.com/feeds/search.php?show=";
+    /** The tvrage epoisodes list rss url : "http://services.tvrage.com/feeds/episode_list.php?sid=" **/
+    public static final String TV_RAGE_EPISODE_LIST_URL = "http://services.tvrage.com/feeds/episode_list.php?sid=";
+    /** tvrage images url : "http://images.tvrage.com/"; */
+    public static String TV_RAGE_IMAGES_URL = "http://images.tvrage.com/";
+    /**
+     * If proccess is finished
+     */
+    public boolean finished = false;
+    private MySeries m;
+    private Thread t;
+    private SeriesRecord currentSeries = null;
+    private static final long serialVersionUID = 4364575758658L;
+    private String site = "";
 
-  /**
-   * If proccess is finished
-   */
-  public boolean finished = false;
-  private MySeries m;
-  private Thread t;
-  private SeriesRecord currentSeries = null;
-  private static final long serialVersionUID = 4364575758658L;
-  private String site = "";
+    /** Creates new form InternetUpdate from MySeries Form
+     * @param m The myseries form
+     * @param site From which site to update
+     */
+    public InternetUpdate(MySeries m, String site) {
+        this.m = m;
+        this.site = site;
+        MySeriesLogger.logger.log(Level.INFO, "Internet update from {0} for all series", site);
+        MySeriesLogger.logger.log(Level.INFO, "Initializong components");
+        initComponents();
+        MySeriesLogger.logger.log(Level.FINE, "Components initialized");
+        startUpdate();
+        setLocationRelativeTo(m);
+        setVisible(true);
 
-  /** Creates new form InternetUpdate from MySeries Form
-   * @param m The myseries form
-   * @param site From which site to update
-   */
-  public InternetUpdate(MySeries m, String site) {
-    this.m = m;
-    this.site = site;
-    initComponents();
-    startUpdate();
-    setLocationRelativeTo(m);
-    setVisible(true);
+    }
 
-  }
+    /**
+     * Constructs an internet update for a specific series
+     * @param m The mySeries form
+     * @param currentSeries The series to update
+     * @param site From which site to update
+     */
+    public InternetUpdate(MySeries m, SeriesRecord currentSeries, String site) {
+        this.m = m;
+        this.currentSeries = currentSeries;
+        this.site = site;
+        MySeriesLogger.logger.log(Level.INFO, "Internet update from {0} for series {1}", new Object[]{site, currentSeries.getFullTitle()});
+        MySeriesLogger.logger.log(Level.INFO, "Initializong components");
+        initComponents();
+        MySeriesLogger.logger.log(Level.FINE, "Components initialized");
+        startUpdate();
+        setLocationRelativeTo(m);
+        setVisible(true);
 
-  /**
-   * Constructs an internet update for a specific series
-   * @param m The mySeries form
-   * @param currentSeries The series to update
-   * @param site From which site to update
-   */
-  public InternetUpdate(MySeries m, SeriesRecord currentSeries, String site) {
-    this.m = m;
-    this.currentSeries = currentSeries;
-    this.site = site;
-    initComponents();
-    startUpdate();
-    setLocationRelativeTo(m);
-    setVisible(true);
-    
-  }
+    }
 
-  /** This method is called from within the constructor to
-   * initialize the form.
-   * WARNING: Do NOT modify this code. The content of this method is
-   * always regenerated by the Form Editor.
-   */
-  @SuppressWarnings("unchecked")
+    /** This method is called from within the constructor to
+     * initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is
+     * always regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -198,47 +202,52 @@ public class InternetUpdate extends MyDraggable {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-  private void startUpdate() {
-    Runnable task = null;
-    if (site.equals(EP_GUIDES_NAME)) {
-      task = new EgUpdate(this);
-    } else if (site.equals(TV_RAGE_NAME)) {
-      task = new TrUpdate(this);
-    } else {
-      return;
+    private void startUpdate() {
+        Runnable task = null;
+        MySeriesLogger.logger.log(Level.INFO, "Satring update");
+        if (site.equals(EP_GUIDES_NAME)) {
+            task = new EgUpdate(this);
+        } else if (site.equals(TV_RAGE_NAME)) {
+            task = new TrUpdate(this);
+        } else {
+            return;
+        }
+        t = new Thread(task);
+        t.start();
     }
-    MySeriesLogger.logger.log(Level.INFO, "Starting update");
-    t = new Thread(task);
-    t.start();
-  }
 
   private void bt_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelActionPerformed
-       if (t == null) {
-      MySeries.glassPane.deactivate();
-      dispose();
-    } else {
-
-      if (finished) {
-        MySeries.glassPane.deactivate();
-        dispose();
-      } else {
-        int i = MyMessages.question("Abort?", "Do you want to cancel the update?");
-        if (i == JOptionPane.OK_OPTION) {
-          t.interrupt();
+      if (t == null) {
           MySeries.glassPane.deactivate();
+          MySeriesLogger.logger.log(Level.INFO, "Updating canceled by the user");
           dispose();
-        } else {
-        }
+      } else {
+
+          if (finished) {
+              MySeries.glassPane.deactivate();
+              MySeriesLogger.logger.log(Level.INFO, "Updating canceled by the user");
+              dispose();
+          } else {
+              MySeriesLogger.logger.log(Level.INFO, "Canceling while updating");
+              int i = MyMessages.question("Abort?", "Do you want to cancel the update?");
+              if (i == JOptionPane.OK_OPTION) {
+                  MySeriesLogger.logger.log(Level.INFO, "Updating canceled by the user");
+                  t.interrupt();
+                  MySeries.glassPane.deactivate();
+                  dispose();
+              } else {
+                  MySeriesLogger.logger.log(Level.INFO, "Canceling aborted");
+              }
+          }
       }
-    }
   }//GEN-LAST:event_bt_cancelActionPerformed
 
-  /**
-   * @return the currentSeries
-   */
-  public SeriesRecord getCurrentSeries() {
-    return currentSeries;
-  }
+    /**
+     * @return the currentSeries
+     */
+    public SeriesRecord getCurrentSeries() {
+        return currentSeries;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private myComponents.myGUI.buttons.MyButtonCancel bt_cancel;
     javax.swing.JEditorPane editor_messages;

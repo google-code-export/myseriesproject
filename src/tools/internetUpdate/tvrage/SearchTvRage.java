@@ -11,20 +11,19 @@ import java.net.MalformedURLException;
 import tools.MySeriesLogger;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
 import javax.swing.DefaultComboBoxModel;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import myseries.MySeries;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import tools.internetUpdate.InternetUpdate;
-import myComponents.MyUsefulFunctions;
 
 
 /**
@@ -34,11 +33,11 @@ import myComponents.MyUsefulFunctions;
 class SearchTvRage implements Runnable {
 
     private String title;
-    Vector<TvRageSeries> results = new Vector<TvRageSeries>();
+    ArrayList<TvRageSeries> results = new ArrayList<TvRageSeries>();
      private TrGetId tr;
 
     public SearchTvRage(String title, TrGetId tr) {
-      MySeriesLogger.logger.log(Level.INFO, "Search");
+      MySeriesLogger.logger.log(Level.INFO, "Search tvrage");
       this.title = title;
       this.tr = tr;
       // run();
@@ -92,7 +91,7 @@ class SearchTvRage implements Runnable {
         results.add(new TvRageSeries(id, name, year));
       }
       if (results.size() > 0) {
-        tr.resultsModel = new DefaultComboBoxModel(results);
+        tr.resultsModel = new DefaultComboBoxModel(results.toArray());
       }
       tr.combo_results.setModel(tr.resultsModel);
       tr.validate();
