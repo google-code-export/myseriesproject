@@ -41,7 +41,7 @@ public class Schedule extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         lb_title = new javax.swing.JLabel();
-        schedule = new com.googlecode.scheduler.Scheduler();
+        schedule = new com.googlecode.scheduler.Scheduler("db");
         schedule.getTblCalendar().getTableHeader().setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
         setOpaque(false);
