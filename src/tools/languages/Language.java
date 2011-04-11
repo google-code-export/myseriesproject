@@ -4,14 +4,16 @@
  */
 package tools.languages;
 
+import java.util.logging.Level;
 import javax.swing.ImageIcon;
 import myComponents.myTableCellRenderers.MySubtitlesCellRenderer;
+import tools.MySeriesLogger;
 
 /**
  * Subtitle language object
  * @author ssoldatos
  */
-public class Language {
+public final class Language {
 
   /** The primary lang constant **/
   public static int PRIMARY = 0;
@@ -39,6 +41,9 @@ public class Language {
     this.name = name;
     this.code = code;
     this.id = id;
+    String p = priority==PRIMARY ? "primary" : priority == SECONDARY ? "secondary" : "no priority";
+    MySeriesLogger.logger.log(Level.INFO, "Creating new language [{0},{1},{2}] as {3}",
+        new Object[] {name, code, id,p});
     if (priority == PRIMARY) {
       setIsPrimary(true);
       setIsSecondary(false);
@@ -131,14 +136,20 @@ public class Language {
    */
   public ImageIcon getIcon() {
     try {
+      MySeriesLogger.logger.log(Level.INFO, "Getting icon for language {0}",getName());
       if (this.equals(LangsList.NONE)) {
+        MySeriesLogger.logger.log(Level.INFO, "Language is none , no icon");
         return null;
       } else if (this.equals(LangsList.MULTIPLE)) {
+        MySeriesLogger.logger.log(Level.INFO, "Language is multiple, multiple icon");
         return new ImageIcon(getClass().getResource("/images/langs/" + MULTIPLE + ".png"));
       }
-      return new ImageIcon(getClass().getResource("/images/langs/" + getCode() + ".png"));
+
+      ImageIcon im =  new ImageIcon(getClass().getResource("/images/langs/" + getCode() + ".png"));
+      MySeriesLogger.logger.log(Level.FINE, "Image icon found");
+      return im;
     } catch (Exception e) {
-     // System.out.println(this);
+       MySeriesLogger.logger.log(Level.WARNING, "Image icon error");
     }
     return null;
   }
