@@ -144,7 +144,6 @@ public final class Language {
         MySeriesLogger.logger.log(Level.INFO, "Language is multiple, multiple icon");
         return new ImageIcon(getClass().getResource("/images/langs/" + MULTIPLE + ".png"));
       }
-
       ImageIcon im =  new ImageIcon(getClass().getResource("/images/langs/" + getCode() + ".png"));
       MySeriesLogger.logger.log(Level.FINE, "Image icon found");
       return im;
