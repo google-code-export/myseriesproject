@@ -52,7 +52,7 @@ public class Options {
    * The regex to use for finding episodes
    * " ?((?i)([ xe-]|(ep)|)?|(([ xe-]|(ep))?\\d*([- &])))0*"
    */
-  public static String _REGEX_ = " ?((?i)([ xe-]|(ep)|)?|(([ xe-]|(ep))?\\d*([- &])))0*";
+  public static final  String _REGEX_ = " ?((?i)([ xe-]|(ep)|)?|(([ xe-]|(ep))?\\d*([- &])))0*";
   /**
    * The possible toolbar positions
    */
@@ -72,173 +72,173 @@ public class Options {
    * Database name
    * String default ""
    */
-  public static String DB_NAME = "DB_NAME";
+  public static final  String DB_NAME = "DB_NAME";
   /**
    * Debug mode
    * int default:0
    */
-  public static String DEBUG_MODE = "DEBUG_MODE";
+  public static final  String DEBUG_MODE = "DEBUG_MODE";
   /**
    * If modal windows are used
    * boolean default true
    */
-  public static String MODAL = "MODAL";
+  public static final  String MODAL = "MODAL";
   /**
    * Date format
    * String default "dd/mm/YYYY"
    */
-  public static String DATE_FORMAT = "DATE_FORMAT";
+  public static final  String DATE_FORMAT = "DATE_FORMAT";
   /**
    * Look and feel to use
    * Not used yet!!!
    */
-  public static String LOOK_AND_FEEL = "LOOK_AND_FEEL";
+  public static final  String LOOK_AND_FEEL = "LOOK_AND_FEEL";
   /**
    * Skin color to use
    * Color default [240,240,240]
    */
-  public static String SKIN_COLOR = "BACKGROUND_COLOR";
+  public static final  String SKIN_COLOR = "BACKGROUND_COLOR";
   /**
    * Use skin color or not
    * boolean default true;
    */
-  public static String USE_SKIN = "USE_SKIN";
+  public static final  String USE_SKIN = "USE_SKIN";
   /**
    * Use proxy to connect to internet or not
    * boolean default : false
    */
-  public static String USE_PROXY = "USE_PROXY";
+  public static final  String USE_PROXY = "USE_PROXY";
   /**
    * Proxy to use
    * string default ""
    */
-  public static String PROXY_HOST = "PROXY_HOST";
+  public static final  String PROXY_HOST = "PROXY_HOST";
   /**
    * Proxy port
    * String default ""
    */
-  public static String PROXY_PORT = "PROXY_PORT";
+  public static final  String PROXY_PORT = "PROXY_PORT";
   /**
    * The split pane divider's location
    * integer default 250
    */
-  public static String DIVIDER_LOCATION = "DIVIDER_LOCATION";
+  public static final  String DIVIDER_LOCATION = "DIVIDER_LOCATION";
   /**
    * The feeds split pane divider's location
    * integer default 250
    */
-  public static String FEED_DIVIDER_LOCATION = "FEED_DIVIDER_LOCATION";
+  public static final  String FEED_DIVIDER_LOCATION = "FEED_DIVIDER_LOCATION";
   /**
    * the font to use
    * String default Arial
    */
-  public static String FONT_FACE = "FONT_FACE";
+  public static final  String FONT_FACE = "FONT_FACE";
   /**
    * The font's size
    * integer default 12
    */
-  public static String FONT_SIZE = "FONT_SIZE";
+  public static final  String FONT_SIZE = "FONT_SIZE";
   /**
    * The table columns widths
    * ArrayList<integer> default 100
    */
-  public static String TABLE_WIDTHS = "TABLE_WIDTHS";
+  public static final  String TABLE_WIDTHS = "TABLE_WIDTHS";
   /**
    * The frame's state
    * integer default JFrame.NORMAL
    */
-  public static String WINDOW_STATE = "WINDOW_STATE";
+  public static final  String WINDOW_STATE = "WINDOW_STATE";
   /**
    * The frame's width
    * integer default 1000
    */
-  public static String WIDTH = "WIDTH";
+  public static final  String WIDTH = "WIDTH";
   /**
    * The frame's height
    * integer default 600
    */
-  public static String HEIGHT = "HEIGHT";
+  public static  final String HEIGHT = "HEIGHT";
   /**
    * Check for updates on start up
    * boolean default true
    */
-  public static String CHECK_VERSION = "CHECK_VERSION";
+  public static final  String CHECK_VERSION = "CHECK_VERSION";
   /**
    * the primary subtitles language
    * String default "Greek"
    */
-  public static String PRIMARY_SUB = "PRIMARY_SUB";
+  public static  final  String PRIMARY_SUB = "PRIMARY_SUB";
   /**
    * the secondary subtitles language
    * String default "English"
    */
-  public static String SECONDARY_SUB = "SECONDARY_SUB";
+  public static final  String SECONDARY_SUB = "SECONDARY_SUB";
   /**
    * The web page used for downloading subtitles
    * String default Options._SUBTITLE_ONLINE_NAME_
    */
-  public static String SUBTITLE_SITE = "SUBTITLE_SITE";
+  public static final  String SUBTITLE_SITE = "SUBTITLE_SITE";
   /**
    * Auto updating video and subtitles from series local folder
    * boolean default false;
    */
-  public static String AUTO_FILE_UPDATING = "AUTO_FILE_UPDATING";
+  public static final  String AUTO_FILE_UPDATING = "AUTO_FILE_UPDATING";
   /**
    * If show series stats as unified series
    * boolean default true;
    */
-  public static String UNIFIED_SERIES = "UNIFIED_SERIES";
+  public static final  String UNIFIED_SERIES = "UNIFIED_SERIES";
   /**
    * The season separator when renaming episodes
    * String default "SE"
    */
-  public static String SEASON_SEPARATOR = "SEASON_SEPARATOR";
+  public static final  String SEASON_SEPARATOR = "SEASON_SEPARATOR";
   /**
    * The Episode separator when renaming episodes
    * String default "x"
    */
-  public static String EPISODE_SEPARATOR = "EPISODE_SEPARATOR";
+  public static final  String EPISODE_SEPARATOR = "EPISODE_SEPARATOR";
   /**
    * The title separator when renaming episodes
    * String default " - "
    */
-  public static String TITLE_SEPARATOR = "TITLE_SEPARATOR";
+  public static final  String TITLE_SEPARATOR = "TITLE_SEPARATOR";
   /**
    * The position of the toolbar
    */
-  public static String TOOLBAR_POSITION = "TOOLBAR_POSITION";
+  public static final  String TOOLBAR_POSITION = "TOOLBAR_POSITION";
   /**
    * The toolbar buttons
    */
-  public static String TOOLBAR_BUTTONS = "TOOLBAR_BUTTONS";
+  public static final  String TOOLBAR_BUTTONS = "TOOLBAR_BUTTONS";
   /**
    * The number of feed columns
    */
-  public static String FEED_COLUMNS = "FEED_COLUMNS";
+  public static final  String FEED_COLUMNS = "FEED_COLUMNS";
   /**
    * The application used to open video files
    */
-  public static String VIDEO_APP = "VIDEO_APP";
+  public static final  String VIDEO_APP = "VIDEO_APP";
   /**
    * Auto extract zip files
    */
-  public static String AUTO_EXTRACT_ZIPS = "AUTO_EXTRACT_ZIPS";
+  public static final  String AUTO_EXTRACT_ZIPS = "AUTO_EXTRACT_ZIPS";
   /**
    * Update feeds on startup
    */
-  public static String UPDATE_FEEDS = "UPDATE_FEEDS";
+  public static final  String UPDATE_FEEDS = "UPDATE_FEEDS";
   /**
    * The order of the tabs
    */
-  public static String TABS_ORDER = "TABS_ORDER";
+  public static final  String TABS_ORDER = "TABS_ORDER";
   /**
    * The main series directory
    */
-   public static String MAIN_DIRECTORY = "MAIN_DIRECTORY";
+   public static final  String MAIN_DIRECTORY = "MAIN_DIRECTORY";
   /**
    * An array of the options that are selected in combo boxes
    */
-  public static String[] _COMBO_OPTIONS_ = {DATE_FORMAT, DEBUG_MODE, LOOK_AND_FEEL,
+  public static final String[] _COMBO_OPTIONS_ = {DATE_FORMAT, DEBUG_MODE, LOOK_AND_FEEL,
     FONT_FACE, SUBTITLE_SITE, PRIMARY_SUB, SECONDARY_SUB};
 
   static {

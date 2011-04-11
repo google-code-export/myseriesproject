@@ -11,7 +11,9 @@
 package tools.options;
 
 import java.io.IOException;
+import java.util.logging.Level;
 import myComponents.myGUI.MyDraggable;
+import tools.MySeriesLogger;
 
 /**
  *
@@ -24,7 +26,9 @@ public class DateFormatHelp extends MyDraggable {
    * @throws IOException 
    */
   public DateFormatHelp() throws IOException {
+    MySeriesLogger.logger.log(Level.INFO, "Initializing components");
     initComponents();
+    MySeriesLogger.logger.log(Level.FINE, "Components initialized");
     setLocationRelativeTo(null);
     java.net.URL helpURL = DateFormatHelp.class.getResource("DateFormatHelp.html");
     editor_help.setPage(helpURL);
