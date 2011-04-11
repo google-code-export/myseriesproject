@@ -61,113 +61,125 @@ import tools.languages.Language;
  * @author lordovol
  */
 public class OptionsPanel extends MyDraggable {
+    public static final int GENERAL_OPTIONS_TAB = 0;
+    public static final int INTERNET_OPTIONS_TAB = 1;
+    public static final int RENAME_OPTIONS_TAB = 2;
 
-  public static final long serialVersionUID = 5676235253653L;
-  private MySeries m;
-  private DefaultComboBoxModel model_laf = new DefaultComboBoxModel();
-  private HashMap<String, LookAndFeelInfo> lafMap;
-  private ComboBoxModel model_fonts;
-  private boolean colorsChanged;
-  private String oldFontSize;
-  private String oldFontFace;
-  private Color oldColor;
-  private boolean oldUseSkin;
-  private String oldLaf;
-  private ComboBoxModel primarySubtitlesModel = new DefaultComboBoxModel(SubtitleConstants.SUBTITLE_LANG.toArray());
-  private ComboBoxModel secondarySubtitlesModel = new DefaultComboBoxModel(SubtitleConstants.SUBTITLE_LANG.toArray());
-  private String sepRegex = "^[^/\\\\?%*:|\\\"<>\\.]*$";
-  private String[] fonts;
+    public static final long serialVersionUID = 5676235253653L;
+    private MySeries m;
+    private DefaultComboBoxModel model_laf = new DefaultComboBoxModel();
+    private HashMap<String, LookAndFeelInfo> lafMap;
+    private ComboBoxModel model_fonts;
+    private boolean colorsChanged;
+    private String oldFontSize;
+    private String oldFontFace;
+    private Color oldColor;
+    private boolean oldUseSkin;
+    private String oldLaf;
+    private ComboBoxModel primarySubtitlesModel = new DefaultComboBoxModel(SubtitleConstants.SUBTITLE_LANG.toArray());
+    private ComboBoxModel secondarySubtitlesModel = new DefaultComboBoxModel(SubtitleConstants.SUBTITLE_LANG.toArray());
+    private String sepRegex = "^[^/\\\\?%*:|\\\"<>\\.]*$";
+    private String[] fonts;
 
-  /** Creates new form OptionsPanel
-   * @param m MySeries main form
-   */
-  public OptionsPanel(MySeries m) {
-    this.m = m;
-    initComponents();
-     combobox_laf.setEnabled(!checkbox_dontUseSkin.isSelected());
-    tf_episodeSep.addValidator(new RegularExpressionValidator("", sepRegex, false, false));
-    tf_seasonSep.addValidator(new RegularExpressionValidator("", sepRegex, false, false));
-    tf_titleSep.addValidator(new RegularExpressionValidator("", sepRegex, false, false));
-    tf_videoApp.addValidator(new FileValidator("", FileValidator.Type.FILE, true));
-    tf_episodeSep.setTrimValue(false);
-    tf_seasonSep.setTrimValue(false);
-    tf_titleSep.setTrimValue(false);
-    combo_secondaryLang.addValidator(
-        new CompareValidator(combo_secondaryLang.getSelectedItem() != null ? combo_secondaryLang.getSelectedItem().toString() : "",
-        combo_primaryLang.getSelectedItem() != null ? combo_primaryLang.getSelectedItem().toString() : "",
-        CompareValidator.Type.NOT_EQUAL, true));
-    checkbox_useProxyActionPerformed(null);
-    setLocationRelativeTo(m);
-    oldFontFace = Options.toString(Options.FONT_FACE);
-    oldFontSize = Options.toString(Options.FONT_SIZE);
-    oldColor = Options.toColor(Options.SKIN_COLOR);
-    oldUseSkin = Options.toBoolean(Options.USE_SKIN);
-    oldLaf = Options.toString(Options.LOOK_AND_FEEL);
-    createModelFonts();
-    JTextField t = (JTextField) combobox_fonts.getEditor().getEditorComponent();
-    t.setText(Options.toString(Options.FONT_FACE));
-    setVisible(true);
+    /** Creates new form OptionsPanel
+     * @param m MySeries main form
+     */
+    public OptionsPanel(MySeries m) {
+        this.m = m;
+        MySeriesLogger.logger.log(Level.INFO, "Initializong components");
+        initComponents();
+        MySeriesLogger.logger.log(Level.FINE, "Components initialized");
+        combobox_laf.setEnabled(!checkbox_dontUseSkin.isSelected());
+        tf_episodeSep.addValidator(new RegularExpressionValidator("", sepRegex, false, false));
+        tf_seasonSep.addValidator(new RegularExpressionValidator("", sepRegex, false, true));
+        tf_titleSep.addValidator(new RegularExpressionValidator("", sepRegex, false, false));
+        tf_videoApp.addValidator(new FileValidator("", FileValidator.Type.FILE, true));
+        tf_episodeSep.setTrimValue(false);
+        tf_seasonSep.setTrimValue(false);
+        tf_titleSep.setTrimValue(false);
+        combo_secondaryLang.addValidator(
+                new CompareValidator(combo_secondaryLang.getSelectedItem() != null ? combo_secondaryLang.getSelectedItem().toString() : "",
+                combo_primaryLang.getSelectedItem() != null ? combo_primaryLang.getSelectedItem().toString() : "",
+                CompareValidator.Type.NOT_EQUAL, true));
+        checkbox_useProxyActionPerformed(null);
+        setLocationRelativeTo(m);
+        oldFontFace = Options.toString(Options.FONT_FACE);
+        oldFontSize = Options.toString(Options.FONT_SIZE);
+        oldColor = Options.toColor(Options.SKIN_COLOR);
+        oldUseSkin = Options.toBoolean(Options.USE_SKIN);
+        oldLaf = Options.toString(Options.LOOK_AND_FEEL);
+        createModelFonts();
+        JTextField t = (JTextField) combobox_fonts.getEditor().getEditorComponent();
+        t.setText(Options.toString(Options.FONT_FACE));
+        setVisible(true);
 
-  }
-
-  private void createLafModel() {
-    LookAndFeelInfo[] laf = LookAndFeels.getLookAndFeels();
-    lafMap = new HashMap<String, LookAndFeelInfo>();
-    String lafNames[] = new String[laf.length];
-    for (int i = 0; i < laf.length; i++) {
-      LookAndFeelInfo lookAndFeelInfo = laf[i];
-      lafMap.put(lookAndFeelInfo.getName(), lookAndFeelInfo);
-      lafNames[i] = lookAndFeelInfo.getName();
-    }
-    combobox_laf.setModel(new DefaultComboBoxModel(lafNames));
-  }
-
-  private void createModelFonts() {
-    System.out.println(System.currentTimeMillis());
-    fonts =  getCachedFonts();
-    model_fonts = new DefaultComboBoxModel(fonts);
-    combobox_fonts.setModel(model_fonts);
-    model_fonts.setSelectedItem(Options.toString(Options.FONT_FACE));
-    combobox_fonts.addValidator(new ListValidator("", fonts, false));
-    System.out.println(System.currentTimeMillis());
-  }
-
-  private String[] getCachedFonts() {
-    File c = new File(Options._USER_DIR_ + "/f.obj");
-    if (c.exists()) {
-      try {
-        FileInputStream fin = new FileInputStream(c);
-        ObjectInputStream ois = new ObjectInputStream(fin);
-        String[] f = (String[]) ois.readObject();
-        ois.close();
-        return f;
-      } catch (Exception ex) {
-        MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-        return null;
-      }
-    } else {
-      GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
-      String[] f = env.getAvailableFontFamilyNames();
-      FileOutputStream fout;
-      try {
-        fout = new FileOutputStream(Options._USER_DIR_ + "/f.obj");
-        ObjectOutputStream oos = new ObjectOutputStream(fout);
-        oos.writeObject(f);
-        oos.close();
-      } catch (IOException ex) {
-        MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-        return null;
-      }
-      return f;
     }
 
-  }
+    private void createLafModel() {
+        MySeriesLogger.logger.log(Level.INFO, "Creating laf model");
+        LookAndFeelInfo[] laf = LookAndFeels.getLookAndFeels();
+        lafMap = new HashMap<String, LookAndFeelInfo>();
+        String lafNames[] = new String[laf.length];
+        for (int i = 0; i < laf.length; i++) {
+            LookAndFeelInfo lookAndFeelInfo = laf[i];
+            lafMap.put(lookAndFeelInfo.getName(), lookAndFeelInfo);
+            lafNames[i] = lookAndFeelInfo.getName();
+            MySeriesLogger.logger.log(Level.INFO, "Adding laf {0}", lafNames[i]);
+        }
+        combobox_laf.setModel(new DefaultComboBoxModel(lafNames));
+    }
 
-  /** This method is called from within the constructor to
-   * initialize the form.
-   * WARNING: Do NOT modify this code. The content of this method is
-   * always regenerated by the Form Editor.
-   */
+    private void createModelFonts() {
+        MySeriesLogger.logger.log(Level.INFO, "Creating fonts model");
+        //System.out.println(System.currentTimeMillis());
+        fonts = getCachedFonts();
+        model_fonts = new DefaultComboBoxModel(fonts);
+        combobox_fonts.setModel(model_fonts);
+        model_fonts.setSelectedItem(Options.toString(Options.FONT_FACE));
+        combobox_fonts.addValidator(new ListValidator("", fonts, false));
+        MySeriesLogger.logger.log(Level.INFO, "Added {0} fonts", model_fonts.getSize());
+        //System.out.println(System.currentTimeMillis());
+    }
+
+    private String[] getCachedFonts() {
+        MySeriesLogger.logger.log(Level.INFO, "Checking for cached fonts model");
+        File c = new File(Options._USER_DIR_ + "/f.obj");
+        if (c.exists()) {
+            MySeriesLogger.logger.log(Level.INFO, "Cached model exists.Reading file");
+            try {
+                FileInputStream fin = new FileInputStream(c);
+                ObjectInputStream ois = new ObjectInputStream(fin);
+                String[] f = (String[]) ois.readObject();
+                ois.close();
+                return f;
+            } catch (Exception ex) {
+                MySeriesLogger.logger.log(Level.SEVERE, "Could not read the fonts model file", ex);
+                return null;
+            }
+        } else {
+            MySeriesLogger.logger.log(Level.INFO, "Cached file does not exist.Creating it");
+            GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            String[] f = env.getAvailableFontFamilyNames();
+            FileOutputStream fout;
+            try {
+                fout = new FileOutputStream(Options._USER_DIR_ + "/f.obj");
+                ObjectOutputStream oos = new ObjectOutputStream(fout);
+                oos.writeObject(f);
+                oos.close();
+            } catch (IOException ex) {
+                MySeriesLogger.logger.log(Level.SEVERE, "Could not create fonts model file", ex);
+                return null;
+            }
+            return f;
+        }
+
+    }
+
+    /** This method is called from within the constructor to
+     * initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is
+     * always regenerated by the Form Editor.
+     */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
@@ -206,6 +218,7 @@ public class OptionsPanel extends MyDraggable {
         jLabel7 = new javax.swing.JLabel();
         tf_mainDir = new com.googlecode.svalidators.formcomponents.STextField(new FileValidator("",FileValidator.Type.DIR ,true));
         bt_mainDirectory = new myComponents.myGUI.buttons.MyButtonDir();
+        jLabel22 = new javax.swing.JLabel();
         panel_internet = new javax.swing.JPanel();
         checkbox_useProxy = new javax.swing.JCheckBox();
         jLabel8 = new javax.swing.JLabel();
@@ -259,6 +272,9 @@ public class OptionsPanel extends MyDraggable {
 
         panel_options.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        tabbedPane_options.setName("Tab"); // NOI18N
+
+        panel_general.setName("General"); // NOI18N
         panel_general.setOpaque(false);
 
         button_BGColor.setBackground(Options.toColor(Options.SKIN_COLOR));
@@ -279,9 +295,9 @@ public class OptionsPanel extends MyDraggable {
         jLabel3.setToolTipText("<html>\nThe level of Debuging info that's written in the log file<br />\nFATAL : Only fatal errors are written<br />\nWARNING : Warnings and fatal errors are written<br />\nINFO : Everything is written<br />\nNO LOGGING: Nothing is written<br />");
         jLabel3.setName("noname"); // NOI18N
 
-        combobox_debugMode.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ALL", "SEVERE", "WARNING", "INFO", "OFF" }));
+        combobox_debugMode.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "OFF", "SEVERE", "WARNING", "ALL" }));
         combobox_debugMode.setSelectedItem(Options.toString(Options.DEBUG_MODE));
-        combobox_debugMode.setToolTipText("<html>\nThe level of Debuging info that's written in the log file<br />\nFATAL : Only fatal errors are written<br />\nWARNING : Warnings and fatal errors are written<br />\nINFO : Everything is written<br />\nNO LOGGING: Nothing is written<br />");
+        combobox_debugMode.setToolTipText("<html>\nThe level of Debuging info that's written in the log file<br />\nSEVERE : Only fatal errors are written<br />\nWARNING : Warnings and fatal errors are written<br />\nINFO : Everything is written<br />\nOFF: Nothing is written<br />");
         combobox_debugMode.setName(Options.DEBUG_MODE);
         combobox_debugMode.setOpaque(false);
 
@@ -426,6 +442,9 @@ public class OptionsPanel extends MyDraggable {
             }
         });
 
+        jLabel22.setFont(jLabel22.getFont().deriveFont((jLabel22.getFont().getStyle() | java.awt.Font.ITALIC), jLabel22.getFont().getSize()-1));
+        jLabel22.setText("Setting logging level to ALL will slow down the application");
+
         javax.swing.GroupLayout panel_generalLayout = new javax.swing.GroupLayout(panel_general);
         panel_general.setLayout(panel_generalLayout);
         panel_generalLayout.setHorizontalGroup(
@@ -447,7 +466,6 @@ public class OptionsPanel extends MyDraggable {
                 .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel_generalLayout.createSequentialGroup()
                         .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(combobox_debugMode, 0, 303, Short.MAX_VALUE)
                             .addComponent(cb_autoUpdate)
                             .addComponent(label_preview, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE)
                             .addGroup(panel_generalLayout.createSequentialGroup()
@@ -471,7 +489,11 @@ public class OptionsPanel extends MyDraggable {
                     .addGroup(panel_generalLayout.createSequentialGroup()
                         .addComponent(tf_mainDir, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(bt_mainDirectory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(bt_mainDirectory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_generalLayout.createSequentialGroup()
+                        .addComponent(combobox_debugMode, 0, 89, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panel_generalLayout.setVerticalGroup(
@@ -480,7 +502,8 @@ public class OptionsPanel extends MyDraggable {
                 .addContainerGap()
                 .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel3)
-                    .addComponent(combobox_debugMode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(combobox_debugMode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel22))
                 .addGap(3, 3, 3)
                 .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel6)
@@ -538,6 +561,7 @@ public class OptionsPanel extends MyDraggable {
 
         tabbedPane_options.addTab("General", panel_general);
 
+        panel_internet.setName("Internet"); // NOI18N
         panel_internet.setOpaque(false);
 
         checkbox_useProxy.setSelected(Options.toBoolean(Options.USE_PROXY));
@@ -734,6 +758,7 @@ public class OptionsPanel extends MyDraggable {
 
         tabbedPane_options.addTab("Internet", panel_internet);
 
+        panel_renaming.setName("Renaming"); // NOI18N
         panel_renaming.setOpaque(false);
 
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -886,161 +911,176 @@ public class OptionsPanel extends MyDraggable {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-  /**
-   * Saves the options
-   * @throws java.io.IOException
-   */
-  private void saveOptions() throws IOException, ParseException {
-    try {
-      // Check for illegal arguments in date format
-      SimpleDateFormat f = new SimpleDateFormat(String.valueOf(combobox_dateFormat.getSelectedItem()));
-      getOptionsComponents();
-      Options.save();
-      Options.getOptions();
-      dispose();
-      MySeries.glassPane.deactivate();
-    } catch (FileNotFoundException ex) {
-      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-    } catch (IOException ex) {
-      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-    } catch (IllegalArgumentException ex) {
-      MyMessages.error("Wrong Arguments", "The date format pattern you provided is invalid");
-      MySeriesLogger.logger.log(Level.WARNING, "The date format "
-          + String.valueOf(combobox_dateFormat.getSelectedItem())
-          + " pattern you provided is invalid", ex);
+    /**
+     * Saves the options
+     * @throws java.io.IOException
+     */
+    private void saveOptions() throws IOException, ParseException {
+        try {
+            // Check for illegal arguments in date format
+            MySeriesLogger.logger.log(Level.INFO, "Saving options");
+            SimpleDateFormat f = new SimpleDateFormat(String.valueOf(combobox_dateFormat.getSelectedItem()));
+            getOptionsComponents();
+            Options.save();
+            Options.getOptions();
+            dispose();
+            MySeries.glassPane.deactivate();
+        } catch (FileNotFoundException ex) {
+            MySeriesLogger.logger.log(Level.SEVERE, "Could not save the options", ex);
+        } catch (IOException ex) {
+            MySeriesLogger.logger.log(Level.SEVERE, "Could not write to options file", ex);
+        } catch (IllegalArgumentException ex) {
+            MyMessages.error("Wrong Arguments", "The date format pattern you provided is invalid");
+            MySeriesLogger.logger.log(Level.WARNING, "The date format "
+                    + String.valueOf(combobox_dateFormat.getSelectedItem())
+                    + " pattern you provided is invalid", ex);
+        }
     }
-  }
 
   private void button_dateFormatHelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_dateFormatHelpActionPerformed
-    try {
-      DateFormatHelp dfh = new DateFormatHelp();
-    } catch (IOException ex) {
-      MySeriesLogger.logger.log(Level.SEVERE, "Could not find date format help file", ex);
-    }
+      try {
+          DateFormatHelp dfh = new DateFormatHelp();
+      } catch (IOException ex) {
+          MySeriesLogger.logger.log(Level.SEVERE, "Could not find date format help file", ex);
+      }
 }//GEN-LAST:event_button_dateFormatHelpActionPerformed
 
   private void combobox_lafActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combobox_lafActionPerformed
-    //LookAndFeelInfo laf = (LookAndFeelInfo) lafMap.get(combobox_laf.getSelectedItem());
-    //LookAndFeels.setLookAndFeel(m,laf);
+      //LookAndFeelInfo laf = (LookAndFeelInfo) lafMap.get(combobox_laf.getSelectedItem());
+      //LookAndFeels.setLookAndFeel(m,laf);
   }//GEN-LAST:event_combobox_lafActionPerformed
 
   private void button_BGColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_BGColorActionPerformed
-    JColorChooser c = new JColorChooser(Options.toColor(Options.SKIN_COLOR));
-    Color newColor = JColorChooser.showDialog(null, "Choose a background color", Options.toColor(Options.SKIN_COLOR));
-    button_BGColor.setBackground(newColor);
-    colorsChanged = true;
-
+      MySeriesLogger.logger.log(Level.INFO, "howing color browser");
+      JColorChooser c = new JColorChooser(Options.toColor(Options.SKIN_COLOR));
+      Color newColor = JColorChooser.showDialog(null, "Choose a background color", Options.toColor(Options.SKIN_COLOR));
+      if(newColor!=null){
+          MySeriesLogger.logger.log(Level.INFO, "Selected color {0}",newColor);
+      button_BGColor.setBackground(newColor);
+      colorsChanged = true;
+      }
 }//GEN-LAST:event_button_BGColorActionPerformed
 
   private void checkbox_dontUseSkinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkbox_dontUseSkinActionPerformed
-    combobox_laf.setEnabled(!checkbox_dontUseSkin.isSelected());
+      combobox_laf.setEnabled(!checkbox_dontUseSkin.isSelected());
   }//GEN-LAST:event_checkbox_dontUseSkinActionPerformed
 
   private void combobox_fontsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combobox_fontsActionPerformed
-    label_preview.setFont(getSelectedFont());
-    label_preview.setText(String.valueOf(combobox_fonts.getSelectedItem()));
+      label_preview.setFont(getSelectedFont());
+      label_preview.setText(String.valueOf(combobox_fonts.getSelectedItem()));
   }//GEN-LAST:event_combobox_fontsActionPerformed
 
   private void textfield_proxyKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textfield_proxyKeyReleased
-    textfield_proxy.validateValue();
+      textfield_proxy.validateValue();
   }//GEN-LAST:event_textfield_proxyKeyReleased
 
   private void textfield_portKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textfield_portKeyReleased
-    textfield_port.validateValue();
+      textfield_port.validateValue();
   }//GEN-LAST:event_textfield_portKeyReleased
 
   private void checkbox_useProxyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkbox_useProxyActionPerformed
-    textfield_port.clearValidatorsList();
-    textfield_proxy.clearValidatorsList();
-    if (!checkbox_useProxy.isSelected()) {
-      textfield_port.addValidator(new NullValidator());
-      textfield_proxy.addValidator(new NullValidator());
-    } else {
-      textfield_port.addValidator(new PositiveNumberValidator(Options.toString(Options.PROXY_PORT), false, false));
-      textfield_proxy.addValidator(new NoSpaceValidator(Options.toString(Options.PROXY_HOST), false));
-    }
-    textfield_port.validateValue();
-    textfield_proxy.validateValue();
+      textfield_port.clearValidatorsList();
+      textfield_proxy.clearValidatorsList();
+      if (!checkbox_useProxy.isSelected()) {
+          textfield_port.addValidator(new NullValidator());
+          textfield_proxy.addValidator(new NullValidator());
+      } else {
+          textfield_port.addValidator(new PositiveNumberValidator(Options.toString(Options.PROXY_PORT), false, false));
+          textfield_proxy.addValidator(new NoSpaceValidator(Options.toString(Options.PROXY_HOST), false));
+      }
+      textfield_port.validateValue();
+      textfield_proxy.validateValue();
   }//GEN-LAST:event_checkbox_useProxyActionPerformed
 
   private void combo_secondaryLangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combo_secondaryLangActionPerformed
-    combo_primaryLangActionPerformed(evt);
+      combo_primaryLangActionPerformed(evt);
   }//GEN-LAST:event_combo_secondaryLangActionPerformed
 
   private void combo_primaryLangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combo_primaryLangActionPerformed
-    CompareValidator val = (CompareValidator) combo_secondaryLang.getValidator(SValidator.COMPARE);
-    val.setValueToCompareWith(combo_primaryLang.getSelectedItem().toString());
-    val.setValue(combo_secondaryLang.getSelectedItem().toString());
-    combo_secondaryLang.validateValue();
+      CompareValidator val = (CompareValidator) combo_secondaryLang.getValidator(SValidator.COMPARE);
+      val.setValueToCompareWith(combo_primaryLang.getSelectedItem().toString());
+      val.setValue(combo_secondaryLang.getSelectedItem().toString());
+      combo_secondaryLang.validateValue();
   }//GEN-LAST:event_combo_primaryLangActionPerformed
 
   private void spinner_fontSizeStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinner_fontSizeStateChanged
-    int size = Integer.parseInt(String.valueOf(spinner_fontSize.getValue()));
-    Font newFont = new Font(combobox_fonts.getSelectedItem().toString(), Font.PLAIN, size);
-    label_preview.setFont(newFont);
+      int size = Integer.parseInt(String.valueOf(spinner_fontSize.getValue()));
+      Font newFont = new Font(combobox_fonts.getSelectedItem().toString(), Font.PLAIN, size);
+      label_preview.setFont(newFont);
   }//GEN-LAST:event_spinner_fontSizeStateChanged
 
   private void cb_autoUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_autoUpdateActionPerformed
-    if (!cb_autoUpdate.isSelected()) {
-      cb_autoUnzip.setSelected(false);
-    }
+      if (!cb_autoUpdate.isSelected()) {
+          cb_autoUnzip.setSelected(false);
+      }
   }//GEN-LAST:event_cb_autoUpdateActionPerformed
 
   private void bt_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelActionPerformed
-    dispose();
-    MySeries.glassPane.deactivate();
+      MySeriesLogger.logger.log(Level.INFO, "Canceled by the user");
+      dispose();
+      MySeries.glassPane.deactivate();
   }//GEN-LAST:event_bt_cancelActionPerformed
 
   private void bt_helpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_helpActionPerformed
-    if (tabbedPane_options.getSelectedIndex() == 0) {
-      new HelpWindow(HelpWindow.GENERAL_OPTIONS);
-    } else if (tabbedPane_options.getSelectedIndex() == 1) {
-      new HelpWindow(HelpWindow.INTERNET_OPTIONS);
-    } else if (tabbedPane_options.getSelectedIndex() == 2) {
-      new HelpWindow(HelpWindow.RENAME_OPTIONS);
-    }
+      if (tabbedPane_options.getSelectedIndex() == GENERAL_OPTIONS_TAB) {
+          MySeriesLogger.logger.log(Level.INFO, "Showing General options help window");
+            HelpWindow helpWindow = new HelpWindow(HelpWindow.GENERAL_OPTIONS);
+      } else if (tabbedPane_options.getSelectedIndex() == INTERNET_OPTIONS_TAB) {
+          MySeriesLogger.logger.log(Level.INFO, "Showing Internet options help window");
+            HelpWindow helpWindow = new HelpWindow(HelpWindow.INTERNET_OPTIONS);
+      } else if (tabbedPane_options.getSelectedIndex() == RENAME_OPTIONS_TAB) {
+          MySeriesLogger.logger.log(Level.INFO, "Showing Rename options help window");
+            HelpWindow helpWindow = new HelpWindow(HelpWindow.RENAME_OPTIONS);
+      }
   }//GEN-LAST:event_bt_helpActionPerformed
 
   private void bt_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_okActionPerformed
-    ValidationGroup group = new ValidationGroup();
-    group.addComponent(textfield_port);
-    group.addComponent(textfield_proxy);
-    group.addComponent(combo_secondaryLang);
-    group.addComponent(tf_episodeSep);
-    group.addComponent(tf_titleSep);
-    group.addComponent(tf_seasonSep);
-    group.addComponent(tf_videoApp);
-    if (!group.validate()) {
-      MyMessages.error("Options Form", group.getErrorMessage());
-      return;
-    }
-    try {
-      String mess ="";
-      saveOptions();
-      MySeries.languages.setPrimary((Language) combo_primaryLang.getSelectedItem());
-      MySeries.languages.setSecondary((Language) combo_secondaryLang.getSelectedItem());
-      MyUsefulFunctions.initInternetConnection();
-      MySeriesLogger.logger.setLevel(Level.parse(Options.toString(Options.DEBUG_MODE)));
-      m.createComboBox_filters();
-      if (!oldFontFace.equals(Options.toString(Options.FONT_FACE))) {
-        mess = "Font face, ";
+      ValidationGroup group = new ValidationGroup();
+      group.addComponent(textfield_port);
+      group.addComponent(textfield_proxy);
+      group.addComponent(combo_secondaryLang);
+      group.addComponent(tf_episodeSep);
+      group.addComponent(tf_titleSep);
+      group.addComponent(tf_seasonSep);
+      group.addComponent(tf_videoApp);
+      MySeriesLogger.logger.log(Level.INFO, "Validating user input");
+      if (!group.validate()) {
+          MySeriesLogger.logger.log(Level.WARNING, "Validation failed\nError message: {0}",group.getErrorMessage());
+          MyMessages.error("Options Form", group.getErrorMessage());
+          return;
       }
-      if (!oldFontSize.equals(Options.toString(Options.FONT_SIZE))) {
-        mess += "Font size, ";
-      }
-      if (!oldColor.equals(Options.toColor(Options.SKIN_COLOR))) {
-        mess += "Skin color, ";
-      }
-      if ((!oldUseSkin && checkbox_dontUseSkin.isSelected()) || (oldUseSkin && !checkbox_dontUseSkin.isSelected())) {
-        mess += "Skin, ";
-      }
-      if(!oldLaf.equals(Options.toString(Options.LOOK_AND_FEEL))){
-        mess += "Look and Feel, ";
-      }
-      mess = mess.trim();
-      
-      if (!mess.equals("")) {
-          mess = mess.substring(0, mess.length()-1)+" changes ";
+      try {
+          String mess = "";
+          saveOptions();
+          MySeries.languages.setPrimary((Language) combo_primaryLang.getSelectedItem());
+          MySeries.languages.setSecondary((Language) combo_secondaryLang.getSelectedItem());
+          MyUsefulFunctions.initInternetConnection();
+          MySeriesLogger.logger.setLevel(Level.parse(Options.toString(Options.DEBUG_MODE)));
+          m.createComboBox_filters();
+          if (!oldFontFace.equals(Options.toString(Options.FONT_FACE))) {
+              MySeriesLogger.logger.log(Level.INFO, "Font face changed");
+              mess = "Font face, ";
+          }
+          if (!oldFontSize.equals(Options.toString(Options.FONT_SIZE))) {
+              MySeriesLogger.logger.log(Level.INFO, "Font size changed");
+              mess += "Font size, ";
+          }
+          if (!oldColor.equals(Options.toColor(Options.SKIN_COLOR))) {
+              MySeriesLogger.logger.log(Level.INFO, "Skin color changed");
+              mess += "Skin color, ";
+          }
+          if ((!oldUseSkin && checkbox_dontUseSkin.isSelected()) || (oldUseSkin && !checkbox_dontUseSkin.isSelected())) {
+              MySeriesLogger.logger.log(Level.INFO, "Skin usage changed");
+              mess += "Skin, ";
+          }
+          if (!oldLaf.equals(Options.toString(Options.LOOK_AND_FEEL))) {
+              MySeriesLogger.logger.log(Level.INFO, "Look and feel changed");
+              mess += "Look and Feel, ";
+          }
+          mess = mess.trim();
+
+          if (!mess.equals("")) {
+              mess = mess.substring(0, mess.length() - 1) + " changes ";
 //        int ans = MyMessages.question("Restart?",
 //            mess + "\nRestart The application?");
 //        if (ans == 0) {
@@ -1048,64 +1088,68 @@ public class OptionsPanel extends MyDraggable {
 //          StartPanel.main(null);
 //        } else {
 //        }
-        MyMessages.message("Options", mess + "will take effect when you restart the application");
-      }
+              MyMessages.message("Options", mess + "will take effect when you restart the application");
+          }
 
-    } catch (IOException ex) {
-      MySeriesLogger.logger.log(Level.SEVERE, "Could not write to options file", ex);
-    } catch (ParseException ex) {
-      MySeriesLogger.logger.log(Level.SEVERE, "Could not parse options objects", ex);
-    }
+      } catch (IOException ex) {
+          MySeriesLogger.logger.log(Level.SEVERE, "Could not write to options file", ex);
+      } catch (ParseException ex) {
+          MySeriesLogger.logger.log(Level.SEVERE, "Could not parse options objects", ex);
+      }
   }//GEN-LAST:event_bt_okActionPerformed
 
   private void bt_videoViewerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_videoViewerActionPerformed
-    File folder;
-    String os = System.getProperty("os.name");
-    if (os.toLowerCase().indexOf("windows") > -1) {
-      folder = new File("C:\\Program Files");
-    } else {
-      folder = new File(System.getProperty("user.home"));
-    }
-    JFileChooser f = new JFileChooser();
-    f.setDialogTitle("Choose the application to open video files");
-    f.setDialogType(JFileChooser.OPEN_DIALOG);
-    f.setFileSelectionMode(JFileChooser.FILES_ONLY);
-    f.setMultiSelectionEnabled(false);
-    if (folder.isDirectory()) {
-      f.setCurrentDirectory(folder);
-    }
-    f.showOpenDialog(this);
-    File sel = f.getSelectedFile();
-    if (sel != null) {
-      String app = sel.getAbsolutePath();
-      tf_videoApp.setText(app);
-    }
+      File folder;
+      MySeriesLogger.logger.log(Level.INFO, "Selecting video viewer");
+      String os = System.getProperty("os.name");
+      if (os.toLowerCase().indexOf("windows") > -1) {
+          folder = new File("C:\\Program Files");
+      } else {
+          folder = new File(System.getProperty("user.home"));
+      }
+      JFileChooser f = new JFileChooser();
+      f.setDialogTitle("Choose the application to open video files");
+      f.setDialogType(JFileChooser.OPEN_DIALOG);
+      f.setFileSelectionMode(JFileChooser.FILES_ONLY);
+      f.setMultiSelectionEnabled(false);
+      if (folder.isDirectory()) {
+          f.setCurrentDirectory(folder);
+      }
+      f.showOpenDialog(this);
+      File sel = f.getSelectedFile();
+      if (sel != null) {
+          String app = sel.getAbsolutePath();
+          tf_videoApp.setText(app);
+          MySeriesLogger.logger.log(Level.INFO, "Video viewer set to {0}",app);
+      }
   }//GEN-LAST:event_bt_videoViewerActionPerformed
 
   private void bt_mainDirectoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_mainDirectoryActionPerformed
       File folder;
-    String os = System.getProperty("os.name");
-    folder = new File(Options.toString(Options.MAIN_DIRECTORY));
-    JFileChooser f = new JFileChooser();
-    f.setDialogTitle("Choose your series main directory");
-    f.setDialogType(JFileChooser.OPEN_DIALOG);
-    f.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-    f.setMultiSelectionEnabled(false);
-    if (folder.isDirectory()) {
-      f.setCurrentDirectory(folder);
-    }
-    f.showOpenDialog(this);
-    File sel = f.getSelectedFile();
-    if (sel != null) {
-      String md = sel.getAbsolutePath();
-      tf_mainDir.setText(md);
-    }
+      MySeriesLogger.logger.log(Level.INFO, "Selecting series main directory");
+      String os = System.getProperty("os.name");
+      folder = new File(Options.toString(Options.MAIN_DIRECTORY));
+      JFileChooser f = new JFileChooser();
+      f.setDialogTitle("Choose your series main directory");
+      f.setDialogType(JFileChooser.OPEN_DIALOG);
+      f.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+      f.setMultiSelectionEnabled(false);
+      if (folder.isDirectory()) {
+          f.setCurrentDirectory(folder);
+      }
+      f.showOpenDialog(this);
+      File sel = f.getSelectedFile();
+      if (sel != null) {
+          String md = sel.getAbsolutePath();
+          tf_mainDir.setText(md);
+          MySeriesLogger.logger.log(Level.INFO, "Main directory set to {0}",md);
+      }
   }//GEN-LAST:event_bt_mainDirectoryActionPerformed
 
-  private Font getSelectedFont() {
-    Font font = new Font((String) combobox_fonts.getSelectedItem(), Font.PLAIN, (int) Float.parseFloat(String.valueOf(spinner_fontSize.getValue())));
-    return font;
-  }
+    private Font getSelectedFont() {
+        Font font = new Font((String) combobox_fonts.getSelectedItem(), Font.PLAIN, (int) Float.parseFloat(String.valueOf(spinner_fontSize.getValue())));
+        return font;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private myComponents.myGUI.buttons.MyButtonCancel bt_cancel;
     private myComponents.myGUI.buttons.MyButtonHelp bt_help;
@@ -1141,6 +1185,7 @@ public class OptionsPanel extends MyDraggable {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1171,65 +1216,64 @@ public class OptionsPanel extends MyDraggable {
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 
-  /**
-   * Parsing all the options panels for option components
-   */
-  private void getOptionsComponents() {
-    parse(panel_general);
-    parse(panel_internet);
-    parse(panel_renaming);
-  }
+    /**
+     * Parsing all the options panels for option components
+     */
+    private void getOptionsComponents() {
+        parse(panel_general);
+        parse(panel_internet);
+        parse(panel_renaming);
+    }
 
-  /**
-   * Parsing a jpanel and gets components with a name diff than "noname"<br />
-   * Then sets the option with the name of the component to the value of the componont
-   * @param panel
-   */
-  private void parse(JPanel panel) {
-    Component[] c = panel.getComponents();
-    for (int i = 0; i < c.length; i++) {
-      if (c[i].getName() == null) {
-      } else if (!c[i].getName().equals("noname") && !c[i].getName().equals("null")) {
-        Options.setOption(c[i].getName(), getValue(c[i]));
-      }
+    /**
+     * Parsing a jpanel and gets components with a name diff than "noname"<br />
+     * Then sets the option with the name of the component to the value of the componont
+     * @param panel
+     */
+    private void parse(JPanel panel) {
+        MySeriesLogger.logger.log(Level.INFO, "Parsing panel {0}",panel.getName());
+        Component[] c = panel.getComponents();
+        for (int i = 0; i < c.length; i++) {
+            if (c[i].getName() == null) {
+            } else if (!c[i].getName().equals("noname") && !c[i].getName().equals("null")) {
+                Options.setOption(c[i].getName(), getValue(c[i]));
+            }
+        }
     }
-  }
 
-  /**
-   * Getting a value of a component <br />
-   * Components are JSpinner, JCheckBox, JComboBox
-   * @param c The component
-   * @return the value of the component
-   */
-  private Object getValue(Component c) {
-    if (c instanceof JSpinner) {
-      JSpinner spin = (JSpinner) c;
-      return spin.getValue();
+    /**
+     * Getting a value of a component <br />
+     * Components are JSpinner, JCheckBox, JComboBox
+     * @param c The component
+     * @return the value of the component
+     */
+    private Object getValue(Component c) {
+        MySeriesLogger.logger.log(Level.INFO, "Getting components value");
+        Object obj = "";
+        if (c instanceof JSpinner) {
+            JSpinner spin = (JSpinner) c;
+            obj = spin.getValue();
+        } else if (c instanceof JCheckBox) {
+            JCheckBox check = (JCheckBox) c;
+            obj = check.isSelected();
+        }else  if (c instanceof JTextField) {
+            JTextField text = (JTextField) c;
+            obj = text.getText();
+        } else  if (c instanceof JComboBox) {
+            JComboBox combo = (JComboBox) c;
+            // In some combos get the item instead of index
+            String name = combo.getName();
+            if (MyUsefulFunctions.isInArray(Options._COMBO_OPTIONS_, name)) {
+                return String.valueOf(combo.getSelectedItem());
+            }
+            return combo.getSelectedIndex();
+        } else  // Get color buttons
+        if (c instanceof JButton) {
+            JButton button = (JButton) c;
+            return button.getBackground().getRed() + ", "
+                    + button.getBackground().getGreen() + ", "
+                    + button.getBackground().getBlue();
+        }
+        return obj;
     }
-    if (c instanceof JCheckBox) {
-      JCheckBox check = (JCheckBox) c;
-      return check.isSelected();
-    }
-    if (c instanceof JTextField) {
-      JTextField text = (JTextField) c;
-      return text.getText();
-    }
-    if (c instanceof JComboBox) {
-      JComboBox combo = (JComboBox) c;
-      // In some combos get the item instead of index
-      String name = combo.getName();
-      if (MyUsefulFunctions.isInArray(Options._COMBO_OPTIONS_, name)) {
-        return String.valueOf(combo.getSelectedItem());
-      }
-      return combo.getSelectedIndex();
-    }
-    // Get color buttons
-    if (c instanceof JButton) {
-      JButton button = (JButton) c;
-      return button.getBackground().getRed() + ", "
-          + button.getBackground().getGreen() + ", "
-          + button.getBackground().getBlue();
-    }
-    return "";
-  }
 }

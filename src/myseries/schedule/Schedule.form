@@ -79,7 +79,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new com.googlecode.scheduler.Scheduler()"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new com.googlecode.scheduler.Scheduler(&quot;db&quot;)"/>
             <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="schedule.getTblCalendar().getTableHeader().setBorder(BorderFactory.createLineBorder(Color.GRAY));"/>
           </AuxValues>
         </Component>

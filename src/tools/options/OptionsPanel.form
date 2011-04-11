@@ -148,11 +148,15 @@
           </Layout>
           <SubComponents>
             <Container class="javax.swing.JTabbedPane" name="tabbedPane_options">
+              <Properties>
+                <Property name="name" type="java.lang.String" value="Tab" noResource="true"/>
+              </Properties>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
               <SubComponents>
                 <Container class="javax.swing.JPanel" name="panel_general">
                   <Properties>
+                    <Property name="name" type="java.lang.String" value="General" noResource="true"/>
                     <Property name="opaque" type="boolean" value="false"/>
                   </Properties>
                   <Constraints>
@@ -167,7 +171,7 @@
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
                                   <Component id="jLabel3" alignment="1" pref="135" max="32767" attributes="2"/>
                                   <Component id="jLabel6" alignment="1" pref="135" max="32767" attributes="0"/>
@@ -180,11 +184,10 @@
                                   <Component id="jLabel11" alignment="1" pref="135" max="32767" attributes="0"/>
                                   <Component id="jLabel7" alignment="1" pref="135" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="combobox_debugMode" alignment="0" pref="303" max="32767" attributes="0"/>
                                           <Component id="cb_autoUpdate" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="label_preview" alignment="0" pref="303" max="32767" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
@@ -215,8 +218,13 @@
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="bt_mainDirectory" min="-2" max="-2" attributes="0"/>
                                   </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="combobox_debugMode" pref="89" max="32767" attributes="0"/>
+                                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel22" max="32767" attributes="0"/>
+                                  </Group>
                               </Group>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -227,6 +235,7 @@
                               <Group type="103" groupAlignment="2" attributes="0">
                                   <Component id="jLabel3" linkSize="2" alignment="2" min="-2" max="-2" attributes="0"/>
                                   <Component id="combobox_debugMode" alignment="2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel22" alignment="2" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="2" attributes="0">
@@ -317,18 +326,17 @@
                     <Component class="javax.swing.JComboBox" name="combobox_debugMode">
                       <Properties>
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                          <StringArray count="5">
-                            <StringItem index="0" value="ALL"/>
+                          <StringArray count="4">
+                            <StringItem index="0" value="OFF"/>
                             <StringItem index="1" value="SEVERE"/>
                             <StringItem index="2" value="WARNING"/>
-                            <StringItem index="3" value="INFO"/>
-                            <StringItem index="4" value="OFF"/>
+                            <StringItem index="3" value="ALL"/>
                           </StringArray>
                         </Property>
                         <Property name="selectedItem" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                           <Connection code="Options.toString(Options.DEBUG_MODE)" type="code"/>
                         </Property>
-                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;The level of Debuging info that&apos;s written in the log file&lt;br /&gt;&#xa;FATAL : Only fatal errors are written&lt;br /&gt;&#xa;WARNING : Warnings and fatal errors are written&lt;br /&gt;&#xa;INFO : Everything is written&lt;br /&gt;&#xa;NO LOGGING: Nothing is written&lt;br /&gt;"/>
+                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;The level of Debuging info that&apos;s written in the log file&lt;br /&gt;&#xa;SEVERE : Only fatal errors are written&lt;br /&gt;&#xa;WARNING : Warnings and fatal errors are written&lt;br /&gt;&#xa;INFO : Everything is written&lt;br /&gt;&#xa;OFF: Nothing is written&lt;br /&gt;"/>
                         <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                           <Connection code="Options.DEBUG_MODE" type="code"/>
                         </Property>
@@ -615,10 +623,21 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_mainDirectoryActionPerformed"/>
                       </Events>
                     </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel22">
+                      <Properties>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.editors2.FontEditor">
+                          <FontInfo relative="true">
+                            <Font component="jLabel22" italic="true" property="font" relativeSize="true" size="-1"/>
+                          </FontInfo>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="Setting logging level to ALL will slow down the application"/>
+                      </Properties>
+                    </Component>
                   </SubComponents>
                 </Container>
                 <Container class="javax.swing.JPanel" name="panel_internet">
                   <Properties>
+                    <Property name="name" type="java.lang.String" value="Internet" noResource="true"/>
                     <Property name="opaque" type="boolean" value="false"/>
                   </Properties>
                   <Constraints>
@@ -937,6 +956,7 @@
                 </Container>
                 <Container class="javax.swing.JPanel" name="panel_renaming">
                   <Properties>
+                    <Property name="name" type="java.lang.String" value="Renaming" noResource="true"/>
                     <Property name="opaque" type="boolean" value="false"/>
                   </Properties>
                   <Constraints>

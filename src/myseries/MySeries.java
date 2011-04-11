@@ -341,7 +341,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
         // Set column widths
         MySeriesLogger.logger.log(Level.INFO, "Creating GUI");
         MySeriesLogger.logger.log(Level.INFO, "Setting tables widths");
-        ArrayList<Integer> widths = Options.toIntegerArrayList(Options.TABLE_WIDTHS);
+        ArrayList<Integer> widths = Options.toIntegerArrayList();
         Integer widthsArr[] = new Integer[widths.size()];
         widthsArr = widths.toArray(widthsArr);
         seriesTableWidths = Arrays.copyOfRange(widthsArr, 0, 3);
