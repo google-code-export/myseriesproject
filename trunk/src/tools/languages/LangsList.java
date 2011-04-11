@@ -6,6 +6,8 @@ package tools.languages;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.logging.Level;
+import tools.MySeriesLogger;
 
 /**
  *
@@ -18,6 +20,7 @@ public class LangsList {
   public static Language MULTIPLE = new Language("Multiple", "", Language.NO_PRIORITY, 3);
 
   public LangsList() {
+    MySeriesLogger.logger.log(Level.INFO, "Creating languages list");
     list = new ArrayList<Language>();
     list.add(new Language("Arabic", "ar", Language.NO_PRIORITY, 4));
     list.add(new Language("Brazilian", "br", Language.NO_PRIORITY, 5));
@@ -51,22 +54,30 @@ public class LangsList {
   }
 
   public Language getPrimary() {
+    MySeriesLogger.logger.log(Level.INFO, "Getting primary language");
     for (Iterator<Language> it = list.iterator(); it.hasNext();) {
       Language language = it.next();
       if (language.isIsPrimary()) {
+        MySeriesLogger.logger.log(Level.FINE, "Primary language {0}",language.getName());
         return language;
       }
     }
+    MySeriesLogger.logger.log(Level.WARNING, "Primary language not found , setting default {0}",
+        getDefaultLanguage(Language.PRIMARY).getName());
     return getDefaultLanguage(Language.PRIMARY);
   }
 
   public Language getSecondary() {
+    MySeriesLogger.logger.log(Level.INFO, "Getting secondary language");
     for (Iterator<Language> it = list.iterator(); it.hasNext();) {
       Language language = it.next();
       if (language.isIsSecondary()) {
+        MySeriesLogger.logger.log(Level.FINE, "Secondary language {0}",language.getName());
         return language;
       }
     }
+    MySeriesLogger.logger.log(Level.WARNING, "Secondary language not found , setting default {0}",
+        getDefaultLanguage(Language.SECONDARY).getName());
     return getDefaultLanguage(Language.SECONDARY);
   }
 
@@ -95,22 +106,28 @@ public class LangsList {
   }
 
   public static Language getLanguageByName(String name) {
+    MySeriesLogger.logger.log(Level.INFO, "Getting language by name {0}",name);
     for (Iterator<Language> it = list.iterator(); it.hasNext();) {
       Language language = it.next();
       if (language.getName().equals(name)) {
+        MySeriesLogger.logger.log(Level.FINE, "Found language {0}",language.getId());
         return language;
       }
     }
+    MySeriesLogger.logger.log(Level.WARNING, "Language not found");
     return LangsList.NONE;
   }
 
   public static Language getLanguageByCode(String code) {
+    MySeriesLogger.logger.log(Level.INFO, "Getting language by code {0}",code);
      for (Iterator<Language> it = list.iterator(); it.hasNext();) {
       Language language = it.next();
       if (language.getCode().equals(code)) {
+        MySeriesLogger.logger.log(Level.FINE, "Found language {0}",language.getId());
         return language;
       }
     }
+    MySeriesLogger.logger.log(Level.WARNING, "Language not found");
     return LangsList.NONE;
   }
 
@@ -121,12 +138,15 @@ public class LangsList {
     if (id == 3) {
       return MULTIPLE;
     }
+     MySeriesLogger.logger.log(Level.INFO, "Getting language by id {0}",id);
     for (Iterator<Language> it = list.iterator(); it.hasNext();) {
       Language language = it.next();
       if (language.getId() == id) {
+        MySeriesLogger.logger.log(Level.FINE, "Found language {0}",language.getName());
         return language;
       }
     }
+     MySeriesLogger.logger.log(Level.WARNING, "Language not found");
     return null;
   }
 
@@ -135,12 +155,15 @@ public class LangsList {
   }
 
   public static boolean isLanguageCode(String code) {
+    MySeriesLogger.logger.log(Level.INFO, "Checking if {0} is a language code",code);
     for (Iterator<Language> it = list.iterator(); it.hasNext();) {
       Language language = it.next();
       if (language.getCode().equals(code)) {
+        MySeriesLogger.logger.log(Level.FINE, "{0} is a language code : {1}",new String[]{code,language.getName()});
         return true;
       }
     }
+    MySeriesLogger.logger.log(Level.WARNING, "{0} is not a language code",code);
     return false;
   }
 }
