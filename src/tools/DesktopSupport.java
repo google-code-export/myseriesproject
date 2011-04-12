@@ -7,8 +7,6 @@ package tools;
 
 import java.awt.Desktop;
 import java.util.logging.Level;
-import myseries.*;
-import myComponents.MyUsefulFunctions;
 /**
  * Desktop support for the OS
  * @author lordovol
@@ -24,6 +22,7 @@ public class DesktopSupport {
    */
   public DesktopSupport(){
     try {
+        MySeriesLogger.logger.log(Level.INFO, "Checking desktop support");
         desktop = Desktop.getDesktop();
         desktopSupport = Desktop.isDesktopSupported();
         browseSupport = desktop.isSupported(Desktop.Action.BROWSE);
