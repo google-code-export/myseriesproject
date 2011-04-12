@@ -5,6 +5,7 @@
 package tools.feeds;
 
 import database.FeedsRecord;
+import java.awt.dnd.DnDConstants;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,6 +15,8 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import tools.options.Options;
@@ -29,6 +32,8 @@ public class FeedUpdater implements Runnable {
     private FeedTree tree;
     private boolean readFeeds = true;
     public static boolean updating = false;
+    private Icon LOADING_ICON = new ImageIcon(getClass().getResource("/images/rss_loading_tab.gif"));
+    private Icon DEFAULT_ICON = new ImageIcon(getClass().getResource("/images/rss_tab.png"));
 
     public FeedUpdater(FeedTree tree, FeedsRecord feedRecord) {
         MySeriesLogger.logger.log(Level.INFO, "Updating feed {0}", feedRecord.getTitle());
@@ -49,6 +54,8 @@ public class FeedUpdater implements Runnable {
         int id = -1;
         updating = true;
         myseries.MySeries.pr_rssUpdating.setVisible(true);
+        int ind = myseries.MySeries.tabsPanel.getIndexByName(String.valueOf(myseries.MySeries.TAB_FEEDS_ID));
+        myseries.MySeries.tabsPanel.setIconAt(ind,LOADING_ICON);
         for (Iterator<FeedsRecord> it = feeds.iterator(); it.hasNext();) {
             FeedsRecord feedRecord = it.next();
             id = feedRecord.getFeed_ID();
@@ -61,6 +68,8 @@ public class FeedUpdater implements Runnable {
             }
         }
         updating = false;
+        ind = myseries.MySeries.tabsPanel.getIndexByName(String.valueOf(myseries.MySeries.TAB_FEEDS_ID));
+        myseries.MySeries.tabsPanel.setIconAt(ind,DEFAULT_ICON);
         myseries.MySeries.pr_rssUpdating.setVisible(false);
         //myseries.MySeries.glassPane.deactivate();
 
