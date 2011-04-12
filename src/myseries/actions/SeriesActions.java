@@ -8,7 +8,6 @@ import database.DBConnection;
 import database.SeriesRecord;
 import java.awt.Image;
 import java.io.File;
-import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -24,6 +23,7 @@ import myComponents.myEvents.MyEventHandler;
 import myComponents.myGUI.MyImagePanel;
 import myseries.MySeries;
 import myseries.episodes.Episodes;
+import myseries.filters.Filters;
 import myseries.series.AdminSeries;
 import myseries.series.Series;
 import tools.DesktopSupport;
@@ -182,8 +182,10 @@ public class SeriesActions {
       MyEvent evt = new MyEvent(m, MyEventHandler.SET_CURRENT_SERIES);
       evt.setSeries(origSeries);
       m.getEvClass().fireMyEvent(evt);
+      Filters.getFilteredSeries();
       MySeriesLogger.logger.log(Level.FINE, "Updating finished");
       MyMessages.message("Update finished", "Updating of series files finished.");
+
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, "Sql exception occured", ex);
     } finally {
