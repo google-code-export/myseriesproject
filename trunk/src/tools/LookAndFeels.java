@@ -43,6 +43,7 @@ public class LookAndFeels {
    * @return a n array of LookAndFeels info
    */
   public static LookAndFeelInfo[] getLookAndFeels() {
+      MySeriesLogger.logger.log(Level.INFO, "Getting look and feels");
     UIManager.LookAndFeelInfo[] lookAndFeelInfos = UIManager.getInstalledLookAndFeels();
     LookAndFeelInfo laf[] = new LookAndFeelInfo[lookAndFeelInfos.length];
     lafMap = new HashMap<String, LookAndFeelInfo>();
@@ -56,14 +57,18 @@ public class LookAndFeels {
   }
 
   public static String getClassName(String laf) {
+      MySeriesLogger.logger.log(Level.INFO, "Get class name for {0}",laf);
     UIManager.LookAndFeelInfo[] lookAndFeelInfos = UIManager.getInstalledLookAndFeels();
     lafMap = new HashMap<String, LookAndFeelInfo>();
     for (int i = 0; i < lookAndFeelInfos.length; i++) {
       UIManager.LookAndFeelInfo lookAndFeelInfo = lookAndFeelInfos[i];
       if (lookAndFeelInfo.getName().equals(laf)) {
-        return lookAndFeelInfo.getClassName();
+        String name =  lookAndFeelInfo.getClassName();
+          MySeriesLogger.logger.log(Level.FINE, "Found claass name {0}",name);
+        return name;
       }
     }
+      MySeriesLogger.logger.log(Level.WARNING, "Class name not found");
     return null;
   }
 

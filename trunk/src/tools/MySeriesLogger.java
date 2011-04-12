@@ -16,7 +16,7 @@ import java.util.logging.SimpleFormatter;
  *
  * @author ssoldatos
  */
-public class MySeriesLogger {
+public class MySeriesLogger{
   public static Logger logger;
 
   /**
@@ -109,6 +109,8 @@ public class MySeriesLogger {
         true,
         1);
   }
+
+
 
  
 }

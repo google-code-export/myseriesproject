@@ -29,30 +29,30 @@ public class HTMLFormatter extends Formatter {
    * @return
    */
   public String format(LogRecord rec) {
-    StringBuffer buf = new StringBuffer(1000);
+    StringBuilder buf = new StringBuilder(1000);
     // Bold any levels >= WARNING
     if (rec.getLevel().intValue() == Level.WARNING.intValue()) {
-      buf.append("<tr bgcolor='yellow' valign='top'><td>"+ rec.getLevel()+"</td>");
+            buf.append("<tr bgcolor='yellow' valign='top'><td>").append(rec.getLevel()).append("</td>");
     } else if (rec.getLevel().intValue() == Level.SEVERE.intValue()) {
-      buf.append("<tr bgcolor='red' valign='top'><td>"+ rec.getLevel()+"</td>");
+            buf.append("<tr bgcolor='red' valign='top'><td>").append(rec.getLevel()).append("</td>");
     } else if (rec.getLevel().intValue() == Level.FINE.intValue()) {
-      buf.append("<tr bgcolor='lightGreen' valign='top'><td>"+ rec.getLevel()+"</td>");
+            buf.append("<tr bgcolor='lightGreen' valign='top'><td>").append(rec.getLevel()).append("</td>");
     }
       else {
-      buf.append("<tr bgcolor='white'  valign='top'><td>"+rec.getLevel()+"</td>");
+            buf.append("<tr bgcolor='white'  valign='top'><td>").append(rec.getLevel()).append("</td>");
     }
     //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss SSS");
     SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss SSS",Locale.ENGLISH);
     Date d = new Date(rec.getMillis());
     String thrown;
-    buf.append("<td>&nbsp;"+sdf.format(d)+"</td>");
-    buf.append("<td>&nbsp;"+rec.getThreadID()+"</td>");
-    buf.append("<td>&nbsp;"+rec.getSourceClassName()+"</td>");
-    buf.append("<td>&nbsp;"+rec.getSourceMethodName()+"</td>");
+        buf.append("<td>&nbsp;").append(sdf.format(d)).append("</td>");
+        buf.append("<td>&nbsp;" + rec.getThreadID() + "</td>");
+        buf.append("<td>&nbsp;").append(rec.getSourceClassName()).append("</td>");
+        buf.append("<td>&nbsp;").append(rec.getSourceMethodName()).append("</td>");
     if(rec.getThrown() != null){
-    buf.append("<td>&nbsp;"+getStackTrace(rec.getThrown())+"</td></tr>\n");
+            buf.append("<td>&nbsp;").append(getStackTrace(rec.getThrown())).append("</td></tr>\n");
     } else {
-       buf.append("<td>&nbsp;"+formatMessage(rec)+"</td></tr>\n");
+            buf.append("<td>&nbsp;").append(formatMessage(rec)).append("</td></tr>\n");
     }
     return buf.toString();
   }
