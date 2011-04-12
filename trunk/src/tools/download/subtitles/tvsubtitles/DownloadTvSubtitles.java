@@ -54,7 +54,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
         } else {
             try {
                 MySeriesLogger.logger.log(Level.INFO, "Downloading whole season subtitles for series {0} seadon {1}", new Object[]{link, season});
-                subs.add(new Subtitle("Whole season subtitles", new URL(link)));
+                subs.add(new Subtitle("Whole season subtitles", new URL(link), 0, 0));
             } catch (MalformedURLException ex) {
                 MySeriesLogger.logger.log(Level.WARNING, "Malformed url: {0}", link);
                 MyMessages.error("Download whole season subtitles", "Malformed url: " + link);
@@ -68,7 +68,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
                 MyMessages.error("Subtitle not found", "The subtitle was not found");
             }
         } else if (subs.size() == 1) {
-            MySeriesLogger.logger.log(Level.FINE, "subtitle found {0}",subs.get(0).title);
+            MySeriesLogger.logger.log(Level.FINE, "subtitle found {0}", subs.get(0).title);
             download(subs.get(0));
             form.dispose();
         } else {
@@ -76,7 +76,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
             MySeriesLogger.logger.log(Level.FINE, "Found {0} subtitles", subs.size());
             Subtitle sub = (Subtitle) MyMessages.ask("Choose subtitle", "Choose the subtitle to download", null, subs.toArray(), null);
             if (sub != null) {
-                MySeriesLogger.logger.log(Level.INFO, "Downloading subtitle {0}",sub.title);
+                MySeriesLogger.logger.log(Level.INFO, "Downloading subtitle {0}", sub.title);
                 String newPath = sub.url.getPath().replace("/subtitle", "download");
                 try {
                     sub.url = new URL(TV_SUBTITLES_URL + newPath);
@@ -129,7 +129,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
     }
 
     private String parseWebPage() throws MalformedURLException, IOException {
-        MySeriesLogger.logger.log(Level.INFO, "Parsing webpage {0}",link);
+        MySeriesLogger.logger.log(Level.INFO, "Parsing webpage {0}", link);
         URL subsUrl = new URL(link);
         BufferedReader in = new BufferedReader(new InputStreamReader(subsUrl.openStream()));
         String inputLine;
@@ -191,21 +191,34 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
     }
 
     private void getDownloadLinks(String subsLink) throws MalformedURLException, IOException {
-        MySeriesLogger.logger.log(Level.INFO, "Getting the download links from {0}",subsLink);
+        MySeriesLogger.logger.log(Level.INFO, "Getting the download links from {0}", subsLink);
         URL subsUrl = new URL(TV_SUBTITLES_URL + subsLink);
         BufferedReader in = new BufferedReader(new InputStreamReader(subsUrl.openStream()));
         String inputLine, line = "";
         while ((inputLine = in.readLine()) != null) {
-            String regex = "(<a href=\"/subtitle-)|(<a href=\"download)|(</h5>)";
+
+            String regex = "(<a href=\"/subtitle-)|"
+                    + "(<a href=\"download)|"
+                    + "(<b id=\"hate\")|"
+                    + "(<b id=\"love\")|"
+                    + "(span style=\"color:red\")|"
+                    + "(span style=\"color:green\")|"
+                    + "(</h5>)";
             Pattern pattern = Pattern.compile(regex);
             Matcher matcher = pattern.matcher(inputLine);
             if (matcher.find()) {
                 line += inputLine + "\n";
             }
         }
-        String[] fields = line.split("(<a href=\"/)|(\"><div href=\"/)|(align=absmiddle>)|(<a href=\")|(\">)", -1);
+        String[] fields = line.split("(<a href=\"/)|(\"><div href=\"/)|(align=absmiddle>)|(<a href=\")|(\">)|"
+                + "(<b id=\")|"
+                + "(span style=\")|"
+                + "(<b id=\")|"
+                + "(<b id=\")", -1);
         String curLink = "";
         String curTitle = "";
+        int love = 0;
+        int hate = 0;
         for (int i = 0; i < fields.length; i++) {
             String field = fields[i];
             if ((field.startsWith("subtitle") || (field.startsWith("download"))) && field.endsWith("html")) {
@@ -216,13 +229,46 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
             } else if (fields[i].indexOf("</h5>") > -1) {
                 curTitle = field.substring(0, fields[i].indexOf("</h5>"));
             }
+            if (fields[i].startsWith("hate") && (!fields[i + 1].startsWith("Rate") && !fields[i + 1].startsWith("Bad"))) {
+                hate = getLoveHate(fields[i + 1]);
+            } else if (fields[i].startsWith("love") && !fields[i + 1].startsWith("Good")) {
+                love = getLoveHate(fields[i + 1]);
+            } else if (fields[i].startsWith("color:red")) {
+                hate = getLoveHate(fields[i + 1]);
+            } else if (fields[i].startsWith("color:green")) {
+                love = getLoveHate(fields[i + 1]);
+            }
             if (!curTitle.equals("") && !curLink.equals("")) {
-                MySeriesLogger.logger.log(Level.FINE, "Subtitle found {0}",curTitle);
-                subs.add(new Subtitle(curTitle, new URL(curLink)));
+                MySeriesLogger.logger.log(Level.FINE, "Subtitle found {0}", curTitle);
+                subs.add(new Subtitle(curTitle, new URL(curLink), love, hate));
                 curTitle = "";
                 curLink = "";
-
+                love = 0;
+                hate = 0;
             }
         }
+    }
+
+    private int getLoveHate(String str) {
+        String s = "";
+        char[] c = str.toCharArray();
+        for (int i = 0; i < c.length; i++) {
+
+            if (MyUsefulFunctions.isNumeric(String.valueOf(c[i]))) {
+                s += c[i];
+            } else {
+                if (MyUsefulFunctions.isNumeric(s)) {
+                    return Integer.parseInt(s);
+                }
+                return 0;
+            }
+
+        }
+        if (MyUsefulFunctions.isNumeric(s)) {
+            return Integer.parseInt(s);
+        }
+        return 0;
+
+
     }
 }

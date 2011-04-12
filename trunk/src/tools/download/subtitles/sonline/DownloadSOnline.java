@@ -119,7 +119,7 @@ public class DownloadSOnline extends AbstractDownloadSubtitle implements Runnabl
                 line = in.readLine();
                 curtitle = line.replaceAll("</a>", "");
                 MySeriesLogger.logger.log(Level.FINE, "Subtitle found :{0}",curtitle);
-                subs.add(new Subtitle(curtitle, curLink));
+                subs.add(new Subtitle(curtitle, curLink,0,0));
             }
         }
         if (subs.isEmpty() && primary) {
