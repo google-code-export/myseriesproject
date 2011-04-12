@@ -64,7 +64,7 @@ public class SubtitleMover {
         if (file.isFile()) {
             String name = file.getName();
             String regex = ser.getTitle() + "\\D*0*" + ser.getSeason() + "\\D";
-            Pattern pattern = Pattern.compile(regex);
+            Pattern pattern = Pattern.compile(regex,Pattern.CASE_INSENSITIVE);
             Matcher matcher = pattern.matcher(name);
             if (matcher.find()) {
                 return true;
