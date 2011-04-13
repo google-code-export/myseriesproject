@@ -233,6 +233,10 @@ public class Options {
      */
     public static final String MAIN_DIRECTORY = "MAIN_DIRECTORY";
     /**
+     * Warn the first time LOG is in INFO Level
+     */
+    public static final String WARN_FOR_LOG_USE = "WARN_FOR_LOG_USE";
+    /**
      * An array of the options that are selected in combo boxes
      */
     public static final String[] _COMBO_OPTIONS_ = {DATE_FORMAT, DEBUG_MODE, LOOK_AND_FEEL,
@@ -587,6 +591,7 @@ public class Options {
         out.println(Options.UPDATE_FEEDS + "=false");
         out.println(Options.TABS_ORDER + "=" + getDefaultTabsOrder());
         out.println(Options.MAIN_DIRECTORY + "=" + getDefaultMainDirectory());
+        out.println(Options.WARN_FOR_LOG_USE + "=true");
 
         out.close();
     }
@@ -680,6 +685,7 @@ public class Options {
         options.put(Options.UPDATE_FEEDS, false);
         options.put(Options.TABS_ORDER, getDefaultTabsOrder());
         options.put(Options.MAIN_DIRECTORY, getDefaultMainDirectory());
+        options.put(Options.WARN_FOR_LOG_USE, true);
     }
 
     private static Object getDefaultMainDirectory() {
