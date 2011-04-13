@@ -32,10 +32,10 @@ public class Subtitle {
 
     @Override
     public String toString() {
-        if(love+hate == 0){
+        if (love + hate == 0) {
             return title;
         }
-        int p = love *100 /(love+hate);
-        return title + " " + p +"%";
+        int p = love * 100 / (love + hate);
+        return title + " " + p + "% (" + love + "/" + hate + ")";
     }
 }
