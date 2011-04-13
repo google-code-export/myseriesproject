@@ -317,6 +317,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
         }
         MySeriesLogger.logger.log(Level.INFO, "Adding schedule mouse listener to schedule");
         scheduler.getSchedule().getTblCalendar().addMouseListener(new ScheduleMouseListener());
+        ApplicationActions.warnForLogLevel();
     }
 
     private void setGlassPane() {
