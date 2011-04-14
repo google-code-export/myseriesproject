@@ -49,18 +49,16 @@ public class FeedUpdater implements Runnable {
 
     @Override
     public void run() {
-        //myseries.MySeries.tabsPanel.setSelectedIndex(myseries.MySeries.TABS_PANEL_FEEDS);
-        //myseries.MySeries.glassPane.activate(null);
         int id = -1;
         updating = true;
         myseries.MySeries.pr_rssUpdating.setVisible(true);
         int ind = myseries.MySeries.tabsPanel.getIndexByName(String.valueOf(myseries.MySeries.TAB_FEEDS_ID));
-        myseries.MySeries.tabsPanel.setIconAt(ind,LOADING_ICON);
+        //myseries.MySeries.tabsPanel.setIconAt(ind,LOADING_ICON);
         for (Iterator<FeedsRecord> it = feeds.iterator(); it.hasNext();) {
             FeedsRecord feedRecord = it.next();
             id = feedRecord.getFeed_ID();
             if (MyUsefulFunctions.hasInternetConnection(feedRecord.getUrl())) {
-                update(feedRecord);
+                //update(feedRecord);
                 MySeriesLogger.logger.log(Level.FINE, "Feed updated");
             } else {
                 MySeriesLogger.logger.log(Level.WARNING, "Could not connect to {0}", feedRecord.getUrl());
