@@ -84,6 +84,7 @@ import myseries.schedule.ScheduleMouseListener;
 import myseries.series.UpdateSeriesTable;
 import myseries.statistics.StatEpisodes;
 import myseries.statistics.StatSeries;
+import tools.HouseKeeping;
 import tools.Skin;
 import tools.download.subtitles.SubtitleConstants;
 import tools.download.torrents.TorrentConstants;
@@ -123,6 +124,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
      *        EpGuides    : Ctrl - Shift - G
      *    Update Downloads: Ctrl - U
      *    Delete Torrents : Ctrl - T
+     *    Housekeeping    : Ctrl - H
      *    Options         : Ctrl - O
      *
      * Help
@@ -507,7 +509,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
         menu_Tools = new javax.swing.JMenu();
         menuItem_exportEpisodes = new javax.swing.JMenuItem();
         menuItem_importEpisodes = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
+        menu_Torrents = new javax.swing.JMenu();
         menuItem_downloadEztv = new javax.swing.JMenuItem();
         menuItem_DownloadIsohunt = new javax.swing.JMenuItem();
         menu_InternetUpdate = new javax.swing.JMenu();
@@ -515,6 +517,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
         menuItem_IUEpguides = new javax.swing.JMenuItem();
         menuItem_updateFiles = new javax.swing.JMenuItem();
         menuItem_deleteTorrents = new javax.swing.JMenuItem();
+        menuItem_housekeeping = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JSeparator();
         menuItem_options = new javax.swing.JMenuItem();
         menu_Help = new javax.swing.JMenu();
@@ -1281,8 +1284,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
         });
         menu_Tools.add(menuItem_importEpisodes);
 
-        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/torrent.png"))); // NOI18N
-        jMenu1.setText("Download Torrent");
+        menu_Torrents.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/torrent.png"))); // NOI18N
+        menu_Torrents.setText("Download Torrent");
 
         menuItem_downloadEztv.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         menuItem_downloadEztv.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eztv.png"))); // NOI18N
@@ -1293,7 +1296,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
                 menuItem_downloadEztvActionPerformed(evt);
             }
         });
-        jMenu1.add(menuItem_downloadEztv);
+        menu_Torrents.add(menuItem_downloadEztv);
 
         menuItem_DownloadIsohunt.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         menuItem_DownloadIsohunt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/isohunt.png"))); // NOI18N
@@ -1303,9 +1306,9 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
                 menuItem_DownloadIsohuntActionPerformed(evt);
             }
         });
-        jMenu1.add(menuItem_DownloadIsohunt);
+        menu_Torrents.add(menuItem_DownloadIsohunt);
 
-        menu_Tools.add(jMenu1);
+        menu_Tools.add(menu_Torrents);
 
         menu_InternetUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/internet_update.png"))); // NOI18N
         menu_InternetUpdate.setText("Internet Update");
@@ -1337,13 +1340,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
         menuItem_updateFiles.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
         menuItem_updateFiles.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/updateFiles.png"))); // NOI18N
-        menuItem_updateFiles.setText("Update & Unzip Files");
-        menuItem_updateFiles.setToolTipText("Scans local dirs and update the file and subtitles statuses");
-        menuItem_updateFiles.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItem_updateFilesActionPerformed(evt);
-            }
-        });
+        menuItem_updateFiles.setText("Update Files");
         menu_Tools.add(menuItem_updateFiles);
 
         menuItem_deleteTorrents.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_MASK));
@@ -1356,6 +1353,17 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
             }
         });
         menu_Tools.add(menuItem_deleteTorrents);
+
+        menuItem_housekeeping.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
+        menuItem_housekeeping.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/housekeeping.png"))); // NOI18N
+        menuItem_housekeeping.setText("Housekeeping");
+        menuItem_housekeeping.setToolTipText("<html>\nChoose to delete downloaded torrents, old log files or\nnot used screenshots");
+        menuItem_housekeeping.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItem_housekeepingActionPerformed(evt);
+            }
+        });
+        menu_Tools.add(menuItem_housekeeping);
         menu_Tools.add(jSeparator2);
 
         menuItem_options.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
@@ -1855,6 +1863,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
       MySeriesLogger.logger.log(Level.INFO, "Delete filter action");
       FiltersActions.deleteFilter(this);
   }//GEN-LAST:event_bt_deleteActionPerformed
+
+  private void menuItem_housekeepingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_housekeepingActionPerformed
+      HouseKeeping h = new HouseKeeping();
+  }//GEN-LAST:event_menuItem_housekeepingActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JMenuItem PopUpItem_AddEpisode;
     public static javax.swing.JMenuItem PopUpItem_AddEpisodeInEpisodes;
@@ -1874,7 +1887,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     public static javax.swing.JSplitPane feedSplitPanel;
     public static tools.feeds.FeedTree feedTree;
     public static javax.swing.JLayeredPane imageLayerPanel;
-    public static javax.swing.JMenu jMenu1;
     public static javax.swing.JSeparator jSeparator1;
     public static javax.swing.JSeparator jSeparator2;
     public static javax.swing.JSeparator jSeparator3;
@@ -1896,6 +1908,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     public static javax.swing.JMenuItem menuItem_exit;
     public static javax.swing.JMenuItem menuItem_exportEpisodes;
     public static javax.swing.JMenuItem menuItem_help;
+    public static javax.swing.JMenuItem menuItem_housekeeping;
     public static javax.swing.JMenuItem menuItem_importEpisodes;
     public static javax.swing.JMenuItem menuItem_loadDatabase;
     public static javax.swing.JMenuItem menuItem_options;
@@ -1908,6 +1921,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     public static javax.swing.JMenu menu_InternetUpdate;
     public static javax.swing.JMenu menu_MySeries;
     public static javax.swing.JMenu menu_Tools;
+    public static javax.swing.JMenu menu_Torrents;
     public static myComponents.myToolbar.Toolbar myToolbar;
     public static javax.swing.JPanel panel_Series;
     public static javax.swing.JScrollPane panel_allSeriesEpisodes;
