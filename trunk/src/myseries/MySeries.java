@@ -140,7 +140,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     public MyEpisodesTableModel tableModel_episodes;
     private MyFilteredSeriesTableModel tableModel_filterSeries;
     public ComboBoxModel comboBoxModel_filters;
-    public static String version = "1.4(r573)";
+    public static String version = "1.5(dev)";
     public String date = "2011-01-26";
     public static MyDisabledGlassPane glassPane;
     public static final long serialVersionUID = 234563636363L;
@@ -169,7 +169,9 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
      * @throws java.io.IOException
      */
     public MySeries() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, IOException {
-
+        if(version.indexOf("dev")>-1){
+          date = MyUsefulFunctions.getToday("dd/MM/yyyy");
+        }
 
         //Get language list
         languages = new LangsList();
