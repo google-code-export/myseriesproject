@@ -28,6 +28,7 @@ import javax.swing.SwingConstants;
 import myComponents.myGUI.MyImagePanel;
 import tools.MySeriesLogger;
 import tools.options.Options;
+import tools.options.Paths;
 
 /**
  *
@@ -129,7 +130,7 @@ public class ScheduleDayPanel extends javax.swing.JPanel {
         MySeriesLogger.logger.log(Level.INFO, "Setting default screenshot for {0}",event.getSeries());
         orIm = getScaledImageIcon(getDefaultImage().getImage());
       } else {
-        File sc = new File(Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH + event.getImage());
+        File sc = new File(Options._USER_DIR_ + Paths.SCREENSHOTS_PATH + event.getImage());
         if(sc.exists()){
         MySeriesLogger.logger.log(Level.INFO, "Setting series screenshot for {0}",event.getSeries());
         orIm = getScaledImageIcon(new ImageIcon(sc.getAbsolutePath()).getImage());
