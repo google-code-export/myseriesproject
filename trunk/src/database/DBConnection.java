@@ -38,6 +38,7 @@ public class DBConnection {
   public DBConnection() {
     MySeriesLogger.logger.log(Level.INFO, "Creating connection");
     this.db = Options.toString(Options.DB_NAME);
+
     createConnection();
   }
 
@@ -181,6 +182,9 @@ public class DBConnection {
    */
   private void createConnection() {
     try {
+        if(db.trim().equals(".db")){
+            return;
+        }
       if (!db.endsWith(Database.EXT)) {
         db = db + Database.EXT;
       }
