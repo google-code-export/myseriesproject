@@ -150,7 +150,7 @@ public class Filters {
     where += getDownloaded(cbDownload) == EpisodesRecord.NOT_DOWNLOADED || getDownloaded(cbDownload) == EpisodesRecord.DOWNLOADED ? " AND downloaded = " + getDownloaded(cbDownload) : "";
     where += getSubtitles(cbSubs);
     DBConnection conn = new DBConnection();
-    String sql = "SELECT e.* FROM episodes e JOIN series s on "
+    String sql = "SELECT e.*, s.title AS sTitle, s.season FROM episodes e JOIN series s on "
         + "e.series_ID = s.series_ID WHERE s.hidden = "
         + SeriesRecord.NOT_HIDDEN + " AND s.deleted = "
         + SeriesRecord.NOT_DELETED + " AND aired < date( julianday(date('now'))) AND aired <> '0000-00-00' "
@@ -167,12 +167,25 @@ public class Filters {
       subsInt = rs.getInt("subs");
       subs = LangsList.getLanguageById(subsInt);
       boolSeen = rs.getBoolean("seen");
-      Vector<SeriesRecord> seriesV = DBHelper.getSeriesBySql(
-          "SELECT * FROM series WHERE hidden = " + SeriesRecord.NOT_HIDDEN
-          + " AND deleted = " + SeriesRecord.NOT_DELETED
-          + " AND series_ID = " + series_ID);
-      ser = seriesV.get(0);
-      Object[] data = {ser.getFullTitle(), episode, DBHelper.getEpisodeByID(id), aired, boolDownloaded, subs, boolSeen};
+      String fulltitle = rs.getString("sTitle") + " S" + myComponents.MyUsefulFunctions.padLeft(rs.getInt("season"), 2, "0");
+      EpisodesRecord epRecord = new EpisodesRecord();
+      epRecord.setEpisode_ID(id);
+      epRecord.setEpisode(episode);
+      epRecord.setAired(aired);
+      epRecord.setSeries_ID(series_ID);
+      epRecord.setDownloaded(boolDownloaded ? 1 :0);
+      epRecord.setSeen(boolSeen ? 1 : 0);
+      epRecord.setSubs(subs);
+      epRecord.setTitle(title);
+      
+
+
+//      Vector<SeriesRecord> seriesV = DBHelper.getSeriesBySql(
+//          "SELECT * FROM series WHERE hidden = " + SeriesRecord.NOT_HIDDEN
+//          + " AND deleted = " + SeriesRecord.NOT_DELETED
+//          + " AND series_ID = " + series_ID);
+//      ser = seriesV.get(0);
+      Object[] data = {fulltitle, episode, epRecord, aired, boolDownloaded, subs, boolSeen};
       if (getTableModel_filterSeries() != null) {
         getTableModel_filterSeries().addRow(data);
       }

@@ -24,6 +24,7 @@ public class MyDownloadedCellRenderer extends DefaultTableCellRenderer {
   public static final String AVI = "avi";
   public static final String MKV = "mkv";
   public static final String MPG = "mpg";
+  public static final String MP4 = "mp4";
   public static final String SAMPLE = "sample";
   public static final String OTHER = "other";
   public static final String NONE = "none";
