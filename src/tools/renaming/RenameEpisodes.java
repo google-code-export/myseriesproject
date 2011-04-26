@@ -50,6 +50,14 @@ public class RenameEpisodes extends MyDraggable {
    * RenameEpisodes table edit column : 3
    */
   public static final int EDIT_COLUMN = 3;
+  /**
+   * Rename single episode
+   */
+  public static final int SINGLE_EPISODE = 0;
+  /**
+   * Rename multiple episodes
+   */
+  public static final int MULTIPLE_EPISODES = 1;
   private static final long serialVersionUID = 35546363456L;
   private ArrayList<File> oldNames;
   private MyRenameEpisodesTableModel renameEpisodesModel = new MyRenameEpisodesTableModel();
@@ -57,19 +65,22 @@ public class RenameEpisodes extends MyDraggable {
   private SeriesRecord series;
   private boolean checkAll = false;
   private String sepRegex = "^[^/\\\\?%*:|\\\"<>\\.]*$";
+  private final int type;
 
   /**
    * Create rename episodes form
    * @param oldNames The oldnames arraylist
    * @param newNames The newnames arraylist
    * @param series The series record
+   * @param type The type of renaming, single episode or multiple episodes
    */
   public RenameEpisodes(ArrayList<File> oldNames,
-      ArrayList<EpisodesRecord> newNames, SeriesRecord series) {
+      ArrayList<EpisodesRecord> newNames, SeriesRecord series, int type) {
     myseries.MySeries.glassPane.activate(null);
     this.oldNames = oldNames;
     this.newNames = newNames;
     this.series = series;
+    this.type = type;
     MySeriesLogger.logger.log(Level.INFO, "Initializing components");
     initComponents();
     MySeriesLogger.logger.log(Level.FINE, "Components initialized");
@@ -80,8 +91,14 @@ public class RenameEpisodes extends MyDraggable {
     textfield_season.setTrimValue(false);
     textfield_title.setTrimValue(false);
     createTableModel();
-    setLocationRelativeTo(null);
-    setVisible(true);
+    checkBox_checkAll.setSelected(true);
+    checkBox_checkAllActionPerformed(null);
+    if (type == SINGLE_EPISODE && Options.toBoolean(Options.NO_RENAME_CONFIRMATION)) {
+      bt_okActionPerformed(null);
+    } else {
+      setLocationRelativeTo(null);
+      setVisible(true);
+    }
   }
 
   /** This method is called from within the constructor to
@@ -342,7 +359,7 @@ public class RenameEpisodes extends MyDraggable {
     if (group.validate()) {
       return true;
     } else {
-      MySeriesLogger.logger.log(Level.WARNING, "Validation failed\nError message: {0}",group.getErrorMessage());
+      MySeriesLogger.logger.log(Level.WARNING, "Validation failed\nError message: {0}", group.getErrorMessage());
       MyMessages.error("Renaming Episodes Form", group.getErrorMessage());
       return false;
     }
@@ -481,7 +498,7 @@ public class RenameEpisodes extends MyDraggable {
   }
 
   private File createFile(EpisodesRecord episode, File oldFile) {
-    MySeriesLogger.logger.log(Level.INFO, "Creating new filename for {0}",episode.getTitle());
+    MySeriesLogger.logger.log(Level.INFO, "Creating new filename for {0}", episode.getTitle());
     String oldName = oldFile.getName();
     String[] tokens = oldName.split("\\.", -1);
     String ext = tokens[tokens.length - 1];
@@ -507,7 +524,7 @@ public class RenameEpisodes extends MyDraggable {
 
     String newName = series.getLocalDir() + "/"
         + newFilename.replaceAll("[\\Q/\\?%*:|\"<>.;\\E]", "") + sample + "." + ext;
-    MySeriesLogger.logger.log(Level.FINE, "New name is {0}",new File(newName).getName());
+    MySeriesLogger.logger.log(Level.FINE, "New name is {0}", new File(newName).getName());
     return new File(newName);
   }
 }
