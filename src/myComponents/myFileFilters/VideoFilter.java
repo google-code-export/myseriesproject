@@ -13,7 +13,7 @@ import java.io.FilenameFilter;
  */
 public class VideoFilter implements FilenameFilter {
 
-  public static final String[] EXTENSIONS = {"avi", "mkv","mpg"};
+  public static final String[] EXTENSIONS = {"avi", "mkv","mpg","mp4"};
 
 
   public boolean accept(File dir, String name) {
@@ -22,7 +22,7 @@ public class VideoFilter implements FilenameFilter {
     }
     for (int i = 0; i < EXTENSIONS.length; i++) {
       String ext = EXTENSIONS[i];
-      if (name.endsWith(ext)) {
+      if (name.toLowerCase().endsWith(ext)) {
         return true;
       }
     }
