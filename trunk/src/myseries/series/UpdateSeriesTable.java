@@ -22,7 +22,7 @@ public class UpdateSeriesTable {
     private TableModel model;
     private Object rec[] = new Object[Series.NUMBER_OF_COLUMS];
 
-    public UpdateSeriesTable(TableModelEvent e) {
+    public UpdateSeriesTable(TableModelEvent e, MySeries m) {
         if (e.getType() == TableModelEvent.UPDATE) {
             MySeriesLogger.logger.log(Level.INFO, "Update series table event");
             int row = e.getFirstRow();
@@ -37,10 +37,10 @@ public class UpdateSeriesTable {
             }
         } else if (e.getType() == -1) {
             //workaround to update the screenshot position when series are added /deleted
-            if (MySeries.splitPane_main.getDividerLocation() % 2 == 0) {
-                MySeries.splitPane_main.setDividerLocation(MySeries.splitPane_main.getDividerLocation() + 1);
+            if (m.splitPane_main.getDividerLocation() % 2 == 0) {
+                m.splitPane_main.setDividerLocation(m.splitPane_main.getDividerLocation() + 1);
             } else {
-                MySeries.splitPane_main.setDividerLocation(MySeries.splitPane_main.getDividerLocation() - 1);
+                m.splitPane_main.setDividerLocation(m.splitPane_main.getDividerLocation() - 1);
             }
         }
     }

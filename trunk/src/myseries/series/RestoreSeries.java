@@ -25,6 +25,10 @@ import myComponents.myEvents.MyEventsClass;
 import myComponents.myGUI.MyDraggable;
 import tools.Skin;
 import myComponents.MyUsefulFunctions;
+import myComponents.myTableCellRenderers.MyCheckBoxCellRenderer;
+import myComponents.myTableCellRenderers.MyDownloadedCellRenderer;
+import myComponents.myTableCellRenderers.MyWatchedCellRenderer;
+import myseries.MySeries;
 
 /**
  *
@@ -34,20 +38,26 @@ public class RestoreSeries extends MyDraggable {
 
   public static final long serialVersionUID = 23534663L;
   private final ArrayList<SeriesRecord> series;
-  MyEventsClass evClass = new MyEventsClass();
+  MyEventsClass evClass;
+  private MySeries m;
+  public static final int COLUMN_SERIES = 0;
+  public static final int COLUMN_RESTORE = 1;
 
   /** Creates new form RestoreSeries */
-  public RestoreSeries() {
-    this(new ArrayList<SeriesRecord>());
+  public RestoreSeries(MySeries m) {
+    this(new ArrayList<SeriesRecord>(),m);
   }
 
-  public RestoreSeries(ArrayList<SeriesRecord> series) {
+  public RestoreSeries(ArrayList<SeriesRecord> series, MySeries m) {
+    this.m = m;
+    evClass = new MyEventsClass(m);
     myseries.MySeries.glassPane.activate(null);
     MySeriesLogger.logger.log(Level.INFO, "Initializing components");
     initComponents();
     MySeriesLogger.logger.log(Level.FINE, "Components initialized");
-    table.getColumnModel().getColumn(0).setPreferredWidth(400);
-    table.getColumnModel().getColumn(1).setPreferredWidth(100);
+    table.getColumnModel().getColumn(COLUMN_SERIES).setPreferredWidth(400);
+    table.getColumnModel().getColumn(COLUMN_RESTORE).setPreferredWidth(100);
+    table.getColumnModel().getColumn(COLUMN_RESTORE).setCellRenderer(new MyCheckBoxCellRenderer());
     this.series = series;
     DefaultTableModel model = (DefaultTableModel) table.getModel();
     MySeriesLogger.logger.log(Level.INFO, "Filling table with deleted series");
