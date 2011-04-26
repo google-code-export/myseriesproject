@@ -13,10 +13,7 @@ import tools.languages.Language;
  * @author lordovol
  */
 public interface SubtitleConstants {
-  /**
-   * List of web subtitle sites
-   */
-  public static ArrayList<String> SUBTITLE_SITES = new ArrayList<String>();
+ 
   /**
    * List of available languages
    */
