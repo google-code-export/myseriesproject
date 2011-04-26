@@ -114,7 +114,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
                     form.dispose();
                 }
             } else {
-                MyMessages.internetError();
+                MyMessages.internetError(true);
                 form.dispose();
             }
         } catch (MalformedURLException ex) {
@@ -178,7 +178,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
                 return null;
             }
             MySeriesLogger.logger.log(Level.INFO, "Primary subtitle not found.Asking for secondary");
-            if (MyMessages.question("Download secondary language", "Primary language subs not found.\nSearch for secondary?") == JOptionPane.YES_OPTION) {
+            if (MyMessages.confirm("Download secondary language", "Primary language subs not found.\nSearch for secondary?") == JOptionPane.YES_OPTION) {
                 MySeriesLogger.logger.log(Level.INFO, "Getting secondary subtitle");
                 return getLink(buff, false);
             } else {

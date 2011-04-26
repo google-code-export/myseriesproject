@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import javax.swing.JOptionPane;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
+import sdialogs.Info;
 import tools.download.subtitles.AbstractDownloadSubtitle;
 import tools.download.subtitles.Subtitle;
 import tools.download.subtitles.SubtitleConstants;
@@ -56,7 +57,7 @@ public class DownloadSOnline extends AbstractDownloadSubtitle implements Runnabl
             MySeriesLogger.logger.log(Level.INFO, "Subtitle was not found");
             form.dispose();
             if (!cancel) {
-                MyMessages.message("Subtitle not found", "The subtitle was not found");
+                MyMessages.message("Subtitle not found", "The subtitle was not found",Info.WARNING_MESS, true);
             }
         } else if (subs.size() == 1) {
             MySeriesLogger.logger.log(Level.FINE, "Found one subtitle.Downloading {0}", subs.get(0).url);
@@ -85,7 +86,7 @@ public class DownloadSOnline extends AbstractDownloadSubtitle implements Runnabl
             parseWebpage(in, true);
             in.close();
         } else {
-            MyMessages.internetError();
+            MyMessages.internetError(true);
             form.dispose();
         }
     }
@@ -124,7 +125,7 @@ public class DownloadSOnline extends AbstractDownloadSubtitle implements Runnabl
         }
         if (subs.isEmpty() && primary) {
             MySeriesLogger.logger.log(Level.INFO, "Subtitle not found.Asking for secondary");
-            if (MyMessages.question("Download secondary language", "Primary language subs not found.\nSearch for secondary?") == JOptionPane.YES_OPTION) {
+            if (MyMessages.confirm("Download secondary language", "Primary language subs not found.\nSearch for secondary?") == JOptionPane.YES_OPTION) {
                 parseWebpage(in, false);
             } else {
                 MySeriesLogger.logger.log(Level.INFO, "Downloading aborted by the user");

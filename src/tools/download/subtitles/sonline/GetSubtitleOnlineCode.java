@@ -62,7 +62,7 @@ public class GetSubtitleOnlineCode implements SubtitleConstants {
                 }
             }
         } else {
-            MyMessages.internetError();
+            MyMessages.internetError(true);
         }
     }
 

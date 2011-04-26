@@ -38,7 +38,8 @@ public class SubtitleMover {
                 ArrayList<File> subs = getSubtitles(ser);
                 for (Iterator<File> it1 = subs.iterator(); it1.hasNext();) {
                     File sub = it1.next();
-                    if (move(sub, ser.getLocalDir())) {
+                    if (move(sub, ser.getLocalDir())&& Options.toBoolean(Options.AUTO_RENAME_SUBS)) {
+                      MyUsefulFunctions.renameEpisode(ser, sub.getName());
                     }
                 }
             }
