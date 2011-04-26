@@ -185,7 +185,7 @@ public class AdminSeries extends MyDraggable {
     textfield_tvSubsId = new com.googlecode.svalidators.formcomponents.STextField(new NoSpaceValidator("",true));
     jLabel1 = new javax.swing.JLabel();
     checkbox_updateEpisodes = new javax.swing.JCheckBox();
-    scrPanel = new myComponents.myGUI.MyImagePanel();
+    scrPanel = new myComponents.myGUI.MyImagePanel(false);
     bt_localDir = new myComponents.myGUI.buttons.MyButtonDir();
     bt_screenshot = new myComponents.myGUI.buttons.MyButtonDir();
     bt_iuScreenshot = new myComponents.myGUI.buttons.MyButtonInternet();
@@ -768,14 +768,14 @@ public class AdminSeries extends MyDraggable {
     if (im != null) {
       im.fitImageIn(scrPanel.getWidth(), scrPanel.getHeight());
       scrPanel.setPreferredSize(new Dimension(im.getWidth(), im.getHeight()));
-      scrPanel.repaint();
-      scrPanel.revalidate();
-      scrPanel.changeSize(im.getImage(), im.getWidth(), im.getHeight());
+
+      scrPanel.setImage(im.getImage(), false, m);
+      scrPanel.changeSize(im.getWidth(), im.getHeight());
       MySeriesLogger.logger.log(Level.FINE, "Screenshot set");
     } else {
-      scrPanel.changeSize(null, scrPanel.getWidth(), scrPanel.getHeight());
+      scrPanel.setImage(null, true, m);
+      scrPanel.changeSize(scrPanel.getWidth(), scrPanel.getHeight());
     }
-
   }
 
   private MyScaledImage getScaledImage(String sc) {

@@ -149,7 +149,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
   public String date = "2011-01-26";
   public static MyDisabledGlassPane glassPane;
   public static final long serialVersionUID = 234563636363L;
-  public MyImagePanel imagePanel = new MyImagePanel();
+  public MyImagePanel imagePanel = new MyImagePanel(true);
   public Image image;
   private Integer[] seriesTableWidths;
   private Integer[] episodesTableWidths;

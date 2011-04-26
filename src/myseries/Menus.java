@@ -92,7 +92,7 @@ public class Menus {
         m.popUpItem_GoToLocalDir.setEnabled(series.getSeries_ID() != 0 && !series.getLocalDir().equals("") && DesktopSupport.isDesktopSupport());
         m.popUpItem_renameEpisodes.setEnabled(series.getSeries_ID() != 0 && !series.getLocalDir().equals(""));
         m.popUpItem_exportEpisodes.setEnabled(series.getSeries_ID() != 0);
-        m.popUpItem_IUTvrage.setEnabled(series.getSeries_ID() != 0 && series.getTvrage_ID() > 0);
+        m.popUpItem_IUTvrage.setEnabled(series.getSeries_ID() != 0);
         m.popUpMenu_internetUpdate.setEnabled(series.getSeries_ID() != 0);
 
 

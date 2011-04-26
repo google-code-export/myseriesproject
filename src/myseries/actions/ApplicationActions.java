@@ -197,7 +197,7 @@ public class ApplicationActions {
     SeriesRecord series = Series.getCurrentSerial();
     MySeriesLogger.logger.log(Level.INFO, "Downloading screenshot for series {0}", series.getFullTitle());
     if (series.getTvrage_ID() == 0) {
-      TrGetId tr = new TrGetId(null, series.getSeries_ID(), series.getFullTitle());
+      TrGetId tr = new TrGetId(null, series.getSeries_ID(), series.getFullTitle(), true);
     }
   }
 

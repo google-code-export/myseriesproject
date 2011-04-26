@@ -200,7 +200,7 @@ public class SeriesActions {
     if (site.equals(InternetUpdate.TV_RAGE_NAME) && cSeries.getTvrage_ID() == 0) {
       try {
         MySeriesLogger.logger.log(Level.INFO, "Showing get tvrage id panel");
-        TrGetId g = new TrGetId(m, cSeries.getSeries_ID(), cSeries.getTitle());
+        TrGetId g = new TrGetId(m, cSeries.getSeries_ID(), cSeries.getTitle(), true);
         cSeries.setTvrage_ID(g.tvRageID);
         cSeries.save();
       } catch (SQLException ex) {
