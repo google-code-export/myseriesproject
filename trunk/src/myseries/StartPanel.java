@@ -16,10 +16,13 @@ import database.DBConnection;
 import database.Database;
 import help.HelpWindow;
 import java.awt.Color;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
@@ -36,6 +39,7 @@ import tools.options.Options;
 import tools.Skin;
 import tools.download.torrents.TorrentConstants;
 import tools.feeds.Feed;
+import tools.options.Paths;
 
 /**
  * The start up panel
@@ -67,7 +71,6 @@ public class StartPanel extends MyDraggable {
     setVisible(true);
   }
 
- 
   /**
    * The start panel to create a database
    * @param m The myseries form
@@ -367,9 +370,21 @@ public class StartPanel extends MyDraggable {
     try {
       // Get options
       Options.getOptions();
+      //create dirs
+      MyUsefulFunctions.checkDir(Options._USER_DIR_ + Paths.LOGS_PATH);
+      moveOldLogs();
+      MyUsefulFunctions.checkDir(Options._USER_DIR_ + Paths.DATABASES_PATH);
+      MyUsefulFunctions.checkDir(Options._USER_DIR_ + Paths.SCREENSHOTS_PATH);
+      MyUsefulFunctions.checkDir(Options._USER_DIR_ + Paths.TORRENTS_PATH);
+      MyUsefulFunctions.checkDir(Options._USER_DIR_ + Paths.FEEDS_PATH);
       //Create the logger
       MySeries.createLogger();
       MySeriesLogger.logger.log(Level.FINE, "Logger created");
+      MySeriesLogger.logger.log(Level.INFO, "Setting font and font sizes");
+      MyFont.SetMyFont();
+      MySeriesLogger.logger.log(Level.FINE, "Font and font sizes are set to "
+          + Options.toString(Options.FONT_FACE) + " " + Options.toFloat(Options.FONT_SIZE) + "pts");
+
       if (Options.toBoolean(Options.USE_SKIN)) {
         MySeriesLogger.logger.log(Level.INFO, "Create Skin");
         Skin skin = new Skin(Options.toColor(Options.SKIN_COLOR));
@@ -398,11 +413,7 @@ public class StartPanel extends MyDraggable {
           MySeriesLogger.logger.log(Level.FINE, "Default look and feel loaded");
         }
       }
-      MySeriesLogger.logger.log(Level.INFO, "Setting font and font sizes");
-      MyFont.SetMyFont();
-      MySeriesLogger.logger.log(Level.FINE, "Font and font sizes are set to "
-          + Options.toString(Options.FONT_FACE) + " " + Options.toFloat(Options.FONT_SIZE) + "pts");
-
+      
       //Check Desktop supported
       MySeriesLogger.logger.log(Level.INFO, "Checking desktop support");
       DesktopSupport ds = new DesktopSupport();
@@ -410,23 +421,19 @@ public class StartPanel extends MyDraggable {
       MySeriesLogger.logger.log(Level.INFO, "Setting tooltip delay");
       ToolTipManager.sharedInstance().setDismissDelay(50000);
 
-      //create dirs
-      MySeriesLogger.logger.log(Level.INFO, "Checking and creating directories");
-      MyUsefulFunctions.checkDir(Options._USER_DIR_ + Database.PATH);
-      MyUsefulFunctions.checkDir(Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH);
-      MyUsefulFunctions.checkDir(Options._USER_DIR_ + TorrentConstants.TORRENTS_PATH);
-      MyUsefulFunctions.checkDir(Options._USER_DIR_ + Feed.FEEDS_PATH);
+
 
       // Create the default db if not exists and create the conn, stmt
       MySeriesLogger.logger.log(Level.INFO, "Checking if database exists or not");
-      if (Options.toString(Options.DB_NAME).equals("")
+      DBConnection conn = new DBConnection();
+      if (Options.toString(Options.DB_NAME).equals(".db")
           || Options.toString(Options.DB_NAME).equals("null")
-          || !DBConnection.databaseExists(Options.toString(Options.DB_NAME))) {
+          || !conn.databaseExists()) {
         StartPanel s = new StartPanel();
       } else {
         // Check if database is in the right format
         MySeriesLogger.logger.log(Level.INFO, "Check database format");
-        if (DBConnection.checkDatabase(Options.toString(Options.DB_NAME))) {
+        if (conn.checkDatabase()) {
           MySeriesLogger.logger.log(Level.INFO, "MySerieS loading...");
           MySeries m = new MySeries();
         } else {
@@ -448,6 +455,27 @@ public class StartPanel extends MyDraggable {
       MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     } catch (IOException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+    }
+  }
+
+  private static void moveOldLogs() {
+    File[] d = new File(Options._USER_DIR_).listFiles(new FilenameFilter() {
+
+      @Override
+      public boolean accept(File dir, String name) {
+        return name.startsWith("MySeriesLogs_");
+      }
+    });
+    for (int i = 0; i < d.length; i++) {
+      File file = d[i];
+      String source = file.getAbsolutePath();
+      String dest = Options._USER_DIR_ + Paths.LOGS_PATH + file.getName().replaceFirst("MySeriesLogs_", "MySeriesLog_");
+      try {
+        MyUsefulFunctions.copyfile(source, dest);
+        file.delete();
+      } catch (FileNotFoundException ex) {
+      } catch (IOException ex) {
+      }
     }
   }
     // Variables declaration - do not modify//GEN-BEGIN:variables
