@@ -4,6 +4,7 @@
  */
 package tools.internetUpdate.tvrage;
 
+import database.DBConnection;
 import database.DBHelper;
 import database.Database;
 import database.EpisodesRecord;
@@ -16,6 +17,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
+import javax.swing.JTable;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -42,10 +44,11 @@ public class TrUpdate extends AbstractUpdate implements Runnable {
    * Construct a tr sereis updater
    * @param iu
    */
-  public TrUpdate(InternetUpdate iu) {
+  public TrUpdate(InternetUpdate iu, JTable episodesTable) {
     this.iu = iu;
     this.list = new ArrayList<AbstractSeriesToUpdate>();
     this.site = InternetUpdate.TV_RAGE_NAME;
+    this.episodesTable = episodesTable;
   }
 
   @Override
@@ -88,7 +91,7 @@ public class TrUpdate extends AbstractUpdate implements Runnable {
   }
 
   @Override
-  protected void updateEpisodes() throws SQLException {
+  protected void updateEpisodes(JTable episodesTable) throws SQLException {
     append("<span style='font-weight:bold;font-size:12px'>Importing data</span>");
     iu.progress_bar.setIndeterminate(false);
     iu.progress_bar.setString("0%");
@@ -106,7 +109,6 @@ public class TrUpdate extends AbstractUpdate implements Runnable {
           MySeriesLogger.logger.log(Level.INFO, "Importing episodes of {0}", curSeries);
           header = false;
         }
-        Database.beginTransaction();
         for (int e = 0; e < curSeries.episodes.size(); e++) {
           boolean save = false;
           TrEpisode episode = curSeries.episodes.get(e);
@@ -136,10 +138,9 @@ public class TrUpdate extends AbstractUpdate implements Runnable {
             if (!airDate.trim().equals("")) {
               episodeRecord.setAired(airDate);
             }
-            episodeRecord.save();
+            episodeRecord.save(new DBConnection().stmt);
           }
         }
-        Database.endTransaction();
          if(newEpisodes == 0 && updEpisodes ==0){
              MySeriesLogger.logger.log(Level.INFO, "No new or updated episodes");
             append("No new or updated episodes");
@@ -151,7 +152,7 @@ public class TrUpdate extends AbstractUpdate implements Runnable {
     }
     iu.progress_bar.setValue(100);
     iu.progress_bar.setString("100%");
-    Episodes.updateEpisodesTable();
+    Episodes.updateEpisodesTable(episodesTable);
     append("<br><br>Internet update of series completed in " + calcExecTime());
       MySeriesLogger.logger.log(Level.INFO, "<br><br>Internet update of series completed in {0}", calcExecTime());
     iu.finished = true;

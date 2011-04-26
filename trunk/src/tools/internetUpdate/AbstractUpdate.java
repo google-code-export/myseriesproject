@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import tools.MySeriesLogger;
 import java.util.Vector;
 import java.util.logging.Level;
+import javax.swing.JTable;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myseries.*;
@@ -63,11 +64,15 @@ public abstract class AbstractUpdate {
      * The site from which data is updated
      */
     protected String site;
+    /**
+     * The episodes table
+     */
+    protected JTable episodesTable;
 
     public void run() {
         start = System.currentTimeMillis();
         MySeriesLogger.logger.log(Level.INFO, "Updating...");
-        update();
+        update(episodesTable);
         if (!isConected) {
             MySeries.glassPane.deactivate();
             iu.dispose();
@@ -113,7 +118,7 @@ public abstract class AbstractUpdate {
     /**
      * Starts the updating
      */
-    protected void update() {
+    protected void update(JTable episodesTable) {
         try {
             if (iu.getCurrentSeries() == null) {
                 serVector = DBHelper.getSeriesBySql(
@@ -136,7 +141,7 @@ public abstract class AbstractUpdate {
                 iu.label_update_series.setText("");
             }
             if (list.size() > 0) {
-                updateEpisodes();
+                updateEpisodes(episodesTable);
             } else {
                 MySeriesLogger.logger.log(Level.WARNING, "Nothing to update");
                 MyMessages.error("No Update!!!", "Nothing to update");
@@ -161,7 +166,7 @@ public abstract class AbstractUpdate {
      * Updates the database
      * @throws SQLException
      */
-    protected abstract void updateEpisodes() throws SQLException;
+    protected abstract void updateEpisodes(JTable episodesTable) throws SQLException;
 
     protected boolean shouldSaveEpisode(EpisodesRecord episodeRecord, String title, String airDate) {
         MySeriesLogger.logger.log(Level.INFO, "Check if episode {0} should be saved",title);
