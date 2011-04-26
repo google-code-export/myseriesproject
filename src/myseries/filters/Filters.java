@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 import myComponents.MyTableModels.MyFilteredSeriesTableModel;
@@ -138,22 +139,23 @@ public class Filters {
    * First empty the table, create the new model and set it tot he filtered series table
    * @throws java.sql.SQLException
    */
-  public static void getFilteredSeries() throws SQLException {
+  public static void getFilteredSeries(JComboBox cbSeen, JComboBox cbSubs, JComboBox cbDownload) throws SQLException {
     int id, subsInt, series_ID, episode;
     Boolean boolDownloaded, boolSeen;
     String title, aired;
     Language subs;
     emptyFilteredSeries();
     String where = "";
-    where += getSeen() == EpisodesRecord.NOT_SEEN || getSeen() == EpisodesRecord.SEEN ? " AND seen = " + getSeen() : "";
-    where += getDownloaded() == EpisodesRecord.NOT_DOWNLOADED || getDownloaded() == EpisodesRecord.DOWNLOADED ? " AND downloaded = " + getDownloaded() : "";
-    where += getSubtitles();
+    where += getSeen(cbSeen) == EpisodesRecord.NOT_SEEN || getSeen(cbSeen) == EpisodesRecord.SEEN ? " AND seen = " + getSeen(cbSeen) : "";
+    where += getDownloaded(cbDownload) == EpisodesRecord.NOT_DOWNLOADED || getDownloaded(cbDownload) == EpisodesRecord.DOWNLOADED ? " AND downloaded = " + getDownloaded(cbDownload) : "";
+    where += getSubtitles(cbSubs);
+    DBConnection conn = new DBConnection();
     String sql = "SELECT e.* FROM episodes e JOIN series s on "
         + "e.series_ID = s.series_ID WHERE s.hidden = "
         + SeriesRecord.NOT_HIDDEN + " AND s.deleted = "
         + SeriesRecord.NOT_DELETED + " AND aired < date( julianday(date('now'))) AND aired <> '0000-00-00' "
         + where + " ORDER BY aired ASC";
-    ResultSet rs = DBConnection.stmt.executeQuery(sql);
+    ResultSet rs = conn.stmt.executeQuery(sql);
     SeriesRecord ser;
     while (rs.next()) {
       id = rs.getInt("episode_ID");
@@ -176,7 +178,7 @@ public class Filters {
       }
     }
     rs.close();
-
+    conn.close();
     if (getTableModel_filterSeries() != null && table_filters != null) {
       table_filters.setModel(getTableModel_filterSeries());
     }
@@ -209,8 +211,8 @@ public class Filters {
   /**
    * @return the seen
    */
-  public static int getSeen() {
-    return myseries.MySeries.comboBox_seen.getSelectedIndex();
+  public static int getSeen(JComboBox cb) {
+    return cb.getSelectedIndex();
   }
 
   /**
@@ -223,8 +225,8 @@ public class Filters {
   /**
    * @return the downloaded
    */
-  public static int getDownloaded() {
-    return myseries.MySeries.combobox_downloaded.getSelectedIndex();
+  public static int getDownloaded(JComboBox cb) {
+    return cb.getSelectedIndex();
   }
 
   /**
@@ -237,8 +239,8 @@ public class Filters {
   /**
    * @return the subtitles
    */
-  public static String getSubtitles() {
-    int sel = myseries.MySeries.comboBox_filterSubtitles.getSelectedIndex();
+  public static String getSubtitles(JComboBox cb) {
+    int sel = cb.getSelectedIndex();
     switch (sel) {
       case 0:
         return " AND subs = 0 ";
