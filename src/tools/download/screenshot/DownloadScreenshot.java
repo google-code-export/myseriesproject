@@ -11,10 +11,10 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.logging.Level;
-import myComponents.myGUI.MyImagePanel;
 import tools.internetUpdate.InternetUpdate;
 import tools.options.Options;
 import tools.MySeriesLogger;
+import tools.options.Paths;
 
 /**
  *
@@ -59,7 +59,7 @@ public class DownloadScreenshot {
             byte[] buf = new byte[1024];
             int ByteRead;
             int ByteWritten = 0;
-            setFilename(Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH + tvRageID + ".jpg");
+            setFilename(Options._USER_DIR_ + Paths.SCREENSHOTS_PATH + tvRageID + ".jpg");
             BufferedOutputStream outStream = new BufferedOutputStream(new FileOutputStream(getFilename()));
             while ((ByteRead = in.read(buf)) > -1) {
                 outStream.write(buf, 0, ByteRead);
