@@ -20,7 +20,9 @@ import java.util.logging.Level;
 import javax.swing.JProgressBar;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
+import sdialogs.Info;
 import tools.options.Options;
+import tools.options.Paths;
 
 /**
  *
@@ -60,9 +62,9 @@ public abstract class AbstractTorrentDownload implements TorrentConstants {
             ArrayList<AbstractTorrent> torrents = readStream(in);
             progress.setString(torrents.size() + " torrents found");
             progress.setIndeterminate(false);
-            if (torrents.size() == 0) {
+            if (torrents.isEmpty()) {
                 MySeriesLogger.logger.log(Level.INFO, "No torrent found");
-                MyMessages.message("No Torrents", "No torrent was found");
+                MyMessages.message("No Torrents", "No torrent was found",Info.WARNING_MESS, true);
             } else if (torrents.size() == 1) {
                 MySeriesLogger.logger.log(Level.INFO, "Torrent found {0}", torrents.get(0).getTitle());
                 getTorrent(torrents.get(0));
@@ -101,7 +103,7 @@ public abstract class AbstractTorrentDownload implements TorrentConstants {
             String torrentName;
             String[] t = torrent.getLink().split("/", -1);
             torrentName = t[t.length - 1];
-            String filename = TORRENTS_PATH + torrentName;
+            String filename = Paths.TORRENTS_PATH + torrentName;
             outStream = new BufferedOutputStream(new FileOutputStream(Options._USER_DIR_ + filename));
             while ((ByteRead = is.read(buf)) != -1) {
                 outStream.write(buf, 0, ByteRead);
