@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
 import tools.MySeriesLogger;
+import tools.options.Options;
 
 /**
  * The series database record
@@ -81,7 +82,8 @@ public class SeriesRecord extends Record {
           + this.getLocalDir() + "','" + this.getScreenshot()
           + "','" + this.sOnlineCode + "'," + this.deleted + ")";
     }
-    return queryUpdate(sql);
+    DBConnection conn = new DBConnection();
+    return queryUpdate(conn.stmt, sql);
   }
 
   /**
@@ -268,5 +270,9 @@ public class SeriesRecord extends Record {
       return true;
     }
     return false;
+  }
+
+  public boolean isValidScreenshot() {
+    return new File(Options._USER_DIR_+"images/"+getScreenshot()).isFile();
   }
 }

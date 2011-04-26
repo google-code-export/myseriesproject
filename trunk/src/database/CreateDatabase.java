@@ -13,11 +13,11 @@ import java.text.ParseException;
 import java.util.logging.Level;
 import javax.swing.UnsupportedLookAndFeelException;
 import myComponents.MyMessages;
-import myComponents.MyUsefulFunctions;
 import myseries.MySeries;
 import myseries.StartPanel;
 import tools.MySeriesLogger;
 import tools.options.Options;
+import tools.options.Paths;
 
 /**
  *
@@ -28,6 +28,7 @@ public class CreateDatabase implements Runnable {
   private Statement stmt;
   private StartPanel startPanel;
   private boolean createNewDb = false;
+  private DBConnection conn;
 
   /**
    * Constructor for creating a new database
@@ -41,16 +42,14 @@ public class CreateDatabase implements Runnable {
    */
   public CreateDatabase(StartPanel startPanelForm, String db, boolean createNewDB) throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
     if (!db.endsWith(Database.EXT)) {
-      DBConnection.db = db + Database.EXT;
-    } else {
-      DBConnection.db = db;
+      db = db + Database.EXT;
     }
-    DBConnection.createConnection(DBConnection.db);
-    this.stmt = DBConnection.stmt;
+    conn = new DBConnection(db);
+    this.stmt = conn.stmt;
     this.startPanel = startPanelForm;
     this.createNewDb = createNewDB;
     if (!createNewDB) {
-      DBConnection.checkDatabase(DBConnection.db);
+      conn.checkDatabase();
     }
   }
 
@@ -59,9 +58,9 @@ public class CreateDatabase implements Runnable {
    */
   public void run() {
     try {
-      File dbFile = new File(Options._USER_DIR_ + Database.PATH + DBConnection.db);
+      File dbFile = new File(Options._USER_DIR_ + Paths.DATABASES_PATH + conn.db);
       if (dbFile.exists() && dbFile.length() > 1 && createNewDb) {
-        MyMessages.error("DB Exists!!!", "DB File " + DBConnection.db + " already exists\nAborting...");
+        MyMessages.error("DB Exists!!!", "DB File " + conn.db + " already exists\nAborting...");
         MySeriesLogger.logger.log(Level.WARNING, "DB File already exists");
       } else {
         commit();

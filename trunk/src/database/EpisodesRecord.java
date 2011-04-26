@@ -6,6 +6,7 @@ package database;
 
 import myComponents.MyUsefulFunctions;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import tools.MySeriesLogger;
 import tools.languages.LangsList;
@@ -86,7 +87,7 @@ public class EpisodesRecord extends Record {
    * @return The id of the inserted record or -1 if it's an update
    * @throws java.sql.SQLException
    */
-  public int save() throws SQLException {
+  public int save(Statement stmt) throws SQLException {
     String sql;
     MySeriesLogger.logger.log(Level.INFO, "Saving episode {0} " , getTitle());
     if (this.getEpisode_ID() != 0) {
@@ -101,7 +102,7 @@ public class EpisodesRecord extends Record {
               + "', " + this.series_ID + ",'" + this.aired + "'," + this.getDownloaded() + ","
               + this.getSubs().getId() + "," + this.getSeen() + ", " + getRate() + ")";
     }
-    return queryUpdate(sql);
+    return queryUpdate(stmt, sql);
   }
 
   /**
