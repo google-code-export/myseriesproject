@@ -18,8 +18,4 @@ public interface DatabaseConstants {
    * The back up extension : .bk
    */
   public static final String BACK_UP_EXT = ".bk";
-  /**
-   * The databases path : "databases/"
-   */
-  public static final String PATH = "databases/";
 }

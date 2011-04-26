@@ -7,14 +7,11 @@ package database;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.DefaultComboBoxModel;
 import tools.options.Options;
-import myComponents.MyUsefulFunctions;
 import tools.MySeriesLogger;
+import tools.options.Paths;
 /**
  * Database helper class
  * @author ssoldatos
@@ -30,7 +27,7 @@ public class Database implements DatabaseConstants {
   public static Vector<String> getDatabases() {
     MySeriesLogger.logger.log(Level.INFO, "Getting databases");
     Vector<String> databases = new Vector<String>();
-    File dir = new File(Options._USER_DIR_ + Database.PATH);
+    File dir = new File(Options._USER_DIR_ + Paths.DATABASES_PATH);
     File[] files = dir.listFiles(new FilenameFilter() {
       @Override
       public boolean accept(File dir, String name) {
@@ -43,28 +40,6 @@ public class Database implements DatabaseConstants {
       MySeriesLogger.logger.log(Level.FINE, "Found database: {0}" , files[i]);
     }
     return databases;
-  }
-
-  public static void endTransaction() {
-    try {
-      MySeriesLogger.logger.log(Level.INFO, "Ending transaction");
-      database.DBConnection.stmt.execute("END TRANSACTION");
-      inTransaction=false;
-    } catch (SQLException ex) {
-      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-    }
-  }
-  public static void beginTransaction() {
-    try {
-      while (inTransaction){
-        
-      }
-      inTransaction=true;
-      MySeriesLogger.logger.log(Level.INFO, "Beggining transaction");
-      database.DBConnection.stmt.execute("BEGIN TRANSACTION");
-    } catch (SQLException ex) {
-      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-    }
   }
 
 
