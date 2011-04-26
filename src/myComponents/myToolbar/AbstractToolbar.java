@@ -46,7 +46,11 @@ public abstract class AbstractToolbar extends JToolBar implements ToolbarButtonA
   protected ToolbarButton deleteTorrents;
   protected ToolbarButton updateFeeds;
   protected ToolbarButton exit;
-  protected Integer[] visibleButtons;
+  protected ToolbarButton houseKeeping;
+  protected ToolbarButton restart;
+  protected ToolbarSeperator sepMem;
+  protected ToolbarSeperator memory;
+  public Integer[] visibleButtons;
 
   public AbstractToolbar() {
     super();
@@ -92,7 +96,14 @@ public abstract class AbstractToolbar extends JToolBar implements ToolbarButtonA
       clearLogs = new ToolbarButton(ToolbarButtonActions.CLEAR_LOGS, "Clear the log files", "clearLogs.png");
       about = new ToolbarButton(ToolbarButtonActions.ABOUT, "About MySeries", "info.png");
       exit = new ToolbarButton(ToolbarButtonActions.EXIT, "Quit MySeries", "exit.png");
+      houseKeeping = new ToolbarButton(ToolbarButtonActions.HOUSEKEEPING, "HouseKeeping", "housekeeping.png");
+      restart = new ToolbarButton(ToolbarButtonActions.RESTART, "Restart", "restart.png");
+      sepMem = new ToolbarSeperator(ToolbarButtonActions.SEP_MEM, "", "");
+      memory = new ToolbarSeperator(ToolbarButtonActions.MEMORY, "Memory", "ram.png");
       MySeriesLogger.logger.log(Level.FINE, "All toolbar buttons created");
+      //DEPRECATE BUTTONS
+      clearLogs.setDeprecated(true);
+      deleteTorrents.setDeprecated(true);
   }
   public void addButtons(){
       MySeriesLogger.logger.log(Level.INFO, "Adding buttons to map");
@@ -122,7 +133,11 @@ public abstract class AbstractToolbar extends JToolBar implements ToolbarButtonA
     buttons.put(ToolbarButtonActions.VIEW_LOGS, viewLogs);
     buttons.put(ToolbarButtonActions.CLEAR_LOGS, clearLogs);
     buttons.put(ToolbarButtonActions.ABOUT, about);
+    buttons.put(ToolbarButtonActions.HOUSEKEEPING, houseKeeping);
+    buttons.put(ToolbarButtonActions.RESTART, restart);
     buttons.put(ToolbarButtonActions.EXIT, exit);
+    buttons.put(ToolbarButtonActions.SEP_MEM, sepMem);
+    buttons.put(ToolbarButtonActions.MEMORY, memory);
       MySeriesLogger.logger.log(Level.FINE, "All buttons added");
     populateToolbar();
   }

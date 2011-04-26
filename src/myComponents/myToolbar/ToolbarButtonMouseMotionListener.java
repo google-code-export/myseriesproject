@@ -4,13 +4,10 @@
  */
 package myComponents.myToolbar;
 
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 /**
