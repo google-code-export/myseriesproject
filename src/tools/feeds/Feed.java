@@ -13,7 +13,6 @@ import java.util.ArrayList;
  */
 public class Feed {
 
-  public static final String FEEDS_PATH = "feeds/";
   private ArrayList<SyndEntryImpl> entries = new ArrayList<SyndEntryImpl>();
 
   /**
