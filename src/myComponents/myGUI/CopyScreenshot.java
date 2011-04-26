@@ -14,9 +14,8 @@ import java.io.IOException;
 import java.util.logging.Level;
 import myComponents.MyMessages;
 import tools.options.Options;
-import myseries.MySeries;
-import myComponents.MyUsefulFunctions;
 import tools.MySeriesLogger;
+import tools.options.Paths;
 
 /**
  * Copy a series screenshot to the screenshots directory
@@ -29,7 +28,7 @@ public class CopyScreenshot implements Runnable {
 
     public CopyScreenshot(String screenshot) {
         this.screenshot = screenshot;
-        destination = Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH;
+        destination = Options._USER_DIR_ + Paths.SCREENSHOTS_PATH;
     }
 
     public void run() {

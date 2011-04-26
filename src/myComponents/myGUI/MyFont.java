@@ -59,7 +59,7 @@ public class MyFont {
     UIManager.put("List.font", myFont);
     UIManager.put("Menu.accelerator.font",mySmallerFont);
     UIManager.put("Menu.font", myBoldFont);
-    UIManager.put("MenuBar.font", myBoldFont);
+    UIManager.put("MenuBar.font", myBiggerBoldFont);
     UIManager.put("MenuItem.accelerator.font",mySmallerFont);
     UIManager.put("MenuItem.font", mySmallerFont);
     UIManager.put("OptionPane.font", myFont);

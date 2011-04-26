@@ -25,10 +25,6 @@ import tools.MySeriesLogger;
  */
 public class MyImagePanel extends JPanel {
 
-  /**
-   * The screenshots path : "images/"
-   */
-  public static final String SCREENSHOTS_PATH = "images/";
   public static final String LOGO = "/images/logo.png";
   private static final long serialVersionUID = 356475743574387L;
   private Image image;
@@ -92,17 +88,17 @@ public class MyImagePanel extends JPanel {
       Thread.sleep(100);
       try {
 
-        int width = MySeries.splitPane_main.getDividerLocation() - 26;
+        int width = m.splitPane_main.getDividerLocation() - 26;
         int height = (int) (image.getHeight(this) * ((double) width / (double) image.getWidth(this)));
 
-        int yPos = (int) MySeries.tableSeries.getPreferredSize().getHeight() + 30;
+        int yPos = calcYpos(m);
         if (yPos == 30) {
           yPos = 50;
         }
         //imageLayerPanel.setBounds(0, yPos, width, height);
         MySeriesLogger.logger.log(Level.INFO, "Relocating screenshot to {0},{1}", new Object[] {0,yPos});
-        MySeries.imagePanel.setBounds(0, yPos, width, height);
-        MySeries.imagePanel.changeSize(image, width, height);
+        setBounds(0, yPos, width, height);
+        changeSize(image, width, height);
       } catch (NullPointerException ex) {
           MySeriesLogger.logger.log(Level.WARNING, "Null Screenshot");
       }
@@ -111,7 +107,7 @@ public class MyImagePanel extends JPanel {
     }
   }
 
-  public void setImage(Image image, boolean defaultImage) {
+  public void setImage(Image image, boolean defaultImage, MySeries m) {
       MySeriesLogger.logger.log(Level.INFO, "Setting the screnshot to {0}", (defaultImage ? " the default image" : " series screenshot"));
     this.defaultImage = defaultImage;
     if (image == null) {
@@ -119,11 +115,19 @@ public class MyImagePanel extends JPanel {
     } else {
       this.image = image;
     }
-    int width = MySeries.splitPane_main.getDividerLocation() - 26;
+    int width = m.splitPane_main.getDividerLocation() - 26;
     int height = (int) (this.image.getHeight(this) * ((double) width / (double) this.image.getWidth(this)));
-    setBounds(0, (int) MySeries.tableSeries.getPreferredSize().getHeight() + 30,
+    int yPos = calcYpos(m);
+    setBounds(0, yPos,
             width, height);
     changeSize(this.image, width, height);
 
+  }
+
+  // TODO fix position
+  private int calcYpos(MySeries m) {
+    int y = m.tableSeries.getHeight() > m.scrollPane_series.getHeight() ?
+          m.scrollPane_series.getHeight() + 30 : m.tableSeries.getHeight() + 30;
+   return y==30 ? 50 : y;
   }
 }
