@@ -129,7 +129,7 @@ public class CheckUpdate extends MyDraggable {
   private boolean check() {
     isConected = MyUsefulFunctions.hasInternetConnection(MYSERIESPROJECT_URL);
     if (!isConected) {
-      MyMessages.internetError();
+      MyMessages.internetError(!onStartUp);
       return false;
     }
     return true;
