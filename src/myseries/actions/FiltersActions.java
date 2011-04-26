@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package myseries.actions;
 
 import database.DBHelper;
@@ -17,44 +16,48 @@ import myseries.filters.Filters;
 import myseries.MySeries;
 import myComponents.MyUsefulFunctions;
 import tools.MySeriesLogger;
+
 /**
  *
  * @author ssoldatos
  */
 public class FiltersActions {
-public static void filterSubtitles(JComboBox comboBox_subtitles) {
+
+  public static void filterSubtitles(MySeries m) {
     try {
       MySeriesLogger.logger.log(Level.INFO, "Filtering subtitles");
       //Filters.setSubtitles(comboBox_subtitles.getSelectedIndex());
-      Filters.getFilteredSeries();
+      Filters.getFilteredSeries(m.comboBox_seen, m.comboBox_filterSubtitles, m.combobox_downloaded);
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     }
   }
 
-  public static void filterSeen(JComboBox comboBox_seen) {
+  public static void filterSeen(MySeries m) {
     try {
       MySeriesLogger.logger.log(Level.INFO, "Filtering watch");
       //Filters.setSeen(comboBox_seen.getSelectedIndex());
-      Filters.getFilteredSeries();
+      Filters.getFilteredSeries(m.comboBox_seen, m.comboBox_filterSubtitles, m.combobox_downloaded);
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     }
   }
-  public static void filterDownloaded(JComboBox combobox_downloaded) {
+
+  public static void filterDownloaded(MySeries m) {
     try {
       MySeriesLogger.logger.log(Level.INFO, "Filtering downloaded");
       //Filters.setDownloaded(combobox_downloaded.getSelectedIndex());
-      Filters.getFilteredSeries();
+      Filters.getFilteredSeries(m.comboBox_seen, m.comboBox_filterSubtitles, m.combobox_downloaded);
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     }
   }
-   public static void saveFilter(MySeries m) {
+
+  public static void saveFilter(MySeries m) {
     String title = "";
-    title = String.valueOf(MySeries.combobox_filters.getSelectedItem());
+    title = String.valueOf(m.combobox_filters.getSelectedItem());
     FilterRecord f;
-     MySeriesLogger.logger.log(Level.INFO, "Saaving filter action");
+    MySeriesLogger.logger.log(Level.INFO, "Saaving filter action");
     if (title.trim().equals("") || title.equals("null")) {
       MySeriesLogger.logger.log(Level.WARNING, "Empty title");
       MyMessages.error("Empty title", "Please specify a save name");
@@ -64,15 +67,15 @@ public static void filterSubtitles(JComboBox comboBox_subtitles) {
         if (f == null) {
           f = new FilterRecord();
         }
-        f.setDownloaded(MySeries.combobox_downloaded.getSelectedIndex());
-        f.setSeen(MySeries.comboBox_seen.getSelectedIndex());
-        f.setSubtitles(MySeries.comboBox_filterSubtitles.getSelectedIndex());
+        f.setDownloaded(m.combobox_downloaded.getSelectedIndex());
+        f.setSeen(m.comboBox_seen.getSelectedIndex());
+        f.setSubtitles(m.comboBox_filterSubtitles.getSelectedIndex());
         f.setTitle(title);
         f.save();
         MyMessages.message("Filter saved", "Filter was saved");
-        MySeriesLogger.logger.log(Level.FINE, "Filter {0} was saved",title);
+        MySeriesLogger.logger.log(Level.FINE, "Filter {0} was saved", title);
         m.comboBoxModel_filters = new DefaultComboBoxModel(DBHelper.getFiltersTitlesList());
-        MySeries.combobox_filters.setModel(m.comboBoxModel_filters);
+        m.combobox_filters.setModel(m.comboBoxModel_filters);
       } catch (SQLException ex) {
         MySeriesLogger.logger.log(Level.WARNING, "Error while saving filter", ex);
         MyMessages.error("SQL Error", "There was an error when saving the filter");
@@ -82,10 +85,10 @@ public static void filterSubtitles(JComboBox comboBox_subtitles) {
 
   public static void deleteFilter(MySeries m) {
     String title = "";
-    title = String.valueOf(MySeries.combobox_filters.getSelectedItem());
+    title = String.valueOf(m.combobox_filters.getSelectedItem());
     FilterRecord f;
-    MySeriesLogger.logger.log(Level.INFO, "Delete filter {0}",title);
-    int answ = MyMessages.question("Delete Filter?", "Are you sure that you want to delete the filter?");
+    MySeriesLogger.logger.log(Level.INFO, "Delete filter {0}", title);
+    int answ = MyMessages.confirm("Delete Filter?", "Are you sure that you want to delete the filter?");
     if (answ == JOptionPane.YES_OPTION) {
       try {
         f = DBHelper.getFilterByTitle(title);
@@ -98,7 +101,7 @@ public static void filterSubtitles(JComboBox comboBox_subtitles) {
           MyMessages.error("Error", "Filter not found");
         }
         m.comboBoxModel_filters = new DefaultComboBoxModel(DBHelper.getFiltersTitlesList());
-        MySeries.combobox_filters.setModel(m.comboBoxModel_filters);
+        m.combobox_filters.setModel(m.comboBoxModel_filters);
       } catch (SQLException ex) {
         MySeriesLogger.logger.log(Level.WARNING, "Error while deleting filter", ex);
         MyMessages.error("SQL Error", "There was an error when deleting the filter");
@@ -111,13 +114,13 @@ public static void filterSubtitles(JComboBox comboBox_subtitles) {
   public static void applyFilter(MySeries m) {
     try {
       String title = "";
-      title = String.valueOf(MySeries.combobox_filters.getSelectedItem());
+      title = String.valueOf(m.combobox_filters.getSelectedItem());
       FilterRecord f = DBHelper.getFilterByTitle(title);
       if (f != null) {
-        MySeriesLogger.logger.log(Level.INFO, "Applying filter {0}",f.getTitle());
-        MySeries.combobox_downloaded.setSelectedIndex(f.getDownloaded());
-        MySeries.comboBox_seen.setSelectedIndex(f.getSeen());
-        MySeries.comboBox_filterSubtitles.setSelectedIndex(f.getSubtitles());
+        MySeriesLogger.logger.log(Level.INFO, "Applying filter {0}", f.getTitle());
+        m.combobox_downloaded.setSelectedIndex(f.getDownloaded());
+        m.comboBox_seen.setSelectedIndex(f.getSeen());
+        m.comboBox_filterSubtitles.setSelectedIndex(f.getSubtitles());
       }
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.WARNING, "Error while applying the  filter", ex);
@@ -127,6 +130,4 @@ public static void filterSubtitles(JComboBox comboBox_subtitles) {
 
   private FiltersActions() {
   }
-
-
 }

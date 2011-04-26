@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
+import myseries.MySeries;
 import tools.MySeriesLogger;
 import tools.feeds.AdminFeed;
 
@@ -18,23 +19,23 @@ import tools.feeds.AdminFeed;
  */
 public class FeedsActions {
 
-  public static boolean addFeedPanel(int feed_ID) {
+  public static boolean addFeedPanel(int feed_ID, MySeries m) {
     myseries.MySeries.glassPane.activate(null);
     FeedsRecord f = new FeedsRecord(feed_ID);
     MySeriesLogger.logger.log(Level.INFO, "Opening admin feed panel for {0}",
         new String[]{feed_ID ==0 ? f.getTitle(): "new feed"});
-    AdminFeed a = new AdminFeed(feed_ID == 0 ? null : f);
+    AdminFeed a = new AdminFeed(feed_ID == 0 ? null : f, m);
     myseries.MySeries.glassPane.deactivate();
     return a.isFeedSaved;
   }
 
-  public static void updateFeeds() {
+  public static void updateFeeds(boolean onStartUp, MySeries m) {
     MySeriesLogger.logger.log(Level.INFO, "Update feeds action");
-    if (MyUsefulFunctions.hasInternetConnection(MyUsefulFunctions.GOOGLE)) {
+    if (!MyUsefulFunctions.hasInternetConnection(MyUsefulFunctions.GOOGLE)) {
       ArrayList<FeedsRecord> feeds = FeedsRecord.getAll();
-      myseries.MySeries.feedTree.updateFeeds(feeds, false);
+      m.feedTree.updateFeeds(feeds, false);
     } else {
-      MyMessages.internetError();
+      MyMessages.internetError(!onStartUp);
     }
   }
 

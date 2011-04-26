@@ -73,26 +73,16 @@ public class SeriesActions {
     int season = series.getSeason();
     int series_ID = series.getSeries_ID();
     String screenshot = series.getScreenshot();
-    MySeriesLogger.logger.log(Level.INFO, "Deleting series {0}",series.getFullTitle());
-    int answ = MyMessages.question("Delete Serial?", "Really delete the series " + title + " season " + season + "?");
+    MySeriesLogger.logger.log(Level.INFO, "Deleting series {0}", series.getFullTitle());
+    int answ = MyMessages.confirm("Delete Serial?", "Really delete the series " + title + " season " + season + "?");
     ArrayList<SeriesRecord> s;
     SeriesRecord ser;
+    DBConnection conn = new DBConnection();
     if (answ == JOptionPane.YES_OPTION) {
       try {
         String sql = "UPDATE series SET deleted = " + SeriesRecord.DELETED + " WHERE series_ID = " + series_ID;
-        DBConnection.stmt.execute(sql);
-        // sql = "DELETE FROM episodes WHERE series_ID = " + series_ID;
-        // DBConnection.stmt.execute(sql);
-        // File screenshotFile = new File(Options._USER_DIR_ + MyImagePanel.SCREENSHOTS_PATH  + screenshot);
-        // if (screenshotFile.isFile()) {
-        //   screenshotFile.delete();
-        //   Image image = new ImageIcon(MySeries.class.getResource(MyImagePanel.LOGO)).getImage();
-        //   m.imagePanel.setImage(image,true);
-        // }
+        conn.stmt.execute(sql);
         MySeriesLogger.logger.log(Level.INFO, "Series deleted");
-        MySeriesLogger.logger.log(Level.INFO, "Setting screenshot to default");
-        Image image = new ImageIcon(MySeries.class.getResource(MyImagePanel.LOGO)).getImage();
-        MySeries.imagePanel.setImage(image, true);
         m.getEvClass().fireMyEvent(new MyEvent(m, MyEventHandler.SERIES_UPDATE));
         if (Series.getSize() > 0) {
           ser = Series.getSeries(false).get(0);
@@ -100,10 +90,12 @@ public class SeriesActions {
           evt.setSeries(ser);
           m.getEvClass().fireMyEvent(evt);
         }
-        Episodes.updateEpisodesTable();
+        Episodes.updateEpisodesTable(m.tableEpisodes);
 
       } catch (SQLException ex) {
         MySeriesLogger.logger.log(Level.SEVERE, "Sql exception occured", ex);
+      } finally {
+        conn.close();
       }
     } else {
       MySeriesLogger.logger.log(Level.INFO, "Delete series aborted by user");
@@ -118,7 +110,7 @@ public class SeriesActions {
         return;
       }
       SeriesRecord series = Series.getCurrentSerial();
-      MySeriesLogger.logger.log(Level.INFO, "Go to the subtitle page of series {0}",series);
+      MySeriesLogger.logger.log(Level.INFO, "Go to the subtitle page of series {0}", series);
       java.net.URI uri = null;
       if (site.equals(SubtitleConstants.TV_SUBTITLES_NAME)) {
         uri = new java.net.URI("http://www.tvsubtitles.net/tvshow-" + series.getTvSubtitlesCode() + ".html");
@@ -136,7 +128,7 @@ public class SeriesActions {
       SeriesRecord series = Series.getCurrentSerial();
       File f = new File(series.getLocalDir());
       if (f.isDirectory()) {
-        MySeriesLogger.logger.log(Level.INFO, "Opening local directory of series {0}",series.getFullTitle());
+        MySeriesLogger.logger.log(Level.INFO, "Opening local directory of series {0}", series.getFullTitle());
         DesktopSupport.getDesktop().open(f);
       } else {
         MySeriesLogger.logger.log(Level.WARNING, "{0} is not a directory", f.getCanonicalPath());
@@ -182,7 +174,7 @@ public class SeriesActions {
       MyEvent evt = new MyEvent(m, MyEventHandler.SET_CURRENT_SERIES);
       evt.setSeries(origSeries);
       m.getEvClass().fireMyEvent(evt);
-      Filters.getFilteredSeries();
+      Filters.getFilteredSeries(m.comboBox_seen, m.comboBox_filterSubtitles, m.combobox_downloaded);
       MySeriesLogger.logger.log(Level.FINE, "Updating finished");
       MyMessages.message("Update finished", "Updating of series files finished.");
 
@@ -223,17 +215,16 @@ public class SeriesActions {
 
   public static void downloadSeasonSubtitles() {
     SeriesRecord series = Series.getCurrentSerial();
-    MySeriesLogger.logger.log(Level.INFO, "Downloading whole season subtitles of {0}",series.getFullTitle());
+    MySeriesLogger.logger.log(Level.INFO, "Downloading whole season subtitles of {0}", series.getFullTitle());
     String code = series.getTvSubtitlesCode().trim();
     String lang = myseries.MySeries.languages.getPrimary().getCode();
     String link = SubtitleConstants.TV_SUBTITLES_URL + "download-"
         + code + "-" + lang + ".html";
     MySeriesLogger.logger.log(Level.INFO, "Showing Tvsubtitles panel");
     TvSubtitlesForm d = new TvSubtitlesForm(
-                link,
-                Series.getCurrentSerial().getSeason(),
-                Series.getCurrentSerial().getLocalDir()
-                );
+        link,
+        Series.getCurrentSerial().getSeason(),
+        Series.getCurrentSerial().getLocalDir());
   }
 
   private SeriesActions() {
