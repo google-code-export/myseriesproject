@@ -5,6 +5,7 @@
 package myComponents.myEvents;
 
 import javax.swing.event.EventListenerList;
+import myseries.MySeries;
 
 /**
  *
@@ -13,12 +14,12 @@ import javax.swing.event.EventListenerList;
 public class MyEventsClass implements MyEventListenerInterface {
 
   protected EventListenerList listenerList = new EventListenerList();
+  private MySeries m;
 
-  public MyEventsClass() {
+  public MyEventsClass(MySeries m) {
+    this.m = m;
     addCustomEventListener(new MyEventHandler());
   }
-
-
 
   @Override
   public void addCustomEventListener(MyEventListener listener) {
@@ -36,7 +37,7 @@ public class MyEventsClass implements MyEventListenerInterface {
     Object[] listeners = listenerList.getListenerList();
     for (int i = 0; i < listeners.length; i = i + 2) {
       if (listeners[i] == MyEventListener.class) {
-        ((MyEventListener) listeners[i + 1]).myEventOccured(evt);
+        ((MyEventListener) listeners[i + 1]).myEventOccured(evt, m);
       }
     }
   }

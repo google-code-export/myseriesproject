@@ -6,6 +6,7 @@
 package myComponents.myEvents;
 
 import java.util.EventListener;
+import myseries.MySeries;
 
 /**
  *
@@ -13,6 +14,6 @@ import java.util.EventListener;
  */
 public interface MyEventListener extends EventListener{
 
-  public void myEventOccured(MyEvent evt);
+  public void myEventOccured(MyEvent evt, MySeries m);
 }
 
