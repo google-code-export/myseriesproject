@@ -1,5 +1,6 @@
 package tools.importExport;
 
+import database.DBConnection;
 import database.DBHelper;
 import database.EpisodesRecord;
 import java.sql.SQLException;
@@ -7,6 +8,7 @@ import java.text.ParseException;
 import java.util.Iterator;
 import java.util.Vector;
 import java.util.logging.Level;
+import javax.swing.JTable;
 import tools.MySeriesLogger;
 import myComponents.myEvents.MyEvent;
 import myComponents.myEvents.MyEventHandler;
@@ -21,19 +23,22 @@ import myComponents.MyUsefulFunctions;
 class insertEpisodesInDB implements Runnable {
 
     private ImportEpisodes im;
-    private MyEventsClass evClass = new MyEventsClass();
+    private MyEventsClass evClass;
+  private MySeries m;
 
     /**
      * Import episodes
      * @param im The import episodes form
      */
-    insertEpisodesInDB(ImportEpisodes im) {
+    insertEpisodesInDB(ImportEpisodes im, MySeries m) {
         this.im = im;
+        this.m = m;
+        evClass = new MyEventsClass(m);
     }
 
     public void run() {
         try {
-            insert();
+            insert(m.tableEpisodes);
         } catch (SQLException ex) {
             MySeriesLogger.logger.log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
@@ -41,7 +46,7 @@ class insertEpisodesInDB implements Runnable {
         }
     }
 
-    private void insert() throws SQLException, ParseException {
+    private void insert(JTable episodesTable) throws SQLException, ParseException {
         int total = im.newEpisodes.size();
         Iterator<EpisodesRecord> it = im.newEpisodes.iterator();
         EpisodesRecord e;
@@ -58,7 +63,7 @@ class insertEpisodesInDB implements Runnable {
         }
         im.progress_import.setString("Completed");
         evClass.fireMyEvent(new MyEvent(this, MyEventHandler.SERIES_UPDATE));
-        Episodes.getCurrentSeriesEpisodes();
+        Episodes.getCurrentSeriesEpisodes(episodesTable);
         im.dispose();
         MySeries.glassPane.deactivate();
     }
@@ -72,6 +77,6 @@ class insertEpisodesInDB implements Runnable {
             e.setEpisode_ID(episodes.get(0).getEpisode_ID());
         }
         MySeriesLogger.logger.log(Level.INFO, "Saving episode {0}",e.getTitle());
-        e.save();
+        e.save(new DBConnection().stmt);
     }
 }
