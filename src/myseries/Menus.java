@@ -24,97 +24,98 @@ import tools.MySeriesLogger;
  */
 public class Menus {
 
-    public static void setSeriesMenus(SeriesRecord s) {
+    public static void setSeriesMenus(SeriesRecord s, MySeries m) {
         MySeriesLogger.logger.log(Level.INFO, "Enabling series menu");
-        MySeries.menuItem_editSeries.setEnabled(s.getSeries_ID() != 0);
-        MySeries.menuItem_deleteSeries.setEnabled(s.getSeries_ID() != 0);
-        MySeries.menuItem_editEpisode.setEnabled(s.getSeries_ID() != 0);
-        MySeries.menuItem_exportEpisodes.setEnabled(s.getSeries_ID() != 0);
-        MySeries.menuItem_editSeries.setText("Edit series " + s);
-        MySeries.menuItem_deleteSeries.setText("Delete series " + s);
-        MySeries.menuItem_editEpisode.setText("Add episode to " + s);
-        setSeriesPopup(s);
-        setSeriesToolbar(s);
+        m.menuItem_editSeries.setEnabled(s.getSeries_ID() != 0);
+        m.menuItem_deleteSeries.setEnabled(s.getSeries_ID() != 0);
+        m.menuItem_editEpisode.setEnabled(s.getSeries_ID() != 0);
+        m.menuItem_exportEpisodes.setEnabled(s.getSeries_ID() != 0);
+        m.menuItem_editSeries.setText("Edit series " + s);
+        m.menuItem_deleteSeries.setText("Delete series " + s);
+        m.menuItem_editEpisode.setText("Add episode to " + s);
+        setSeriesPopup(s, m);
+        setSeriesToolbar(s, m);
     }
 
-    public static void setEpisodesPopup(SeriesRecord series, EpisodesRecord episode, boolean singleEpisode, boolean episodesPanel) {
+    public static void setEpisodesPopup(SeriesRecord series, EpisodesRecord episode,
+        boolean singleEpisode, boolean episodesPanel, MySeries m) {
         MySeriesLogger.logger.log(Level.INFO, "Enabling episodes popup");
         String seriesTitle = series != null ? series.getFullTitle() : "";
         String episodeTitle = episode != null ? episode.getTitle() : "";
         String localDir = series != null ? series.getLocalDir() : "";
         boolean hasBeenAired = false;
         if (singleEpisode) {
-            hasBeenAired = MyUsefulFunctions.hasBeenAired(episode.getAired(), true);
+            hasBeenAired = episode!=null ? MyUsefulFunctions.hasBeenAired(episode.getAired(), true):false;
         }
         //ADD EPISODE
-        MySeries.PopUpItem_AddEpisodeInEpisodes.setEnabled(singleEpisode);
-        MySeries.PopUpItem_AddEpisodeInEpisodes.setText("Add new episode to " + seriesTitle);
+        m.PopUpItem_AddEpisodeInEpisodes.setEnabled(singleEpisode);
+        m.PopUpItem_AddEpisodeInEpisodes.setText("Add new episode to " + seriesTitle);
 
         //DELETE EPISODE
-        MySeries.popUpItem_deleteEpisode.setEnabled(episodesPanel);
-        MySeries.popUpItem_deleteEpisode.setText(singleEpisode
+        m.popUpItem_deleteEpisode.setEnabled(episodesPanel && episode!=null);
+        m.popUpItem_deleteEpisode.setText(singleEpisode
                 ? "Delete episode " + episodeTitle
                 : "Delete selected episodes");
 
         //VIEW EPISODE
-        MySeries.popUpItem_viewEpisode.setEnabled(!localDir.equals("") && singleEpisode && Episodes.checkDownloads(series, episode));
-        MySeries.popUpItem_viewEpisode.setText("View episode " + episodeTitle);
+        m.popUpItem_viewEpisode.setEnabled(episode!=null && !localDir.equals("") && singleEpisode && Episodes.checkDownloads(series, episode));
+        m.popUpItem_viewEpisode.setText("View episode " + episodeTitle);
 
         //RENAME EPISODE
-        MySeries.popUpItem_renameEpisode.setEnabled(!localDir.equals("") && singleEpisode && Episodes.checkDownloads(series, episode));
-        MySeries.popUpItem_renameEpisode.setText("Rename episode " + episodeTitle);
+        m.popUpItem_renameEpisode.setEnabled(episode!=null && !localDir.equals("") && singleEpisode && Episodes.checkDownloads(series, episode));
+        m.popUpItem_renameEpisode.setText("Rename episode " + episodeTitle);
 
         //DOWNLOAD SUBS
-        MySeries.popUpMenu_downloadSubtitles.setEnabled(singleEpisode && hasBeenAired);
-        MySeries.popUpMenu_downloadSubtitles.setText("Download subtitles for " + episodeTitle);
-        MySeries.popUpItem_downloadSubsTvSubs.setEnabled(singleEpisode && hasBeenAired);
-        MySeries.popUpItem_downloadSubsSubOn.setEnabled(singleEpisode && hasBeenAired);
+        m.popUpMenu_downloadSubtitles.setEnabled(singleEpisode && hasBeenAired);
+        m.popUpMenu_downloadSubtitles.setText("Download subtitles for " + episodeTitle);
+        m.popUpItem_downloadSubsTvSubs.setEnabled(singleEpisode && hasBeenAired);
+        m.popUpItem_downloadSubsSubOn.setEnabled(singleEpisode && hasBeenAired);
 
         //DOWNLOAD TORRENT
-        MySeries.popUpMenu_downloadTorrent.setEnabled(singleEpisode && hasBeenAired);
-        MySeries.popUpMenu_downloadTorrent.setText("Download torrent for " + episodeTitle);
-        MySeries.popUpItem_downloadEzTv.setEnabled(singleEpisode && hasBeenAired);
-        MySeries.popUpItem_downloadIsohunt.setEnabled(singleEpisode && hasBeenAired);
+        m.popUpMenu_downloadTorrent.setEnabled(singleEpisode && hasBeenAired);
+        m.popUpMenu_downloadTorrent.setText("Download torrent for " + episodeTitle);
+        m.popUpItem_downloadEzTv.setEnabled(singleEpisode && hasBeenAired);
+        m.popUpItem_downloadIsohunt.setEnabled(singleEpisode && hasBeenAired);
     }
 
-    private static void setSeriesPopup(SeriesRecord series) {
+    private static void setSeriesPopup(SeriesRecord series, MySeries m) {
         MySeriesLogger.logger.log(Level.INFO, "Enabling series popup");
         String seriesTitle = series != null ? series.getFullTitle() : "";
         String localDir = series != null ? series.getLocalDir() : "";
 
-        MySeries.PopUpItem_AddEpisode.setEnabled(series.getSeries_ID() != 0);
-        MySeries.PopUpItem_DeleteSerial.setEnabled(series.getSeries_ID() != 0);
-        MySeries.PopUpItem_EditSerial.setEnabled(series.getSeries_ID() != 0);
-        MySeries.popUpItem_GoToTvSubs.setEnabled(series.getSeries_ID() != 0 && !series.getTvSubtitlesCode().equals("") && DesktopSupport.isBrowseSupport());
-        MySeries.popUpItem_GoToSubOn.setEnabled(series.getSeries_ID() != 0 && !series.getSOnlineCode().equals("") && DesktopSupport.isBrowseSupport());
-        MySeries.popUpMenu_GoToSubtitles.setEnabled(series.getSeries_ID() != 0);
-        MySeries.popUpItem_GoToLocalDir.setEnabled(series.getSeries_ID() != 0 && !series.getLocalDir().equals("") && DesktopSupport.isDesktopSupport());
-        MySeries.popUpItem_renameEpisodes.setEnabled(series.getSeries_ID() != 0 && !series.getLocalDir().equals(""));
-        MySeries.popUpItem_exportEpisodes.setEnabled(series.getSeries_ID() != 0);
-        MySeries.popUpItem_IUTvrage.setEnabled(series.getSeries_ID() != 0 && series.getTvrage_ID() > 0);
-        MySeries.popUpMenu_internetUpdate.setEnabled(series.getSeries_ID() != 0);
+        m.PopUpItem_AddEpisode.setEnabled(series.getSeries_ID() != 0);
+        m.PopUpItem_DeleteSerial.setEnabled(series.getSeries_ID() != 0);
+        m.PopUpItem_EditSerial.setEnabled(series.getSeries_ID() != 0);
+        m.popUpItem_GoToTvSubs.setEnabled(series.getSeries_ID() != 0 && !series.getTvSubtitlesCode().equals("") && DesktopSupport.isBrowseSupport());
+        m.popUpItem_GoToSubOn.setEnabled(series.getSeries_ID() != 0 && !series.getSOnlineCode().equals("") && DesktopSupport.isBrowseSupport());
+        m.popUpMenu_GoToSubtitles.setEnabled(series.getSeries_ID() != 0);
+        m.popUpItem_GoToLocalDir.setEnabled(series.getSeries_ID() != 0 && !series.getLocalDir().equals("") && DesktopSupport.isDesktopSupport());
+        m.popUpItem_renameEpisodes.setEnabled(series.getSeries_ID() != 0 && !series.getLocalDir().equals(""));
+        m.popUpItem_exportEpisodes.setEnabled(series.getSeries_ID() != 0);
+        m.popUpItem_IUTvrage.setEnabled(series.getSeries_ID() != 0 && series.getTvrage_ID() > 0);
+        m.popUpMenu_internetUpdate.setEnabled(series.getSeries_ID() != 0);
 
 
-        MySeries.PopUpItem_AddEpisode.setText("Add new episode to " + seriesTitle);
-        MySeries.PopUpItem_DeleteSerial.setText("Delete series " + seriesTitle);
-        MySeries.PopUpItem_EditSerial.setText("Edit series " + seriesTitle);
-        MySeries.popUpMenu_GoToSubtitles.setText("Go to the subtitles page of  " + seriesTitle);
-        MySeries.popUpItem_GoToTvSubs.setText("Go to TvSubtitle");
-        MySeries.popUpItem_GoToSubOn.setText("Go to SubtitleOnline");
-        MySeries.popUpItem_GoToLocalDir.setText("Open " + seriesTitle + " directory");
-        MySeries.popUpItem_renameEpisodes.setText("Rename " + seriesTitle + " episodes");
-        MySeries.popUpItem_exportEpisodes.setText("Export episodes of " + seriesTitle);
-        MySeries.popUpMenu_internetUpdate.setText("Update " + seriesTitle + " episodes list");
+        m.PopUpItem_AddEpisode.setText("Add new episode to " + seriesTitle);
+        m.PopUpItem_DeleteSerial.setText("Delete series " + seriesTitle);
+        m.PopUpItem_EditSerial.setText("Edit series " + seriesTitle);
+        m.popUpMenu_GoToSubtitles.setText("Go to the subtitles page of  " + seriesTitle);
+        m.popUpItem_GoToTvSubs.setText("Go to TvSubtitle");
+        m.popUpItem_GoToSubOn.setText("Go to SubtitleOnline");
+        m.popUpItem_GoToLocalDir.setText("Open " + seriesTitle + " directory");
+        m.popUpItem_renameEpisodes.setText("Rename " + seriesTitle + " episodes");
+        m.popUpItem_exportEpisodes.setText("Export episodes of " + seriesTitle);
+        m.popUpMenu_internetUpdate.setText("Update " + seriesTitle + " episodes list");
 
     }
 
-    private static void setSeriesToolbar(SeriesRecord s) {
+    private static void setSeriesToolbar(SeriesRecord s, MySeries m) {
 
-        if (MySeries.myToolbar == null) {
+        if (m.myToolbar == null) {
             return;
         } else {
             MySeriesLogger.logger.log(Level.INFO, "Enabling toolbar menu");
-            Toolbar toolbar = MySeries.myToolbar;
+            Toolbar toolbar = m.myToolbar;
             Map<Integer, Component> buttons = toolbar.getButtons();
             Set<Integer> keys = buttons.keySet();
             for (Iterator<Integer> it = keys.iterator(); it.hasNext();) {
