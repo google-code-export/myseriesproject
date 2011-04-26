@@ -4,6 +4,7 @@
  */
 package myseries.episodes;
 
+import database.DBConnection;
 import database.EpisodesRecord;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -58,7 +59,7 @@ public class UpdateEpisodesTable {
       er.setSeen((Boolean) rec[Episodes.SEEN_COLUMN] ? EpisodesRecord.SEEN : EpisodesRecord.NOT_SEEN);
       er.setRate((Double) rec[Episodes.RATE_COLUMN]);
       MySeriesLogger.logger.log(Level.INFO, "Update episode {0}", er.getTitle());
-      er.save();
+      er.save(new DBConnection().stmt);
       MySeriesLogger.logger.log(Level.FINE, "Episode updated");
       // NextEpisodes.createNextEpisodes();
       // NextEpisodes.show();

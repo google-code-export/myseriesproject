@@ -5,7 +5,6 @@
 package myseries.episodes;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import myseries.series.Series;
 import tools.MySeriesLogger;
 import database.DBConnection;
@@ -20,14 +19,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import myComponents.MyTableModels.MyEpisodesTableModel;
 import myComponents.MyUsefulFunctions;
-import myComponents.myFileFilters.SubtitlesFilter;
 import myComponents.myFileFilters.ZipFilter;
-import myComponents.myGUI.MyDnDTabbedPane;
 import tools.Unziper;
 import tools.download.subtitles.SubtitleMover;
 import tools.languages.LangsList;
@@ -71,41 +68,27 @@ public class Episodes {
   /** The episodes rate table column title : rate   */
   public static final String RATE_COLUMN_TITLE = "Rate";
   /** The episodes table model   */
-  private static MyEpisodesTableModel tableModel_episodes;
+  //private static MyEpisodesTableModel tableModel_episodes;
   /** The episodes table   */
-  private static JTable table_episodesList = new JTable();
+  //private static JTable table_episodesList = new JTable();
   /** The current episode   */
   private static EpisodesRecord currentEpisode;
 
-  /** @return the tableModel_episodes   */
-  public static MyEpisodesTableModel getTableModel_episodes() {
-    return tableModel_episodes;
-  }
+//  /** @return the tableModel_episodes   */
+//  public static MyEpisodesTableModel getTableModel_episodes() {
+//    return tableModel_episodes;
+//  }
+//
+//  /**
+//   * Sets the model for the episodes table
+//   * @param aTableModel_episodes the tableModel_episodes to set
+//   */
+//  public static void setTableModel_episodes(MyEpisodesTableModel aTableModel_episodes) {
+//    tableModel_episodes = aTableModel_episodes;
+//  }
 
-  /**
-   * Sets the model for the episodes table
-   * @param aTableModel_episodes the tableModel_episodes to set
-   */
-  public static void setTableModel_episodes(MyEpisodesTableModel aTableModel_episodes) {
-    tableModel_episodes = aTableModel_episodes;
-  }
-
-  /**
-   * @return the table_episodes
-   */
-  public static JTable getTable_episodes() {
-    return table_episodesList;
-  }
-
-  /**
-   * @param aTable_episodes the table_episodes to set
-   */
-  public static void setTable_episodes(JTable aTable_episodes) {
-    table_episodesList = aTable_episodes;
-  }
-
-  public static void setTableWidths(Integer[] EpisodesTableWidths) {
-    TableColumnModel model = Episodes.table_episodesList.getColumnModel();
+  public static void setTableWidths(JTable table, Integer[] EpisodesTableWidths) {
+    TableColumnModel model = table.getColumnModel();
     for (int i = 0; i < EpisodesTableWidths.length; i++) {
       Integer width = EpisodesTableWidths[i];
       model.getColumn(i).setPreferredWidth(width);
@@ -126,6 +109,13 @@ public class Episodes {
           if (u.unzip()) {
             if (!u.unzippedFiles.isEmpty()) {
               MySeriesLogger.logger.log(Level.INFO, "Unzipped {0}", u.unzippedFiles);
+              for (Iterator<String> it = u.unzippedFiles.iterator(); it.hasNext();) {
+                String filename = it.next();
+                if(Options.toBoolean(Options.AUTO_RENAME_SUBS) && MyUsefulFunctions.renameEpisode(series,filename)){
+                  MySeriesLogger.logger.log(Level.INFO, "Subtitle renamed");
+                }
+              }
+
             }
           }
         } catch (Exception ex) {
@@ -147,7 +137,7 @@ public class Episodes {
     MySeriesLogger.logger.log(Level.INFO, "Setting the current episode");
     String sql = "SELECT * FROM episodes "
         + "WHERE series_ID = " + Series.getCurrentSerial().getSeries_ID() + " AND episode = " + episode;
-    ResultSet rs = EpisodesRecord.query(sql);
+    ResultSet rs = EpisodesRecord.query(new DBConnection().stmt, sql);
     if (rs.next()) {
       currentEpisode = new EpisodesRecord();
       getCurrentEpisode().setEpisode_ID(rs.getInt("episode_ID"));
@@ -171,7 +161,7 @@ public class Episodes {
    * @return An arraylist of all the episodes records
    * @throws java.sql.SQLException
    */
-  public static ArrayList<EpisodesRecord> getCurrentSeriesEpisodes() throws SQLException {
+  public static ArrayList<EpisodesRecord> getCurrentSeriesEpisodes(JTable episodesTable) throws SQLException {
     ArrayList<EpisodesRecord> eps = new ArrayList<EpisodesRecord>();
     ArrayList<EpisodesRecord> updated = new ArrayList<EpisodesRecord>();
     File[] subtitleFiles = null;
@@ -180,9 +170,11 @@ public class Episodes {
     Boolean download, seen;
     String title, aired;
     Language subs;
-    emptyEpisodes();
+    emptyEpisodes(episodesTable);
     SeriesRecord series = Series.getCurrentSerial();
+    DefaultTableModel model = (DefaultTableModel) episodesTable.getModel();
     MySeriesLogger.logger.log(Level.INFO, "Getting episodes of series {0}",series.getFullTitle());
+    DBConnection conn = new DBConnection();
     if (Options.toBoolean(Options.AUTO_FILE_UPDATING) && series.isValidLocalDir()) {
       MySeriesLogger.logger.log(Level.INFO, "File auto updating is active");
       ArrayList<SeriesRecord> list = new ArrayList<SeriesRecord>();
@@ -200,7 +192,7 @@ public class Episodes {
     }
     String sql = "SELECT * FROM episodes WHERE series_ID = " + Series.getCurrentSerial().getSeries_ID()
         + " ORDER BY CAST(episode AS UNSIGNED) ASC";
-    Statement stmt = DBConnection.conn.createStatement();
+    Statement stmt = conn.stmt;
     ResultSet rs = stmt.executeQuery(sql);
     while (rs.next()) {
       EpisodesRecord e = new EpisodesRecord();
@@ -245,24 +237,26 @@ public class Episodes {
       }
       subs = e.getSubs();
       Object[] data = {episode, e, e.getAired(), download, e.getSubs(), seen, e.getRate()};
-      getTableModel_episodes().addRow(data);
+      model.addRow(data);
       eps.add(e);
     }
     rs.close();
     MySeriesLogger.logger.log(Level.FINE, "Found {0} episodes",eps.size());
     if (!updated.isEmpty()) {
       MySeriesLogger.logger.log(Level.INFO, "Updating episodes");
-      Database.beginTransaction();
+      conn.beginTransaction();
+      //System.out.println(System.currentTimeMillis());
       for (Iterator<EpisodesRecord> it = updated.iterator(); it.hasNext();) {
         EpisodesRecord episodesRecord = it.next();
-        episodesRecord.save();
+        episodesRecord.save(stmt);
         MySeriesLogger.logger.log(Level.FINE, "Updating {0}",episodesRecord.getTitle());
       }
-      Database.endTransaction();
+      conn.endTransaction();
+       //System.out.println(System.currentTimeMillis());
       MySeriesLogger.logger.log(Level.FINE, "Updating finished");
     }
-    table_episodesList.setModel(getTableModel_episodes());
-
+    episodesTable.setModel(model);
+    conn.close();
     return eps;
   }
 
@@ -360,30 +354,26 @@ public class Episodes {
    * Updates the episodes table with the current series episodes
    * @throws java.sql.SQLException
    */
-  public static void updateEpisodesTable() throws SQLException {
+  public static void updateEpisodesTable(JTable table) throws SQLException {
     MySeriesLogger.logger.log(Level.INFO, "Updating episodes table");
-    Episodes.setTableModel_episodes(tableModel_episodes);
-    // Episodes.setTabsPanel(tabsPanel);
-    Episodes.getCurrentSeriesEpisodes();
-    tableModel_episodes = Episodes.getTableModel_episodes();
-    //tabsPanel = Episodes.getTabsPanel();
+    Episodes.getCurrentSeriesEpisodes(table);
   }
 
   /**
    * Empty the episodes table and sets the tabbed pane title to empty string
    */
-  public static void emptyEpisodes() {
+  public static void emptyEpisodes(JTable episodesTable) {
     MySeriesLogger.logger.log(Level.INFO, "Emptying episodes table");
-    getTableModel_episodes().setRowCount(0);
+    ((DefaultTableModel)episodesTable.getModel()).setRowCount(0);
     //getTabsPanel().setTitleAt(0, "");
   }
 
-  /**
-   * @return the tabsPanel
-   */
-  public static JTabbedPane getTabsPanel() {
-    return myseries.MySeries.tabsPanel;
-  }
+//  /**
+//   * @return the tabsPanel
+//   */
+//  public static JTabbedPane getTabsPanel() {
+//    return myseries.MySeries.tabsPanel;
+//  }
 
 //  /**
 //   * @param tabsPanel the tabsPanel to set
