@@ -33,7 +33,11 @@ public class ToolbarSeperator extends JLabel implements ToolbarButtonActions {
         this.tooltip = tooltip;
         setOpaque(false);
         setBorder(BorderFactory.createEmptyBorder());
+        if(image.equals("")){
         setIcon(new ImageIcon(getClass().getResource("/images/sep.png")));
+      } else{
+          setIcon(new ImageIcon(getClass().getResource("/images/"+image)));
+      }
         setToolTipText(tooltip);
         MySeriesLogger.logger.log(Level.FINE, "Toolbar Seperator was created");
     }

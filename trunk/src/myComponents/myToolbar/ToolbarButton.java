@@ -22,6 +22,7 @@ public class ToolbarButton extends JButton implements ToolbarButtonActions {
   private String tooltip;
   public Point origin = new Point();
   public Point startPoint = new Point();
+  private boolean deprecated = false;
 
   public ToolbarButton() {
     this(-1,"","");
@@ -74,6 +75,20 @@ public class ToolbarButton extends JButton implements ToolbarButtonActions {
     public String getTooltip() {
         return tooltip;
     }
+
+  /**
+   * @return the deprecated
+   */
+  public boolean isDeprecated() {
+    return deprecated;
+  }
+
+  /**
+   * @param deprecated the deprecated to set
+   */
+  public void setDeprecated(boolean deprecated) {
+    this.deprecated = deprecated;
+  }
 
 
 

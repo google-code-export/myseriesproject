@@ -40,8 +40,10 @@ public interface ToolbarButtonActions {
   public static int CHECK_UPDATES = 22;
   public static int VIEW_LOGS = 23;
   public static int CLEAR_LOGS = 24;
-  public static int ABOUT = 25;
-  public static int EXIT = 26;
-
-
+  public static int HOUSEKEEPING = 25;
+  public static int ABOUT = 26;
+  public static int RESTART = 27;
+  public static int EXIT = 28;
+  public static int SEP_MEM = 29;
+  public static int MEMORY = 30;
 }
