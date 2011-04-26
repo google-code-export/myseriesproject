@@ -4,9 +4,13 @@
  */
 package myComponents;
 
+import database.DBConnection;
 import database.EpisodesRecord;
 import database.SeriesRecord;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Desktop;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -26,23 +30,31 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Properties;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.BorderFactory;
+import javax.swing.SwingConstants;
+import javax.swing.Timer;
 import myComponents.myGUI.MyFont;
+import myComponents.myGUI.MyTimerListener;
 import myComponents.myTableCellRenderers.MyDownloadedCellRenderer;
 import myComponents.myTableCellRenderers.MySubtitlesCellRenderer;
+import myComponents.myToolbar.ToolbarButtonActions;
+import myComponents.myToolbar.ToolbarSeperator;
+import myseries.MySeries;
 import myseries.series.Series;
 import tools.DesktopSupport;
 import tools.MySeriesLogger;
@@ -284,7 +296,9 @@ public class MyUsefulFunctions {
    * @return true if succedded copying
    */
   public static boolean copyfile(String srFile, String dtFile) throws FileNotFoundException, IOException {
-    MySeriesLogger.logger.log(Level.INFO, "Copying file {0} to {1}", new String[]{srFile, dtFile});
+    if (MySeriesLogger.logger != null) {
+      MySeriesLogger.logger.log(Level.INFO, "Copying file {0} to {1}", new String[]{srFile, dtFile});
+    }
     File f1 = new File(srFile);
     File f2 = new File(dtFile);
     InputStream in = new FileInputStream(f1);
@@ -549,15 +563,23 @@ public class MyUsefulFunctions {
    * @param dirPath The directory to check
    */
   public static void checkDir(String dirPath) {
-    MySeriesLogger.logger.log(Level.INFO, "Checking need for creation of dir {0}", dirPath);
+    if (MySeriesLogger.logger != null) {
+      MySeriesLogger.logger.log(Level.INFO, "Checking need for creation of dir {0}", dirPath);
+    }
     if (!new File(dirPath).isDirectory()) {
       if (new File(dirPath).mkdir()) {
-        MySeriesLogger.logger.log(Level.INFO, "Created directory {0}", dirPath);
+        if (MySeriesLogger.logger != null) {
+          MySeriesLogger.logger.log(Level.INFO, "Created directory {0}", dirPath);
+        }
       } else {
-        MySeriesLogger.logger.log(Level.SEVERE, "Could not create directory {0}", dirPath);
+        if (MySeriesLogger.logger != null) {
+          MySeriesLogger.logger.log(Level.SEVERE, "Could not create directory {0}", dirPath);
+        }
       }
     }
-    MySeriesLogger.logger.log(Level.INFO, "No need for creating the directory {0}", dirPath);
+    if (MySeriesLogger.logger != null) {
+      MySeriesLogger.logger.log(Level.INFO, "No need for creating the directory {0}", dirPath);
+    }
   }
 
   /**
@@ -949,7 +971,7 @@ public class MyUsefulFunctions {
 
   public static String getBaseUrl(String url) {
     try {
-      MySeriesLogger.logger.log(Level.INFO, "Getting base url of {0}",url);
+      MySeriesLogger.logger.log(Level.INFO, "Getting base url of {0}", url);
       URL u = new URL(url);
       return u.getHost();
     } catch (MalformedURLException ex) {
@@ -961,7 +983,7 @@ public class MyUsefulFunctions {
   public static boolean isNoticableRss(String title) {
     try {
       ArrayList<SeriesRecord> series = Series.getSeries(false);
-      MySeriesLogger.logger.log(Level.INFO, "Check if feed {0} is a noticable feed",title);
+      MySeriesLogger.logger.log(Level.INFO, "Check if feed {0} is a noticable feed", title);
       for (Iterator<SeriesRecord> it = series.iterator(); it.hasNext();) {
         SeriesRecord seriesRecord = it.next();
         String sTitle = seriesRecord.getTitle();
@@ -981,14 +1003,14 @@ public class MyUsefulFunctions {
   }
 
   public static boolean isSubtitle(String filename) {
-    MySeriesLogger.logger.log(Level.INFO, "Checking if {0} is subtitle",filename);
+    MySeriesLogger.logger.log(Level.INFO, "Checking if {0} is subtitle", filename);
     int p = filename.lastIndexOf(".");
     String ext = filename.substring(p + 1);
-    boolean is =  isInArray(SubtitleConstants.EXTENSIONS, ext);
-    if(is){
-      MySeriesLogger.logger.log(Level.FINE, "{0} is a subtitle",filename);
+    boolean is = isInArray(SubtitleConstants.EXTENSIONS, ext);
+    if (is) {
+      MySeriesLogger.logger.log(Level.FINE, "{0} is a subtitle", filename);
     } else {
-      MySeriesLogger.logger.log(Level.INFO, "{0} is not a subtitle",filename);
+      MySeriesLogger.logger.log(Level.INFO, "{0} is not a subtitle", filename);
     }
     return is;
   }
@@ -1004,6 +1026,158 @@ public class MyUsefulFunctions {
   public static String getExtension(String file) {
     String[] tok = file.split("\\.");
     return tok[tok.length - 1].toLowerCase();
+  }
+
+  public static String getRenamedEpisode(String filename, SeriesRecord series, EpisodesRecord episode) {
+    String[] tokens = filename.split("\\.", -1);
+    String ext = tokens[tokens.length - 1];
+    if (MyUsefulFunctions.isSubtitle(filename)) {
+      if (isLanguage(tokens[tokens.length - 2])) {
+        ext = tokens[tokens.length - 2] + "." + tokens[tokens.length - 1];
+      }
+    }
+    String sample = "";
+    if (filename.indexOf("sample") > -1) {
+      sample = "_sample";
+    }
+    return series.getTitle()
+        + Options.toString(Options.SEASON_SEPARATOR, false) + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0")
+        + Options.toString(Options.EPISODE_SEPARATOR, false) + MyUsefulFunctions.padLeft(episode.getEpisode(), 2, "0")
+        + Options.toString(Options.TITLE_SEPARATOR, false) + episode.getTitle() + sample + "." + ext;
+  }
+
+  public static boolean renameEpisode(SeriesRecord series, String filename) {
+    MySeriesLogger.logger.log(Level.INFO, "renaming episode {0}", filename);
+    String path = series.getLocalDir();
+    File oldFile = new File(path + "/" + filename);
+    String[] numbers = filename.split("\\D+");
+    int episode = -1;
+    for (int i = 0; i < numbers.length; i++) {
+      String n = numbers[i];
+      if (MyUsefulFunctions.isNumeric(n)
+          && Integer.parseInt(n) == series.getSeason()
+          && i < numbers.length - 1) {
+        episode = MyUsefulFunctions.isNumeric(numbers[i + 1])
+            ? Integer.parseInt(numbers[i + 1])
+            : -1;
+      }
+    }
+    if (episode > -1) {
+      DBConnection conn = new DBConnection();
+      ResultSet rs = null;
+      try {
+        rs = EpisodesRecord.query(conn.stmt, "SELECT * FROM episodes WHERE series_ID =" + series.getSeries_ID() + " AND episode = " + episode);
+        while (rs.next()) {
+          EpisodesRecord e = new EpisodesRecord();
+          e.setSeries_ID(rs.getInt("series_ID"));
+          e.setEpisode_ID(rs.getInt("episode_ID"));
+          e.setTitle(rs.getString("title"));
+          e.setAired(rs.getString("aired"));
+          episode = rs.getInt("episode");
+          e.setEpisode(rs.getInt("episode"));
+          e.setDownloaded(rs.getInt("downloaded"));
+          e.setSeen(rs.getInt("seen"));
+          e.setRate(rs.getDouble("rate"));
+          e.setSubs(LangsList.getLanguageById(rs.getInt("subs")));
+          String newName = getRenamedEpisode(filename, series, e);
+          File newFile = new File(path + "/" + newName);
+          oldFile.renameTo(newFile);
+          MySeriesLogger.logger.log(Level.FINE, "Episode renamed");
+          return true;
+        }
+      } catch (SQLException ex) {
+        MySeriesLogger.logger.log(Level.SEVERE, "Sql error occured", ex);
+      } finally {
+        conn.close();
+        try {
+          rs.close();
+        } catch (SQLException ex) {
+          MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+        }
+      }
+    }
+    return false;
+  }
+
+  private static boolean isLanguage(String lang) {
+    MySeriesLogger.logger.log(Level.INFO, "Checking if {0} is a language", lang);
+    ArrayList<Language> langs = myseries.MySeries.languages.getLangs();
+    for (Iterator<Language> it = langs.iterator(); it.hasNext();) {
+      Language language = it.next();
+      if (language.getCode().equals(lang)) {
+        MySeriesLogger.logger.log(Level.FINE, "Found language {0}", language);
+        return true;
+      }
+    }
+    MySeriesLogger.logger.log(Level.WARNING, "Did not find a language for {0}", lang);
+    return false;
+  }
+
+  /**
+   * Run external program
+   * @param command
+   * @param startingFolder
+   * @throws IOException
+   */
+  public static void runExternalProgram(String[] command, File startingFolder) throws IOException {
+    String[] envp = null; // should inherit the environment
+    Process p = Runtime.getRuntime().exec(command, envp, startingFolder);
+  }
+
+  public static boolean isInList(Object sc, Collection<?> col) {
+    for (Iterator<?> it = col.iterator(); it.hasNext();) {
+      Object o = it.next();
+      if (o.equals(sc)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public static void createMemoryCons(MySeries m) {
+    ToolbarSeperator mem = getMemoryToolbarSeperator(m);
+    MySeriesLogger.logger.log(Level.INFO, "Creating the timer for memory consumption");
+    Timer timer = new Timer(1000, new MyTimerListener(mem,m.myToolbar.getOrientation()));
+    MySeriesLogger.logger.log(Level.INFO, "Starting timer");
+    timer.start();
+  }
+
+  private static ToolbarSeperator getMemoryToolbarSeperator(MySeries m) {
+    MySeriesLogger.logger.log(Level.INFO, "Getting the memory toolbar component");
+    Component[] comps = m.myToolbar.getComponents();
+    for (int i = 0; i < comps.length; i++) {
+      Component component = comps[i];
+      if (component instanceof ToolbarSeperator) {
+        ToolbarSeperator t = (ToolbarSeperator) component;
+        if (t.getActionName() == ToolbarButtonActions.MEMORY) {
+          MySeriesLogger.logger.log(Level.FINE, "Component found");
+          MySeriesLogger.logger.log(Level.INFO, "Customizing component");
+          t.setOpaque(true);
+          // t.setBounds(0, 0, 120, 32);
+          if (m.myToolbar.getOrientation() == SwingConstants.HORIZONTAL) {
+            t.setMinimumSize(new Dimension(120, 26));
+            t.setPreferredSize(new Dimension(120, 26));
+            t.setMaximumSize(new Dimension(120, 26));
+          } else{
+            t.setMinimumSize(new Dimension(26, 26));
+            t.setPreferredSize(new Dimension(26, 26));
+            t.setMaximumSize(new Dimension(26, 26));
+          }
+          t.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
+          return t;
+        }
+      }
+    }
+    MySeriesLogger.logger.log(Level.WARNING, "Component not found");
+    return null;
+  }
+
+  public static void sendMail(URI email) throws IOException {
+    if (Desktop.getDesktop().isSupported(Desktop.Action.MAIL)) {
+      Desktop.getDesktop().mail(email);
+    } else {
+      throw new UnsupportedOperationException("Sending mail does not supported by the OS");
+    }
   }
 
   private MyUsefulFunctions() {
