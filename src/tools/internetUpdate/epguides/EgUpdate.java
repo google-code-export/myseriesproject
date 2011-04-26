@@ -4,6 +4,7 @@
  */
 package tools.internetUpdate.epguides;
 
+import database.DBConnection;
 import database.DBHelper;
 import tools.MySeriesLogger;
 import database.Database;
@@ -17,6 +18,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
+import javax.swing.JTable;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myseries.episodes.Episodes;
@@ -38,11 +40,12 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
    * Update series
    * @param iu The update series form
    */
-  public EgUpdate(InternetUpdate iu) {
+  public EgUpdate(InternetUpdate iu, JTable episodesTable) {
       MySeriesLogger.logger.log(Level.INFO, "Updating series from EpGuide");
     this.iu = iu;
     this.list = new ArrayList<AbstractSeriesToUpdate>();
     this.site = InternetUpdate.EP_GUIDES_NAME;
+    this.episodesTable = episodesTable;
   }
 
   protected boolean read(SeriesRecord series) {
@@ -51,7 +54,7 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
     URL epGuides;
     StringBuilder buf = new StringBuilder();
     if (!isConected) {
-      MyMessages.internetError();
+      MyMessages.internetError(true);
       return false;
     }
     try {
@@ -155,7 +158,7 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
     return false;
   }
 
-  protected void updateEpisodes() throws SQLException {
+  protected void updateEpisodes(JTable episodesTable) throws SQLException {
     append("<span style='font-weight:bold;font-size:12px'>Importing data</span>");
     EgEpisodeOld curData;
     String[] arr;
@@ -178,7 +181,6 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
           MySeriesLogger.logger.log(Level.INFO, "Importing episodes of {0}", curSeries);
           header = false;
         }
-        Database.beginTransaction();
         for (int e = 0; e < curSeries.episodes.size(); e++) {
           boolean save = false;
           EgEpisode episode = curSeries.episodes.get(e);
@@ -208,10 +210,9 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
             if (!airDate.trim().equals("")) {
               episodeRecord.setAired(airDate);
             }
-            episodeRecord.save();
+            episodeRecord.save(new DBConnection().stmt);
           }
         }
-        Database.endTransaction();
         if (newEpisodes == 0 && updEpisodes == 0) {
             MySeriesLogger.logger.log(Level.INFO, "No new or updated episodes");
           append("No new or updated episodes");
@@ -224,7 +225,7 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
     }
     iu.progress_bar.setValue(100);
     iu.progress_bar.setString("100%");
-    Episodes.updateEpisodesTable();
+    Episodes.updateEpisodesTable(episodesTable);
     append("<br><br>Internet update of series completed in " + calcExecTime());
       MySeriesLogger.logger.log(Level.INFO, "<br><br>Internet update of series completed in {0}", calcExecTime());
     iu.finished = true;

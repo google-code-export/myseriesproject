@@ -17,6 +17,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import tools.MySeriesLogger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import myComponents.MyMessages;
 import myComponents.myGUI.MyDraggable;
 import myseries.MySeries;
@@ -32,8 +33,6 @@ public class InternetUpdate extends MyDraggable {
     public static final String TV_RAGE_NAME = "TvRage";
     /** EpGuides name : "EpGuides"   */
     public static final String EP_GUIDES_NAME = "EpGuides";
-    /** List of web series databases   */
-    public static Vector<String> DB_UPDATERS = new Vector<String>();
     /** The epguides url : "http://www.epguides.com/" **/
     public static final String EP_GUIDES_URL = "http://www.epguides.com/";
     /** The tvrage url : "http://www.tvrage.com **/
@@ -65,7 +64,7 @@ public class InternetUpdate extends MyDraggable {
         MySeriesLogger.logger.log(Level.INFO, "Initializong components");
         initComponents();
         MySeriesLogger.logger.log(Level.FINE, "Components initialized");
-        startUpdate();
+        startUpdate(m.tableEpisodes);
         setLocationRelativeTo(m);
         setVisible(true);
 
@@ -85,7 +84,7 @@ public class InternetUpdate extends MyDraggable {
         MySeriesLogger.logger.log(Level.INFO, "Initializong components");
         initComponents();
         MySeriesLogger.logger.log(Level.FINE, "Components initialized");
-        startUpdate();
+        startUpdate(m.tableEpisodes);
         setLocationRelativeTo(m);
         setVisible(true);
 
@@ -202,13 +201,13 @@ public class InternetUpdate extends MyDraggable {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void startUpdate() {
+    private void startUpdate(JTable episodesTable) {
         Runnable task = null;
         MySeriesLogger.logger.log(Level.INFO, "Satring update");
         if (site.equals(EP_GUIDES_NAME)) {
-            task = new EgUpdate(this);
+            task = new EgUpdate(this,episodesTable);
         } else if (site.equals(TV_RAGE_NAME)) {
-            task = new TrUpdate(this);
+            task = new TrUpdate(this,episodesTable);
         } else {
             return;
         }
@@ -229,7 +228,7 @@ public class InternetUpdate extends MyDraggable {
               dispose();
           } else {
               MySeriesLogger.logger.log(Level.INFO, "Canceling while updating");
-              int i = MyMessages.question("Abort?", "Do you want to cancel the update?");
+              int i = MyMessages.confirm("Abort?", "Do you want to cancel the update?");
               if (i == JOptionPane.OK_OPTION) {
                   MySeriesLogger.logger.log(Level.INFO, "Updating canceled by the user");
                   t.interrupt();

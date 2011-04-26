@@ -40,7 +40,7 @@ import tools.options.Options;
  */
 public class TrGetId extends MyDraggable {
 
-    private MyEventsClass evClass = new MyEventsClass();
+    private MyEventsClass evClass;
     private MySeries m;
     private int series_ID = 0;
     private AdminSeries adminSeries;
@@ -72,6 +72,7 @@ public class TrGetId extends MyDraggable {
         this.m = m;
         this.series_ID = series_ID;
         this.title = title;
+        evClass = new MyEventsClass(m);
         getID();
 
     }
@@ -108,7 +109,7 @@ public class TrGetId extends MyDraggable {
     private void getID() {
         if (!isConected) {
             MySeriesLogger.logger.log(Level.WARNING, "Could not connect to internet");
-            MyMessages.internetError();
+            MyMessages.internetError(true);
             bt_cancelActionPerformed(null);
             return;
         }
