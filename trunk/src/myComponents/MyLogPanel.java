@@ -33,10 +33,14 @@ public class MyLogPanel extends javax.swing.JPanel {
 
   /** Creates new form MyLogPanel */
   public MyLogPanel() {
+    if(MySeriesLogger.logger != null){
     MySeriesLogger.logger.log(Level.INFO, "Creating log panel");
     MySeriesLogger.logger.log(Level.INFO, "Initializing components");
+    }
     initComponents();
+    if(MySeriesLogger.logger != null){
     MySeriesLogger.logger.log(Level.FINE, "Components initialized");
+    }
     table.getColumnModel().getColumn(COLUMN_TYPE).setMaxWidth(50);
     table.getColumnModel().getColumn(COLUMN_TIME).setPreferredWidth(150);
     table.getColumnModel().getColumn(COLUMN_TIME).setMaxWidth(200);
