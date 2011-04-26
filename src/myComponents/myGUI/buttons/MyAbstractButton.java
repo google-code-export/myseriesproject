@@ -29,6 +29,9 @@ public abstract class MyAbstractButton extends Button {
     public static final String INTERNET = "internet";
     public static final String RSS_ADD = "rss_add";
     public static final String RSS_REFRESH = "rss_refresh";
+    public static final String GOOGLE_CODE = "googlecode";
+    public static final String EMAIL = "mail";
+    public static final String CLEAR = "clear";
 
     private class Adapter extends MouseAdapter{
         
