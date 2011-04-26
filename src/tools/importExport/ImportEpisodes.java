@@ -399,7 +399,7 @@ public class ImportEpisodes extends MyDraggable {
         if (series_ID > 0) {
             if (file != null) {
                 newEpisodes = readFile();
-                insertEpisodesInDB i = new insertEpisodesInDB(this);
+                insertEpisodesInDB i = new insertEpisodesInDB(this,m);
                 Thread t = new Thread(i);
                 t.start();
             } else {

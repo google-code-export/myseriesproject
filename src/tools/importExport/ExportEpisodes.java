@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JTable;
 import myComponents.MyMessages;
 import myComponents.myFileFilters.EpisodesExportFilter;
 import myseries.episodes.Episodes;
@@ -32,7 +33,7 @@ public class ExportEpisodes {
      * Exports the episodes of the current Series<br />
      * It exports the episode number, the episode title and the date when the episodes was aired
      */
-    public ExportEpisodes() {
+    public ExportEpisodes(JTable episodesTable) {
         MySeriesLogger.logger.log(Level.INFO, "Exporting episodes of {0}", Series.getCurrentSerial().getFullTitle());
         JFileChooser f = new JFileChooser();
         f.setApproveButtonText("Export");
@@ -47,7 +48,7 @@ public class ExportEpisodes {
             file = f.getSelectedFile();
             MySeriesLogger.logger.log(Level.INFO, "Exporting episodes to {0}", file.getName());
             try {
-                exportEpisodesToFile(file);
+                exportEpisodesToFile(file, episodesTable);
             } catch (IOException ex) {
                 MySeriesLogger.logger.log(Level.SEVERE, "Could not write to file", ex);
             } catch (SQLException ex) {
@@ -62,9 +63,9 @@ public class ExportEpisodes {
      * @throws java.io.IOException
      * @throws java.sql.SQLException
      */
-    private void exportEpisodesToFile(File file) throws IOException, SQLException {
+    private void exportEpisodesToFile(File file, JTable episodesTable) throws IOException, SQLException {
         PrintWriter out = myComponents.MyUsefulFunctions.createOutputStream(file, false);
-        ArrayList<EpisodesRecord> episodes = Episodes.getCurrentSeriesEpisodes();
+        ArrayList<EpisodesRecord> episodes = Episodes.getCurrentSeriesEpisodes(episodesTable);
         for (int i = 0; i < episodes.size(); i++) {
             EpisodesRecord ep = episodes.get(i);
             out.println(
