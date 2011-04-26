@@ -74,7 +74,7 @@ public class FeedPreviewPanel extends javax.swing.JPanel {
       MySeriesLogger.logger.log(Level.INFO, "Creating {0} feed entries",feed.getEntries().size());
     for (Iterator<SyndEntryImpl> it = feed.getEntries().iterator(); it.hasNext();) {
       SyndEntryImpl entry = it.next();
-      FeedPanel p = new FeedPanel(feedPanel, entry);
+      FeedPanel p = new FeedPanel(feedPanel, entry, this);
       p.run();
       count++;
     }

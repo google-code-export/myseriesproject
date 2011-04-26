@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 import javax.swing.text.html.HTMLEditorKit;
@@ -60,6 +61,7 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
     public int id = -1;
     private int numberOfColumns = Options.toInt(Options.FEED_COLUMNS);
     public static final int CUT_TITLE_PADDING = 120;
+    private JPanel feedPreviewPanel;
 
     /** Creates new form PhotoPanel */
     public FeedPanel() {
@@ -69,9 +71,10 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
 
     }
 
-    public FeedPanel(MyScrollableFlowPanel feedPanel, SyndEntryImpl entry) {
+    public FeedPanel(MyScrollableFlowPanel feedPanel, SyndEntryImpl entry, JPanel feedPreviewPanel) {
         this.feedPanel = feedPanel;
         this.entry = entry;
+        this.feedPreviewPanel = feedPreviewPanel;
         getWidths(MINIMIZED);
         MySeriesLogger.logger.log(Level.INFO, "Initializong components");
         initComponents();
@@ -106,10 +109,10 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
 
     private void getWidths(int size) {
         if (size == MINIMIZED) {
-            min_width = myseries.MySeries.feedPreviewPanel.getWidth() / numberOfColumns - 20;
+            min_width = feedPreviewPanel.getWidth() / numberOfColumns - 20;
             setPreferredSize(new Dimension(FeedPanel.min_width, FeedPanel.min_height));
         } else {
-            max_width = myseries.MySeries.feedPreviewPanel.getWidth() - 35;
+            max_width = feedPreviewPanel.getWidth() - 35;
             setPreferredSize(new Dimension(FeedPanel.max_width, FeedPanel.max_height));
         }
     }

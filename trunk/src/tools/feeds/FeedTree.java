@@ -39,12 +39,17 @@ public class FeedTree extends javax.swing.JPanel {
     private DefaultTreeModel treemodel;
     private FeedLeaf selectedLeaf;
     private int selectedRow;
+    MySeries m;
 
     /** Creates new form FeedTree */
     public FeedTree() {
         initComponents();
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 
+    }
+
+    public void setMySeries(MySeries m){
+      this.m = m;
     }
 
     private void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -192,7 +197,7 @@ public class FeedTree extends javax.swing.JPanel {
   }// </editor-fold>//GEN-END:initComponents
 
   private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
-      if (MyMessages.question("Delete Feed", "Do you really want to delete this feed") == JOptionPane.YES_OPTION) {
+      if (MyMessages.confirm("Delete Feed", "Do you really want to delete this feed") == JOptionPane.YES_OPTION) {
           MySeriesLogger.logger.log(Level.INFO, "Deleting feed");
           boolean deleteById = FeedsRecord.deleteById(getSelectedLeaf().id);
           if (deleteById) {
@@ -209,13 +214,13 @@ public class FeedTree extends javax.swing.JPanel {
   }//GEN-LAST:event_treeMouseReleased
 
   private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
-      FeedsActions.addFeedPanel(getSelectedLeaf().id);
+      FeedsActions.addFeedPanel(getSelectedLeaf().id, m);
   }//GEN-LAST:event_editActionPerformed
 
   private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
       MySeriesLogger.logger.log(Level.INFO, "Updating feed");
       FeedsRecord feed = new FeedsRecord(getSelectedLeaf().id);
-      FeedUpdater fu = new FeedUpdater(this, feed);
+      FeedUpdater fu = new FeedUpdater(this, feed, m);
       Thread t = new Thread(fu);
       t.start();
   }//GEN-LAST:event_updateActionPerformed
@@ -232,13 +237,13 @@ public class FeedTree extends javax.swing.JPanel {
                       MySeriesLogger.logger.log(Level.INFO, "Selected leaf {0}",leaf.title);
                       selectedRow = tree.getSelectionRows()[0];
                       FeedsRecord feedsRecord = new FeedsRecord(leaf.id);
-                      FeedReader fr = new FeedReader(this, feedsRecord);
+                      FeedReader fr = new FeedReader(this, feedsRecord, m);
                       Feed feed = fr.getFeed();
-                      FeedPreviewPanel pp = MySeries.feedPreviewPanel;
+                      FeedPreviewPanel pp = m.feedPreviewPanel;
                       pp.setFeed(feed);
                   }
               } else {
-                  FeedPreviewPanel pp = MySeries.feedPreviewPanel;
+                  FeedPreviewPanel pp = m.feedPreviewPanel;
                   pp.removeFeeds();
               }
           }
@@ -256,7 +261,7 @@ public class FeedTree extends javax.swing.JPanel {
 
     public void updateFeeds(ArrayList<FeedsRecord> feeds, boolean readFeeds) {
         MySeriesLogger.logger.log(Level.INFO, "Updating all feeds");
-        FeedUpdater fu = new FeedUpdater(this, feeds, readFeeds);
+        FeedUpdater fu = new FeedUpdater(this, feeds, readFeeds, m);
         Thread t = new Thread(fu);
         t.start();
     }
