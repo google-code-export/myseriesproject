@@ -3,9 +3,6 @@
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="0"/>
-    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-      <Color blue="66" green="66" red="66" type="rgb"/>
-    </Property>
     <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
@@ -117,12 +114,9 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="textField_Serial" alignment="0" pref="224" max="32767" attributes="1"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="spinner_season" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="165" max="-2" attributes="0"/>
-                                  </Group>
                                   <Component id="textfield_localDir" alignment="0" pref="224" max="32767" attributes="1"/>
                                   <Component id="textfield_screenshot" alignment="0" pref="224" max="32767" attributes="1"/>
+                                  <Component id="spinner_season" alignment="0" min="-2" pref="46" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -132,8 +126,9 @@
                                       <Component id="bt_screenshot" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="bt_localDir" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cb_existingSeries" alignment="0" min="-2" pref="189" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="148" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -167,6 +162,7 @@
                       <Group type="103" groupAlignment="2" attributes="0">
                           <Component id="label_title" alignment="2" min="-2" max="-2" attributes="0"/>
                           <Component id="textField_Serial" alignment="2" min="-2" max="-2" attributes="0"/>
+                          <Component id="cb_existingSeries" alignment="2" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="2" attributes="0">
@@ -416,6 +412,16 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_tvRageActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="cb_existingSeries">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="existingSeriesModel" type="code"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cb_existingSeriesActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
