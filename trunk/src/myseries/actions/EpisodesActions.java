@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myseries.MySeries;
@@ -69,9 +70,9 @@ public class EpisodesActions {
     }
   }
 
-  public static void exportEpisodes() {
+  public static void exportEpisodes(MySeries m) {
     MySeriesLogger.logger.log(Level.INFO, "Showing export episodes panel");
-    new ExportEpisodes();
+    new ExportEpisodes(m.tableEpisodes);
   }
 
   public static void importEpisodes(MySeries m) {
@@ -85,7 +86,7 @@ public class EpisodesActions {
     }
   }
 
-  public static void viewEpisode() {
+  public static void viewEpisode(JTable episodesTable) {
     File localDir = new File(Series.getCurrentSerial().getLocalDir().trim());
     int season = Series.getCurrentSerial().getSeason();
     int episode = Episodes.getCurrentEpisode().getEpisode();
@@ -93,45 +94,51 @@ public class EpisodesActions {
         new String[]{Series.getCurrentSerial().getFullTitle(),Episodes.getCurrentEpisode().getTitle()});
     String regex = MyUsefulFunctions.createRegex(season, episode);
     String regexFake = MyUsefulFunctions.createRegex(season,season*10+ episode);
-    Video.getVideos(localDir, regex, regexFake);
+    Video.getVideos(localDir, regex, regexFake, episodesTable);
   }
 
-  public static void deleteEpisode() {
+  public static void deleteEpisode(JTable episodesTable) {
     String title = Episodes.getCurrentEpisode().getTitle();
     int episode_ID = Episodes.getCurrentEpisode().getEpisode_ID();
     MySeriesLogger.logger.log(Level.INFO, "Deleting episode {0}",title);
-    int answ = MyMessages.question("Delete Episode?", "Really delete the episode " + title + "?");
+    int answ = MyMessages.confirm("Delete Episode?", "Really delete the episode " + title + "?");
     if (answ == JOptionPane.YES_OPTION) {
+      DBConnection conn = new DBConnection();
       try {
         String sql = "DELETE FROM episodes WHERE episode_ID = " + episode_ID;
-        DBConnection.stmt.execute(sql);
+        conn.stmt.execute(sql);
         MySeriesLogger.logger.log(Level.FINE, "Episode deleted");
-        Episodes.updateEpisodesTable();
+        Episodes.updateEpisodesTable(episodesTable);
       } catch (SQLException ex) {
         MySeriesLogger.logger.log(Level.SEVERE, "Could not delete episode", ex);
+      } finally {
+        conn.close();
       }
     } else {
       MySeriesLogger.logger.log(Level.INFO, "Action aborted by the user");
     }
   }
 
-  public static void deleteEpisodes(ArrayList<EpisodesRecord> episodes) {
+  public static void deleteEpisodes(JTable episodesTable, ArrayList<EpisodesRecord> episodes) {
     MySeriesLogger.logger.log(Level.INFO, "Deleting {0} episodes ",episodes.size());
-    int answ = MyMessages.question("Delete Episode?", "Really delete the selected episodes ?");
+    int answ = MyMessages.confirm("Delete Episode?", "Really delete the selected episodes ?");
+    DBConnection conn = new DBConnection();
     if (answ == JOptionPane.YES_OPTION) {
       for (Iterator<EpisodesRecord> it = episodes.iterator(); it.hasNext();) {
         EpisodesRecord e = it.next();
         MySeriesLogger.logger.log(Level.INFO, "Deleting episode {0}" + e.getTitle());
         String sql = "DELETE FROM episodes WHERE episode_ID = " + e.getEpisode_ID();
         try {
-          DBConnection.stmt.execute(sql);
+          conn.stmt.execute(sql);
           MySeriesLogger.logger.log(Level.FINE, "Episode deleted");
         } catch (SQLException ex) {
           MySeriesLogger.logger.log(Level.SEVERE, "Could not delete episode " + e.getTitle(), ex);
+        } finally {
+          conn.close();
         }
       }
       try {
-        Episodes.updateEpisodesTable();
+        Episodes.updateEpisodesTable(episodesTable);
       } catch (SQLException ex) {
         MySeriesLogger.logger.log(Level.SEVERE, "Sql exception occured", ex);
       }
@@ -164,23 +171,10 @@ public class EpisodesActions {
         Matcher matcher = pattern.matcher(name);
         Matcher matcherFake = patternFake.matcher(name);
         if (matcher.find() &&!matcherFake.find()) {
-          String[] tokens = name.split("\\.", -1);
-          String ext = tokens[tokens.length - 1];
-          if (MyUsefulFunctions.isSubtitle(name)) {
-            if (tokens[tokens.length - 2].equals("gr") || tokens[tokens.length - 2].equals("en")) {
-              ext = tokens[tokens.length - 2] + "." + tokens[tokens.length - 1];
-            }
-          }
-          String sample = "";
-          if (name.indexOf("sample") > -1) {
-            sample = "_sample";
-          }
-          String newFilename = series.getTitle()
-                  + Options.toString(Options.SEASON_SEPARATOR, false) + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0")
-                  + Options.toString(Options.EPISODE_SEPARATOR, false) + MyUsefulFunctions.padLeft(episodeRecord.getEpisode(), 2, "0")
-                  + Options.toString(Options.TITLE_SEPARATOR, false) + episodeRecord.getTitle();
+         
+          String newFilename = MyUsefulFunctions.getRenamedEpisode(name, series, episodeRecord);
 
-          String newName = path + "/" + newFilename + sample + "." + ext;
+          String newName = path + "/" + newFilename;
           File newFile = new File(newName);
           oldNames.add(files[i]);
           newNames.add(episodeRecord);
@@ -191,14 +185,14 @@ public class EpisodesActions {
     if (oldNames.size() > 0) {
       MySeriesLogger.logger.log(Level.INFO, "{0} files to rename",newNames.size());
       MySeriesLogger.logger.log(Level.INFO, "Showing Rename panel");
-      RenameEpisodes r = new RenameEpisodes(oldNames, newNames, series);
+      RenameEpisodes r = new RenameEpisodes(oldNames, newNames, series, RenameEpisodes.SINGLE_EPISODE);
     } else {
       MySeriesLogger.logger.log(Level.INFO, "No files to rename");
       MyMessages.message("No files to rename", "There are no available files to rename");
     }
   }
 
-  public static void renameEpisodes() {
+  public static void renameEpisodes(JTable episodesTable) {
     try {
       ArrayList<File> oldNames = new ArrayList<File>();
       ArrayList<EpisodesRecord> newNames = new ArrayList<EpisodesRecord>();
@@ -216,7 +210,7 @@ public class EpisodesActions {
       File[] files = dir.listFiles();
       String path;
 
-      ArrayList<EpisodesRecord> episodes = Episodes.getCurrentSeriesEpisodes();
+      ArrayList<EpisodesRecord> episodes = Episodes.getCurrentSeriesEpisodes(episodesTable);
       for (Iterator<EpisodesRecord> it = episodes.iterator(); it.hasNext();) {
         EpisodesRecord episodesRecord = it.next();
         int episode = episodesRecord.getEpisode();
@@ -232,25 +226,9 @@ public class EpisodesActions {
             Matcher matcher = pattern.matcher(name);
             Matcher matcherFake = patternFake.matcher(name);
             if (matcher.find() &&!matcherFake.find()) {
-              String[] tokens = name.split("\\.", -1);
-              String ext = tokens[tokens.length - 1];
-              if (MyUsefulFunctions.isSubtitle(name)) {
-                if (tokens[tokens.length - 2].equals("gr") || tokens[tokens.length - 2].equals("en")) {
-                  ext = tokens[tokens.length - 2] + "." + tokens[tokens.length - 1];
-                }
-              }
-
-              String sample = "";
-              if (name.indexOf("sample") > -1) {
-                sample = "_sample";
-              }
-
-              String newFilename = series.getTitle()
-                      + Options.toString(Options.SEASON_SEPARATOR, false) + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0")
-                      + Options.toString(Options.EPISODE_SEPARATOR, false) + MyUsefulFunctions.padLeft(episodesRecord.getEpisode(), 2, "0")
-                      + Options.toString(Options.TITLE_SEPARATOR, false) + episodesRecord.getTitle();
-
-              String newName = path + "/" + newFilename + sample + "." + ext;
+             String newFilename = MyUsefulFunctions.getRenamedEpisode(name, series, episodesRecord);
+              
+              String newName = path + "/" + newFilename;
               File newFile = new File(newName);
               oldNames.add(files[i]);
               newNames.add(episodesRecord);
@@ -262,7 +240,7 @@ public class EpisodesActions {
       if (oldNames.size() > 0) {
         MySeriesLogger.logger.log(Level.FINE, "{0} files to rename",newNames.size());
         MySeriesLogger.logger.log(Level.INFO, "Showing rename panel");
-        RenameEpisodes r = new RenameEpisodes(oldNames, newNames, series);
+        RenameEpisodes r = new RenameEpisodes(oldNames, newNames, series, RenameEpisodes.MULTIPLE_EPISODES);
       } else {
         myseries.MySeries.glassPane.activate(null);
         MyMessages.message("No files to rename", "There are no available files to rename");
@@ -273,7 +251,7 @@ public class EpisodesActions {
     }
   }
 
-  public static void downloadSubtitles(String site) {
+  public static void downloadSubtitles(String site, MySeries m) {
     MySeriesLogger.logger.log(Level.INFO, "Downloading subtitles from {0}",site);
     if (site.equals(SubtitleConstants.TV_SUBTITLES_NAME)) {
       SeriesRecord series = Series.getCurrentSerial();
@@ -338,8 +316,8 @@ public class EpisodesActions {
       }
     }
     try {
-      Episodes.updateEpisodesTable();
-      Filters.getFilteredSeries();
+      Episodes.updateEpisodesTable(m.tableEpisodes);
+      Filters.getFilteredSeries(m.comboBox_seen, m.comboBox_filterSubtitles, m.combobox_downloaded);
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, "Sql exception occured", ex);
     }
