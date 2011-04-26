@@ -13,6 +13,7 @@ package tools.internetUpdate.tvrage;
 import database.DBHelper;
 import database.SeriesRecord;
 import java.awt.Dialog.ModalityType;
+import java.util.logging.Logger;
 import tools.MySeriesLogger;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -40,100 +41,106 @@ import tools.options.Options;
  */
 public class TrGetId extends MyDraggable {
 
-    private MyEventsClass evClass;
-    private MySeries m;
-    private int series_ID = 0;
-    private AdminSeries adminSeries;
-    String title;
-    ComboBoxModel resultsModel = new DefaultComboBoxModel();
-    public int tvRageID = 0;
-    private boolean isConected;
-    private static final long serialVersionUID = 345645747547L;
-    private static int instances = 0;
-    private boolean cancel = true;
-    private boolean screenshot = false;
+  private MyEventsClass evClass;
+  private MySeries m;
+  private int series_ID = 0;
+  private AdminSeries adminSeries;
+  String title;
+  ComboBoxModel resultsModel = new DefaultComboBoxModel();
+  public int tvRageID = 0;
+  private boolean isConected;
+  private static final long serialVersionUID = 345645747547L;
+  private static int instances = 0;
+  private boolean cancel = true;
+  private boolean screenshot = false;
+  private boolean downloadScreenshot;
+  public DownloadScreenshot scrDownload;
 
-    {
-        isConected = MyUsefulFunctions.hasInternetConnection(InternetUpdate.TV_RAGE_URL);
+  {
+    isConected = MyUsefulFunctions.hasInternetConnection(InternetUpdate.TV_RAGE_URL);
+  }
+  
+
+  /** Creates new form GetTvRageID */
+  public TrGetId() {
+  }
+
+  /**
+   * Creates a tvrage get id from My series form
+   * @param m MySeries form
+   * @param series_ID The series ID
+   * @param title The series title
+   * @param internetUpdate If internet update should invoked
+   */
+  public TrGetId(MySeries m, int series_ID, String title, boolean downloadScreenshot) {
+    MySeriesLogger.logger.log(Level.INFO, "Getting tvrage id for series {0} from application", title);
+    this.m = m;
+    this.series_ID = series_ID;
+    this.title = title;
+    this.downloadScreenshot = downloadScreenshot;
+    evClass = new MyEventsClass(m);
+    getID();
+
+
+  }
+
+  /**
+   * Creates a TvRage get id from admin series form
+   * @param adminSeries The ad
+   * @param title
+   */
+  public TrGetId(AdminSeries adminSeries, String title) {
+    MySeriesLogger.logger.log(Level.INFO, "Getting tvrage id for series {0} from series admin", title);
+    this.adminSeries = adminSeries;
+    this.title = title;
+    getID();
+    adminSeries.setModalityType(ModalityType.APPLICATION_MODAL);
+  }
+
+  /**
+   * Creates a TvRage get id from admin series form
+   * @param adminSeries The ad
+   * @param title
+   * @param screenshot If screenshot is queried
+   */
+  public TrGetId(AdminSeries adminSeries, String title, boolean screenshot) {
+    MySeriesLogger.logger.log(Level.INFO, "Getting tvrage id for series {0} for screenshot", title);
+    this.adminSeries = adminSeries;
+    this.title = title;
+    this.screenshot = screenshot;
+    getID();
+    adminSeries.setModalityType(ModalityType.APPLICATION_MODAL);
+
+  }
+
+  private void getID() {
+    if (!isConected) {
+      MySeriesLogger.logger.log(Level.WARNING, "Could not connect to internet");
+      MyMessages.internetError(true);
+      bt_cancelActionPerformed(null);
+      return;
     }
+    MySeriesLogger.logger.log(Level.INFO, "Initializong components");
+    initComponents();
+    MySeriesLogger.logger.log(Level.FINE, "Components initialized");
+    label_title.setText("Select the right series from the results found for " + title);
+    setLocationRelativeTo(null);
+    setLocation(getX(), 200);
+    setModalityType(ModalityType.MODELESS);
+    pack();
+    setVisible(true);
+    MySeriesLogger.logger.log(Level.INFO, "Searching for series {0}", title);
+    SearchTvRage s = new SearchTvRage(title, this);
+    Thread t = new Thread(s);
+    t.start();
+  }
 
-    /** Creates new form GetTvRageID */
-    public TrGetId() {
-    }
-
-    /**
-     * Creates a tvrage get id from My series form
-     * @param m MySeries form
-     * @param series_ID The series ID
-     * @param title The series title
-     */
-    public TrGetId(MySeries m, int series_ID, String title) {
-        MySeriesLogger.logger.log(Level.INFO, "Getting tvrage id for series {0} from application", title);
-        this.m = m;
-        this.series_ID = series_ID;
-        this.title = title;
-        evClass = new MyEventsClass(m);
-        getID();
-
-    }
-
-    /**
-     * Creates a TvRage get id from admin series form
-     * @param adminSeries The ad
-     * @param title
-     */
-    public TrGetId(AdminSeries adminSeries, String title) {
-        MySeriesLogger.logger.log(Level.INFO, "Getting tvrage id for series {0} from series admin", title);
-        this.adminSeries = adminSeries;
-        this.title = title;
-        getID();
-        adminSeries.setModalityType(ModalityType.APPLICATION_MODAL);
-    }
-
-    /**
-     * Creates a TvRage get id from admin series form
-     * @param adminSeries The ad
-     * @param title
-     * @param screenshot If screenshot is queried
-     */
-    public TrGetId(AdminSeries adminSeries, String title, boolean screenshot) {
-        MySeriesLogger.logger.log(Level.INFO, "Getting tvrage id for series {0} for screenshot", title);
-        this.adminSeries = adminSeries;
-        this.title = title;
-        this.screenshot = screenshot;
-        getID();
-        adminSeries.setModalityType(ModalityType.APPLICATION_MODAL);
-
-    }
-
-    private void getID() {
-        if (!isConected) {
-            MySeriesLogger.logger.log(Level.WARNING, "Could not connect to internet");
-            MyMessages.internetError(true);
-            bt_cancelActionPerformed(null);
-            return;
-        }
-        MySeriesLogger.logger.log(Level.INFO, "Initializong components");
-        initComponents();
-        MySeriesLogger.logger.log(Level.FINE, "Components initialized");
-        label_title.setText("Select the right series from the results found for " + title);
-        setLocationRelativeTo(null);
-        setLocation(getX(), 200);
-        setModalityType(ModalityType.MODELESS);
-        pack();
-        setVisible(true);
-        MySeriesLogger.logger.log(Level.INFO, "Searching for series {0}", title);
-        SearchTvRage s = new SearchTvRage(title, this);
-        Thread t = new Thread(s);
-        t.start();
-    }
-
-    /** This method is called from within the constructor to
-     * initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is
-     * always regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
+  /** This method is called from within the constructor to
+   * initialize the form.
+   * WARNING: Do NOT modify this code. The content of this method is
+   * always regenerated by the Form Editor.
+   */
+  @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -256,65 +263,67 @@ public class TrGetId extends MyDraggable {
     }// </editor-fold>//GEN-END:initComponents
 
   private void bt_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelActionPerformed
-      //MySeries.glassPane.deactivate();
-      if (!cancel) {
-          if (adminSeries != null) {
-              adminSeries.setModalityType(ModalityType.APPLICATION_MODAL);
-              if (tvRageID > 0) {
-                  adminSeries.textfield_tvRageID.setText(String.valueOf(tvRageID));
-                  if (screenshot) {
-                      setVisible(false);
-                      DownloadScreenshot g = new DownloadScreenshot(tvRageID, title);
-                      dispose();
-                      if (g.isSuccess()) {
-                          adminSeries.textfield_screenshot.setText(g.getFilename());
-                          MyMessages.message("Downloading screenshot", "The screenshot was saved in the images folder");
-                          adminSeries.setVisible(true);
-                          return;
-                      } else {
-                          MyMessages.error("Downloading screenshot", "No screenshot was found");
-                          adminSeries.setVisible(true);
-                          return;
-                      }
-                  }
-              }
-              dispose();
+    //MySeries.glassPane.deactivate();
+    if (!cancel) {
+      if (adminSeries != null) {
+        adminSeries.setModalityType(ModalityType.APPLICATION_MODAL);
+        if (tvRageID > 0) {
+          adminSeries.textfield_tvRageID.setText(String.valueOf(tvRageID));
+          if (screenshot) {
+            setVisible(false);
+            DownloadScreenshot g = new DownloadScreenshot(tvRageID, title);
+            dispose();
+            if (g.isSuccess()) {
+              adminSeries.textfield_screenshot.setText(g.getFilename());
+              MyMessages.message("Downloading screenshot", "The screenshot was saved in the images folder");
               adminSeries.setVisible(true);
-          } else {
-              if (m != null) {
-                  InternetUpdate iu = new InternetUpdate(m, Series.getCurrentSerial(), InternetUpdate.TV_RAGE_NAME);
-              }
+              return;
+            } else {
+              MyMessages.error("Downloading screenshot", "No screenshot was found");
+              adminSeries.setVisible(true);
+              return;
+            }
           }
+        }
+        dispose();
+        adminSeries.setVisible(true);
       } else {
-          dispose();
-          if (adminSeries != null) {
-              adminSeries.setVisible(true);
-          }
-
+        if (m != null && !downloadScreenshot) {
+          InternetUpdate iu = new InternetUpdate(m, Series.getCurrentSerial(), InternetUpdate.TV_RAGE_NAME);
+        } else {
+           scrDownload = new DownloadScreenshot(tvRageID, title);
+        }
       }
+    } else {
       dispose();
+      if (adminSeries != null) {
+        adminSeries.setVisible(true);
+      }
+
+    }
+    dispose();
   }//GEN-LAST:event_bt_cancelActionPerformed
 
   private void bt_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_okActionPerformed
-      TvRageSeries sel = (TvRageSeries) combo_results.getSelectedItem();
-      tvRageID = Integer.parseInt(sel.id);
-      if (series_ID > 0) {
-          try {
-              SeriesRecord cSeries = DBHelper.getSeriesByID(series_ID);
-              cSeries.setTvrage_ID(tvRageID);
-              cSeries.save();
-              MySeriesLogger.logger.log(Level.INFO, "Setting current series to {0}",cSeries.getFullTitle());
-              MyEvent event = new MyEvent(m, MyEventHandler.SET_CURRENT_SERIES);
-              event.setSeries(cSeries);
-              evClass.fireMyEvent(event);
-          } catch (SQLException ex) {
-              MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-              MyMessages.error("SQL Error", "TvRage ID could not be saved in database");
-          }
+    TvRageSeries sel = (TvRageSeries) combo_results.getSelectedItem();
+    tvRageID = Integer.parseInt(sel.id);
+    if (series_ID > 0) {
+      try {
+        SeriesRecord cSeries = DBHelper.getSeriesByID(series_ID);
+        cSeries.setTvrage_ID(tvRageID);
+        cSeries.save();
+        MySeriesLogger.logger.log(Level.INFO, "Setting current series to {0}", cSeries.getFullTitle());
+        MyEvent event = new MyEvent(m, MyEventHandler.SET_CURRENT_SERIES);
+        event.setSeries(cSeries);
+        evClass.fireMyEvent(event);
+      } catch (SQLException ex) {
+        MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+        MyMessages.error("SQL Error", "TvRage ID could not be saved in database");
       }
-      cancel = false;
-      bt_cancelActionPerformed(evt);
-      //MySeries.glassPane.deactivate();
+    }
+    cancel = false;
+    bt_cancelActionPerformed(evt);
+    //MySeries.glassPane.deactivate();
   }//GEN-LAST:event_bt_okActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private myComponents.myGUI.buttons.MyButtonCancel bt_cancel;

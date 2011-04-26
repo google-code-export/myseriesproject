@@ -346,6 +346,9 @@
                   <Dimension value="[180, 110]"/>
                 </Property>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new myComponents.myGUI.MyImagePanel(false)"/>
+              </AuxValues>
 
               <Layout>
                 <DimensionLayout dim="0">
