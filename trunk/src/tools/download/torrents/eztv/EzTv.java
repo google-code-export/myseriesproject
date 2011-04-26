@@ -52,7 +52,7 @@ public class EzTv extends AbstractTorrentDownload implements Runnable, TorrentCo
       progress.setString("Getting rss feeds from " + EZTV_NAME);
       getStream();
     } else {
-      MyMessages.internetError();
+      MyMessages.internetError(true);
     }
   }
 

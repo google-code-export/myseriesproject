@@ -47,7 +47,7 @@ public class Isohunt extends AbstractTorrentDownload implements Runnable, Torren
       progress.setString("Getting json data from " + ISOHUNT_NAME);
       getStream();
     } else {
-      MyMessages.internetError();
+      MyMessages.internetError(true);
     }
   }
 

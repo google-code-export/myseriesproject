@@ -11,10 +11,6 @@ package tools.download.torrents;
 public interface TorrentConstants {
 
   /**
-   * The torrents path : "torrents/"
-   */
-  public static final String TORRENTS_PATH = "torrents/";
-  /**
    * The EzTv name : EzTv
    */
   public static String EZTV_NAME = "EzTv";
