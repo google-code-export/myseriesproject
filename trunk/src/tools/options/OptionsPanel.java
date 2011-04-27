@@ -613,7 +613,7 @@ public class OptionsPanel extends MyDraggable {
     });
 
     jCheckBox1.setSelected(Options.toBoolean(Options.CHECK_VERSION));
-    jCheckBox1.setText("Check for updates on startup :");
+    jCheckBox1.setText("Check for updates on startup");
     jCheckBox1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     jCheckBox1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
     jCheckBox1.setMargin(new java.awt.Insets(0, 0, 0, 0));
@@ -671,7 +671,7 @@ public class OptionsPanel extends MyDraggable {
     spinner_columns.setValue(Options.toInt(Options.FEED_COLUMNS));
 
     cb_updateFeeds.setSelected(Options.toBoolean(Options.UPDATE_FEEDS));
-    cb_updateFeeds.setText("Update feeds on startup :");
+    cb_updateFeeds.setText("Update feeds on startup");
     cb_updateFeeds.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
     cb_updateFeeds.setMargin(new java.awt.Insets(0, 0, 0, 0));
     cb_updateFeeds.setName(Options.UPDATE_FEEDS);
