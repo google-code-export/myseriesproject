@@ -15,6 +15,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import myComponents.MyMessages;
 import myseries.MySeries;
 import myseries.StartPanel;
+import myseries.actions.ApplicationActions;
 import tools.MySeriesLogger;
 import tools.options.Options;
 import tools.options.Paths;
@@ -25,42 +26,34 @@ import tools.options.Paths;
  */
 public class CreateDatabase implements Runnable {
 
-  private Statement stmt;
   private StartPanel startPanel;
-  private boolean createNewDb = false;
-  private DBConnection conn;
 
   /**
    * Constructor for creating a new database
    * @param startPanelForm The form from which the constructor is invoked
    * @param db The database name
-   * @param createNewDB Create a new db or ovewrite it if exists
    * @throws ClassNotFoundException
    * @throws SQLException
    * @throws FileNotFoundException
    * @throws IOException
    */
-  public CreateDatabase(StartPanel startPanelForm, String db, boolean createNewDB) throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
+  public CreateDatabase(StartPanel startPanelForm, String db) throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
     if (!db.endsWith(Database.EXT)) {
       db = db + Database.EXT;
     }
-    conn = new DBConnection(db);
-    this.stmt = conn.stmt;
+    DBConnection conn = new DBConnection(db);
     this.startPanel = startPanelForm;
-    this.createNewDb = createNewDB;
-    if (!createNewDB) {
-      conn.checkDatabase();
-    }
   }
 
   /**
    * Starts the runnable
    */
+  @Override
   public void run() {
     try {
-      File dbFile = new File(Options._USER_DIR_ + Paths.DATABASES_PATH + conn.db);
-      if (dbFile.exists() && dbFile.length() > 1 && createNewDb) {
-        MyMessages.error("DB Exists!!!", "DB File " + conn.db + " already exists\nAborting...");
+      File dbFile = new File(Options._USER_DIR_ + Paths.DATABASES_PATH + DBConnection.db);
+      if (dbFile.exists() && dbFile.length() > 1) {
+        MyMessages.error("DB Exists!!!", "DB File " + DBConnection.db + " already exists\nAborting...");
         MySeriesLogger.logger.log(Level.WARNING, "DB File already exists");
       } else {
         commit();
@@ -98,8 +91,8 @@ public class CreateDatabase implements Runnable {
       startPanel.dispose();
       MySeriesLogger.logger.log(Level.INFO, "Closing Main Window");
       startPanel.m.dispose();
-      MySeriesLogger.logger.log(Level.INFO, "Loading MySerieS");
-      new MySeries();
+      MySeriesLogger.logger.log(Level.INFO, "Restarting MySerieS");
+      ApplicationActions.restartApplication(startPanel.m);
     }
   }
 
@@ -110,7 +103,7 @@ public class CreateDatabase implements Runnable {
    */
   public void createTables() throws SQLException, IOException {
     MySeriesLogger.logger.log(Level.INFO, "Creating table episodes");
-    stmt.executeUpdate("CREATE TABLE IF NOT EXISTS [episodes] "
+    DBConnection.conn.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS [episodes] "
             + "([episode_ID] INTEGER NOT NULL PRIMARY KEY UNIQUE,"
             + "  [episode] VARCHAR DEFAULT 0,"
             + " [title] VARCHAR DEFAULT '',"
@@ -123,7 +116,7 @@ public class CreateDatabase implements Runnable {
             + " [rate] BOOLEAN DEFAULT 0.0)");
     MySeriesLogger.logger.log(Level.FINE, "Episodes table created");
     MySeriesLogger.logger.log(Level.INFO, "Creating table series");
-    stmt.executeUpdate("CREATE TABLE IF NOT EXISTS [series] "
+    DBConnection.conn.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS [series] "
             + "([series_ID] INTEGER NOT NULL ON CONFLICT ABORT "
             + "PRIMARY KEY ON CONFLICT ABORT AUTOINCREMENT UNIQUE ON CONFLICT ABORT, "
             + "[title] VARCHAR NOT NULL ON CONFLICT ABORT,"
@@ -137,14 +130,14 @@ public class CreateDatabase implements Runnable {
             + "[screenshot] VARCHAR DEFAULT '',"
             + "[deleted]INTEGER DEFAULT 0)");
     MySeriesLogger.logger.log(Level.INFO, "Creating table filters");
-    stmt.executeUpdate("CREATE  TABLE IF NOT EXISTS [filters] "
+    DBConnection.conn.createStatement().executeUpdate("CREATE  TABLE IF NOT EXISTS [filters] "
             + "([filter_ID] INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , "
             + "[title] VARCHAR NOT NULL  DEFAULT 'filter', "
             + "[downloaded] INTEGER NOT NULL  DEFAULT 0, "
             + "[seen] INTEGER NOT NULL  DEFAULT 0, "
             + "[subtitles] INTEGER NOT NULL  DEFAULT 0)");
     MySeriesLogger.logger.log(Level.INFO, "Creating table feeds");
-    stmt.executeUpdate("CREATE TABLE IF NOT EXISTS  [feeds]"
+    DBConnection.conn.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS  [feeds]"
             + "([feed_ID] INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE ,"
             + "[title] VARCHAR NOT NULL , "
             + "[url] VARCHAR NOT NULL )");

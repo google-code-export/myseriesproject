@@ -44,8 +44,7 @@ public class FilterRecord extends Record {
     if (this.getFilter_ID() != 0) {
       MySeriesLogger.logger.log(Level.INFO, "Deleting filter: {0} ",getTitle());
       sql = "DELETE FROM filters WHERE filter_ID = " + this.getFilter_ID();
-      DBConnection conn = new DBConnection();
-      return queryUpdate(conn.stmt, sql);
+      return queryUpdate(DBConnection.conn.createStatement(), sql);
     }
     return -1;
   }
@@ -66,8 +65,7 @@ public class FilterRecord extends Record {
       sql = "INSERT INTO filters (title, downloaded, seen, subtitles) VALUES('" + this.getTitle() + "', "
               + this.getDownloaded() + ", " + this.getSeen() + ", " + this.getSubtitles() + ")";
     }
-    DBConnection conn = new DBConnection();
-    return queryUpdate(conn.stmt,sql);
+    return queryUpdate(DBConnection.conn.createStatement(),sql);
   }
 
   /**
