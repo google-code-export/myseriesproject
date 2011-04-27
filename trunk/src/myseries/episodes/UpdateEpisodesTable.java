@@ -7,15 +7,13 @@ package myseries.episodes;
 import database.DBConnection;
 import database.EpisodesRecord;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import javax.swing.event.TableModelEvent;
 import tools.MySeriesLogger;
 import javax.swing.table.TableModel;
 import myComponents.MyMessages;
-import myseries.MySeries;
-import tools.download.subtitles.Subtitle;
 import tools.languages.Language;
-import myComponents.MyUsefulFunctions;
 
 /**
  * Updates the episodes table
@@ -59,7 +57,8 @@ public class UpdateEpisodesTable {
       er.setSeen((Boolean) rec[Episodes.SEEN_COLUMN] ? EpisodesRecord.SEEN : EpisodesRecord.NOT_SEEN);
       er.setRate((Double) rec[Episodes.RATE_COLUMN]);
       MySeriesLogger.logger.log(Level.INFO, "Update episode {0}", er.getTitle());
-      er.save(new DBConnection().stmt);
+      Statement stmt = DBConnection.conn.createStatement();
+      er.save(stmt);
       MySeriesLogger.logger.log(Level.FINE, "Episode updated");
       // NextEpisodes.createNextEpisodes();
       // NextEpisodes.show();

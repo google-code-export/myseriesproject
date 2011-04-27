@@ -117,10 +117,9 @@ public class StatEpisodes extends javax.swing.JPanel {
 
   public void refresh() {
     clearModel();
-    DBConnection conn = new DBConnection();
     ResultSet rs = null;
     try {
-      Statement stmt = conn.stmt;
+      Statement stmt = DBConnection.conn.createStatement();
       String sql = "SELECT  series.title AS series, episodes.episode as episode,  series.season as season, episodes.title as title, episodes.rate as rate "
           + "FROM series join episodes on series.series_ID = episodes.series_ID "
           + "where episodes.rate > 0 order by rate desc";
@@ -139,7 +138,6 @@ public class StatEpisodes extends javax.swing.JPanel {
       } catch (SQLException ex) {
         MySeriesLogger.logger.log(Level.SEVERE, "Could not close resultset", ex);
       }
-      conn.close();
     }
   }
 

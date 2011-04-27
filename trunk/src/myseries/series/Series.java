@@ -103,8 +103,8 @@ public class Series {
     MySeriesLogger.logger.log(Level.INFO, "Getting all the {0} series", deleted ? "deleted" : "");
     ArrayList<SeriesRecord> series = new ArrayList<SeriesRecord>();
     String sql = "SELECT * FROM series  WHERE deleted = " + d + " ORDER BY title , season";
-     DBConnection conn = new DBConnection();
-    ResultSet rs = conn.stmt.executeQuery(sql);
+   
+    ResultSet rs = DBConnection.conn.createStatement().executeQuery(sql);
     boolean hidden;
     boolean update;
     while (rs.next()) {
@@ -127,7 +127,6 @@ public class Series {
       MySeriesLogger.logger.log(Level.FINE, "Found series {0}", s.getFullTitle());
     }
     rs.close();
-    conn.close();
     return series;
   }
 

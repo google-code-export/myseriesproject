@@ -26,6 +26,7 @@ import database.EpisodesRecord;
 import database.SeriesRecord;
 import help.HelpWindow;
 import java.awt.Color;
+import java.sql.Statement;
 import java.util.Calendar;
 import javax.swing.DefaultComboBoxModel;
 import myComponents.MyMessages;
@@ -339,7 +340,8 @@ public class AdminEpisodes extends MyDraggable {
         aired = f.format(dateChooser.getDate());
       }
       episodeRecord.setAired(aired);
-      episodeRecord.save(new DBConnection().stmt);
+      Statement stmt = DBConnection.conn.createStatement();
+      episodeRecord.save(stmt);
       MySeriesLogger.logger.log(Level.INFO, "Episode {0} added", episodeRecord.getTitle());
       Episodes.getCurrentSeriesEpisodes(m.tableEpisodes);
       dispose();

@@ -289,8 +289,13 @@ public class ApplicationActions {
     try {
       String pathToApp = new File("restart.jar").getAbsolutePath();
       File startingDir = new File("restart.jar").getAbsoluteFile().getParentFile();
-      MyUsefulFunctions.runExternalProgram(new String[]{"java", "-jar", pathToApp}, startingDir);
-      ApplicationActions.exitApplication(m);
+      if (new File("restart.jar").exists()) {
+        MyUsefulFunctions.runExternalProgram(new String[]{"java", "-jar", pathToApp}, startingDir);
+        ApplicationActions.exitApplication(m);
+      } else {
+        MySeriesLogger.logger.log(Level.SEVERE, "Could not restart application");
+        MyMessages.error("Restart Application", "Could not restart the application");
+      }
     } catch (IOException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, "Could not restart application", ex);
       MyMessages.error("Restart Application", "Could not restart the application");

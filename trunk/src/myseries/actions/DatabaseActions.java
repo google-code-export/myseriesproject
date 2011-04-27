@@ -37,9 +37,8 @@ public class DatabaseActions {
       if (load != null && !load.equals("null") && !load.equals(Options.toString(Options.DB_NAME))) {
         MySeriesLogger.logger.log(Level.INFO, "Database to load : {0}", load);
         conn = new DBConnection(load);
-        if (conn.checkDatabase()) {
-          Options.setOption(Options.DB_NAME, load);
-          Options.save();
+        if (DBConnection.checkDatabase()) {
+          
           ApplicationActions.restartApplication(m);
         } else {
           MySeriesLogger.logger.log(Level.WARNING, "Selected database is invlid.Not loading...");
@@ -50,9 +49,7 @@ public class DatabaseActions {
       }
     } finally {
       MySeries.glassPane.deactivate();
-      if (conn != null) {
-        conn.close();
-      }
+     
     }
   }
 

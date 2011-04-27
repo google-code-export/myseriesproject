@@ -77,11 +77,10 @@ public class SeriesActions {
     int answ = MyMessages.confirm("Delete Serial?", "Really delete the series " + title + " season " + season + "?");
     ArrayList<SeriesRecord> s;
     SeriesRecord ser;
-    DBConnection conn = new DBConnection();
     if (answ == JOptionPane.YES_OPTION) {
       try {
         String sql = "UPDATE series SET deleted = " + SeriesRecord.DELETED + " WHERE series_ID = " + series_ID;
-        conn.stmt.execute(sql);
+        DBConnection.conn.createStatement().execute(sql);
         MySeriesLogger.logger.log(Level.INFO, "Series deleted");
         m.getEvClass().fireMyEvent(new MyEvent(m, MyEventHandler.SERIES_UPDATE));
         if (Series.getSize() > 0) {
@@ -94,9 +93,7 @@ public class SeriesActions {
 
       } catch (SQLException ex) {
         MySeriesLogger.logger.log(Level.SEVERE, "Sql exception occured", ex);
-      } finally {
-        conn.close();
-      }
+      } 
     } else {
       MySeriesLogger.logger.log(Level.INFO, "Delete series aborted by user");
     }

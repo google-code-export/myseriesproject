@@ -10,6 +10,7 @@
  */
 package myseries.series;
 
+import java.util.logging.Logger;
 import javax.swing.event.DocumentEvent;
 import myComponents.myGUI.CopyScreenshot;
 import tools.MySeriesLogger;
@@ -37,6 +38,7 @@ import database.DBConnection;
 import help.HelpWindow;
 import java.awt.Dimension;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.event.DocumentListener;
@@ -710,9 +712,10 @@ public class AdminSeries extends MyDraggable {
           private void cb_existingSeriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_existingSeriesActionPerformed
             if (cb_existingSeries.getSelectedIndex() > 0) {
               String title = (String) cb_existingSeries.getSelectedItem();
-              DBConnection conn = new DBConnection();
+              ResultSet rs = null;
               try {
-                ResultSet rs = SeriesRecord.query(conn.stmt, "SELECT * FROM series WHERE title ='"
+                Statement stmt = DBConnection.conn.createStatement();
+                rs = SeriesRecord.query(stmt, "SELECT * FROM series WHERE title ='"
                     + title + "' LIMIT 1");
                 while (rs.next()) {
                   textField_Serial.setText(rs.getString("title"));
@@ -723,7 +726,13 @@ public class AdminSeries extends MyDraggable {
               } catch (SQLException ex) {
                 MySeriesLogger.logger.log(Level.SEVERE, "Could not get series info", ex);
               } finally {
-                conn.close();
+                if (rs != null) {
+                  try {
+                    rs.close();
+                  } catch (SQLException ex) {
+                    Logger.getLogger(AdminSeries.class.getName()).log(Level.SEVERE, null, ex);
+                  }
+                }
               }
             }
           }//GEN-LAST:event_cb_existingSeriesActionPerformed
@@ -799,10 +808,12 @@ public class AdminSeries extends MyDraggable {
   }
 
   private void createExistingSeriesModel() {
-    DBConnection conn = new DBConnection();
+
     ArrayList<String> list = new ArrayList<String>();
+    ResultSet rs = null;
     try {
-      ResultSet rs = SeriesRecord.query(conn.stmt, "SELECT DISTINCT title FROM series");
+      Statement stmt = DBConnection.conn.createStatement();
+      rs = SeriesRecord.query(stmt, "SELECT DISTINCT title FROM series");
       list.add("Select from existing series");
       while (rs.next()) {
         list.add(rs.getString(1));
@@ -810,7 +821,13 @@ public class AdminSeries extends MyDraggable {
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, "Could not get series titles", ex);
     } finally {
-      conn.close();
+      try {
+        if (rs != null) {
+          rs.close();
+        }
+      } catch (SQLException ex) {
+        Logger.getLogger(AdminSeries.class.getName()).log(Level.SEVERE, null, ex);
+      }
     }
     existingSeriesModel = new DefaultComboBoxModel(list.toArray());
     cb_existingSeries.setModel(existingSeriesModel);
@@ -819,9 +836,10 @@ public class AdminSeries extends MyDraggable {
   private boolean seriesExist() {
     String title = textField_Serial.getText();
     int serSeason = Integer.parseInt(String.valueOf(spinner_season.getValue()));
-    DBConnection conn = new DBConnection();
+    ResultSet rs = null;
     try {
-      ResultSet rs = SeriesRecord.query(conn.stmt, "SELECT * FROM series WHERE title = '" + title + "' AND season = " + serSeason);
+      Statement stmt =  DBConnection.conn.createStatement();
+      rs = SeriesRecord.query(stmt, "SELECT * FROM series WHERE title = '" + title + "' AND season = " + serSeason);
       while (rs.next()) {
         return true;
       }
@@ -830,7 +848,11 @@ public class AdminSeries extends MyDraggable {
       MySeriesLogger.logger.log(Level.SEVERE, "Could not check for duplicate series", ex);
       return false;
     } finally {
-      conn.close();
+      try {
+        rs.close();
+      } catch (SQLException ex) {
+        Logger.getLogger(AdminSeries.class.getName()).log(Level.SEVERE, null, ex);
+      }
     }
   }
 }

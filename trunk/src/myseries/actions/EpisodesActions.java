@@ -103,17 +103,14 @@ public class EpisodesActions {
     MySeriesLogger.logger.log(Level.INFO, "Deleting episode {0}",title);
     int answ = MyMessages.confirm("Delete Episode?", "Really delete the episode " + title + "?");
     if (answ == JOptionPane.YES_OPTION) {
-      DBConnection conn = new DBConnection();
       try {
         String sql = "DELETE FROM episodes WHERE episode_ID = " + episode_ID;
-        conn.stmt.execute(sql);
+        DBConnection.conn.createStatement().execute(sql);
         MySeriesLogger.logger.log(Level.FINE, "Episode deleted");
         Episodes.updateEpisodesTable(episodesTable);
       } catch (SQLException ex) {
         MySeriesLogger.logger.log(Level.SEVERE, "Could not delete episode", ex);
-      } finally {
-        conn.close();
-      }
+      } 
     } else {
       MySeriesLogger.logger.log(Level.INFO, "Action aborted by the user");
     }
@@ -122,20 +119,17 @@ public class EpisodesActions {
   public static void deleteEpisodes(JTable episodesTable, ArrayList<EpisodesRecord> episodes) {
     MySeriesLogger.logger.log(Level.INFO, "Deleting {0} episodes ",episodes.size());
     int answ = MyMessages.confirm("Delete Episode?", "Really delete the selected episodes ?");
-    DBConnection conn = new DBConnection();
     if (answ == JOptionPane.YES_OPTION) {
       for (Iterator<EpisodesRecord> it = episodes.iterator(); it.hasNext();) {
         EpisodesRecord e = it.next();
         MySeriesLogger.logger.log(Level.INFO, "Deleting episode {0}" + e.getTitle());
         String sql = "DELETE FROM episodes WHERE episode_ID = " + e.getEpisode_ID();
         try {
-          conn.stmt.execute(sql);
+          DBConnection.conn.createStatement().execute(sql);
           MySeriesLogger.logger.log(Level.FINE, "Episode deleted");
         } catch (SQLException ex) {
           MySeriesLogger.logger.log(Level.SEVERE, "Could not delete episode " + e.getTitle(), ex);
-        } finally {
-          conn.close();
-        }
+        } 
       }
       try {
         Episodes.updateEpisodesTable(episodesTable);

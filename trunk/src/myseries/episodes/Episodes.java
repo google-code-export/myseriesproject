@@ -137,7 +137,7 @@ public class Episodes {
     MySeriesLogger.logger.log(Level.INFO, "Setting the current episode");
     String sql = "SELECT * FROM episodes "
         + "WHERE series_ID = " + Series.getCurrentSerial().getSeries_ID() + " AND episode = " + episode;
-    ResultSet rs = EpisodesRecord.query(new DBConnection().stmt, sql);
+    ResultSet rs = EpisodesRecord.query(DBConnection.conn.createStatement(), sql);
     if (rs.next()) {
       currentEpisode = new EpisodesRecord();
       getCurrentEpisode().setEpisode_ID(rs.getInt("episode_ID"));
@@ -174,7 +174,6 @@ public class Episodes {
     SeriesRecord series = Series.getCurrentSerial();
     DefaultTableModel model = (DefaultTableModel) episodesTable.getModel();
     MySeriesLogger.logger.log(Level.INFO, "Getting episodes of series {0}",series.getFullTitle());
-    DBConnection conn = new DBConnection();
     if (Options.toBoolean(Options.AUTO_FILE_UPDATING) && series.isValidLocalDir()) {
       MySeriesLogger.logger.log(Level.INFO, "File auto updating is active");
       ArrayList<SeriesRecord> list = new ArrayList<SeriesRecord>();
@@ -192,7 +191,7 @@ public class Episodes {
     }
     String sql = "SELECT * FROM episodes WHERE series_ID = " + Series.getCurrentSerial().getSeries_ID()
         + " ORDER BY CAST(episode AS UNSIGNED) ASC";
-    Statement stmt = conn.stmt;
+    Statement stmt = DBConnection.conn.createStatement();
     ResultSet rs = stmt.executeQuery(sql);
     while (rs.next()) {
       EpisodesRecord e = new EpisodesRecord();
@@ -244,19 +243,18 @@ public class Episodes {
     MySeriesLogger.logger.log(Level.FINE, "Found {0} episodes",eps.size());
     if (!updated.isEmpty()) {
       MySeriesLogger.logger.log(Level.INFO, "Updating episodes");
-      conn.beginTransaction();
+      DBConnection.beginTransaction();
       //System.out.println(System.currentTimeMillis());
       for (Iterator<EpisodesRecord> it = updated.iterator(); it.hasNext();) {
         EpisodesRecord episodesRecord = it.next();
         episodesRecord.save(stmt);
         MySeriesLogger.logger.log(Level.FINE, "Updating {0}",episodesRecord.getTitle());
       }
-      conn.endTransaction();
+      DBConnection.endTransaction();
        //System.out.println(System.currentTimeMillis());
       MySeriesLogger.logger.log(Level.FINE, "Updating finished");
     }
     episodesTable.setModel(model);
-    conn.close();
     return eps;
   }
 
