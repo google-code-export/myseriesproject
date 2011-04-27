@@ -82,8 +82,7 @@ public class SeriesRecord extends Record {
           + this.getLocalDir() + "','" + this.getScreenshot()
           + "','" + this.sOnlineCode + "'," + this.deleted + ")";
     }
-    DBConnection conn = new DBConnection();
-    return queryUpdate(conn.stmt, sql);
+    return queryUpdate(DBConnection.conn.createStatement(), sql);
   }
 
   /**

@@ -7,8 +7,10 @@ package database;
 import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import myComponents.MyUsefulFunctions;
 import tools.options.Options;
 import tools.MySeriesLogger;
@@ -34,11 +36,12 @@ public class FeedsRecord extends Record {
   public FeedsRecord(int feed_ID) {
     super();
     if(feed_ID > 0){
+      ResultSet rs =null;
       try {
         MySeriesLogger.logger.log(Level.INFO, "Getting feed: {0}",feed_ID);
         String sql = "SELECT * FROM feeds WHERE feed_ID = " + feed_ID;
-        DBConnection conn = new DBConnection();
-        ResultSet rs = query(conn.stmt, sql);
+        Statement stmt =  DBConnection.conn.createStatement();
+         rs = query(stmt, sql);
         while (rs.next()) {
           this.feed_ID = feed_ID;
           this.url = rs.getString("url");
@@ -47,6 +50,14 @@ public class FeedsRecord extends Record {
         }
       } catch (SQLException ex) {
         MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+      } finally {
+        if(rs != null){
+          try {
+            rs.close();
+          } catch (SQLException ex) {
+            Logger.getLogger(FeedsRecord.class.getName()).log(Level.SEVERE, null, ex);
+          }
+        }
       }
 
     }
@@ -54,6 +65,7 @@ public class FeedsRecord extends Record {
 
   public static boolean deleteById(int id) {
     if(id > 0){
+      ResultSet rs = null;
       MySeriesLogger.logger.log(Level.INFO, "Deleting feed : {0}",id);
       String sql = "DELETE FROM feeds WHERE feed_ID = "+id;
       try {
@@ -63,8 +75,8 @@ public class FeedsRecord extends Record {
           file.delete();
           MySeriesLogger.logger.log(Level.FINE, "Feed file deleted");
         }
-        DBConnection conn = new DBConnection();
-        queryUpdate(conn.stmt, sql);
+        Statement stmt =  DBConnection.conn.createStatement();
+        queryUpdate(stmt, sql);
         return true;
       } catch (SQLException ex) {
         MySeriesLogger.logger.log(Level.SEVERE, "Sql exception occured", ex);
@@ -76,11 +88,12 @@ public class FeedsRecord extends Record {
 
   public static ArrayList<FeedsRecord> getAll() {
     ArrayList<FeedsRecord> feeds = new ArrayList<FeedsRecord>();
+    ResultSet rs = null;
     try {
       MySeriesLogger.logger.log(Level.INFO, "Getting all feeds");
       String sql = "SELECT * FROM feeds ORDER BY title";
-      DBConnection conn = new DBConnection();
-      ResultSet rs = query(conn.stmt, sql);
+      Statement stmt = DBConnection.conn.createStatement();
+       rs = query(stmt, sql);
       while(rs.next()){
         FeedsRecord f = new FeedsRecord();
         f.feed_ID = rs.getInt("feed_ID");
@@ -93,6 +106,12 @@ public class FeedsRecord extends Record {
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, null, ex);
       return null;
+    } finally {
+      try {
+        rs.close();
+      } catch (SQLException ex) {
+        Logger.getLogger(FeedsRecord.class.getName()).log(Level.SEVERE, null, ex);
+      }
     }
   }
 
@@ -103,7 +122,7 @@ public class FeedsRecord extends Record {
    */
   public int save() throws SQLException {
     String sql;
-    DBConnection conn = new DBConnection();
+    Statement stmt = DBConnection.conn.createStatement();
     MySeriesLogger.logger.log(Level.INFO, "Saving feed");
     if (this.feed_ID != 0) {
       sql = "UPDATE feeds SET title = '" + MyUsefulFunctions.escapeString(this.getTitle()) + "', url = '" + this.getUrl()
@@ -112,7 +131,7 @@ public class FeedsRecord extends Record {
       sql = "INSERT INTO feeds (title, url) "
               + "VALUES('" + MyUsefulFunctions.escapeString(this.getTitle()) + "','" + this.getUrl() + "')";
     }
-    return queryUpdate(conn.stmt, sql);
+    return queryUpdate(stmt, sql);
   }
 
   /**

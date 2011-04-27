@@ -4,6 +4,7 @@
  */
 package database;
 
+import Exceptions.DatabaseException;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -24,22 +25,21 @@ import tools.options.Paths;
  */
 public class DBConnection {
 
-  public String db;
-  public Connection conn;
-  public Statement stmt;
-  private boolean inTransaction;
+  public static String db;
+  public static Connection conn;
+  private static Statement stmt;
+  private static boolean inTransaction;
+  public static boolean isConnected;
 
   public DBConnection(String db) {
     MySeriesLogger.logger.log(Level.INFO, "Creating connection");
-    this.db = db;
-    createConnection();
-  }
-
-  public DBConnection() {
-    MySeriesLogger.logger.log(Level.INFO, "Creating connection");
-    this.db = Options.toString(Options.DB_NAME);
-
-    createConnection();
+    DBConnection.db = db;
+    try {
+      createConnection();
+    } catch (DatabaseException ex) {
+      isConnected = false;
+      Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
+    }
   }
 
   /**
@@ -48,16 +48,15 @@ public class DBConnection {
    * @return true if update is done or does not need update. False if update is
    * needed but an error occured
    */
-  public boolean checkDatabase() {
-    createConnection();
+  public static boolean checkDatabase() {
     MySeriesLogger.logger.log(Level.INFO, "Checking database tables");
     String sqlSeries = "PRAGMA table_info(series)";
     String sqlEpisodes = "PRAGMA table_info(episodes)";
     String sqlFeeds = "SELECT name FROM sqlite_master WHERE name='feeds'";
 
-    ResultSet rsSeries;
-    ResultSet rsEpisodes;
-    ResultSet rsFeeds;
+    ResultSet rsSeries = null;
+    ResultSet rsEpisodes = null;
+    ResultSet rsFeeds = null;
     boolean internetUpdate = false;
     boolean tvRageID = false;
     boolean localDir = false;
@@ -70,7 +69,7 @@ public class DBConnection {
 
     try {
       MySeriesLogger.logger.log(Level.INFO, "Checking series table");
-      rsSeries = stmt.executeQuery(sqlSeries);
+      rsSeries = conn.createStatement().executeQuery(sqlSeries);
       while (rsSeries.next()) {
         if (rsSeries.getString(2).equals("internetUpdate")) {
           internetUpdate = true;
@@ -109,8 +108,8 @@ public class DBConnection {
         return true;
       }
       MySeriesLogger.logger.log(Level.INFO, "Database is of an older version and needs update");
-      MyMessages.message("Old Database version", 
-          "Database is of an older version and needs update\nA back Up is taken first!!",Info.WARNING_MESS, true);
+      MyMessages.message("Old Database version",
+          "Database is of an older version and needs update\nA back Up is taken first!!", Info.WARNING_MESS, true);
       MySeriesLogger.logger.log(Level.INFO, "Database backup");
       SaveDatabase s = new SaveDatabase(db);
       if (s.backUp) {
@@ -161,18 +160,26 @@ public class DBConnection {
         }
         MySeriesLogger.logger.log(Level.FINE, "Database was updated");
         MyMessages.message("Database Update", "Database Update done!!!");
+        Options.setOption(Options.DB_NAME, db);
+        Options.save();
         checkDatabase();
         return true;
       } else {
+        Options.setOption(Options.DB_NAME, "");
+        Options.save();
         MyMessages.error("No Update", "Could not update the database");
         MySeriesLogger.logger.log(Level.SEVERE, "Could not update the database.Exiting...");
-        System.exit(1);
+        isConnected = false;
+        // System.exit(1);
         return false;
       }
-    } catch (SQLException ex1) {
+    } catch (Exception ex1) {
       MySeriesLogger.logger.log(Level.SEVERE, "SQL Error.Exiting...", ex1);
-      System.exit(1);
-      return true;
+      Options.setOption(Options.DB_NAME, "");
+      Options.save();
+      isConnected = false;
+      //System.exit(1);
+      return false;
     }
   }
 
@@ -180,23 +187,22 @@ public class DBConnection {
    * Creates a connection to the database
    * @param db The database name
    */
-  private void createConnection() {
+  private static void createConnection() throws DatabaseException {
     try {
-        if(db.trim().equals(".db")){
-            return;
-        }
-      if (!db.endsWith(Database.EXT)) {
-        db = db + Database.EXT;
-      }
       MySeriesLogger.logger.log(Level.INFO, "Creating database connection with {0}", db);
       Class.forName("org.sqlite.JDBC");
       conn = DriverManager.getConnection("jdbc:sqlite:" + Options._USER_DIR_ + Paths.DATABASES_PATH + db);
       stmt = conn.createStatement();
+      isConnected = true;
+      Options.setOption(Options.DB_NAME, db);
+      Options.save();
       MySeriesLogger.logger.log(Level.FINE, "Database connection established");
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, "Could not connect to the SQLite database", ex);
+      isConnected = false;
     } catch (ClassNotFoundException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, "Could not find SQLite class", ex);
+      isConnected = false;
     }
   }
 
@@ -205,12 +211,12 @@ public class DBConnection {
    * @param dbName The database name
    * @return
    */
-  public boolean databaseExists() {
-    if (new File(Options._USER_DIR_ + Paths.DATABASES_PATH + db).isFile()) {
-      MySeriesLogger.logger.log(Level.FINE, "Database exists");
+  public static boolean databaseExists(String dbName) {
+    if (new File(Options._USER_DIR_ + Paths.DATABASES_PATH + dbName).isFile()) {
+      MySeriesLogger.logger.log(Level.FINE, "Database {0} exists", dbName);
       return true;
     }
-    MySeriesLogger.logger.log(Level.WARNING, "Database does not exist");
+    MySeriesLogger.logger.log(Level.WARNING, "Database {0} does not exist", dbName);
     return false;
   }
 
@@ -225,21 +231,21 @@ public class DBConnection {
     }
   }
 
-  public void endTransaction() {
+  public static void endTransaction() {
     try {
       MySeriesLogger.logger.log(Level.INFO, "Ending transaction");
       stmt.execute("END TRANSACTION");
-      inTransaction=false;
+      inTransaction = false;
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     }
   }
-  public void beginTransaction() {
-    try {
-      while (inTransaction){
 
+  public static void beginTransaction() {
+    try {
+      while (inTransaction) {
       }
-      inTransaction=true;
+      inTransaction = true;
       MySeriesLogger.logger.log(Level.INFO, "Beggining transaction");
       stmt.execute("BEGIN TRANSACTION");
     } catch (SQLException ex) {

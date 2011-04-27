@@ -59,8 +59,8 @@ public class DBHelper {
    * @throws SQLException
    */
   public static Vector<EpisodesRecord> getEpisodesBySql(String sql) throws SQLException {
-    DBConnection conn = new DBConnection();
-    ResultSet rs = conn.stmt.executeQuery(sql);
+    
+    ResultSet rs = DBConnection.conn.createStatement().executeQuery(sql);
     Vector<EpisodesRecord> a = new Vector<EpisodesRecord>();
     MySeriesLogger.logger.log(Level.INFO, "Getting episodes by sql");
     MySeriesLogger.logger.log(Level.INFO, sql);
@@ -82,7 +82,6 @@ public class DBHelper {
       rs.close();
       return a;
     } finally {
-      conn.close();
       if (rs != null) {
         rs.close();
       }
@@ -126,9 +125,8 @@ public class DBHelper {
     ResultSet rs = null;
     MySeriesLogger.logger.log(Level.INFO, "Geting filter record by sql");
     MySeriesLogger.logger.log(Level.INFO, sql);
-    DBConnection conn = new DBConnection();
     try {
-      rs = conn.stmt.executeQuery(sql);
+      rs = DBConnection.conn.createStatement().executeQuery(sql);
       Vector<FilterRecord> a = new Vector<FilterRecord>();
       while (rs.next()) {
         FilterRecord s = new FilterRecord();
@@ -143,7 +141,6 @@ public class DBHelper {
       rs.close();
       return a;
     } finally {
-      conn.close();
       if (rs != null) {
         rs.close();
       }
@@ -176,9 +173,8 @@ public class DBHelper {
     ResultSet rs = null;
     MySeriesLogger.logger.log(Level.INFO, "Getting series by sql");
     MySeriesLogger.logger.log(Level.INFO, sql);
-      DBConnection conn = new DBConnection();
       try {
-      rs = conn.stmt.executeQuery(sql);
+      rs = DBConnection.conn.createStatement().executeQuery(sql);
       Vector<SeriesRecord> a = new Vector<SeriesRecord>();
       while (rs.next()) {
         SeriesRecord s = new SeriesRecord();
@@ -197,7 +193,6 @@ public class DBHelper {
       rs.close();
       return a;
     } finally {
-      conn.close();
       if (rs != null) {
         rs.close();
       }
@@ -251,9 +246,8 @@ public class DBHelper {
         + "series.title AS series, episodes.downloaded AS downloaded, episodes.seen AS seen FROM "
         + "episodes JOIN series on episodes.series_ID = series.series_ID WHERE "
         + "aired = '" + date + "' AND deleted = 0";
-     DBConnection conn = new DBConnection();
       try {
-     rs = conn.stmt.executeQuery(sql);
+     rs = DBConnection.conn.createStatement().executeQuery(sql);
       while (rs.next()) {
         ScheduleEvent ev = new ScheduleEvent();
         ev.setSeries(rs.getString("series"));
@@ -270,7 +264,6 @@ public class DBHelper {
       MySeriesLogger.logger.log(Level.SEVERE, "Sql exception occured", ex);
       return events;
     } finally {
-      conn.close();
       if(rs!=null){
         try {
           rs.close();
@@ -296,18 +289,16 @@ public class DBHelper {
 
   public static int getSeasonByEpisodeId(int episode_ID) {
     MySeriesLogger.logger.log(Level.INFO, "Getting season by episode id: {0}", episode_ID);
-    DBConnection conn = new DBConnection();
     ResultSet rs = null;
     try {
       String sql = "SELECT series.season FROM series join episodes ON " + "series.series_ID=episodes.series_ID WHERE episodes.episode_ID=" + episode_ID;
       
-      rs = conn.stmt.executeQuery(sql);
+      rs = DBConnection.conn.createStatement().executeQuery(sql);
       return rs.getInt("season");
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, null, ex);
       return 0;
     } finally{
-      conn.close();
       if(rs!=null){
         try {
           rs.close();
