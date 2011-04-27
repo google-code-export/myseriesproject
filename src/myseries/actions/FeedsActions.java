@@ -31,7 +31,7 @@ public class FeedsActions {
 
   public static void updateFeeds(boolean onStartUp, MySeries m) {
     MySeriesLogger.logger.log(Level.INFO, "Update feeds action");
-    if (!MyUsefulFunctions.hasInternetConnection(MyUsefulFunctions.GOOGLE)) {
+    if (MyUsefulFunctions.hasInternetConnection(MyUsefulFunctions.GOOGLE)) {
       ArrayList<FeedsRecord> feeds = FeedsRecord.getAll();
       m.feedTree.updateFeeds(feeds, false);
     } else {

@@ -70,7 +70,7 @@ public class FeedUpdater implements Runnable {
       FeedsRecord feedRecord = it.next();
       id = feedRecord.getFeed_ID();
       if (MyUsefulFunctions.hasInternetConnection(feedRecord.getUrl())) {
-        //update(feedRecord);
+        update(feedRecord);
         MySeriesLogger.logger.log(Level.FINE, "Feed updated");
       } else {
         MySeriesLogger.logger.log(Level.WARNING, "Could not connect to {0}", feedRecord.getUrl());
