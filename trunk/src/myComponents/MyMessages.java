@@ -24,6 +24,9 @@ public class MyMessages {
 
   private static boolean glassPaneActive;
   private static MyLogPanel logPanel;
+  private static final int ERROR_MESS = 0;
+  private static final int WARNING_MESS = 2;
+  private static final int INFO_MESS = 1;
 
   public static void setLogPanel(MyLogPanel logPanel) {
     MyMessages.logPanel = logPanel;
@@ -42,7 +45,7 @@ public class MyMessages {
    * @param message The message text
    */
   public static void message(String title, String message) {
-    message(title, message, Info.INFO_MESS, true);
+    message(title, message, INFO_MESS, true);
   }
 
   /**
@@ -53,13 +56,13 @@ public class MyMessages {
   public static void message(String title, String message, int type, boolean showWindow) {
     Level level = Level.INFO;
     switch (type) {
-      case Info.INFO_MESS:
+      case INFO_MESS:
         level = Level.INFO;
         break;
-      case Info.WARNING_MESS:
+      case WARNING_MESS:
         level = Level.WARNING;
         break;
-      case Info.ERROR_MESS:
+      case ERROR_MESS:
         level = Level.SEVERE;
         break;
     }
@@ -71,7 +74,7 @@ public class MyMessages {
       i.showDialog();
       hideMessage();
     }
-    if (type != Info.INFO_MESS) {
+    if (type != INFO_MESS) {
       logToPanel(type, message);
     }
   }
@@ -82,7 +85,7 @@ public class MyMessages {
    * @param message The message
    */
   public static void error(String title, String message) {
-    message(title, message, Info.ERROR_MESS, true);
+    message(title, message, ERROR_MESS, true);
   }
 
   /**
@@ -91,7 +94,7 @@ public class MyMessages {
   public static void internetError(boolean showMessage) {
     message("No Internet Connection!!!",
         "Could not connect to internet.\nIf you are behind a proxy check your proxy settings in options",
-        Info.WARNING_MESS, showMessage);
+        WARNING_MESS, showMessage);
 
   }
 

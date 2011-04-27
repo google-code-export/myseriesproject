@@ -26,12 +26,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.io.Reader;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -43,6 +45,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.BorderFactory;
@@ -1065,10 +1068,10 @@ public class MyUsefulFunctions {
       }
     }
     if (episode > -1) {
-      DBConnection conn = new DBConnection();
       ResultSet rs = null;
       try {
-        rs = EpisodesRecord.query(conn.stmt, "SELECT * FROM episodes WHERE series_ID =" + series.getSeries_ID() + " AND episode = " + episode);
+        Statement stmt = DBConnection.conn.createStatement();
+        rs = EpisodesRecord.query(stmt, "SELECT * FROM episodes WHERE series_ID =" + series.getSeries_ID() + " AND episode = " + episode);
         while (rs.next()) {
           EpisodesRecord e = new EpisodesRecord();
           e.setSeries_ID(rs.getInt("series_ID"));
@@ -1090,7 +1093,6 @@ public class MyUsefulFunctions {
       } catch (SQLException ex) {
         MySeriesLogger.logger.log(Level.SEVERE, "Sql error occured", ex);
       } finally {
-        conn.close();
         try {
           rs.close();
         } catch (SQLException ex) {
@@ -1139,7 +1141,7 @@ public class MyUsefulFunctions {
   public static void createMemoryCons(MySeries m) {
     ToolbarSeperator mem = getMemoryToolbarSeperator(m);
     MySeriesLogger.logger.log(Level.INFO, "Creating the timer for memory consumption");
-    Timer timer = new Timer(1000, new MyTimerListener(mem,m.myToolbar.getOrientation()));
+    Timer timer = new Timer(1000, new MyTimerListener(mem, m.myToolbar.getOrientation()));
     MySeriesLogger.logger.log(Level.INFO, "Starting timer");
     timer.start();
   }
@@ -1160,7 +1162,7 @@ public class MyUsefulFunctions {
             t.setMinimumSize(new Dimension(120, 26));
             t.setPreferredSize(new Dimension(120, 26));
             t.setMaximumSize(new Dimension(120, 26));
-          } else{
+          } else {
             t.setMinimumSize(new Dimension(26, 26));
             t.setPreferredSize(new Dimension(26, 26));
             t.setMaximumSize(new Dimension(26, 26));
