@@ -210,14 +210,14 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
             if (!airDate.trim().equals("")) {
               episodeRecord.setAired(airDate);
             }
-            episodeRecord.save(new DBConnection().stmt);
+            episodeRecord.save(DBConnection.conn.createStatement());
           }
         }
         if (newEpisodes == 0 && updEpisodes == 0) {
             MySeriesLogger.logger.log(Level.INFO, "No new or updated episodes");
           append("No new or updated episodes");
         } else {
-            MySeriesLogger.logger.log(Level.INFO, newEpisodes + " new episodes and " + updEpisodes + " updates");
+            MySeriesLogger.logger.log(Level.INFO, "{0} new episodes and {1} updates", new Object[]{newEpisodes, updEpisodes});
           append(newEpisodes + " new episodes and " + updEpisodes + " updates");
         }
       }

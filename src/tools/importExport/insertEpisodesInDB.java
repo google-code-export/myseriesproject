@@ -77,6 +77,6 @@ class insertEpisodesInDB implements Runnable {
             e.setEpisode_ID(episodes.get(0).getEpisode_ID());
         }
         MySeriesLogger.logger.log(Level.INFO, "Saving episode {0}",e.getTitle());
-        e.save(new DBConnection().stmt);
+        e.save(DBConnection.conn.createStatement());
     }
 }
