@@ -36,7 +36,7 @@ public class UpdateFiltersTable {
           ep.setDownloaded(downloaded ? EpisodesRecord.DOWNLOADED : EpisodesRecord.NOT_DOWNLOADED);
           ep.setSeen(seen ? EpisodesRecord.SEEN : EpisodesRecord.NOT_SEEN);
           ep.setSubs(subs);
-          ep.save(new DBConnection().stmt);
+          ep.save(DBConnection.conn.createStatement());
           // NextEpisodes.createNextEpisodes();
           // NextEpisodes.show();
           Thread.sleep(100);

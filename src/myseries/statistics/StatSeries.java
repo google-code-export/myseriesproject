@@ -159,9 +159,8 @@ public class StatSeries extends javax.swing.JPanel {
   public void refresh(boolean unified) {
     clearModel();
     ResultSet rs = null;
-    DBConnection conn = new DBConnection();
     try {
-      Statement stmt = conn.stmt;
+      Statement stmt = DBConnection.conn.createStatement();
       String sql;
       if (!unified) {
         sql = "SELECT series.series_ID AS series_ID, series.title AS series, sum(episodes.rate)/count(1) as rate, count(1) as episodes "
@@ -188,7 +187,6 @@ public class StatSeries extends javax.swing.JPanel {
       } catch (SQLException ex) {
         MySeriesLogger.logger.log(Level.SEVERE, "Could not close resultset", ex);
       }
-      conn.close();
     }
   }
 

@@ -147,7 +147,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
   public ComboBoxModel comboBoxModel_filters;
   public static String version = "1.5(dev)";
   public String date = "2011-01-26";
-  public static MyDisabledGlassPane glassPane;
+  public static MyDisabledGlassPane glassPane = new MyDisabledGlassPane();
   public static final long serialVersionUID = 234563636363L;
   public MyImagePanel imagePanel = new MyImagePanel(true);
   public Image image;
@@ -522,13 +522,13 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     menuItem_customizeToolbar = new javax.swing.JMenuItem();
     jSeparator2 = new javax.swing.JSeparator();
     menuItem_options = new javax.swing.JMenuItem();
-    menu_Help = new javax.swing.JMenu();
-    menuItem_help = new javax.swing.JMenuItem();
     menu_online = new javax.swing.JMenu();
     menuItem_googleCode = new javax.swing.JMenuItem();
     menuItem_reportBug = new javax.swing.JMenuItem();
     menuItem_checkUpdate = new javax.swing.JMenuItem();
     menuItem_paypal = new javax.swing.JMenuItem();
+    menu_Help = new javax.swing.JMenu();
+    menuItem_help = new javax.swing.JMenuItem();
     menuItem_viewLogs = new javax.swing.JMenuItem();
     menuItem_showErrorPanel = new javax.swing.JCheckBoxMenuItem();
     jSeparator3 = new javax.swing.JSeparator();
@@ -872,7 +872,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
       tabpanel_episodesListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(tabpanel_episodesListLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(panel_episodesList, javax.swing.GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
+        .addComponent(panel_episodesList, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE)
         .addContainerGap())
     );
 
@@ -991,7 +991,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
         .addContainerGap()
         .addComponent(panel_filters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addGap(17, 17, 17)
-        .addComponent(panel_allSeriesEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
+        .addComponent(panel_allSeriesEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE)
         .addContainerGap())
     );
 
@@ -1016,9 +1016,9 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     tabpanel_statisticsLayout.setVerticalGroup(
       tabpanel_statisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabpanel_statisticsLayout.createSequentialGroup()
-        .addComponent(statSeries, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+        .addComponent(statSeries, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(statEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
+        .addComponent(statEpisodes, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
         .addContainerGap())
     );
 
@@ -1095,7 +1095,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
           .addComponent(bt_rssUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(pr_rssUpdating, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(feedTree, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
+        .addComponent(feedTree, javax.swing.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)
         .addContainerGap())
     );
 
@@ -1123,7 +1123,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
       tabpanel_feedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(tabpanel_feedsLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(feedSplitPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
+        .addComponent(feedSplitPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE)
         .addContainerGap())
     );
 
@@ -1384,30 +1384,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
     menuBar.add(menu_Tools);
 
-    menu_Help.setText("Help");
-    menu_Help.addMenuListener(new javax.swing.event.MenuListener() {
-      public void menuCanceled(javax.swing.event.MenuEvent evt) {
-      }
-      public void menuDeselected(javax.swing.event.MenuEvent evt) {
-      }
-      public void menuSelected(javax.swing.event.MenuEvent evt) {
-        menu_HelpMenuSelected(evt);
-      }
-    });
-
-    menuItem_help.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
-    menuItem_help.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"))); // NOI18N
-    menuItem_help.setText("Help");
-    menuItem_help.setToolTipText("Display Help");
-    menuItem_help.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        menuItem_helpActionPerformed(evt);
-      }
-    });
-    menu_Help.add(menuItem_help);
-
-    menu_online.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/website.png"))); // NOI18N
-    menu_online.setText("MySerieS Online");
+    menu_online.setText("Online");
 
     menuItem_googleCode.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F10, 0));
     menuItem_googleCode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/googlecode.png"))); // NOI18N
@@ -1450,7 +1427,29 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     });
     menu_online.add(menuItem_paypal);
 
-    menu_Help.add(menu_online);
+    menuBar.add(menu_online);
+
+    menu_Help.setText("Help");
+    menu_Help.addMenuListener(new javax.swing.event.MenuListener() {
+      public void menuCanceled(javax.swing.event.MenuEvent evt) {
+      }
+      public void menuDeselected(javax.swing.event.MenuEvent evt) {
+      }
+      public void menuSelected(javax.swing.event.MenuEvent evt) {
+        menu_HelpMenuSelected(evt);
+      }
+    });
+
+    menuItem_help.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+    menuItem_help.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"))); // NOI18N
+    menuItem_help.setText("Help");
+    menuItem_help.setToolTipText("Display Help");
+    menuItem_help.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        menuItem_helpActionPerformed(evt);
+      }
+    });
+    menu_Help.add(menuItem_help);
 
     menuItem_viewLogs.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F12, 0));
     menuItem_viewLogs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/viewLogs.png"))); // NOI18N

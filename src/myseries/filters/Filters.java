@@ -149,13 +149,12 @@ public class Filters {
     where += getSeen(cbSeen) == EpisodesRecord.NOT_SEEN || getSeen(cbSeen) == EpisodesRecord.SEEN ? " AND seen = " + getSeen(cbSeen) : "";
     where += getDownloaded(cbDownload) == EpisodesRecord.NOT_DOWNLOADED || getDownloaded(cbDownload) == EpisodesRecord.DOWNLOADED ? " AND downloaded = " + getDownloaded(cbDownload) : "";
     where += getSubtitles(cbSubs);
-    DBConnection conn = new DBConnection();
     String sql = "SELECT e.*, s.title AS sTitle, s.season FROM episodes e JOIN series s on "
         + "e.series_ID = s.series_ID WHERE s.hidden = "
         + SeriesRecord.NOT_HIDDEN + " AND s.deleted = "
         + SeriesRecord.NOT_DELETED + " AND aired < date( julianday(date('now'))) AND aired <> '0000-00-00' "
         + where + " ORDER BY aired ASC";
-    ResultSet rs = conn.stmt.executeQuery(sql);
+    ResultSet rs = DBConnection.conn.createStatement().executeQuery(sql);
     SeriesRecord ser;
     while (rs.next()) {
       id = rs.getInt("episode_ID");
@@ -191,7 +190,6 @@ public class Filters {
       }
     }
     rs.close();
-    conn.close();
     if (getTableModel_filterSeries() != null && table_filters != null) {
       table_filters.setModel(getTableModel_filterSeries());
     }

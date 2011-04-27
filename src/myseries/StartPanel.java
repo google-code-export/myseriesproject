@@ -32,6 +32,7 @@ import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyDraggable;
 import myComponents.myGUI.MyFont;
 import myComponents.myGUI.MyImagePanel;
+import myseries.actions.ApplicationActions;
 import tools.DesktopSupport;
 import tools.LookAndFeels;
 import tools.MySeriesLogger;
@@ -324,17 +325,56 @@ public class StartPanel extends MyDraggable {
 
       if (new RequiredValidator(dbName).validate()) {
         try {
-          MySeriesLogger.logger.log(Level.INFO, "Create the connection to the database");
-          CreateDatabase d = new CreateDatabase(this, dbName, createNewDB);
-          Thread t = new Thread(d);
-          t.start();
-          dispose();
+          if (!dbName.endsWith(".db")) {
+            dbName += ".db";
+          }
+          if (createNewDB) {
+            MySeriesLogger.logger.log(Level.INFO, "Create new DB");
+            CreateDatabase d = new CreateDatabase(this, dbName);
+            Thread t = new Thread(d);
+            t.start();
+            dispose();
+          } else {
+            //Connect
+            DBConnection conn = new DBConnection(dbName);
+            // Check if connection is established
+            if (DBConnection.isConnected) {
+              MySeriesLogger.logger.log(Level.INFO, "Check database format");
+              if (DBConnection.checkDatabase()) {
+                if (DBConnection.isConnected) {
+                  MySeriesLogger.logger.log(Level.INFO, "MySerieS restarting");
+                  dispose();
+                  MySeries m = new MySeries();
+                } else {
+                  dispose();
+                  MyMessages.error("Invalid Database", "Could not connect to the selected database.\nPlease select another one or create a new one.");
+                  StartPanel s = new StartPanel();
+                }
+              } else {
+                dispose();
+                MyMessages.error("Invalid Database", "The selected database seems to be invalid.\nPlease select another one or create a new one.");
+                StartPanel s = new StartPanel();
+              }
+            }
+          }
+
         } catch (ClassNotFoundException ex) {
           MySeriesLogger.logger.log(Level.SEVERE, "Database library not found", ex);
         } catch (SQLException ex) {
           MySeriesLogger.logger.log(Level.SEVERE, "An sql exception occured", ex);
         } catch (IOException ex) {
           MySeriesLogger.logger.log(Level.SEVERE, "Could not read/write to database", ex);
+        } catch (InstantiationException ex) {
+          MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+          MyMessages.error("My Series", "Could not create Application");
+        } catch (IllegalAccessException ex) {
+          MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+          MyMessages.error("My Series", "Illegal access");
+        } catch (UnsupportedLookAndFeelException ex) {
+          MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+          MyMessages.error("My Series", "Look and feel is not supported");
+        } catch (Exception ex) {
+          System.out.println(ex);
         }
       } else {
         MySeriesLogger.logger.log(Level.WARNING, "The database name should not be empty");
@@ -382,8 +422,7 @@ public class StartPanel extends MyDraggable {
       MySeriesLogger.logger.log(Level.FINE, "Logger created");
       MySeriesLogger.logger.log(Level.INFO, "Setting font and font sizes");
       MyFont.SetMyFont();
-      MySeriesLogger.logger.log(Level.FINE, "Font and font sizes are set to "
-          + Options.toString(Options.FONT_FACE) + " " + Options.toFloat(Options.FONT_SIZE) + "pts");
+      MySeriesLogger.logger.log(Level.FINE, "Font and font sizes are set to {0} {1}pts", new Object[]{Options.toString(Options.FONT_FACE), Options.toFloat(Options.FONT_SIZE)});
 
       if (Options.toBoolean(Options.USE_SKIN)) {
         MySeriesLogger.logger.log(Level.INFO, "Create Skin");
@@ -413,7 +452,7 @@ public class StartPanel extends MyDraggable {
           MySeriesLogger.logger.log(Level.FINE, "Default look and feel loaded");
         }
       }
-      
+
       //Check Desktop supported
       MySeriesLogger.logger.log(Level.INFO, "Checking desktop support");
       DesktopSupport ds = new DesktopSupport();
@@ -425,36 +464,50 @@ public class StartPanel extends MyDraggable {
 
       // Create the default db if not exists and create the conn, stmt
       MySeriesLogger.logger.log(Level.INFO, "Checking if database exists or not");
-      DBConnection conn = new DBConnection();
-      if (Options.toString(Options.DB_NAME).equals(".db")
-          || Options.toString(Options.DB_NAME).equals("null")
-          || !conn.databaseExists()) {
+      if (!DBConnection.databaseExists(Options.toString(Options.DB_NAME))) {
+        // Select or create db
         StartPanel s = new StartPanel();
       } else {
-        // Check if database is in the right format
-        MySeriesLogger.logger.log(Level.INFO, "Check database format");
-        if (conn.checkDatabase()) {
-          MySeriesLogger.logger.log(Level.INFO, "MySerieS loading...");
-          MySeries m = new MySeries();
-        } else {
-          MyMessages.error("Invalid Database", "The selected database seems to be invalid.\nPlease select another one or create a new one.");
-          StartPanel s = new StartPanel();
+        //Connect
+        DBConnection conn = new DBConnection(Options.toString(Options.DB_NAME));
+        // Check if connection is established
+        if (DBConnection.isConnected) {
+          MySeriesLogger.logger.log(Level.INFO, "Check database format");
+          if (DBConnection.checkDatabase()) {
+            if (DBConnection.isConnected) {
+              MySeriesLogger.logger.log(Level.INFO, "MySerieS loading...");
+              MySeries m = new MySeries();
+            } else {
+              MyMessages.error("Invalid Database", "Could not connect to the selected database.\nPlease select another one or create a new one.");
+              StartPanel s = new StartPanel();
+            }
+          } else {
+            MyMessages.error("Invalid Database", "The selected database seems to be invalid.\nPlease select another one or create a new one.");
+            StartPanel s = new StartPanel();
+          }
         }
       }
     } catch (ClassNotFoundException ex) {
+      MyMessages.error("Database", "Could not load database driver");
       MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     } catch (SQLException ex) {
+      MyMessages.error("Database", "Sql error occured");
       MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     } catch (InstantiationException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+      MyMessages.error("My Series", "Could not create Application");
     } catch (IllegalAccessException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+      MyMessages.error("My Series", "Illegal access");
     } catch (UnsupportedLookAndFeelException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+      MyMessages.error("My Series", "Look and feel is not supported");
     } catch (FileNotFoundException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+      MyMessages.error("My Series options", "Could find options file");
     } catch (IOException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+      MyMessages.error("My Series options", "Could not create options file");
     }
   }
 
