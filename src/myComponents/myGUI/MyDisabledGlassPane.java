@@ -27,7 +27,7 @@ public class MyDisabledGlassPane extends JComponent implements KeyListener {
   private final static Border MESSAGE_BORDER = new EmptyBorder(10, 10, 10, 10);
   private JLabel message = new JLabel();
   private final static long serialVersionUID = 4232536436456L;
-  public static boolean isActivated;
+  public static boolean isActivated = false;
 
   /**
    * Constructor
