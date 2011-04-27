@@ -794,7 +794,7 @@
                         <Property name="selected" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                           <Connection code="Options.toBoolean(Options.CHECK_VERSION)" type="code"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Check for updates on startup :"/>
+                        <Property name="text" type="java.lang.String" value="Check for updates on startup"/>
                         <Property name="horizontalAlignment" type="int" value="4"/>
                         <Property name="horizontalTextPosition" type="int" value="4"/>
                         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
@@ -902,7 +902,7 @@
                         <Property name="selected" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                           <Connection code="Options.toBoolean(Options.UPDATE_FEEDS)" type="code"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Update feeds on startup :"/>
+                        <Property name="text" type="java.lang.String" value="Update feeds on startup"/>
                         <Property name="horizontalTextPosition" type="int" value="4"/>
                         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
                           <Insets value="[0, 0, 0, 0]"/>
