@@ -300,9 +300,6 @@
       </SubComponents>
     </Container>
     <Menu class="javax.swing.JMenuBar" name="menuBar">
-      <BindingProperties>
-        <BindingProperty name="foreground" source="tableSeries" sourcePath="${background}" target="menuBar" targetPath="foreground" updateStrategy="0" immediately="false"/>
-      </BindingProperties>
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="menu_MySeries">
           <Properties>
