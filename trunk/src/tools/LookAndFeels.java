@@ -93,8 +93,18 @@ public class LookAndFeels {
         try {
           File jarFile = new File(Paths.LAFS + name + "/" + jar[0]);
           JarFileLoader.addFile(jarFile);
-          String lafClass = getLafClass(jarFile).replace(".class", "").replaceAll("/", ".");
-          lafMap.put(name, new LookAndFeelInfo(name, lafClass));
+          String[] lafClass = getLafClass(jarFile);
+          if(lafClass.length==1){
+            lafMap.put(name, new LookAndFeelInfo(name, lafClass[0]));
+          } else if(lafClass.length >1){
+            for (int j = 0; j < lafClass.length; j++) {
+              String c = lafClass[j];
+               String[] packages = c.split("\\.");
+               lafMap.put(packages[packages.length-1], new LookAndFeelInfo(packages[packages.length-1], lafClass[j]));
+            }
+          } else {
+            MySeriesLogger.logger.log(Level.SEVERE, "LAF Class not found");
+          }
         } catch (IOException ex) {
           MySeriesLogger.logger.log(Level.SEVERE, "IO Exception on loading external laf", ex);
         }
@@ -104,25 +114,26 @@ public class LookAndFeels {
     }
   }
 
-  private static String getLafClass(File jar) {
+  private static String[] getLafClass(File jar) {
+    ArrayList<String> classes = new ArrayList<String>();
     try {
       JarInputStream jarFile = new JarInputStream(new FileInputStream(jar));
       JarEntry jarEntry;
 
       while (true) {
         jarEntry = jarFile.getNextJarEntry();
-        if (jarEntry == null) {
+             if (jarEntry == null) {
           break;
         }
-        if (jarEntry.getName().endsWith("LookAndFeel.class")) {
-          return jarEntry.toString();
+        if (!jarEntry.getName().startsWith("Abstract") && jarEntry.getName().endsWith("LookAndFeel.class")) {
+          classes.add(jarEntry.toString().replace(".class", "").replaceAll("/", "."));
         }
       }
     } catch (Exception e) {
       MySeriesLogger.logger.log(Level.WARNING, "Did not find look and feel class");
       return null;
     }
-    return null;
+    return classes.toArray(new String[classes.size()]);
   }
 
   private static String[] getListOfExtJars(File dir) {
