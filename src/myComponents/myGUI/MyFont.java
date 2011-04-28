@@ -7,6 +7,7 @@ package myComponents.myGUI;
 import java.awt.Font;
 import java.util.logging.Level;
 import javax.swing.UIManager;
+import javax.swing.plaf.FontUIResource;
 import tools.MySeriesLogger;
 import tools.options.Options;
 
@@ -39,12 +40,12 @@ public class MyFont {
     Options.save();
     int plain = Font.PLAIN;
     int bold = Font.BOLD;
-    myFont = new Font(fontFace,plain,(int)fontSize);
-    myBoldFont = myFont.deriveFont(bold);
-    mySmallerFont = myFont.deriveFont(fontSize - SIZE_STEP);
-    myBiggerFont = myFont.deriveFont(fontSize + SIZE_STEP);
-    myBiggerBoldFont = myBiggerFont.deriveFont(bold);
-    myBiggestFont = myFont.deriveFont(fontSize + (2*SIZE_STEP));
+    myFont = new FontUIResource(new Font(fontFace,plain,(int)fontSize));
+    myBoldFont =  new FontUIResource(myFont.deriveFont(bold));
+    mySmallerFont =  new FontUIResource(myFont.deriveFont(fontSize - SIZE_STEP));
+    myBiggerFont =  new FontUIResource(myFont.deriveFont(fontSize + SIZE_STEP));
+    myBiggerBoldFont =  new FontUIResource(myBiggerFont.deriveFont(bold));
+    myBiggestFont =  new FontUIResource(myFont.deriveFont(fontSize + (2*SIZE_STEP)));
     UIManager.put("Button.font", myBoldFont);
     UIManager.put("CheckBox.font", myFont);
     UIManager.put("CheckBoxMenuItem.accelerator.font", mySmallerFont);
