@@ -13,6 +13,7 @@ package tools.options;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.util.Map;
 import tools.MySeriesLogger;
 import java.awt.GraphicsEnvironment;
 import java.io.FileNotFoundException;
@@ -50,8 +51,13 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Set;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import myComponents.myTableCellRenderers.MySubtitleListRenderer;
 import myComponents.myTableCellRenderers.MySubtitlesCellRenderer;
 import myseries.actions.ApplicationActions;
@@ -123,15 +129,18 @@ public class OptionsPanel extends MyDraggable {
 
   private void createLafModel() {
     MySeriesLogger.logger.log(Level.INFO, "Creating laf model");
-    LookAndFeelInfo[] laf = LookAndFeels.getLookAndFeels();
-    lafMap = new HashMap<String, LookAndFeelInfo>();
-    String lafNames[] = new String[laf.length];
-    for (int i = 0; i < laf.length; i++) {
-      LookAndFeelInfo lookAndFeelInfo = laf[i];
-      lafMap.put(lookAndFeelInfo.getName(), lookAndFeelInfo);
-      lafNames[i] = lookAndFeelInfo.getName();
+    Map<String, LookAndFeelInfo> map = LookAndFeels.lafMap;
+    Set<String> keys = map.keySet();
+    String[] lafNames = new String[keys.size()];
+    int i = 0;
+    for (Iterator<String> it = keys.iterator(); it.hasNext();) {
+      Object key = it.next();
+      LookAndFeelInfo info = map.get(key);
+      lafNames[i] = info.getName();
       MySeriesLogger.logger.log(Level.INFO, "Adding laf {0}", lafNames[i]);
+      i++;
     }
+
     combobox_laf.setModel(new DefaultComboBoxModel(lafNames));
   }
 
@@ -150,7 +159,7 @@ public class OptionsPanel extends MyDraggable {
   private String[] getCachedFonts() {
     MySeriesLogger.logger.log(Level.INFO, "Checking for cached fonts model");
     File c = new File(Options._USER_DIR_ + "/f.obj");
-    if (c.exists() && (System.currentTimeMillis()-c.lastModified())/3600000/24 < 15) {
+    if (c.exists() && (System.currentTimeMillis() - c.lastModified()) / 3600000 / 24 < 15) {
       MySeriesLogger.logger.log(Level.INFO, "Cached model exists an it's new.Reading file");
       try {
         FileInputStream fin = new FileInputStream(c);
