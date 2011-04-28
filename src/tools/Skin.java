@@ -21,7 +21,7 @@ import tools.options.Options;
 public final class Skin {
 
     private static final long limit = -4289918;
-    private static Color skinColor = new Color(240, 240, 240);
+    private static Color skinColor ;
 
     ;
     private static Color color_1;
@@ -38,7 +38,7 @@ public final class Skin {
      */
     public Skin() {
         MySeriesLogger.logger.log(Level.INFO, "Creating default skin");
-        skinColor = new Color(240, 240, 240);
+        skinColor = UIManager.getColor("Panel.background");
         brightness = getBrightness();
         skinColor = fixColor(skinColor);
 

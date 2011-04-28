@@ -4,8 +4,6 @@
  */
 package myComponents.myGUI.buttons;
 
-import buttons.Button;
-
 /**
  *
  * @author lordovol

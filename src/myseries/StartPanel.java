@@ -418,6 +418,7 @@ public class StartPanel extends MyDraggable {
       MyUsefulFunctions.checkDir(Options._USER_DIR_ + Paths.SCREENSHOTS_PATH);
       MyUsefulFunctions.checkDir(Options._USER_DIR_ + Paths.TORRENTS_PATH);
       MyUsefulFunctions.checkDir(Options._USER_DIR_ + Paths.FEEDS_PATH);
+      MyUsefulFunctions.checkDir(Options._USER_DIR_ + Paths.LAFS_PATH);
       //Create the logger
       MySeries.createLogger();
       MySeriesLogger.logger.log(Level.FINE, "Logger created");
@@ -437,7 +438,7 @@ public class StartPanel extends MyDraggable {
         MySeriesLogger.logger.log(Level.FINE, "Skin applied");
       } else {
         MySeriesLogger.logger.log(Level.INFO, "No Skin is used");
-        Skin skin = new Skin(Color.GRAY);
+        
         MySeriesLogger.logger.log(Level.INFO, "Loading look and feel");
         String laf = Options.toString(Options.LOOK_AND_FEEL);
         if (!laf.equals("")) {
@@ -445,6 +446,7 @@ public class StartPanel extends MyDraggable {
           if (className != null) {
             try {
               UIManager.setLookAndFeel(className);
+              Skin skin = new Skin(UIManager.getColor("Panel.background"));
               MySeriesLogger.logger.log(Level.FINE, "{0} look and feel loaded", laf);
             } catch (ClassNotFoundException ex) {
               MySeriesLogger.logger.log(Level.WARNING, "Could not load {0} look and feel", laf);
