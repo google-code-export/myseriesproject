@@ -260,7 +260,6 @@ public class HouseKeeping extends MyDraggable {
   private void gettingScreenshotsForDb(String db) {
     try {
       MySeriesLogger.logger.log(Level.INFO, "Getting unused screenshots");
-      DBConnection c = new DBConnection(db);
       ResultSet r = SeriesRecord.query(DBConnection.conn.createStatement(), "SELECT screenshot FROM series");
       while (r.next()) {
         String screenshot = r.getString("screenshot");
@@ -268,7 +267,6 @@ public class HouseKeeping extends MyDraggable {
           usedScreenshots.add(screenshot);
         }
       }
-      File dir = new File(Options._USER_DIR_ + Paths.SCREENSHOTS_PATH);
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, "Could not get screenshots", ex);
 
