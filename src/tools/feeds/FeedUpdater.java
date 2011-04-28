@@ -121,7 +121,6 @@ public class FeedUpdater implements Runnable {
     public void actionPerformed(ActionEvent e) {
       int ind = m.tabsPanel.getIndexByName(String.valueOf(myseries.MySeries.TAB_FEEDS_ID));
       frame++;
-      System.out.println(frame);
       switch (frame) {
         case 0:
           m.tabsPanel.setIconAt(ind, ANIMATION_0);

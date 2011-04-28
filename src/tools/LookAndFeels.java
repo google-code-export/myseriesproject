@@ -4,26 +4,39 @@
  */
 package tools;
 
+import java.io.File;
+import java.io.FileFilter;
+import java.io.FileInputStream;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
+import java.util.jar.JarEntry;
+import java.util.jar.JarInputStream;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 import myseries.MySeries;
-import myComponents.MyUsefulFunctions;
+import tools.misc.JarFileLoader;
+import tools.options.Options;
+import tools.options.Paths;
+
 /**
  * Looks and Feels
  * @author lordovol
  */
 public class LookAndFeels {
 
-  public static Map<String, LookAndFeelInfo> lafMap;
-
-  {
-    getLookAndFeels();
-  }
+  public static Map<String, LookAndFeelInfo> lafMap = new HashMap<String, LookAndFeelInfo>();
 
   /**
    * Sets the look and feel for the application form
@@ -36,6 +49,8 @@ public class LookAndFeels {
   }
 
   public LookAndFeels() {
+    getDefaultLookAndFeels();
+    addExternalLafs();
   }
 
   /**
@@ -43,33 +58,91 @@ public class LookAndFeels {
    * @return a n array of LookAndFeels info
    */
   public static LookAndFeelInfo[] getLookAndFeels() {
-      MySeriesLogger.logger.log(Level.INFO, "Getting look and feels");
-    UIManager.LookAndFeelInfo[] lookAndFeelInfos = UIManager.getInstalledLookAndFeels();
-    LookAndFeelInfo laf[] = new LookAndFeelInfo[lookAndFeelInfos.length];
-    lafMap = new HashMap<String, LookAndFeelInfo>();
-    for (int i = 0; i < lookAndFeelInfos.length; i++) {
-      UIManager.LookAndFeelInfo lookAndFeelInfo = lookAndFeelInfos[i];
-      lafMap.put(lookAndFeelInfo.getName(), lookAndFeelInfo);
-      laf[i] = lookAndFeelInfo;
-
+    MySeriesLogger.logger.log(Level.INFO, "Getting look and feels");
+    LookAndFeelInfo[] info = new LookAndFeelInfo[lafMap.size()];
+    Set<String> keys = lafMap.keySet();
+    int i = 0;
+    for (Iterator<String> it = keys.iterator(); it.hasNext();) {
+      String key = it.next();
+      info[i++] = lafMap.get(key);
     }
-    return laf;
+    return info;
   }
 
   public static String getClassName(String laf) {
-      MySeriesLogger.logger.log(Level.INFO, "Get class name for {0}",laf);
-    UIManager.LookAndFeelInfo[] lookAndFeelInfos = UIManager.getInstalledLookAndFeels();
-    lafMap = new HashMap<String, LookAndFeelInfo>();
-    for (int i = 0; i < lookAndFeelInfos.length; i++) {
-      UIManager.LookAndFeelInfo lookAndFeelInfo = lookAndFeelInfos[i];
-      if (lookAndFeelInfo.getName().equals(laf)) {
-        String name =  lookAndFeelInfo.getClassName();
-          MySeriesLogger.logger.log(Level.FINE, "Found claass name {0}",name);
-        return name;
+    MySeriesLogger.logger.log(Level.INFO, "Get class name for {0}", laf);
+    Set<String> keys = lafMap.keySet();
+    int i = 0;
+    for (Iterator<String> it = keys.iterator(); it.hasNext();) {
+      String key = it.next();
+      if (key.equals(laf)) {
+        return lafMap.get(key).getClassName();
       }
     }
-      MySeriesLogger.logger.log(Level.WARNING, "Class name not found");
+    MySeriesLogger.logger.log(Level.WARNING, "Class name not found");
     return null;
+  }
+
+  public static void addExternalLafs() {
+    File[] extLafs = getListOfExtLafs();
+    for (int i = 0; i < extLafs.length; i++) {
+      File dir = extLafs[i];
+      String name = dir.getName();
+      String[] jar = getListOfExtJars(dir);
+      if (jar.length == 1) {
+        try {
+          File jarFile = new File(Paths.LAFS + name + "/" + jar[0]);
+          JarFileLoader.addFile(jarFile);
+          String lafClass = getLafClass(jarFile).replace(".class", "").replaceAll("/", ".");
+          lafMap.put(name, new LookAndFeelInfo(name, lafClass));
+        } catch (IOException ex) {
+          MySeriesLogger.logger.log(Level.SEVERE, "IO Exception on loading external laf", ex);
+        }
+      } else {
+        MySeriesLogger.logger.log(Level.WARNING, "More than one jars in laf directory {0}", name);
+      }
+    }
+  }
+
+  private static String getLafClass(File jar) {
+    try {
+      JarInputStream jarFile = new JarInputStream(new FileInputStream(jar));
+      JarEntry jarEntry;
+
+      while (true) {
+        jarEntry = jarFile.getNextJarEntry();
+        if (jarEntry == null) {
+          break;
+        }
+        if (jarEntry.getName().endsWith("LookAndFeel.class")) {
+          return jarEntry.toString();
+        }
+      }
+    } catch (Exception e) {
+      MySeriesLogger.logger.log(Level.WARNING, "Did not find look and feel class");
+      return null;
+    }
+    return null;
+  }
+
+  private static String[] getListOfExtJars(File dir) {
+    return dir.list(new FilenameFilter() {
+
+      @Override
+      public boolean accept(File dir, String name) {
+        return name.toLowerCase().endsWith(".jar");
+      }
+    });
+  }
+
+  private static File[] getListOfExtLafs() {
+    return new File(Options._USER_DIR_ + Paths.LAFS).listFiles(new FileFilter() {
+
+      @Override
+      public boolean accept(File pathname) {
+        return pathname.isDirectory();
+      }
+    });
   }
 
   /**
@@ -90,6 +163,15 @@ public class LookAndFeels {
       MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     } catch (UnsupportedLookAndFeelException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+    }
+  }
+
+  private void getDefaultLookAndFeels() {
+    UIManager.LookAndFeelInfo[] lookAndFeelInfos = UIManager.getInstalledLookAndFeels();
+    LookAndFeelInfo laf[] = new LookAndFeelInfo[lookAndFeelInfos.length];
+    for (int i = 0; i < lookAndFeelInfos.length; i++) {
+      UIManager.LookAndFeelInfo lookAndFeelInfo = lookAndFeelInfos[i];
+      lafMap.put(lookAndFeelInfo.getName(), lookAndFeelInfo);
     }
   }
 }

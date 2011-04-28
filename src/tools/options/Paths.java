@@ -30,4 +30,8 @@ public interface Paths {
    * The path to logs : "logs/"
    */
   public static final String LOGS_PATH = "logs/";
+  /**
+   * The path to look and feels
+   */
+  public static final String LAFS = "lafs/";
 }

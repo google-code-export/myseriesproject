@@ -20,26 +20,27 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyDraggable;
 import myComponents.myGUI.MyFont;
-import myComponents.myGUI.MyImagePanel;
-import myseries.actions.ApplicationActions;
 import tools.DesktopSupport;
 import tools.LookAndFeels;
 import tools.MySeriesLogger;
 import tools.options.Options;
 import tools.Skin;
-import tools.download.torrents.TorrentConstants;
-import tools.feeds.Feed;
 import tools.options.Paths;
 
 /**
@@ -423,7 +424,10 @@ public class StartPanel extends MyDraggable {
       MySeriesLogger.logger.log(Level.INFO, "Setting font and font sizes");
       MyFont.SetMyFont();
       MySeriesLogger.logger.log(Level.FINE, "Font and font sizes are set to {0} {1}pts", new Object[]{Options.toString(Options.FONT_FACE), Options.toFloat(Options.FONT_SIZE)});
+      LookAndFeels l = new LookAndFeels();
 
+      Map<String, LookAndFeelInfo> map = LookAndFeels.lafMap;
+      UIManager.setInstalledLookAndFeels(LookAndFeels.getLookAndFeels());
       if (Options.toBoolean(Options.USE_SKIN)) {
         MySeriesLogger.logger.log(Level.INFO, "Create Skin");
         Skin skin = new Skin(Options.toColor(Options.SKIN_COLOR));
@@ -439,10 +443,17 @@ public class StartPanel extends MyDraggable {
         if (!laf.equals("")) {
           String className = LookAndFeels.getClassName(laf);
           if (className != null) {
-            UIManager.setLookAndFeel(className);
-            MySeriesLogger.logger.log(Level.FINE, laf + " look and feel loaded");
+            try {
+              UIManager.setLookAndFeel(className);
+              MySeriesLogger.logger.log(Level.FINE, "{0} look and feel loaded", laf);
+            } catch (ClassNotFoundException ex) {
+              MySeriesLogger.logger.log(Level.WARNING, "Could not load {0} look and feel", laf);
+              UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+              MySeriesLogger.logger.log(Level.FINE, "Default look and feel loaded");
+            }
+
           } else {
-            MySeriesLogger.logger.log(Level.WARNING, "Could not load " + laf + " look and feel");
+            MySeriesLogger.logger.log(Level.WARNING, "Could not load {0} look and feel", laf);
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             MySeriesLogger.logger.log(Level.FINE, "Default look and feel loaded");
           }
