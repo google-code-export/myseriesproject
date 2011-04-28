@@ -91,7 +91,7 @@ public class LookAndFeels {
       String[] jar = getListOfExtJars(dir);
       if (jar.length == 1) {
         try {
-          File jarFile = new File(Paths.LAFS + name + "/" + jar[0]);
+          File jarFile = new File(Paths.LAFS_PATH + name + "/" + jar[0]);
           JarFileLoader.addFile(jarFile);
           String[] lafClass = getLafClass(jarFile);
           if(lafClass.length==1){
@@ -147,7 +147,7 @@ public class LookAndFeels {
   }
 
   private static File[] getListOfExtLafs() {
-    return new File(Options._USER_DIR_ + Paths.LAFS).listFiles(new FileFilter() {
+    return new File(Options._USER_DIR_ + Paths.LAFS_PATH).listFiles(new FileFilter() {
 
       @Override
       public boolean accept(File pathname) {

@@ -33,5 +33,5 @@ public interface Paths {
   /**
    * The path to look and feels
    */
-  public static final String LAFS = "lafs/";
+  public static final String LAFS_PATH = "lafs/";
 }

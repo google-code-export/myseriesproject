@@ -8,12 +8,15 @@ import com.googlecode.scheduler.ScheduleDay;
 import com.googlecode.scheduler.SchedulerCellRenderer;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.UIManager;
+import javax.swing.plaf.ColorUIResource;
 import myseries.schedule.ScheduleDayPanel;
 import tools.Skin;
 
@@ -26,21 +29,22 @@ public class MyScheduleTableCellRenderer extends SchedulerCellRenderer {
     public ScheduleDayPanel panel;
     private int cellHeight;
     private int cellWidth;
-    private Color disabledBack = Color.LIGHT_GRAY;
-    private Color selBack = Skin.getColor_5();
-    private Color selFore = Skin.getColor_1();
-    private Color plainBack = Skin.getColor_1();
-    private Color plainFore = Skin.getColor_5();
-    private Color nowBack = Skin.getSkinColor();
-    private Color nowFore = Skin.getColor_5();
-    private Color weekendBack = Skin.getColor_4();
-    private Color weekendFore = Skin.getColor_2();
+    private Color disabledBack = UIManager.getColor("Panel.background");
+    private Color selBack = UIManager.getColor("TableHeader.background");
+    private Color selFore = UIManager.getColor("TableHeader.foreground");
+    private Color plainBack = null;
+    private Color plainFore = null;
+    private Color nowBack = UIManager.getColor("Table.focusCellBackground");
+    private Color nowFore = UIManager.getColor("Table.focusCellForeground");
+    private Color weekendBack = new ColorUIResource(Color.DARK_GRAY);
+    private Color weekendFore =new ColorUIResource(Color.WHITE);
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         JLabel dayLabel = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         dayLabel.setOpaque(false);
         dayLabel.setBorder(BorderFactory.createEmptyBorder());
+        dayLabel.setHorizontalTextPosition(LEFT);
         this.cellHeight = table.getRowHeight();
         this.cellWidth = table.getColumnModel().getColumn(column).getWidth();
         panel = new ScheduleDayPanel(value, dayLabel, cellHeight, cellWidth);
@@ -65,18 +69,20 @@ public class MyScheduleTableCellRenderer extends SchedulerCellRenderer {
                     panel.setBackground(nowBack);
                 } else {
                     if (day == Calendar.SATURDAY || day == Calendar.SUNDAY) {
-                        dayLabel.setForeground(Skin.getColor_5());
-                        dayLabel.setFont(dayLabel.getFont().deriveFont(Font.BOLD,dayLabel.getFont().getSize()+2));
+                        dayLabel.setForeground(Color.RED);
+                        dayLabel.setFont(dayLabel.getFont().deriveFont(Font.ITALIC,dayLabel.getFont().getSize()+2));
                     } else {
                         panel.setBackground(plainBack);
                         dayLabel.setForeground(plainFore);
                     }
                 }
             }
+            panel.setOpaque(true);
         } else {
-            panel.setBackground(disabledBack);
+            //panel.setBackground(disabledBack);
+            panel.setOpaque(false);
         }
-
+        
         return panel;
     }
 
