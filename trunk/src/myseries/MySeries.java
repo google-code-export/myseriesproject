@@ -49,6 +49,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelListener;
 import javax.swing.plaf.basic.BasicToolBarUI;
+import javax.swing.plaf.basic.BasicViewportUI;
 import myComponents.MyMessages;
 import myComponents.MyTableModels.MyFilteredSeriesTableModel;
 import myComponents.MyTableModels.MySeriesTableModel;
@@ -431,7 +432,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
   @SuppressWarnings("unchecked")
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
-    bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
     seriesPopUp = new javax.swing.JPopupMenu();
     PopUpItem_AddSeries = new javax.swing.JMenuItem();
@@ -1147,9 +1147,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     });
     getContentPane().add(myToolbar, java.awt.BorderLayout.NORTH);
 
-    org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tableSeries, org.jdesktop.beansbinding.ELProperty.create("${background}"), menuBar, org.jdesktop.beansbinding.BeanProperty.create("foreground"));
-    bindingGroup.addBinding(binding);
-
     menu_MySeries.setText("MySerieS");
 
     menuItem_createDB.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
@@ -1489,8 +1486,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     menuBar.add(menu_Help);
 
     setJMenuBar(menuBar);
-
-    bindingGroup.bind();
 
     pack();
   }// </editor-fold>//GEN-END:initComponents
@@ -2055,7 +2050,6 @@ logPanel.setVisible(menuItem_showErrorPanel.isSelected());
   public javax.swing.JPanel tabpanel_schedule;
   public javax.swing.JPanel tabpanel_statistics;
   public myComponents.myGUI.MyDnDTabbedPane tabsPanel;
-  private org.jdesktop.beansbinding.BindingGroup bindingGroup;
   // End of variables declaration//GEN-END:variables
 
   public int getToolbarPosition() {
