@@ -675,9 +675,6 @@
             <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
               <Insets value="[0, 0, 0, 6]"/>
             </Property>
-            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-              <Insets value="[0, 0, 0, 6]"/>
-            </Property>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[80, 22]"/>
             </Property>
@@ -818,7 +815,7 @@
                   <KeyStroke key="F11"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/info.png"/>
+                  <Image iconType="3" name="/images/about.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="About"/>
                 <Property name="toolTipText" type="java.lang.String" value="About MySerieS"/>
