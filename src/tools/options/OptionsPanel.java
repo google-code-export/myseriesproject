@@ -13,14 +13,12 @@ package tools.options;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import java.util.Map;
 import tools.MySeriesLogger;
 import java.awt.GraphicsEnvironment;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
 import java.util.logging.Level;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
@@ -31,7 +29,6 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import javax.swing.UIManager.LookAndFeelInfo;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyDraggable;
@@ -51,15 +48,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Set;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
 import myComponents.myTableCellRenderers.MySubtitleListRenderer;
-import myComponents.myTableCellRenderers.MySubtitlesCellRenderer;
 import myseries.actions.ApplicationActions;
 import tools.LookAndFeels;
 import tools.Skin;
@@ -75,10 +66,10 @@ public class OptionsPanel extends MyDraggable {
   public static final int GENERAL_OPTIONS_TAB = 0;
   public static final int INTERNET_OPTIONS_TAB = 1;
   public static final int RENAME_OPTIONS_TAB = 2;
+  public static final int APPEARANCE_TAB = 3;
   public static final long serialVersionUID = 5676235253653L;
   private MySeries m;
   private DefaultComboBoxModel model_laf = new DefaultComboBoxModel();
-  private HashMap<String, LookAndFeelInfo> lafMap;
   private ComboBoxModel model_fonts;
   private boolean colorsChanged;
   private String oldFontSize;
@@ -128,20 +119,7 @@ public class OptionsPanel extends MyDraggable {
   }
 
   private void createLafModel() {
-    MySeriesLogger.logger.log(Level.INFO, "Creating laf model");
-    Map<String, LookAndFeelInfo> map = LookAndFeels.lafMap;
-    Set<String> keys = map.keySet();
-    String[] lafNames = new String[keys.size()];
-    int i = 0;
-    for (Iterator<String> it = keys.iterator(); it.hasNext();) {
-      Object key = it.next();
-      LookAndFeelInfo info = map.get(key);
-      lafNames[i] = info.getName();
-      MySeriesLogger.logger.log(Level.INFO, "Adding laf {0}", lafNames[i]);
-      i++;
-    }
-
-    combobox_laf.setModel(new DefaultComboBoxModel(lafNames));
+    combobox_laf.setModel(LookAndFeels.getComboBoxModel());
   }
 
   private void createModelFonts() {
@@ -207,20 +185,10 @@ public class OptionsPanel extends MyDraggable {
     panel_options = new javax.swing.JPanel();
     tabbedPane_options = new javax.swing.JTabbedPane();
     panel_general = new javax.swing.JPanel();
-    button_BGColor = new javax.swing.JButton();
     jLabel3 = new javax.swing.JLabel();
     combobox_debugMode = new javax.swing.JComboBox();
     jLabel4 = new javax.swing.JLabel();
     combobox_dateFormat = new javax.swing.JComboBox();
-    button_dateFormatHelp = new javax.swing.JButton();
-    jLabel5 = new javax.swing.JLabel();
-    combobox_laf = new javax.swing.JComboBox();
-    checkbox_dontUseSkin = new javax.swing.JCheckBox();
-    jLabel10 = new javax.swing.JLabel();
-    spinner_fontSize = new javax.swing.JSpinner();
-    combobox_fonts = new com.googlecode.svalidators.formcomponents.SComboBox();
-    label_preview = new javax.swing.JLabel();
-    jLabel16 = new javax.swing.JLabel();
     jLabel17 = new javax.swing.JLabel();
     cb_autoUpdate = new javax.swing.JCheckBox();
     jLabel11 = new javax.swing.JLabel();
@@ -232,6 +200,18 @@ public class OptionsPanel extends MyDraggable {
     tf_mainDir = new com.googlecode.svalidators.formcomponents.STextField(new FileValidator("",FileValidator.Type.DIR ,true));
     bt_mainDirectory = new myComponents.myGUI.buttons.MyButtonDir();
     jLabel22 = new javax.swing.JLabel();
+    bt_dfhelp = new myComponents.myGUI.buttons.MyButtonHelp();
+    panel_appearance = new javax.swing.JPanel();
+    jLabel5 = new javax.swing.JLabel();
+    combobox_laf = new javax.swing.JComboBox();
+    checkbox_dontUseSkin = new javax.swing.JCheckBox();
+    button_BGColor = new javax.swing.JButton();
+    combobox_fonts = new com.googlecode.svalidators.formcomponents.SComboBox();
+    jLabel10 = new javax.swing.JLabel();
+    spinner_fontSize = new javax.swing.JSpinner();
+    jLabel16 = new javax.swing.JLabel();
+    label_preview = new javax.swing.JLabel();
+    jCheckBox2 = new javax.swing.JCheckBox();
     panel_internet = new javax.swing.JPanel();
     checkbox_useProxy = new javax.swing.JCheckBox();
     jLabel8 = new javax.swing.JLabel();
@@ -255,6 +235,8 @@ public class OptionsPanel extends MyDraggable {
     tf_titleSep = new com.googlecode.svalidators.formcomponents.STextField();
     cb_noRenameConf = new javax.swing.JCheckBox();
     cd_autoRename = new javax.swing.JCheckBox();
+    jLabel6 = new javax.swing.JLabel();
+    jLabel12 = new javax.swing.JLabel();
     jLabel1 = new javax.swing.JLabel();
     bt_cancel = new myComponents.myGUI.buttons.MyButtonCancel();
     bt_help = new myComponents.myGUI.buttons.MyButtonHelp();
@@ -287,21 +269,9 @@ public class OptionsPanel extends MyDraggable {
 
     tabbedPane_options.setName("Tab"); // NOI18N
 
+    panel_general.setToolTipText("General options");
     panel_general.setName("General"); // NOI18N
     panel_general.setOpaque(false);
-
-    button_BGColor.setBackground(Options.toColor(Options.SKIN_COLOR));
-    button_BGColor.setText("Set Color");
-    button_BGColor.setName(Options.SKIN_COLOR);
-
-    org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, checkbox_dontUseSkin, org.jdesktop.beansbinding.ELProperty.create("${selected}"), button_BGColor, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-    bindingGroup.addBinding(binding);
-
-    button_BGColor.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        button_BGColorActionPerformed(evt);
-      }
-    });
 
     jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     jLabel3.setText("Logging level :");
@@ -324,76 +294,6 @@ public class OptionsPanel extends MyDraggable {
     combobox_dateFormat.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "dd/MM/yyyy", "dd-MM-yyyy", "dd/MM/yy", "dd-MM-yy", "d/M/yyyy", "d/M/yy" }));
     combobox_dateFormat.setSelectedItem(Options.toString(Options.DATE_FORMAT));
     combobox_dateFormat.setName(Options.DATE_FORMAT);
-
-    button_dateFormatHelp.setBackground(new java.awt.Color(255, 255, 255));
-    button_dateFormatHelp.setToolTipText("Brings up help about formating date");
-    button_dateFormatHelp.setBorder(null);
-    button_dateFormatHelp.setBorderPainted(false);
-    button_dateFormatHelp.setContentAreaFilled(false);
-    button_dateFormatHelp.setFocusPainted(false);
-    button_dateFormatHelp.setName("noname"); // NOI18N
-    button_dateFormatHelp.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        button_dateFormatHelpActionPerformed(evt);
-      }
-    });
-
-    jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-    jLabel5.setText("Look And Feel :");
-    jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-    jLabel5.setName("noname"); // NOI18N
-
-    combobox_laf.setModel(model_laf);
-    combobox_laf.setSelectedItem(Options.toString(Options.LOOK_AND_FEEL));
-    combobox_laf.setName(Options.LOOK_AND_FEEL);
-    combobox_laf.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        combobox_lafActionPerformed(evt);
-      }
-    });
-
-    checkbox_dontUseSkin.setSelected(Options.toBoolean(Options.USE_SKIN));
-    checkbox_dontUseSkin.setText("Use Skin Color :");
-    checkbox_dontUseSkin.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-    checkbox_dontUseSkin.setName(Options.USE_SKIN);
-    checkbox_dontUseSkin.setOpaque(false);
-    checkbox_dontUseSkin.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        checkbox_dontUseSkinActionPerformed(evt);
-      }
-    });
-
-    jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-    jLabel10.setText("Font : ");
-    jLabel10.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-    jLabel10.setName("noname"); // NOI18N
-
-    spinner_fontSize.setModel(new javax.swing.SpinnerNumberModel(1, 1, 36, 1));
-    spinner_fontSize.setName(Options.FONT_SIZE);
-    spinner_fontSize.setOpaque(false);
-    spinner_fontSize.setValue(Options.toFloat(Options.FONT_SIZE));
-    spinner_fontSize.addChangeListener(new javax.swing.event.ChangeListener() {
-      public void stateChanged(javax.swing.event.ChangeEvent evt) {
-        spinner_fontSizeStateChanged(evt);
-      }
-    });
-
-    combobox_fonts.setMinimumSize(new java.awt.Dimension(23, 20));
-    combobox_fonts.setName(Options.FONT_FACE);
-    combobox_fonts.setRenderer(new MyOptionsFontRenderer());
-    combobox_fonts.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        combobox_fontsActionPerformed(evt);
-      }
-    });
-
-    setFont(getSelectedFont());
-    label_preview.setText(String.valueOf(combobox_fonts.getSelectedItem()));
-    label_preview.setName("noname"); // NOI18N
-
-    jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-    jLabel16.setText("Font preview :");
-    jLabel16.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
     jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     jLabel17.setText("Auto update :");
@@ -426,11 +326,13 @@ public class OptionsPanel extends MyDraggable {
     cb_autoUnzip.setName(Options.AUTO_EXTRACT_ZIPS);
     cb_autoUnzip.setOpaque(false);
 
-    binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, cb_autoUpdate, org.jdesktop.beansbinding.ELProperty.create("${selected}"), cb_autoUnzip, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+    org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, cb_autoUpdate, org.jdesktop.beansbinding.ELProperty.create("${selected}"), cb_autoUnzip, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
     bindingGroup.addBinding(binding);
 
     bt_videoViewer.setText("");
     bt_videoViewer.setToolTipText("Browse for video viewer");
+    bt_videoViewer.setMaximumSize(new java.awt.Dimension(32, 32));
+    bt_videoViewer.setMinimumSize(new java.awt.Dimension(32, 32));
     bt_videoViewer.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         bt_videoViewerActionPerformed(evt);
@@ -447,6 +349,8 @@ public class OptionsPanel extends MyDraggable {
 
     bt_mainDirectory.setText("");
     bt_mainDirectory.setToolTipText("Browse for main directory");
+    bt_mainDirectory.setMaximumSize(new java.awt.Dimension(32, 32));
+    bt_mainDirectory.setMinimumSize(new java.awt.Dimension(32, 32));
     bt_mainDirectory.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         bt_mainDirectoryActionPerformed(evt);
@@ -456,55 +360,44 @@ public class OptionsPanel extends MyDraggable {
     jLabel22.setFont(jLabel22.getFont().deriveFont((jLabel22.getFont().getStyle() | java.awt.Font.ITALIC), jLabel22.getFont().getSize()-1));
     jLabel22.setText("Setting logging level to ALL will slow down the application");
 
+    bt_dfhelp.setText("");
+    bt_dfhelp.setToolTipText("Date format help");
+    bt_dfhelp.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        bt_dfhelpActionPerformed(evt);
+      }
+    });
+
     javax.swing.GroupLayout panel_generalLayout = new javax.swing.GroupLayout(panel_general);
     panel_general.setLayout(panel_generalLayout);
     panel_generalLayout.setHorizontalGroup(
       panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_generalLayout.createSequentialGroup()
-        .addGap(10, 10, 10)
-        .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addComponent(checkbox_dontUseSkin, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
-          .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-          .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
-          .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
-          .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
-          .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
-          .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
-          .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
-          .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE))
+      .addGroup(panel_generalLayout.createSequentialGroup()
+        .addContainerGap()
+        .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+          .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+          .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+          .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+          .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_generalLayout.createSequentialGroup()
-            .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(combobox_debugMode, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-              .addComponent(combobox_dateFormat, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(label_preview, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
-              .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                .addComponent(button_BGColor, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel_generalLayout.createSequentialGroup()
-                  .addComponent(combobox_fonts, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                  .addComponent(spinner_fontSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addComponent(combobox_laf, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-            .addGap(95, 95, 95)
-            .addComponent(button_dateFormatHelp, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addComponent(combobox_debugMode, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
           .addGroup(panel_generalLayout.createSequentialGroup()
-            .addComponent(cb_autoUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
-            .addGap(73, 73, 73))
-          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_generalLayout.createSequentialGroup()
-            .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-              .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE)
-              .addComponent(cb_autoUnzip, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE)
-              .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel_generalLayout.createSequentialGroup()
-                .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                  .addComponent(tf_mainDir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                  .addComponent(tf_videoApp, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE))
-                .addGap(6, 6, 6)
-                .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                  .addComponent(bt_mainDirectory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                  .addComponent(bt_videoViewer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-            .addGap(65, 65, 65))))
+            .addComponent(combobox_dateFormat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(bt_dfhelp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addComponent(cb_autoUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
+          .addComponent(cb_autoUnzip, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
+          .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(tf_videoApp, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
+          .addComponent(tf_mainDir, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(bt_videoViewer, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(bt_mainDirectory, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addGap(107, 107, 107))
     );
     panel_generalLayout.setVerticalGroup(
       panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -513,71 +406,187 @@ public class OptionsPanel extends MyDraggable {
         .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jLabel3)
           .addComponent(combobox_debugMode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addGap(8, 8, 8)
+        .addComponent(jLabel22)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(button_dateFormatHelp, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addGroup(panel_generalLayout.createSequentialGroup()
-            .addGap(2, 2, 2)
-            .addComponent(jLabel22)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-              .addComponent(jLabel4)
-              .addComponent(combobox_dateFormat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-              .addComponent(jLabel5)
-              .addComponent(combobox_laf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-              .addComponent(checkbox_dontUseSkin)
-              .addComponent(button_BGColor))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-              .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(combobox_fonts, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(spinner_fontSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-              .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-              .addComponent(jLabel16)
-              .addComponent(label_preview, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-              .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(cb_autoUpdate))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(cb_autoUnzip)
-            .addGap(8, 8, 8)
-            .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-              .addComponent(tf_videoApp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(jLabel11)
-              .addComponent(bt_videoViewer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+        .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+          .addComponent(jLabel4)
+          .addComponent(combobox_dateFormat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(bt_dfhelp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(cb_autoUpdate))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(cb_autoUnzip)
+        .addGap(8, 8, 8)
+        .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+          .addComponent(tf_videoApp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(jLabel11)
+          .addComponent(bt_videoViewer, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addGroup(panel_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
           .addComponent(jLabel7)
           .addComponent(tf_mainDir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(bt_mainDirectory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addContainerGap(98, Short.MAX_VALUE))
+          .addComponent(bt_mainDirectory, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addContainerGap(34, Short.MAX_VALUE))
     );
 
-    panel_generalLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {button_dateFormatHelp, combobox_dateFormat});
-
-    panel_generalLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {button_BGColor, checkbox_dontUseSkin, combobox_debugMode, combobox_laf, jLabel22, jLabel3, jLabel4, jLabel5});
-
-    panel_generalLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {combobox_fonts, jLabel10, spinner_fontSize});
-
-    panel_generalLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel16, label_preview});
+    panel_generalLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {combobox_debugMode, jLabel22, jLabel3, jLabel4});
 
     panel_generalLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cb_autoUpdate, jLabel17});
 
     panel_generalLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel11, tf_videoApp});
 
+    tabbedPane_options.addTab("General", panel_general);
+
+    panel_appearance.setToolTipText("Appearance options");
+    panel_appearance.setName("Appearance"); // NOI18N
+    panel_appearance.setOpaque(false);
+
+    jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    jLabel5.setText("Look And Feel :");
+    jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+    jLabel5.setName("noname"); // NOI18N
+
+    combobox_laf.setModel(model_laf);
+    combobox_laf.setSelectedItem(Options.toString(Options.LOOK_AND_FEEL));
+    combobox_laf.setName(Options.LOOK_AND_FEEL);
+    combobox_laf.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        combobox_lafActionPerformed(evt);
+      }
+    });
+
+    checkbox_dontUseSkin.setSelected(Options.toBoolean(Options.USE_SKIN));
+    checkbox_dontUseSkin.setText("Use Skin Color :");
+    checkbox_dontUseSkin.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    checkbox_dontUseSkin.setName(Options.USE_SKIN);
+    checkbox_dontUseSkin.setOpaque(false);
+    checkbox_dontUseSkin.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        checkbox_dontUseSkinActionPerformed(evt);
+      }
+    });
+
+    button_BGColor.setBackground(Options.toColor(Options.SKIN_COLOR));
+    button_BGColor.setText("Set Color");
+    button_BGColor.setName(Options.SKIN_COLOR);
+
+    binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, checkbox_dontUseSkin, org.jdesktop.beansbinding.ELProperty.create("${selected}"), button_BGColor, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+    bindingGroup.addBinding(binding);
+
+    button_BGColor.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_BGColorActionPerformed(evt);
+      }
+    });
+
+    combobox_fonts.setMinimumSize(new java.awt.Dimension(23, 20));
+    combobox_fonts.setName(Options.FONT_FACE);
+    combobox_fonts.setRenderer(new MyOptionsFontRenderer());
+    combobox_fonts.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        combobox_fontsActionPerformed(evt);
+      }
+    });
+
+    jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    jLabel10.setText("Font : ");
+    jLabel10.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+    jLabel10.setName("noname"); // NOI18N
+
+    spinner_fontSize.setModel(new javax.swing.SpinnerNumberModel(1, 1, 36, 1));
+    spinner_fontSize.setName(Options.FONT_SIZE);
+    spinner_fontSize.setOpaque(false);
+    spinner_fontSize.setValue(Options.toFloat(Options.FONT_SIZE));
+    spinner_fontSize.addChangeListener(new javax.swing.event.ChangeListener() {
+      public void stateChanged(javax.swing.event.ChangeEvent evt) {
+        spinner_fontSizeStateChanged(evt);
+      }
+    });
+
+    jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    jLabel16.setText("Font preview :");
+    jLabel16.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+
+    setFont(getSelectedFont());
+    label_preview.setText(String.valueOf(combobox_fonts.getSelectedItem()));
+    label_preview.setName("noname"); // NOI18N
+
+    jCheckBox2.setSelected(Options.toBoolean(Options.MINIMIZE_TO_TRAY));
+    jCheckBox2.setText("Minimize to tray");
+    jCheckBox2.setToolTipText("Minimize Application to tray");
+    jCheckBox2.setName(Options.MINIMIZE_TO_TRAY);
+    jCheckBox2.setOpaque(false);
+
+    javax.swing.GroupLayout panel_appearanceLayout = new javax.swing.GroupLayout(panel_appearance);
+    panel_appearance.setLayout(panel_appearanceLayout);
+    panel_appearanceLayout.setHorizontalGroup(
+      panel_appearanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(panel_appearanceLayout.createSequentialGroup()
+        .addContainerGap()
+        .addGroup(panel_appearanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(panel_appearanceLayout.createSequentialGroup()
+            .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap())
+          .addGroup(panel_appearanceLayout.createSequentialGroup()
+            .addGroup(panel_appearanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+              .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+              .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+              .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+              .addComponent(checkbox_dontUseSkin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(panel_appearanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+              .addGroup(panel_appearanceLayout.createSequentialGroup()
+                .addGroup(panel_appearanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                  .addComponent(button_BGColor, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                  .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel_appearanceLayout.createSequentialGroup()
+                    .addComponent(combobox_fonts, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(spinner_fontSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                  .addComponent(combobox_laf, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(246, Short.MAX_VALUE))
+              .addGroup(panel_appearanceLayout.createSequentialGroup()
+                .addComponent(label_preview, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
+                .addGap(184, 184, 184))))))
+    );
+    panel_appearanceLayout.setVerticalGroup(
+      panel_appearanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(panel_appearanceLayout.createSequentialGroup()
+        .addGap(23, 23, 23)
+        .addGroup(panel_appearanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(jLabel5)
+          .addComponent(combobox_laf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGroup(panel_appearanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+          .addComponent(checkbox_dontUseSkin)
+          .addComponent(button_BGColor))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGroup(panel_appearanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+          .addGroup(panel_appearanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addComponent(combobox_fonts, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(spinner_fontSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGroup(panel_appearanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+          .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(label_preview, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(jCheckBox2)
+        .addContainerGap(133, Short.MAX_VALUE))
+    );
+
+    panel_appearanceLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {button_BGColor, checkbox_dontUseSkin, combobox_laf, jLabel5});
+
+    panel_appearanceLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {combobox_fonts, jLabel10, spinner_fontSize});
+
     createLafModel();
     combobox_laf.setSelectedItem(Options.toString(Options.LOOK_AND_FEEL));
 
-    tabbedPane_options.addTab("General", panel_general);
+    tabbedPane_options.addTab("Appearance", panel_appearance);
 
     panel_internet.setName("Internet"); // NOI18N
     panel_internet.setOpaque(false);
@@ -723,7 +732,7 @@ public class OptionsPanel extends MyDraggable {
             .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
               .addComponent(cb_updateFeeds)
               .addComponent(jCheckBox1))))
-        .addContainerGap(152, Short.MAX_VALUE))
+        .addContainerGap(249, Short.MAX_VALUE))
     );
     panel_internetLayout.setVerticalGroup(
       panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -787,16 +796,27 @@ public class OptionsPanel extends MyDraggable {
     tf_titleSep.setName(Options.TITLE_SEPARATOR);
 
     cb_noRenameConf.setSelected(Options.toBoolean(Options.NO_RENAME_CONFIRMATION));
-    cb_noRenameConf.setText("Rename single episode with no name confirmation");
+    cb_noRenameConf.setText("Fast single episode renaming");
     cb_noRenameConf.setToolTipText("<html>\nWhen this is checked renaming of a single episode will not bring up the renaming window<br />\nand the files will be renamed with the current renaming options");
     cb_noRenameConf.setName(Options.NO_RENAME_CONFIRMATION);
     cb_noRenameConf.setOpaque(false);
 
     cd_autoRename.setSelected(Options.toBoolean(Options.AUTO_RENAME_SUBS));
-    cd_autoRename.setText("Auto rename subs when unziped or moved from the main to the series directory");
+    cd_autoRename.setText("Auto Renaming");
     cd_autoRename.setToolTipText("<html>Rename subtitles when unzipped or moved from the main series directory to the series directory where they belong");
     cd_autoRename.setName(Options.AUTO_RENAME_SUBS);
     cd_autoRename.setOpaque(false);
+    cd_autoRename.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        cd_autoRenameActionPerformed(evt);
+      }
+    });
+
+    jLabel6.setFont(jLabel6.getFont().deriveFont((jLabel6.getFont().getStyle() | java.awt.Font.ITALIC), jLabel6.getFont().getSize()-1));
+    jLabel6.setText("(Rename single episodes without naming confirmation)");
+
+    jLabel12.setFont(jLabel12.getFont().deriveFont((jLabel12.getFont().getStyle() | java.awt.Font.ITALIC), jLabel12.getFont().getSize()-1));
+    jLabel12.setText("(Auto rename subtitles when downloaded, unziped or moved from the Main Series Directory)");
 
     javax.swing.GroupLayout panel_renamingLayout = new javax.swing.GroupLayout(panel_renaming);
     panel_renaming.setLayout(panel_renamingLayout);
@@ -805,12 +825,6 @@ public class OptionsPanel extends MyDraggable {
       .addGroup(panel_renamingLayout.createSequentialGroup()
         .addContainerGap()
         .addGroup(panel_renamingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(panel_renamingLayout.createSequentialGroup()
-            .addComponent(cd_autoRename, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE)
-            .addGap(236, 236, 236))
-          .addGroup(panel_renamingLayout.createSequentialGroup()
-            .addComponent(cb_noRenameConf, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
-            .addGap(269, 269, 269))
           .addGroup(panel_renamingLayout.createSequentialGroup()
             .addGroup(panel_renamingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
               .addGroup(panel_renamingLayout.createSequentialGroup()
@@ -825,7 +839,21 @@ public class OptionsPanel extends MyDraggable {
                 .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tf_titleSep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addGap(524, 524, 524))))
+            .addGap(524, 524, 524))
+          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_renamingLayout.createSequentialGroup()
+            .addGroup(panel_renamingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+              .addGroup(panel_renamingLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE))
+              .addComponent(cb_noRenameConf, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE))
+            .addGap(269, 269, 269))
+          .addGroup(panel_renamingLayout.createSequentialGroup()
+            .addComponent(cd_autoRename, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap())
+          .addGroup(panel_renamingLayout.createSequentialGroup()
+            .addGap(21, 21, 21)
+            .addComponent(jLabel12)
+            .addContainerGap())))
     );
     panel_renamingLayout.setVerticalGroup(
       panel_renamingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -845,8 +873,12 @@ public class OptionsPanel extends MyDraggable {
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(cb_noRenameConf)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(jLabel6)
+        .addGap(5, 5, 5)
         .addComponent(cd_autoRename, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(326, 326, 326))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(jLabel12)
+        .addGap(122, 122, 122))
     );
 
     tabbedPane_options.addTab("Renaming", panel_renaming);
@@ -857,15 +889,15 @@ public class OptionsPanel extends MyDraggable {
       panel_optionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_optionsLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(tabbedPane_options, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
+        .addComponent(tabbedPane_options, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
         .addContainerGap())
     );
     panel_optionsLayout.setVerticalGroup(
       panel_optionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(panel_optionsLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(tabbedPane_options, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
-        .addContainerGap())
+        .addComponent(tabbedPane_options, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
     jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getStyle() | java.awt.Font.BOLD, jLabel1.getFont().getSize()+2));
@@ -901,14 +933,14 @@ public class OptionsPanel extends MyDraggable {
       .addGroup(jPanel1Layout.createSequentialGroup()
         .addContainerGap()
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(bt_ok, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+          .addGroup(jPanel1Layout.createSequentialGroup()
             .addGap(58, 58, 58)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(bt_help, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(bt_cancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addComponent(bt_ok, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addGroup(jPanel1Layout.createSequentialGroup()
             .addComponent(panel_options, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addContainerGap())))
@@ -921,8 +953,8 @@ public class OptionsPanel extends MyDraggable {
           .addComponent(bt_help, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(bt_cancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(panel_options, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(panel_options, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         .addComponent(bt_ok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
     );
 
@@ -934,7 +966,7 @@ public class OptionsPanel extends MyDraggable {
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+      .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
     );
 
     bindingGroup.bind();
@@ -967,14 +999,6 @@ public class OptionsPanel extends MyDraggable {
           + " pattern you provided is invalid", ex);
     }
   }
-
-  private void button_dateFormatHelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_dateFormatHelpActionPerformed
-    try {
-      DateFormatHelp dfh = new DateFormatHelp();
-    } catch (IOException ex) {
-      MySeriesLogger.logger.log(Level.SEVERE, "Could not find date format help file", ex);
-    }
-}//GEN-LAST:event_button_dateFormatHelpActionPerformed
 
   private void combobox_lafActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combobox_lafActionPerformed
     //LookAndFeelInfo laf = (LookAndFeelInfo) lafMap.get(combobox_laf.getSelectedItem());
@@ -1062,6 +1086,9 @@ public class OptionsPanel extends MyDraggable {
     } else if (tabbedPane_options.getSelectedIndex() == RENAME_OPTIONS_TAB) {
       MySeriesLogger.logger.log(Level.INFO, "Showing Rename options help window");
       HelpWindow helpWindow = new HelpWindow(HelpWindow.RENAME_OPTIONS);
+    }else if (tabbedPane_options.getSelectedIndex() == APPEARANCE_TAB) {
+      MySeriesLogger.logger.log(Level.INFO, "Showing appearance options help window");
+      HelpWindow helpWindow = new HelpWindow(HelpWindow.APPEARANCE_OPTIONS);
     }
   }//GEN-LAST:event_bt_helpActionPerformed
 
@@ -1173,18 +1200,30 @@ public class OptionsPanel extends MyDraggable {
     }
   }//GEN-LAST:event_bt_mainDirectoryActionPerformed
 
+  private void bt_dfhelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_dfhelpActionPerformed
+     try {
+      DateFormatHelp dfh = new DateFormatHelp();
+    } catch (IOException ex) {
+      MySeriesLogger.logger.log(Level.SEVERE, "Could not find date format help file", ex);
+    }
+  }//GEN-LAST:event_bt_dfhelpActionPerformed
+
+  private void cd_autoRenameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cd_autoRenameActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_cd_autoRenameActionPerformed
+
   private Font getSelectedFont() {
     Font font = new Font((String) combobox_fonts.getSelectedItem(), Font.PLAIN, (int) Float.parseFloat(String.valueOf(spinner_fontSize.getValue())));
     return font;
   }
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private myComponents.myGUI.buttons.MyButtonCancel bt_cancel;
+  private myComponents.myGUI.buttons.MyButtonHelp bt_dfhelp;
   private myComponents.myGUI.buttons.MyButtonHelp bt_help;
   private myComponents.myGUI.buttons.MyButtonDir bt_mainDirectory;
   private myComponents.myGUI.buttons.MyButtonOk bt_ok;
   private myComponents.myGUI.buttons.MyButtonDir bt_videoViewer;
   private javax.swing.JButton button_BGColor;
-  private javax.swing.JButton button_dateFormatHelp;
   private javax.swing.JCheckBox cb_autoUnzip;
   private javax.swing.JCheckBox cb_autoUpdate;
   private javax.swing.JCheckBox cb_noRenameConf;
@@ -1199,9 +1238,11 @@ public class OptionsPanel extends MyDraggable {
   private com.googlecode.svalidators.formcomponents.SComboBox combobox_fonts;
   private javax.swing.JComboBox combobox_laf;
   private javax.swing.JCheckBox jCheckBox1;
+  private javax.swing.JCheckBox jCheckBox2;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel10;
   private javax.swing.JLabel jLabel11;
+  private javax.swing.JLabel jLabel12;
   private javax.swing.JLabel jLabel13;
   private javax.swing.JLabel jLabel14;
   private javax.swing.JLabel jLabel15;
@@ -1215,6 +1256,7 @@ public class OptionsPanel extends MyDraggable {
   private javax.swing.JLabel jLabel3;
   private javax.swing.JLabel jLabel4;
   private javax.swing.JLabel jLabel5;
+  private javax.swing.JLabel jLabel6;
   private javax.swing.JLabel jLabel7;
   private javax.swing.JLabel jLabel8;
   private javax.swing.JLabel jLabel9;
@@ -1224,6 +1266,7 @@ public class OptionsPanel extends MyDraggable {
   private javax.swing.JPanel jPanel1;
   private javax.swing.JLabel label_preview;
   private javax.swing.JPanel panel_DateFormatHelp;
+  private javax.swing.JPanel panel_appearance;
   private javax.swing.JPanel panel_general;
   private javax.swing.JPanel panel_internet;
   private javax.swing.JPanel panel_options;
@@ -1246,8 +1289,10 @@ public class OptionsPanel extends MyDraggable {
    */
   private void getOptionsComponents() {
     parse(panel_general);
+    parse(panel_appearance);
     parse(panel_internet);
     parse(panel_renaming);
+    
   }
 
   /**
