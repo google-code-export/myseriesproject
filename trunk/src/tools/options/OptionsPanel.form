@@ -63,7 +63,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+          <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -82,17 +82,17 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="bt_ok" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Group type="102" alignment="1" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="58" pref="58" max="58" attributes="0"/>
-                          <Component id="jLabel1" pref="386" max="32767" attributes="0"/>
+                          <Component id="jLabel1" pref="483" max="32767" attributes="0"/>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Component id="bt_help" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Component id="bt_cancel" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <Component id="bt_ok" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="panel_options" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -110,8 +110,8 @@
                       <Component id="bt_cancel" alignment="2" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="panel_options" max="32767" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="panel_options" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Component id="bt_ok" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -132,7 +132,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="tabbedPane_options" pref="486" max="32767" attributes="0"/>
+                      <Component id="tabbedPane_options" pref="583" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -141,8 +141,8 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="tabbedPane_options" pref="485" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="tabbedPane_options" min="-2" pref="316" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -157,6 +157,7 @@
               <SubComponents>
                 <Container class="javax.swing.JPanel" name="panel_general">
                   <Properties>
+                    <Property name="toolTipText" type="java.lang.String" value="General options"/>
                     <Property name="name" type="java.lang.String" value="General" noResource="true"/>
                     <Property name="opaque" type="boolean" value="false"/>
                   </Properties>
@@ -171,63 +172,36 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="checkbox_dontUseSkin" pref="105" max="32767" attributes="2"/>
-                                  <Component id="jLabel7" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="jLabel11" alignment="1" pref="105" max="32767" attributes="0"/>
-                                  <Component id="jLabel17" alignment="1" pref="105" max="32767" attributes="0"/>
-                                  <Component id="jLabel16" alignment="1" pref="105" max="32767" attributes="0"/>
-                                  <Component id="jLabel10" alignment="1" pref="105" max="32767" attributes="0"/>
-                                  <Component id="jLabel5" alignment="1" pref="105" max="32767" attributes="0"/>
-                                  <Component id="jLabel4" alignment="1" pref="105" max="32767" attributes="0"/>
-                                  <Component id="jLabel3" alignment="1" pref="105" max="32767" attributes="3"/>
-                              </Group>
-                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="combobox_debugMode" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
-                                          <Component id="jLabel22" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="combobox_dateFormat" alignment="0" min="-2" pref="175" max="-2" attributes="3"/>
-                                          <Component id="label_preview" alignment="0" pref="260" max="32767" attributes="0"/>
-                                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                              <Component id="button_BGColor" alignment="0" max="32767" attributes="1"/>
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="combobox_fonts" min="-2" pref="170" max="-2" attributes="1"/>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="spinner_fontSize" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <Component id="combobox_laf" alignment="0" max="32767" attributes="3"/>
-                                          </Group>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="95" max="-2" attributes="0"/>
-                                      <Component id="button_dateFormatHelp" min="-2" pref="44" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="cb_autoUpdate" pref="326" max="32767" attributes="0"/>
-                                      <EmptySpace min="73" pref="73" max="73" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Group type="103" groupAlignment="1" attributes="0">
-                                          <Component id="jLabel14" alignment="0" pref="334" max="32767" attributes="2"/>
-                                          <Component id="cb_autoUnzip" alignment="0" pref="334" max="32767" attributes="2"/>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                  <Component id="tf_mainDir" max="32767" attributes="1"/>
-                                                  <Component id="tf_videoApp" alignment="0" pref="296" max="32767" attributes="1"/>
-                                              </Group>
-                                              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="bt_mainDirectory" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="bt_videoViewer" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                          </Group>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="jLabel3" alignment="1" pref="114" max="32767" attributes="3"/>
+                                  <Component id="jLabel4" alignment="1" pref="114" max="32767" attributes="1"/>
+                                  <Component id="jLabel17" alignment="1" pref="114" max="32767" attributes="1"/>
+                                  <Component id="jLabel11" alignment="1" pref="114" max="32767" attributes="1"/>
+                                  <Component id="jLabel7" alignment="1" min="-2" pref="114" max="-2" attributes="1"/>
                               </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="combobox_debugMode" alignment="0" min="-2" pref="104" max="-2" attributes="0"/>
+                                  <Component id="jLabel22" alignment="0" pref="341" max="32767" attributes="1"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="combobox_dateFormat" min="-2" max="-2" attributes="3"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="bt_dfhelp" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="cb_autoUpdate" alignment="0" pref="341" max="32767" attributes="1"/>
+                                  <Component id="cb_autoUnzip" alignment="0" pref="341" max="32767" attributes="3"/>
+                                  <Component id="jLabel14" alignment="0" min="-2" pref="246" max="-2" attributes="3"/>
+                                  <Component id="tf_videoApp" alignment="0" pref="341" max="32767" attributes="1"/>
+                                  <Component id="tf_mainDir" alignment="0" pref="341" max="32767" attributes="1"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="bt_videoViewer" alignment="0" min="-2" pref="32" max="-2" attributes="0"/>
+                                  <Component id="bt_mainDirectory" alignment="0" min="-2" pref="32" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="107" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -239,86 +213,41 @@
                                   <Component id="jLabel3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="combobox_debugMode" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                              <Component id="jLabel22" linkSize="2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="button_dateFormatHelp" linkSize="1" alignment="0" min="-2" pref="23" max="-2" attributes="1"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                                      <Component id="jLabel22" linkSize="2" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="2" attributes="0">
-                                          <Component id="jLabel4" linkSize="2" alignment="2" min="-2" max="-2" attributes="0"/>
-                                          <Component id="combobox_dateFormat" linkSize="1" alignment="2" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="jLabel5" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="combobox_laf" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="2" attributes="0">
-                                          <Component id="checkbox_dontUseSkin" linkSize="2" alignment="2" min="-2" max="-2" attributes="0"/>
-                                          <Component id="button_BGColor" linkSize="2" alignment="2" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="1" attributes="0">
-                                          <Group type="103" alignment="1" groupAlignment="3" attributes="0">
-                                              <Component id="combobox_fonts" linkSize="6" alignment="3" min="-2" pref="21" max="-2" attributes="0"/>
-                                              <Component id="spinner_fontSize" linkSize="6" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Component id="jLabel10" linkSize="6" min="-2" pref="20" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="2" attributes="0">
-                                          <Component id="jLabel16" linkSize="7" alignment="2" min="-2" max="-2" attributes="0"/>
-                                          <Component id="label_preview" linkSize="7" alignment="2" min="-2" pref="22" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="jLabel17" linkSize="8" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
-                                          <Component id="cb_autoUpdate" linkSize="8" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="cb_autoUnzip" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="2" attributes="0">
-                                          <Component id="tf_videoApp" linkSize="9" alignment="2" min="-2" max="-2" attributes="1"/>
-                                          <Component id="jLabel11" linkSize="9" alignment="2" min="-2" max="-2" attributes="1"/>
-                                          <Component id="bt_videoViewer" alignment="2" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
+                              <Group type="103" groupAlignment="2" attributes="0">
+                                  <Component id="jLabel4" linkSize="2" alignment="2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="combobox_dateFormat" alignment="2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="bt_dfhelp" alignment="2" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jLabel17" linkSize="8" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
+                                  <Component id="cb_autoUpdate" linkSize="8" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="cb_autoUnzip" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="2" attributes="0">
+                                  <Component id="tf_videoApp" linkSize="9" alignment="2" min="-2" max="-2" attributes="1"/>
+                                  <Component id="jLabel11" linkSize="9" alignment="2" min="-2" max="-2" attributes="1"/>
+                                  <Component id="bt_videoViewer" alignment="2" min="-2" pref="32" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jLabel14" min="-2" pref="18" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="2" attributes="0">
                                   <Component id="jLabel7" alignment="2" min="-2" max="-2" attributes="0"/>
                                   <Component id="tf_mainDir" alignment="2" min="-2" max="-2" attributes="0"/>
-                                  <Component id="bt_mainDirectory" alignment="2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="bt_mainDirectory" alignment="2" min="-2" pref="32" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="98" max="32767" attributes="0"/>
+                              <EmptySpace pref="34" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JButton" name="button_BGColor">
-                      <Properties>
-                        <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="Options.toColor(Options.SKIN_COLOR)" type="code"/>
-                        </Property>
-                        <Property name="text" type="java.lang.String" value="Set Color"/>
-                        <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="Options.SKIN_COLOR" type="code"/>
-                        </Property>
-                      </Properties>
-                      <BindingProperties>
-                        <BindingProperty name="enabled" source="checkbox_dontUseSkin" sourcePath="${selected}" target="button_BGColor" targetPath="enabled" updateStrategy="0" immediately="false"/>
-                      </BindingProperties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_BGColorActionPerformed"/>
-                      </Events>
-                    </Component>
                     <Component class="javax.swing.JLabel" name="jLabel3">
                       <Properties>
                         <Property name="horizontalAlignment" type="int" value="4"/>
@@ -375,126 +304,6 @@
                         <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                           <Connection code="Options.DATE_FORMAT" type="code"/>
                         </Property>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JButton" name="button_dateFormatHelp">
-                      <Properties>
-                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                        </Property>
-                        <Property name="toolTipText" type="java.lang.String" value="Brings up help about formating date"/>
-                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                          <Border info="null"/>
-                        </Property>
-                        <Property name="borderPainted" type="boolean" value="false"/>
-                        <Property name="contentAreaFilled" type="boolean" value="false"/>
-                        <Property name="focusPainted" type="boolean" value="false"/>
-                        <Property name="name" type="java.lang.String" value="noname" noResource="true"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_dateFormatHelpActionPerformed"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel5">
-                      <Properties>
-                        <Property name="horizontalAlignment" type="int" value="4"/>
-                        <Property name="text" type="java.lang.String" value="Look And Feel :"/>
-                        <Property name="horizontalTextPosition" type="int" value="4"/>
-                        <Property name="name" type="java.lang.String" value="noname" noResource="true"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JComboBox" name="combobox_laf">
-                      <Properties>
-                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="model_laf" type="code"/>
-                        </Property>
-                        <Property name="selectedItem" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="Options.toString(Options.LOOK_AND_FEEL)" type="code"/>
-                        </Property>
-                        <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="Options.LOOK_AND_FEEL" type="code"/>
-                        </Property>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="combobox_lafActionPerformed"/>
-                      </Events>
-                      <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_allCodePost" type="java.lang.String" value="createLafModel();&#xa;combobox_laf.setSelectedItem(Options.toString(Options.LOOK_AND_FEEL));"/>
-                      </AuxValues>
-                    </Component>
-                    <Component class="javax.swing.JCheckBox" name="checkbox_dontUseSkin">
-                      <Properties>
-                        <Property name="selected" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="Options.toBoolean(Options.USE_SKIN)" type="code"/>
-                        </Property>
-                        <Property name="text" type="java.lang.String" value="Use Skin Color :"/>
-                        <Property name="horizontalAlignment" type="int" value="4"/>
-                        <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="Options.USE_SKIN" type="code"/>
-                        </Property>
-                        <Property name="opaque" type="boolean" value="false"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="checkbox_dontUseSkinActionPerformed"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel10">
-                      <Properties>
-                        <Property name="horizontalAlignment" type="int" value="4"/>
-                        <Property name="text" type="java.lang.String" value="Font : "/>
-                        <Property name="horizontalTextPosition" type="int" value="4"/>
-                        <Property name="name" type="java.lang.String" value="noname" noResource="true"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JSpinner" name="spinner_fontSize">
-                      <Properties>
-                        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-                          <SpinnerModel initial="1" maximum="36" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
-                        </Property>
-                        <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="Options.FONT_SIZE" type="code"/>
-                        </Property>
-                        <Property name="opaque" type="boolean" value="false"/>
-                        <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="Options.toFloat(Options.FONT_SIZE)" type="code"/>
-                        </Property>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="spinner_fontSizeStateChanged"/>
-                      </Events>
-                    </Component>
-                    <Component class="com.googlecode.svalidators.formcomponents.SComboBox" name="combobox_fonts">
-                      <Properties>
-                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[23, 20]"/>
-                        </Property>
-                        <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="Options.FONT_FACE" type="code"/>
-                        </Property>
-                        <Property name="renderer" type="javax.swing.ListCellRenderer" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="new MyOptionsFontRenderer()" type="code"/>
-                        </Property>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="combobox_fontsActionPerformed"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="label_preview">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="String.valueOf(combobox_fonts.getSelectedItem())" type="code"/>
-                        </Property>
-                        <Property name="name" type="java.lang.String" value="noname" noResource="true"/>
-                      </Properties>
-                      <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="setFont(getSelectedFont());"/>
-                      </AuxValues>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel16">
-                      <Properties>
-                        <Property name="horizontalAlignment" type="int" value="4"/>
-                        <Property name="text" type="java.lang.String" value="Font preview :"/>
-                        <Property name="horizontalTextPosition" type="int" value="4"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel17">
@@ -578,6 +387,12 @@
                       <Properties>
                         <Property name="text" type="java.lang.String" value=""/>
                         <Property name="toolTipText" type="java.lang.String" value="Browse for video viewer"/>
+                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[32, 32]"/>
+                        </Property>
+                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[32, 32]"/>
+                        </Property>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_videoViewerActionPerformed"/>
@@ -608,6 +423,12 @@
                       <Properties>
                         <Property name="text" type="java.lang.String" value=""/>
                         <Property name="toolTipText" type="java.lang.String" value="Browse for main directory"/>
+                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[32, 32]"/>
+                        </Property>
+                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[32, 32]"/>
+                        </Property>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_mainDirectoryActionPerformed"/>
@@ -621,6 +442,238 @@
                           </FontInfo>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Setting logging level to ALL will slow down the application"/>
+                      </Properties>
+                    </Component>
+                    <Component class="myComponents.myGUI.buttons.MyButtonHelp" name="bt_dfhelp">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value=""/>
+                        <Property name="toolTipText" type="java.lang.String" value="Date format help"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_dfhelpActionPerformed"/>
+                      </Events>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Container class="javax.swing.JPanel" name="panel_appearance">
+                  <Properties>
+                    <Property name="toolTipText" type="java.lang.String" value="Appearance options"/>
+                    <Property name="name" type="java.lang.String" value="Appearance" noResource="true"/>
+                    <Property name="opaque" type="boolean" value="false"/>
+                  </Properties>
+                  <Constraints>
+                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                      <JTabbedPaneConstraints tabName="Appearance">
+                        <Property name="tabTitle" type="java.lang.String" value="Appearance"/>
+                      </JTabbedPaneConstraints>
+                    </Constraint>
+                  </Constraints>
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jCheckBox2" min="-2" pref="326" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="jLabel16" max="32767" attributes="1"/>
+                                          <Component id="jLabel10" alignment="0" max="32767" attributes="1"/>
+                                          <Component id="jLabel5" alignment="0" max="32767" attributes="1"/>
+                                          <Component id="checkbox_dontUseSkin" alignment="0" max="32767" attributes="3"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                                  <Component id="button_BGColor" alignment="0" max="32767" attributes="1"/>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <Component id="combobox_fonts" min="-2" pref="170" max="-2" attributes="1"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="spinner_fontSize" min="-2" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <Component id="combobox_laf" alignment="0" max="32767" attributes="3"/>
+                                              </Group>
+                                              <EmptySpace pref="246" max="32767" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <Component id="label_preview" pref="277" max="32767" attributes="0"/>
+                                              <EmptySpace min="-2" pref="184" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jLabel5" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="combobox_laf" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="2" attributes="0">
+                                  <Component id="checkbox_dontUseSkin" linkSize="2" alignment="2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="button_BGColor" linkSize="2" alignment="2" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="combobox_fonts" linkSize="6" alignment="3" min="-2" pref="21" max="-2" attributes="0"/>
+                                      <Component id="spinner_fontSize" linkSize="6" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="jLabel10" linkSize="6" min="-2" pref="20" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="2" attributes="0">
+                                  <Component id="jLabel16" alignment="2" min="-2" pref="22" max="-2" attributes="0"/>
+                                  <Component id="label_preview" alignment="2" min="-2" pref="22" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jCheckBox2" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace pref="133" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JLabel" name="jLabel5">
+                      <Properties>
+                        <Property name="horizontalAlignment" type="int" value="4"/>
+                        <Property name="text" type="java.lang.String" value="Look And Feel :"/>
+                        <Property name="horizontalTextPosition" type="int" value="4"/>
+                        <Property name="name" type="java.lang.String" value="noname" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JComboBox" name="combobox_laf">
+                      <Properties>
+                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="model_laf" type="code"/>
+                        </Property>
+                        <Property name="selectedItem" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="Options.toString(Options.LOOK_AND_FEEL)" type="code"/>
+                        </Property>
+                        <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="Options.LOOK_AND_FEEL" type="code"/>
+                        </Property>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="combobox_lafActionPerformed"/>
+                      </Events>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_allCodePost" type="java.lang.String" value="createLafModel();&#xa;combobox_laf.setSelectedItem(Options.toString(Options.LOOK_AND_FEEL));"/>
+                      </AuxValues>
+                    </Component>
+                    <Component class="javax.swing.JCheckBox" name="checkbox_dontUseSkin">
+                      <Properties>
+                        <Property name="selected" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="Options.toBoolean(Options.USE_SKIN)" type="code"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="Use Skin Color :"/>
+                        <Property name="horizontalAlignment" type="int" value="4"/>
+                        <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="Options.USE_SKIN" type="code"/>
+                        </Property>
+                        <Property name="opaque" type="boolean" value="false"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="checkbox_dontUseSkinActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="button_BGColor">
+                      <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="Options.toColor(Options.SKIN_COLOR)" type="code"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="Set Color"/>
+                        <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="Options.SKIN_COLOR" type="code"/>
+                        </Property>
+                      </Properties>
+                      <BindingProperties>
+                        <BindingProperty name="enabled" source="checkbox_dontUseSkin" sourcePath="${selected}" target="button_BGColor" targetPath="enabled" updateStrategy="0" immediately="false"/>
+                      </BindingProperties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_BGColorActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="com.googlecode.svalidators.formcomponents.SComboBox" name="combobox_fonts">
+                      <Properties>
+                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[23, 20]"/>
+                        </Property>
+                        <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="Options.FONT_FACE" type="code"/>
+                        </Property>
+                        <Property name="renderer" type="javax.swing.ListCellRenderer" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="new MyOptionsFontRenderer()" type="code"/>
+                        </Property>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="combobox_fontsActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel10">
+                      <Properties>
+                        <Property name="horizontalAlignment" type="int" value="4"/>
+                        <Property name="text" type="java.lang.String" value="Font : "/>
+                        <Property name="horizontalTextPosition" type="int" value="4"/>
+                        <Property name="name" type="java.lang.String" value="noname" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JSpinner" name="spinner_fontSize">
+                      <Properties>
+                        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                          <SpinnerModel initial="1" maximum="36" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
+                        </Property>
+                        <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="Options.FONT_SIZE" type="code"/>
+                        </Property>
+                        <Property name="opaque" type="boolean" value="false"/>
+                        <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="Options.toFloat(Options.FONT_SIZE)" type="code"/>
+                        </Property>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="spinner_fontSizeStateChanged"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel16">
+                      <Properties>
+                        <Property name="horizontalAlignment" type="int" value="4"/>
+                        <Property name="text" type="java.lang.String" value="Font preview :"/>
+                        <Property name="horizontalTextPosition" type="int" value="4"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="label_preview">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="String.valueOf(combobox_fonts.getSelectedItem())" type="code"/>
+                        </Property>
+                        <Property name="name" type="java.lang.String" value="noname" noResource="true"/>
+                      </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="setFont(getSelectedFont());"/>
+                      </AuxValues>
+                    </Component>
+                    <Component class="javax.swing.JCheckBox" name="jCheckBox2">
+                      <Properties>
+                        <Property name="selected" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="Options.toBoolean(Options.MINIMIZE_TO_TRAY)" type="code"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="Minimize to tray"/>
+                        <Property name="toolTipText" type="java.lang.String" value="Minimize Application to tray"/>
+                        <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="Options.MINIMIZE_TO_TRAY" type="code"/>
+                        </Property>
+                        <Property name="opaque" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -686,7 +739,7 @@
                                       </Group>
                                   </Group>
                               </Group>
-                              <EmptySpace pref="152" max="32767" attributes="0"/>
+                              <EmptySpace pref="249" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -932,16 +985,8 @@
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="cd_autoRename" pref="466" max="32767" attributes="0"/>
-                                      <EmptySpace min="236" pref="236" max="236" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="cb_noRenameConf" pref="433" max="32767" attributes="0"/>
-                                      <EmptySpace min="269" pref="269" max="269" attributes="0"/>
-                                  </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
@@ -961,6 +1006,25 @@
                                           </Group>
                                       </Group>
                                       <EmptySpace min="-2" pref="524" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <EmptySpace min="21" pref="21" max="21" attributes="0"/>
+                                              <Component id="jLabel6" pref="412" max="32767" attributes="0"/>
+                                          </Group>
+                                          <Component id="cb_noRenameConf" alignment="1" pref="433" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="269" pref="269" max="269" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="cd_autoRename" min="-2" pref="165" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                                      <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -986,9 +1050,13 @@
                               </Group>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Component id="cb_noRenameConf" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                               <Component id="cd_autoRename" min="-2" pref="23" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="326" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="122" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -1047,7 +1115,7 @@
                         <Property name="selected" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                           <Connection code="Options.toBoolean(Options.NO_RENAME_CONFIRMATION)" type="code"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Rename single episode with no name confirmation"/>
+                        <Property name="text" type="java.lang.String" value="Fast single episode renaming"/>
                         <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;When this is checked renaming of a single episode will not bring up the renaming window&lt;br /&gt;&#xa;and the files will be renamed with the current renaming options"/>
                         <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                           <Connection code="Options.NO_RENAME_CONFIRMATION" type="code"/>
@@ -1060,12 +1128,35 @@
                         <Property name="selected" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                           <Connection code="Options.toBoolean(Options.AUTO_RENAME_SUBS)" type="code"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Auto rename subs when unziped or moved from the main to the series directory"/>
+                        <Property name="text" type="java.lang.String" value="Auto Renaming"/>
                         <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;Rename subtitles when unzipped or moved from the main series directory to the series directory where they belong"/>
                         <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                           <Connection code="Options.AUTO_RENAME_SUBS" type="code"/>
                         </Property>
                         <Property name="opaque" type="boolean" value="false"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cd_autoRenameActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel6">
+                      <Properties>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.editors2.FontEditor">
+                          <FontInfo relative="true">
+                            <Font component="jLabel6" italic="true" property="font" relativeSize="true" size="-1"/>
+                          </FontInfo>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="(Rename single episodes without naming confirmation)"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel12">
+                      <Properties>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.editors2.FontEditor">
+                          <FontInfo relative="true">
+                            <Font component="jLabel12" italic="true" property="font" relativeSize="true" size="-1"/>
+                          </FontInfo>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="(Auto rename subtitles when downloaded, unziped or moved from the Main Series Directory)"/>
                       </Properties>
                     </Component>
                   </SubComponents>

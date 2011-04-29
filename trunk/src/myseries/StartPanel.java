@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
@@ -411,6 +412,7 @@ public class StartPanel extends MyDraggable {
     try {
       // Get options
       Options.getOptions();
+      
       //create dirs
       MyUsefulFunctions.checkDir(Options._USER_DIR_ + Paths.LOGS_PATH);
       moveOldLogs();
@@ -426,9 +428,7 @@ public class StartPanel extends MyDraggable {
       MyFont.SetMyFont();
       MySeriesLogger.logger.log(Level.FINE, "Font and font sizes are set to {0} {1}pts", new Object[]{Options.toString(Options.FONT_FACE), Options.toFloat(Options.FONT_SIZE)});
       LookAndFeels l = new LookAndFeels();
-
-      Map<String, LookAndFeelInfo> map = LookAndFeels.lafMap;
-      UIManager.setInstalledLookAndFeels(LookAndFeels.getLookAndFeels());
+      LookAndFeels.setInstalledLookAndFeels();
       if (Options.toBoolean(Options.USE_SKIN)) {
         MySeriesLogger.logger.log(Level.INFO, "Create Skin");
         Skin skin = new Skin(Options.toColor(Options.SKIN_COLOR));
@@ -438,32 +438,29 @@ public class StartPanel extends MyDraggable {
         MySeriesLogger.logger.log(Level.FINE, "Skin applied");
       } else {
         MySeriesLogger.logger.log(Level.INFO, "No Skin is used");
-        
+
         MySeriesLogger.logger.log(Level.INFO, "Loading look and feel");
         String laf = Options.toString(Options.LOOK_AND_FEEL);
-        if (!laf.equals("")) {
-          String className = LookAndFeels.getClassName(laf);
-          if (className != null) {
-            try {
-              UIManager.setLookAndFeel(className);
-              Skin skin = new Skin(UIManager.getColor("Panel.background"));
-              MySeriesLogger.logger.log(Level.FINE, "{0} look and feel loaded", laf);
-            } catch (ClassNotFoundException ex) {
-              MySeriesLogger.logger.log(Level.WARNING, "Could not load {0} look and feel", laf);
-              UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-              MySeriesLogger.logger.log(Level.FINE, "Default look and feel loaded");
-            }
-
-          } else {
-            MySeriesLogger.logger.log(Level.WARNING, "Could not load {0} look and feel", laf);
+        try {
+          LookAndFeels.setLookAndFeel(laf);
+        } catch (Exception ex) {
+          MySeriesLogger.logger.log(Level.SEVERE, ex.getMessage());
+          try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            MySeriesLogger.logger.log(Level.FINE, "Default look and feel loaded");
+          } catch (ClassNotFoundException ex1) {
+            MySeriesLogger.logger.log(Level.SEVERE, "Could not load default system laf class", ex);
+          } catch (InstantiationException ex1) {
+            MySeriesLogger.logger.log(Level.SEVERE, "Could not instantiate default system laf", ex);
+          } catch (IllegalAccessException ex1) {
+            MySeriesLogger.logger.log(Level.SEVERE, "Illegal access with default system laf", ex);
+          } catch (UnsupportedLookAndFeelException ex1) {
+            MySeriesLogger.logger.log(Level.SEVERE, "Default system laf is not supported", ex);
           }
-        } else {
-          MySeriesLogger.logger.log(Level.WARNING, "No look and feel defined");
-          UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
           MySeriesLogger.logger.log(Level.FINE, "Default look and feel loaded");
         }
+        Skin skin = new Skin(UIManager.getColor("Panel.background"));
+        MySeriesLogger.logger.log(Level.FINE, "{0} look and feel loaded", laf);
+
       }
 
       //Check Desktop supported
@@ -500,27 +497,24 @@ public class StartPanel extends MyDraggable {
           }
         }
       }
-    } catch (ClassNotFoundException ex) {
-      MyMessages.error("Database", "Could not load database driver");
-      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     } catch (SQLException ex) {
-      MyMessages.error("Database", "Sql error occured");
+      MyMessages.error("MySerieS", "Sql error occured while connecting to database");
       MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-    } catch (InstantiationException ex) {
-      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-      MyMessages.error("My Series", "Could not create Application");
-    } catch (IllegalAccessException ex) {
-      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-      MyMessages.error("My Series", "Illegal access");
-    } catch (UnsupportedLookAndFeelException ex) {
-      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-      MyMessages.error("My Series", "Look and feel is not supported");
-    } catch (FileNotFoundException ex) {
-      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-      MyMessages.error("My Series options", "Could find options file");
     } catch (IOException ex) {
-      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-      MyMessages.error("My Series options", "Could not create options file");
+      MyMessages.error("MySeries", "Could not read options file");
+      MySeriesLogger.logger.log(Level.SEVERE, "Could not read options file", ex);
+    } catch (ClassNotFoundException ex) {
+      MyMessages.error("MySeries", "MySerieS class not found");
+      MySeriesLogger.logger.log(Level.SEVERE, "MySerieS class not found", ex);
+    } catch (IllegalAccessException ex) {
+      MyMessages.error("MySeries", "MySerieS illegal access exception");
+      MySeriesLogger.logger.log(Level.SEVERE, "MySerieS illegal access exception", ex);
+    } catch (InstantiationException ex) {
+      MyMessages.error("MySeries", "Could not instantiate MySerieS");
+      MySeriesLogger.logger.log(Level.SEVERE, "Could not instantiate MySerieS", ex);
+    } catch (UnsupportedLookAndFeelException ex) {
+      MyMessages.error("MySeries", "Unsupported Look and feel");
+      MySeriesLogger.logger.log(Level.SEVERE, "Unsupported Look and feel", ex);
     }
   }
 

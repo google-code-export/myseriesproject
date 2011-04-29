@@ -28,9 +28,14 @@ import database.SeriesRecord;
 import help.CheckUpdate;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.TrayIcon;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Dimension2D;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -59,6 +64,7 @@ import myComponents.myEvents.MyEventsClass;
 import myComponents.myGUI.MyImagePanel;
 import myComponents.myGUI.MyDisabledGlassPane;
 import myComponents.myGUI.MyFont;
+import myComponents.myGUI.MyTrayIcon;
 import myComponents.myGUI.buttons.MyAbstractButton;
 import myComponents.myTableCellEditors.MyDownloadedCellEditor;
 import myComponents.myTableCellEditors.MyRateEditor;
@@ -163,10 +169,12 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
   private EventListenerList listenerList = new EventListenerList();
   private MyEventsClass evClass = new MyEventsClass(this);
   private Integer[] visibleButtons;
+  public TrayIcon trayIcon;
   //public static Toolbar myToolbar;
+  private Image appIcon;
+  private MyTrayIcon myTrayIcon;
 
   // TODO delete multiple episodes
-
   /**
    *
    * @throws java.lang.ClassNotFoundException
@@ -177,6 +185,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
    * @throws java.io.IOException
    */
   public MySeries() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, IOException {
+    appIcon = new javax.swing.ImageIcon(getClass().getResource(APPLICATION_ICON)).getImage();
+    myTrayIcon = new MyTrayIcon(this, appIcon, "MySeries");
     if (version.indexOf("dev") > -1) {
       date = MyUsefulFunctions.getToday("dd/MM/yyyy");
     }
@@ -205,7 +215,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     MySeriesLogger.logger.log(Level.INFO, "Creating episodes stats");
     table_stat_episodes = new StatEpisodes();
     MySeriesLogger.logger.log(Level.INFO, "Creating application icon");
-    setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/subtitles.png")).getImage());
+    setIconImage(appIcon);
     MySeriesLogger.logger.log(Level.INFO, "Setting window size to {0}x{1}", new int[]{Options.toInt(Options.WIDTH), Options.toInt(Options.HEIGHT)});
     setSize(Options.toInt(Options.WIDTH), Options.toInt(Options.HEIGHT));
     setExtendedState(Options.toInt(Options.WINDOW_STATE));
@@ -322,6 +332,13 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     ApplicationActions.warnForLogLevel();
     MyUsefulFunctions.createMemoryCons(this);
     ApplicationActions.warnForJREVersion();
+    Dimension size = new Dimension(Options.toInt(Options.WIDTH), Options.toInt(Options.HEIGHT));
+    Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+    if (size.width > screen.width || size.height > screen.height) {
+      setExtendedState(Frame.MAXIMIZED_BOTH);
+    } else {
+      setExtendedState(Frame.NORMAL);
+    }
   }
 
   private void setGlassPane() {
@@ -751,6 +768,9 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     addWindowListener(new java.awt.event.WindowAdapter() {
       public void windowClosing(java.awt.event.WindowEvent evt) {
         formWindowClosing(evt);
+      }
+      public void windowIconified(java.awt.event.WindowEvent evt) {
+        formWindowIconified(evt);
       }
     });
 
@@ -1964,13 +1984,19 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
   }//GEN-LAST:event_myToolbarPropertyChange
 
   private void menuItem_showErrorPanelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_showErrorPanelActionPerformed
-logPanel.setVisible(menuItem_showErrorPanel.isSelected());
+    logPanel.setVisible(menuItem_showErrorPanel.isSelected());
   }//GEN-LAST:event_menuItem_showErrorPanelActionPerformed
 
   private void menu_HelpMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_menu_HelpMenuSelected
     menuItem_showErrorPanel.setSelected(logPanel.isVisible());
   }//GEN-LAST:event_menu_HelpMenuSelected
 
+  private void formWindowIconified(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowIconified
+    if (myTrayIcon.getTrayIcon() != null && Options.toBoolean(Options.MINIMIZE_TO_TRAY)) {
+      myTrayIcon.addIconToTray();
+      setVisible(false);
+    }
+  }//GEN-LAST:event_formWindowIconified
   // Variables declaration - do not modify//GEN-BEGIN:variables
   public javax.swing.JMenuItem PopUpItem_AddEpisode;
   public javax.swing.JMenuItem PopUpItem_AddEpisodeInEpisodes;
@@ -2151,5 +2177,11 @@ logPanel.setVisible(menuItem_showErrorPanel.isSelected());
 
   public static Class<MySeries> getInstance() {
     return MySeries.class;
+  }
+
+  @Override
+  public void dispose() {
+    ApplicationActions.exitApplication(this);
+    super.dispose();
   }
 }

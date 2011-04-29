@@ -249,6 +249,10 @@ public class Options {
    */
   public static final String AUTO_RENAME_SUBS = "AUTO RENAME SUBS";
   /**
+   * If window should minimize to tray
+   */
+  public static final String MINIMIZE_TO_TRAY = "MINIMIZE_TO_TRAY";
+  /**
    * An array of the options that are selected in combo boxes
    */
   public static final String[] _COMBO_OPTIONS_ = {DATE_FORMAT, DEBUG_MODE, LOOK_AND_FEEL,
@@ -601,6 +605,7 @@ public class Options {
     out.println(Options.WARN_FOR_VERSION+ "=true");
     out.println(Options.NO_RENAME_CONFIRMATION + "=false");
     out.println(Options.AUTO_RENAME_SUBS + "=false");
+    out.println(Options.MINIMIZE_TO_TRAY + "=false");
 
     out.close();
   }
@@ -701,6 +706,7 @@ public class Options {
     options.put(Options.WARN_FOR_VERSION, true);
     options.put(Options.NO_RENAME_CONFIRMATION, false);
     options.put(Options.AUTO_RENAME_SUBS, false);
+    options.put(Options.MINIMIZE_TO_TRAY, false);
   }
 
   private static Object getDefaultMainDirectory() {

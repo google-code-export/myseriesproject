@@ -34,6 +34,7 @@ public class HelpWindow extends MyDraggable {
   public static final int INTERNET_OPTIONS = 7;
   public static final int RENAME_OPTIONS = 8;
   public static final int RENAMING = 9;
+  public static final int APPEARANCE_OPTIONS = 10;
 
   public HelpWindow(int page) {
     String url = null;
@@ -82,6 +83,10 @@ public class HelpWindow extends MyDraggable {
       case RENAMING:
         label_title.setText("Renaming Episodes");
         url = "episodes_renaming";
+        break;
+         case APPEARANCE_OPTIONS:
+        label_title.setText("Appearance Options");
+        url = "appearance_options";
         break;
     }
     java.net.URL helpURL = Help.class.getResource("/help/html/"+url+".html");
