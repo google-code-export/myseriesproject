@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
@@ -38,6 +39,24 @@ public class LookAndFeels {
 
   public static void setInstalledLookAndFeels() {
     UIManager.setInstalledLookAndFeels(LookAndFeels.getLookAndFeels());
+  }
+
+  public static String getRandomLaf() {
+    int lafs = lafMap.size();
+    Random r = new Random();
+    int random = r.nextInt(lafs-1);
+    Set<String> keys = lafMap.keySet();
+    int i =0;
+    for (Iterator<String> it = keys.iterator(); it.hasNext();) {
+      String key = it.next();
+      if(i==random){
+        MySeriesLogger.logger.log(Level.INFO, "Got random laf {0}",key);
+        return key;
+      }
+      i++;
+    }
+    MySeriesLogger.logger.log(Level.WARNING, "Could not get a random laf");
+    return "";
   }
 
   public LookAndFeels() {

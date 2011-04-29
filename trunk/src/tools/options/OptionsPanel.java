@@ -211,7 +211,8 @@ public class OptionsPanel extends MyDraggable {
     spinner_fontSize = new javax.swing.JSpinner();
     jLabel16 = new javax.swing.JLabel();
     label_preview = new javax.swing.JLabel();
-    jCheckBox2 = new javax.swing.JCheckBox();
+    cb_minimizeTray = new javax.swing.JCheckBox();
+    cb_randomizeLaf = new javax.swing.JCheckBox();
     panel_internet = new javax.swing.JPanel();
     checkbox_useProxy = new javax.swing.JCheckBox();
     jLabel8 = new javax.swing.JLabel();
@@ -461,7 +462,7 @@ public class OptionsPanel extends MyDraggable {
     });
 
     checkbox_dontUseSkin.setSelected(Options.toBoolean(Options.USE_SKIN));
-    checkbox_dontUseSkin.setText("Use Skin Color :");
+    checkbox_dontUseSkin.setText("Use Skin :");
     checkbox_dontUseSkin.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     checkbox_dontUseSkin.setName(Options.USE_SKIN);
     checkbox_dontUseSkin.setOpaque(false);
@@ -516,11 +517,16 @@ public class OptionsPanel extends MyDraggable {
     label_preview.setText(String.valueOf(combobox_fonts.getSelectedItem()));
     label_preview.setName("noname"); // NOI18N
 
-    jCheckBox2.setSelected(Options.toBoolean(Options.MINIMIZE_TO_TRAY));
-    jCheckBox2.setText("Minimize to tray");
-    jCheckBox2.setToolTipText("Minimize Application to tray");
-    jCheckBox2.setName(Options.MINIMIZE_TO_TRAY);
-    jCheckBox2.setOpaque(false);
+    cb_minimizeTray.setSelected(Options.toBoolean(Options.MINIMIZE_TO_TRAY));
+    cb_minimizeTray.setText("Minimize to tray");
+    cb_minimizeTray.setToolTipText("Minimize Application to tray");
+    cb_minimizeTray.setName(Options.MINIMIZE_TO_TRAY);
+    cb_minimizeTray.setOpaque(false);
+
+    cb_randomizeLaf.setSelected(Options.toBoolean(Options.RANDOMIZE_LAF));
+    cb_randomizeLaf.setText("Use a random LAF on startup");
+    cb_randomizeLaf.setName(Options.RANDOMIZE_LAF);
+    cb_randomizeLaf.setOpaque(false);
 
     javax.swing.GroupLayout panel_appearanceLayout = new javax.swing.GroupLayout(panel_appearance);
     panel_appearance.setLayout(panel_appearanceLayout);
@@ -530,7 +536,7 @@ public class OptionsPanel extends MyDraggable {
         .addContainerGap()
         .addGroup(panel_appearanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(panel_appearanceLayout.createSequentialGroup()
-            .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(cb_minimizeTray, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addContainerGap())
           .addGroup(panel_appearanceLayout.createSequentialGroup()
             .addGroup(panel_appearanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -540,7 +546,7 @@ public class OptionsPanel extends MyDraggable {
               .addComponent(checkbox_dontUseSkin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(panel_appearanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-              .addGroup(panel_appearanceLayout.createSequentialGroup()
+              .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel_appearanceLayout.createSequentialGroup()
                 .addGroup(panel_appearanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                   .addComponent(button_BGColor, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                   .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel_appearanceLayout.createSequentialGroup()
@@ -548,9 +554,11 @@ public class OptionsPanel extends MyDraggable {
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(spinner_fontSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                   .addComponent(combobox_laf, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(246, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cb_randomizeLaf, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
               .addGroup(panel_appearanceLayout.createSequentialGroup()
-                .addComponent(label_preview, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
+                .addComponent(label_preview, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
                 .addGap(184, 184, 184))))))
     );
     panel_appearanceLayout.setVerticalGroup(
@@ -559,7 +567,8 @@ public class OptionsPanel extends MyDraggable {
         .addGap(23, 23, 23)
         .addGroup(panel_appearanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jLabel5)
-          .addComponent(combobox_laf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addComponent(combobox_laf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(cb_randomizeLaf))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(panel_appearanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
           .addComponent(checkbox_dontUseSkin)
@@ -575,7 +584,7 @@ public class OptionsPanel extends MyDraggable {
           .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(label_preview, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(jCheckBox2)
+        .addComponent(cb_minimizeTray)
         .addContainerGap(133, Short.MAX_VALUE))
     );
 
@@ -1018,6 +1027,7 @@ public class OptionsPanel extends MyDraggable {
 
   private void checkbox_dontUseSkinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkbox_dontUseSkinActionPerformed
     combobox_laf.setEnabled(!checkbox_dontUseSkin.isSelected());
+    cb_randomizeLaf.setEnabled(!checkbox_dontUseSkin.isSelected());
   }//GEN-LAST:event_checkbox_dontUseSkinActionPerformed
 
   private void combobox_fontsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combobox_fontsActionPerformed
@@ -1226,7 +1236,9 @@ public class OptionsPanel extends MyDraggable {
   private javax.swing.JButton button_BGColor;
   private javax.swing.JCheckBox cb_autoUnzip;
   private javax.swing.JCheckBox cb_autoUpdate;
+  private javax.swing.JCheckBox cb_minimizeTray;
   private javax.swing.JCheckBox cb_noRenameConf;
+  private javax.swing.JCheckBox cb_randomizeLaf;
   private javax.swing.JCheckBox cb_updateFeeds;
   private javax.swing.JCheckBox cd_autoRename;
   private javax.swing.JCheckBox checkbox_dontUseSkin;
@@ -1238,7 +1250,6 @@ public class OptionsPanel extends MyDraggable {
   private com.googlecode.svalidators.formcomponents.SComboBox combobox_fonts;
   private javax.swing.JComboBox combobox_laf;
   private javax.swing.JCheckBox jCheckBox1;
-  private javax.swing.JCheckBox jCheckBox2;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel10;
   private javax.swing.JLabel jLabel11;
