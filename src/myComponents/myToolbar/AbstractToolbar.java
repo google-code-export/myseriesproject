@@ -94,7 +94,7 @@ public abstract class AbstractToolbar extends JToolBar implements ToolbarButtonA
       checkUpdates = new ToolbarButton(ToolbarButtonActions.CHECK_UPDATES, "Check for program updates", "checkUpdates.png");
       viewLogs = new ToolbarButton(ToolbarButtonActions.VIEW_LOGS, "View the log file", "viewLogs.png");
       clearLogs = new ToolbarButton(ToolbarButtonActions.CLEAR_LOGS, "Clear the log files", "clearLogs.png");
-      about = new ToolbarButton(ToolbarButtonActions.ABOUT, "About MySeries", "info.png");
+      about = new ToolbarButton(ToolbarButtonActions.ABOUT, "About MySeries", "about.png");
       exit = new ToolbarButton(ToolbarButtonActions.EXIT, "Quit MySeries", "exit.png");
       houseKeeping = new ToolbarButton(ToolbarButtonActions.HOUSEKEEPING, "HouseKeeping", "housekeeping.png");
       restart = new ToolbarButton(ToolbarButtonActions.RESTART, "Restart", "restart.png");
