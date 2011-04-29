@@ -10,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -80,18 +81,18 @@ public class LookAndFeels {
       File dir = extLafs[i];
       String name = dir.getName();
       String[] jar = getListOfExtJars(dir);
-      if (jar.length == 1) {
+      for (int j = 0 ; j < jar.length ; j++) {
         try {
-          File jarFile = new File(Paths.LAFS_PATH + name + "/" + jar[0]);
+          File jarFile = new File(Paths.LAFS_PATH + name + "/" + jar[j]);
           JarFileLoader.addFile(jarFile);
           String[] lafClass = getLafClass(jarFile);
           if (lafClass.length == 1) {
             lafMap.put(name, new LookAndFeelInfo(name, lafClass[0]));
           } else if (lafClass.length > 1) {
-            for (int j = 0; j < lafClass.length; j++) {
-              String c = lafClass[j];
+            for (int k = 0; k < lafClass.length; k++) {
+              String c = lafClass[k];
               String[] packages = c.split("\\.");
-              lafMap.put(packages[packages.length - 1], new LookAndFeelInfo(packages[packages.length - 1], lafClass[j]));
+              lafMap.put(packages[packages.length - 1], new LookAndFeelInfo(packages[packages.length - 1], lafClass[k]));
             }
           } else {
             MySeriesLogger.logger.log(Level.SEVERE, "LAF Class not found");
@@ -99,9 +100,7 @@ public class LookAndFeels {
         } catch (IOException ex) {
           MySeriesLogger.logger.log(Level.SEVERE, "IO Exception on loading external laf", ex);
         }
-      } else {
-        MySeriesLogger.logger.log(Level.WARNING, "More than one jars in laf directory {0}", name);
-      }
+      } 
     }
   }
 
@@ -158,6 +157,7 @@ public class LookAndFeels {
       MySeriesLogger.logger.log(Level.INFO, "Adding laf {0}", lafNames[i]);
       i++;
     }
+    Arrays.sort(lafNames);
     return new DefaultComboBoxModel(lafNames);
   }
 
