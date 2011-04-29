@@ -438,9 +438,13 @@ public class StartPanel extends MyDraggable {
         MySeriesLogger.logger.log(Level.FINE, "Skin applied");
       } else {
         MySeriesLogger.logger.log(Level.INFO, "No Skin is used");
-
         MySeriesLogger.logger.log(Level.INFO, "Loading look and feel");
-        String laf = Options.toString(Options.LOOK_AND_FEEL);
+        String laf = "";
+        if(Options.toBoolean(Options.RANDOMIZE_LAF)){
+          laf = LookAndFeels.getRandomLaf();
+        } else {
+          laf = Options.toString(Options.LOOK_AND_FEEL);
+        }
         try {
           LookAndFeels.setLookAndFeel(laf);
         } catch (Exception ex) {
