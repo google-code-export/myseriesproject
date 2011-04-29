@@ -332,12 +332,14 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     ApplicationActions.warnForLogLevel();
     MyUsefulFunctions.createMemoryCons(this);
     ApplicationActions.warnForJREVersion();
-    Dimension size = new Dimension(Options.toInt(Options.WIDTH), Options.toInt(Options.HEIGHT));
-    Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-    if (size.width > screen.width || size.height > screen.height) {
-      setExtendedState(Frame.MAXIMIZED_BOTH);
-    } else {
-      setExtendedState(Frame.NORMAL);
+    if (Options.toBoolean(Options.MINIMIZE_TO_TRAY) && trayIcon != null) {
+      Dimension size = new Dimension(Options.toInt(Options.WIDTH), Options.toInt(Options.HEIGHT));
+      Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+      if (size.width > screen.width || size.height > screen.height) {
+        setExtendedState(Frame.MAXIMIZED_BOTH);
+      } else {
+        setExtendedState(Frame.NORMAL);
+      }
     }
   }
 
