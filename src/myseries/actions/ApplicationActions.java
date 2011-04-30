@@ -33,6 +33,8 @@ import tools.options.Options;
 import tools.options.OptionsPanel;
 import myComponents.MyUsefulFunctions;
 import myComponents.myToolbar.ToolbarCustomize;
+import myseries.MySeriesConstants;
+import myseries.StartPanel;
 import sdialogs.Info;
 import tools.MySeriesLogger;
 import tools.misc.housekeeping.HouseKeeping;
@@ -287,9 +289,9 @@ public class ApplicationActions {
 
   public static void restartApplication(MySeries m) {
     try {
-      String pathToApp = new File("restart.jar").getAbsolutePath();
-      File startingDir = new File("restart.jar").getAbsoluteFile().getParentFile();
-      if (new File("restart.jar").exists()) {
+      String pathToApp = new File(MySeriesConstants.APPLICATION_JAR).getAbsolutePath();
+      File startingDir = new File(MySeriesConstants.APPLICATION_JAR).getAbsoluteFile().getParentFile();
+      if (new File(MySeriesConstants.APPLICATION_JAR).exists()) {
         MyUsefulFunctions.runExternalProgram(new String[]{"java", "-jar", pathToApp}, startingDir);
         ApplicationActions.exitApplication(m);
       } else {

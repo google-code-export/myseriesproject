@@ -184,17 +184,17 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="combobox_debugMode" alignment="0" min="-2" pref="104" max="-2" attributes="0"/>
-                                  <Component id="jLabel22" alignment="0" pref="341" max="32767" attributes="1"/>
+                                  <Component id="jLabel22" alignment="0" pref="303" max="32767" attributes="1"/>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="combobox_dateFormat" min="-2" max="-2" attributes="3"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="bt_dfhelp" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="cb_autoUpdate" alignment="0" pref="341" max="32767" attributes="1"/>
-                                  <Component id="cb_autoUnzip" alignment="0" pref="341" max="32767" attributes="3"/>
+                                  <Component id="cb_autoUpdate" alignment="0" pref="303" max="32767" attributes="1"/>
+                                  <Component id="cb_autoUnzip" alignment="0" pref="303" max="32767" attributes="3"/>
                                   <Component id="jLabel14" alignment="0" min="-2" pref="246" max="-2" attributes="3"/>
-                                  <Component id="tf_videoApp" alignment="0" pref="341" max="32767" attributes="1"/>
-                                  <Component id="tf_mainDir" alignment="0" pref="341" max="32767" attributes="1"/>
+                                  <Component id="tf_videoApp" alignment="0" pref="303" max="32767" attributes="1"/>
+                                  <Component id="tf_mainDir" alignment="0" pref="303" max="32767" attributes="1"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -499,7 +499,7 @@
                                                   <Component id="combobox_laf" alignment="0" max="32767" attributes="3"/>
                                               </Group>
                                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="cb_randomizeLaf" min="-2" pref="166" max="-2" attributes="0"/>
+                                              <Component id="cb_randomizeLaf" pref="261" max="32767" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" attributes="0">
@@ -517,14 +517,14 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jLabel5" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="combobox_laf" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="combobox_laf" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="cb_randomizeLaf" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="2" attributes="0">
-                                  <Component id="checkbox_dontUseSkin" linkSize="2" alignment="2" min="-2" max="-2" attributes="0"/>
-                                  <Component id="button_BGColor" linkSize="2" alignment="2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="checkbox_dontUseSkin" alignment="2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="button_BGColor" alignment="2" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
@@ -541,7 +541,7 @@
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="cb_minimizeTray" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="133" max="32767" attributes="0"/>
+                              <EmptySpace pref="135" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>

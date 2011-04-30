@@ -447,6 +447,8 @@ public class StartPanel extends MyDraggable {
         }
         try {
           LookAndFeels.setLookAndFeel(laf);
+          Options.setOption(Options.LOOK_AND_FEEL, laf);
+          Options.save();
         } catch (Exception ex) {
           MySeriesLogger.logger.log(Level.SEVERE, ex.getMessage());
           try {
