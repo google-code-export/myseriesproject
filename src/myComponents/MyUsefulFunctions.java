@@ -1161,9 +1161,9 @@ public class MyUsefulFunctions {
                     if (m.myToolbar.getOrientation() == SwingConstants.HORIZONTAL) {
                         FontMetrics fm = t.getFontMetrics(new Font(Options.toString(Options.FONT_FACE), Font.BOLD,(int) Options.toFloat(Options.FONT_SIZE)));
                         int width = fm.stringWidth(Dummy);
-                        t.setMinimumSize(new Dimension(width + 20, 26));
-                        t.setPreferredSize(new Dimension(width + 20, 26));
-                        t.setMaximumSize(new Dimension(width + 20, 26));
+                        t.setMinimumSize(new Dimension(width + 40, 26));
+                        t.setPreferredSize(new Dimension(width + 40, 26));
+                        t.setMaximumSize(new Dimension(width + 40, 26));
                     } else {
                         t.setMinimumSize(new Dimension(26, 26));
                         t.setPreferredSize(new Dimension(26, 26));
