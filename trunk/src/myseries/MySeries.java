@@ -333,15 +333,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     ApplicationActions.warnForLogLevel();
     MyUsefulFunctions.createMemoryCons(this);
     ApplicationActions.warnForJREVersion();
-    if (Options.toBoolean(Options.MINIMIZE_TO_TRAY) && trayIcon != null) {
-      Dimension size = new Dimension(Options.toInt(Options.WIDTH), Options.toInt(Options.HEIGHT));
-      Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-      if (size.width > screen.width || size.height > screen.height) {
-        setExtendedState(Frame.MAXIMIZED_BOTH);
-      } else {
-        setExtendedState(Frame.NORMAL);
-      }
-    }
+
   }
 
   private void setGlassPane() {
@@ -424,7 +416,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     tableFilters.getColumn(Filters.DOWNLOADED_COLUMN_TITLE).setCellEditor(new MyDownloadedCellEditor(Filters.EPISODERECORD_COLUMN));
     tableFilters.getColumn(Filters.SEEN_COLUMN_TITLE).setCellRenderer(new MyWatchedCellRenderer());
     tableFilters.getColumn(Filters.SEEN_COLUMN_TITLE).setCellEditor(new MyWatchedCellEditor(Filters.EPISODERECORD_COLUMN));
-    Filters.setTableWidths(tableFilters,filtersTableWidths);
+    Filters.setTableWidths(tableFilters, filtersTableWidths);
     tableFilters.setRowHeight(fontHeight + CELL_MARGIN);
 
     //SERIES TABLE
@@ -771,8 +763,16 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
       public void windowClosing(java.awt.event.WindowEvent evt) {
         formWindowClosing(evt);
       }
+      public void windowDeiconified(java.awt.event.WindowEvent evt) {
+        formWindowDeiconified(evt);
+      }
       public void windowIconified(java.awt.event.WindowEvent evt) {
         formWindowIconified(evt);
+      }
+    });
+    addWindowStateListener(new java.awt.event.WindowStateListener() {
+      public void windowStateChanged(java.awt.event.WindowEvent evt) {
+        formWindowStateChanged(evt);
       }
     });
 
@@ -1768,6 +1768,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
   private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
     MySeriesLogger.logger.log(Level.INFO, "Exit application action");
+    //Options.setOption(Options.WINDOW_STATE, getExtendedState());
+    //Options.save();
     ApplicationActions.exitApplication(this);
   }//GEN-LAST:event_formWindowClosing
 
@@ -1953,7 +1955,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
   private void bt_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_deleteActionPerformed
     MySeriesLogger.logger.log(Level.INFO, "Delete filter action");
     FiltersActions.deleteFilter(this);
-    if(comboBoxModel_filters.getSize()==0){
+    if (comboBoxModel_filters.getSize() == 0) {
       combobox_downloaded.setSelectedIndex(Filters.DOWNLOADED_YES);
       comboBox_seen.setSelectedIndex(Filters.SEEN_NO);
       comboBox_filterSubtitles.setSelectedIndex(Filters.PRIMARY);
@@ -2008,6 +2010,26 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
       setVisible(false);
     }
   }//GEN-LAST:event_formWindowIconified
+
+  private void formWindowDeiconified(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowDeiconified
+    //setExtendedState(Options.toInt(Options.WINDOW_STATE));
+  }//GEN-LAST:event_formWindowDeiconified
+
+  private void formWindowStateChanged(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowStateChanged
+    System.out.println("Option " + Options.toInt(Options.WINDOW_STATE));
+    System.out.println("State " + getExtendedState());
+    System.out.println("Before " + evt.getOldState());
+    System.out.println("After  " + evt.getNewState());
+    if (evt.getNewState() != NORMAL && evt.getNewState() != MAXIMIZED_BOTH  ) {
+      Options.setOption(Options.WINDOW_STATE, evt.getOldState());
+      Options.save();
+    } else {
+      Options.setOption(Options.WINDOW_STATE, evt.getNewState());
+      Options.save();
+    }
+    System.out.println("Saved after " + Options.toInt(Options.WINDOW_STATE));
+
+  }//GEN-LAST:event_formWindowStateChanged
   // Variables declaration - do not modify//GEN-BEGIN:variables
   public javax.swing.JMenuItem PopUpItem_AddEpisode;
   public javax.swing.JMenuItem PopUpItem_AddEpisodeInEpisodes;
