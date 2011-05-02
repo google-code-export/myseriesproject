@@ -57,6 +57,8 @@ public class ApplicationActions {
     int divLocation = m.splitPane_main.getDividerLocation();
     Options.setOption(Options.DIVIDER_LOCATION, divLocation);
     int feedDivLocation = m.feedSplitPanel.getDividerLocation();
+    String filter = m.combobox_filters.getSelectedItem() != null ? (String) m.combobox_filters.getSelectedItem() : "";
+    Options.setOption(Options.ACTIVE_FILTER, filter);
     Options.setOption(Options.FEED_DIVIDER_LOCATION, feedDivLocation);
     Options.setOption(Options.WINDOW_STATE, m.getExtendedState());
     Options.setOption(Options.WIDTH, m.getWidth());
@@ -182,7 +184,7 @@ public class ApplicationActions {
     try {
       if (name == MySeries.TAB_EPISODES_ID) {
       } else if (name == MySeries.TAB_FILTERS_ID) {
-        Filters.getFilteredSeries(m.comboBox_seen, m.comboBox_filterSubtitles, m.combobox_downloaded);
+        Filters.getFilteredSeries(m.comboBox_seen, m.comboBox_filterSubtitles, m.combobox_downloaded, m.tableFilters);
       } else if (name == MySeries.TAB_RATINGS_ID) {
         m.statSeries.refresh(Options.toBoolean(Options.UNIFIED_SERIES));
         m.statEpisodes.refresh();

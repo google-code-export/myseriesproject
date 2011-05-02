@@ -257,6 +257,10 @@ public class Options {
    */
   public static final String RANDOMIZE_LAF = "RANDOMIZE LAF";
   /**
+   * The active episodes filter
+   */
+  public static final String ACTIVE_FILTER= "ACTIVE_FILTER";
+  /**
    * An array of the options that are selected in combo boxes
    */
   public static final String[] _COMBO_OPTIONS_ = {DATE_FORMAT, DEBUG_MODE, LOOK_AND_FEEL,
@@ -611,6 +615,7 @@ public class Options {
     out.println(Options.AUTO_RENAME_SUBS + "=false");
     out.println(Options.MINIMIZE_TO_TRAY + "=false");
     out.println(Options.RANDOMIZE_LAF + "=false");
+    out.println(Options.ACTIVE_FILTER + "=");
 
     out.close();
   }
@@ -713,6 +718,7 @@ public class Options {
     options.put(Options.AUTO_RENAME_SUBS, false);
     options.put(Options.MINIMIZE_TO_TRAY, false);
     options.put(Options.RANDOMIZE_LAF, false);
+    options.put(Options.ACTIVE_FILTER, "");
   }
 
   private static Object getDefaultMainDirectory() {

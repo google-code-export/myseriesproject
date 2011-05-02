@@ -311,7 +311,7 @@ public class EpisodesActions {
     }
     try {
       Episodes.updateEpisodesTable(m.tableEpisodes);
-      Filters.getFilteredSeries(m.comboBox_seen, m.comboBox_filterSubtitles, m.combobox_downloaded);
+      Filters.getFilteredSeries(m.comboBox_seen, m.comboBox_filterSubtitles, m.combobox_downloaded, m.tableFilters);
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, "Sql exception occured", ex);
     }
