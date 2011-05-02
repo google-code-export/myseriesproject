@@ -40,7 +40,7 @@ public class UpdateFiltersTable {
           // NextEpisodes.createNextEpisodes();
           // NextEpisodes.show();
           Thread.sleep(100);
-          Filters.getFilteredSeries(m.comboBox_seen, m.comboBox_filterSubtitles, m.combobox_downloaded);
+          Filters.getFilteredSeries(m.comboBox_seen, m.comboBox_filterSubtitles, m.combobox_downloaded,m.tableFilters);
         } catch (SQLException ex) {
           MySeriesLogger.logger.log(Level.WARNING, null, ex);
         } catch (InterruptedException ex) {

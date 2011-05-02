@@ -267,8 +267,9 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     //Create the filteredSeries data
     MySeriesLogger.logger.log(Level.INFO, "Creating filters data");
     Filters.setTableModel_filterSeries(tableModel_filterSeries);
-    Filters.getFilteredSeries(comboBox_seen, comboBox_filterSubtitles, combobox_downloaded);
-
+    //    
+    //    Filters.getFilteredSeries(comboBox_seen, comboBox_filterSubtitles, combobox_downloaded);
+    FiltersActions.applyFilter(this);
     MySeriesLogger.logger.log(Level.INFO, "Creating toolbar");
     switch (Options.toInt(Options.TOOLBAR_POSITION)) {
       case Options._NORTH_:
@@ -423,8 +424,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     tableFilters.getColumn(Filters.DOWNLOADED_COLUMN_TITLE).setCellEditor(new MyDownloadedCellEditor(Filters.EPISODERECORD_COLUMN));
     tableFilters.getColumn(Filters.SEEN_COLUMN_TITLE).setCellRenderer(new MyWatchedCellRenderer());
     tableFilters.getColumn(Filters.SEEN_COLUMN_TITLE).setCellEditor(new MyWatchedCellEditor(Filters.EPISODERECORD_COLUMN));
-    Filters.setTableFilters(tableFilters);
-    Filters.setTableWidths(filtersTableWidths);
+    Filters.setTableWidths(tableFilters,filtersTableWidths);
     tableFilters.setRowHeight(fontHeight + CELL_MARGIN);
 
     //SERIES TABLE
@@ -924,6 +924,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
     combobox_filters.setEditable(true);
     combobox_filters.setModel(comboBoxModel_filters);
+    combobox_filters.setSelectedItem(Options.toString(Options.ACTIVE_FILTER));
     combobox_filters.setMinimumSize(new java.awt.Dimension(250, 18));
     combobox_filters.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1944,12 +1945,20 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
   private void bt_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_saveActionPerformed
     MySeriesLogger.logger.log(Level.INFO, "Save filter action");
+    String curFilter = (String) comboBoxModel_filters.getSelectedItem();
     FiltersActions.saveFilter(this);
+    comboBoxModel_filters.setSelectedItem(curFilter);
   }//GEN-LAST:event_bt_saveActionPerformed
 
   private void bt_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_deleteActionPerformed
     MySeriesLogger.logger.log(Level.INFO, "Delete filter action");
     FiltersActions.deleteFilter(this);
+    if(comboBoxModel_filters.getSize()==0){
+      combobox_downloaded.setSelectedIndex(Filters.DOWNLOADED_YES);
+      comboBox_seen.setSelectedIndex(Filters.SEEN_NO);
+      comboBox_filterSubtitles.setSelectedIndex(Filters.PRIMARY);
+    }
+    FiltersActions.applyFilter(this);
   }//GEN-LAST:event_bt_deleteActionPerformed
 
   private void menuItem_housekeepingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_housekeepingActionPerformed

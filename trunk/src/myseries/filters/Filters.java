@@ -113,6 +113,17 @@ public class Filters {
    */
   public static final int DOWNLOADED_UNAWARE = 2;
   /**
+   * The subtitles language statuses
+   */
+  public static final int NONE = 0;
+  public static final int PRIMARY = 1;
+  public static final int SECONDARY = 2;
+  public static final int BOTH = 3;
+  public static final int PRIMARY_OR_SECONDARY = 4;
+  public static final int NOT_PRIMARY = 5;
+  public static final int UNAWARE = 6;
+  public static final int DEFAULT = 4;
+  /**
    * The model of the filteredSeries table
    */
   private static MyFilteredSeriesTableModel tableModel_filterSeries;
@@ -129,17 +140,15 @@ public class Filters {
    * 5: Not Primary , 6:Unaware , defautlt :4
    */
   private static int subtitles;
-  /**
-   * The filtered episodes table
-   */
-  public static JTable table_filters;
+  
+  
 
   /**
    * Gets the filtered episodes
    * First empty the table, create the new model and set it tot he filtered series table
    * @throws java.sql.SQLException
    */
-  public static void getFilteredSeries(JComboBox cbSeen, JComboBox cbSubs, JComboBox cbDownload) throws SQLException {
+  public static void getFilteredSeries(JComboBox cbSeen, JComboBox cbSubs, JComboBox cbDownload, JTable table_filters) throws SQLException {
     int id, subsInt, series_ID, episode;
     Boolean boolDownloaded, boolSeen;
     String title, aired;
@@ -279,12 +288,10 @@ public class Filters {
     Filters.subtitles = subtitles;
   }
 
-  public static void setTableFilters(JTable table) {
-    Filters.table_filters = table;
-  }
+  
 
-  public static void setTableWidths(Integer[] filtersTableWidths) {
-    TableColumnModel model = Filters.table_filters.getColumnModel();
+  public static void setTableWidths(JTable table , Integer[] filtersTableWidths) {
+    TableColumnModel model = table.getColumnModel();
     for (int i = 0; i < filtersTableWidths.length; i++) {
       Integer width = filtersTableWidths[i];
       model.getColumn(i).setPreferredWidth(width);

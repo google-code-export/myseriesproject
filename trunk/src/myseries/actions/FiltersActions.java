@@ -27,7 +27,7 @@ public class FiltersActions {
     try {
       MySeriesLogger.logger.log(Level.INFO, "Filtering subtitles");
       //Filters.setSubtitles(comboBox_subtitles.getSelectedIndex());
-      Filters.getFilteredSeries(m.comboBox_seen, m.comboBox_filterSubtitles, m.combobox_downloaded);
+      Filters.getFilteredSeries(m.comboBox_seen, m.comboBox_filterSubtitles, m.combobox_downloaded, m.tableFilters);
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     }
@@ -37,7 +37,7 @@ public class FiltersActions {
     try {
       MySeriesLogger.logger.log(Level.INFO, "Filtering watch");
       //Filters.setSeen(comboBox_seen.getSelectedIndex());
-      Filters.getFilteredSeries(m.comboBox_seen, m.comboBox_filterSubtitles, m.combobox_downloaded);
+      Filters.getFilteredSeries(m.comboBox_seen, m.comboBox_filterSubtitles, m.combobox_downloaded, m.tableFilters);
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     }
@@ -47,7 +47,7 @@ public class FiltersActions {
     try {
       MySeriesLogger.logger.log(Level.INFO, "Filtering downloaded");
       //Filters.setDownloaded(combobox_downloaded.getSelectedIndex());
-      Filters.getFilteredSeries(m.comboBox_seen, m.comboBox_filterSubtitles, m.combobox_downloaded);
+      Filters.getFilteredSeries(m.comboBox_seen, m.comboBox_filterSubtitles, m.combobox_downloaded, m.tableFilters);
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     }
