@@ -161,7 +161,7 @@ public class Filters {
     String sql = "SELECT e.*, s.title AS sTitle, s.season FROM episodes e JOIN series s on "
         + "e.series_ID = s.series_ID WHERE s.hidden = "
         + SeriesRecord.NOT_HIDDEN + " AND s.deleted = "
-        + SeriesRecord.NOT_DELETED + " AND aired < date( julianday(date('now'))) AND aired <> '0000-00-00' "
+        + SeriesRecord.NOT_DELETED + " AND aired < date( julianday(date('now'))) AND aired <> '0000-00-00' AND aired <> ''"
         + where + " ORDER BY aired ASC";
     ResultSet rs = DBConnection.conn.createStatement().executeQuery(sql);
     SeriesRecord ser;

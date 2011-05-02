@@ -172,8 +172,8 @@ public class EpisodesRecord extends Record {
    * @param aired the aired to set
    */
   public void setAired(String aired) {
-    if (aired.equals("")) {
-      aired = "";
+    if(!MyUsefulFunctions.isValidDate(aired)){
+        aired = "";
     }
     this.aired = MyUsefulFunctions.convertDateForMySQL(aired);
   }
