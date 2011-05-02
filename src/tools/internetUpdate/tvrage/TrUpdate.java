@@ -135,9 +135,7 @@ public class TrUpdate extends AbstractUpdate implements Runnable {
             episodeRecord.setSeries_ID(series.getSeries_ID());
             episodeRecord.setEpisode(number);
             episodeRecord.setTitle(title);
-            if (!airDate.trim().equals("")) {
-              episodeRecord.setAired(airDate);
-            }
+            episodeRecord.setAired(airDate);
             episodeRecord.save(DBConnection.conn.createStatement());
           }
         }
