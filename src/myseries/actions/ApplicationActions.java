@@ -19,6 +19,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
@@ -60,7 +61,9 @@ public class ApplicationActions {
     String filter = m.combobox_filters.getSelectedItem() != null ? (String) m.combobox_filters.getSelectedItem() : "";
     Options.setOption(Options.ACTIVE_FILTER, filter);
     Options.setOption(Options.FEED_DIVIDER_LOCATION, feedDivLocation);
-    Options.setOption(Options.WINDOW_STATE, m.getExtendedState());
+    if(m.getExtendedState() != JFrame.ICONIFIED){
+      Options.setOption(Options.WINDOW_STATE, m.getExtendedState());
+    }
     Options.setOption(Options.WIDTH, m.getWidth());
     Options.setOption(Options.HEIGHT, m.getHeight());
     Options.setOption(Options.TOOLBAR_POSITION, m.getToolbarPosition());

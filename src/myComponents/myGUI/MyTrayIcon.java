@@ -18,6 +18,7 @@ import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 import javax.swing.JFrame;
 import tools.MySeriesLogger;
+import tools.options.Options;
 
 /**
  *
@@ -127,7 +128,7 @@ public class MyTrayIcon {
     public void mouseReleased(MouseEvent e) {
       if (e.getClickCount() > 1) {
         frame.setVisible(true);
-        frame.setExtendedState(Frame.NORMAL);
+        frame.setExtendedState(Options.toInt(Options.WINDOW_STATE));
         removeIconFromTray();
       }
     }
@@ -147,12 +148,12 @@ public class MyTrayIcon {
       switch (action) {
         case RESTORE:
           frame.setVisible(true);
-          frame.setExtendedState(Frame.NORMAL);
+          frame.setExtendedState(Options.toInt(Options.WINDOW_STATE));
           removeIconFromTray();
           break;
         case EXIT:
           removeIconFromTray();
-          frame.setExtendedState(Frame.ICONIFIED);
+          frame.setExtendedState(Options.toInt(Options.WINDOW_STATE));
           frame.dispose();
           break;
       }
