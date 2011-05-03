@@ -28,14 +28,10 @@ import database.SeriesRecord;
 import help.CheckUpdate;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Point;
-import java.awt.Toolkit;
 import java.awt.TrayIcon;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Dimension2D;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -54,7 +50,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelListener;
 import javax.swing.plaf.basic.BasicToolBarUI;
-import javax.swing.plaf.basic.BasicViewportUI;
 import myComponents.MyMessages;
 import myComponents.MyTableModels.MyFilteredSeriesTableModel;
 import myComponents.MyTableModels.MySeriesTableModel;
@@ -789,7 +784,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
     scrollPane_series.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
     scrollPane_series.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-    scrollPane_series.setMaximumSize(new java.awt.Dimension(30000, 460));
     scrollPane_series.setMinimumSize(new java.awt.Dimension(200, 400));
     scrollPane_series.setPreferredSize(new java.awt.Dimension(200, 400));
     scrollPane_series.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1704,6 +1698,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
       if (tableEpisodes.getSelectedRowCount() > 1) {
         MySeriesLogger.logger.log(Level.INFO, "Multiple episodes selected");
         event.setSingleEpisode(false);
+        event.setSeries(Series.getCurrentSerial());
         evClass.fireMyEvent(event);
         episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
       } else {
@@ -2016,10 +2011,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
   }//GEN-LAST:event_formWindowDeiconified
 
   private void formWindowStateChanged(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowStateChanged
-    System.out.println("Option " + Options.toInt(Options.WINDOW_STATE));
-    System.out.println("State " + getExtendedState());
-    System.out.println("Before " + evt.getOldState());
-    System.out.println("After  " + evt.getNewState());
     if (evt.getNewState() != NORMAL && evt.getNewState() != MAXIMIZED_BOTH  ) {
       Options.setOption(Options.WINDOW_STATE, evt.getOldState());
       Options.save();
@@ -2027,8 +2018,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
       Options.setOption(Options.WINDOW_STATE, evt.getNewState());
       Options.save();
     }
-    System.out.println("Saved after " + Options.toInt(Options.WINDOW_STATE));
-
   }//GEN-LAST:event_formWindowStateChanged
   // Variables declaration - do not modify//GEN-BEGIN:variables
   public javax.swing.JMenuItem PopUpItem_AddEpisode;

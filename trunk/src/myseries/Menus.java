@@ -52,7 +52,7 @@ public class Menus {
         m.PopUpItem_AddEpisodeInEpisodes.setText("Add new episode to " + seriesTitle);
 
         //DELETE EPISODE
-        m.popUpItem_deleteEpisode.setEnabled(episodesPanel && episode!=null);
+        m.popUpItem_deleteEpisode.setEnabled(episodesPanel && (episode!=null || !singleEpisode));
         m.popUpItem_deleteEpisode.setText(singleEpisode
                 ? "Delete episode " + episodeTitle
                 : "Delete selected episodes");
