@@ -112,9 +112,11 @@ public class MyImagePanel extends JPanel {
           height = (int) ((double) height - (5 * ratio));
           width = width - 5;
         }
-        //imageLayerPanel.setBounds(0, yPos, width, height);
-        MySeriesLogger.logger.log(Level.INFO, "Relocating screenshot to {0},{1}", new Object[]{0, yPos});
-        setBounds((maxWidth - width) / 2, yPos, width, height);
+        int xPos = (maxWidth - width) / 2;
+        setBounds(xPos, yPos, width, height);
+        MySeriesLogger.logger.log(Level.INFO, "Relocating screenshot to {0},{1} with size {2}x{3}", 
+            new Object[]{xPos, yPos,width,height});
+        
         changeSize(width, height);
       } catch (NullPointerException ex) {
         MySeriesLogger.logger.log(Level.WARNING, "Null Screenshot");
