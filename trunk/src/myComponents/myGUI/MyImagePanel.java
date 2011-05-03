@@ -97,17 +97,24 @@ public class MyImagePanel extends JPanel {
     try {
       Thread.sleep(100);
       try {
-
-        int width = m.splitPane_main.getDividerLocation() - 26;
-        int height = (int) (image.getHeight(this) * ((double) width / (double) image.getWidth(this)));
-
+        int maxWidth = m.splitPane_main.getDividerLocation() - 26;
+        int width = image.getWidth(this);
+        int maxHeight = m.splitPane_main.getHeight() - m.scrollPane_series.getHeight();
+        int height = image.getHeight(this);
         int yPos = calcYpos(m);
-        if (yPos == 30) {
-          yPos = 50;
+        double ratio = (double) height / (double) width;
+        while (height < maxHeight && width < maxWidth) {
+          height = (int) ((double) height + (5 * ratio));
+          width = width + 5;
+
+        }
+        while (height > maxHeight || width > maxWidth) {
+          height = (int) ((double) height - (5 * ratio));
+          width = width - 5;
         }
         //imageLayerPanel.setBounds(0, yPos, width, height);
         MySeriesLogger.logger.log(Level.INFO, "Relocating screenshot to {0},{1}", new Object[]{0, yPos});
-        setBounds(0, yPos, width, height);
+        setBounds((maxWidth - width) / 2, yPos, width, height);
         changeSize(width, height);
       } catch (NullPointerException ex) {
         MySeriesLogger.logger.log(Level.WARNING, "Null Screenshot");

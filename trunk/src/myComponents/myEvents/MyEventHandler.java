@@ -82,6 +82,7 @@ public class MyEventHandler implements MyEventListener {
                     }
                 }
                 Menus.setSeriesMenus(series, m);
+                m.imagePanel.relocate(m);
             } else if (evt.getType() == SET_CURRENT_EPISODE) {
                 MySeriesLogger.logger.log(Level.INFO, "Episode select event occured");
                 if (!evt.isSingleEpisode()) {
