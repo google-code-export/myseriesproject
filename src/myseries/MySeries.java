@@ -438,6 +438,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
   @SuppressWarnings("unchecked")
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
+    java.awt.GridBagConstraints gridBagConstraints;
 
     seriesPopUp = new javax.swing.JPopupMenu();
     PopUpItem_AddSeries = new javax.swing.JMenuItem();
@@ -810,26 +811,26 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     panel_SeriesLayout.setHorizontalGroup(
       panel_SeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(panel_SeriesLayout.createSequentialGroup()
-        .addContainerGap()
+        .addGap(10, 10, 10)
         .addComponent(imageLayerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
-        .addContainerGap())
-      .addGroup(panel_SeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(panel_SeriesLayout.createSequentialGroup()
-          .addContainerGap()
-          .addComponent(scrollPane_series, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-          .addContainerGap()))
+        .addGap(10, 10, 10))
+      .addGroup(panel_SeriesLayout.createSequentialGroup()
+        .addContainerGap()
+        .addComponent(scrollPane_series, javax.swing.GroupLayout.PREFERRED_SIZE, 180, Short.MAX_VALUE)
+        .addGap(9, 9, 9))
     );
     panel_SeriesLayout.setVerticalGroup(
       panel_SeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(panel_SeriesLayout.createSequentialGroup()
-        .addContainerGap()
-        .addComponent(imageLayerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 718, Short.MAX_VALUE)
+        .addGroup(panel_SeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(panel_SeriesLayout.createSequentialGroup()
+            .addGap(11, 11, 11)
+            .addComponent(imageLayerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 718, Short.MAX_VALUE))
+          .addGroup(panel_SeriesLayout.createSequentialGroup()
+            .addContainerGap()
+            .addComponent(scrollPane_series, javax.swing.GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE)
+            .addGap(213, 213, 213)))
         .addContainerGap())
-      .addGroup(panel_SeriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(panel_SeriesLayout.createSequentialGroup()
-          .addContainerGap()
-          .addComponent(scrollPane_series, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addContainerGap(329, Short.MAX_VALUE)))
     );
 
     splitPane_main.setLeftComponent(panel_Series);
