@@ -95,7 +95,7 @@ public abstract class AbstractDownloadSubtitle {
             MySeriesLogger.logger.log(Level.FINE, "Subtitle downloaded and extracted");
             form.label_message.setText("Subtitle downloaded and extracted");
           } catch (Exception ex) {
-            MySeriesLogger.logger.log(Level.WARNING, "Could not extract subtitle file", ex);
+            MySeriesLogger.logger.log(Level.WARNING, "Could not extract subtitle file " + filename, ex);
           }
           //openZip(filename);
         }
