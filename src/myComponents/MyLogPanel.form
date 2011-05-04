@@ -20,7 +20,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="jScrollPane1" pref="515" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="561" max="32767" attributes="0"/>
                       <EmptySpace min="10" pref="10" max="10" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -57,7 +57,6 @@
     </Component>
     <Component class="myComponents.myGUI.buttons.MyButtonCancel" name="bt_hide">
       <Properties>
-        <Property name="text" type="java.lang.String" value=""/>
         <Property name="toolTipText" type="java.lang.String" value="Hide"/>
       </Properties>
       <Events>
@@ -87,7 +86,6 @@
     </Container>
     <Component class="myComponents.myGUI.buttons.MyDefaultButton" name="bt_clearMessages">
       <Properties>
-        <Property name="text" type="java.lang.String" value=""/>
         <Property name="toolTipText" type="java.lang.String" value="Clear messages"/>
       </Properties>
       <Events>

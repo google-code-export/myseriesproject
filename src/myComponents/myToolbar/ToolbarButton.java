@@ -33,7 +33,6 @@ public class ToolbarButton extends JButton implements ToolbarButtonActions {
     return super.clone();
   }
 
-
   public ToolbarButton(int actionName,String tooltip, String image) {
     this.actionName = actionName;
     this.tooltip = tooltip;
