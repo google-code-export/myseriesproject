@@ -57,7 +57,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
                 subs.add(new Subtitle("Whole season subtitles", new URL(link), 0, 0));
             } catch (MalformedURLException ex) {
                 MySeriesLogger.logger.log(Level.WARNING, "Malformed url: {0}", link);
-                MyMessages.error("Download whole season subtitles", "Malformed url: " + link);
+                MyMessages.error("Download whole season subtitles", "Malformed url: " + link, true);
             }
         }
         progress.setIndeterminate(false);
@@ -65,7 +65,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
             MySeriesLogger.logger.log(Level.INFO, "Subtitle not found");
             form.dispose();
             if (!cancel) {
-                MyMessages.error("Subtitle not found", "The subtitle was not found");
+                MyMessages.error("Subtitle not found", "The subtitle was not found", true);
             }
         } else if (subs.size() == 1) {
             MySeriesLogger.logger.log(Level.FINE, "subtitle found {0}", subs.get(0).title);
@@ -74,14 +74,14 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
         } else {
             // Subtitle sub = (Subtitle) JOptionPane.showInputDialog(null, "Choose the subtitle to download", "Choose subtitle", JOptionPane.QUESTION_MESSAGE, null, subs.toArray(), 0);
             MySeriesLogger.logger.log(Level.FINE, "Found {0} subtitles", subs.size());
-            Subtitle sub = (Subtitle) MyMessages.ask("Choose subtitle", "Choose the subtitle to download", null, subs.toArray(), null);
+            Subtitle sub = (Subtitle) MyMessages.ask("Choose subtitle", "Choose the subtitle to download", null, subs.toArray(), null, true);
             if (sub != null) {
                 MySeriesLogger.logger.log(Level.INFO, "Downloading subtitle {0}", sub.title);
                 String newPath = sub.url.getPath().replace("/subtitle", "download");
                 try {
                     sub.url = new URL(TV_SUBTITLES_URL + newPath);
                 } catch (MalformedURLException ex) {
-                    MyMessages.error("Error occured!!!", "Wrong url : " + sub.url);
+                    MyMessages.error("Error occured!!!", "Wrong url : " + sub.url, true);
                     MySeriesLogger.logger.log(Level.SEVERE, null, ex);
                     form.dispose();
                 }
@@ -119,11 +119,11 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
             }
         } catch (MalformedURLException ex) {
             MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-            MyMessages.error("Error occured!!!", "Wrong url");
+            MyMessages.error("Error occured!!!", "Wrong url", true);
             form.dispose();
         } catch (IOException ex) {
             MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-            MyMessages.error("Error occured!!!", "Could not read input stream");
+            MyMessages.error("Error occured!!!", "Could not read input stream", true);
             form.dispose();
         }
     }
@@ -178,7 +178,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
                 return null;
             }
             MySeriesLogger.logger.log(Level.INFO, "Primary subtitle not found.Asking for secondary");
-            if (MyMessages.confirm("Download secondary language", "Primary language subs not found.\nSearch for secondary?") == JOptionPane.YES_OPTION) {
+            if (MyMessages.confirm("Download secondary language", "Primary language subs not found.\nSearch for secondary?", true) == JOptionPane.YES_OPTION) {
                 MySeriesLogger.logger.log(Level.INFO, "Getting secondary subtitle");
                 return getLink(buff, false);
             } else {

@@ -228,7 +228,7 @@ public class InternetUpdate extends MyDraggable {
               dispose();
           } else {
               MySeriesLogger.logger.log(Level.INFO, "Canceling while updating");
-              int i = MyMessages.confirm("Abort?", "Do you want to cancel the update?");
+              int i = MyMessages.confirm("Abort?", "Do you want to cancel the update?", true);
               if (i == JOptionPane.OK_OPTION) {
                   MySeriesLogger.logger.log(Level.INFO, "Updating canceled by the user");
                   t.interrupt();

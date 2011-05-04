@@ -317,7 +317,7 @@ public class CheckUpdate extends MyDraggable {
       if (DesktopSupport.isBrowseSupport()) {
         MyUsefulFunctions.browse(download);
       } else {
-        MyMessages.error("Browsing not supported", "Opening a browser window is not supported in your OS");
+        MyMessages.error("Browsing not supported", "Opening a browser window is not supported in your OS", true);
         MySeriesLogger.logger.log(Level.WARNING, "Opening a browser window is not supported in your OS");
       }
     } catch (URISyntaxException ex) {

@@ -80,9 +80,6 @@
       <SubComponents>
         <Container class="javax.swing.JSplitPane" name="splitPanel">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
             </Property>
@@ -108,7 +105,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="tf_search" min="-2" pref="137" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="bt_ok" min="-2" max="-2" attributes="0"/>
+                          <Component id="bt_search" min="-2" max="-2" attributes="0"/>
                           <EmptySpace pref="11" max="32767" attributes="0"/>
                       </Group>
                       <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
@@ -125,7 +122,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="2" attributes="0">
-                              <Component id="bt_ok" alignment="2" min="-2" max="-2" attributes="0"/>
+                              <Component id="bt_search" alignment="2" min="-2" max="-2" attributes="0"/>
                               <Component id="tf_search" alignment="2" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="456" max="32767" attributes="0"/>
@@ -190,22 +187,22 @@
                 </Container>
                 <Component class="javax.swing.JTextField" name="tf_search">
                 </Component>
-                <Component class="myComponents.myGUI.buttons.MyButtonOk" name="bt_ok">
+                <Component class="myComponents.myGUI.buttons.MyDefaultButton" name="bt_search">
                   <Properties>
                     <Property name="text" type="java.lang.String" value=""/>
                     <Property name="toolTipText" type="java.lang.String" value="Search"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_okActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_searchActionPerformed"/>
                   </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new myComponents.myGUI.buttons.MyDefaultButton(MyAbstractButton.SEARCH,&quot;Search Help&quot;)"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="panel_right">
               <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                     <LineBorder/>

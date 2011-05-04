@@ -197,7 +197,7 @@ public class FeedTree extends javax.swing.JPanel {
   }// </editor-fold>//GEN-END:initComponents
 
   private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
-      if (MyMessages.confirm("Delete Feed", "Do you really want to delete this feed") == JOptionPane.YES_OPTION) {
+      if (MyMessages.confirm("Delete Feed", "Do you really want to delete this feed", true) == JOptionPane.YES_OPTION) {
           MySeriesLogger.logger.log(Level.INFO, "Deleting feed");
           boolean deleteById = FeedsRecord.deleteById(getSelectedLeaf().id);
           if (deleteById) {

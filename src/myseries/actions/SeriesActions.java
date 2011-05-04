@@ -74,7 +74,7 @@ public class SeriesActions {
     int series_ID = series.getSeries_ID();
     String screenshot = series.getScreenshot();
     MySeriesLogger.logger.log(Level.INFO, "Deleting series {0}", series.getFullTitle());
-    int answ = MyMessages.confirm("Delete Serial?", "Really delete the series " + title + " season " + season + "?");
+    int answ = MyMessages.confirm("Delete Serial?", "Really delete the series " + title + " season " + season + "?", true);
     ArrayList<SeriesRecord> s;
     SeriesRecord ser;
     if (answ == JOptionPane.YES_OPTION) {
@@ -103,7 +103,7 @@ public class SeriesActions {
     try {
       if (!DesktopSupport.isBrowseSupport()) {
         MySeriesLogger.logger.log(Level.WARNING, "Browse is not supported in the current OS");
-        MyMessages.error("Browse Error!!!", "Browse is not supported");
+        MyMessages.error("Browse Error!!!", "Browse is not supported", true);
         return;
       }
       SeriesRecord series = Series.getCurrentSerial();
@@ -129,12 +129,12 @@ public class SeriesActions {
         DesktopSupport.getDesktop().open(f);
       } else {
         MySeriesLogger.logger.log(Level.WARNING, "{0} is not a directory", f.getCanonicalPath());
-        MyMessages.error("Directory error", f.getCanonicalPath() + " is not a directory");
+        MyMessages.error("Directory error", f.getCanonicalPath() + " is not a directory", true);
         return;
       }
     } catch (Exception ex) {
       MySeriesLogger.logger.log(Level.WARNING, "Browse is not supported in the current OS");
-      MyMessages.error("Browse Error!!!", "Browse is not supported");
+      MyMessages.error("Browse Error!!!", "Browse is not supported", true);
       return;
     }
   }

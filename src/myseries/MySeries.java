@@ -1965,7 +1965,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
   }//GEN-LAST:event_menuItem_housekeepingActionPerformed
 
   private void menuItem_restartApplicationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_restartApplicationActionPerformed
-    if (MyMessages.confirm("Restart application", "Really restart the application?") == JOptionPane.YES_OPTION) {
+    if (MyMessages.confirm("Restart application", "Really restart the application?", true) == JOptionPane.YES_OPTION) {
       ApplicationActions.restartApplication(this);
     }
   }//GEN-LAST:event_menuItem_restartApplicationActionPerformed

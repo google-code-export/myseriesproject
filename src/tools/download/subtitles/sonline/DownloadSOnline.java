@@ -50,14 +50,14 @@ public class DownloadSOnline extends AbstractDownloadSubtitle implements Runnabl
             getSubtitle();
         } catch (IOException ex) {
             MySeriesLogger.logger.log(Level.WARNING, "Could not read input stream", ex);
-            MyMessages.error("IO error", "Could not read from input stream");
+            MyMessages.error("IO error", "Could not read from input stream", true);
         }
         progress.setIndeterminate(false);
         if (subs.isEmpty()) {
             MySeriesLogger.logger.log(Level.INFO, "Subtitle was not found");
             form.dispose();
             if (!cancel) {
-                MyMessages.message("Subtitle not found", "The subtitle was not found",Info.WARNING_MESS, true);
+                MyMessages.message("Subtitle not found", "The subtitle was not found",Info.WARNING_MESS, true, true);
             }
         } else if (subs.size() == 1) {
             MySeriesLogger.logger.log(Level.FINE, "Found one subtitle.Downloading {0}", subs.get(0).url);
@@ -65,7 +65,7 @@ public class DownloadSOnline extends AbstractDownloadSubtitle implements Runnabl
             form.dispose();
         } else {
             MySeriesLogger.logger.log(Level.FINE, "Found {0} subtitles", subs.size());
-            Subtitle sub = (Subtitle) MyMessages.ask("Choose subtitle", "Choose the subtitle to download", null, subs.toArray(), null);
+            Subtitle sub = (Subtitle) MyMessages.ask("Choose subtitle", "Choose the subtitle to download", null, subs.toArray(), null, true);
             if (sub != null) {
                 MySeriesLogger.logger.log(Level.INFO, "Downloadinf subtitle {0}", sub.url);
                 download(sub);
@@ -125,7 +125,7 @@ public class DownloadSOnline extends AbstractDownloadSubtitle implements Runnabl
         }
         if (subs.isEmpty() && primary) {
             MySeriesLogger.logger.log(Level.INFO, "Subtitle not found.Asking for secondary");
-            if (MyMessages.confirm("Download secondary language", "Primary language subs not found.\nSearch for secondary?") == JOptionPane.YES_OPTION) {
+            if (MyMessages.confirm("Download secondary language", "Primary language subs not found.\nSearch for secondary?", true) == JOptionPane.YES_OPTION) {
                 parseWebpage(in, false);
             } else {
                 MySeriesLogger.logger.log(Level.INFO, "Downloading aborted by the user");

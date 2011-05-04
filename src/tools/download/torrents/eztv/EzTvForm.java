@@ -327,7 +327,7 @@ public class EzTvForm extends AbstractTorrentForm {
           }
       } else {
           MySeriesLogger.logger.log(Level.WARNING, "Validation error\nMessage: {0}", group.getErrorMessage());
-          MyMessages.error("EzTv Search Form", group.getErrorMessage());
+          MyMessages.error("EzTv Search Form", group.getErrorMessage(), true);
       }
       //myseries.MySeries.glassPane.deactivate();
       //dispose();
@@ -386,7 +386,7 @@ public class EzTvForm extends AbstractTorrentForm {
             query = MyUsefulFunctions.join(q, "&");
             return new URI(address + query);
         } catch (URISyntaxException ex) {
-            MyMessages.error("Wrong url", "Wrong url " + address + query);
+            MyMessages.error("Wrong url", "Wrong url " + address + query, true);
             MySeriesLogger.logger.log(Level.SEVERE, "Invalid uri", ex);
             return null;
         } catch (UnsupportedEncodingException ex) {

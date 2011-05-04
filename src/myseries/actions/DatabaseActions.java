@@ -42,7 +42,7 @@ public class DatabaseActions {
           ApplicationActions.restartApplication(m);
         } else {
           MySeriesLogger.logger.log(Level.WARNING, "Selected database is invlid.Not loading...");
-          MyMessages.error("Invalid Database", "The database you selected is invalid");
+          MyMessages.error("Invalid Database", "The database you selected is invalid", true);
           loadDatabase(m);
         }
       } else {

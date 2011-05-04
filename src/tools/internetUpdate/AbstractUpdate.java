@@ -144,14 +144,14 @@ public abstract class AbstractUpdate {
                 updateEpisodes(episodesTable);
             } else {
                 MySeriesLogger.logger.log(Level.WARNING, "Nothing to update");
-                MyMessages.error("No Update!!!", "Nothing to update");
+                MyMessages.error("No Update!!!", "Nothing to update", true);
                 MySeries.glassPane.deactivate();
                 iu.dispose();
             }
 
         } catch (SQLException ex) {
             MySeriesLogger.logger.log(Level.WARNING, "Could not get the series from the database", ex);
-            MyMessages.error("SQL Error!!!", "Could not get the series from the database");
+            MyMessages.error("SQL Error!!!", "Could not get the series from the database", true);
         }
     }
 

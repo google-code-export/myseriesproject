@@ -499,7 +499,7 @@ public class AdminSeries extends MyDraggable {
     if (newSeries && seriesExist()) {
       MySeriesLogger.logger.log(Level.WARNING, "Series {0} season {1} already exists", new Object[]{
             textField_Serial.getText(), spinner_season.getValue()});
-      MyMessages.error("Add new Series", "Series already exists");
+      MyMessages.error("Add new Series", "Series already exists", true);
       return;
     }
     try {
@@ -562,7 +562,7 @@ public class AdminSeries extends MyDraggable {
       }
     } catch (NumberFormatException ex) {
       MySeriesLogger.logger.log(Level.WARNING, "Season must be a number", ex);
-      MyMessages.error("Season not a number!!!", "Season must be a number");
+      MyMessages.error("Season not a number!!!", "Season must be a number", true);
     }
   }
 
@@ -587,7 +587,7 @@ public class AdminSeries extends MyDraggable {
       MySeriesLogger.logger.log(Level.INFO, "Validating input");
       if (!group.validate()) {
         MySeriesLogger.logger.log(Level.WARNING, "Validation error :\n", group.getErrorMessage());
-        MyMessages.error("Series Form", group.getErrorMessage());
+        MyMessages.error("Series Form", group.getErrorMessage(), true);
         return;
       }
       addSeries();
@@ -649,7 +649,7 @@ public class AdminSeries extends MyDraggable {
             MyMessages.message("Downloading screenshot", "The screenshot was saved in the images folder");
           } else {
             MySeriesLogger.logger.log(Level.WARNING, "Screenshot not found");
-            MyMessages.error("Downloading screenshot", "No screenshot was found");
+            MyMessages.error("Downloading screenshot", "No screenshot was found", true);
     }//GEN-LAST:event_bt_iuScreenshotActionPerformed
 
       }
@@ -660,7 +660,7 @@ public class AdminSeries extends MyDraggable {
             MySeriesLogger.logger.log(Level.INFO, "Getting tv subtitles code");
             if (seriesRecord.getSeries_ID() == 0) {
               if (textField_Serial.getText().trim().equals("")) {
-                MyMessages.error("Empty title", "The series title shouldn't be empty");
+                MyMessages.error("Empty title", "The series title shouldn't be empty", true);
                 return;
               } else {
                 seriesRecord = new SeriesRecord();

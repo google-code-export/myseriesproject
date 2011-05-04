@@ -207,11 +207,11 @@ public class MyImagePanel extends JPanel {
             MyMessages.message("Downloading screenshot", "The screenshot was saved in the images folder");
           } catch (SQLException ex) {
             MySeriesLogger.logger.log(Level.SEVERE, "Could not save series record", ex);
-            MyMessages.error("Downloading screenshot", "SQL error while saving series");
+            MyMessages.error("Downloading screenshot", "SQL error while saving series", true);
           }
         } else {
           MySeriesLogger.logger.log(Level.WARNING, "Screenshot not found");
-          MyMessages.error("Downloading screenshot", "No screenshot was found");
+          MyMessages.error("Downloading screenshot", "No screenshot was found", true);
         }
       }
     }

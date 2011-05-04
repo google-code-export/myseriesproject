@@ -50,9 +50,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import myComponents.myGUI.MyFont;
 import myComponents.myTableCellRenderers.MySubtitleListRenderer;
+import myseries.actions.ApplicationActions;
 import tools.LookAndFeels;
 import tools.Skin;
 import tools.download.subtitles.SubtitleConstants;
@@ -88,7 +90,7 @@ public class OptionsPanel extends MyDraggable {
    */
   public OptionsPanel(MySeries m) {
     this.m = m;
-    MySeriesLogger.logger.log(Level.INFO, "Initializong components");
+    MySeriesLogger.logger.log(Level.INFO, "Initializing components");
     initComponents();
     MySeriesLogger.logger.log(Level.FINE, "Components initialized");
     combobox_laf.setEnabled(!checkbox_dontUseSkin.isSelected());
@@ -1014,7 +1016,7 @@ public class OptionsPanel extends MyDraggable {
     } catch (IOException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, "Could not write to options file", ex);
     } catch (IllegalArgumentException ex) {
-      MyMessages.error("Wrong Arguments", "The date format pattern you provided is invalid");
+      MyMessages.error("Wrong Arguments", "The date format pattern you provided is invalid", true);
       MySeriesLogger.logger.log(Level.WARNING, "The date format "
           + String.valueOf(combobox_dateFormat.getSelectedItem())
           + " pattern you provided is invalid", ex);
@@ -1115,6 +1117,7 @@ public class OptionsPanel extends MyDraggable {
   }//GEN-LAST:event_bt_helpActionPerformed
 
   private void bt_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_okActionPerformed
+    boolean skinChange = false;
     ValidationGroup group = new ValidationGroup();
     group.addComponent(textfield_port);
     group.addComponent(textfield_proxy);
@@ -1126,7 +1129,7 @@ public class OptionsPanel extends MyDraggable {
     MySeriesLogger.logger.log(Level.INFO, "Validating user input");
     if (!group.validate()) {
       MySeriesLogger.logger.log(Level.WARNING, "Validation failed\nError message: {0}", group.getErrorMessage());
-      MyMessages.error("Options Form", group.getErrorMessage());
+      MyMessages.error("Options Form", group.getErrorMessage(), true);
       return;
     }
     try {
@@ -1148,10 +1151,12 @@ public class OptionsPanel extends MyDraggable {
       if (!oldColor.equals(Options.toColor(Options.SKIN_COLOR))) {
         MySeriesLogger.logger.log(Level.INFO, "Skin color changed");
         mess += "Skin color, ";
+        skinChange = true;
       }
       if ((!oldUseSkin && checkbox_dontUseSkin.isSelected()) || (oldUseSkin && !checkbox_dontUseSkin.isSelected())) {
         MySeriesLogger.logger.log(Level.INFO, "Skin usage changed");
         mess += "Skin, ";
+        skinChange = true;
       }
       if (!oldLaf.equals(Options.toString(Options.LOOK_AND_FEEL))) {
         MySeriesLogger.logger.log(Level.INFO, "Look and feel changed");
@@ -1160,6 +1165,7 @@ public class OptionsPanel extends MyDraggable {
       mess = mess.trim();
 
       if (!mess.equals("")) {
+       if(!skinChange){
         MyFont.SetMyFont();
         try {
           LookAndFeels.setLookAndFeel(Options.toString(Options.LOOK_AND_FEEL));
@@ -1171,13 +1177,14 @@ public class OptionsPanel extends MyDraggable {
         SwingUtilities.updateComponentTreeUI(m.episodesPopUp);
         m.pack();
         m.setExtendedState(Options.toInt(Options.WINDOW_STATE));
-//        mess = mess.substring(0, mess.length() - 1) + " changes ";
-//        int a = MyMessages.confirm("Options", mess + "will take effect when you restart the application\nRestart now?");
-//        if (a == JOptionPane.YES_OPTION) {
-//          ApplicationActions.restartApplication(m);
-//        }
+       } else {
+        mess = "Skin changes ";
+        int a = MyMessages.confirm("Options", mess + "will take effect when you restart the application\nRestart now?", false);
+        if (a == JOptionPane.YES_OPTION) {
+          ApplicationActions.restartApplication(m);
+        }
       }
-
+      }
     } catch (IOException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, "Could not write to options file", ex);
     } catch (ParseException ex) {

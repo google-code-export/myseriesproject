@@ -144,7 +144,7 @@ public class ApplicationActions {
     }
     int ans = MyMessages.confirm("Delete log files",
         "Realy delete the following " + files.length + " log files:\n"
-        + MyUsefulFunctions.listArray(null, true));
+        + MyUsefulFunctions.listArray(null, true), true);
     if (ans == JOptionPane.YES_OPTION) {
       for (int i = 0; i < files.length; i++) {
         File file = files[i];
@@ -159,18 +159,18 @@ public class ApplicationActions {
     Desktop d = Desktop.getDesktop();
     if (!Desktop.isDesktopSupported()) {
       MySeriesLogger.logger.log(Level.WARNING, "Desktop is not supported");
-      MyMessages.error("Sorry!!!", "Your OS does not support this function");
+      MyMessages.error("Sorry!!!", "Your OS does not support this function", true);
     } else {
       if (!d.isSupported(Desktop.Action.OPEN)) {
         MySeriesLogger.logger.log(Level.WARNING, "Open file is not supported");
-        MyMessages.error("Sorry!!!", "Your OS does not support this function");
+        MyMessages.error("Sorry!!!", "Your OS does not support this function", true);
       } else {
         try {
           d.open(new File(Paths.LOGS_PATH + "MySeriesLog_0.html"));
           MySeriesLogger.logger.log(Level.FINE, "Log file opened for viewing");
         } catch (Exception ex) {
           MySeriesLogger.logger.log(Level.SEVERE, "Could not read the log file", ex);
-          MyMessages.error("View Log", "Couldn't find the log file");
+          MyMessages.error("View Log", "Couldn't find the log file", true);
         }
       }
     }
@@ -233,7 +233,7 @@ public class ApplicationActions {
 
   public static void deleteTorrents() {
     MySeriesLogger.logger.log(Level.INFO, "Deleting torrents");
-    if (MyMessages.confirm("Delete torrents", "Do you really want to clear the torrents directory?") == JOptionPane.OK_OPTION) {
+    if (MyMessages.confirm("Delete torrents", "Do you really want to clear the torrents directory?", true) == JOptionPane.OK_OPTION) {
       File dir = new File(Options._USER_DIR_ + Paths.TORRENTS_PATH);
       if (dir.isDirectory()) {
         File[] torrents = dir.listFiles();
@@ -264,7 +264,7 @@ public class ApplicationActions {
         MyMessages.message("Delete torrents", mess);
       } else {
         MySeriesLogger.logger.log(Level.WARNING, "The torrents directory does not exist");
-        MyMessages.error("Delete torrents", "The torrents directory does not exist");
+        MyMessages.error("Delete torrents", "The torrents directory does not exist", true);
       }
     }
   }
@@ -275,7 +275,7 @@ public class ApplicationActions {
       if (Options.toBoolean(Options.WARN_FOR_LOG_USE)) {
         int a = MyMessages.confirm("Logging level", "Logging level is set to ALL.\n"
             + "That's for debugging reasons and may slow down the application.\n"
-            + "Do you want to turn logging off?");
+            + "Do you want to turn logging off?", true);
         if (a == JOptionPane.OK_OPTION) {
           Options.setOption(Options.DEBUG_MODE, "OFF");
           Options.setOption(Options.WARN_FOR_LOG_USE, false);
@@ -301,11 +301,11 @@ public class ApplicationActions {
         ApplicationActions.exitApplication(m);
       } else {
         MySeriesLogger.logger.log(Level.SEVERE, "Could not restart application");
-        MyMessages.error("Restart Application", "Could not restart the application");
+        MyMessages.error("Restart Application", "Could not restart the application", false);
       }
     } catch (IOException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, "Could not restart application", ex);
-      MyMessages.error("Restart Application", "Could not restart the application");
+      MyMessages.error("Restart Application", "Could not restart the application", false);
     }
   }
 
@@ -330,7 +330,7 @@ public class ApplicationActions {
       MyUsefulFunctions.sendMail(email);
     } catch (Exception ex) {
       MyMessages.error("Sending mail", "Could not open your email client.\n"
-          + "Please send it manually to " + MySeries.EMAIL);
+          + "Please send it manually to " + MySeries.EMAIL, true);
       MySeriesLogger.logger.log(Level.SEVERE, "Could not send mail", ex);
     }
   }
@@ -339,7 +339,7 @@ public class ApplicationActions {
     MySeriesLogger.logger.log(Level.INFO, "Showing donation message");
     int a = MyMessages.confirm("Paypal Donation", "Thanks for your interest in donating for MySeries developement."
         + "Even 1$ or 1€ is a real help.You can make your donation via paypal to " + MySeries.EMAIL + ".\nClick OK"
-        + " to go to the donation page");
+        + " to go to the donation page", true);
     if (a == JOptionPane.YES_OPTION) {
       MySeriesLogger.logger.log(Level.INFO, "Go to donation page");
       MyUsefulFunctions.browse(MySeries.DONATION_URL);
@@ -370,7 +370,7 @@ public class ApplicationActions {
       if (Options.toBoolean(Options.WARN_FOR_VERSION)) {
         MyMessages.message("Java version " + version, "The application is written for java 6.\n"
             + "It seems that you are using java 7.\nThere might be some incopatibility issues",
-            Info.WARNING_MESS, true);
+            Info.WARNING_MESS, true, true);
         Options.setOption(Options.WARN_FOR_VERSION, false);
         Options.save();
       } else {

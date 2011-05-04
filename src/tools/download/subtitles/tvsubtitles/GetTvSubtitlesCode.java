@@ -40,7 +40,7 @@ public class GetTvSubtitlesCode implements SubtitleConstants {
             getCode();
         } catch (IOException ex) {
             MySeriesLogger.logger.log(Level.SEVERE, "Could not read from input stream", ex);
-            MyMessages.error("I/O Error", "Could not read from input stream");
+            MyMessages.error("I/O Error", "Could not read from input stream", true);
         }
     }
 
@@ -53,13 +53,13 @@ public class GetTvSubtitlesCode implements SubtitleConstants {
             in.close();
             if (sLinks.isEmpty()) {
                 MySeriesLogger.logger.log(Level.INFO, "Code not found");
-                MyMessages.message("Series not found", "The series " + series.getFullTitle() + " is not found in SubtitleOnline",Info.WARNING_MESS, true);
+                MyMessages.message("Series not found", "The series " + series.getFullTitle() + " is not found in SubtitleOnline",Info.WARNING_MESS, true, true);
             } else if (sLinks.size() == 1) {
                 MySeriesLogger.logger.log(Level.FINE, "Code found: {0}", sLinks.get(0).getCode());
                 this.tSubCode = sLinks.get(0).getCode();
             } else {
                 MySeriesLogger.logger.log(Level.INFO, "{0} codes found",sLinks.size());
-                TCode tl = (TCode) MyMessages.ask("Choose the right series", "Multiple series found", null, sLinks.toArray(), null);
+                TCode tl = (TCode) MyMessages.ask("Choose the right series", "Multiple series found", null, sLinks.toArray(), null, true);
                 if (tl != null) {
                     MySeriesLogger.logger.log(Level.FINE, "Code selected :{0}",tl.getCode());
                     this.tSubCode = tl.getCode();

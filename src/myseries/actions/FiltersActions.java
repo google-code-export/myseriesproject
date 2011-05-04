@@ -60,7 +60,7 @@ public class FiltersActions {
     MySeriesLogger.logger.log(Level.INFO, "Saaving filter action");
     if (title.trim().equals("") || title.equals("null")) {
       MySeriesLogger.logger.log(Level.WARNING, "Empty title");
-      MyMessages.error("Empty title", "Please specify a save name");
+      MyMessages.error("Empty title", "Please specify a save name", true);
     } else {
       try {
         f = DBHelper.getFilterByTitle(title);
@@ -78,7 +78,7 @@ public class FiltersActions {
         m.combobox_filters.setModel(m.comboBoxModel_filters);
       } catch (SQLException ex) {
         MySeriesLogger.logger.log(Level.WARNING, "Error while saving filter", ex);
-        MyMessages.error("SQL Error", "There was an error when saving the filter");
+        MyMessages.error("SQL Error", "There was an error when saving the filter", true);
       }
     }
   }
@@ -88,7 +88,7 @@ public class FiltersActions {
     title = String.valueOf(m.combobox_filters.getSelectedItem());
     FilterRecord f;
     MySeriesLogger.logger.log(Level.INFO, "Delete filter {0}", title);
-    int answ = MyMessages.confirm("Delete Filter?", "Are you sure that you want to delete the filter?");
+    int answ = MyMessages.confirm("Delete Filter?", "Are you sure that you want to delete the filter?", true);
     if (answ == JOptionPane.YES_OPTION) {
       try {
         f = DBHelper.getFilterByTitle(title);
@@ -98,13 +98,13 @@ public class FiltersActions {
           MyMessages.message("Filter deleted", "Filter was deleted");
         } else {
           MySeriesLogger.logger.log(Level.WARNING, "Filter not found");
-          MyMessages.error("Error", "Filter not found");
+          MyMessages.error("Error", "Filter not found", true);
         }
         m.comboBoxModel_filters = new DefaultComboBoxModel(DBHelper.getFiltersTitlesList());
         m.combobox_filters.setModel(m.comboBoxModel_filters);
       } catch (SQLException ex) {
         MySeriesLogger.logger.log(Level.WARNING, "Error while deleting filter", ex);
-        MyMessages.error("SQL Error", "There was an error when deleting the filter");
+        MyMessages.error("SQL Error", "There was an error when deleting the filter", true);
       }
     } else {
       MySeriesLogger.logger.log(Level.INFO, "Delete filter aborted by user");
@@ -124,7 +124,7 @@ public class FiltersActions {
       }
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.WARNING, "Error while applying the  filter", ex);
-      MyMessages.error("SQL Error", "There was an error when applying the filter");
+      MyMessages.error("SQL Error", "There was an error when applying the filter", true);
     }
   }
 

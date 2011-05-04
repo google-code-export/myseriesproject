@@ -360,7 +360,7 @@ public class RenameEpisodes extends MyDraggable {
       return true;
     } else {
       MySeriesLogger.logger.log(Level.WARNING, "Validation failed\nError message: {0}", group.getErrorMessage());
-      MyMessages.error("Renaming Episodes Form", group.getErrorMessage());
+      MyMessages.error("Renaming Episodes Form", group.getErrorMessage(), true);
       return false;
     }
   }
@@ -478,7 +478,7 @@ public class RenameEpisodes extends MyDraggable {
     table_rename.getColumn("Rename").setMaxWidth(60);
     if (oldNames.size() != newNames.size()) {
       MySeriesLogger.logger.log(Level.WARNING, "An error occured, old names size != new names size");
-      MyMessages.error("Error", "An error occured, old names size != new names size");
+      MyMessages.error("Error", "An error occured, old names size != new names size", true);
       dispose();
     }
     for (int i = 0; i < oldNames.size(); i++) {
