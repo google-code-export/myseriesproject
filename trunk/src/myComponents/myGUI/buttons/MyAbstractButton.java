@@ -47,7 +47,5 @@ public abstract class MyAbstractButton extends JButton {
         setMinimumSize(size);
         setMaximumSize(size);
         setPreferredSize(size);
-        ButtonUI b = (ButtonUI) UIManager.getDefaults().getUI(this);
-        setUI(b);
     }
 }
