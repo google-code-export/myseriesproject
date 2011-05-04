@@ -56,11 +56,14 @@ public class Help extends JFrame {
 
     panel_help = new javax.swing.JPanel();
     splitPanel = new javax.swing.JSplitPane();
-    panel_right = new javax.swing.JPanel();
-    jScrollPane2 = new ScrollablePanel();
-    mainContent = new javax.swing.JEditorPane();
-    jScrollPane1 = new javax.swing.JScrollPane();
+    panel_left = new javax.swing.JPanel();
+    tree_panel = new javax.swing.JScrollPane();
     tree_help = new javax.swing.JTree();
+    tf_search = new javax.swing.JTextField();
+    bt_ok = new myComponents.myGUI.buttons.MyButtonOk();
+    panel_right = new javax.swing.JPanel();
+    mainScrollPane = new ScrollablePanel();
+    mainContent = new javax.swing.JEditorPane();
     jLabel1 = new javax.swing.JLabel();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -78,51 +81,12 @@ public class Help extends JFrame {
 
     splitPanel.setBackground(new java.awt.Color(255, 255, 255));
     splitPanel.setBorder(null);
-    splitPanel.setDividerLocation(150);
+    splitPanel.setDividerLocation(200);
     splitPanel.setMinimumSize(new java.awt.Dimension(600, 502));
 
-    panel_right.setBackground(new java.awt.Color(255, 255, 255));
-    panel_right.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-    panel_right.setOpaque(false);
-
-    jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-    jScrollPane2.setHorizontalScrollBar(null);
-
-    mainContent.setContentType("text/html");
-    mainContent.setEditable(false);
-    mainContent.setText("\n");
-    mainContent.setMaximumSize(new java.awt.Dimension(600, 600));
-    mainContent.setMinimumSize(new java.awt.Dimension(600, 300));
-    mainContent.setPreferredSize(new java.awt.Dimension(600, 400));
-    mainContent.addMouseListener(new java.awt.event.MouseAdapter() {
-      public void mouseClicked(java.awt.event.MouseEvent evt) {
-        mainContentMouseClicked(evt);
-      }
-    });
-    jScrollPane2.setViewportView(mainContent);
-
-    javax.swing.GroupLayout panel_rightLayout = new javax.swing.GroupLayout(panel_right);
-    panel_right.setLayout(panel_rightLayout);
-    panel_rightLayout.setHorizontalGroup(
-      panel_rightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(panel_rightLayout.createSequentialGroup()
-        .addContainerGap()
-        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 909, Short.MAX_VALUE)
-        .addContainerGap())
-    );
-    panel_rightLayout.setVerticalGroup(
-      panel_rightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(panel_rightLayout.createSequentialGroup()
-        .addContainerGap()
-        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE)
-        .addContainerGap())
-    );
-
-    splitPanel.setRightComponent(panel_right);
-
-    jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-    jScrollPane1.setMinimumSize(new java.awt.Dimension(180, 200));
-    jScrollPane1.setPreferredSize(new java.awt.Dimension(180, 200));
+    tree_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+    tree_panel.setMinimumSize(new java.awt.Dimension(180, 200));
+    tree_panel.setPreferredSize(new java.awt.Dimension(180, 200));
 
     tree_help.setFont(tree_help.getFont().deriveFont(tree_help.getFont().getStyle() | java.awt.Font.BOLD));
     javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("MySerieS Help");
@@ -201,6 +165,8 @@ public class Help extends JFrame {
     treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Help");
     treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("View Log File");
     treeNode2.add(treeNode3);
+    treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Show Errors Panel");
+    treeNode2.add(treeNode3);
     treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("About");
     treeNode2.add(treeNode3);
     treeNode1.add(treeNode2);
@@ -218,9 +184,87 @@ public class Help extends JFrame {
         tree_helpValueChanged(evt);
       }
     });
-    jScrollPane1.setViewportView(tree_help);
+    tree_panel.setViewportView(tree_help);
 
-    splitPanel.setLeftComponent(jScrollPane1);
+    bt_ok.setText("");
+    bt_ok.setToolTipText("Search");
+    bt_ok.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        bt_okActionPerformed(evt);
+      }
+    });
+
+    javax.swing.GroupLayout panel_leftLayout = new javax.swing.GroupLayout(panel_left);
+    panel_left.setLayout(panel_leftLayout);
+    panel_leftLayout.setHorizontalGroup(
+      panel_leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(panel_leftLayout.createSequentialGroup()
+        .addContainerGap()
+        .addComponent(tf_search, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addComponent(bt_ok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(11, Short.MAX_VALUE))
+      .addGroup(panel_leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(panel_leftLayout.createSequentialGroup()
+          .addContainerGap()
+          .addComponent(tree_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+    );
+    panel_leftLayout.setVerticalGroup(
+      panel_leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(panel_leftLayout.createSequentialGroup()
+        .addContainerGap()
+        .addGroup(panel_leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+          .addComponent(bt_ok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(tf_search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addContainerGap(456, Short.MAX_VALUE))
+      .addGroup(panel_leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(panel_leftLayout.createSequentialGroup()
+          .addGap(44, 44, 44)
+          .addComponent(tree_panel, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+    );
+
+    splitPanel.setLeftComponent(panel_left);
+
+    panel_right.setBackground(new java.awt.Color(255, 255, 255));
+    panel_right.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+    panel_right.setOpaque(false);
+
+    mainScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+    mainScrollPane.setHorizontalScrollBar(null);
+
+    mainContent.setContentType("text/html");
+    mainContent.setEditable(false);
+    mainContent.setText("\n");
+    mainContent.setMaximumSize(new java.awt.Dimension(600, 600));
+    mainContent.setMinimumSize(new java.awt.Dimension(600, 300));
+    mainContent.setPreferredSize(new java.awt.Dimension(600, 400));
+    mainContent.addMouseListener(new java.awt.event.MouseAdapter() {
+      public void mouseClicked(java.awt.event.MouseEvent evt) {
+        mainContentMouseClicked(evt);
+      }
+    });
+    mainScrollPane.setViewportView(mainContent);
+
+    javax.swing.GroupLayout panel_rightLayout = new javax.swing.GroupLayout(panel_right);
+    panel_right.setLayout(panel_rightLayout);
+    panel_rightLayout.setHorizontalGroup(
+      panel_rightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(panel_rightLayout.createSequentialGroup()
+        .addContainerGap()
+        .addComponent(mainScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 859, Short.MAX_VALUE)
+        .addContainerGap())
+    );
+    panel_rightLayout.setVerticalGroup(
+      panel_rightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(panel_rightLayout.createSequentialGroup()
+        .addContainerGap()
+        .addComponent(mainScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE)
+        .addContainerGap())
+    );
+
+    splitPanel.setRightComponent(panel_right);
 
     jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getStyle() | java.awt.Font.BOLD, jLabel1.getFont().getSize()+2));
     jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -289,6 +333,12 @@ public class Help extends JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
       MySeries.isHelp = false;
     }//GEN-LAST:event_formWindowClosing
+
+    private void bt_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_okActionPerformed
+      String s = tf_search.getText();
+      SearchHelp search = new SearchHelp(this,s);
+      search.search();
+    }//GEN-LAST:event_bt_okActionPerformed
 
   private void followHyperLink() throws BadLocationException, IOException {
     MySeriesLogger.logger.log(Level.INFO, "Following link");
@@ -365,13 +415,16 @@ public class Help extends JFrame {
     }
   }
   // Variables declaration - do not modify//GEN-BEGIN:variables
+  private myComponents.myGUI.buttons.MyButtonOk bt_ok;
   private javax.swing.JLabel jLabel1;
-  private javax.swing.JScrollPane jScrollPane1;
-  private help.ScrollablePanel jScrollPane2;
   private javax.swing.JEditorPane mainContent;
+  private help.ScrollablePanel mainScrollPane;
   private javax.swing.JPanel panel_help;
+  private javax.swing.JPanel panel_left;
   private javax.swing.JPanel panel_right;
   private javax.swing.JSplitPane splitPanel;
+  private javax.swing.JTextField tf_search;
   private javax.swing.JTree tree_help;
+  private javax.swing.JScrollPane tree_panel;
   // End of variables declaration//GEN-END:variables
 }

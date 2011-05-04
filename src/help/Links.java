@@ -25,6 +25,7 @@ public class Links {
     links.put("Application", "Start Application");
     links.put("Main Window","Main Window");
     links.put("The Series panel:","Series Panel");
+    links.put("The Errors panel:","Errors Panel");
     links.put("episodes panel","Episodes Panel");
     links.put("The Next Episodes panel:","Next Episodes Panel");
     links.put("The Episodes panel:","Episodes Panel");
@@ -41,6 +42,7 @@ public class Links {
     links.put("Internet","internet_update");
     links.put("Episodes pop up menu","episodes_popup");
     links.put("The Feeds panel:","feeds_panel");
+    links.put("Contact/Report Bug","contact_report");
     MySeriesLogger.logger.log(Level.FINE, "Links map created");
   }
 
