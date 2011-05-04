@@ -45,7 +45,7 @@ public class MyMessages {
    * @param message The message text
    */
   public static void message(String title, String message) {
-    message(title, message, INFO_MESS, true);
+    message(title, message, INFO_MESS, true, true);
   }
 
   /**
@@ -53,7 +53,7 @@ public class MyMessages {
    * @param title The message title
    * @param message The message text
    */
-  public static void message(String title, String message, int type, boolean showWindow) {
+  public static void message(String title, String message, int type, boolean showWindow, boolean setColors) {
     Level level = Level.INFO;
     switch (type) {
       case INFO_MESS:
@@ -70,7 +70,9 @@ public class MyMessages {
     if (showWindow) {
       checkpane();
       Info i = new Info(title, message, type);
-      setColors(i);
+      if(setColors){
+        setColors(i);
+      }
       i.showDialog();
       hideMessage();
     }
@@ -84,8 +86,8 @@ public class MyMessages {
    * @param title The title
    * @param message The message
    */
-  public static void error(String title, String message) {
-    message(title, message, ERROR_MESS, true);
+  public static void error(String title, String message, boolean setColors) {
+    message(title, message, ERROR_MESS, true, setColors);
   }
 
   /**
@@ -94,7 +96,7 @@ public class MyMessages {
   public static void internetError(boolean showMessage) {
     message("No Internet Connection!!!",
         "Could not connect to internet.\nIf you are behind a proxy check your proxy settings in options",
-        WARNING_MESS, showMessage);
+        WARNING_MESS, showMessage, true);
 
   }
 
@@ -104,12 +106,13 @@ public class MyMessages {
    * @param message The message
    * @return The users decision
    */
-  public static int confirm(String title, String message) {
+  public static int confirm(String title, String message, boolean setColors) {
     checkpane();
     MySeriesLogger.logger.log(Level.INFO, "Displaying confirm dialog : {0}", message);
     Confirm c = new Confirm(title, message);
-    setColors(
-        c);
+     if(setColors){
+        setColors(c);
+      }
     c.showDialog();
     hideMessage();
 
@@ -122,21 +125,20 @@ public class MyMessages {
   public static String ask(String title, String message) {
     checkpane();
     MySeriesLogger.logger.log(Level.INFO, "Show ask dialog : {0}", message);
-    String answer = (String) ask(title, message, null, null, null);
+    String answer = (String) ask(title, message, null, null, null, true);
     hideMessage();
-
-
     return answer;
 
 
   }
 
-  public static Object ask(String title, String message, String errorMessage, Object[] collection, Object defaultSelection) {
+  public static Object ask(String title, String message, String errorMessage, Object[] collection, Object defaultSelection, boolean setColors) {
     checkpane();
     MySeriesLogger.logger.log(Level.INFO, "Show ask dialog : {0}", message);
     Ask a = new Ask(title, message, null, collection, defaultSelection);
-    setColors(
-        a);
+     if(setColors){
+        setColors(a);
+      }
     a.showDialog();
     Object name = a.selection;
     hideMessage();
@@ -153,8 +155,6 @@ public class MyMessages {
       drag.setInnerColor(Color.WHITE);
       drag.setTitleColor(Skin.getTitleColor());
       drag.setTextColor(Skin.getForeGroundColor(Skin.getInnerColor()));
-
-
     }
   }
 

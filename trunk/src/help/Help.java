@@ -10,12 +10,17 @@
  */
 package help;
 
+import help.SearchHelp.Result;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.logging.Level;
 import javax.swing.JFrame;
 import javax.swing.text.BadLocationException;
 import myseries.MySeries;
 import myComponents.MyUsefulFunctions;
+import myComponents.myGUI.buttons.MyAbstractButton;
+import org.jdom.Document;
 import tools.MySeriesLogger;
 
 /**
@@ -60,7 +65,7 @@ public class Help extends JFrame {
     tree_panel = new javax.swing.JScrollPane();
     tree_help = new javax.swing.JTree();
     tf_search = new javax.swing.JTextField();
-    bt_ok = new myComponents.myGUI.buttons.MyButtonOk();
+    bt_search = new myComponents.myGUI.buttons.MyDefaultButton(MyAbstractButton.SEARCH,"Search Help");
     panel_right = new javax.swing.JPanel();
     mainScrollPane = new ScrollablePanel();
     mainContent = new javax.swing.JEditorPane();
@@ -79,7 +84,6 @@ public class Help extends JFrame {
     panel_help.setOpaque(false);
     panel_help.setPreferredSize(new java.awt.Dimension(800, 546));
 
-    splitPanel.setBackground(new java.awt.Color(255, 255, 255));
     splitPanel.setBorder(null);
     splitPanel.setDividerLocation(200);
     splitPanel.setMinimumSize(new java.awt.Dimension(600, 502));
@@ -186,11 +190,11 @@ public class Help extends JFrame {
     });
     tree_panel.setViewportView(tree_help);
 
-    bt_ok.setText("");
-    bt_ok.setToolTipText("Search");
-    bt_ok.addActionListener(new java.awt.event.ActionListener() {
+    bt_search.setText("");
+    bt_search.setToolTipText("Search");
+    bt_search.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
-        bt_okActionPerformed(evt);
+        bt_searchActionPerformed(evt);
       }
     });
 
@@ -202,7 +206,7 @@ public class Help extends JFrame {
         .addContainerGap()
         .addComponent(tf_search, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addComponent(bt_ok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(bt_search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addContainerGap(11, Short.MAX_VALUE))
       .addGroup(panel_leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(panel_leftLayout.createSequentialGroup()
@@ -215,7 +219,7 @@ public class Help extends JFrame {
       .addGroup(panel_leftLayout.createSequentialGroup()
         .addContainerGap()
         .addGroup(panel_leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-          .addComponent(bt_ok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(bt_search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(tf_search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addContainerGap(456, Short.MAX_VALUE))
       .addGroup(panel_leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,7 +231,6 @@ public class Help extends JFrame {
 
     splitPanel.setLeftComponent(panel_left);
 
-    panel_right.setBackground(new java.awt.Color(255, 255, 255));
     panel_right.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
     panel_right.setOpaque(false);
 
@@ -334,11 +337,12 @@ public class Help extends JFrame {
       MySeries.isHelp = false;
     }//GEN-LAST:event_formWindowClosing
 
-    private void bt_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_okActionPerformed
+    private void bt_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_searchActionPerformed
       String s = tf_search.getText();
-      SearchHelp search = new SearchHelp(this,s);
+      SearchHelp search = new SearchHelp(this, s);
       search.search();
-    }//GEN-LAST:event_bt_okActionPerformed
+      setMainContent(search.results);
+    }//GEN-LAST:event_bt_searchActionPerformed
 
   private void followHyperLink() throws BadLocationException, IOException {
     MySeriesLogger.logger.log(Level.INFO, "Following link");
@@ -356,7 +360,7 @@ public class Help extends JFrame {
   }
 
   private void followHyperLink(String link) {
-    MySeriesLogger.logger.log(Level.INFO, "Following link {0)",link);
+    MySeriesLogger.logger.log(Level.INFO, "Following link {0)", link);
     if (Links.links.get(link) != null) {
       setMainContent(Links.links.get(link));
     } else {
@@ -365,22 +369,22 @@ public class Help extends JFrame {
   }
 
   private String getLink(int pos) throws BadLocationException {
-    MySeriesLogger.logger.log(Level.INFO, "Getting link from position {0}",pos);
+    MySeriesLogger.logger.log(Level.INFO, "Getting link from position {0}", pos);
     String link = "";
     for (int i = pos; i > 2 && link.equals(""); i--) {
       if (mainContent.getText(i, 1).equals("[")) {
         link = mainContent.getText(i + 1, pos - i - 1);
-        
+
       }
     }
     for (int i = pos; i < mainContent.getText().length() - 2; i++) {
       if (mainContent.getText(i, 1).equals("]")) {
         link += mainContent.getText(pos, i - pos);
-        MySeriesLogger.logger.log(Level.FINE, "Found link: {0}",link);
+        MySeriesLogger.logger.log(Level.FINE, "Found link: {0}", link);
         return link;
       }
     }
-    MySeriesLogger.logger.log(Level.FINE, "Found link: {0}",link);
+    MySeriesLogger.logger.log(Level.FINE, "Found link: {0}", link);
     return link;
   }
 
@@ -400,9 +404,9 @@ public class Help extends JFrame {
 
   private void setMainContent(String section) {
     try {
-      MySeriesLogger.logger.log(Level.INFO, "Setting the main content to section {0}",section);
+      MySeriesLogger.logger.log(Level.INFO, "Setting the main content to section {0}", section);
       java.net.URL helpURL = Help.class.getResource("/help/html/" + section.toLowerCase().replaceAll(" ", "_") + ".html");
-      MySeriesLogger.logger.log(Level.INFO, "Setting the content to help url : {0}",helpURL);
+      MySeriesLogger.logger.log(Level.INFO, "Setting the content to help url : {0}", helpURL);
       mainContent.setPage(helpURL);
       MySeriesLogger.logger.log(Level.FINE, "Content succesfuly set");
       MySeriesLogger.logger.log(Level.INFO, "Setting caret position to the start of the document");
@@ -415,7 +419,7 @@ public class Help extends JFrame {
     }
   }
   // Variables declaration - do not modify//GEN-BEGIN:variables
-  private myComponents.myGUI.buttons.MyButtonOk bt_ok;
+  private myComponents.myGUI.buttons.MyDefaultButton bt_search;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JEditorPane mainContent;
   private help.ScrollablePanel mainScrollPane;
@@ -427,4 +431,16 @@ public class Help extends JFrame {
   private javax.swing.JTree tree_help;
   private javax.swing.JScrollPane tree_panel;
   // End of variables declaration//GEN-END:variables
+
+  private void setMainContent(ArrayList<Result> results) {
+    String text = "<link rel=\"stylesheet\" href=\"styles.css\" type=\"text/css\" /><table class=\"mainTable\">";
+    text +="<tr><th >MySeries Help</th></tr><tr><th><img src=\"../../images/logo.png\"><br></th></tr>";
+    text += "<tr><th>Search Results</th></tr>";
+    for (Iterator<Result> it = results.iterator(); it.hasNext();) {
+      Result result = it.next();
+      text += "<tr><td>"+result.link+" ("+result.text+")</td></tr>";
+    }
+    text += "</html>";   
+    mainContent.setText(text);
+  }
 }

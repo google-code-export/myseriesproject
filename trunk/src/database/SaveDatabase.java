@@ -34,10 +34,10 @@ public class SaveDatabase {
             showSavePane();
         } catch (FileNotFoundException ex) {
             MySeriesLogger.logger.log(Level.SEVERE, "Could not save database", ex);
-            MyMessages.error("Database not saved!!!", "The database could not be saved (" + ex.getMessage() + ")");
+            MyMessages.error("Database not saved!!!", "The database could not be saved (" + ex.getMessage() + ")", true);
         } catch (IOException ex) {
             MySeriesLogger.logger.log(Level.SEVERE, "Could not save database", ex);
-            MyMessages.error("Database not saved!!!", "The database could not be saved (" + ex.getMessage() + ")");
+            MyMessages.error("Database not saved!!!", "The database could not be saved (" + ex.getMessage() + ")", true);
         } finally {
             myseries.MySeries.glassPane.deactivate();
         }
@@ -71,7 +71,7 @@ public class SaveDatabase {
         if (db.isFile()) {
           MySeriesLogger.logger.log(Level.INFO, "Overwrite database?");
             return MyMessages.confirm("File Exists",
-                    "File already exists.\nOverwrite it?") == JOptionPane.NO_OPTION ? true : false;
+                    "File already exists.\nOverwrite it?", true) == JOptionPane.NO_OPTION ? true : false;
         } else {
             return false;
         }
@@ -90,10 +90,10 @@ public class SaveDatabase {
             }
         } catch (FileNotFoundException ex) {
             MySeriesLogger.logger.log(Level.SEVERE, "The database could not be saved", ex);
-            MyMessages.error("Database not saved!!!", "The database could not be saved (" + ex.getMessage() + ")");
+            MyMessages.error("Database not saved!!!", "The database could not be saved (" + ex.getMessage() + ")", true);
         } catch (IOException ex) {
             MySeriesLogger.logger.log(Level.SEVERE, "The database could not be saved", ex);
-            MyMessages.error("Database not saved!!!", "The database could not be saved (" + ex.getMessage() + ")");
+            MyMessages.error("Database not saved!!!", "The database could not be saved (" + ex.getMessage() + ")", true);
         }
 
     }
@@ -102,12 +102,12 @@ public class SaveDatabase {
         name = MyUsefulFunctions.getInput("Save Database", "Save Database As ");
         MySeriesLogger.logger.log(Level.INFO, "Saving database {0}",name);
         if (name == null) {
-            MyMessages.error("Save Database", "Save Database aborted");
+            MyMessages.error("Save Database", "Save Database aborted", true);
             MySeriesLogger.logger.log(Level.INFO, "Save Database aborted");
         } else {
             if (!overwriteDatabase()) {
                 if ((name).equals(Options.toString(Options.DB_NAME).replace(Database.EXT, ""))) {
-                    MyMessages.error("Error", "Cannot save the database on itself!!!");
+                    MyMessages.error("Error", "Cannot save the database on itself!!!", true);
                     MySeriesLogger.logger.log(Level.WARNING, "Cannot save the database on itself!!!");
                 } else {
                     commitSave();

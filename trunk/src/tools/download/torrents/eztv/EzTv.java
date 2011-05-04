@@ -64,7 +64,7 @@ public class EzTv extends AbstractTorrentDownload implements Runnable, TorrentCo
       while ((line = in.readLine()) != null) {
         if (line.indexOf("Follow the Swarm") > -1) {
             MySeriesLogger.logger.log(Level.INFO, "Torrent is not available any more");
-          MyMessages.error("No Torrents", "Torrent is not available anymore");
+          MyMessages.error("No Torrents", "Torrent is not available anymore", true);
           return false;
         }
       }
@@ -126,7 +126,7 @@ public class EzTv extends AbstractTorrentDownload implements Runnable, TorrentCo
   @Override
   protected AbstractTorrent getSelectedTorrent(ArrayList<AbstractTorrent> torrents) {
       MySeriesLogger.logger.log(Level.INFO, "{0} torrents found.Select the one to download",torrents.size());
-      return (AbstractTorrent) MyMessages.ask( "Choose torrent", "Choose the torrent to download", null , torrents.toArray(),null);
+      return (AbstractTorrent) MyMessages.ask( "Choose torrent", "Choose the torrent to download", null, torrents.toArray(),null, true);
 
     
   }

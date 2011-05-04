@@ -82,7 +82,7 @@ public class EpisodesActions {
       new ImportEpisodes(m);
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.WARNING, "Error while importing the episodes", ex);
-      MyMessages.error("SQL Error", "There was an error when importing the episodes");
+      MyMessages.error("SQL Error", "There was an error when importing the episodes", true);
     }
   }
 
@@ -101,7 +101,7 @@ public class EpisodesActions {
     String title = Episodes.getCurrentEpisode().getTitle();
     int episode_ID = Episodes.getCurrentEpisode().getEpisode_ID();
     MySeriesLogger.logger.log(Level.INFO, "Deleting episode {0}",title);
-    int answ = MyMessages.confirm("Delete Episode?", "Really delete the episode " + title + "?");
+    int answ = MyMessages.confirm("Delete Episode?", "Really delete the episode " + title + "?", true);
     if (answ == JOptionPane.YES_OPTION) {
       try {
         String sql = "DELETE FROM episodes WHERE episode_ID = " + episode_ID;
@@ -118,7 +118,7 @@ public class EpisodesActions {
 
   public static void deleteEpisodes(JTable episodesTable, ArrayList<EpisodesRecord> episodes) {
     MySeriesLogger.logger.log(Level.INFO, "Deleting {0} episodes ",episodes.size());
-    int answ = MyMessages.confirm("Delete Episode?", "Really delete the selected episodes ?");
+    int answ = MyMessages.confirm("Delete Episode?", "Really delete the selected episodes ?", true);
     if (answ == JOptionPane.YES_OPTION) {
       for (Iterator<EpisodesRecord> it = episodes.iterator(); it.hasNext();) {
         EpisodesRecord e = it.next();
@@ -197,7 +197,7 @@ public class EpisodesActions {
       if (!dir.isDirectory()) {
         myseries.MySeries.glassPane.activate(null);
         MySeriesLogger.logger.log(Level.WARNING, "No local directory for series {0}",series.getFullTitle());
-        MyMessages.error("Not a directory", "The local directory is not found");
+        MyMessages.error("Not a directory", "The local directory is not found", true);
         myseries.MySeries.glassPane.deactivate();
         return;
       }
@@ -274,7 +274,7 @@ public class EpisodesActions {
         try {
           series.save();
         } catch (SQLException ex) {
-          MyMessages.error("SQL Error", "Could not update series link");
+          MyMessages.error("SQL Error", "Could not update series link", true);
           MySeriesLogger.logger.log(Level.WARNING, "Could not update series link", ex);
         }
       }

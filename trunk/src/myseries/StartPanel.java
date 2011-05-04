@@ -20,18 +20,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
@@ -349,12 +342,12 @@ public class StartPanel extends MyDraggable {
                   MySeries m = new MySeries();
                 } else {
                   dispose();
-                  MyMessages.error("Invalid Database", "Could not connect to the selected database.\nPlease select another one or create a new one.");
+                  MyMessages.error("Invalid Database", "Could not connect to the selected database.\nPlease select another one or create a new one.", true);
                   StartPanel s = new StartPanel();
                 }
               } else {
                 dispose();
-                MyMessages.error("Invalid Database", "The selected database seems to be invalid.\nPlease select another one or create a new one.");
+                MyMessages.error("Invalid Database", "The selected database seems to be invalid.\nPlease select another one or create a new one.", true);
                 StartPanel s = new StartPanel();
               }
             }
@@ -368,19 +361,19 @@ public class StartPanel extends MyDraggable {
           MySeriesLogger.logger.log(Level.SEVERE, "Could not read/write to database", ex);
         } catch (InstantiationException ex) {
           MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-          MyMessages.error("My Series", "Could not create Application");
+          MyMessages.error("My Series", "Could not create Application", true);
         } catch (IllegalAccessException ex) {
           MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-          MyMessages.error("My Series", "Illegal access");
+          MyMessages.error("My Series", "Illegal access", true);
         } catch (UnsupportedLookAndFeelException ex) {
           MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-          MyMessages.error("My Series", "Look and feel is not supported");
+          MyMessages.error("My Series", "Look and feel is not supported", true);
         } catch (Exception ex) {
           System.out.println(ex);
         }
       } else {
         MySeriesLogger.logger.log(Level.WARNING, "The database name should not be empty");
-        MyMessages.error("Empty name", "The database name should not be empty");
+        MyMessages.error("Empty name", "The database name should not be empty", true);
       }
     }//GEN-LAST:event_bt_okActionPerformed
 
@@ -494,32 +487,32 @@ public class StartPanel extends MyDraggable {
               MySeriesLogger.logger.log(Level.INFO, "MySerieS loading...");
               MySeries m = new MySeries();
             } else {
-              MyMessages.error("Invalid Database", "Could not connect to the selected database.\nPlease select another one or create a new one.");
+              MyMessages.error("Invalid Database", "Could not connect to the selected database.\nPlease select another one or create a new one.", true);
               StartPanel s = new StartPanel();
             }
           } else {
-            MyMessages.error("Invalid Database", "The selected database seems to be invalid.\nPlease select another one or create a new one.");
+            MyMessages.error("Invalid Database", "The selected database seems to be invalid.\nPlease select another one or create a new one.", true);
             StartPanel s = new StartPanel();
           }
         }
       }
     } catch (SQLException ex) {
-      MyMessages.error("MySerieS", "Sql error occured while connecting to database");
+      MyMessages.error("MySerieS", "Sql error occured while connecting to database", true);
       MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     } catch (IOException ex) {
-      MyMessages.error("MySeries", "Could not read options file");
+      MyMessages.error("MySeries", "Could not read options file", true);
       MySeriesLogger.logger.log(Level.SEVERE, "Could not read options file", ex);
     } catch (ClassNotFoundException ex) {
-      MyMessages.error("MySeries", "MySerieS class not found");
+      MyMessages.error("MySeries", "MySerieS class not found", true);
       MySeriesLogger.logger.log(Level.SEVERE, "MySerieS class not found", ex);
     } catch (IllegalAccessException ex) {
-      MyMessages.error("MySeries", "MySerieS illegal access exception");
+      MyMessages.error("MySeries", "MySerieS illegal access exception", true);
       MySeriesLogger.logger.log(Level.SEVERE, "MySerieS illegal access exception", ex);
     } catch (InstantiationException ex) {
-      MyMessages.error("MySeries", "Could not instantiate MySerieS");
+      MyMessages.error("MySeries", "Could not instantiate MySerieS", true);
       MySeriesLogger.logger.log(Level.SEVERE, "Could not instantiate MySerieS", ex);
     } catch (UnsupportedLookAndFeelException ex) {
-      MyMessages.error("MySeries", "Unsupported Look and feel");
+      MyMessages.error("MySeries", "Unsupported Look and feel", true);
       MySeriesLogger.logger.log(Level.SEVERE, "Unsupported Look and feel", ex);
     }
   }

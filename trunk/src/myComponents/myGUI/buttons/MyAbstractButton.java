@@ -35,6 +35,7 @@ public abstract class MyAbstractButton extends Button {
     public static final String GOOGLE_CODE = "googlecode";
     public static final String EMAIL = "mail";
     public static final String CLEAR = "clear";
+    public static final String SEARCH = "search";
 
     private class Adapter extends MouseAdapter {
 

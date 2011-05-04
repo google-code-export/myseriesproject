@@ -35,7 +35,7 @@ public class GetSubtitleOnlineCode implements SubtitleConstants {
             getCode();
         } catch (IOException ex) {
             MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-            MyMessages.error("I/O Error", "could not read from input stream");
+            MyMessages.error("I/O Error", "could not read from input stream", true);
         }
     }
 
@@ -55,7 +55,7 @@ public class GetSubtitleOnlineCode implements SubtitleConstants {
                 this.subtitleOnlineCode = sLinks.get(0).getCode();
             } else {
                 MySeriesLogger.logger.log(Level.FINE, "{0} series found.Ask for the right one", sLinks.size());
-                SCode tl = (SCode) MyMessages.ask("Choose the right series", "Multiple series found", null, sLinks.toArray(), null);
+                SCode tl = (SCode) MyMessages.ask("Choose the right series", "Multiple series found", null, sLinks.toArray(), null, true);
                 if (tl != null) {
                     MySeriesLogger.logger.log(Level.INFO, "Subtitle online code chosen is {0}",tl.getCode());
                     this.subtitleOnlineCode = tl.getCode();
