@@ -406,14 +406,7 @@
                     </Component>
                     <Component class="myComponents.myGUI.buttons.MyButtonDir" name="bt_videoViewer">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value=""/>
                         <Property name="toolTipText" type="java.lang.String" value="Browse for video viewer"/>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[32, 32]"/>
-                        </Property>
-                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[32, 32]"/>
-                        </Property>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_videoViewerActionPerformed"/>
@@ -442,14 +435,7 @@
                     </Component>
                     <Component class="myComponents.myGUI.buttons.MyButtonDir" name="bt_mainDirectory">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value=""/>
                         <Property name="toolTipText" type="java.lang.String" value="Browse for main directory"/>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[32, 32]"/>
-                        </Property>
-                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[32, 32]"/>
-                        </Property>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_mainDirectoryActionPerformed"/>
@@ -467,7 +453,6 @@
                     </Component>
                     <Component class="myComponents.myGUI.buttons.MyButtonHelp" name="bt_dfhelp">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value=""/>
                         <Property name="toolTipText" type="java.lang.String" value="Date format help"/>
                       </Properties>
                       <Events>
@@ -669,7 +654,7 @@
                         </Property>
                         <Property name="opaque" type="boolean" value="false"/>
                         <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="Options.toFloat(Options.FONT_SIZE)" type="code"/>
+                          <Connection code="(int)Options.toFloat(Options.FONT_SIZE)" type="code"/>
                         </Property>
                       </Properties>
                       <Events>
@@ -1218,25 +1203,16 @@
           </Properties>
         </Component>
         <Component class="myComponents.myGUI.buttons.MyButtonCancel" name="bt_cancel">
-          <Properties>
-            <Property name="text" type="java.lang.String" value=""/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_cancelActionPerformed"/>
           </Events>
         </Component>
         <Component class="myComponents.myGUI.buttons.MyButtonHelp" name="bt_help">
-          <Properties>
-            <Property name="text" type="java.lang.String" value=""/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_helpActionPerformed"/>
           </Events>
         </Component>
         <Component class="myComponents.myGUI.buttons.MyButtonOk" name="bt_ok">
-          <Properties>
-            <Property name="text" type="java.lang.String" value=""/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_okActionPerformed"/>
           </Events>

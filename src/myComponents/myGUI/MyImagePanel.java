@@ -55,7 +55,7 @@ public class MyImagePanel extends JPanel {
     this.image = new ImageIcon(getClass().getResource(MyImagePanel.LOGO)).getImage();
     this.defaultImage = true;
     this.addListener = addListener;
-    this.setBorder(BorderFactory.createLineBorder(Color.black));
+    //this.setBorder(BorderFactory.createLineBorder(Color.black));
     if (addListener) {
       MySeriesLogger.logger.log(Level.INFO, "Adding mouse listener for downloading screenshot");
       if (getMouseListeners().length == 0) {
@@ -69,7 +69,7 @@ public class MyImagePanel extends JPanel {
   @Override
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
-    g.drawImage(getImage(), 0, 0, getWidth(), getHeight(), this);
+    g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
   }
 
   /**
@@ -88,6 +88,7 @@ public class MyImagePanel extends JPanel {
   public void changeSize(int width, int height) {
     MySeriesLogger.logger.log(Level.INFO, "Resizing screenshot to {1} x {2}", new Object[]{width, height});
     this.defaultImage = false;
+    image = image.getScaledInstance(width,height, Image.SCALE_SMOOTH);
     this.setSize(width, height);
     revalidate();
     repaint();
@@ -116,7 +117,6 @@ public class MyImagePanel extends JPanel {
         setBounds(xPos, yPos, width, height);
         MySeriesLogger.logger.log(Level.INFO, "Relocating screenshot to {0},{1} with size {2}x{3}", 
             new Object[]{xPos, yPos,width,height});
-        
         changeSize(width, height);
       } catch (NullPointerException ex) {
         MySeriesLogger.logger.log(Level.WARNING, "Null Screenshot");
