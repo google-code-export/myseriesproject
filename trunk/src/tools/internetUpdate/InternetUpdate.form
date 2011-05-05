@@ -39,7 +39,6 @@
             <LineBorder/>
           </Border>
         </Property>
-        <Property name="opaque" type="boolean" value="false"/>
       </Properties>
 
       <Layout>
@@ -84,6 +83,7 @@
                 <LineBorder/>
               </Border>
             </Property>
+            <Property name="opaque" type="boolean" value="false"/>
           </Properties>
 
           <Layout>
@@ -169,9 +169,6 @@
           </Properties>
         </Component>
         <Component class="myComponents.myGUI.buttons.MyButtonCancel" name="bt_cancel">
-          <Properties>
-            <Property name="text" type="java.lang.String" value=""/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_cancelActionPerformed"/>
           </Events>

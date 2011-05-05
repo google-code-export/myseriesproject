@@ -25,6 +25,7 @@ import myseries.actions.ApplicationActions;
 import myComponents.MyUsefulFunctions;
 import myComponents.myEvents.MyEvent;
 import myComponents.myEvents.MyEventHandler;
+import myseries.MySeriesConstants;
 import myseries.series.Series;
 import tools.MySeriesLogger;
 import tools.download.screenshot.DownloadScreenshot;
@@ -36,7 +37,6 @@ import tools.internetUpdate.tvrage.TrGetId;
  */
 public class MyImagePanel extends JPanel {
 
-  public static final String LOGO = "/images/logo.png";
   private static final long serialVersionUID = 356475743574387L;
   private Image image;
   DownloadScreenshotListener list;
@@ -47,19 +47,27 @@ public class MyImagePanel extends JPanel {
   private boolean defaultImage;
   private final boolean addListener;
 
+  public MyImagePanel() {
+    this(true);
+  }
+
   /**
    * Creates the default screenshot of the application's logo
    */
   public MyImagePanel(boolean addListener) {
-    MySeriesLogger.logger.log(Level.INFO, "Creating image panel");
-    this.image = new ImageIcon(getClass().getResource(MyImagePanel.LOGO)).getImage();
+    if (MySeriesLogger.logger != null) {
+      MySeriesLogger.logger.log(Level.INFO, "Creating image panel");
+    }
+    this.image = new ImageIcon(getClass().getResource(MySeriesConstants.LOGO)).getImage();
     this.defaultImage = true;
     this.addListener = addListener;
     //this.setBorder(BorderFactory.createLineBorder(Color.black));
     if (addListener) {
-      MySeriesLogger.logger.log(Level.INFO, "Adding mouse listener for downloading screenshot");
+      if (MySeriesLogger.logger != null) {
+        MySeriesLogger.logger.log(Level.INFO, "Adding mouse listener for downloading screenshot");
+      }
       if (getMouseListeners().length == 0) {
-        list = new DownloadScreenshotListener(this);
+        //list = new DownloadScreenshotListener(this);
         addMouseListener(list);
       }
     }
@@ -88,7 +96,7 @@ public class MyImagePanel extends JPanel {
   public void changeSize(int width, int height) {
     MySeriesLogger.logger.log(Level.INFO, "Resizing screenshot to {1} x {2}", new Object[]{width, height});
     this.defaultImage = false;
-    image = image.getScaledInstance(width,height, Image.SCALE_SMOOTH);
+    image = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
     this.setSize(width, height);
     revalidate();
     repaint();
@@ -115,8 +123,8 @@ public class MyImagePanel extends JPanel {
         }
         int xPos = (maxWidth - width) / 2;
         setBounds(xPos, yPos, width, height);
-        MySeriesLogger.logger.log(Level.INFO, "Relocating screenshot to {0},{1} with size {2}x{3}", 
-            new Object[]{xPos, yPos,width,height});
+        MySeriesLogger.logger.log(Level.INFO, "Relocating screenshot to {0},{1} with size {2}x{3}",
+            new Object[]{xPos, yPos, width, height});
         changeSize(width, height);
       } catch (NullPointerException ex) {
         MySeriesLogger.logger.log(Level.WARNING, "Null Screenshot");
@@ -130,7 +138,7 @@ public class MyImagePanel extends JPanel {
     MySeriesLogger.logger.log(Level.INFO, "Setting the screnshot to {0}", (defaultImage ? " the default image" : " series screenshot"));
     this.defaultImage = defaultImage;
     if (image == null) {
-      this.image = new ImageIcon(getClass().getResource(LOGO)).getImage();
+      this.image = new ImageIcon(getClass().getResource(MySeriesConstants.LOGO)).getImage();
     } else {
       this.image = image;
     }

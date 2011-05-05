@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import myComponents.myGUI.MyImagePanel;
 import myseries.Menus;
 import myseries.MySeries;
+import myseries.MySeriesConstants;
 import myseries.episodes.Episodes;
 import myseries.series.Series;
 import tools.options.Options;
@@ -68,7 +69,7 @@ public class MyEventHandler implements MyEventListener {
                     m.imagePanel.setImage(image, false, m);
                 } else {
                     MySeriesLogger.logger.log(Level.FINE, "No screenshot. Setting screenshot to default image");
-                    Image image = new ImageIcon(getClass().getResource(MyImagePanel.LOGO)).getImage();
+                    Image image = new ImageIcon(getClass().getResource(MySeriesConstants.LOGO)).getImage();
                     m.imagePanel.setImage(image, true, m);
                 }
 
