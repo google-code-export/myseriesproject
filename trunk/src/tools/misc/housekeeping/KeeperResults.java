@@ -68,9 +68,9 @@ public class KeeperResults extends MyDraggable {
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
     outer.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-    outer.setOpaque(false);
 
     inner.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+    inner.setOpaque(false);
 
     lb_torrents.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     lb_torrents.setText("Torrents deleted :");
@@ -131,7 +131,6 @@ public class KeeperResults extends MyDraggable {
     jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     jLabel1.setText("Housekeeping Results");
 
-    myButtonCancel1.setText("");
     myButtonCancel1.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         myButtonCancel1ActionPerformed(evt);

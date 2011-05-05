@@ -335,10 +335,7 @@ public class OptionsPanel extends MyDraggable {
     org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, cb_autoUpdate, org.jdesktop.beansbinding.ELProperty.create("${selected}"), cb_autoUnzip, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
     bindingGroup.addBinding(binding);
 
-    bt_videoViewer.setText("");
     bt_videoViewer.setToolTipText("Browse for video viewer");
-    bt_videoViewer.setMaximumSize(new java.awt.Dimension(32, 32));
-    bt_videoViewer.setMinimumSize(new java.awt.Dimension(32, 32));
     bt_videoViewer.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         bt_videoViewerActionPerformed(evt);
@@ -353,10 +350,7 @@ public class OptionsPanel extends MyDraggable {
     tf_mainDir.setToolTipText("<html>A directory where subtitle (zipped or not) files should be saved. Then the application will move them to the series directory if possible");
     tf_mainDir.setName(Options.MAIN_DIRECTORY);
 
-    bt_mainDirectory.setText("");
     bt_mainDirectory.setToolTipText("Browse for main directory");
-    bt_mainDirectory.setMaximumSize(new java.awt.Dimension(32, 32));
-    bt_mainDirectory.setMinimumSize(new java.awt.Dimension(32, 32));
     bt_mainDirectory.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         bt_mainDirectoryActionPerformed(evt);
@@ -366,7 +360,6 @@ public class OptionsPanel extends MyDraggable {
     jLabel22.setFont(jLabel22.getFont().deriveFont((jLabel22.getFont().getStyle() | java.awt.Font.ITALIC), jLabel22.getFont().getSize()-1));
     jLabel22.setText("Setting logging level to ALL will slow down the application");
 
-    bt_dfhelp.setText("");
     bt_dfhelp.setToolTipText("Date format help");
     bt_dfhelp.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -516,7 +509,7 @@ public class OptionsPanel extends MyDraggable {
     spinner_fontSize.setModel(new javax.swing.SpinnerNumberModel(1, 1, 36, 1));
     spinner_fontSize.setName(Options.FONT_SIZE);
     spinner_fontSize.setOpaque(false);
-    spinner_fontSize.setValue(Options.toFloat(Options.FONT_SIZE));
+    spinner_fontSize.setValue((int)Options.toFloat(Options.FONT_SIZE));
     spinner_fontSize.addChangeListener(new javax.swing.event.ChangeListener() {
       public void stateChanged(javax.swing.event.ChangeEvent evt) {
         spinner_fontSizeStateChanged(evt);
@@ -928,21 +921,18 @@ public class OptionsPanel extends MyDraggable {
     jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     jLabel1.setText("Options");
 
-    bt_cancel.setText("");
     bt_cancel.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         bt_cancelActionPerformed(evt);
       }
     });
 
-    bt_help.setText("");
     bt_help.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         bt_helpActionPerformed(evt);
       }
     });
 
-    bt_ok.setText("");
     bt_ok.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         bt_okActionPerformed(evt);

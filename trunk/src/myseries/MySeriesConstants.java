@@ -21,7 +21,7 @@ public interface MySeriesConstants {
   String GOOGLE_CODE_URL = "http://code.google.com/p/myseriesproject/";
   String GOOGLE_CODE_TRACKER = "http://code.google.com/p/myseriesproject/issues/list";
   String EMAIL = "lordovol@hotmail.com";
-  String APPLICATION_ICON = "/images/subtitles.png";
+  String APPLICATION_ICON = "/images/icon.png";
   String APPLICATION_JAR = "myseriesproject.jar";
 
 }
