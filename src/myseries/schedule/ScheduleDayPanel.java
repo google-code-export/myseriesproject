@@ -26,6 +26,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import myComponents.myGUI.MyImagePanel;
+import myseries.MySeriesConstants;
 import tools.MySeriesLogger;
 import tools.options.Options;
 import tools.options.Paths;
@@ -190,7 +191,7 @@ public class ScheduleDayPanel extends javax.swing.JPanel {
   }
 
   public ImageIcon getDefaultImage() {
-    ImageIcon im = new ImageIcon(getClass().getResource(MyImagePanel.LOGO));
+    ImageIcon im = new ImageIcon(getClass().getResource(MySeriesConstants.LOGO));
     return im;
   }
 
