@@ -55,6 +55,7 @@ import myComponents.myGUI.MyFont;
 import myComponents.myGUI.MyTimerListener;
 import myComponents.myTableCellRenderers.MyDownloadedCellRenderer;
 import myComponents.myTableCellRenderers.MySubtitlesCellRenderer;
+import myComponents.myTableCellRenderers.MyTitleCellRenderer;
 import myComponents.myToolbar.ToolbarButtonActions;
 import myComponents.myToolbar.ToolbarSeperator;
 import myseries.MySeries;
@@ -547,7 +548,7 @@ public class MyUsefulFunctions {
    * @param seen If the episode is seen
    * @return The color to use
    */
-  public static Color getCellColor(boolean isSelected, boolean seen, String date, boolean downloaded) {
+  public static Color getCellColor(Component c, boolean isSelected, boolean seen, String date, boolean downloaded) {
     if (isSelected) {
       return Skin.getColor_1();
     } else {
@@ -555,7 +556,8 @@ public class MyUsefulFunctions {
         return Skin.getColor_4();
       } else {
         if (MyUsefulFunctions.hasBeenAired(date, false) && !downloaded) {
-          return Color.RED;
+          Color b = c.getBackground();
+          return new Color(255-b.getRed(),255-b.getGreen(),255-b.getBlue());
         } else {
           return Skin.getColor_5();
         }
@@ -1230,6 +1232,27 @@ public class MyUsefulFunctions {
       }
     }
     return String.valueOf(chars);
+  }
+
+  public static int getTitleCellIcon(EpisodesRecord ep) {
+    boolean aired = MyUsefulFunctions.hasBeenAired(ep.getAired(),false);
+    boolean downloaded = ep.getDownloaded()==1;
+    boolean subs = !ep.getSubs().getName().equals(SubtitleConstants.NONE);
+    boolean needRenaming = MyUsefulFunctions.needRenaming(ep);
+    boolean watched = ep.getSeen()==1;
+    
+    if(!aired){
+      return MyTitleCellRenderer.NOT_AIRED;
+    } else if(!downloaded){
+      return MyTitleCellRenderer.NOT_DOWNLOADED;
+    } else if(!subs){
+      return MyTitleCellRenderer.NO_SUBTITLES;
+    } else if(needRenaming){
+      return MyTitleCellRenderer.NOT_RENAMED;
+    } else if (!watched){
+      return MyTitleCellRenderer.NOT_SEEN;
+    }
+    return MyTitleCellRenderer.NOT_AIRED;
   }
 
   private MyUsefulFunctions() {
