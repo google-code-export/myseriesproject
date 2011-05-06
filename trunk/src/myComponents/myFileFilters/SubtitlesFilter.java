@@ -16,10 +16,12 @@ import tools.download.subtitles.SubtitleConstants;
 public class SubtitlesFilter implements FilenameFilter, SubtitleConstants {
 
 
+  @Override
   public boolean accept(File dir, String name) {
-    if(new File(dir + "/" + name).isDirectory()){
+    File f = new File(dir + "/" + name);
+    if(f.isDirectory()){
       return true;
     }
-    return MyUsefulFunctions.isSubtitle(name);
+    return MyUsefulFunctions.isSubtitle(f);
   }
 }

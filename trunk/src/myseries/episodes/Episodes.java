@@ -25,7 +25,7 @@ import javax.swing.table.TableColumnModel;
 import myComponents.MyTableModels.MyEpisodesTableModel;
 import myComponents.MyUsefulFunctions;
 import myComponents.myFileFilters.ZipFilter;
-import tools.Unziper;
+import tools.zip.ZipFile;
 import tools.download.subtitles.SubtitleMover;
 import tools.languages.LangsList;
 import tools.languages.Language;
@@ -86,7 +86,6 @@ public class Episodes {
 //  public static void setTableModel_episodes(MyEpisodesTableModel aTableModel_episodes) {
 //    tableModel_episodes = aTableModel_episodes;
 //  }
-
   public static void setTableWidths(JTable table, Integer[] EpisodesTableWidths) {
     TableColumnModel model = table.getColumnModel();
     for (int i = 0; i < EpisodesTableWidths.length; i++) {
@@ -104,14 +103,14 @@ public class Episodes {
     for (int i = 0; i < subs.length; i++) {
       File file = subs[i];
       if (file.isFile()) {
-        Unziper u = new Unziper(series.getLocalDir(), file, true, Unziper.SUBTITLES);
+        ZipFile u = new ZipFile(file);
         try {
-          if (u.unzip()) {
+          if (u.unzip(series.getLocalDir(), true, ZipFile.SUBTITLES)) {
             if (!u.unzippedFiles.isEmpty()) {
               MySeriesLogger.logger.log(Level.INFO, "Unzipped {0}", u.unzippedFiles);
               for (Iterator<String> it = u.unzippedFiles.iterator(); it.hasNext();) {
                 String filename = it.next();
-                if(Options.toBoolean(Options.AUTO_RENAME_SUBS) && MyUsefulFunctions.renameEpisode(series,filename)){
+                if (Options.toBoolean(Options.AUTO_RENAME_SUBS) && MyUsefulFunctions.renameEpisode(series, filename)) {
                   MySeriesLogger.logger.log(Level.INFO, "Subtitle renamed");
                 }
               }
@@ -149,7 +148,7 @@ public class Episodes {
       getCurrentEpisode().setSubs(LangsList.getLanguageById(rs.getInt("subs")));
       getCurrentEpisode().setSeen(rs.getInt("seen"));
       getCurrentEpisode().setRate(rs.getDouble("rate"));
-      MySeriesLogger.logger.log(Level.FINE, "Current episode set to {0}",getCurrentEpisode().getTitle());
+      MySeriesLogger.logger.log(Level.FINE, "Current episode set to {0}", getCurrentEpisode().getTitle());
     }
     rs.close();
   }
@@ -173,7 +172,7 @@ public class Episodes {
     emptyEpisodes(episodesTable);
     SeriesRecord series = Series.getCurrentSerial();
     DefaultTableModel model = (DefaultTableModel) episodesTable.getModel();
-    MySeriesLogger.logger.log(Level.INFO, "Getting episodes of series {0}",series.getFullTitle());
+    MySeriesLogger.logger.log(Level.INFO, "Getting episodes of series {0}", series.getFullTitle());
     if (Options.toBoolean(Options.AUTO_FILE_UPDATING) && series.isValidLocalDir()) {
       MySeriesLogger.logger.log(Level.INFO, "File auto updating is active");
       ArrayList<SeriesRecord> list = new ArrayList<SeriesRecord>();
@@ -240,7 +239,7 @@ public class Episodes {
       eps.add(e);
     }
     rs.close();
-    MySeriesLogger.logger.log(Level.FINE, "Found {0} episodes",eps.size());
+    MySeriesLogger.logger.log(Level.FINE, "Found {0} episodes", eps.size());
     if (!updated.isEmpty()) {
       MySeriesLogger.logger.log(Level.INFO, "Updating episodes");
       DBConnection.beginTransaction();
@@ -248,10 +247,10 @@ public class Episodes {
       for (Iterator<EpisodesRecord> it = updated.iterator(); it.hasNext();) {
         EpisodesRecord episodesRecord = it.next();
         episodesRecord.save(stmt);
-        MySeriesLogger.logger.log(Level.FINE, "Updating {0}",episodesRecord.getTitle());
+        MySeriesLogger.logger.log(Level.FINE, "Updating {0}", episodesRecord.getTitle());
       }
       DBConnection.endTransaction();
-       //System.out.println(System.currentTimeMillis());
+      //System.out.println(System.currentTimeMillis());
       MySeriesLogger.logger.log(Level.FINE, "Updating finished");
     }
     episodesTable.setModel(model);
@@ -262,7 +261,7 @@ public class Episodes {
     int season = series.getSeason();
     int episode = e.getEpisode();
     MySeriesLogger.logger.log(Level.INFO, "Checking downloaded of series {0} episode {1}",
-        new String[] {series.getFullTitle(),e.getTitle()});
+        new String[]{series.getFullTitle(), e.getTitle()});
     File[] videoFiles = Series.getVideoFiles(series);
     try {
       return checkDownloads(season, episode, videoFiles);
@@ -282,13 +281,13 @@ public class Episodes {
     Pattern pattern = Pattern.compile(regex);
     Pattern patternFake = Pattern.compile(regexFake);
     MySeriesLogger.logger.log(Level.INFO, "Getting video files  of season {0} episode {1}",
-        new int[] {season,episode});
+        new int[]{season, episode});
     for (int j = 0; j < videoFiles.length; j++) {
       File file = videoFiles[j];
       Matcher matcher = pattern.matcher(file.getName());
       Matcher matcherFake = patternFake.matcher(file.getName());
       if (matcher.find() && !matcherFake.find()) {
-        MySeriesLogger.logger.log(Level.FINE, "Video file  found {0}",file.getName());
+        MySeriesLogger.logger.log(Level.FINE, "Video file  found {0}", file.getName());
         return true;
       }
     }
@@ -304,7 +303,7 @@ public class Episodes {
     Pattern pattern = Pattern.compile(regex);
     Pattern patternFake = Pattern.compile(regexFake);
     MySeriesLogger.logger.log(Level.INFO, "Getting subtitle files  of season {0} episode {1}",
-        new int[] {season,episode});
+        new int[]{season, episode});
     for (int j = 0; j < subtitleFiles.length; j++) {
       File file = subtitleFiles[j];
       Matcher matcher = pattern.matcher(file.getName());
@@ -362,7 +361,7 @@ public class Episodes {
    */
   public static void emptyEpisodes(JTable episodesTable) {
     MySeriesLogger.logger.log(Level.INFO, "Emptying episodes table");
-    ((DefaultTableModel)episodesTable.getModel()).setRowCount(0);
+    ((DefaultTableModel) episodesTable.getModel()).setRowCount(0);
     //getTabsPanel().setTitleAt(0, "");
   }
 
@@ -372,7 +371,6 @@ public class Episodes {
 //  public static JTabbedPane getTabsPanel() {
 //    return myseries.MySeries.tabsPanel;
 //  }
-
 //  /**
 //   * @param tabsPanel the tabsPanel to set
 //   */
