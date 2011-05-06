@@ -24,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import myComponents.MyTableModels.MyEpisodesTableModel;
 import myComponents.MyUsefulFunctions;
+import myComponents.myFileFilters.SubtitlesFilter;
 import myComponents.myFileFilters.ZipFilter;
 import tools.archive.ArchiveFile;
 import tools.download.subtitles.SubtitleMover;
@@ -99,7 +100,7 @@ public class Episodes {
       return;
     }
     File dir = new File(series.getLocalDir());
-    File[] subs = dir.listFiles(new ZipFilter());
+    File[] subs = dir.listFiles(new SubtitlesFilter());
     for (int i = 0; i < subs.length; i++) {
       File file = subs[i];
       if (file.isFile()) {

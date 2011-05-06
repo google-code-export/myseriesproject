@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.ArrayList;
 import net.sf.sevenzipjbinding.ExtractAskMode;
 import net.sf.sevenzipjbinding.ExtractOperationResult;
 import net.sf.sevenzipjbinding.IArchiveExtractCallback;
@@ -24,6 +25,7 @@ import net.sf.sevenzipjbinding.impl.RandomAccessFileInStream;
  */
 class SevenZipFile extends AbstractArchiveFile implements ArchiveConstants {
 
+ 
   SevenZipFile(File file) {
     this.archivedFile = file;
   }
@@ -36,7 +38,7 @@ class SevenZipFile extends AbstractArchiveFile implements ArchiveConstants {
       RandomAccessFile randomAccessFile = null;
       randomAccessFile = new RandomAccessFile(archivedFile, "r");
       inArchive = SevenZip.openInArchive(null, new RandomAccessFileInStream(randomAccessFile));
-      inArchive.extract(null, false, new MyExtractCallback(inArchive, directory, type));
+      inArchive.extract(null, false, new SevenZipExtractCallback(inArchive, this, directory, type));
       if (inArchive != null) {
         inArchive.close();
       }
@@ -48,63 +50,34 @@ class SevenZipFile extends AbstractArchiveFile implements ArchiveConstants {
       throw ex;
     }
   }
-  
-  public class MyExtractCallback implements IArchiveExtractCallback {
 
-    private final ISevenZipInArchive inArchive;
-    private final String extractPath;
-    private int type;
-
-    public MyExtractCallback(ISevenZipInArchive inArchive, String extractPath, int type) {
-      this.inArchive = inArchive;
-      this.extractPath = extractPath;
-      this.type = type;
-    }
-
-    @Override
-    public ISequentialOutStream getStream(final int index, ExtractAskMode extractAskMode) throws SevenZipException {
-      return new ISequentialOutStream() {
-
-        @Override
-        public int write(byte[] data) throws SevenZipException {
-          String filePath = inArchive.getStringProperty(index, PropID.PATH);
-
-          FileOutputStream fos = null;
-          try {
-            if (shouldUnzip(filePath, type)) {
-              fos = new FileOutputStream(extractPath + "/" + filePath, true);
-              fos.write(data);
-              extractedFiles.add(filePath);
-            }
-          } catch (IOException e) {
-          } finally {
-            try {
-              if (fos != null) {
-                fos.flush();
-                fos.close();
-              }
-            } catch (IOException e) {
-            }
-          }
-          return data.length;
+  @Override
+  ArrayList<String> getEntries(int type) {
+    ArrayList<String> entries = new ArrayList<String>();
+    try {
+      //SevenZip.initSevenZipFromPlatformJAR(ext, file);
+      ISevenZipInArchive inArchive = null;
+      RandomAccessFile randomAccessFile = null;
+      randomAccessFile = new RandomAccessFile(archivedFile, "r");
+      inArchive = SevenZip.openInArchive(null, new RandomAccessFileInStream(randomAccessFile));
+      int i = inArchive.getNumberOfItems();
+      for (int j = 0; j < i; j++) {
+        String name = inArchive.getStringProperty(j, PropID.getPropIDByIndex(3));
+        if(isValidType(name, type)){
+          entries.add(name);
         }
-      };
-    }
-
-    @Override
-    public void prepareOperation(ExtractAskMode extractAskMode) throws SevenZipException {
-    }
-
-    @Override
-    public void setOperationResult(ExtractOperationResult extractOperationResult) throws SevenZipException {
-    }
-
-    @Override
-    public void setCompleted(long completeValue) throws SevenZipException {
-    }
-
-    @Override
-    public void setTotal(long total) throws SevenZipException {
+      }
+      if (inArchive != null) {
+        inArchive.close();
+      }
+      if (randomAccessFile != null) {
+        randomAccessFile.close();
+      }
+      return entries;
+    } catch (Exception ex) {
+      return null;
     }
   }
+
+ 
 }

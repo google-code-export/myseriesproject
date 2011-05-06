@@ -45,6 +45,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.BorderFactory;
@@ -61,6 +62,7 @@ import myseries.series.Series;
 import tools.DesktopSupport;
 import tools.MySeriesLogger;
 import tools.Skin;
+import tools.archive.ArchiveConstants;
 import tools.archive.ArchiveFile;
 import tools.download.subtitles.SubtitleConstants;
 import tools.languages.LangsList;
@@ -1025,13 +1027,20 @@ public class MyUsefulFunctions {
     MySeriesLogger.logger.log(Level.INFO, "Checking if {0} is subtitle", filename);
     int p = filename.lastIndexOf(".");
     String ext = filename.substring(p + 1);
+    ArrayList<String> entries;
     if (isInArray(SubtitleConstants.EXTENSIONS, ext)) {
       MySeriesLogger.logger.log(Level.FINE, "{0} is a subtitle", filename);
       return true;
     } else if (isInArray(SubtitleConstants.ZIP_EXT, ext)){
       if(file!=null){
         ArchiveFile z = new ArchiveFile(file);
-        
+        try {
+          entries = z.getEntries(ArchiveConstants.SUBTITLES);
+          return entries !=null && !entries.isEmpty();
+        } catch (Exception ex) {
+          MySeriesLogger.logger.log(Level.SEVERE, "Could not get entries from archive " + file.getName(), ex);
+          return false;
+        }
       }
       return false;
     } else {
