@@ -1159,15 +1159,15 @@ public class OptionsPanel extends MyDraggable {
        if(!skinChange){
         MyFont.SetMyFont();
         try {
-          LookAndFeels.setCrossPlatformLookAndFeel();
+           LookAndFeels.setLookAndFeel(Options.toString(Options.LOOK_AND_FEEL));
         } catch (Exception ex) {
           Logger.getLogger(OptionsPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
         SwingUtilities.updateComponentTreeUI(m);
         SwingUtilities.updateComponentTreeUI(m.seriesPopUp);
         SwingUtilities.updateComponentTreeUI(m.episodesPopUp);
-        m.pack();
-        m.setExtendedState(Options.toInt(Options.WINDOW_STATE));
+       // m.pack();
+       m.setExtendedState(Options.toInt(Options.WINDOW_STATE));
        } else {
         mess = "Skin changes ";
         int a = MyMessages.confirm("Options", mess + "will take effect when you restart the application\nRestart now?", false);

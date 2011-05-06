@@ -19,9 +19,6 @@ public class SubtitlesFilter implements FilenameFilter, SubtitleConstants {
   @Override
   public boolean accept(File dir, String name) {
     File f = new File(dir + "/" + name);
-    if(f.isDirectory()){
-      return true;
-    }
     return MyUsefulFunctions.isSubtitle(f);
   }
 }
