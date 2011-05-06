@@ -61,7 +61,7 @@ import myseries.series.Series;
 import tools.DesktopSupport;
 import tools.MySeriesLogger;
 import tools.Skin;
-import tools.zip.ZipFile;
+import tools.archive.ArchiveFile;
 import tools.download.subtitles.SubtitleConstants;
 import tools.languages.LangsList;
 import tools.languages.Language;
@@ -1030,7 +1030,7 @@ public class MyUsefulFunctions {
       return true;
     } else if (isInArray(SubtitleConstants.ZIP_EXT, ext)){
       if(file!=null){
-        ZipFile z = new ZipFile(file);
+        ArchiveFile z = new ArchiveFile(file);
         
       }
       return false;
