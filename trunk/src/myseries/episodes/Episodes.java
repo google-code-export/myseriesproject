@@ -25,7 +25,7 @@ import javax.swing.table.TableColumnModel;
 import myComponents.MyTableModels.MyEpisodesTableModel;
 import myComponents.MyUsefulFunctions;
 import myComponents.myFileFilters.ZipFilter;
-import tools.zip.ZipFile;
+import tools.archive.ArchiveFile;
 import tools.download.subtitles.SubtitleMover;
 import tools.languages.LangsList;
 import tools.languages.Language;
@@ -103,12 +103,12 @@ public class Episodes {
     for (int i = 0; i < subs.length; i++) {
       File file = subs[i];
       if (file.isFile()) {
-        ZipFile u = new ZipFile(file);
+        ArchiveFile u = new ArchiveFile(file);
         try {
-          if (u.unzip(series.getLocalDir(), true, ZipFile.SUBTITLES)) {
-            if (!u.unzippedFiles.isEmpty()) {
-              MySeriesLogger.logger.log(Level.INFO, "Unzipped {0}", u.unzippedFiles);
-              for (Iterator<String> it = u.unzippedFiles.iterator(); it.hasNext();) {
+          if (u.unzip(series.getLocalDir(), true, ArchiveFile.SUBTITLES)) {
+            if (!u.extractedFiles.isEmpty()) {
+              MySeriesLogger.logger.log(Level.INFO, "Unzipped {0}", u.extractedFiles);
+              for (Iterator<String> it = u.extractedFiles.iterator(); it.hasNext();) {
                 String filename = it.next();
                 if (Options.toBoolean(Options.AUTO_RENAME_SUBS) && MyUsefulFunctions.renameEpisode(series, filename)) {
                   MySeriesLogger.logger.log(Level.INFO, "Subtitle renamed");
