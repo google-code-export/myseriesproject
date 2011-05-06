@@ -1235,15 +1235,15 @@ public class MyUsefulFunctions {
   }
 
   public static int getTitleCellIcon(EpisodesRecord ep) {
-    boolean aired = MyUsefulFunctions.hasBeenAired(ep.getAired(),false);
+     boolean aired = MyUsefulFunctions.hasBeenAired(ep.getAired(),false);
     boolean downloaded = ep.getDownloaded()==1;
     boolean subs = !ep.getSubs().getName().equals(SubtitleConstants.NONE);
     boolean needRenaming = MyUsefulFunctions.needRenaming(ep);
     boolean watched = ep.getSeen()==1;
-    
-    if(!aired){
-      return MyTitleCellRenderer.NOT_AIRED;
-    } else if(!downloaded){
+    if(watched || !aired){
+        return MyTitleCellRenderer.NO_ICON;
+    }
+    if(!downloaded){
       return MyTitleCellRenderer.NOT_DOWNLOADED;
     } else if(!subs){
       return MyTitleCellRenderer.NO_SUBTITLES;

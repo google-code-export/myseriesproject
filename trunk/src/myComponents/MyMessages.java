@@ -151,10 +151,10 @@ public class MyMessages {
 
   private static void setColors(MyDraggable drag) {
     if (Options.toBoolean(Options.USE_SKIN)) {
-      drag.setOuterColor(Skin.getOuterColor());
-      drag.setInnerColor(Color.WHITE);
-      drag.setTitleColor(Skin.getTitleColor());
-      drag.setTextColor(Skin.getForeGroundColor(Skin.getInnerColor()));
+      //drag.setOuterColor(Skin.getOuterColor());
+      //drag.setInnerColor(Color.WHITE);
+      //drag.setTitleColor(Skin.getTitleColor());
+      //drag.setTextColor(Skin.getForeGroundColor(Skin.getInnerColor()));
     }
   }
 

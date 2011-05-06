@@ -100,7 +100,7 @@ public class Episodes {
       return;
     }
     File dir = new File(series.getLocalDir());
-    File[] subs = dir.listFiles(new SubtitlesFilter());
+    File[] subs = dir.listFiles(new ZipFilter());
     for (int i = 0; i < subs.length; i++) {
       File file = subs[i];
       if (file.isFile()) {
