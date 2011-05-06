@@ -22,11 +22,6 @@ public final class Skin {
 
   private static final long limit = -4289918;
   private static Color skinColor;
-  ;
-    private static Color color_1;
-  private static Color color_2;
-  private static Color color_4;
-  private static Color color_5;
   private static int skinRed;
   private static int skinGreen;
   private static int skinBlue;
@@ -40,7 +35,7 @@ public final class Skin {
     skinColor = UIManager.getColor("Panel.background");
     lightness = getLightness();
     skinColor = fixColor(skinColor);
-    createColors();
+    
   }
 
   /**
@@ -52,18 +47,17 @@ public final class Skin {
     skinColor = color;
     lightness = getLightness();
     skinColor = fixColor(skinColor);
-    createColors();
   }
 
   private Color fixColor(Color color) {
-    if (lightness >200) {
+    if (lightness >170) {
       return color;
     } else if (lightness > 127) {
-      return getColor_1().brighter();
-    } else if (lightness > 20){
-      return getColor_1().brighter().brighter();
+      return getColor_2();
+    } else if (lightness > 60){
+      return getColor_1();
     } else {
-      return getColor_1().brighter().brighter().brighter();
+      return getColor_2().brighter();
     }
    
   }
@@ -658,10 +652,5 @@ public final class Skin {
     return col;
   }
 
-  private void createColors() {
-    color_1 = getColor_1();
-    color_2 = getColor_2();
-    color_4 = getColor_4();
-    color_5 = getColor_5();
-  }
+  
 }

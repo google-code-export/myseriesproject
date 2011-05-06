@@ -52,6 +52,7 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import myComponents.myGUI.MyFont;
 import myComponents.myTableCellRenderers.MySubtitleListRenderer;
 import myseries.actions.ApplicationActions;
@@ -1158,7 +1159,7 @@ public class OptionsPanel extends MyDraggable {
        if(!skinChange){
         MyFont.SetMyFont();
         try {
-          LookAndFeels.setLookAndFeel(Options.toString(Options.LOOK_AND_FEEL));
+          LookAndFeels.setCrossPlatformLookAndFeel();
         } catch (Exception ex) {
           Logger.getLogger(OptionsPanel.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -19,6 +19,7 @@ import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -178,6 +179,15 @@ public class LookAndFeels {
     }
     Arrays.sort(lafNames);
     return new DefaultComboBoxModel(lafNames);
+  }
+  
+  public static void setSystemLookAndFeel() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException{
+      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+  }
+
+  
+  public static void setCrossPlatformLookAndFeel() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException{
+      UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
   }
 
   private void getDefaultLookAndFeels() {
