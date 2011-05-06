@@ -61,6 +61,7 @@ import myseries.series.Series;
 import tools.DesktopSupport;
 import tools.MySeriesLogger;
 import tools.Skin;
+import tools.zip.ZipFile;
 import tools.download.subtitles.SubtitleConstants;
 import tools.languages.LangsList;
 import tools.languages.Language;
@@ -767,7 +768,9 @@ public class MyUsefulFunctions {
       Matcher matcher = pattern.matcher(file.getName());
       Matcher matcherFake = patternFake.matcher(file.getName());
       if (matcher.find() && !matcherFake.find()) {
-        subs.add(file);
+        if(MyUsefulFunctions.isSubtitle(file)){
+          subs.add(file);
+        }
       }
     }
     MySeriesLogger.logger.log(Level.FINE, "Found {0} subtitles", subs);
@@ -1006,17 +1009,36 @@ public class MyUsefulFunctions {
     }
   }
 
-  public static boolean isSubtitle(String filename) {
+  public static boolean isSubtitle(Object obj) {
+    String filename = null;
+    File file = null;
+    if(obj == null){
+      return false;
+    }
+    //EntryName
+    if(obj instanceof String){
+      filename = (String)obj;
+    } else if(obj instanceof File){
+      file = (File)obj;
+      filename = ((File)obj).getName();
+    }
     MySeriesLogger.logger.log(Level.INFO, "Checking if {0} is subtitle", filename);
     int p = filename.lastIndexOf(".");
     String ext = filename.substring(p + 1);
-    boolean is = isInArray(SubtitleConstants.EXTENSIONS, ext);
-    if (is) {
+    if (isInArray(SubtitleConstants.EXTENSIONS, ext)) {
       MySeriesLogger.logger.log(Level.FINE, "{0} is a subtitle", filename);
+      return true;
+    } else if (isInArray(SubtitleConstants.ZIP_EXT, ext)){
+      if(file!=null){
+        ZipFile z = new ZipFile(file);
+        
+      }
+      return false;
     } else {
       MySeriesLogger.logger.log(Level.INFO, "{0} is not a subtitle", filename);
+      return false;
     }
-    return is;
+    
   }
 
   public static String sanitize(String str) {
@@ -1032,10 +1054,11 @@ public class MyUsefulFunctions {
     return tok[tok.length - 1].toLowerCase();
   }
 
-  public static String getRenamedEpisode(String filename, SeriesRecord series, EpisodesRecord episode) {
+  public static String getRenamedEpisode(File file, SeriesRecord series, EpisodesRecord episode) {
+    String filename = file.getName();
     String[] tokens = filename.split("\\.", -1);
     String ext = tokens[tokens.length - 1];
-    if (MyUsefulFunctions.isSubtitle(filename)) {
+    if (MyUsefulFunctions.isSubtitle(file)) {
       if (isLanguage(tokens[tokens.length - 2])) {
         ext = tokens[tokens.length - 2] + "." + tokens[tokens.length - 1];
       }
@@ -1083,7 +1106,7 @@ public class MyUsefulFunctions {
           e.setSeen(rs.getInt("seen"));
           e.setRate(rs.getDouble("rate"));
           e.setSubs(LangsList.getLanguageById(rs.getInt("subs")));
-          String newName = getRenamedEpisode(filename, series, e);
+          String newName = getRenamedEpisode(oldFile, series, e);
           File newFile = new File(path + "/" + newName);
           oldFile.renameTo(newFile);
           MySeriesLogger.logger.log(Level.FINE, "Episode renamed");

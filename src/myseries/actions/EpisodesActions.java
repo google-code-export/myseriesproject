@@ -166,7 +166,7 @@ public class EpisodesActions {
         Matcher matcherFake = patternFake.matcher(name);
         if (matcher.find() &&!matcherFake.find()) {
          
-          String newFilename = MyUsefulFunctions.getRenamedEpisode(name, series, episodeRecord);
+          String newFilename = MyUsefulFunctions.getRenamedEpisode(file, series, episodeRecord);
 
           String newName = path + "/" + newFilename;
           File newFile = new File(newName);
@@ -220,7 +220,7 @@ public class EpisodesActions {
             Matcher matcher = pattern.matcher(name);
             Matcher matcherFake = patternFake.matcher(name);
             if (matcher.find() &&!matcherFake.find()) {
-             String newFilename = MyUsefulFunctions.getRenamedEpisode(name, series, episodesRecord);
+             String newFilename = MyUsefulFunctions.getRenamedEpisode(file, series, episodesRecord);
               
               String newName = path + "/" + newFilename;
               File newFile = new File(newName);

@@ -59,7 +59,8 @@ public interface SubtitleConstants {
   /**
    * The subtitle extensions (srt, sub)
    */
-  public static final String[] EXTENSIONS = {"srt", "sub","ssa", "zip","rar","7z","gz","tar"};
+  //public static final String[] EXTENSIONS = {"srt", "sub","ssa", "zip","rar","7z","gz","tar"};
+  public static final String[] EXTENSIONS = {"srt", "sub","ssa"};
 /**
  * Ziped subtitles extensions (zip, rar)
  */

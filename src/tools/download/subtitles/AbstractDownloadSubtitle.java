@@ -26,7 +26,7 @@ import javax.swing.JProgressBar;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myseries.series.Series;
-import tools.Unziper;
+import tools.zip.ZipFile;
 import tools.options.Options;
 
 /**
@@ -81,9 +81,9 @@ public abstract class AbstractDownloadSubtitle {
           is.close();
           outStream.close();
           progress.setString("Opening zip File");
-          Unziper z = new Unziper(getLocalDir(), new File(filename), true, Unziper.SUBTITLES);
+          ZipFile z = new ZipFile(new File(filename));
           try {
-            if (z.unzip()) {
+            if (z.unzip(getLocalDir(), true, ZipFile.SUBTITLES)) {
               for (Iterator<String> it = z.unzippedFiles.iterator(); it.hasNext();) {
                 String name = it.next();
                 if (Options.toBoolean(Options.AUTO_RENAME_SUBS) && MyUsefulFunctions.renameEpisode(Series.getCurrentSerial(), name)) {
