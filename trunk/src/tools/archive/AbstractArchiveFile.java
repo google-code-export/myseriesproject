@@ -20,21 +20,22 @@ public abstract class AbstractArchiveFile implements ArchiveConstants {
   File archivedFile;
   boolean result = false;
 
-  boolean shouldUnzip(String entryName, int type) {
-    MySeriesLogger.logger.log(Level.INFO, "Check if {0} should unzip", entryName);
+  boolean isValidType(String entryName, int type) {
+    MySeriesLogger.logger.log(Level.INFO, "Check if {0} is valid type", entryName);
     switch (type) {
       case NONE:
-        MySeriesLogger.logger.log(Level.INFO, "Unzipping none");
+        MySeriesLogger.logger.log(Level.INFO, "Type none");
         return false;
       case ALL:
-        MySeriesLogger.logger.log(Level.INFO, "Unzipping all");
+        MySeriesLogger.logger.log(Level.INFO, "Type all");
         return true;
       case SUBTITLES:
-        MySeriesLogger.logger.log(Level.INFO, "Checking if subtitle");
+        MySeriesLogger.logger.log(Level.INFO, "Type subtitle");
         return MyUsefulFunctions.isSubtitle(entryName);
     }
     return false;
   }
 
   abstract void unzip(String directory, int type) throws Exception;
+  abstract ArrayList<String> getEntries(int type) throws Exception;
 }

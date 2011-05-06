@@ -6,7 +6,12 @@ package tools.archive;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -29,7 +34,7 @@ class ZipFile extends AbstractArchiveFile implements ArchiveConstants {
       while (zipEntry != null) {
         //for each entry to be extracted
         String entryName = zipEntry.getName();
-        if (shouldUnzip(entryName, type)) {
+        if (isValidType(entryName, type)) {
           int n;
           FileOutputStream fileoutputstream;
           File newFile = new File(entryName);
@@ -54,5 +59,29 @@ class ZipFile extends AbstractArchiveFile implements ArchiveConstants {
       throw ex;
     }
     result = true;
+  }
+
+  @Override
+  ArrayList<String> getEntries(int type) throws Exception {
+    ArrayList<String> entries = new ArrayList<String>();
+    ZipInputStream zipInputStream = null;
+    try {
+      byte[] buf = new byte[1024];
+      zipInputStream = new ZipInputStream(new FileInputStream(archivedFile));
+      ZipEntry zipEntry = zipInputStream.getNextEntry();
+      while (zipEntry != null) {
+        //for each entry to be extracted
+        String entryName = zipEntry.getName();
+        if(isValidType(entryName, type)){
+          entries.add(entryName);
+        }
+        zipEntry = zipInputStream.getNextEntry();
+      }
+      return entries;
+    } catch (Exception ex) {
+      throw ex;
+    } finally {
+      zipInputStream.close();
+    }
   }
 }

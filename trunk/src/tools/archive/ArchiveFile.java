@@ -56,4 +56,22 @@ public class ArchiveFile implements ArchiveConstants {
     }
     return res;
   }
+
+  public ArrayList<String> getEntries(int type) throws Exception {
+    if (ext.toLowerCase().equals(ZIP)) {
+      MySeriesLogger.logger.log(Level.INFO, "Getting entries of file {0} (zip compression)", file);
+      ZipFile zip = new ZipFile(file);
+      return zip.getEntries(type);
+    } else if (ext.toLowerCase().equals(RAR)) {
+      MySeriesLogger.logger.log(Level.INFO, "Getting entries of file {0} (rar compression)", file);
+      RarFile rar = new RarFile(file);
+      return rar.getEntries(type);
+    } else {
+      MySeriesLogger.logger.log(Level.INFO, "Getting entries of file {0} (7zip compression)", file);
+      SevenZipFile sev = new SevenZipFile(file);
+      return sev.getEntries(type);
+    }
+
+
+  }
 }
