@@ -288,7 +288,7 @@ public class HouseKeeping extends MyDraggable {
       String db = dbs[i].getName();
       gettingScreenshotsForDb(db);
     }
-    new DBConnection(curDb);
+    new DBConnection(curDb, false);
   }
 
   private File[] findUnusedScreenshots() {

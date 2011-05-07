@@ -10,6 +10,7 @@ import java.awt.Image;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import myComponents.myGUI.MyImagePanel;
 import myseries.Menus;
@@ -72,7 +73,6 @@ public class MyEventHandler implements MyEventListener {
                     Image image = new ImageIcon(getClass().getResource(MySeriesConstants.LOGO)).getImage();
                     m.imagePanel.setImage(image, true, m);
                 }
-
                 Episodes.updateEpisodesTable(m.tableEpisodes);
                 int row = m.getSeriesTableRow(series);
                 if (row > -1) {
