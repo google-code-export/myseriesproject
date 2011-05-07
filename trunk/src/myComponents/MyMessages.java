@@ -22,7 +22,7 @@ import tools.options.Options;
  */
 public class MyMessages {
 
-  private static boolean glassPaneActive;
+  private static boolean wasGlassPaneActive;
   private static MyLogPanel logPanel;
   private static final int ERROR_MESS = 0;
   private static final int WARNING_MESS = 2;
@@ -33,8 +33,8 @@ public class MyMessages {
   }
 
   private static void checkpane() {
-    glassPaneActive = MyDisabledGlassPane.isActivated;
-    if (!glassPaneActive) {
+    wasGlassPaneActive = MyDisabledGlassPane.isActivated;
+    if (!wasGlassPaneActive) {
       myseries.MySeries.glassPane.activate(null);
     }
   }
@@ -159,10 +159,8 @@ public class MyMessages {
   }
 
   private static void hideMessage() {
-    if (!glassPaneActive) {
+    if (!wasGlassPaneActive) {
       myseries.MySeries.glassPane.deactivate();
-
-
     }
   }
 

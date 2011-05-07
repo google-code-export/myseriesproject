@@ -331,7 +331,7 @@ public class StartPanel extends MyDraggable {
             dispose();
           } else {
             //Connect
-            DBConnection conn = new DBConnection(dbName);
+            DBConnection conn = new DBConnection(dbName, false);
             // Check if connection is established
             if (DBConnection.isConnected) {
               MySeriesLogger.logger.log(Level.INFO, "Check database format");
@@ -478,7 +478,7 @@ public class StartPanel extends MyDraggable {
         StartPanel s = new StartPanel();
       } else {
         //Connect
-        DBConnection conn = new DBConnection(Options.toString(Options.DB_NAME));
+        DBConnection conn = new DBConnection(Options.toString(Options.DB_NAME), false);
         // Check if connection is established
         if (DBConnection.isConnected) {
           MySeriesLogger.logger.log(Level.INFO, "Check database format");
