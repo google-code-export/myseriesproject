@@ -15,14 +15,12 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Level;
 import javax.swing.JFrame;
 import myComponents.MyUsefulFunctions;
 import tools.MySeriesLogger;
 import tools.download.subtitles.SubtitleConstants;
-import tools.internetUpdate.InternetUpdate;
 
 /**
  *
@@ -260,6 +258,10 @@ public class Options {
    * The active episodes filter
    */
   public static final String ACTIVE_FILTER= "ACTIVE_FILTER";
+  /**
+   * How often memory consumption should be updated
+   */
+  public static final String MEMORY_CONSUMPTION_UPDATE = "MEMORY_CONSUMTION_UPDATE";
   /**
    * An array of the options that are selected in combo boxes
    */
@@ -616,6 +618,7 @@ public class Options {
     out.println(Options.MINIMIZE_TO_TRAY + "=false");
     out.println(Options.RANDOMIZE_LAF + "=false");
     out.println(Options.ACTIVE_FILTER + "=");
+    out.println(Options.MEMORY_CONSUMPTION_UPDATE + "=1000");
 
     out.close();
   }
@@ -719,6 +722,7 @@ public class Options {
     options.put(Options.MINIMIZE_TO_TRAY, false);
     options.put(Options.RANDOMIZE_LAF, false);
     options.put(Options.ACTIVE_FILTER, "");
+    options.put(Options.MEMORY_CONSUMPTION_UPDATE, 1000);
   }
 
   private static Object getDefaultMainDirectory() {

@@ -14,6 +14,7 @@ import com.googlecode.starrating.StarTableCellRenderer;
 import java.awt.Component;
 import java.awt.event.MouseListener;
 import javax.swing.ComboBoxModel;
+import javax.swing.Timer;
 import javax.swing.table.TableModel;
 import myComponents.myEvents.MyEvent;
 import myseries.episodes.Episodes;
@@ -168,6 +169,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
   //public static Toolbar myToolbar;
   private Image appIcon;
   private MyTrayIcon myTrayIcon;
+  public Timer memoryTimer = new Timer(1000, null);
 
   // TODO delete multiple episodes
   /**
