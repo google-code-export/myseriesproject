@@ -63,7 +63,7 @@ public class SubtitleMover {
 
     private boolean isValid(File file, SeriesRecord ser) {
         if (file.isFile()) {
-            String name = file.getName();
+            String name = file.getName().replaceAll("[^A-Za-z0-9]", " ");
             String regex = ser.getTitle() + "\\D*0*" + ser.getSeason() + "\\D";
             Pattern pattern = Pattern.compile(regex,Pattern.CASE_INSENSITIVE);
             Matcher matcher = pattern.matcher(name);
