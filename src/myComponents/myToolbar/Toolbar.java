@@ -60,7 +60,7 @@ public class Toolbar extends AbstractToolbar {
     visibleButtons = visibleButtons == null ? Options.getDefaultToolbarButtons() : visibleButtons;
     for (int i = 0; i < visibleButtons.length; i++) {
       Integer key = visibleButtons[i];
-      if (buttons.containsKey(key)) {
+      if (key != null && buttons.containsKey(key)) {
         Component b = buttons.get(key);
         if (b instanceof ToolbarButton) {
           ToolbarButton but = (ToolbarButton) b;
@@ -92,6 +92,16 @@ public class Toolbar extends AbstractToolbar {
 
   public Integer[] getVisibleButtons() {
     return visibleButtons;
+  }
+
+  public void removeButton(int id){
+      for (int j = 0; j < visibleButtons.length; j++) {
+          Integer  i = visibleButtons[j];
+          if(i==id){
+              visibleButtons[j]=null;
+          }
+      }
+      
   }
 
   class ToolbarMouseListener extends MouseAdapter {
