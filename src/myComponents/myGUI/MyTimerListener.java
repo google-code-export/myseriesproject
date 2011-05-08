@@ -51,11 +51,14 @@ public class MyTimerListener implements ActionListener {
                 mem.setBackground(Color.RED);
             }
             String text = memory + " " + perc + "% ";
+            String tooltip = "<html><table><tr><td>Memory used by MySerieS :"+memory + " " + perc + "% </td></tr>"+
+                    "<tr><td>Memory dedicated to java : " + calc(jvmTotMem) +"</td></tr>" +
+                    "<tr><td>Maximum memory for java : " + calc(jvmMaxMem) +"</td></tr></table>";
             if (orientation == SwingConstants.HORIZONTAL) {
                 mem.setText(text);
             }
 
-            mem.setToolTipText(text);
+            mem.setToolTipText(tooltip);
             mem.revalidate();
         }
     }
