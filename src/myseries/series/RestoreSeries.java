@@ -91,10 +91,8 @@ public class RestoreSeries extends MyDraggable {
     setUndecorated(true);
 
     jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-    jPanel1.setOpaque(false);
 
     title.setFont(title.getFont().deriveFont(title.getFont().getStyle() | java.awt.Font.BOLD, title.getFont().getSize()+2));
-    title.setForeground(Skin.getTitleColor());
     title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     title.setText("Restore Series");
 
@@ -123,14 +121,12 @@ public class RestoreSeries extends MyDraggable {
     });
     scroll.setViewportView(table);
 
-    bt_cancel.setText("");
     bt_cancel.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         bt_cancelActionPerformed(evt);
       }
     });
 
-    bt_ok.setText("");
     bt_ok.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         bt_okActionPerformed(evt);
@@ -138,7 +134,6 @@ public class RestoreSeries extends MyDraggable {
     });
 
     bt_help.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-    bt_help.setText("");
     bt_help.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         bt_helpActionPerformed(evt);

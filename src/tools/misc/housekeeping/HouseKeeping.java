@@ -142,18 +142,15 @@ public class HouseKeeping extends MyDraggable {
     inner_panelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cb_logs, cb_screenhsots, cb_torrents, lb_log, lb_screenshots, lb_torrents});
 
     jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getStyle() | java.awt.Font.BOLD, jLabel1.getFont().getSize()+2));
-    jLabel1.setForeground(Skin.getTitleColor());
     jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     jLabel1.setText("Housekeeping");
 
-    bt_cancel.setText("");
     bt_cancel.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         bt_cancelActionPerformed(evt);
       }
     });
 
-    bt_ok.setText("");
     bt_ok.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         bt_okActionPerformed(evt);

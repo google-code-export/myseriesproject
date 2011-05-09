@@ -84,7 +84,6 @@ public class About extends MyDraggable {
   private void initComponents() {
 
     main_panel = new javax.swing.JPanel();
-    bt_cancel = new buttons.Button();
     inner_panel = new javax.swing.JPanel();
     jLabel1 = new javax.swing.JLabel();
     jPanel2 = new javax.swing.JPanel();
@@ -98,20 +97,11 @@ public class About extends MyDraggable {
     jScrollPane2 = new javax.swing.JScrollPane();
     propertiesEditor = new javax.swing.JEditorPane();
     jLabel6 = new javax.swing.JLabel();
+    bt_cancel = new myComponents.myGUI.buttons.MyButtonCancel();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
     main_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-    main_panel.setOpaque(false);
-
-    bt_cancel.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-    bt_cancel.setText("");
-    bt_cancel.setFocusable(false);
-    bt_cancel.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        bt_cancelActionPerformed(evt);
-      }
-    });
 
     inner_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -227,40 +217,43 @@ public class About extends MyDraggable {
             .addGap(11, 11, 11)
             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
+        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
         .addContainerGap())
     );
 
     jLabel6.setFont(jLabel6.getFont().deriveFont(jLabel6.getFont().getStyle() | java.awt.Font.BOLD, jLabel6.getFont().getSize()+2));
-    jLabel6.setForeground(Skin.getTitleColor());
     jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     jLabel6.setText("About MySeries");
+
+    bt_cancel.setToolTipText("Close");
+    bt_cancel.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        bt_cancelActionPerformed(evt);
+      }
+    });
 
     javax.swing.GroupLayout main_panelLayout = new javax.swing.GroupLayout(main_panel);
     main_panel.setLayout(main_panelLayout);
     main_panelLayout.setHorizontalGroup(
       main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, main_panelLayout.createSequentialGroup()
+        .addGap(20, 20, 20)
+        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 615, Short.MAX_VALUE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(bt_cancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
       .addGroup(main_panelLayout.createSequentialGroup()
         .addContainerGap()
-        .addGroup(main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(main_panelLayout.createSequentialGroup()
-            .addComponent(inner_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addContainerGap())
-          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, main_panelLayout.createSequentialGroup()
-            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(bt_cancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+        .addComponent(inner_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addGap(10, 10, 10))
     );
     main_panelLayout.setVerticalGroup(
       main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(main_panelLayout.createSequentialGroup()
-        .addGroup(main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
           .addComponent(bt_cancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addGroup(main_panelLayout.createSequentialGroup()
-            .addGap(11, 11, 11)
-            .addComponent(jLabel6)))
-        .addGap(7, 7, 7)
-        .addComponent(inner_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+          .addComponent(jLabel6))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(inner_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         .addContainerGap())
     );
 
@@ -307,12 +300,12 @@ public class About extends MyDraggable {
   }//GEN-LAST:event_textArea_contactMouseReleased
 
   private void bt_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelActionPerformed
-    MySeriesLogger.logger.log(Level.INFO, "Closing window");
     dispose();
     MySeries.glassPane.deactivate();
   }//GEN-LAST:event_bt_cancelActionPerformed
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
-  private buttons.Button bt_cancel;
+  private myComponents.myGUI.buttons.MyButtonCancel bt_cancel;
   private javax.swing.JPanel inner_panel;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;

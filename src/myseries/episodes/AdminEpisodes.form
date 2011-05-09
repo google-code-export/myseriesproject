@@ -40,27 +40,25 @@
             <LineBorder/>
           </Border>
         </Property>
-        <Property name="opaque" type="boolean" value="false"/>
       </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="55" pref="55" max="55" attributes="0"/>
-                          <Component id="label_title" pref="255" max="32767" attributes="2"/>
-                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Component id="jPanel2" max="32767" attributes="2"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="bt_ok" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="label_title" min="-2" pref="243" max="-2" attributes="2"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="bt_help" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Component id="bt_cancel" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="bt_ok" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="jPanel2" max="32767" attributes="2"/>
-                          <EmptySpace min="10" pref="10" max="10" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -69,15 +67,12 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="bt_cancel" min="-2" max="-2" attributes="0"/>
-                      <Component id="bt_help" min="-2" max="-2" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="label_title" pref="21" max="32767" attributes="0"/>
-                      </Group>
+                  <Group type="103" groupAlignment="2" attributes="0">
+                      <Component id="label_title" alignment="2" min="-2" pref="14" max="-2" attributes="0"/>
+                      <Component id="bt_help" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="bt_cancel" alignment="2" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="bt_ok" min="-2" max="-2" attributes="0"/>
@@ -92,9 +87,6 @@
               <FontInfo relative="true">
                 <Font bold="true" component="label_title" property="font" relativeSize="true" size="2"/>
               </FontInfo>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="Skin.getTitleColor()" type="code"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
           </Properties>
@@ -150,25 +142,25 @@
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="2" attributes="0">
-                          <Component id="label_EpisodeNumber" alignment="2" pref="27" max="32767" attributes="0"/>
+                          <Component id="label_EpisodeNumber" alignment="2" pref="28" max="32767" attributes="0"/>
                           <Component id="spinner_episode" alignment="2" min="-2" pref="20" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="2" attributes="0">
-                          <Component id="label_EpisodeTitle" alignment="2" pref="28" max="32767" attributes="0"/>
+                          <Component id="label_EpisodeTitle" alignment="2" pref="29" max="32767" attributes="0"/>
                           <Component id="textfield_title" alignment="2" min="-2" pref="19" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="2" attributes="0">
-                          <Component id="label_Date" alignment="2" pref="27" max="32767" attributes="0"/>
+                          <Component id="label_Date" alignment="2" pref="28" max="32767" attributes="0"/>
                           <Component id="dateChooser" alignment="2" min="-2" max="-2" attributes="0"/>
-                          <Component id="checkbox_downloaded" alignment="2" pref="27" max="32767" attributes="0"/>
+                          <Component id="checkbox_downloaded" alignment="2" pref="28" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="2" attributes="0">
-                          <Component id="label_subtitles" alignment="2" pref="27" max="32767" attributes="0"/>
+                          <Component id="label_subtitles" alignment="2" pref="30" max="32767" attributes="0"/>
                           <Component id="combobox_subtitles" alignment="2" min="-2" max="-2" attributes="0"/>
-                          <Component id="checkbox_seen" alignment="2" pref="27" max="32767" attributes="0"/>
+                          <Component id="checkbox_seen" alignment="2" pref="30" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -251,25 +243,16 @@
           </SubComponents>
         </Container>
         <Component class="myComponents.myGUI.buttons.MyButtonCancel" name="bt_cancel">
-          <Properties>
-            <Property name="text" type="java.lang.String" value=""/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_cancelActionPerformed"/>
           </Events>
         </Component>
         <Component class="myComponents.myGUI.buttons.MyButtonOk" name="bt_ok">
-          <Properties>
-            <Property name="text" type="java.lang.String" value=""/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_okActionPerformed"/>
           </Events>
         </Component>
         <Component class="myComponents.myGUI.buttons.MyButtonHelp" name="bt_help">
-          <Properties>
-            <Property name="text" type="java.lang.String" value=""/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_helpActionPerformed"/>
           </Events>
