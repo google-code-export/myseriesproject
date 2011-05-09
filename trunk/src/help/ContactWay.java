@@ -58,7 +58,6 @@ public class ContactWay extends MyDraggable {
     setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
     outer.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-    outer.setOpaque(false);
 
     jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -96,18 +95,16 @@ public class ContactWay extends MyDraggable {
     );
 
     jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getStyle() | java.awt.Font.BOLD, jLabel1.getFont().getSize()+2));
-    jLabel1.setForeground(Skin.getTitleColor());
     jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     jLabel1.setText("Contact or report a bug");
 
-    bt_cancel.setText("");
+    bt_cancel.setToolTipText("Close");
     bt_cancel.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         bt_cancelActionPerformed(evt);
       }
     });
 
-    bt_google.setText("");
     bt_google.setToolTipText("Google code report");
     bt_google.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,7 +112,6 @@ public class ContactWay extends MyDraggable {
       }
     });
 
-    bt_email.setText("");
     bt_email.setToolTipText("Contact by email");
     bt_email.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -46,7 +46,6 @@
             <LineBorder/>
           </Border>
         </Property>
-        <Property name="opaque" type="boolean" value="false"/>
         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[800, 546]"/>
         </Property>
@@ -187,7 +186,6 @@
                 </Component>
                 <Component class="myComponents.myGUI.buttons.MyDefaultButton" name="bt_search">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value=""/>
                     <Property name="toolTipText" type="java.lang.String" value="Search"/>
                   </Properties>
                   <Events>

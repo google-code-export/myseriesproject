@@ -40,7 +40,6 @@
             <LineBorder/>
           </Border>
         </Property>
-        <Property name="opaque" type="boolean" value="false"/>
       </Properties>
 
       <Layout>
@@ -365,7 +364,6 @@
             </Container>
             <Component class="myComponents.myGUI.buttons.MyButtonDir" name="bt_localDir">
               <Properties>
-                <Property name="text" type="java.lang.String" value=""/>
                 <Property name="toolTipText" type="java.lang.String" value="Browse for the local Directory"/>
               </Properties>
               <Events>
@@ -374,7 +372,6 @@
             </Component>
             <Component class="myComponents.myGUI.buttons.MyButtonDir" name="bt_screenshot">
               <Properties>
-                <Property name="text" type="java.lang.String" value=""/>
                 <Property name="toolTipText" type="java.lang.String" value="Browse for a screenshot"/>
               </Properties>
               <Events>
@@ -383,7 +380,6 @@
             </Component>
             <Component class="myComponents.myGUI.buttons.MyButtonInternet" name="bt_iuScreenshot">
               <Properties>
-                <Property name="text" type="java.lang.String" value=""/>
                 <Property name="toolTipText" type="java.lang.String" value="Download screenshot"/>
               </Properties>
               <Events>
@@ -392,7 +388,6 @@
             </Component>
             <Component class="myComponents.myGUI.buttons.MyButtonInternet" name="bt_tvSubs">
               <Properties>
-                <Property name="text" type="java.lang.String" value=""/>
                 <Property name="toolTipText" type="java.lang.String" value="Get TvSubtitles ID"/>
               </Properties>
               <Events>
@@ -401,7 +396,6 @@
             </Component>
             <Component class="myComponents.myGUI.buttons.MyButtonInternet" name="bt_subsOn">
               <Properties>
-                <Property name="text" type="java.lang.String" value=""/>
                 <Property name="toolTipText" type="java.lang.String" value="Get subtitleOnline ID"/>
               </Properties>
               <Events>
@@ -410,7 +404,6 @@
             </Component>
             <Component class="myComponents.myGUI.buttons.MyButtonInternet" name="bt_tvRage">
               <Properties>
-                <Property name="text" type="java.lang.String" value=""/>
                 <Property name="toolTipText" type="java.lang.String" value="Get TvRage ID"/>
               </Properties>
               <Events>
@@ -430,9 +423,6 @@
           </SubComponents>
         </Container>
         <Component class="myComponents.myGUI.buttons.MyButtonHelp" name="myButtonHelp1">
-          <Properties>
-            <Property name="text" type="java.lang.String" value=""/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="myButtonHelp1ActionPerformed"/>
           </Events>
@@ -444,25 +434,16 @@
                 <Font bold="true" component="label_Title" property="font" relativeSize="true" size="2"/>
               </FontInfo>
             </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="Skin.getColor_1()" type="code"/>
-            </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="Add A New Series"/>
           </Properties>
         </Component>
         <Component class="myComponents.myGUI.buttons.MyButtonOk" name="myButtonOk1">
-          <Properties>
-            <Property name="text" type="java.lang.String" value=""/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="myButtonOk1ActionPerformed"/>
           </Events>
         </Component>
         <Component class="myComponents.myGUI.buttons.MyButtonCancel" name="myButtonCancel1">
-          <Properties>
-            <Property name="text" type="java.lang.String" value=""/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="myButtonCancel1ActionPerformed"/>
           </Events>

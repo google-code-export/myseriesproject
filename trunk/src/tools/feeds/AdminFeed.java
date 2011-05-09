@@ -86,7 +86,6 @@ public class AdminFeed extends MyDraggable {
     setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
     outerPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-    outerPanel.setOpaque(false);
 
     innerPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -133,18 +132,15 @@ public class AdminFeed extends MyDraggable {
     );
 
     label_title.setFont(label_title.getFont().deriveFont(label_title.getFont().getStyle() | java.awt.Font.BOLD, label_title.getFont().getSize()+2));
-    label_title.setForeground(Skin.getTitleColor());
     label_title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     label_title.setText("title");
 
-    bt_cancel.setText("");
     bt_cancel.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         bt_cancelActionPerformed(evt);
       }
     });
 
-    bt_ok.setText("");
     bt_ok.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         bt_okActionPerformed(evt);

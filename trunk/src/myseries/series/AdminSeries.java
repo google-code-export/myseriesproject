@@ -204,7 +204,6 @@ public class AdminSeries extends MyDraggable {
     setResizable(false);
 
     main_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-    main_panel.setOpaque(false);
 
     inner_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -263,7 +262,6 @@ public class AdminSeries extends MyDraggable {
       .addGap(0, 146, Short.MAX_VALUE)
     );
 
-    bt_localDir.setText("");
     bt_localDir.setToolTipText("Browse for the local Directory");
     bt_localDir.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -271,7 +269,6 @@ public class AdminSeries extends MyDraggable {
       }
     });
 
-    bt_screenshot.setText("");
     bt_screenshot.setToolTipText("Browse for a screenshot");
     bt_screenshot.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -279,7 +276,6 @@ public class AdminSeries extends MyDraggable {
       }
     });
 
-    bt_iuScreenshot.setText("");
     bt_iuScreenshot.setToolTipText("Download screenshot");
     bt_iuScreenshot.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -287,7 +283,6 @@ public class AdminSeries extends MyDraggable {
       }
     });
 
-    bt_tvSubs.setText("");
     bt_tvSubs.setToolTipText("Get TvSubtitles ID");
     bt_tvSubs.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -295,7 +290,6 @@ public class AdminSeries extends MyDraggable {
       }
     });
 
-    bt_subsOn.setText("");
     bt_subsOn.setToolTipText("Get subtitleOnline ID");
     bt_subsOn.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -303,7 +297,6 @@ public class AdminSeries extends MyDraggable {
       }
     });
 
-    bt_tvRage.setText("");
     bt_tvRage.setToolTipText("Get TvRage ID");
     bt_tvRage.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -417,7 +410,6 @@ public class AdminSeries extends MyDraggable {
         .addGap(45, 45, 45))
     );
 
-    myButtonHelp1.setText("");
     myButtonHelp1.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         myButtonHelp1ActionPerformed(evt);
@@ -425,18 +417,15 @@ public class AdminSeries extends MyDraggable {
     });
 
     label_Title.setFont(label_Title.getFont().deriveFont(label_Title.getFont().getStyle() | java.awt.Font.BOLD, label_Title.getFont().getSize()+2));
-    label_Title.setForeground(Skin.getColor_1());
     label_Title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     label_Title.setText("Add A New Series");
 
-    myButtonOk1.setText("");
     myButtonOk1.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         myButtonOk1ActionPerformed(evt);
       }
     });
 
-    myButtonCancel1.setText("");
     myButtonCancel1.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         myButtonCancel1ActionPerformed(evt);
