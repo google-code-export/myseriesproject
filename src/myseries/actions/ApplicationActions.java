@@ -61,7 +61,7 @@ public class ApplicationActions {
     String filter = m.combobox_filters.getSelectedItem() != null ? (String) m.combobox_filters.getSelectedItem() : "";
     Options.setOption(Options.ACTIVE_FILTER, filter);
     Options.setOption(Options.FEED_DIVIDER_LOCATION, feedDivLocation);
-    if(m.getExtendedState() != JFrame.ICONIFIED){
+    if (m.getExtendedState() != JFrame.ICONIFIED) {
       Options.setOption(Options.WINDOW_STATE, m.getExtendedState());
     }
     Options.setOption(Options.WIDTH, m.getWidth());
@@ -292,23 +292,6 @@ public class ApplicationActions {
     HouseKeeping h = new HouseKeeping();
   }
 
-  public static void restartApplication(MySeries m) {
-    try {
-      String pathToApp = new File(MySeriesConstants.APPLICATION_JAR).getAbsolutePath();
-      File startingDir = new File(MySeriesConstants.APPLICATION_JAR).getAbsoluteFile().getParentFile();
-      if (new File(MySeriesConstants.APPLICATION_JAR).exists()) {
-        MyUsefulFunctions.runExternalProgram(new String[]{"java", "-jar", pathToApp}, startingDir);
-        ApplicationActions.exitApplication(m);
-      } else {
-        MySeriesLogger.logger.log(Level.SEVERE, "Could not restart application");
-        MyMessages.error("Restart Application", "Could not restart the application", false);
-      }
-    } catch (IOException ex) {
-      MySeriesLogger.logger.log(Level.SEVERE, "Could not restart application", ex);
-      MyMessages.error("Restart Application", "Could not restart the application", false);
-    }
-  }
-
   public static void customizeToolbar(MySeries m) {
     ToolbarCustomize tc = new ToolbarCustomize(m.myToolbar.getVisibleButtons());
     m.myToolbar.visibleButtons = tc.newVisibleButtons;
@@ -377,6 +360,66 @@ public class ApplicationActions {
         MyMessages.logToPanel(Info.WARNING_MESS, "The application is written for java 6.\n"
             + "It seems that you are using java 7.\nThere might be some incopatibility issues");
       }
+    }
+  }
+
+  public static void restartApplication(MySeries m) {
+    String os = System.getProperty("os.name").toLowerCase();
+    if (os.startsWith("windows")) {
+      restartWindows(m);
+    } else if (os.startsWith("linux")) {
+      restartLinux(m);
+    } else {
+      restartDefault(m);
+    }
+  }
+
+  private static void restartWindows(MySeries m) {
+    File exec = new File(MySeriesConstants.WINDOWS_EXECUTABLE);
+    restart(m, exec);
+  }
+
+  private static void restartLinux(MySeries m) {
+    File exec = new File(MySeriesConstants.LINUX_EXECUTABLE);
+    restart(m, exec);
+  }
+
+  private static void restartDefault(MySeries m) {
+    File exec = new File(MySeriesConstants.APPLICATION_JAR);
+    restartDefault(m, exec);
+  }
+
+  private static void restart(MySeries m, File exec) {
+    try {
+      String pathToApp = exec.getAbsolutePath();
+      File startingDir = exec.getAbsoluteFile().getParentFile();
+      if (exec.exists()) {
+        MyUsefulFunctions.runExternalProgram(new String[]{pathToApp}, startingDir);
+        ApplicationActions.exitApplication(m);
+      } else {
+        MySeriesLogger.logger.log(Level.SEVERE, "Could not restart application");
+        MyMessages.error("Restart Application", "Could not restart the application", false);
+      }
+    } catch (IOException ex) {
+      MySeriesLogger.logger.log(Level.SEVERE, "Could not restart application", ex);
+      MyMessages.error("Restart Application", "Could not restart the application", false);
+    }
+  }
+
+  private static void restartDefault(MySeries m, File exec) {
+    try {
+      String pathToApp = exec.getAbsolutePath();
+      File startingDir = exec.getAbsoluteFile().getParentFile();
+      if (exec.exists()) {
+        MyUsefulFunctions.runExternalProgram(new String[]{"java", "-jar", pathToApp}, startingDir);
+        ApplicationActions.exitApplication(m);
+      } else {
+        MySeriesLogger.logger.log(Level.SEVERE, "Could not restart application");
+        MyMessages.error("Restart Application", "Could not restart the application", false);
+      }
+    } catch (IOException ex) {
+      MySeriesLogger.logger.log(Level.SEVERE, "Could not restart application", ex);
+      MyMessages.error("Restart Application", "Could not restart the application", false);
     }
   }
 

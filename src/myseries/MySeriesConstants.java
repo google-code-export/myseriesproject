@@ -24,5 +24,7 @@ public interface MySeriesConstants {
   String APPLICATION_ICON = "/images/icon.png";
   String LOGO = "/images/logo.png";
   String APPLICATION_JAR = "myseriesproject.jar";
+  String WINDOWS_EXECUTABLE ="myseriesproject.exe";
+  String LINUX_EXECUTABLE ="myseriesproject.sh";
 
 }
