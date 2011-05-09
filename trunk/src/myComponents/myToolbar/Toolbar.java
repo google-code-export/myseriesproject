@@ -9,10 +9,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.logging.Level;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import myComponents.MyUsefulFunctions;
 import myseries.MySeries;
 import myseries.actions.ApplicationActions;
 import tools.MySeriesLogger;
@@ -93,6 +95,16 @@ public class Toolbar extends AbstractToolbar {
   public Integer[] getVisibleButtons() {
     return visibleButtons;
   }
+  
+  public void addButton(int id){
+    if(MyUsefulFunctions.isInArray(visibleButtons, id)){
+      return;
+    }
+    int orLength = visibleButtons.length ;
+    visibleButtons = Arrays.copyOf(visibleButtons, orLength + 1);
+    visibleButtons[orLength] = id;
+    populateToolbar();
+  }
 
   public void removeButton(int id){
       for (int j = 0; j < visibleButtons.length; j++) {
@@ -101,7 +113,7 @@ public class Toolbar extends AbstractToolbar {
               visibleButtons[j]=null;
           }
       }
-      
+    populateToolbar();  
   }
 
   class ToolbarMouseListener extends MouseAdapter {
