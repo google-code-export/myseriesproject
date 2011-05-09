@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package myComponents.myGUI;
+package myComponents.myListeners;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -15,13 +15,13 @@ import myComponents.myToolbar.ToolbarSeperator;
  *
  * @author ssoldatos
  */
-public class MyTimerListener implements ActionListener {
+public class MyMemoryTimerListener implements ActionListener {
 
     private static final long serialVersionUID = 8768767857564L;
     private final ToolbarSeperator mem;
     private final int orientation;
 
-    public MyTimerListener(ToolbarSeperator mem, int orientation) {
+    public MyMemoryTimerListener(ToolbarSeperator mem, int orientation) {
         this.mem = mem;
         this.orientation = orientation;
 

@@ -52,7 +52,8 @@ import javax.swing.BorderFactory;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import myComponents.myGUI.MyFont;
-import myComponents.myGUI.MyTimerListener;
+import myComponents.myListeners.MyFeedsTimerListener;
+import myComponents.myListeners.MyMemoryTimerListener;
 import myComponents.myTableCellRenderers.MyDownloadedCellRenderer;
 import myComponents.myTableCellRenderers.MySubtitlesCellRenderer;
 import myComponents.myTableCellRenderers.MyTitleCellRenderer;
@@ -1171,6 +1172,16 @@ public class MyUsefulFunctions {
     }
     return false;
   }
+  
+  public static void feedUpdater(MySeries m){
+    if(Options.toInt(Options.FEED_UPDATE_FREQUENCY)>0){
+      int fr = Options.toInt(Options.FEED_UPDATE_FREQUENCY)*60*1000;
+     m.feedsTimer = new Timer(fr, new MyFeedsTimerListener(m));
+     m.feedsTimer.start(); 
+    } else {
+      m.feedsTimer.stop(); 
+    }
+  }
 
   public static void createMemoryCons(MySeries m) {
     
@@ -1178,7 +1189,7 @@ public class MyUsefulFunctions {
     if (Options.toInt(Options.MEMORY_CONSUMPTION_UPDATE) > 0) {
       m.myToolbar.addButton(AbstractToolbar.MEMORY);
       ToolbarSeperator mem = getMemoryToolbarSeperator(m);
-      m.memoryTimer = new Timer(Options.toInt(Options.MEMORY_CONSUMPTION_UPDATE), new MyTimerListener(mem, m.myToolbar.getOrientation()));
+      m.memoryTimer = new Timer(Options.toInt(Options.MEMORY_CONSUMPTION_UPDATE), new MyMemoryTimerListener(mem, m.myToolbar.getOrientation()));
       MySeriesLogger.logger.log(Level.INFO, "Starting timer");
       m.memoryTimer.start();
     } else {

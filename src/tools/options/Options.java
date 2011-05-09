@@ -263,6 +263,10 @@ public class Options {
    */
   public static final String MEMORY_CONSUMPTION_UPDATE = "MEMORY_CONSUMTION_UPDATE";
   /**
+   * How often the feeds will be updated
+   */
+  public static final String FEED_UPDATE_FREQUENCY = "FEED_UPDATE_FREQUENCY";
+  /**
    * An array of the options that are selected in combo boxes
    */
   public static final String[] _COMBO_OPTIONS_ = {DATE_FORMAT, DEBUG_MODE, LOOK_AND_FEEL,
@@ -619,6 +623,7 @@ public class Options {
     out.println(Options.RANDOMIZE_LAF + "=false");
     out.println(Options.ACTIVE_FILTER + "=");
     out.println(Options.MEMORY_CONSUMPTION_UPDATE + "=1000");
+    out.println(Options.FEED_UPDATE_FREQUENCY + "=0");
 
     out.close();
   }
@@ -723,6 +728,7 @@ public class Options {
     options.put(Options.RANDOMIZE_LAF, false);
     options.put(Options.ACTIVE_FILTER, "");
     options.put(Options.MEMORY_CONSUMPTION_UPDATE, 1000);
+    options.put(Options.FEED_UPDATE_FREQUENCY, 0);
   }
 
   private static Object getDefaultMainDirectory() {
