@@ -1087,7 +1087,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="panel_episodesList" pref="517" max="32767" attributes="0"/>
+                              <Component id="panel_episodesList" pref="516" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -1177,7 +1177,7 @@
                               <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Component id="panel_filters" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
-                              <Component id="panel_allSeriesEpisodes" pref="468" max="32767" attributes="0"/>
+                              <Component id="panel_allSeriesEpisodes" pref="467" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -1223,13 +1223,13 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                                  <Component id="combobox_downloaded" pref="205" max="32767" attributes="0"/>
+                                  <Component id="combobox_downloaded" pref="210" max="32767" attributes="0"/>
                                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                                  <Component id="comboBox_seen" pref="153" max="32767" attributes="0"/>
+                                  <Component id="comboBox_seen" pref="158" max="32767" attributes="0"/>
                                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                                  <Component id="comboBox_filterSubtitles" pref="135" max="32767" attributes="0"/>
+                                  <Component id="comboBox_filterSubtitles" pref="143" max="32767" attributes="0"/>
                                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                                  <Component id="combobox_filters" pref="205" max="32767" attributes="0"/>
+                                  <Component id="combobox_filters" pref="210" max="32767" attributes="0"/>
                                   <EmptySpace min="-2" max="-2" attributes="0"/>
                                   <Component id="bt_save" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -1365,7 +1365,7 @@
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="statSeries" pref="237" max="32767" attributes="0"/>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
-                              <Component id="statEpisodes" pref="285" max="32767" attributes="0"/>
+                              <Component id="statEpisodes" pref="284" max="32767" attributes="0"/>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -1467,7 +1467,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="feedSplitPanel" pref="517" max="32767" attributes="0"/>
+                              <Component id="feedSplitPanel" pref="516" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -1521,7 +1521,7 @@
                                           <Component id="bt_rssUpdate" alignment="2" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="feedTree" pref="455" max="32767" attributes="0"/>
+                                      <Component id="feedTree" pref="454" max="32767" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -1546,15 +1546,6 @@
                             <Component class="myComponents.myGUI.buttons.MyDefaultButton" name="bt_rssAdd">
                               <Properties>
                                 <Property name="toolTipText" type="java.lang.String" value=""/>
-                                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                                  <Dimension value="[32, 32]"/>
-                                </Property>
-                                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                                  <Dimension value="[32, 32]"/>
-                                </Property>
-                                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                                  <Dimension value="[32, 32]"/>
-                                </Property>
                               </Properties>
                               <Events>
                                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_rssAddActionPerformed"/>
@@ -1566,15 +1557,6 @@
                             <Component class="myComponents.myGUI.buttons.MyDefaultButton" name="bt_rssUpdate">
                               <Properties>
                                 <Property name="toolTipText" type="java.lang.String" value=""/>
-                                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                                  <Dimension value="[32, 32]"/>
-                                </Property>
-                                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                                  <Dimension value="[32, 32]"/>
-                                </Property>
-                                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                                  <Dimension value="[32, 32]"/>
-                                </Property>
                               </Properties>
                               <Events>
                                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_rssUpdateActionPerformed"/>

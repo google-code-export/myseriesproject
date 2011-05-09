@@ -169,7 +169,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
   //public static Toolbar myToolbar;
   private Image appIcon;
   private MyTrayIcon myTrayIcon;
-  public Timer memoryTimer = new Timer(1000, null);
+  public Timer memoryTimer = new Timer(Integer.MAX_VALUE, null);
+  public Timer feedsTimer = new Timer(Integer.MAX_VALUE, null);
 
   // TODO delete multiple episodes
   /**
@@ -325,10 +326,12 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     if (Options.toBoolean(Options.UPDATE_FEEDS)) {
       FeedsActions.updateFeeds(true, this);
     }
+    
     MySeriesLogger.logger.log(Level.INFO, "Adding schedule mouse listener to schedule");
     scheduler.getSchedule().getTblCalendar().addMouseListener(new ScheduleMouseListener());
-    ApplicationActions.warnForLogLevel();
     MyUsefulFunctions.createMemoryCons(this);
+    MyUsefulFunctions.feedUpdater(this);
+    ApplicationActions.warnForLogLevel();
     ApplicationActions.warnForJREVersion();
 
   }
