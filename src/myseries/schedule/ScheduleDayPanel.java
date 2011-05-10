@@ -181,7 +181,7 @@ public class ScheduleDayPanel extends javax.swing.JPanel {
         newW = ((width - NUMBER_LABEL_WIDTH) / MAX_COLUMNS) - (rows * GAP);
         newH =h / (w / newW);
       }
-      im = new ImageIcon(image.getScaledInstance((int)newW,(int) newH, Image.SCALE_SMOOTH));
+      im = new ImageIcon(image.getScaledInstance((int)newW,(int) newH, Options.IMAGE_SCALING[Options.toInt(Options.IMAGE_QUALITY)]));
       MySeriesLogger.logger.log(Level.FINE, "Image scaled");
     } catch (Exception ex) {
       MySeriesLogger.logger.log(Level.WARNING, "Could not scale image.Using default image");
@@ -224,7 +224,7 @@ public class ScheduleDayPanel extends javax.swing.JPanel {
     if(icHeight==0 || icWidth==0){
       
     }
-    Image scaled = im.getImage().getScaledInstance(icWidth, icHeight, Image.SCALE_SMOOTH);
+    Image scaled = im.getImage().getScaledInstance(icWidth, icHeight, Options.IMAGE_SCALING[Options.toInt(Options.IMAGE_QUALITY)]);
     MySeriesLogger.logger.log(Level.FINE, "Image scaled");
     return new ImageIcon(scaled);
   }
