@@ -23,6 +23,7 @@ import myseries.MySeriesConstants;
 import myseries.series.Series;
 import tools.MySeriesLogger;
 import tools.download.screenshot.DownloadScreenshot;
+import tools.options.Options;
 
 /**
  * The screenshot panel
@@ -98,7 +99,7 @@ public class MyImagePanel extends JPanel {
     public void changeSize(int width, int height) {
         MySeriesLogger.logger.log(Level.INFO, "Resizing screenshot to {1} x {2}", new Object[]{width, height});
         this.defaultImage = false;
-        image = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        image = originalImage.getScaledInstance(width, height, Options.IMAGE_SCALING[Options.toInt(Options.IMAGE_QUALITY)]);
         this.setSize(width, height);
         revalidate();
         repaint();

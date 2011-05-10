@@ -6,6 +6,7 @@ package tools.options;
 
 import Exceptions.OptionFormatException;
 import java.awt.Color;
+import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -257,7 +258,7 @@ public class Options {
   /**
    * The active episodes filter
    */
-  public static final String ACTIVE_FILTER= "ACTIVE_FILTER";
+  public static final String ACTIVE_FILTER = "ACTIVE_FILTER";
   /**
    * How often memory consumption should be updated
    */
@@ -267,12 +268,20 @@ public class Options {
    */
   public static final String FEED_UPDATE_FREQUENCY = "FEED_UPDATE_FREQUENCY";
   /**
+   * The quality of the screenshots
+   */
+  public static final String IMAGE_QUALITY = "IMAGE_QUALITY";
+  /**
+   * The type of iamge scaling from fastest(worst quality) to slower (better quality)
+   */
+  public static final int[] IMAGE_SCALING = {Image.SCALE_REPLICATE,
+    Image.SCALE_FAST, Image.SCALE_AREA_AVERAGING, Image.SCALE_SMOOTH};
+  /**
    * An array of the options that are selected in combo boxes
    */
   public static final String[] _COMBO_OPTIONS_ = {DATE_FORMAT, DEBUG_MODE, LOOK_AND_FEEL,
     FONT_FACE, SUBTITLE_SITE, PRIMARY_SUB, SECONDARY_SUB};
 
- 
   /**
    * Loads the options from MySeries.ini or writes a default if <br />
    * it does not exist
@@ -616,7 +625,7 @@ public class Options {
     out.println(Options.TABS_ORDER + "=" + getDefaultTabsOrder());
     out.println(Options.MAIN_DIRECTORY + "=" + getDefaultMainDirectory());
     out.println(Options.WARN_FOR_LOG_USE + "=true");
-    out.println(Options.WARN_FOR_VERSION+ "=true");
+    out.println(Options.WARN_FOR_VERSION + "=true");
     out.println(Options.NO_RENAME_CONFIRMATION + "=false");
     out.println(Options.AUTO_RENAME_SUBS + "=false");
     out.println(Options.MINIMIZE_TO_TRAY + "=false");
@@ -624,6 +633,7 @@ public class Options {
     out.println(Options.ACTIVE_FILTER + "=");
     out.println(Options.MEMORY_CONSUMPTION_UPDATE + "=1000");
     out.println(Options.FEED_UPDATE_FREQUENCY + "=0");
+    out.println(Options.IMAGE_QUALITY + "=" + 3);
 
     out.close();
   }
@@ -642,7 +652,7 @@ public class Options {
     try {
       out = MyUsefulFunctions.createOutputStream(new File(Options._USER_DIR_ + "MySeries.ini"), false);
 
-      for (int i =0 ; i < keys.length;i++) {
+      for (int i = 0; i < keys.length; i++) {
         String key = String.valueOf(keys[i]);
         String value = "";
         if (options.get(key) instanceof Object[]) {
@@ -674,7 +684,7 @@ public class Options {
 
   public static Integer[] getDefaultToolbarButtons() {
     return new Integer[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
-          12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29,30};
+          12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30};
   }
 
   private static Integer[] getDefaultTabsOrder() {
@@ -729,6 +739,7 @@ public class Options {
     options.put(Options.ACTIVE_FILTER, "");
     options.put(Options.MEMORY_CONSUMPTION_UPDATE, 1000);
     options.put(Options.FEED_UPDATE_FREQUENCY, 0);
+    options.put(Options.IMAGE_QUALITY, 3);
   }
 
   private static Object getDefaultMainDirectory() {

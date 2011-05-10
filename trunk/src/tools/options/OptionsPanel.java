@@ -255,6 +255,8 @@ public class OptionsPanel extends MyDraggable {
     jLabel23 = new javax.swing.JLabel();
     jLabel24 = new javax.swing.JLabel();
     sl_feeds = new javax.swing.JSlider();
+    sl_image = new javax.swing.JSlider();
+    jLabel25 = new javax.swing.JLabel();
     lb_title = new javax.swing.JLabel();
     bt_cancel = new myComponents.myGUI.buttons.MyButtonCancel();
     bt_help = new myComponents.myGUI.buttons.MyButtonHelp();
@@ -897,7 +899,7 @@ public class OptionsPanel extends MyDraggable {
       }
     });
 
-    jLabel1.setText(" Update Memory indicator every 50 ms");
+    jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
     binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, sl_memory, org.jdesktop.beansbinding.ELProperty.create(" Update Memory consumption every ${value} ms"), jLabel1, org.jdesktop.beansbinding.BeanProperty.create("text"));
     bindingGroup.addBinding(binding);
@@ -913,12 +915,16 @@ public class OptionsPanel extends MyDraggable {
     sl_memory.setOpaque(false);
 
     jLabel21.setFont(jLabel21.getFont().deriveFont((jLabel21.getFont().getStyle() | java.awt.Font.ITALIC)));
+    jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     jLabel21.setText("(Set it to 0 to remove the memory indicator)");
+
+    jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
     binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, sl_feeds, org.jdesktop.beansbinding.ELProperty.create("Update feeds every ${value} min"), jLabel23, org.jdesktop.beansbinding.BeanProperty.create("text"));
     bindingGroup.addBinding(binding);
 
     jLabel24.setFont(jLabel24.getFont().deriveFont((jLabel24.getFont().getStyle() | java.awt.Font.ITALIC)));
+    jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     jLabel24.setText("(Set it to 0 to deactivate it)");
 
     sl_feeds.setMajorTickSpacing(10);
@@ -931,6 +937,17 @@ public class OptionsPanel extends MyDraggable {
     sl_feeds.setName(Options.FEED_UPDATE_FREQUENCY);
     sl_feeds.setOpaque(false);
 
+    sl_image.setMajorTickSpacing(1);
+    sl_image.setMaximum(3);
+    sl_image.setMinorTickSpacing(1);
+    sl_image.setPaintTicks(true);
+    sl_image.setSnapToTicks(true);
+    sl_image.setValue(Options.toInt(Options.IMAGE_QUALITY));
+    sl_image.setName(Options.IMAGE_QUALITY);
+
+    jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    jLabel25.setText("Screenshots quality");
+
     javax.swing.GroupLayout panel_performanceLayout = new javax.swing.GroupLayout(panel_performance);
     panel_performance.setLayout(panel_performanceLayout);
     panel_performanceLayout.setHorizontalGroup(
@@ -938,24 +955,34 @@ public class OptionsPanel extends MyDraggable {
       .addGroup(panel_performanceLayout.createSequentialGroup()
         .addContainerGap()
         .addGroup(panel_performanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
-          .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
-          .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(panel_performanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(sl_feeds, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(sl_memory, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addContainerGap(31, Short.MAX_VALUE))
-      .addGroup(panel_performanceLayout.createSequentialGroup()
-        .addGap(10, 10, 10)
-        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(panel_performanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-          .addComponent(cb_autoUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-          .addComponent(cb_autoUnzip, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addContainerGap(45, Short.MAX_VALUE))
+          .addGroup(panel_performanceLayout.createSequentialGroup()
+            .addGap(180, 180, 180)
+            .addComponent(cb_autoUnzip, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(panel_performanceLayout.createSequentialGroup()
+            .addGap(180, 180, 180)
+            .addComponent(cb_autoUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE))
+          .addGroup(panel_performanceLayout.createSequentialGroup()
+            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(253, 253, 253))
+          .addGroup(panel_performanceLayout.createSequentialGroup()
+            .addGroup(panel_performanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+              .addComponent(jLabel25, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
+              .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
+              .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
+              .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel_performanceLayout.createSequentialGroup()
+                .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5))
+              .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(panel_performanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(sl_feeds, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addComponent(sl_memory, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addComponent(sl_image, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE))))
+        .addContainerGap())
     );
+
+    panel_performanceLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {sl_feeds, sl_memory});
+
     panel_performanceLayout.setVerticalGroup(
       panel_performanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(panel_performanceLayout.createSequentialGroup()
@@ -973,13 +1000,17 @@ public class OptionsPanel extends MyDraggable {
             .addComponent(jLabel23)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        .addGap(18, 18, 18)
+        .addGap(19, 19, 19)
+        .addGroup(panel_performanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+          .addComponent(jLabel25)
+          .addComponent(sl_image, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addGap(40, 40, 40)
         .addGroup(panel_performanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(cb_autoUpdate))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(cb_autoUnzip)
-        .addContainerGap(130, Short.MAX_VALUE))
+        .addContainerGap(58, Short.MAX_VALUE))
     );
 
     panel_performanceLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cb_autoUpdate, jLabel17});
@@ -1375,6 +1406,7 @@ public class OptionsPanel extends MyDraggable {
   private javax.swing.JLabel jLabel22;
   private javax.swing.JLabel jLabel23;
   private javax.swing.JLabel jLabel24;
+  private javax.swing.JLabel jLabel25;
   private javax.swing.JLabel jLabel3;
   private javax.swing.JLabel jLabel4;
   private javax.swing.JLabel jLabel5;
@@ -1396,6 +1428,7 @@ public class OptionsPanel extends MyDraggable {
   private javax.swing.JPanel panel_performance;
   private javax.swing.JPanel panel_renaming;
   private javax.swing.JSlider sl_feeds;
+  private javax.swing.JSlider sl_image;
   private javax.swing.JSlider sl_memory;
   private javax.swing.JSpinner spinner_columns;
   private javax.swing.JSpinner spinner_fontSize;
@@ -1496,5 +1529,12 @@ public class OptionsPanel extends MyDraggable {
         labelTable.put( new Integer( 60 ), new JLabel("60") );
         sl_feeds.setLabelTable(labelTable);
         sl_feeds.setPaintLabels(true);
+        labelTable = new Hashtable();
+        labelTable.put( new Integer( 0 ), new JLabel("Low") );
+        labelTable.put( new Integer( 1 ), new JLabel("Medium") );
+        labelTable.put( new Integer( 2 ), new JLabel("Normal") );
+        labelTable.put( new Integer( 3 ), new JLabel("High") );
+        sl_image.setLabelTable(labelTable);
+        sl_image.setPaintLabels(true);
     }
 }
