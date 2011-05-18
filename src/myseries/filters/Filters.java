@@ -5,19 +5,19 @@
 package myseries.filters;
 
 import database.DBConnection;
-import database.DBHelper;
 import database.EpisodesRecord;
 import database.SeriesRecord;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Vector;
+import java.sql.Statement;
+import java.util.logging.Level;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.TableColumnModel;
 import myComponents.MyTableModels.MyFilteredSeriesTableModel;
-import myComponents.MyUsefulFunctions;
-import tools.download.subtitles.Subtitle;
+import tools.MySeriesLogger;
 import tools.languages.LangsList;
 import tools.languages.Language;
 
@@ -140,6 +140,7 @@ public class Filters {
    * 5: Not Primary , 6:Unaware , defautlt :4
    */
   private static int subtitles;
+  private static String currentFilter = "";
   
   
 
@@ -148,11 +149,19 @@ public class Filters {
    * First empty the table, create the new model and set it tot he filtered series table
    * @throws java.sql.SQLException
    */
-  public static void getFilteredSeries(JComboBox cbSeen, JComboBox cbSubs, JComboBox cbDownload, JTable table_filters) throws SQLException {
+  public static void getFilteredSeries(JComboBox cbSeen, JComboBox cbSubs, JComboBox cbDownload, JComboBox cb_filters, JTable table_filters ) throws SQLException {
     int id, subsInt, series_ID, episode;
     Boolean boolDownloaded, boolSeen;
     String title, aired;
     Language subs;
+    String filter = isSavedFilter(cbSeen.getSelectedIndex(),cbSubs.getSelectedIndex(),cbDownload.getSelectedIndex());
+    if(filter!=null && !filter.equals(currentFilter)){
+      cb_filters.setSelectedItem(filter);
+      currentFilter = filter;
+    } else if(filter == null){
+      JTextField tf = (JTextField) cb_filters.getEditor().getEditorComponent();
+      tf.setText("");
+    }
     emptyFilteredSeries();
     String where = "";
     where += getSeen(cbSeen) == EpisodesRecord.NOT_SEEN || getSeen(cbSeen) == EpisodesRecord.SEEN ? " AND seen = " + getSeen(cbSeen) : "";
@@ -185,14 +194,6 @@ public class Filters {
       epRecord.setSeen(boolSeen ? 1 : 0);
       epRecord.setSubs(subs);
       epRecord.setTitle(title);
-      
-
-
-//      Vector<SeriesRecord> seriesV = DBHelper.getSeriesBySql(
-//          "SELECT * FROM series WHERE hidden = " + SeriesRecord.NOT_HIDDEN
-//          + " AND deleted = " + SeriesRecord.NOT_DELETED
-//          + " AND series_ID = " + series_ID);
-//      ser = seriesV.get(0);
       Object[] data = {fulltitle, episode, epRecord, aired, boolDownloaded, subs, boolSeen};
       if (getTableModel_filterSeries() != null) {
         getTableModel_filterSeries().addRow(data);
@@ -295,6 +296,21 @@ public class Filters {
     for (int i = 0; i < filtersTableWidths.length; i++) {
       Integer width = filtersTableWidths[i];
       model.getColumn(i).setPreferredWidth(width);
+    }
+  }
+
+  private static String isSavedFilter(int seen, int subs, int download) {
+    try {
+      Statement stmt = DBConnection.conn.createStatement();
+      String sql = "SELECT title FROM filters WHERE downloaded = " + download + " AND seen = " + seen + " AND subtitles = " + subs;
+      ResultSet rs = stmt.executeQuery(sql);
+      while(rs.next()){
+        return rs.getString(1);
+      }
+      return null;
+    } catch (SQLException ex) {
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+      return null;
     }
   }
 
