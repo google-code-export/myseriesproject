@@ -234,6 +234,9 @@ public class OptionsPanel extends MyDraggable {
     jLabel2 = new javax.swing.JLabel();
     spinner_columns = new javax.swing.JSpinner();
     cb_updateFeeds = new javax.swing.JCheckBox();
+    jLabel26 = new javax.swing.JLabel();
+    jLabel27 = new javax.swing.JLabel();
+    sl_feeds = new javax.swing.JSlider();
     panel_renaming = new javax.swing.JPanel();
     jLabel18 = new javax.swing.JLabel();
     jLabel19 = new javax.swing.JLabel();
@@ -251,10 +254,6 @@ public class OptionsPanel extends MyDraggable {
     cb_autoUpdate = new javax.swing.JCheckBox();
     jLabel1 = new javax.swing.JLabel();
     sl_memory = new javax.swing.JSlider();
-    jLabel21 = new javax.swing.JLabel();
-    jLabel23 = new javax.swing.JLabel();
-    jLabel24 = new javax.swing.JLabel();
-    sl_feeds = new javax.swing.JSlider();
     sl_image = new javax.swing.JSlider();
     jLabel25 = new javax.swing.JLabel();
     lb_title = new javax.swing.JLabel();
@@ -415,7 +414,7 @@ public class OptionsPanel extends MyDraggable {
           .addComponent(bt_mainDirectory, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(tf_mainDir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(jLabel7))
-        .addContainerGap(105, Short.MAX_VALUE))
+        .addContainerGap(193, Short.MAX_VALUE))
     );
 
     panel_generalLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {combobox_debugMode, jLabel22, jLabel3, jLabel4});
@@ -516,34 +515,32 @@ public class OptionsPanel extends MyDraggable {
       .addGroup(panel_appearanceLayout.createSequentialGroup()
         .addContainerGap()
         .addGroup(panel_appearanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(jLabel16, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
+          .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
+          .addComponent(checkbox_dontUseSkin, javax.swing.GroupLayout.Alignment.TRAILING)
+          .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGroup(panel_appearanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(panel_appearanceLayout.createSequentialGroup()
-            .addComponent(cb_minimizeTray, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap())
+            .addComponent(combobox_laf, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(379, 379, 379))
           .addGroup(panel_appearanceLayout.createSequentialGroup()
-            .addGroup(panel_appearanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-              .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-              .addComponent(jLabel16, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
-              .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
-              .addComponent(checkbox_dontUseSkin, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE))
+            .addComponent(label_preview, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+            .addGap(184, 184, 184))
+          .addGroup(panel_appearanceLayout.createSequentialGroup()
+            .addComponent(combobox_fonts, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(spinner_fontSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(295, 295, 295))
+          .addGroup(panel_appearanceLayout.createSequentialGroup()
             .addGroup(panel_appearanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addGroup(panel_appearanceLayout.createSequentialGroup()
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panel_appearanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                  .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel_appearanceLayout.createSequentialGroup()
-                    .addGroup(panel_appearanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                      .addComponent(cb_randomizeLaf, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
-                      .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel_appearanceLayout.createSequentialGroup()
-                        .addGroup(panel_appearanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                          .addComponent(button_BGColor, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                          .addComponent(combobox_fonts, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(spinner_fontSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGap(30, 30, 30))
-                  .addComponent(label_preview, javax.swing.GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE))
-                .addGap(184, 184, 184))
-              .addGroup(panel_appearanceLayout.createSequentialGroup()
-                .addGap(4, 4, 4)
-                .addComponent(combobox_laf, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+              .addComponent(cb_randomizeLaf, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE)
+              .addComponent(button_BGColor))
+            .addGap(203, 203, 203))))
+      .addGroup(panel_appearanceLayout.createSequentialGroup()
+        .addGap(10, 10, 10)
+        .addComponent(cb_minimizeTray, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+        .addGap(396, 396, 396))
     );
     panel_appearanceLayout.setVerticalGroup(
       panel_appearanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -552,25 +549,25 @@ public class OptionsPanel extends MyDraggable {
         .addGroup(panel_appearanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jLabel5)
           .addComponent(combobox_laf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(cb_randomizeLaf)
-        .addGap(8, 8, 8)
-        .addGroup(panel_appearanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+        .addGap(13, 13, 13)
+        .addGroup(panel_appearanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(checkbox_dontUseSkin)
           .addComponent(button_BGColor))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGap(18, 18, 18)
         .addGroup(panel_appearanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
           .addGroup(panel_appearanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
             .addComponent(combobox_fonts, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(spinner_fontSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
           .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addGroup(panel_appearanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
           .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(label_preview, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGap(18, 18, 18)
         .addComponent(cb_minimizeTray)
-        .addContainerGap(121, Short.MAX_VALUE))
+        .addContainerGap(166, Short.MAX_VALUE))
     );
 
     panel_appearanceLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {combobox_fonts, jLabel10, spinner_fontSize});
@@ -688,6 +685,25 @@ public class OptionsPanel extends MyDraggable {
     cb_updateFeeds.setName(Options.UPDATE_FEEDS);
     cb_updateFeeds.setOpaque(false);
 
+    jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+
+    binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, sl_feeds, org.jdesktop.beansbinding.ELProperty.create("Update feeds every ${value} min"), jLabel26, org.jdesktop.beansbinding.BeanProperty.create("text"));
+    bindingGroup.addBinding(binding);
+
+    jLabel27.setFont(jLabel27.getFont().deriveFont((jLabel27.getFont().getStyle() | java.awt.Font.ITALIC)));
+    jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    jLabel27.setText("(Set it to 0 to deactivate it)");
+
+    sl_feeds.setMajorTickSpacing(10);
+    sl_feeds.setMaximum(60);
+    sl_feeds.setMinorTickSpacing(1);
+    sl_feeds.setPaintTicks(true);
+    sl_feeds.setSnapToTicks(true);
+    sl_feeds.setToolTipText("Frequency of memory consumption update");
+    sl_feeds.setValue(Options.toInt(Options.FEED_UPDATE_FREQUENCY));
+    sl_feeds.setName(Options.FEED_UPDATE_FREQUENCY);
+    sl_feeds.setOpaque(false);
+
     javax.swing.GroupLayout panel_internetLayout = new javax.swing.GroupLayout(panel_internet);
     panel_internet.setLayout(panel_internetLayout);
     panel_internetLayout.setHorizontalGroup(
@@ -695,20 +711,13 @@ public class OptionsPanel extends MyDraggable {
       .addGroup(panel_internetLayout.createSequentialGroup()
         .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(panel_internetLayout.createSequentialGroup()
-            .addGap(10, 10, 10)
+            .addGap(21, 21, 21)
             .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(cb_updateFeeds, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
-              .addComponent(jCheckBox1, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
-              .addComponent(checkbox_useProxy, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
-              .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                .addGroup(panel_internetLayout.createSequentialGroup()
-                  .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                  .addGap(18, 18, 18)
-                  .addComponent(textfield_port, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(panel_internetLayout.createSequentialGroup()
-                  .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                  .addGap(18, 18, 18)
-                  .addComponent(textfield_proxy, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+              .addComponent(cb_updateFeeds, javax.swing.GroupLayout.Alignment.TRAILING)
+              .addComponent(jLabel26, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addComponent(jLabel27, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addComponent(sl_feeds, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
           .addGroup(panel_internetLayout.createSequentialGroup()
             .addContainerGap()
             .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -719,8 +728,24 @@ public class OptionsPanel extends MyDraggable {
             .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
               .addComponent(combo_primaryLang, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
               .addComponent(combo_secondaryLang, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(spinner_columns, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))))
-        .addContainerGap())
+              .addComponent(spinner_columns, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
+          .addGroup(panel_internetLayout.createSequentialGroup()
+            .addContainerGap()
+            .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(panel_internetLayout.createSequentialGroup()
+            .addContainerGap()
+            .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+              .addComponent(checkbox_useProxy, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+              .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(panel_internetLayout.createSequentialGroup()
+                  .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                  .addGap(18, 18, 18)
+                  .addComponent(textfield_port, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panel_internetLayout.createSequentialGroup()
+                  .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                  .addGap(18, 18, 18)
+                  .addComponent(textfield_proxy, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+        .addContainerGap(136, Short.MAX_VALUE))
     );
     panel_internetLayout.setVerticalGroup(
       panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -739,11 +764,18 @@ public class OptionsPanel extends MyDraggable {
             .addComponent(combo_secondaryLang, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(spinner_columns, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGap(13, 13, 13)
         .addComponent(cb_updateFeeds)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(sl_feeds, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addGroup(panel_internetLayout.createSequentialGroup()
+            .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        .addGap(18, 18, 18)
         .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(15, 15, 15)
+        .addGap(28, 28, 28)
         .addComponent(checkbox_useProxy, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addGroup(panel_internetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -815,35 +847,31 @@ public class OptionsPanel extends MyDraggable {
       .addGroup(panel_renamingLayout.createSequentialGroup()
         .addContainerGap()
         .addGroup(panel_renamingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(panel_renamingLayout.createSequentialGroup()
-            .addGroup(panel_renamingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addGroup(panel_renamingLayout.createSequentialGroup()
-                .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tf_seasonSep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-              .addGroup(panel_renamingLayout.createSequentialGroup()
-                .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tf_episodeSep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-              .addGroup(panel_renamingLayout.createSequentialGroup()
-                .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tf_titleSep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addGap(524, 524, 524))
-          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_renamingLayout.createSequentialGroup()
-            .addGroup(panel_renamingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-              .addGroup(panel_renamingLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE))
-              .addComponent(cb_noRenameConf, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE))
-            .addGap(269, 269, 269))
-          .addGroup(panel_renamingLayout.createSequentialGroup()
+          .addComponent(jLabel18, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+          .addComponent(jLabel19, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+          .addComponent(jLabel20, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGroup(panel_renamingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(tf_seasonSep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(tf_episodeSep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(tf_titleSep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addGap(627, 627, 627))
+      .addGroup(panel_renamingLayout.createSequentialGroup()
+        .addGap(10, 10, 10)
+        .addGroup(panel_renamingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+          .addComponent(cb_noRenameConf, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+          .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel_renamingLayout.createSequentialGroup()
             .addGap(21, 21, 21)
-            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGap(263, 263, 263))
-          .addGroup(panel_renamingLayout.createSequentialGroup()
-            .addComponent(cd_autoRename, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap())))
+            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        .addGap(239, 239, 239))
+      .addGroup(panel_renamingLayout.createSequentialGroup()
+        .addGap(10, 10, 10)
+        .addComponent(cd_autoRename, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(305, 305, 305))
+      .addGroup(panel_renamingLayout.createSequentialGroup()
+        .addGap(31, 31, 31)
+        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(334, Short.MAX_VALUE))
     );
     panel_renamingLayout.setVerticalGroup(
       panel_renamingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -852,28 +880,29 @@ public class OptionsPanel extends MyDraggable {
         .addGroup(panel_renamingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
           .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
           .addComponent(tf_seasonSep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGap(12, 12, 12)
         .addGroup(panel_renamingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
           .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
           .addComponent(tf_episodeSep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addGroup(panel_renamingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
           .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
           .addComponent(tf_titleSep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(cb_noRenameConf)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(jLabel6)
-        .addGap(5, 5, 5)
-        .addComponent(cd_autoRename, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(jLabel12)
-        .addGap(291, 291, 291))
+        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(11, 11, 11)
+        .addComponent(cd_autoRename, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(181, 181, 181))
     );
 
     tabbedPane_options.addTab("Renaming", panel_renaming);
 
     panel_performance.setName("Performance"); // NOI18N
+    panel_performance.setOpaque(false);
 
     jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     jLabel17.setText("Auto update Files :");
@@ -901,7 +930,7 @@ public class OptionsPanel extends MyDraggable {
 
     jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
-    binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, sl_memory, org.jdesktop.beansbinding.ELProperty.create(" Update Memory consumption every ${value} ms"), jLabel1, org.jdesktop.beansbinding.BeanProperty.create("text"));
+    binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, sl_memory, org.jdesktop.beansbinding.ELProperty.create(" Update Memory indicator every ${value} ms (0 to remove it)"), jLabel1, org.jdesktop.beansbinding.BeanProperty.create("text"));
     bindingGroup.addBinding(binding);
 
     sl_memory.setMajorTickSpacing(1000);
@@ -914,29 +943,6 @@ public class OptionsPanel extends MyDraggable {
     sl_memory.setName(Options.MEMORY_CONSUMPTION_UPDATE);
     sl_memory.setOpaque(false);
 
-    jLabel21.setFont(jLabel21.getFont().deriveFont((jLabel21.getFont().getStyle() | java.awt.Font.ITALIC)));
-    jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-    jLabel21.setText("(Set it to 0 to remove the memory indicator)");
-
-    jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-
-    binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, sl_feeds, org.jdesktop.beansbinding.ELProperty.create("Update feeds every ${value} min"), jLabel23, org.jdesktop.beansbinding.BeanProperty.create("text"));
-    bindingGroup.addBinding(binding);
-
-    jLabel24.setFont(jLabel24.getFont().deriveFont((jLabel24.getFont().getStyle() | java.awt.Font.ITALIC)));
-    jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-    jLabel24.setText("(Set it to 0 to deactivate it)");
-
-    sl_feeds.setMajorTickSpacing(10);
-    sl_feeds.setMaximum(60);
-    sl_feeds.setMinorTickSpacing(1);
-    sl_feeds.setPaintTicks(true);
-    sl_feeds.setSnapToTicks(true);
-    sl_feeds.setToolTipText("Frequency of memory consumption update");
-    sl_feeds.setValue(Options.toInt(Options.FEED_UPDATE_FREQUENCY));
-    sl_feeds.setName(Options.FEED_UPDATE_FREQUENCY);
-    sl_feeds.setOpaque(false);
-
     sl_image.setMajorTickSpacing(1);
     sl_image.setMaximum(3);
     sl_image.setMinorTickSpacing(1);
@@ -944,8 +950,9 @@ public class OptionsPanel extends MyDraggable {
     sl_image.setSnapToTicks(true);
     sl_image.setValue(Options.toInt(Options.IMAGE_QUALITY));
     sl_image.setName(Options.IMAGE_QUALITY);
+    sl_image.setOpaque(false);
 
-    jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     jLabel25.setText("Screenshots quality");
 
     javax.swing.GroupLayout panel_performanceLayout = new javax.swing.GroupLayout(panel_performance);
@@ -953,64 +960,44 @@ public class OptionsPanel extends MyDraggable {
     panel_performanceLayout.setHorizontalGroup(
       panel_performanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(panel_performanceLayout.createSequentialGroup()
-        .addContainerGap()
         .addGroup(panel_performanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(panel_performanceLayout.createSequentialGroup()
-            .addGap(180, 180, 180)
-            .addComponent(cb_autoUnzip, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(88, 88, 88)
+            .addGroup(panel_performanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(sl_memory, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addComponent(jLabel1)
+              .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addComponent(sl_image, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)))
           .addGroup(panel_performanceLayout.createSequentialGroup()
-            .addGap(180, 180, 180)
-            .addComponent(cb_autoUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE))
-          .addGroup(panel_performanceLayout.createSequentialGroup()
-            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(253, 253, 253))
-          .addGroup(panel_performanceLayout.createSequentialGroup()
-            .addGroup(panel_performanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-              .addComponent(jLabel25, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
-              .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
-              .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
-              .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel_performanceLayout.createSequentialGroup()
-                .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5))
-              .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE))
+            .addContainerGap()
+            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(panel_performanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(sl_feeds, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(sl_memory, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(sl_image, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE))))
-        .addContainerGap())
+              .addComponent(cb_autoUnzip, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addComponent(cb_autoUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE))))
+        .addContainerGap(56, Short.MAX_VALUE))
     );
 
-    panel_performanceLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {sl_feeds, sl_memory});
+    panel_performanceLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {sl_image, sl_memory});
 
     panel_performanceLayout.setVerticalGroup(
       panel_performanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(panel_performanceLayout.createSequentialGroup()
+        .addGap(27, 27, 27)
+        .addComponent(jLabel1)
         .addGap(15, 15, 15)
-        .addGroup(panel_performanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(sl_memory, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addGroup(panel_performanceLayout.createSequentialGroup()
-            .addComponent(jLabel1)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        .addGap(1, 1, 1)
-        .addGroup(panel_performanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(sl_feeds, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addGroup(panel_performanceLayout.createSequentialGroup()
-            .addComponent(jLabel23)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        .addGap(19, 19, 19)
-        .addGroup(panel_performanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-          .addComponent(jLabel25)
-          .addComponent(sl_image, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addGap(40, 40, 40)
+        .addComponent(sl_memory, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(jLabel25)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(sl_image, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addGroup(panel_performanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(cb_autoUpdate))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(cb_autoUnzip)
-        .addContainerGap(58, Short.MAX_VALUE))
+        .addContainerGap(169, Short.MAX_VALUE))
     );
 
     panel_performanceLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cb_autoUpdate, jLabel17});
@@ -1030,8 +1017,8 @@ public class OptionsPanel extends MyDraggable {
       panel_optionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(panel_optionsLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(tabbedPane_options, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addComponent(tabbedPane_options, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(21, Short.MAX_VALUE))
     );
 
     lb_title.setFont(lb_title.getFont().deriveFont(lb_title.getFont().getStyle() | java.awt.Font.BOLD, lb_title.getFont().getSize()+2));
@@ -1083,8 +1070,8 @@ public class OptionsPanel extends MyDraggable {
           .addComponent(bt_cancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(bt_help, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(panel_options, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addComponent(panel_options, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(bt_ok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
     );
 
@@ -1092,7 +1079,7 @@ public class OptionsPanel extends MyDraggable {
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+      .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1402,11 +1389,10 @@ public class OptionsPanel extends MyDraggable {
   private javax.swing.JLabel jLabel19;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JLabel jLabel20;
-  private javax.swing.JLabel jLabel21;
   private javax.swing.JLabel jLabel22;
-  private javax.swing.JLabel jLabel23;
-  private javax.swing.JLabel jLabel24;
   private javax.swing.JLabel jLabel25;
+  private javax.swing.JLabel jLabel26;
+  private javax.swing.JLabel jLabel27;
   private javax.swing.JLabel jLabel3;
   private javax.swing.JLabel jLabel4;
   private javax.swing.JLabel jLabel5;
