@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -300,10 +301,11 @@ public class Filters {
   }
 
   private static String isSavedFilter(int seen, int subs, int download) {
+    ResultSet rs = null ;
     try {
       Statement stmt = DBConnection.conn.createStatement();
       String sql = "SELECT title FROM filters WHERE downloaded = " + download + " AND seen = " + seen + " AND subtitles = " + subs;
-      ResultSet rs = stmt.executeQuery(sql);
+      rs = stmt.executeQuery(sql);
       while(rs.next()){
         return rs.getString(1);
       }
@@ -311,6 +313,14 @@ public class Filters {
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, null, ex);
       return null;
+    } finally {
+      if(rs !=null){
+        try {
+          rs.close();
+        } catch (SQLException ex) {
+          MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+        }
+      }
     }
   }
 
