@@ -187,7 +187,7 @@ public class ApplicationActions {
     try {
       if (name == MySeries.TAB_EPISODES_ID) {
       } else if (name == MySeries.TAB_FILTERS_ID) {
-        Filters.getFilteredSeries(m.comboBox_seen, m.comboBox_filterSubtitles, m.combobox_downloaded, m.tableFilters);
+        Filters.getFilteredSeries(m.comboBox_seen, m.comboBox_filterSubtitles, m.combobox_downloaded,m.combobox_filters, m.tableFilters);
       } else if (name == MySeries.TAB_RATINGS_ID) {
         m.statSeries.refresh(Options.toBoolean(Options.UNIFIED_SERIES));
         m.statEpisodes.refresh();

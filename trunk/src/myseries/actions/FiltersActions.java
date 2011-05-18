@@ -9,12 +9,10 @@ import database.FilterRecord;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import myComponents.MyMessages;
 import myseries.filters.Filters;
 import myseries.MySeries;
-import myComponents.MyUsefulFunctions;
 import tools.MySeriesLogger;
 
 /**
@@ -27,7 +25,7 @@ public class FiltersActions {
     try {
       MySeriesLogger.logger.log(Level.INFO, "Filtering subtitles");
       //Filters.setSubtitles(comboBox_subtitles.getSelectedIndex());
-      Filters.getFilteredSeries(m.comboBox_seen, m.comboBox_filterSubtitles, m.combobox_downloaded, m.tableFilters);
+      Filters.getFilteredSeries(m.comboBox_seen, m.comboBox_filterSubtitles, m.combobox_downloaded,m.combobox_filters, m.tableFilters);
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     }
@@ -37,7 +35,7 @@ public class FiltersActions {
     try {
       MySeriesLogger.logger.log(Level.INFO, "Filtering watch");
       //Filters.setSeen(comboBox_seen.getSelectedIndex());
-      Filters.getFilteredSeries(m.comboBox_seen, m.comboBox_filterSubtitles, m.combobox_downloaded, m.tableFilters);
+      Filters.getFilteredSeries(m.comboBox_seen, m.comboBox_filterSubtitles, m.combobox_downloaded,m.combobox_filters, m.tableFilters);
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     }
@@ -47,7 +45,7 @@ public class FiltersActions {
     try {
       MySeriesLogger.logger.log(Level.INFO, "Filtering downloaded");
       //Filters.setDownloaded(combobox_downloaded.getSelectedIndex());
-      Filters.getFilteredSeries(m.comboBox_seen, m.comboBox_filterSubtitles, m.combobox_downloaded, m.tableFilters);
+      Filters.getFilteredSeries(m.comboBox_seen, m.comboBox_filterSubtitles, m.combobox_downloaded,m.combobox_filters, m.tableFilters);
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     }

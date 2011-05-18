@@ -171,7 +171,7 @@ public class SeriesActions {
       MyEvent evt = new MyEvent(m, MyEventHandler.SET_CURRENT_SERIES);
       evt.setSeries(origSeries);
       m.getEvClass().fireMyEvent(evt);
-      Filters.getFilteredSeries(m.comboBox_seen, m.comboBox_filterSubtitles, m.combobox_downloaded, m.tableFilters);
+      Filters.getFilteredSeries(m.comboBox_seen, m.comboBox_filterSubtitles, m.combobox_downloaded,m.combobox_filters, m.tableFilters);
       MySeriesLogger.logger.log(Level.FINE, "Updating finished");
       MyMessages.message("Update finished", "Updating of series files finished.");
 
