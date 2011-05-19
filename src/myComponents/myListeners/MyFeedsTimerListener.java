@@ -28,9 +28,7 @@ public class MyFeedsTimerListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-      System.out.println("Feed update fired " + System.currentTimeMillis());
        FeedsActions.updateFeeds(true, m);
-      
     }
 
    
