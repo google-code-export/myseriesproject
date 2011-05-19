@@ -36,6 +36,7 @@ public class Internet extends javax.swing.JPanel {
   /** Creates new form Internet */
   public Internet() {
     initComponents();
+    addSliderLabels();
     combo_secondaryLang.addValidator(
             new CompareValidator(combo_secondaryLang.getSelectedItem() != null ? combo_secondaryLang.getSelectedItem().toString() : "",
             combo_primaryLang.getSelectedItem() != null ? combo_primaryLang.getSelectedItem().toString() : "",
@@ -67,6 +68,7 @@ public class Internet extends javax.swing.JPanel {
   @SuppressWarnings("unchecked")
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
+    bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
     checkbox_useProxy = new javax.swing.JCheckBox();
     jLabel8 = new javax.swing.JLabel();
@@ -98,11 +100,11 @@ public class Internet extends javax.swing.JPanel {
       }
     });
 
-    jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     jLabel8.setText("Http proxy :");
     jLabel8.setName("noname"); // NOI18N
 
-    jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     jLabel9.setText("port :");
     jLabel9.setName("noname"); // NOI18N
 
@@ -130,7 +132,7 @@ public class Internet extends javax.swing.JPanel {
       }
     });
 
-    jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     jLabel13.setText("Primary subtitles lang. :");
     jLabel13.setToolTipText("When downloading subtitles this language will be queried first.");
     jLabel13.setName("noname"); // NOI18N
@@ -145,7 +147,7 @@ public class Internet extends javax.swing.JPanel {
       }
     });
 
-    jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     jLabel15.setText("Secondary subtitles lang. :");
     jLabel15.setToolTipText("When downloading subtitles this language will be queried first.");
     jLabel15.setName("noname"); // NOI18N
@@ -175,10 +177,13 @@ public class Internet extends javax.swing.JPanel {
     cb_updateFeeds.setName(Options.UPDATE_FEEDS);
     cb_updateFeeds.setOpaque(false);
 
-    jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+
+    org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, sl_feeds, org.jdesktop.beansbinding.ELProperty.create("Update feeds every ${value} min"), jLabel26, org.jdesktop.beansbinding.BeanProperty.create("text"));
+    bindingGroup.addBinding(binding);
 
     jLabel27.setFont(jLabel27.getFont().deriveFont((jLabel27.getFont().getStyle() | java.awt.Font.ITALIC)));
-    jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     jLabel27.setText("(Set it to 0 to deactivate it)");
 
     sl_feeds.setMajorTickSpacing(10);
@@ -195,83 +200,91 @@ public class Internet extends javax.swing.JPanel {
     this.setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(layout.createSequentialGroup()
-        .addContainerGap()
+      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+        .addGap(83, 83, 83)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(layout.createSequentialGroup()
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(sl_feeds, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(sl_feeds, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
           .addGroup(layout.createSequentialGroup()
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-              .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-              .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-              .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-              .addComponent(cb_updateFeeds, javax.swing.GroupLayout.Alignment.TRAILING))
+            .addComponent(combo_primaryLang, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 274, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(layout.createSequentialGroup()
+            .addComponent(combo_secondaryLang, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 274, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(layout.createSequentialGroup()
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(spinner_columns, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(228, 228, 228))
+          .addGroup(layout.createSequentialGroup()
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+              .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+              .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING))
+            .addGap(286, 286, 286))
+          .addGroup(layout.createSequentialGroup()
+            .addComponent(cb_updateFeeds)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(layout.createSequentialGroup()
+            .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(layout.createSequentialGroup()
+            .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(layout.createSequentialGroup()
+            .addComponent(checkbox_useProxy, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(323, 323, 323))
+          .addGroup(layout.createSequentialGroup()
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(combo_primaryLang, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(combo_secondaryLang, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(spinner_columns, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
-          .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-            .addComponent(checkbox_useProxy, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-              .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(textfield_port, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-              .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(textfield_proxy, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-        .addContainerGap(24, Short.MAX_VALUE))
+              .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+              .addComponent(textfield_port, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addComponent(textfield_proxy, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        .addContainerGap())
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(layout.createSequentialGroup()
-        .addContainerGap()
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(layout.createSequentialGroup()
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-              .addComponent(jLabel13)
-              .addComponent(combo_primaryLang, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jLabel15))
-          .addGroup(layout.createSequentialGroup()
-            .addGap(27, 27, 27)
-            .addComponent(combo_secondaryLang, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-              .addComponent(jLabel2)
-              .addComponent(spinner_columns, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-        .addGap(13, 13, 13)
+      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addComponent(jLabel13)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(combo_primaryLang, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(18, 18, 18)
+        .addComponent(jLabel15)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(combo_secondaryLang, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(18, 18, 18)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(jLabel2)
+          .addComponent(spinner_columns, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addGap(18, 18, 18)
         .addComponent(cb_updateFeeds)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addGroup(layout.createSequentialGroup()
-            .addComponent(sl_feeds, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(18, 18, 18))
-          .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-            .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(sl_feeds, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(18, 18, 18)
         .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(28, 28, 28)
+        .addGap(42, 42, 42)
         .addComponent(checkbox_useProxy, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
           .addComponent(jLabel8)
           .addComponent(textfield_proxy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jLabel9)
-          .addComponent(textfield_port, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+          .addComponent(textfield_port, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(jLabel9))
+        .addContainerGap())
     );
+
+    bindingGroup.bind();
   }// </editor-fold>//GEN-END:initComponents
 
     private void checkbox_useProxyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkbox_useProxyActionPerformed
@@ -323,5 +336,6 @@ public class Internet extends javax.swing.JPanel {
   public javax.swing.JSpinner spinner_columns;
   public com.googlecode.svalidators.formcomponents.STextField textfield_port;
   public com.googlecode.svalidators.formcomponents.STextField textfield_proxy;
+  private org.jdesktop.beansbinding.BindingGroup bindingGroup;
   // End of variables declaration//GEN-END:variables
 }

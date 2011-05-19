@@ -32,6 +32,7 @@ import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyDraggable;
 import myseries.MySeries;
 import com.googlecode.svalidators.formcomponents.ValidationGroup;
+import java.awt.BorderLayout;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JSlider;
@@ -191,8 +192,8 @@ public class OptionsPanel extends MyDraggable {
             .addComponent(bt_cancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
           .addComponent(bt_ok, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addGroup(jPanel1Layout.createSequentialGroup()
-            .addComponent(splitpane, javax.swing.GroupLayout.DEFAULT_SIZE, 638, Short.MAX_VALUE)
-            .addContainerGap())))
+            .addComponent(splitpane, javax.swing.GroupLayout.PREFERRED_SIZE, 638, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
     );
     jPanel1Layout.setVerticalGroup(
       jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

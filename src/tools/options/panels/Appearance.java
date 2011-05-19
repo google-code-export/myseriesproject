@@ -150,6 +150,7 @@ public class Appearance extends javax.swing.JPanel {
     checkbox_dontUseSkin.setSelected(Options.toBoolean(Options.USE_SKIN));
     checkbox_dontUseSkin.setText("Use Skin :");
     checkbox_dontUseSkin.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    checkbox_dontUseSkin.setMargin(new java.awt.Insets(0, 0, 0, 0));
     checkbox_dontUseSkin.setName(Options.USE_SKIN);
     checkbox_dontUseSkin.setOpaque(false);
     checkbox_dontUseSkin.addActionListener(new java.awt.event.ActionListener() {
@@ -176,7 +177,7 @@ public class Appearance extends javax.swing.JPanel {
       }
     });
 
-    jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     jLabel10.setText("Font : ");
     jLabel10.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
     jLabel10.setName("noname"); // NOI18N
@@ -190,7 +191,7 @@ public class Appearance extends javax.swing.JPanel {
       }
     });
 
-    jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     jLabel16.setText("Font preview :");
     jLabel16.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
@@ -201,11 +202,14 @@ public class Appearance extends javax.swing.JPanel {
     cb_minimizeTray.setSelected(Options.toBoolean(Options.MINIMIZE_TO_TRAY));
     cb_minimizeTray.setText("Minimize to tray");
     cb_minimizeTray.setToolTipText("Minimize Application to tray");
+    cb_minimizeTray.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+    cb_minimizeTray.setMargin(new java.awt.Insets(0, 0, 0, 0));
     cb_minimizeTray.setName(Options.MINIMIZE_TO_TRAY);
     cb_minimizeTray.setOpaque(false);
 
     cb_randomizeLaf.setSelected(Options.toBoolean(Options.RANDOMIZE_LAF));
     cb_randomizeLaf.setText("Use a random LAF on startup");
+    cb_randomizeLaf.setMargin(new java.awt.Insets(0, 0, 0, 0));
     cb_randomizeLaf.setName(Options.RANDOMIZE_LAF);
     cb_randomizeLaf.setOpaque(false);
 
@@ -214,60 +218,53 @@ public class Appearance extends javax.swing.JPanel {
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addContainerGap()
+        .addGap(65, 65, 65)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(cb_minimizeTray, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(jLabel5)
+          .addComponent(combobox_laf, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(cb_randomizeLaf, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)
           .addGroup(layout.createSequentialGroup()
-            .addComponent(cb_minimizeTray, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap())
-          .addGroup(layout.createSequentialGroup()
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-              .addComponent(jLabel16, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
-              .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
-              .addComponent(checkbox_dontUseSkin, javax.swing.GroupLayout.Alignment.TRAILING)
-              .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))
+            .addComponent(checkbox_dontUseSkin)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(combobox_laf, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(99, 99, 99))
-              .addGroup(layout.createSequentialGroup()
-                .addComponent(button_BGColor)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-              .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                  .addComponent(label_preview, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                  .addComponent(cb_randomizeLaf, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                  .addComponent(combobox_fonts, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(spinner_fontSize, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addGap(30, 30, 30))))
+            .addComponent(button_BGColor))
+          .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)
+          .addGroup(layout.createSequentialGroup()
+            .addComponent(combobox_fonts, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(spinner_fontSize, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(layout.createSequentialGroup()
+            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(label_preview, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)))
+        .addContainerGap())
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
         .addContainerGap()
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jLabel5)
-          .addComponent(combobox_laf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addComponent(jLabel5)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(combobox_laf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(cb_randomizeLaf)
-        .addGap(13, 13, 13)
+        .addGap(18, 18, 18)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(checkbox_dontUseSkin)
           .addComponent(button_BGColor))
         .addGap(18, 18, 18)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-            .addComponent(combobox_fonts, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(spinner_fontSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-          .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(combobox_fonts, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(spinner_fontSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(label_preview, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addGap(18, 18, 18)
         .addComponent(cb_minimizeTray)
-        .addContainerGap(19, Short.MAX_VALUE))
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
     createLafModel();
