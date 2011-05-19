@@ -31,14 +31,13 @@ import myseries.series.RestoreSeries;
 import myseries.series.Series;
 import tools.internetUpdate.tvrage.TrGetId;
 import tools.options.Options;
-import tools.options.OptionsPanel;
 import myComponents.MyUsefulFunctions;
 import myComponents.myToolbar.ToolbarCustomize;
 import myseries.MySeriesConstants;
-import myseries.StartPanel;
 import sdialogs.Info;
 import tools.MySeriesLogger;
 import tools.misc.housekeeping.HouseKeeping;
+import tools.options.OptionsPanel;
 import tools.options.Paths;
 
 /**
