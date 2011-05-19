@@ -1193,6 +1193,7 @@ public class MyUsefulFunctions {
       MySeriesLogger.logger.log(Level.INFO, "Starting timer");
       m.memoryTimer.start();
     } else {
+      MySeriesLogger.logger.log(Level.INFO, "Stopping timer");
       m.memoryTimer.stop();
       m.myToolbar.removeButton(AbstractToolbar.MEMORY);
     }
