@@ -4,16 +4,13 @@
  */
 package myComponents.myTreeCellRenderers;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeCellRenderer;
 import myComponents.myGUI.MyFont;
-import tools.Skin;
 
 /**
  *

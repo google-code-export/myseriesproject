@@ -24,6 +24,7 @@ public class Performance extends javax.swing.JPanel {
     /** Creates new form Performance */
     public Performance() {
         initComponents();
+        addSliderLabels();
     }
 
      private void addSliderLabels() {
@@ -50,6 +51,7 @@ public class Performance extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
+    bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
     jLabel17 = new javax.swing.JLabel();
     cb_autoUnzip = new javax.swing.JCheckBox();
@@ -59,7 +61,7 @@ public class Performance extends javax.swing.JPanel {
     sl_image = new javax.swing.JSlider();
     jLabel25 = new javax.swing.JLabel();
 
-    jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     jLabel17.setText("Auto update Files :");
     jLabel17.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
@@ -80,7 +82,10 @@ public class Performance extends javax.swing.JPanel {
       }
     });
 
-    jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+
+    org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, sl_memory, org.jdesktop.beansbinding.ELProperty.create("Update memory indicator every ${value} ms"), jLabel1, org.jdesktop.beansbinding.BeanProperty.create("text"));
+    bindingGroup.addBinding(binding);
 
     sl_memory.setMajorTickSpacing(1000);
     sl_memory.setMaximum(10000);
@@ -108,44 +113,39 @@ public class Performance extends javax.swing.JPanel {
     this.setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-        .addContainerGap()
+      .addGroup(layout.createSequentialGroup()
+        .addGap(71, 71, 71)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jLabel1)
-          .addComponent(sl_image, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(sl_memory, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addGroup(layout.createSequentialGroup()
-            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-              .addComponent(cb_autoUnzip, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-              .addComponent(cb_autoUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE))))
-        .addContainerGap(27, Short.MAX_VALUE))
+          .addComponent(sl_image, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(cb_autoUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE)
+          .addComponent(cb_autoUnzip, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE))
+        .addContainerGap())
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(layout.createSequentialGroup()
-            .addComponent(jLabel1)
-            .addGap(87, 87, 87)
-            .addComponent(sl_image, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-          .addGroup(layout.createSequentialGroup()
-            .addContainerGap()
-            .addComponent(sl_memory, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jLabel25)
-            .addGap(45, 45, 45)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-              .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(cb_autoUpdate))))
+        .addContainerGap()
+        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(sl_memory, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(sl_image, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(36, 36, 36)
+        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(cb_autoUpdate)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(cb_autoUnzip)
-        .addContainerGap(29, Short.MAX_VALUE))
+        .addContainerGap(23, Short.MAX_VALUE))
     );
+
+    bindingGroup.bind();
   }// </editor-fold>//GEN-END:initComponents
 
     private void cb_autoUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_autoUpdateActionPerformed
@@ -163,6 +163,7 @@ public class Performance extends javax.swing.JPanel {
   private javax.swing.JLabel jLabel25;
   private javax.swing.JSlider sl_image;
   private javax.swing.JSlider sl_memory;
+  private org.jdesktop.beansbinding.BindingGroup bindingGroup;
   // End of variables declaration//GEN-END:variables
 
 }
