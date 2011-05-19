@@ -1,0 +1,242 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+
+<Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="jLabel7" alignment="1" min="-2" max="-2" attributes="2"/>
+                  <Group type="103" alignment="1" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="jLabel11" alignment="0" max="32767" attributes="3"/>
+                      <Component id="jLabel4" alignment="1" max="32767" attributes="3"/>
+                      <Component id="jLabel3" alignment="1" pref="111" max="32767" attributes="3"/>
+                  </Group>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jLabel14" alignment="0" min="-2" pref="298" max="-2" attributes="3"/>
+                  <Component id="combobox_debugMode" alignment="0" min="-2" pref="104" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="combobox_dateFormat" min="-2" max="-2" attributes="3"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="bt_dfhelp" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="jLabel22" alignment="0" min="-2" pref="376" max="-2" attributes="2"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="tf_videoApp" min="-2" pref="337" max="-2" attributes="1"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="bt_videoViewer" min="-2" pref="32" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="tf_mainDir" min="-2" pref="338" max="-2" attributes="1"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="bt_mainDirectory" min="-2" pref="32" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="combobox_debugMode" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jLabel22" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="2" attributes="0">
+                  <Component id="combobox_dateFormat" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel4" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="bt_dfhelp" alignment="2" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="2" attributes="0">
+                  <Component id="bt_videoViewer" alignment="2" min="-2" pref="32" max="-2" attributes="0"/>
+                  <Component id="jLabel11" alignment="2" min="-2" max="-2" attributes="1"/>
+                  <Component id="tf_videoApp" alignment="2" min="-2" max="-2" attributes="1"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jLabel14" min="-2" pref="18" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="2" attributes="0">
+                  <Component id="bt_mainDirectory" alignment="2" min="-2" pref="32" max="-2" attributes="0"/>
+                  <Component id="tf_mainDir" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel7" alignment="2" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="112" max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="jLabel3">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="text" type="java.lang.String" value="Logging level :"/>
+        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;The level of Debuging info that&apos;s written in the log file&lt;br /&gt;&#xa;FATAL : Only fatal errors are written&lt;br /&gt;&#xa;WARNING : Warnings and fatal errors are written&lt;br /&gt;&#xa;INFO : Everything is written&lt;br /&gt;&#xa;NO LOGGING: Nothing is written&lt;br /&gt;"/>
+        <Property name="horizontalTextPosition" type="int" value="4"/>
+        <Property name="name" type="java.lang.String" value="noname" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="combobox_debugMode">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="4">
+            <StringItem index="0" value="OFF"/>
+            <StringItem index="1" value="SEVERE"/>
+            <StringItem index="2" value="WARNING"/>
+            <StringItem index="3" value="ALL"/>
+          </StringArray>
+        </Property>
+        <Property name="selectedItem" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="Options.toString(Options.DEBUG_MODE)" type="code"/>
+        </Property>
+        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;The level of Debuging info that&apos;s written in the log file&lt;br /&gt;&#xa;SEVERE : Only fatal errors are written&lt;br /&gt;&#xa;WARNING : Warnings and fatal errors are written&lt;br /&gt;&#xa;ALL : Everything is written&lt;br /&gt;&#xa;OFF: Nothing is written&lt;br /&gt;"/>
+        <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="Options.DEBUG_MODE" type="code"/>
+        </Property>
+        <Property name="opaque" type="boolean" value="false"/>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel4">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="text" type="java.lang.String" value="Date Format :"/>
+        <Property name="horizontalTextPosition" type="int" value="4"/>
+        <Property name="name" type="java.lang.String" value="noname" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="combobox_dateFormat">
+      <Properties>
+        <Property name="editable" type="boolean" value="true"/>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="6">
+            <StringItem index="0" value="dd/MM/yyyy"/>
+            <StringItem index="1" value="dd-MM-yyyy"/>
+            <StringItem index="2" value="dd/MM/yy"/>
+            <StringItem index="3" value="dd-MM-yy"/>
+            <StringItem index="4" value="d/M/yyyy"/>
+            <StringItem index="5" value="d/M/yy"/>
+          </StringArray>
+        </Property>
+        <Property name="selectedItem" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="Options.toString(Options.DATE_FORMAT)" type="code"/>
+        </Property>
+        <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="Options.DATE_FORMAT" type="code"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel11">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="text" type="java.lang.String" value="Video Viewer :"/>
+        <Property name="horizontalTextPosition" type="int" value="4"/>
+      </Properties>
+    </Component>
+    <Component class="com.googlecode.svalidators.formcomponents.STextField" name="tf_videoApp">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="Options.toString(Options.VIDEO_APP)" type="code"/>
+        </Property>
+        <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="Options.VIDEO_APP" type="code"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new com.googlecode.svalidators.formcomponents.STextField()"/>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel14">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.editors2.FontEditor">
+          <FontInfo relative="true">
+            <Font component="jLabel14" italic="true" property="font" relativeSize="true" size="-1"/>
+          </FontInfo>
+        </Property>
+        <Property name="text" type="java.lang.String" value="(Leave it blank to use your OS default video viewer)"/>
+      </Properties>
+    </Component>
+    <Component class="myComponents.myGUI.buttons.MyButtonDir" name="bt_videoViewer">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="Browse for video viewer"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_videoViewerActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel7">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="text" type="java.lang.String" value="Main Series Directory:"/>
+        <Property name="horizontalTextPosition" type="int" value="4"/>
+      </Properties>
+    </Component>
+    <Component class="com.googlecode.svalidators.formcomponents.STextField" name="tf_mainDir">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="Options.toString(Options.MAIN_DIRECTORY)" type="code"/>
+        </Property>
+        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;A directory where subtitle (zipped or not) files should be saved. Then the application will move them to the series directory if possible"/>
+        <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="Options.MAIN_DIRECTORY" type="code"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new com.googlecode.svalidators.formcomponents.STextField(new FileValidator(&quot;&quot;,FileValidator.Type.DIR ,true))"/>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+      </AuxValues>
+    </Component>
+    <Component class="myComponents.myGUI.buttons.MyButtonDir" name="bt_mainDirectory">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="Browse for main directory"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_mainDirectoryActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel22">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.editors2.FontEditor">
+          <FontInfo relative="true">
+            <Font component="jLabel22" italic="true" property="font" relativeSize="true" size="-1"/>
+          </FontInfo>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Setting logging level to ALL will slow down the application"/>
+      </Properties>
+    </Component>
+    <Component class="myComponents.myGUI.buttons.MyButtonHelp" name="bt_dfhelp">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="Date format help"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_dfhelpActionPerformed"/>
+      </Events>
+    </Component>
+  </SubComponents>
+</Form>
