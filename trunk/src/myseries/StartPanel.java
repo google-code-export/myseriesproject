@@ -364,7 +364,8 @@ public class StartPanel extends MyDraggable {
           MySeriesLogger.logger.log(Level.SEVERE, null, ex);
           MyMessages.error("My Series", "Look and feel is not supported", true);
         } catch (Exception ex) {
-          System.out.println(ex);
+          MyMessages.error("My Series", ex.getMessage(),true);
+          MySeriesLogger.logger.log(Level.SEVERE, ex.getMessage(),ex);
         }
       } else {
         MySeriesLogger.logger.log(Level.WARNING, "The database name should not be empty");
