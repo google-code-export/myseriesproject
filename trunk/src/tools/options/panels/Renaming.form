@@ -1,6 +1,9 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <Properties>
+    <Property name="name" type="java.lang.String" value="Renaming" noResource="true"/>
+  </Properties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -16,48 +19,48 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="cd_autoRename" min="-2" pref="269" max="-2" attributes="0"/>
-                      <EmptySpace pref="202" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="21" pref="21" max="21" attributes="0"/>
-                      <Component id="jLabel6" min="-2" pref="314" max="-2" attributes="0"/>
-                      <EmptySpace pref="136" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jLabel18" pref="95" max="32767" attributes="2"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="tf_seasonSep" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="391" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="330" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="tf_episodeSep" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="391" max="-2" attributes="0"/>
+                      <Component id="cd_autoRename" min="-2" pref="269" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="240" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="tf_titleSep" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="391" max="-2" attributes="0"/>
+                      <Component id="jLabel6" pref="429" max="32767" attributes="2"/>
+                      <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="cb_noRenameConf" alignment="0" pref="178" max="32767" attributes="1"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="jLabel20" alignment="0" pref="94" max="32767" attributes="2"/>
+                                  <Component id="jLabel19" alignment="1" max="32767" attributes="2"/>
+                              </Group>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="tf_episodeSep" min="-2" max="-2" attributes="0"/>
+                                  <Component id="tf_titleSep" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="-2" pref="331" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="jLabel19" alignment="0" max="32767" attributes="1"/>
-                          <Component id="jLabel20" alignment="0" min="-2" pref="260" max="-2" attributes="1"/>
+                          <Component id="jLabel12" alignment="0" max="32767" attributes="3"/>
+                          <Component id="jLabel13" alignment="0" pref="267" max="32767" attributes="3"/>
                       </Group>
-                      <EmptySpace pref="211" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="cb_noRenameConf" pref="335" max="32767" attributes="1"/>
-                      <EmptySpace pref="136" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="jLabel12" alignment="1" min="-2" pref="450" max="-2" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="jLabel18" pref="260" max="32767" attributes="1"/>
-                      <EmptySpace min="-2" pref="211" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -65,26 +68,31 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jLabel18" min="-2" pref="23" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel18" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="tf_seasonSep" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="tf_seasonSep" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jLabel19" min="-2" pref="23" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel19" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="tf_episodeSep" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="tf_episodeSep" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-              <Component id="jLabel20" min="-2" pref="27" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel20" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
+                  <Component id="tf_titleSep" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="tf_titleSep" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="cb_noRenameConf" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
               <Component id="cd_autoRename" min="-2" pref="18" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="47" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -205,7 +213,17 @@
             <Font component="jLabel12" italic="true" property="font" relativeSize="true" size="-1"/>
           </FontInfo>
         </Property>
-        <Property name="text" type="java.lang.String" value="(Auto rename subtitles when downloaded, unziped or moved from the Main Series Directory)"/>
+        <Property name="text" type="java.lang.String" value="(Auto rename subtitles when downloaded,"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel13">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.editors2.FontEditor">
+          <FontInfo relative="true">
+            <Font component="jLabel13" italic="true" property="font" relativeSize="true" size="-1"/>
+          </FontInfo>
+        </Property>
+        <Property name="text" type="java.lang.String" value="unziped or moved from the Main Series Directory)"/>
       </Properties>
     </Component>
   </SubComponents>

@@ -12,6 +12,7 @@ package tools.options;
 
 import java.awt.Component;
 import java.awt.Font;
+import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import tools.MySeriesLogger;
 import java.io.FileNotFoundException;
@@ -38,6 +39,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JSlider;
 import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 import myComponents.myGUI.MyFont;
 import myseries.actions.ApplicationActions;
 import tools.LookAndFeels;
@@ -48,6 +50,7 @@ import tools.options.panels.General;
 import tools.options.panels.Internet;
 import tools.options.panels.Performance;
 import tools.options.panels.Renaming;
+import tools.options.panels.Subtitles;
 
 /**
  *
@@ -60,6 +63,7 @@ public class OptionsPanel extends MyDraggable {
   public static final String RENAMING = "Renaming";
   public static final String APPEARANCE = "Appearance";
   public static final String PERFORMANCE = "Performance";
+  public static final String SUBTITLES = "Subtitles";
   public static final long serialVersionUID = 5676235253653L;
   private MySeries m;
   private DefaultComboBoxModel model_laf = new DefaultComboBoxModel();
@@ -68,6 +72,9 @@ public class OptionsPanel extends MyDraggable {
   Internet internet = new Internet();
   Renaming renaming = new Renaming();
   Performance performance = new Performance();
+  Subtitles subtitles = new Subtitles();
+  public JPanel[] panels = {general, appearance, internet, renaming, performance, subtitles};
+  private TreeModel optionsTreeModel;
 
   /** Creates new form OptionsPanel
    * @param m MySeries main form
@@ -75,6 +82,7 @@ public class OptionsPanel extends MyDraggable {
   public OptionsPanel(MySeries m) {
     this.m = m;
     MySeriesLogger.logger.log(Level.INFO, "Initializing components");
+    createTreeModel();
     initComponents();
     tree.setSelectionRow(1);
     MySeriesLogger.logger.log(Level.FINE, "Components initialized");
@@ -103,6 +111,7 @@ public class OptionsPanel extends MyDraggable {
     left = new javax.swing.JScrollPane();
     tree = new javax.swing.JTree();
     right = new javax.swing.JPanel();
+    margin = new javax.swing.JLabel();
 
     javax.swing.GroupLayout panel_DateFormatHelpLayout = new javax.swing.GroupLayout(panel_DateFormatHelp);
     panel_DateFormatHelp.setLayout(panel_DateFormatHelpLayout);
@@ -152,18 +161,7 @@ public class OptionsPanel extends MyDraggable {
 
     splitpane.setDividerLocation(150);
 
-    javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Options");
-    javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("General");
-    treeNode1.add(treeNode2);
-    treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Appearance");
-    treeNode1.add(treeNode2);
-    treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Internet");
-    treeNode1.add(treeNode2);
-    treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Renaming");
-    treeNode1.add(treeNode2);
-    treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Performance");
-    treeNode1.add(treeNode2);
-    tree.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+    tree.setModel(optionsTreeModel);
     tree.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
       public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
         treeValueChanged(evt);
@@ -174,6 +172,12 @@ public class OptionsPanel extends MyDraggable {
     splitpane.setLeftComponent(left);
 
     right.setLayout(new java.awt.BorderLayout());
+
+    margin.setMaximumSize(new java.awt.Dimension(20, 14));
+    margin.setMinimumSize(new java.awt.Dimension(20, 14));
+    margin.setPreferredSize(new java.awt.Dimension(20, 14));
+    right.add(margin, java.awt.BorderLayout.LINE_START);
+
     splitpane.setRightComponent(right);
 
     javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -243,8 +247,8 @@ public class OptionsPanel extends MyDraggable {
     } catch (IllegalArgumentException ex) {
       MyMessages.error("Wrong Arguments", "The date format pattern you provided is invalid", true);
       MySeriesLogger.logger.log(Level.WARNING, "The date format "
-              + String.valueOf(general.combobox_dateFormat.getSelectedItem())
-              + " pattern you provided is invalid", ex);
+          + String.valueOf(general.combobox_dateFormat.getSelectedItem())
+          + " pattern you provided is invalid", ex);
     }
   }
 
@@ -275,7 +279,7 @@ public class OptionsPanel extends MyDraggable {
     ValidationGroup group = new ValidationGroup();
     group.addComponent(internet.textfield_port);
     group.addComponent(internet.textfield_proxy);
-    group.addComponent(internet.combo_secondaryLang);
+    group.addComponent(subtitles.combo_secondaryLang);
     group.addComponent(renaming.tf_episodeSep);
     group.addComponent(renaming.tf_titleSep);
     group.addComponent(renaming.tf_seasonSep);
@@ -291,8 +295,8 @@ public class OptionsPanel extends MyDraggable {
       saveOptions();
       MyUsefulFunctions.createMemoryCons(m);
       MyUsefulFunctions.feedUpdater(m);
-      MySeries.languages.setPrimary((Language) internet.combo_primaryLang.getSelectedItem());
-      MySeries.languages.setSecondary((Language) internet.combo_secondaryLang.getSelectedItem());
+      MySeries.languages.setPrimary((Language) subtitles.combo_primaryLang.getSelectedItem());
+      MySeries.languages.setSecondary((Language) subtitles.combo_secondaryLang.getSelectedItem());
       MyUsefulFunctions.initInternetConnection();
       MySeriesLogger.logger.setLevel(Level.parse(Options.toString(Options.DEBUG_MODE)));
       m.createComboBox_filters();
@@ -352,21 +356,25 @@ public class OptionsPanel extends MyDraggable {
     TreePath path = evt.getNewLeadSelectionPath();
     DefaultMutableTreeNode node = (DefaultMutableTreeNode) path.getLastPathComponent();
     String selection = (String) node.getUserObject();
-    if (right.getComponentCount() > 0) {
-      right.removeAll();
+    BorderLayout layout = (BorderLayout) right.getLayout();
+    Component c = layout.getLayoutComponent(right, BorderLayout.CENTER);
+    if(c!=null){
+      right.remove(c);
       right.validate();
       right.repaint();
     }
     if (selection.equals(GENERAL)) {
-      right.add(general);
+      right.add(general, BorderLayout.CENTER);
     } else if (selection.equals(APPEARANCE)) {
-      right.add(appearance);
+      right.add(appearance, BorderLayout.CENTER);
     } else if (selection.equals(INTERNET)) {
-      right.add(internet);
+      right.add(internet, BorderLayout.CENTER);
     } else if (selection.equals(RENAMING)) {
-      right.add(renaming);
+      right.add(renaming, BorderLayout.CENTER);
     } else if (selection.equals(PERFORMANCE)) {
-      right.add(performance);
+      right.add(performance, BorderLayout.CENTER);
+    } else if (selection.equals(SUBTITLES)) {
+      right.add(subtitles, BorderLayout.CENTER);
     } else {
       tree.expandRow(1);
       tree.setSelectionRow(1);
@@ -389,6 +397,7 @@ public class OptionsPanel extends MyDraggable {
   private javax.swing.JPanel jPanel1;
   private javax.swing.JLabel lb_title;
   private javax.swing.JScrollPane left;
+  private javax.swing.JLabel margin;
   private javax.swing.JPanel panel_DateFormatHelp;
   private javax.swing.JPanel right;
   private javax.swing.JSplitPane splitpane;
@@ -399,12 +408,9 @@ public class OptionsPanel extends MyDraggable {
    * Parsing all the options panels for option components
    */
   private void getOptionsComponents() {
-    parse(general);
-    parse(appearance);
-    parse(internet);
-    parse(renaming);
-    parse(performance);
-
+    for (int i = 0; i < panels.length; i++) {
+      parse(panels[i]);
+    }
   }
 
   /**
@@ -454,13 +460,24 @@ public class OptionsPanel extends MyDraggable {
     if (c instanceof JButton) {
       JButton button = (JButton) c;
       return button.getBackground().getRed() + ", "
-              + button.getBackground().getGreen() + ", "
-              + button.getBackground().getBlue();
+          + button.getBackground().getGreen() + ", "
+          + button.getBackground().getBlue();
     } else if (c instanceof JSlider) {
       JSlider sl = (JSlider) c;
       obj = sl.getValue();
     }
     MySeriesLogger.logger.log(Level.INFO, "Components value is {0}", obj);
     return obj;
+  }
+
+  private void createTreeModel() {
+    MySeriesLogger.logger.log(Level.INFO, "Creating the tree model");
+    DefaultMutableTreeNode top =
+        new DefaultMutableTreeNode("Options");
+    for (int i = 0; i < panels.length; i++) {
+      String name = panels[i].getName();
+      top.add(new DefaultMutableTreeNode(name));
+    }
+    optionsTreeModel = new DefaultTreeModel(top);
   }
 }

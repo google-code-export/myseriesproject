@@ -61,6 +61,8 @@ public class Performance extends javax.swing.JPanel {
     sl_image = new javax.swing.JSlider();
     jLabel25 = new javax.swing.JLabel();
 
+    setName("Performance"); // NOI18N
+
     jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     jLabel17.setText("Auto update Files :");
     jLabel17.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -114,7 +116,7 @@ public class Performance extends javax.swing.JPanel {
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addGap(71, 71, 71)
+        .addContainerGap()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(sl_memory, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -122,8 +124,7 @@ public class Performance extends javax.swing.JPanel {
           .addComponent(sl_image, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(cb_autoUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE)
-          .addComponent(cb_autoUnzip, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE))
-        .addContainerGap())
+          .addComponent(cb_autoUnzip, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE)))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

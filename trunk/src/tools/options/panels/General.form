@@ -1,6 +1,9 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <Properties>
+    <Property name="name" type="java.lang.String" value="General" noResource="true"/>
+  </Properties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -16,19 +19,15 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="jLabel3" alignment="0" pref="104" max="32767" attributes="2"/>
-                          <Component id="combobox_debugMode" alignment="0" pref="104" max="32767" attributes="1"/>
+                          <Component id="combobox_debugMode" alignment="0" min="-2" pref="104" max="-2" attributes="1"/>
                       </Group>
                       <EmptySpace min="-2" pref="272" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="jLabel22" min="-2" pref="285" max="-2" attributes="2"/>
-                      <EmptySpace pref="91" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel7" max="32767" attributes="2"/>
@@ -49,12 +48,6 @@
                       <EmptySpace min="-2" pref="298" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="tf_videoApp" min="-2" pref="337" max="-2" attributes="1"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="bt_videoViewer" min="-2" pref="32" max="-2" attributes="0"/>
-                      <EmptySpace pref="1" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
                       <Component id="tf_mainDir" min="-2" pref="338" max="-2" attributes="1"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="bt_mainDirectory" min="-2" pref="32" max="-2" attributes="0"/>
@@ -63,8 +56,19 @@
                       <Component id="jLabel14" pref="298" max="32767" attributes="2"/>
                       <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
                   </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="jLabel22" alignment="0" max="32767" attributes="3"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="tf_videoApp" min="-2" pref="337" max="-2" attributes="1"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="bt_videoViewer" min="-2" pref="32" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace pref="1" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -93,14 +97,14 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="18" max="32767" attributes="1"/>
+              <EmptySpace min="-2" pref="18" max="-2" attributes="1"/>
               <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="2" attributes="0">
                   <Component id="bt_mainDirectory" alignment="2" min="-2" pref="32" max="-2" attributes="0"/>
                   <Component id="tf_mainDir" alignment="2" min="-2" pref="26" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+              <EmptySpace pref="27" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
