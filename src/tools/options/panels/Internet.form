@@ -1,6 +1,9 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <Properties>
+    <Property name="name" type="java.lang.String" value="Internet" noResource="true"/>
+  </Properties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -16,108 +19,83 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="-2" pref="83" max="-2" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="sl_feeds" min="-2" pref="263" max="-2" attributes="0"/>
-                      <EmptySpace pref="151" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="combo_primaryLang" min="-2" pref="140" max="-2" attributes="0"/>
-                      <EmptySpace pref="274" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="combo_secondaryLang" min="-2" pref="140" max="-2" attributes="0"/>
-                      <EmptySpace pref="274" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="jLabel2" max="32767" attributes="2"/>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="spinner_columns" min="-2" pref="41" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="228" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="jLabel15" alignment="0" max="32767" attributes="3"/>
-                          <Component id="jLabel13" alignment="0" min="-2" max="-2" attributes="3"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="checkbox_useProxy" alignment="0" pref="269" max="32767" attributes="1"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="cb_updateFeeds" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel2" alignment="1" min="-2" max="-2" attributes="2"/>
+                              </Group>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <Component id="spinner_columns" min="-2" pref="41" max="-2" attributes="0"/>
+                              <EmptySpace min="77" pref="77" max="77" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jLabel8" min="-2" pref="69" max="-2" attributes="2"/>
+                                  <Component id="jLabel9" max="32767" attributes="2"/>
+                              </Group>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="textfield_proxy" min="-2" pref="132" max="-2" attributes="1"/>
+                                  <Component id="textfield_port" min="-2" pref="132" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="286" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="cb_updateFeeds" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="275" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="jLabel26" min="-2" pref="254" max="-2" attributes="2"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel27" min="-2" pref="154" max="-2" attributes="2"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="jCheckBox1" min="-2" pref="178" max="-2" attributes="0"/>
-                      <EmptySpace pref="236" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="checkbox_useProxy" max="32767" attributes="1"/>
-                      <EmptySpace min="-2" pref="323" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel9" alignment="1" min="-2" pref="74" max="-2" attributes="0"/>
-                          <Component id="jLabel8" alignment="1" min="-2" pref="101" max="-2" attributes="0"/>
+                          <Component id="jLabel26" alignment="0" min="-2" pref="254" max="-2" attributes="2"/>
+                          <Component id="jLabel27" alignment="0" min="-2" pref="154" max="-2" attributes="2"/>
+                          <Component id="sl_feeds" alignment="0" min="-2" pref="263" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="textfield_port" alignment="1" min="-2" pref="132" max="-2" attributes="0"/>
-                          <Component id="textfield_proxy" alignment="1" min="-2" pref="132" max="-2" attributes="1"/>
-                      </Group>
-                      <EmptySpace pref="177" max="-2" attributes="0"/>
+                      <EmptySpace pref="50" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jCheckBox1" min="-2" pref="178" max="-2" attributes="0"/>
+                      <EmptySpace pref="135" max="32767" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="combo_primaryLang" min="-2" pref="21" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="combo_secondaryLang" min="-2" pref="21" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="spinner_columns" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
               <Component id="cb_updateFeeds" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel26" alignment="3" min="-2" pref="17" max="-2" attributes="0"/>
-                  <Component id="jLabel27" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
-              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jLabel26" min="-2" pref="17" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jLabel27" min="-2" pref="14" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="sl_feeds" min="-2" pref="46" max="-2" attributes="1"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jCheckBox1" min="-2" pref="19" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
               <Component id="checkbox_useProxy" min="-2" pref="13" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="2" attributes="0">
-                  <Component id="jLabel8" alignment="2" min="-2" max="-2" attributes="0"/>
-                  <Component id="textfield_proxy" alignment="2" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="textfield_proxy" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="2" attributes="0">
-                  <Component id="textfield_port" alignment="2" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel9" alignment="2" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="textfield_port" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace pref="13" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -128,7 +106,7 @@
         <Property name="selected" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="Options.toBoolean(Options.USE_PROXY)" type="code"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Proxy Settings"/>
+        <Property name="text" type="java.lang.String" value="Use Proxy"/>
         <Property name="horizontalAlignment" type="int" value="2"/>
         <Property name="horizontalTextPosition" type="int" value="4"/>
         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
@@ -156,7 +134,7 @@
     <Component class="javax.swing.JLabel" name="jLabel9">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="2"/>
-        <Property name="text" type="java.lang.String" value="port :"/>
+        <Property name="text" type="java.lang.String" value="Port :"/>
         <Property name="name" type="java.lang.String" value="noname" noResource="true"/>
       </Properties>
     </Component>
@@ -214,68 +192,9 @@
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel13">
-      <Properties>
-        <Property name="horizontalAlignment" type="int" value="2"/>
-        <Property name="text" type="java.lang.String" value="Primary subtitles lang. :"/>
-        <Property name="toolTipText" type="java.lang.String" value="When downloading subtitles this language will be queried first."/>
-        <Property name="name" type="java.lang.String" value="noname" noResource="true"/>
-      </Properties>
-    </Component>
-    <Component class="com.googlecode.svalidators.formcomponents.SComboBox" name="combo_primaryLang">
-      <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="primarySubtitlesModel" type="code"/>
-        </Property>
-        <Property name="selectedItem" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="MySeries.languages.getLanguageByName(Options.toString(Options.PRIMARY_SUB))" type="code"/>
-        </Property>
-        <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Options.PRIMARY_SUB" type="code"/>
-        </Property>
-        <Property name="opaque" type="boolean" value="false"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="combo_primaryLangActionPerformed"/>
-      </Events>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-      </AuxValues>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel15">
-      <Properties>
-        <Property name="horizontalAlignment" type="int" value="2"/>
-        <Property name="text" type="java.lang.String" value="Secondary subtitles lang. :"/>
-        <Property name="toolTipText" type="java.lang.String" value="When downloading subtitles this language will be queried first."/>
-        <Property name="name" type="java.lang.String" value="noname" noResource="true"/>
-      </Properties>
-    </Component>
-    <Component class="com.googlecode.svalidators.formcomponents.SComboBox" name="combo_secondaryLang">
-      <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="secondarySubtitlesModel" type="code"/>
-        </Property>
-        <Property name="selectedItem" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="MySeries.languages.getLanguageByName(Options.toString(Options.SECONDARY_SUB))" type="code"/>
-        </Property>
-        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[23, 20]"/>
-        </Property>
-        <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Options.SECONDARY_SUB" type="code"/>
-        </Property>
-        <Property name="opaque" type="boolean" value="false"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="combo_secondaryLangActionPerformed"/>
-      </Events>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-      </AuxValues>
-    </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="horizontalAlignment" type="int" value="2"/>
         <Property name="text" type="java.lang.String" value="Number of columns in Feeds :"/>
       </Properties>
     </Component>

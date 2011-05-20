@@ -272,6 +272,11 @@ public class Options {
    */
   public static final String IMAGE_QUALITY = "IMAGE_QUALITY";
   /**
+   * When searching for subtitles and primary not found, check for secondary 
+   * or not
+   */
+  public static final String SEARCH_FOR_SECONDARY_SUBTITLE = "SEARCH_FOR_SECONDARY_SUBTITLE";
+  /**
    * The type of iamge scaling from fastest(worst quality) to slower (better quality)
    */
   public static final int[] IMAGE_SCALING = {Image.SCALE_REPLICATE,
@@ -633,7 +638,8 @@ public class Options {
     out.println(Options.ACTIVE_FILTER + "=");
     out.println(Options.MEMORY_CONSUMPTION_UPDATE + "=1000");
     out.println(Options.FEED_UPDATE_FREQUENCY + "=0");
-    out.println(Options.IMAGE_QUALITY + "=" + 3);
+    out.println(Options.IMAGE_QUALITY + "=3");
+    out.println(Options.SEARCH_FOR_SECONDARY_SUBTITLE + "=true");
 
     out.close();
   }
@@ -740,6 +746,7 @@ public class Options {
     options.put(Options.MEMORY_CONSUMPTION_UPDATE, 1000);
     options.put(Options.FEED_UPDATE_FREQUENCY, 0);
     options.put(Options.IMAGE_QUALITY, 3);
+    options.put(Options.SEARCH_FOR_SECONDARY_SUBTITLE, true);
   }
 
   private static Object getDefaultMainDirectory() {

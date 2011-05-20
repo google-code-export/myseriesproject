@@ -18,6 +18,7 @@ import sdialogs.Info;
 import tools.download.subtitles.AbstractDownloadSubtitle;
 import tools.download.subtitles.Subtitle;
 import tools.download.subtitles.SubtitleConstants;
+import tools.options.Options;
 
 /**
  *
@@ -123,7 +124,7 @@ public class DownloadSOnline extends AbstractDownloadSubtitle implements Runnabl
                 subs.add(new Subtitle(curtitle, curLink,0,0));
             }
         }
-        if (subs.isEmpty() && primary) {
+        if (subs.isEmpty() && primary && Options.toBoolean(Options.SEARCH_FOR_SECONDARY_SUBTITLE)) {
             MySeriesLogger.logger.log(Level.INFO, "Subtitle not found.Asking for secondary");
             if (MyMessages.confirm("Download secondary language", "Primary language subs not found.\nSearch for secondary?", true) == JOptionPane.YES_OPTION) {
                 parseWebpage(in, false);

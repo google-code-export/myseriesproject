@@ -131,6 +131,7 @@ public class Appearance extends javax.swing.JPanel {
     cb_minimizeTray = new javax.swing.JCheckBox();
     cb_randomizeLaf = new javax.swing.JCheckBox();
 
+    setName("Appearance"); // NOI18N
     setPreferredSize(new java.awt.Dimension(350, 229));
 
     jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -218,26 +219,27 @@ public class Appearance extends javax.swing.JPanel {
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addGap(65, 65, 65)
+        .addContainerGap()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addComponent(cb_minimizeTray, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(jLabel5)
           .addComponent(combobox_laf, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(cb_randomizeLaf, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)
+          .addComponent(cb_randomizeLaf, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
           .addGroup(layout.createSequentialGroup()
             .addComponent(checkbox_dontUseSkin)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(button_BGColor))
-          .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)
+            .addComponent(button_BGColor)
+            .addGap(125, 125, 125))
+          .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
           .addGroup(layout.createSequentialGroup()
             .addComponent(combobox_fonts, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(spinner_fontSize, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
           .addGroup(layout.createSequentialGroup()
-            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(label_preview, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)))
-        .addContainerGap())
+            .addComponent(label_preview, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)))
+        .addGap(65, 65, 65))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
