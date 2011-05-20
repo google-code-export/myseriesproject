@@ -4,24 +4,16 @@
  */
 package tools.download.subtitles;
 
-import java.awt.Desktop;
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import tools.MySeriesLogger;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 import javax.swing.JProgressBar;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
@@ -33,7 +25,7 @@ import tools.options.Options;
  *
  * @author lordovol
  */
-public abstract class AbstractDownloadSubtitle {
+public abstract class AbstractDownloadSubtitle implements SubtitleConstants {
 
   protected int season;
   protected int episode;
@@ -43,6 +35,7 @@ public abstract class AbstractDownloadSubtitle {
   protected AbstractDownloadForm form;
   protected String srtFilename = "";
   protected boolean cancel = false;
+  protected String[] lang = new String[NUM_OF_SUBTITLES];
 
   protected void download(Subtitle sub) {
     if (localDir.equals("")) {

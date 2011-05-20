@@ -396,8 +396,8 @@ public class MyUsefulFunctions {
   public static void initInternetConnection() {
     if (Options.toBoolean(Options.USE_PROXY)) {
       MySeriesLogger.logger.log(Level.INFO,
-          "Initializing internet connection with proxy [host:{0},port:{1}]",
-          new String[]{Options.toString(Options.PROXY_HOST), Options.toString(Options.PROXY_PORT)});
+              "Initializing internet connection with proxy [host:{0},port:{1}]",
+              new String[]{Options.toString(Options.PROXY_HOST), Options.toString(Options.PROXY_PORT)});
       System.setProperty("http.proxyHost", Options.toString(Options.PROXY_HOST));
       System.setProperty("http.proxyPort", Options.toString(Options.PROXY_PORT));
     } else {
@@ -667,7 +667,7 @@ public class MyUsefulFunctions {
 
   private static File getVideoFile(SeriesRecord series, EpisodesRecord episode) {
     MySeriesLogger.logger.log(Level.INFO, "Getting video file for series {0} and episode {1} ",
-        new String[]{series.getFullTitle(), episode.getTitle()});
+            new String[]{series.getFullTitle(), episode.getTitle()});
     String regex = MyUsefulFunctions.createRegex(series.getSeason(), episode.getEpisode());
     String regexFake = MyUsefulFunctions.createRegex(series.getSeason(), series.getSeason() * 10 + episode.getEpisode());
     File[] videoFiles = Series.getVideoFiles(series);
@@ -688,7 +688,7 @@ public class MyUsefulFunctions {
 
   private static ArrayList<File> getVideoFiles(SeriesRecord series, EpisodesRecord episode) {
     MySeriesLogger.logger.log(Level.INFO, "Getting video files for series {0} and episode {1} ",
-        new String[]{series.getFullTitle(), episode.getTitle()});
+            new String[]{series.getFullTitle(), episode.getTitle()});
 
     String regex = MyUsefulFunctions.createRegex(series.getSeason(), episode.getEpisode());
     String regexFake = MyUsefulFunctions.createRegex(series.getSeason(), series.getSeason() * 10 + episode.getEpisode());
@@ -752,13 +752,13 @@ public class MyUsefulFunctions {
       }
     }
     MySeriesLogger.logger.log(Level.FINE, "Found {0} types ({1})",
-        new Object[]{types.length, MyUsefulFunctions.listArray(types, false)});
+            new Object[]{types.length, MyUsefulFunctions.listArray(types, false)});
     return types;
   }
 
   private static ArrayList<File> getSubtitles(SeriesRecord series, EpisodesRecord episode) {
     MySeriesLogger.logger.log(Level.INFO, "Getting subtitles for {0} episode {1}",
-        new String[]{series.getFullTitle(), episode.getTitle()});
+            new String[]{series.getFullTitle(), episode.getTitle()});
     String regex = MyUsefulFunctions.createRegex(series.getSeason(), episode.getEpisode());
     String regexFake = MyUsefulFunctions.createRegex(series.getSeason(), series.getSeason() * 10 + episode.getEpisode());
     ArrayList<File> subs = new ArrayList<File>();
@@ -785,7 +785,7 @@ public class MyUsefulFunctions {
 
   public static String[][] getSubtitleLangs(EpisodesRecord ep) {
     MySeriesLogger.logger.log(Level.INFO, "Getting subtitle langs episode {1}",
-        ep.getTitle());
+            ep.getTitle());
     SeriesRecord series;
     try {
       series = database.DBHelper.getSeriesByID(ep.getSeries_ID());
@@ -826,7 +826,7 @@ public class MyUsefulFunctions {
       }
     }
     MySeriesLogger.logger.log(Level.FINE, "Found {0} types",
-        types.length);
+            types.length);
     return types;
   }
 
@@ -1081,9 +1081,9 @@ public class MyUsefulFunctions {
       sample = "_sample";
     }
     return series.getTitle()
-        + Options.toString(Options.SEASON_SEPARATOR, false) + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0")
-        + Options.toString(Options.EPISODE_SEPARATOR, false) + MyUsefulFunctions.padLeft(episode.getEpisode(), 2, "0")
-        + Options.toString(Options.TITLE_SEPARATOR, false) + episode.getTitle() + sample + "." + ext;
+            + Options.toString(Options.SEASON_SEPARATOR, false) + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0")
+            + Options.toString(Options.EPISODE_SEPARATOR, false) + MyUsefulFunctions.padLeft(episode.getEpisode(), 2, "0")
+            + Options.toString(Options.TITLE_SEPARATOR, false) + episode.getTitle() + sample + "." + ext;
   }
 
   public static boolean renameEpisode(SeriesRecord series, String filename) {
@@ -1095,11 +1095,11 @@ public class MyUsefulFunctions {
     for (int i = 0; i < numbers.length; i++) {
       String n = numbers[i];
       if (MyUsefulFunctions.isNumeric(n)
-          && Integer.parseInt(n) == series.getSeason()
-          && i < numbers.length - 1) {
+              && Integer.parseInt(n) == series.getSeason()
+              && i < numbers.length - 1) {
         episode = MyUsefulFunctions.isNumeric(numbers[i + 1])
-            ? Integer.parseInt(numbers[i + 1])
-            : -1;
+                ? Integer.parseInt(numbers[i + 1])
+                : -1;
       }
     }
     if (episode > -1) {
@@ -1172,19 +1172,19 @@ public class MyUsefulFunctions {
     }
     return false;
   }
-  
-  public static void feedUpdater(MySeries m){
-    if(Options.toInt(Options.FEED_UPDATE_FREQUENCY)>0){
-      int fr = Options.toInt(Options.FEED_UPDATE_FREQUENCY)*60*1000;
-     m.feedsTimer = new Timer(fr, new MyFeedsTimerListener(m));
-     m.feedsTimer.start(); 
+
+  public static void feedUpdater(MySeries m) {
+    if (Options.toInt(Options.FEED_UPDATE_FREQUENCY) > 0) {
+      int fr = Options.toInt(Options.FEED_UPDATE_FREQUENCY) * 60 * 1000;
+      m.feedsTimer = new Timer(fr, new MyFeedsTimerListener(m));
+      m.feedsTimer.start();
     } else {
-      m.feedsTimer.stop(); 
+      m.feedsTimer.stop();
     }
   }
 
   public static void createMemoryCons(MySeries m) {
-    
+
     MySeriesLogger.logger.log(Level.INFO, "Creating the timer for memory consumption");
     if (Options.toInt(Options.MEMORY_CONSUMPTION_UPDATE) > 0) {
       m.myToolbar.addButton(AbstractToolbar.MEMORY);
@@ -1273,6 +1273,15 @@ public class MyUsefulFunctions {
       return MyTitleCellRenderer.NOT_SEEN;
     }
     return MyTitleCellRenderer.NOT_AIRED;
+  }
+
+  public static boolean isAllArrayElementsNull(String[] arr) {
+    for (int i = 0; i < arr.length; i++) {
+      if (arr[i] != null) {
+        return false;
+      }
+    }
+    return true;
   }
 
   private MyUsefulFunctions() {
