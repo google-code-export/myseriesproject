@@ -8,19 +8,24 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import tools.MySeriesLogger;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Iterator;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
+import tools.download.screenshot.SelectSubtitle;
 import tools.download.subtitles.AbstractDownloadSubtitle;
 import tools.download.subtitles.Subtitle;
 import tools.download.subtitles.SubtitleConstants;
+import tools.languages.Language;
 import tools.options.Options;
 
 /**
@@ -30,6 +35,7 @@ import tools.options.Options;
 public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Runnable, SubtitleConstants {
 
   private final String link;
+  
 
   /**
    * Download the subtitles from tvSubtitles
@@ -44,6 +50,8 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
     this.episode = episode;
     this.form = form;
     this.progress = form.progress;
+    this.lang[0] = myseries.MySeries.languages.getPrimary().getCode();
+    this.lang[1] = myseries.MySeries.languages.getSecondary().getCode();
   }
 
   public void run() {
@@ -55,7 +63,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
     } else {
       try {
         MySeriesLogger.logger.log(Level.INFO, "Downloading whole season subtitles for series {0} seadon {1}", new Object[]{link, season});
-        subs.add(new Subtitle("Whole season subtitles", new URL(link), 0, 0));
+        subs.add(new Subtitle("Whole season subtitles", new URL(link), 0, 0,""));
       } catch (MalformedURLException ex) {
         MySeriesLogger.logger.log(Level.WARNING, "Malformed url: {0}", link);
         MyMessages.error("Download whole season subtitles", "Malformed url: " + link, true);
@@ -75,7 +83,9 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
     } else {
       // Subtitle sub = (Subtitle) JOptionPane.showInputDialog(null, "Choose the subtitle to download", "Choose subtitle", JOptionPane.QUESTION_MESSAGE, null, subs.toArray(), 0);
       MySeriesLogger.logger.log(Level.FINE, "Found {0} subtitles", subs.size());
-      Subtitle sub = (Subtitle) MyMessages.ask("Choose subtitle", "Choose the subtitle to download", null, subs.toArray(), null, true);
+      SelectSubtitle ss = new SelectSubtitle(subs);
+      Subtitle sub = ss.subtitle;
+      //Subtitle sub = (Subtitle) MyMessages.ask("Choose subtitle", "Choose the subtitle to download", null, subLabels, null, true);
       if (sub != null) {
         MySeriesLogger.logger.log(Level.INFO, "Downloading subtitle {0}", sub.title);
         String newPath = sub.url.getPath().replace("/subtitle", "download");
@@ -87,6 +97,8 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
           form.dispose();
         }
         download(sub);
+        form.dispose();
+      } else {
         form.dispose();
       }
     }
@@ -102,10 +114,13 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
         MySeriesLogger.logger.log(Level.INFO, "Getting the subtitle links");
         String buff = parseWebPage();
         if (!buff.equals("")) {
-          String subsLink = getLink(buff, true);
-          if (subsLink != null) {
+          String[] subsLink = getLink(buff, true);
+          if (!MyUsefulFunctions.isAllArrayElementsNull(subsLink)) {
             MySeriesLogger.logger.log(Level.FINE, "Subtitle page found");
-            getDownloadLinks(subsLink);
+            for (int i = 0; i < subsLink.length; i++) {
+              getDownloadLinks(subsLink[i],lang[i]);
+            }
+
           } else {
             MySeriesLogger.logger.log(Level.INFO, "No links found");
             form.dispose();
@@ -153,48 +168,54 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
     return buff;
   }
 
-  private String getLink(String buff, boolean primary) {
+  private String[] getLink(String buff, boolean primary) {
     MySeriesLogger.logger.log(Level.INFO, "Getting the subtitle link");
-    String lang = "";
-    lang = primary ? myseries.MySeries.languages.getPrimary().getCode()
-        : myseries.MySeries.languages.getSecondary().getCode();
+   
+    String[] subLink = new String[2];
+    int[] pos = new int[NUM_OF_SUBTITLES];
+    int[] i = new int[NUM_OF_SUBTITLES];
+    
 
-    int pos = buff.indexOf("<img src=\"images/flags/" + lang + ".gif\"");
-    int i = pos;
-    String subLink = null;
-    while (i > 0) {
-      String character = buff.substring(i - 1, i);
-      if (character.equals("<")) {
-        subLink = buff.substring(i, pos).replace("a href=\"", "").replaceFirst("\">", "");
-        i = 0;
-      }
-      i--;
-    }
-    if (subLink != null) {
-      MySeriesLogger.logger.log(Level.FINE, "Subtitle link found");
-      return subLink;
-    } else {
-      if (!primary) {
-        MySeriesLogger.logger.log(Level.INFO, "Subtitle not found");
-        return null;
-      }
-      if (Options.toBoolean(Options.SEARCH_FOR_SECONDARY_SUBTITLE)) {
-        MySeriesLogger.logger.log(Level.INFO, "Primary subtitle not found.Asking for secondary");
-        if (MyMessages.confirm("Download secondary language", "Primary language subs not found.\nSearch for secondary?", true) == JOptionPane.YES_OPTION) {
-          MySeriesLogger.logger.log(Level.INFO, "Getting secondary subtitle");
-          return getLink(buff, false);
-        } else {
-          MySeriesLogger.logger.log(Level.INFO, "Downloading aborted by the user");
-          cancel = true;
-          return null;
+    pos[0] = buff.indexOf("<img src=\"images/flags/" + lang[0] + ".gif\"");
+    pos[1] = buff.indexOf("<img src=\"images/flags/" + lang[1] + ".gif\"");
+    i[0] = pos[0];
+    i[1] = pos[1];
+    for (int j = 0; j < NUM_OF_SUBTITLES; j++) {
+      while (i[j] > 0) {
+        String character = buff.substring(i[j] - 1, i[j]);
+        if (character.equals("<")) {
+          subLink[j] = buff.substring(i[j], pos[j]).replace("a href=\"", "").replaceFirst("\">", "");
+          i[j] = 0;
         }
-      } else {
-        return null;
+        i[j]--;
       }
     }
+    if (!MyUsefulFunctions.isAllArrayElementsNull(subLink)) {
+      MySeriesLogger.logger.log(Level.FINE, "Subtitle link found");
+     
+    } else {
+//      if (!primary) {
+//        MySeriesLogger.logger.log(Level.INFO, "Subtitle not found");
+//        return null;
+//      }
+//      if (Options.toBoolean(Options.SEARCH_FOR_SECONDARY_SUBTITLE)) {
+//        MySeriesLogger.logger.log(Level.INFO, "Primary subtitle not found.Asking for secondary");
+//        if (MyMessages.confirm("Download secondary language", "Primary language subs not found.\nSearch for secondary?", true) == JOptionPane.YES_OPTION) {
+//          MySeriesLogger.logger.log(Level.INFO, "Getting secondary subtitle");
+//          return getLink(buff, false);
+//        } else {
+//          MySeriesLogger.logger.log(Level.INFO, "Downloading aborted by the user");
+//          cancel = true;
+//          return null;
+//        }
+//      } else {
+//        return null;
+//      }
+    }
+     return subLink;
   }
 
-  private void getDownloadLinks(String subsLink) throws MalformedURLException, IOException {
+  private void getDownloadLinks(String subsLink,String language) throws MalformedURLException, IOException {
     MySeriesLogger.logger.log(Level.INFO, "Getting the download links from {0}", subsLink);
     URL subsUrl = new URL(TV_SUBTITLES_URL + subsLink);
     BufferedReader in = new BufferedReader(new InputStreamReader(subsUrl.openStream()));
@@ -202,12 +223,12 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
     while ((inputLine = in.readLine()) != null) {
 
       String regex = "(<a href=\"/subtitle-)|"
-          + "(<a href=\"download)|"
-          + "(<b id=\"hate\")|"
-          + "(<b id=\"love\")|"
-          + "(span style=\"color:red\")|"
-          + "(span style=\"color:green\")|"
-          + "(</h5>)";
+              + "(<a href=\"download)|"
+              + "(<b id=\"hate\")|"
+              + "(<b id=\"love\")|"
+              + "(span style=\"color:red\")|"
+              + "(span style=\"color:green\")|"
+              + "(</h5>)";
       Pattern pattern = Pattern.compile(regex);
       Matcher matcher = pattern.matcher(inputLine);
       if (matcher.find()) {
@@ -215,10 +236,10 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
       }
     }
     String[] fields = line.split("(<a href=\"/)|(\"><div href=\"/)|(align=absmiddle>)|(<a href=\")|(\">)|"
-        + "(<b id=\")|"
-        + "(span style=\")|"
-        + "(<b id=\")|"
-        + "(<b id=\")", -1);
+            + "(<b id=\")|"
+            + "(span style=\")|"
+            + "(<b id=\")|"
+            + "(<b id=\")", -1);
     String curLink = "";
     String curTitle = "";
     int love = 0;
@@ -228,7 +249,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
       if ((field.startsWith("subtitle") || (field.startsWith("download"))) && field.endsWith("html")) {
         curLink = TV_SUBTITLES_URL + URLEncoder.encode(field, "UTF-8");
         if (field.startsWith("download")) {
-          curTitle = "dummy";
+          curTitle = "Season " + season + " Episode " + episode;
         }
       } else if (fields[i].indexOf("</h5>") > -1) {
         curTitle = field.substring(0, fields[i].indexOf("</h5>"));
@@ -244,7 +265,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
       }
       if (!curTitle.equals("") && !curLink.equals("")) {
         MySeriesLogger.logger.log(Level.FINE, "Subtitle found {0}", curTitle);
-        subs.add(new Subtitle(curTitle, new URL(curLink), love, hate));
+        subs.add(new Subtitle(curTitle, new URL(curLink), love, hate,language));
         curTitle = "";
         curLink = "";
         love = 0;
@@ -275,4 +296,6 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
 
 
   }
+
+
 }
