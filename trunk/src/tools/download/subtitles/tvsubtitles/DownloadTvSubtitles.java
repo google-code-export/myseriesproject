@@ -171,16 +171,13 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
   private String[] getLink(String buff, boolean primary) {
     MySeriesLogger.logger.log(Level.INFO, "Getting the subtitle link");
    
-    String[] subLink = new String[2];
+    String[] subLink = new String[NUM_OF_SUBTITLES];
     int[] pos = new int[NUM_OF_SUBTITLES];
     int[] i = new int[NUM_OF_SUBTITLES];
     
-
-    pos[0] = buff.indexOf("<img src=\"images/flags/" + lang[0] + ".gif\"");
-    pos[1] = buff.indexOf("<img src=\"images/flags/" + lang[1] + ".gif\"");
-    i[0] = pos[0];
-    i[1] = pos[1];
     for (int j = 0; j < NUM_OF_SUBTITLES; j++) {
+      pos[j] = buff.indexOf("<img src=\"images/flags/" + lang[j] + ".gif\"");
+      i[j] = pos[j];
       while (i[j] > 0) {
         String character = buff.substring(i[j] - 1, i[j]);
         if (character.equals("<")) {
@@ -192,26 +189,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
     }
     if (!MyUsefulFunctions.isAllArrayElementsNull(subLink)) {
       MySeriesLogger.logger.log(Level.FINE, "Subtitle link found");
-     
-    } else {
-//      if (!primary) {
-//        MySeriesLogger.logger.log(Level.INFO, "Subtitle not found");
-//        return null;
-//      }
-//      if (Options.toBoolean(Options.SEARCH_FOR_SECONDARY_SUBTITLE)) {
-//        MySeriesLogger.logger.log(Level.INFO, "Primary subtitle not found.Asking for secondary");
-//        if (MyMessages.confirm("Download secondary language", "Primary language subs not found.\nSearch for secondary?", true) == JOptionPane.YES_OPTION) {
-//          MySeriesLogger.logger.log(Level.INFO, "Getting secondary subtitle");
-//          return getLink(buff, false);
-//        } else {
-//          MySeriesLogger.logger.log(Level.INFO, "Downloading aborted by the user");
-//          cancel = true;
-//          return null;
-//        }
-//      } else {
-//        return null;
-//      }
-    }
+    } 
      return subLink;
   }
 

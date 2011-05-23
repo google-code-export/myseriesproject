@@ -104,10 +104,9 @@ public class DownloadSOnline extends AbstractDownloadSubtitle implements Runnabl
     URL curLink = null;
     String curtitle = "";
     String[] search = new String[NUM_OF_SUBTITLES];
-    search[0] = "<a href=\"/" + sOnlineCode + "-s" + season + "e" + episode + "-" + lang[0] + "-subtitles-download";
-    search[1] = "<a href=\"/" + sOnlineCode + "-s" + season + "e" + episode + "-" + lang[1] + "-subtitles-download";
-    
     for (int i = 0; i < NUM_OF_SUBTITLES; i++) {
+      search[i] = "<a href=\"/" + sOnlineCode + "-s" + season + "e" + episode + "-" + lang[i] + "-subtitles-download";
+    
       BufferedReader in = new BufferedReader(new InputStreamReader(wpUrl.openStream()));
       URL dUrl;
       String s= search[i].toLowerCase();

@@ -35,7 +35,7 @@ public abstract class AbstractDownloadSubtitle implements SubtitleConstants {
   protected AbstractDownloadForm form;
   protected String srtFilename = "";
   protected boolean cancel = false;
-  protected String[] lang = new String[NUM_OF_SUBTITLES];
+  protected String[] lang = new String[2];
 
   protected void download(Subtitle sub) {
     if (localDir.equals("")) {
