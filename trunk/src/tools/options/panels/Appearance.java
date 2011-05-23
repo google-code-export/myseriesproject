@@ -266,7 +266,7 @@ public class Appearance extends javax.swing.JPanel {
           .addComponent(label_preview, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addGap(18, 18, 18)
         .addComponent(cb_minimizeTray)
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addContainerGap(10, Short.MAX_VALUE))
     );
 
     createLafModel();

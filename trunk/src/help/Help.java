@@ -154,6 +154,10 @@ public class Help extends JFrame {
     treeNode2.add(treeNode3);
     treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Renaming Options");
     treeNode2.add(treeNode3);
+    treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Performance Options");
+    treeNode2.add(treeNode3);
+    treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Subtitles Options");
+    treeNode2.add(treeNode3);
     treeNode1.add(treeNode2);
     treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("MySerieS Online");
     treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Google Code");
