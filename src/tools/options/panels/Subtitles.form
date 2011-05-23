@@ -117,7 +117,7 @@
         <Property name="selected" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="Options.toBoolean(Options.SEARCH_FOR_SECONDARY_SUBTITLE)" type="code"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Search for sec language if primary is not found"/>
+        <Property name="text" type="java.lang.String" value="Search for both languages subtitles"/>
         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
           <Insets value="[0, 0, 0, 0]"/>
         </Property>

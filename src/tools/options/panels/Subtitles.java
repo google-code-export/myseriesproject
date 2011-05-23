@@ -88,7 +88,7 @@ public class Subtitles extends javax.swing.JPanel {
     });
 
     jCheckBox1.setSelected(Options.toBoolean(Options.SEARCH_FOR_SECONDARY_SUBTITLE));
-    jCheckBox1.setText("Search for sec language if primary is not found");
+    jCheckBox1.setText("Search for both languages subtitles");
     jCheckBox1.setMargin(new java.awt.Insets(0, 0, 0, 0));
     jCheckBox1.setName(Options.SEARCH_FOR_SECONDARY_SUBTITLE);
 
