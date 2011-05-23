@@ -35,7 +35,6 @@ import tools.options.Options;
 public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Runnable, SubtitleConstants {
 
   private final String link;
-  
 
   /**
    * Download the subtitles from tvSubtitles
@@ -63,7 +62,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
     } else {
       try {
         MySeriesLogger.logger.log(Level.INFO, "Downloading whole season subtitles for series {0} seadon {1}", new Object[]{link, season});
-        subs.add(new Subtitle("Whole season subtitles", new URL(link), 0, 0,""));
+        subs.add(new Subtitle("Whole season subtitles", new URL(link), 0, 0, ""));
       } catch (MalformedURLException ex) {
         MySeriesLogger.logger.log(Level.WARNING, "Malformed url: {0}", link);
         MyMessages.error("Download whole season subtitles", "Malformed url: " + link, true);
@@ -118,7 +117,9 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
           if (!MyUsefulFunctions.isAllArrayElementsNull(subsLink)) {
             MySeriesLogger.logger.log(Level.FINE, "Subtitle page found");
             for (int i = 0; i < subsLink.length; i++) {
-              getDownloadLinks(subsLink[i],lang[i]);
+              if (subsLink[i] != null) {
+                getDownloadLinks(subsLink[i], lang[i]);
+              }
             }
 
           } else {
@@ -170,11 +171,11 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
 
   private String[] getLink(String buff, boolean primary) {
     MySeriesLogger.logger.log(Level.INFO, "Getting the subtitle link");
-   
+
     String[] subLink = new String[NUM_OF_SUBTITLES];
     int[] pos = new int[NUM_OF_SUBTITLES];
     int[] i = new int[NUM_OF_SUBTITLES];
-    
+
     for (int j = 0; j < NUM_OF_SUBTITLES; j++) {
       pos[j] = buff.indexOf("<img src=\"images/flags/" + lang[j] + ".gif\"");
       i[j] = pos[j];
@@ -189,11 +190,11 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
     }
     if (!MyUsefulFunctions.isAllArrayElementsNull(subLink)) {
       MySeriesLogger.logger.log(Level.FINE, "Subtitle link found");
-    } 
-     return subLink;
+    }
+    return subLink;
   }
 
-  private void getDownloadLinks(String subsLink,String language) throws MalformedURLException, IOException {
+  private void getDownloadLinks(String subsLink, String language) throws MalformedURLException, IOException {
     MySeriesLogger.logger.log(Level.INFO, "Getting the download links from {0}", subsLink);
     URL subsUrl = new URL(TV_SUBTITLES_URL + subsLink);
     BufferedReader in = new BufferedReader(new InputStreamReader(subsUrl.openStream()));
@@ -243,7 +244,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
       }
       if (!curTitle.equals("") && !curLink.equals("")) {
         MySeriesLogger.logger.log(Level.FINE, "Subtitle found {0}", curTitle);
-        subs.add(new Subtitle(curTitle, new URL(curLink), love, hate,language));
+        subs.add(new Subtitle(curTitle, new URL(curLink), love, hate, language));
         curTitle = "";
         curLink = "";
         love = 0;
@@ -274,6 +275,4 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
 
 
   }
-
-
 }
