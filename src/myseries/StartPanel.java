@@ -15,7 +15,6 @@ import database.CreateDatabase;
 import database.DBConnection;
 import database.Database;
 import help.HelpWindow;
-import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
@@ -26,12 +25,13 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import lap.LafAndPlay;
+import lap.LafAndPlayException;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyDraggable;
 import myComponents.myGUI.MyFont;
 import tools.DesktopSupport;
-import tools.LookAndFeels;
 import tools.MySeriesLogger;
 import tools.options.Options;
 import tools.Skin;
@@ -416,8 +416,9 @@ public class StartPanel extends MyDraggable {
       MySeriesLogger.logger.log(Level.INFO, "Setting font and font sizes");
       MyFont.SetMyFont();
       MySeriesLogger.logger.log(Level.FINE, "Font and font sizes are set to {0} {1}pts", new Object[]{Options.toString(Options.FONT_FACE), Options.toFloat(Options.FONT_SIZE)});
-      LookAndFeels l = new LookAndFeels();
-      LookAndFeels.setInstalledLookAndFeels();
+      LafAndPlay lap = new LafAndPlay(Paths.LAFS_PATH);
+      lap.addDefaultLookAndFeels();
+      lap.addExternalLookAndFeels();
       if (Options.toBoolean(Options.USE_SKIN)) {
         MySeriesLogger.logger.log(Level.INFO, "Create Skin");
         Skin skin = new Skin(Options.toColor(Options.SKIN_COLOR));
@@ -430,12 +431,12 @@ public class StartPanel extends MyDraggable {
         MySeriesLogger.logger.log(Level.INFO, "Loading look and feel");
         String laf = "";
         if(Options.toBoolean(Options.RANDOMIZE_LAF)){
-          laf = LookAndFeels.getRandomLaf();
+          laf = lap.getRandomLaf();
         } else {
           laf = Options.toString(Options.LOOK_AND_FEEL);
         }
         try {
-          LookAndFeels.setLookAndFeel(laf);
+          lap.setLookAndFeel(laf);
           Options.setOption(Options.LOOK_AND_FEEL, laf);
           Options.save();
         } catch (Exception ex) {
@@ -510,6 +511,11 @@ public class StartPanel extends MyDraggable {
     } catch (UnsupportedLookAndFeelException ex) {
       MyMessages.error("MySeries", "Unsupported Look and feel", true);
       MySeriesLogger.logger.log(Level.SEVERE, "Unsupported Look and feel", ex);
+    } catch (LafAndPlayException ex){
+      MyMessages.error("MySeries", "Laf Exception", true);
+      MySeriesLogger.logger.log(Level.SEVERE, ex.getMessage(), ex);
+    } catch (Exception ex){
+      MySeriesLogger.logger.log(Level.SEVERE, "External Laf Exception", ex);
     }
   }
 

@@ -42,8 +42,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import myComponents.myGUI.MyFont;
 import myseries.actions.ApplicationActions;
-import tools.LookAndFeels;
-import tools.download.subtitles.SubtitleConstants;
 import tools.languages.Language;
 import tools.options.panels.Appearance;
 import tools.options.panels.General;
@@ -328,7 +326,7 @@ public class OptionsPanel extends MyDraggable {
         if (!skinChange) {
           MyFont.SetMyFont();
           try {
-            LookAndFeels.setLookAndFeel(Options.toString(Options.LOOK_AND_FEEL));
+            appearance.lap.setLookAndFeel(Options.toString(Options.LOOK_AND_FEEL));
           } catch (Exception ex) {
             Logger.getLogger(OptionsPanel.class.getName()).log(Level.SEVERE, null, ex);
           }

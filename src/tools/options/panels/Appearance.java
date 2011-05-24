@@ -25,10 +25,11 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JColorChooser;
 import javax.swing.JTextField;
-import tools.LookAndFeels;
+import lap.LafAndPlay;
 import tools.MySeriesLogger;
 import tools.options.MyOptionsFontRenderer;
 import tools.options.Options;
+import tools.options.Paths;
 
 /**
  *
@@ -45,6 +46,7 @@ public class Appearance extends javax.swing.JPanel {
   public String oldLaf;
   private String[] fonts;
   private ComboBoxModel model_fonts;
+  public LafAndPlay lap;
 
   /** Creates new form Appearance */
   public Appearance() {
@@ -61,7 +63,16 @@ public class Appearance extends javax.swing.JPanel {
   }
 
   private void createLafModel() {
-    combobox_laf.setModel(LookAndFeels.getComboBoxModel());
+    lap = new LafAndPlay(Paths.LAFS_PATH);
+    lap.addDefaultLookAndFeels();
+    try {
+      lap.addExternalLookAndFeels();
+    } catch (IOException ex) {
+      MySeriesLogger.logger.log(Level.SEVERE, "Could not get external lafs", ex);
+    } catch (Exception ex) {
+      MySeriesLogger.logger.log(Level.SEVERE, "Could not get external lafs", ex);
+    }
+    combobox_laf.setModel(lap.getComboBoxModel());
   }
 
   private void createModelFonts() {
@@ -309,8 +320,6 @@ public class Appearance extends javax.swing.JPanel {
     Font font = new Font((String) combobox_fonts.getSelectedItem(), Font.PLAIN, (int) Float.parseFloat(String.valueOf(spinner_fontSize.getValue())));
     return font;
   }
-
- 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   public javax.swing.JButton button_BGColor;
   public javax.swing.JCheckBox cb_minimizeTray;
