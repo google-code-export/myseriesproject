@@ -360,7 +360,7 @@ public class RenameEpisodes extends MyDraggable {
       return true;
     } else {
       MySeriesLogger.logger.log(Level.WARNING, "Validation failed\nError message: {0}", group.getErrorMessage());
-      MyMessages.error("Renaming Episodes Form", group.getErrorMessage(), true);
+      MyMessages.warning("Renaming Episodes Form", group.getErrorMessage(), true);
       return false;
     }
   }

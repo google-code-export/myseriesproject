@@ -53,7 +53,7 @@ public class MyMessages {
    * @param title The message title
    * @param message The message text
    */
-  public static void message(String title, String message, int type, boolean showWindow, boolean setColors) {
+  private static void message(String title, String message, int type, boolean showWindow, boolean setColors) {
     Level level = Level.INFO;
     switch (type) {
       case INFO_MESS:
@@ -77,7 +77,7 @@ public class MyMessages {
       hideMessage();
     }
     if (type != INFO_MESS) {
-      logToPanel(type, message);
+      logToPanel(type, title, message);
     }
   }
 
@@ -88,6 +88,15 @@ public class MyMessages {
    */
   public static void error(String title, String message, boolean setColors) {
     message(title, message, ERROR_MESS, true, setColors);
+  }
+  
+  /**
+   * Displays a warning dialog
+   * @param title The title
+   * @param message The message
+   */
+  public static void warning(String title, String message, boolean setColors) {
+    message(title, message, WARNING_MESS, true, setColors);
   }
 
   /**
@@ -164,10 +173,10 @@ public class MyMessages {
     }
   }
 
-  public static void logToPanel(int type, String message) {
+  public static void logToPanel(int type, String title,  String message) {
     if (logPanel != null) {
       logPanel.setVisible(true);
-      logPanel.log(type, System.currentTimeMillis(), message);
+      logPanel.log(type, System.currentTimeMillis(),title, message);
 
     }
   }

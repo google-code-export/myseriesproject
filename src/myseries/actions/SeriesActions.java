@@ -103,7 +103,7 @@ public class SeriesActions {
     try {
       if (!DesktopSupport.isBrowseSupport()) {
         MySeriesLogger.logger.log(Level.WARNING, "Browse is not supported in the current OS");
-        MyMessages.error("Browse Error!!!", "Browse is not supported", true);
+        MyMessages.warning("Browse Error!!!", "Browse is not supported", true);
         return;
       }
       SeriesRecord series = Series.getCurrentSerial();
@@ -129,12 +129,12 @@ public class SeriesActions {
         DesktopSupport.getDesktop().open(f);
       } else {
         MySeriesLogger.logger.log(Level.WARNING, "{0} is not a directory", f.getCanonicalPath());
-        MyMessages.error("Directory error", f.getCanonicalPath() + " is not a directory", true);
+        MyMessages.warning("Directory error", f.getCanonicalPath() + " is not a directory", true);
         return;
       }
     } catch (Exception ex) {
       MySeriesLogger.logger.log(Level.WARNING, "Browse is not supported in the current OS");
-      MyMessages.error("Browse Error!!!", "Browse is not supported", true);
+      MyMessages.warning("Browse Error!!!", "Browse is not supported", true);
       return;
     }
   }

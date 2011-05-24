@@ -322,7 +322,7 @@ public class EzTvForm extends AbstractTorrentForm {
           }
       } else {
           MySeriesLogger.logger.log(Level.WARNING, "Validation error\nMessage: {0}", group.getErrorMessage());
-          MyMessages.error("EzTv Search Form", group.getErrorMessage(), true);
+          MyMessages.warning("EzTv Search Form", group.getErrorMessage(), true);
       }
       //myseries.MySeries.glassPane.deactivate();
       //dispose();
