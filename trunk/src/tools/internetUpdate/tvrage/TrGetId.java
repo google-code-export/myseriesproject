@@ -275,7 +275,7 @@ public class TrGetId extends MyDraggable {
               adminSeries.setVisible(true);
               return;
             } else {
-              MyMessages.error("Downloading screenshot", "No screenshot was found", true);
+              MyMessages.warning("Downloading screenshot", "No screenshot was found", true);
               adminSeries.setVisible(true);
               return;
             }

@@ -64,16 +64,16 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
         MySeriesLogger.logger.log(Level.INFO, "Downloading whole season subtitles for series {0} seadon {1}", new Object[]{link, season});
         subs.add(new Subtitle("Whole season subtitles", new URL(link), 0, 0, ""));
       } catch (MalformedURLException ex) {
-        MySeriesLogger.logger.log(Level.WARNING, "Malformed url: {0}", link);
+        MySeriesLogger.logger.log(Level.SEVERE, "Malformed url: {0}", link);
         MyMessages.error("Download whole season subtitles", "Malformed url: " + link, true);
       }
     }
     progress.setIndeterminate(false);
     if (subs.isEmpty()) {
-      MySeriesLogger.logger.log(Level.INFO, "Subtitle not found");
+      MySeriesLogger.logger.log(Level.WARNING, "Subtitle not found");
       form.dispose();
       if (!cancel) {
-        MyMessages.error("Subtitle not found", "The subtitle was not found", true);
+        MyMessages.warning("Subtitle not found", "The subtitle was not found", true);
       }
     } else if (subs.size() == 1) {
       MySeriesLogger.logger.log(Level.FINE, "subtitle found {0}", subs.get(0).title);

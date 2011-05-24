@@ -99,7 +99,7 @@ public class Video {
       Episodes.updateEpisodesTable(episodesTable);
     } catch (Exception ex) {
       MySeriesLogger.logger.log(Level.WARNING, "Playing videos is not supported", ex);
-      MyMessages.error("Not supported", "Playing videos is not supported by your OS", true);
+      MyMessages.warning("Not supported", "Playing videos is not supported by your OS", true);
     }
   }
 

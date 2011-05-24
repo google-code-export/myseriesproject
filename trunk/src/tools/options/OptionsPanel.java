@@ -287,7 +287,7 @@ public class OptionsPanel extends MyDraggable {
     MySeriesLogger.logger.log(Level.INFO, "Validating user input");
     if (!group.validate()) {
       MySeriesLogger.logger.log(Level.WARNING, "Validation failed\nError message: {0}", group.getErrorMessage());
-      MyMessages.error("Options Form", group.getErrorMessage(), true);
+      MyMessages.warning("Options Form", group.getErrorMessage(), true);
       return;
     }
     try {

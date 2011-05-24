@@ -53,7 +53,7 @@ public class GetTvSubtitlesCode implements SubtitleConstants {
             in.close();
             if (sLinks.isEmpty()) {
                 MySeriesLogger.logger.log(Level.INFO, "Code not found");
-                MyMessages.message("Series not found", "The series " + series.getFullTitle() + " is not found in SubtitleOnline",Info.WARNING_MESS, true, true);
+                MyMessages.warning("Series not found", "The series " + series.getFullTitle() + " is not found in SubtitleOnline",true);
             } else if (sLinks.size() == 1) {
                 MySeriesLogger.logger.log(Level.FINE, "Code found: {0}", sLinks.get(0).getCode());
                 this.tSubCode = sLinks.get(0).getCode();

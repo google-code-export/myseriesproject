@@ -369,7 +369,7 @@ public class StartPanel extends MyDraggable {
         }
       } else {
         MySeriesLogger.logger.log(Level.WARNING, "The database name should not be empty");
-        MyMessages.error("Empty name", "The database name should not be empty", true);
+        MyMessages.warning("Empty name", "The database name should not be empty", true);
       }
     }//GEN-LAST:event_bt_okActionPerformed
 

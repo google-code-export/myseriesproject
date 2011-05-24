@@ -352,7 +352,7 @@ public class ImportEpisodes extends MyDraggable {
         MySeriesLogger.logger.log(Level.INFO, "Validating user input");
         if (!group.validate()) {
             MySeriesLogger.logger.log(Level.WARNING, "Validation failed/nError: {0}", group.getErrorMessage());
-            MyMessages.error("Import Episodes Form", group.getErrorMessage(), true);
+            MyMessages.warning("Import Episodes Form", group.getErrorMessage(), true);
             return;
         }
         try {
@@ -398,7 +398,7 @@ public class ImportEpisodes extends MyDraggable {
                 Thread t = new Thread(i);
                 t.start();
             } else {
-                MySeriesLogger.logger.log(Level.WARNING, "No file selected");
+                MySeriesLogger.logger.log(Level.SEVERE, "No file selected");
                 MyMessages.error("No file!!!", "No File selected!!!", true);
             }
         } else {

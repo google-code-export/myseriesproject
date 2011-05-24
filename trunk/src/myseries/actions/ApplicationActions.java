@@ -157,11 +157,11 @@ public class ApplicationActions {
   public static void viewLog(MySeries m) {
     Desktop d = Desktop.getDesktop();
     if (!Desktop.isDesktopSupported()) {
-      MySeriesLogger.logger.log(Level.WARNING, "Desktop is not supported");
+      MySeriesLogger.logger.log(Level.SEVERE, "Desktop is not supported");
       MyMessages.error("Sorry!!!", "Your OS does not support this function", true);
     } else {
       if (!d.isSupported(Desktop.Action.OPEN)) {
-        MySeriesLogger.logger.log(Level.WARNING, "Open file is not supported");
+        MySeriesLogger.logger.log(Level.SEVERE, "Open file is not supported");
         MyMessages.error("Sorry!!!", "Your OS does not support this function", true);
       } else {
         try {
@@ -262,7 +262,7 @@ public class ApplicationActions {
         MySeriesLogger.logger.log(Level.FINE, mess);
         MyMessages.message("Delete torrents", mess);
       } else {
-        MySeriesLogger.logger.log(Level.WARNING, "The torrents directory does not exist");
+        MySeriesLogger.logger.log(Level.SEVERE, "The torrents directory does not exist");
         MyMessages.error("Delete torrents", "The torrents directory does not exist", true);
       }
     }
@@ -281,7 +281,7 @@ public class ApplicationActions {
           Options.save();
         }
       }
-      MyMessages.logToPanel(Info.WARNING_MESS, "Logging level is set to ALL\n"
+      MyMessages.logToPanel(Info.WARNING_MESS, "Logging level", "Logging level is set to ALL\n"
           + "That's for debugging reasons and may slow down the application\n");
     }
   }
@@ -311,9 +311,9 @@ public class ApplicationActions {
       URI email = new URI("mailto:" + MySeries.EMAIL + subject);
       MyUsefulFunctions.sendMail(email);
     } catch (Exception ex) {
-      MyMessages.error("Sending mail", "Could not open your email client.\n"
+      MyMessages.warning("Sending mail", "Could not open your email client.\n"
           + "Please send it manually to " + MySeries.EMAIL, true);
-      MySeriesLogger.logger.log(Level.SEVERE, "Could not send mail", ex);
+      MySeriesLogger.logger.log(Level.WARNING, "Could not send mail", ex);
     }
   }
 
@@ -350,13 +350,13 @@ public class ApplicationActions {
     MySeriesLogger.logger.log(Level.INFO, "Java version is {0}", version);
     if (version != null && version.startsWith("1.7")) {
       if (Options.toBoolean(Options.WARN_FOR_VERSION)) {
-        MyMessages.message("Java version " + version, "The application is written for java 6.\n"
+        MyMessages.warning("Java version " + version, "The application is written for java 6.\n"
             + "It seems that you are using java 7.\nThere might be some incopatibility issues",
-            Info.WARNING_MESS, true, true);
+            true);
         Options.setOption(Options.WARN_FOR_VERSION, false);
         Options.save();
       } else {
-        MyMessages.logToPanel(Info.WARNING_MESS, "The application is written for java 6.\n"
+        MyMessages.logToPanel(Info.WARNING_MESS,"Java version", "The application is written for java 6.\n"
             + "It seems that you are using java 7.\nThere might be some incopatibility issues");
       }
     }

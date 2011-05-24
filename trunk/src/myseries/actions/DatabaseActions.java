@@ -85,7 +85,7 @@ public class DatabaseActions {
                 m.getEvClass().fireMyEvent(ev);
             } else {
                 MySeriesLogger.logger.log(Level.WARNING, "Selected database is invlid.Not loading...");
-                MyMessages.error("Invalid Database", "The database you selected is invalid", true);
+                MyMessages.warning("Invalid Database", "The database you selected is invalid", true);
                 loadDatabase(m);
             }
         } else {

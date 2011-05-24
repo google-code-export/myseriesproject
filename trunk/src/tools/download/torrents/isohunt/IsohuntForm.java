@@ -336,7 +336,7 @@ public class IsohuntForm extends AbstractTorrentForm implements TorrentConstants
             }
         } else {
             MySeriesLogger.logger.log(Level.WARNING, "Validation failed\nError message : {0}",group.getErrorMessage());
-            MyMessages.error("IsoHunt Search Form", group.getErrorMessage(), true);
+            MyMessages.warning("IsoHunt Search Form", group.getErrorMessage(), true);
         }
     }//GEN-LAST:event_bt_okActionPerformed
   // Variables declaration - do not modify//GEN-BEGIN:variables

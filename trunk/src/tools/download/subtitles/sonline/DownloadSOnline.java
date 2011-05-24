@@ -55,7 +55,7 @@ public class DownloadSOnline extends AbstractDownloadSubtitle implements Runnabl
     try {
       getSubtitle();
     } catch (IOException ex) {
-      MySeriesLogger.logger.log(Level.WARNING, "Could not read input stream", ex);
+      MySeriesLogger.logger.log(Level.SEVERE, "Could not read input stream", ex);
       MyMessages.error("IO error", "Could not read from input stream", true);
     }
     progress.setIndeterminate(false);
@@ -63,7 +63,8 @@ public class DownloadSOnline extends AbstractDownloadSubtitle implements Runnabl
       MySeriesLogger.logger.log(Level.INFO, "Subtitle was not found");
       form.dispose();
       if (!cancel) {
-        MyMessages.message("Subtitle not found", "The subtitle was not found", Info.WARNING_MESS, true, true);
+        MyMessages.warning("Subtitle not found", 
+            "The subtitle was not found", true);
       }
     } else if (subs.size() == 1) {
       MySeriesLogger.logger.log(Level.FINE, "Found one subtitle.Downloading {0}", subs.get(0).url);

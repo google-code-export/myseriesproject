@@ -81,7 +81,7 @@ public class EpisodesActions {
       MySeriesLogger.logger.log(Level.INFO, "Showing import episodes panel");
       new ImportEpisodes(m);
     } catch (SQLException ex) {
-      MySeriesLogger.logger.log(Level.WARNING, "Error while importing the episodes", ex);
+      MySeriesLogger.logger.log(Level.SEVERE, "Error while importing the episodes", ex);
       MyMessages.error("SQL Error", "There was an error when importing the episodes", true);
     }
   }
@@ -197,7 +197,7 @@ public class EpisodesActions {
       if (!dir.isDirectory()) {
         myseries.MySeries.glassPane.activate(null);
         MySeriesLogger.logger.log(Level.WARNING, "No local directory for series {0}",series.getFullTitle());
-        MyMessages.error("Not a directory", "The local directory is not found", true);
+        MyMessages.warning("Not a directory", "The local directory is not found", true);
         myseries.MySeries.glassPane.deactivate();
         return;
       }
@@ -275,7 +275,7 @@ public class EpisodesActions {
           series.save();
         } catch (SQLException ex) {
           MyMessages.error("SQL Error", "Could not update series link", true);
-          MySeriesLogger.logger.log(Level.WARNING, "Could not update series link", ex);
+          MySeriesLogger.logger.log(Level.SEVERE, "Could not update series link", ex);
         }
       }
       if (link != null && !link.equals("")) {
