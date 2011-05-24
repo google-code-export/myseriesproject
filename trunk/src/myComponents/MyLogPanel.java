@@ -42,12 +42,15 @@ public class MyLogPanel extends javax.swing.JPanel {
     if(MySeriesLogger.logger != null){
     MySeriesLogger.logger.log(Level.FINE, "Components initialized");
     }
-    table.getColumnModel().getColumn(COLUMN_TYPE).setMaxWidth(50);
+    table.getColumnModel().getColumn(COLUMN_TYPE).setMaxWidth(50); 
+    table.getColumnModel().getColumn(COLUMN_TYPE).setCellRenderer(new MyLogTypeRenderer());
+   
     table.getColumnModel().getColumn(COLUMN_TIME).setPreferredWidth(180);
     table.getColumnModel().getColumn(COLUMN_TIME).setMaxWidth(200);
+    
     table.getColumnModel().getColumn(COLUMN_TITLE).setPreferredWidth(250);
     table.getColumnModel().getColumn(COLUMN_TITLE).setMaxWidth(400);
-    table.getColumnModel().getColumn(COLUMN_TYPE).setCellRenderer(new MyLogTypeRenderer());
+    
     table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
   }
