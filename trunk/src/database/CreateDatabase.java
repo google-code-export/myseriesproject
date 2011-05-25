@@ -39,6 +39,8 @@ public class CreateDatabase implements Runnable {
     public CreateDatabase(StartPanel startPanelForm, String db) throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
         if (!db.endsWith(Database.EXT)) {
             this.db = db + Database.EXT;
+        } else {
+          this.db = db;
         }
         DBConnection conn = new DBConnection(this.db, true);
         this.startPanel = startPanelForm;

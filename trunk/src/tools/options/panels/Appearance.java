@@ -104,8 +104,10 @@ public class Appearance extends javax.swing.JPanel {
       }
     } else {
       MySeriesLogger.logger.log(Level.INFO, "Cached file does not exist or it's old.Creating it");
+      
       GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
       String[] f = env.getAvailableFontFamilyNames();
+      
       FileOutputStream fout;
       try {
         fout = new FileOutputStream(Options._USER_DIR_ + "/f.obj");
@@ -117,6 +119,7 @@ public class Appearance extends javax.swing.JPanel {
         return null;
       }
       return f;
+      
     }
 
   }

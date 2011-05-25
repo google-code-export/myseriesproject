@@ -356,7 +356,7 @@ public class MyUsefulFunctions {
 
       if (files.length == 0) {
         MyMessages.warning("Select File", "No files to select", true);
-        MySeriesLogger.logger.log(Level.WARNING, "No files interface the directory");
+        MySeriesLogger.logger.log(Level.WARNING, "No files in the directory");
         System.exit(0);
       } else {
         return (String) MyMessages.ask(title, message, null, files, Options.toString(Options.DB_NAME), true);

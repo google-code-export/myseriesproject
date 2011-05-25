@@ -109,6 +109,7 @@ public class CheckUpdate extends MyDraggable {
       label_needUpdate.setText("Connected to server!!!");
       String inputLine;
       while ((inputLine = in.readLine()) != null) {
+        inputLine = " Current version : 1.5(<a href=\"/p/myseriesproject/source/detail?r=573\">r808 - beta</a>) - PLEASE SEE readme.txt </div> </p>";
         int pos = inputLine.indexOf("Current version :");
         if (pos > -1) {
           inputLine = inputLine.substring(pos + 17);
@@ -122,6 +123,7 @@ public class CheckUpdate extends MyDraggable {
           return inputLine;
         }
       }
+      in.close();
       return null;
     }
   }

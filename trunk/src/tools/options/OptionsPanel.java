@@ -33,6 +33,7 @@ import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyDraggable;
 import myseries.MySeries;
 import com.googlecode.svalidators.formcomponents.ValidationGroup;
+import help.HelpWindow;
 import java.awt.BorderLayout;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -73,6 +74,7 @@ public class OptionsPanel extends MyDraggable {
   Subtitles subtitles = new Subtitles();
   public JPanel[] panels = {general, appearance, internet, renaming, performance, subtitles};
   private TreeModel optionsTreeModel;
+  private JPanel currentPanel;
 
   /** Creates new form OptionsPanel
    * @param m MySeries main form
@@ -257,19 +259,25 @@ public class OptionsPanel extends MyDraggable {
   }//GEN-LAST:event_bt_cancelActionPerformed
 
   private void bt_helpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_helpActionPerformed
-//    if (tabbedPane_options.getSelectedIndex() == GENERAL_OPTIONS_TAB) {
-//      MySeriesLogger.logger.log(Level.INFO, "Showing General options help window");
-//      HelpWindow helpWindow = new HelpWindow(HelpWindow.GENERAL_OPTIONS);
-//    } else if (tabbedPane_options.getSelectedIndex() == INTERNET_OPTIONS_TAB) {
-//      MySeriesLogger.logger.log(Level.INFO, "Showing Internet options help window");
-//      HelpWindow helpWindow = new HelpWindow(HelpWindow.INTERNET_OPTIONS);
-//    } else if (tabbedPane_options.getSelectedIndex() == RENAME_OPTIONS_TAB) {
-//      MySeriesLogger.logger.log(Level.INFO, "Showing Rename options help window");
-//      HelpWindow helpWindow = new HelpWindow(HelpWindow.RENAME_OPTIONS);
-//    }else if (tabbedPane_options.getSelectedIndex() == APPEARANCE_TAB) {
-//      MySeriesLogger.logger.log(Level.INFO, "Showing appearance options help window");
-//      HelpWindow helpWindow = new HelpWindow(HelpWindow.APPEARANCE_OPTIONS);
-//    }
+    if (currentPanel.equals(general)) {
+      MySeriesLogger.logger.log(Level.INFO, "Showing General options help window");
+      HelpWindow helpWindow = new HelpWindow(HelpWindow.GENERAL_OPTIONS);
+    } else if (currentPanel.equals(internet)) {
+      MySeriesLogger.logger.log(Level.INFO, "Showing Internet options help window");
+      HelpWindow helpWindow = new HelpWindow(HelpWindow.INTERNET_OPTIONS);
+    } else if (currentPanel.equals(renaming)) {
+      MySeriesLogger.logger.log(Level.INFO, "Showing Rename options help window");
+      HelpWindow helpWindow = new HelpWindow(HelpWindow.RENAME_OPTIONS);
+    }else if (currentPanel.equals(appearance)) {
+      MySeriesLogger.logger.log(Level.INFO, "Showing appearance options help window");
+      HelpWindow helpWindow = new HelpWindow(HelpWindow.APPEARANCE_OPTIONS);
+    }else if (currentPanel.equals(performance)) {
+      MySeriesLogger.logger.log(Level.INFO, "Showing performance options help window");
+      HelpWindow helpWindow = new HelpWindow(HelpWindow.PERFORMANCE_OPTIONS);
+    }else if (currentPanel.equals(subtitles)) {
+      MySeriesLogger.logger.log(Level.INFO, "Showing subtitles options help window");
+      HelpWindow helpWindow = new HelpWindow(HelpWindow.SUBTITLES_OPTIONS);
+    }
   }//GEN-LAST:event_bt_helpActionPerformed
 
   private void bt_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_okActionPerformed
@@ -363,19 +371,26 @@ public class OptionsPanel extends MyDraggable {
     }
     if (selection.equals(GENERAL)) {
       right.add(general, BorderLayout.CENTER);
+      currentPanel = general;
     } else if (selection.equals(APPEARANCE)) {
       right.add(appearance, BorderLayout.CENTER);
+      currentPanel = appearance;
     } else if (selection.equals(INTERNET)) {
       right.add(internet, BorderLayout.CENTER);
+      currentPanel = internet;
     } else if (selection.equals(RENAMING)) {
       right.add(renaming, BorderLayout.CENTER);
+      currentPanel = renaming;
     } else if (selection.equals(PERFORMANCE)) {
       right.add(performance, BorderLayout.CENTER);
+      currentPanel =  performance;
     } else if (selection.equals(SUBTITLES)) {
       right.add(subtitles, BorderLayout.CENTER);
+      currentPanel = subtitles;
     } else {
       tree.expandRow(1);
       tree.setSelectionRow(1);
+      currentPanel = general;
     }
     right.validate();
     right.repaint();
