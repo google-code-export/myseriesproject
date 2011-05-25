@@ -74,7 +74,7 @@ public class SeriesActions {
     int series_ID = series.getSeries_ID();
     String screenshot = series.getScreenshot();
     MySeriesLogger.logger.log(Level.INFO, "Deleting series {0}", series.getFullTitle());
-    int answ = MyMessages.confirm("Delete Serial?", "Really delete the series " + title + " season " + season + "?", true);
+    int answ = MyMessages.confirm("Delete Series?", "Really delete the series " + title + " season " + season + "?", true);
     ArrayList<SeriesRecord> s;
     SeriesRecord ser;
     if (answ == JOptionPane.YES_OPTION) {
