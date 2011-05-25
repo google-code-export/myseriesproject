@@ -32,6 +32,7 @@ import myseries.series.Series;
 import tools.Skin;
 import tools.download.torrents.AbstractTorrentForm;
 import tools.download.torrents.AbstractTorrent;
+import tools.options.Options;
 
 /**
  * The form to submit a torrent search to EzTv
@@ -139,6 +140,7 @@ public class EzTvForm extends AbstractTorrentForm {
     spinner_episode.setModel(new javax.swing.SpinnerNumberModel(1, 0, 60, 1));
 
     combo_quality.setModel(qualityModel);
+    combo_quality.setSelectedItem(Options.toString(Options.VIDEO_QUALITY));
 
     progress.setString("");
     progress.setStringPainted(true);
@@ -313,7 +315,8 @@ public class EzTvForm extends AbstractTorrentForm {
       MySeriesLogger.logger.log(Level.INFO, "Validating user input");
       if (group.validate()) {
           URI uri = createUri();
-
+          Options.setOption(Options.VIDEO_QUALITY, (String)combo_quality.getSelectedItem());
+          Options.save();
           if (uri != null) {
               MySeriesLogger.logger.log(Level.FINE, "Search uri :{0}", uri);
               EzTv e = new EzTv(uri, this);

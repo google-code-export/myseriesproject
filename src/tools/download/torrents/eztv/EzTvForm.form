@@ -206,6 +206,9 @@
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="qualityModel" type="code"/>
                 </Property>
+                <Property name="selectedItem" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Options.toString(Options.VIDEO_QUALITY)" type="code"/>
+                </Property>
               </Properties>
             </Component>
             <Component class="javax.swing.JProgressBar" name="progress">
