@@ -35,6 +35,8 @@ public class HelpWindow extends MyDraggable {
   public static final int RENAME_OPTIONS = 8;
   public static final int RENAMING = 9;
   public static final int APPEARANCE_OPTIONS = 10;
+  public static final int PERFORMANCE_OPTIONS = 11;
+  public static final int SUBTITLES_OPTIONS = 12;
 
   public HelpWindow(int page) {
     String url = null;
@@ -42,7 +44,7 @@ public class HelpWindow extends MyDraggable {
     MySeriesLogger.logger.log(Level.INFO, "Initializing components");
     initComponents();
     MySeriesLogger.logger.log(Level.FINE, "Components initialized");
-    MySeriesLogger.logger.log(Level.INFO, "Setting page to {0}",page);
+    MySeriesLogger.logger.log(Level.INFO, "Setting page to {0}", page);
     switch (page) {
       case ADMIN_SERIES:
         label_title.setText("Series Administration");
@@ -84,14 +86,22 @@ public class HelpWindow extends MyDraggable {
         label_title.setText("Renaming Episodes");
         url = "episodes_renaming";
         break;
-         case APPEARANCE_OPTIONS:
+      case APPEARANCE_OPTIONS:
         label_title.setText("Appearance Options");
         url = "appearance_options";
         break;
+      case PERFORMANCE_OPTIONS:
+        label_title.setText("Performance Options");
+        url = "performance_options";
+        break;
+      case SUBTITLES_OPTIONS:
+        label_title.setText("Subtitles Options");
+        url = "subtitles_options";
+        break;
     }
-    java.net.URL helpURL = Help.class.getResource("/help/html/"+url+".html");
+    java.net.URL helpURL = Help.class.getResource("/help/html/" + url + ".html");
     try {
-      MySeriesLogger.logger.log(Level.INFO, "Setting content to url {0}",helpURL);
+      MySeriesLogger.logger.log(Level.INFO, "Setting content to url {0}", helpURL);
       content.setPage(helpURL);
       MySeriesLogger.logger.log(Level.FINE, "Content succesfuly set");
     } catch (IOException ex) {
@@ -192,7 +202,6 @@ public class HelpWindow extends MyDraggable {
     MySeriesLogger.logger.log(Level.INFO, "Closing window");
     dispose();
   }//GEN-LAST:event_myButton1ActionPerformed
-
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JEditorPane content;
   private javax.swing.JScrollPane inner_panel;
