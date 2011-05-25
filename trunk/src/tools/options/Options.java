@@ -277,6 +277,10 @@ public class Options {
    */
   public static final String SEARCH_FOR_SECONDARY_SUBTITLE = "SEARCH_FOR_SECONDARY_SUBTITLE";
   /**
+   * The default video quality for downloading videos
+   */
+  public static final String VIDEO_QUALITY = "VIDEO_QUALITY";
+  /**
    * The type of iamge scaling from fastest(worst quality) to slower (better quality)
    */
   public static final int[] IMAGE_SCALING = {Image.SCALE_REPLICATE,
@@ -640,6 +644,7 @@ public class Options {
     out.println(Options.FEED_UPDATE_FREQUENCY + "=0");
     out.println(Options.IMAGE_QUALITY + "=3");
     out.println(Options.SEARCH_FOR_SECONDARY_SUBTITLE + "=true");
+    out.println(Options.VIDEO_QUALITY+ "=");
 
     out.close();
   }
@@ -747,6 +752,7 @@ public class Options {
     options.put(Options.FEED_UPDATE_FREQUENCY, 0);
     options.put(Options.IMAGE_QUALITY, 3);
     options.put(Options.SEARCH_FOR_SECONDARY_SUBTITLE, true);
+    options.put(Options.VIDEO_QUALITY, "");
   }
 
   private static Object getDefaultMainDirectory() {
