@@ -1,0 +1,4 @@
+===MySerieS Latest News===
+<div id='news_1'>
+26/05/2011 : MySerieS v1.5 is almost completed.It will be available in a couple of days.
+</div>
