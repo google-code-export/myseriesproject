@@ -16,6 +16,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import myComponents.MyMessages;
@@ -71,6 +72,7 @@ public class LatestNews extends MyDraggable {
         MySeriesLogger.logger.log(Level.INFO, "Checking for updates");
         latestNewsViewed = Options.toInt(Options.LATEST_NEWS_ID);
         ArrayList<OnlineNew> news = getOnlineNews();
+        showNews(news);
       } catch (MalformedURLException ex) {
         MySeriesLogger.logger.log(Level.SEVERE, "Could not connect to server", ex);
       } catch (IOException ex) {
@@ -79,6 +81,19 @@ public class LatestNews extends MyDraggable {
 
 
     }
+
+    private void showNews(ArrayList<OnlineNew> news) {
+      String n = "<html><head><title>Latest News</title>" +
+      "<link rel=\"stylesheet\" href=\"styles.css\" type=\"text/css\" /></head><body><table>";
+
+      for (Iterator<OnlineNew> it = news.iterator(); it.hasNext();) {
+        OnlineNew on = it.next();
+        n+="<tr><th>"+on.date + " - " + on.title+"</th></tr>";
+        n+="<tr><td>"+on.news +"</td></tr>";
+      }
+      n+= "</table></body></html>";
+      newsPane.setText(n);
+    }
   }
 
   private ArrayList<OnlineNew> getOnlineNews() throws MalformedURLException, IOException {
@@ -86,16 +101,20 @@ public class LatestNews extends MyDraggable {
     MySeriesLogger.logger.log(Level.INFO, "Getting the latest version");
     URL v = new URL(LATESTNEWS_URL);
     BufferedReader in = new BufferedReader(new InputStreamReader(v.openStream()));
-    label_status.setText("Reading news!!!");
     progress.setIndeterminate(true);
-    progress.setString("");
+    progress.setString("Reading news");
     MySeriesLogger.logger.log(Level.FINE, "Latest version found");
     String inputLine;
     while ((inputLine = in.readLine()) != null) {
       int pos = inputLine.indexOf("<div title=\"news_");
       if (pos > -1) {
-        OnlineNew n = new OnlineNew(inputLine);
-        news.add(n);
+        String[] tokens = inputLine.split("<div title=\"news_");
+
+        for (int i = 1; i < tokens.length; i++) {
+          OnlineNew n = new OnlineNew(tokens[i]);
+          news.add(n);
+        }
+
       }
     }
     progress.setIndeterminate(false);
@@ -106,29 +125,25 @@ public class LatestNews extends MyDraggable {
   }
 
   class OnlineNew {
+
     int id;
     String date;
     String title;
     String news;
 
     private OnlineNew(String inputLine) {
-      String[] tokens = inputLine.split("<div title=\"news_");
-      
-      if(tokens.length >1){
-        String[] t = tokens[1].split("(\">)|( : )|(<br></br>)");
-        id = Integer.parseInt(t[0]);
-        date = t[1];
-        title = t[2];
-        news = MyUsefulFunctions.stripHTML(t[3]);
-      }
-      System.out.println(this);
+      inputLine = inputLine.replaceAll("<a.+?</a>", "");
+      String[] t = inputLine.split("(\"> </p><h3>)|( : )|(</h3><p>)");
+      id = Integer.parseInt(t[0]);
+      date = t[1];
+      title = t[2];
+      news = MyUsefulFunctions.stripHTML(t[3]);
     }
 
     @Override
     public String toString() {
-      return id +"."+date+" - " + title + " : " + news;
+      return id + "." + date + " - " + title + " : " + news;
     }
-    
   }
 
   private boolean check() {
@@ -153,8 +168,9 @@ public class LatestNews extends MyDraggable {
     jLabel1 = new javax.swing.JLabel();
     bt_close = new myComponents.myGUI.buttons.MyButtonCancel();
     inner = new javax.swing.JPanel();
-    label_status = new javax.swing.JLabel();
     progress = new javax.swing.JProgressBar();
+    jScrollPane1 = new javax.swing.JScrollPane();
+    newsPane = new javax.swing.JEditorPane();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
@@ -174,7 +190,9 @@ public class LatestNews extends MyDraggable {
     inner.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
     inner.setOpaque(false);
 
-    label_status.setText(" ");
+    newsPane.setContentType("text/html");
+    newsPane.setEditable(false);
+    jScrollPane1.setViewportView(newsPane);
 
     javax.swing.GroupLayout innerLayout = new javax.swing.GroupLayout(inner);
     inner.setLayout(innerLayout);
@@ -183,18 +201,18 @@ public class LatestNews extends MyDraggable {
       .addGroup(innerLayout.createSequentialGroup()
         .addContainerGap()
         .addGroup(innerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(progress, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
-          .addComponent(label_status, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
+          .addComponent(progress, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE))
         .addContainerGap())
     );
     innerLayout.setVerticalGroup(
       innerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(innerLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(label_status)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(progress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(202, Short.MAX_VALUE))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+        .addContainerGap())
     );
 
     javax.swing.GroupLayout outerLayout = new javax.swing.GroupLayout(outer);
@@ -241,12 +259,12 @@ public class LatestNews extends MyDraggable {
     dispose();
     MySeries.glassPane.deactivate();
   }//GEN-LAST:event_bt_closeActionPerformed
-
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private myComponents.myGUI.buttons.MyButtonCancel bt_close;
   private javax.swing.JPanel inner;
   private javax.swing.JLabel jLabel1;
-  private javax.swing.JLabel label_status;
+  private javax.swing.JScrollPane jScrollPane1;
+  private javax.swing.JEditorPane newsPane;
   private javax.swing.JPanel outer;
   private javax.swing.JProgressBar progress;
   // End of variables declaration//GEN-END:variables
