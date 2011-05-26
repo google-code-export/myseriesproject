@@ -189,6 +189,7 @@ public class ToolbarCustomize extends JDialog {
 
   private void bt_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelActionPerformed
     myseries.MySeries.glassPane.deactivate();
+    Toolbar.customize = false;
     MySeriesLogger.logger.log(Level.INFO, "Closing window");
     dispose();
 
