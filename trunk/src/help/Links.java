@@ -26,6 +26,7 @@ public class Links {
     links.put("Main Window","Main Window");
     links.put("The Series panel:","Series Panel");
     links.put("The Errors panel:","Errors Panel");
+    links.put("The Ratings panel:","Ratings Panel");
     links.put("episodes panel","Episodes Panel");
     links.put("The Next Episodes panel:","Next Episodes Panel");
     links.put("The Episodes panel:","Episodes Panel");
