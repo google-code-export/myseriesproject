@@ -20,6 +20,7 @@ public interface MySeriesConstants {
   String DONATION_URL = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=A67FZUFW6S8HE";
   String GOOGLE_CODE_URL = "http://code.google.com/p/myseriesproject/";
   String GOOGLE_CODE_TRACKER = "http://code.google.com/p/myseriesproject/issues/list";
+  String GOOGLE_CODE_DOWNLOAD_URL = "http://code.google.com/p/myseriesproject/downloads/list";
   String EMAIL = "lordovol@hotmail.com";
   String APPLICATION_ICON = "/images/icon.png";
   String LOGO = "/images/logo.png";

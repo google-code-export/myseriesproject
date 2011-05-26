@@ -47,7 +47,9 @@
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="combobox_laf" min="-2" pref="224" max="-2" attributes="2"/>
-                              <EmptySpace min="51" pref="51" max="51" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="bt_downloadLafs" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
@@ -70,7 +72,10 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="combobox_laf" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="2" attributes="0">
+                  <Component id="combobox_laf" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="bt_downloadLafs" alignment="2" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="cb_randomizeLaf" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -265,6 +270,14 @@
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
       </AuxValues>
+    </Component>
+    <Component class="myComponents.myGUI.buttons.MyButtonInternet" name="bt_downloadLafs">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="Download Look and Feels"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_downloadLafsActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
