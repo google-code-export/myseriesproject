@@ -26,6 +26,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JColorChooser;
 import javax.swing.JTextField;
 import lap.LafAndPlay;
+import myComponents.MyUsefulFunctions;
+import myseries.MySeriesConstants;
 import tools.MySeriesLogger;
 import tools.options.MyOptionsFontRenderer;
 import tools.options.Options;
@@ -144,6 +146,7 @@ public class Appearance extends javax.swing.JPanel {
     label_preview = new javax.swing.JLabel();
     cb_minimizeTray = new javax.swing.JCheckBox();
     cb_randomizeLaf = new javax.swing.JCheckBox();
+    bt_downloadLafs = new myComponents.myGUI.buttons.MyButtonInternet();
 
     setName("Appearance"); // NOI18N
     setPreferredSize(new java.awt.Dimension(350, 229));
@@ -228,6 +231,13 @@ public class Appearance extends javax.swing.JPanel {
     cb_randomizeLaf.setName(Options.RANDOMIZE_LAF);
     cb_randomizeLaf.setOpaque(false);
 
+    bt_downloadLafs.setToolTipText("Download Look and Feels");
+    bt_downloadLafs.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        bt_downloadLafsActionPerformed(evt);
+      }
+    });
+
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
     this.setLayout(layout);
     layout.setHorizontalGroup(
@@ -254,10 +264,12 @@ public class Appearance extends javax.swing.JPanel {
                 .addComponent(label_preview, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE))
               .addGroup(layout.createSequentialGroup()
                 .addComponent(combobox_laf, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(51, 51, 51)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bt_downloadLafs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(13, 13, 13)))
             .addGap(65, 65, 65))
           .addGroup(layout.createSequentialGroup()
-            .addComponent(cb_randomizeLaf, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
+            .addComponent(cb_randomizeLaf, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
             .addGap(67, 67, 67))
           .addGroup(layout.createSequentialGroup()
             .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
@@ -269,7 +281,9 @@ public class Appearance extends javax.swing.JPanel {
         .addContainerGap()
         .addComponent(jLabel5)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(combobox_laf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+          .addComponent(combobox_laf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(bt_downloadLafs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(cb_randomizeLaf)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -288,7 +302,7 @@ public class Appearance extends javax.swing.JPanel {
           .addComponent(label_preview, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addGap(18, 18, 18)
         .addComponent(cb_minimizeTray)
-        .addContainerGap(34, Short.MAX_VALUE))
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
     createLafModel();
@@ -327,11 +341,16 @@ public class Appearance extends javax.swing.JPanel {
       label_preview.setFont(newFont);
 }//GEN-LAST:event_spinner_fontSizeStateChanged
 
+    private void bt_downloadLafsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_downloadLafsActionPerformed
+      MyUsefulFunctions.browse(MySeriesConstants.GOOGLE_CODE_DOWNLOAD_URL);
+    }//GEN-LAST:event_bt_downloadLafsActionPerformed
+
   private Font getSelectedFont() {
     Font font = new Font((String) combobox_fonts.getSelectedItem(), Font.PLAIN, (int) Float.parseFloat(String.valueOf(spinner_fontSize.getValue())));
     return font;
   }
   // Variables declaration - do not modify//GEN-BEGIN:variables
+  private myComponents.myGUI.buttons.MyButtonInternet bt_downloadLafs;
   public javax.swing.JButton button_BGColor;
   public javax.swing.JCheckBox cb_minimizeTray;
   public javax.swing.JCheckBox cb_randomizeLaf;
