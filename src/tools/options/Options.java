@@ -281,6 +281,10 @@ public class Options {
    */
   public static final String VIDEO_QUALITY = "VIDEO_QUALITY";
   /**
+   * The id of the latest news that the user has seen
+   */
+  public static final String LATEST_NEWS_ID = "LATEST_NEWS_ID";
+  /**
    * The type of iamge scaling from fastest(worst quality) to slower (better quality)
    */
   public static final int[] IMAGE_SCALING = {Image.SCALE_REPLICATE,
@@ -290,6 +294,7 @@ public class Options {
    */
   public static final String[] _COMBO_OPTIONS_ = {DATE_FORMAT, DEBUG_MODE, LOOK_AND_FEEL,
     FONT_FACE, SUBTITLE_SITE, PRIMARY_SUB, SECONDARY_SUB};
+  
 
   /**
    * Loads the options from MySeries.ini or writes a default if <br />
@@ -602,7 +607,7 @@ public class Options {
     out.println(Options.DEBUG_MODE + "=0");
     //out.println(Options.MODAL + "=true");
     out.println(Options.DATE_FORMAT + "=dd/MM/yyyy");
-    out.println(Options.LOOK_AND_FEEL + "=");
+    out.println(Options.LOOK_AND_FEEL + "=EaSynth");
     out.println(Options.SKIN_COLOR + " =240,240,240");
     out.println(Options.USE_SKIN + " =false");
     out.println(Options.USE_PROXY + " =false");
@@ -645,6 +650,7 @@ public class Options {
     out.println(Options.IMAGE_QUALITY + "=3");
     out.println(Options.SEARCH_FOR_SECONDARY_SUBTITLE + "=true");
     out.println(Options.VIDEO_QUALITY+ "=");
+    out.println(Options.LATEST_NEWS_ID+ "=0");
 
     out.close();
   }
@@ -710,7 +716,7 @@ public class Options {
     options.put(Options.DEBUG_MODE, new Integer(0));
     //options.put(Options.MODAL, true);
     options.put(Options.DATE_FORMAT, "dd/MM/yyyy");
-    options.put(Options.LOOK_AND_FEEL, "");
+    options.put(Options.LOOK_AND_FEEL, "EaSynth");
     options.put(Options.SKIN_COLOR, "240,240,240");
     options.put(Options.USE_SKIN, false);
     options.put(Options.USE_PROXY, false);
@@ -753,6 +759,7 @@ public class Options {
     options.put(Options.IMAGE_QUALITY, 3);
     options.put(Options.SEARCH_FOR_SECONDARY_SUBTITLE, true);
     options.put(Options.VIDEO_QUALITY, "");
+    options.put(Options.LATEST_NEWS_ID, 0);
   }
 
   private static Object getDefaultMainDirectory() {
