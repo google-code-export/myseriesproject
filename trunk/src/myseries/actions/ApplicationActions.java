@@ -37,6 +37,7 @@ import myseries.MySeriesConstants;
 import sdialogs.Info;
 import tools.MySeriesLogger;
 import tools.misc.housekeeping.HouseKeeping;
+import tools.misc.latestNews.LatestNews;
 import tools.options.OptionsPanel;
 import tools.options.Paths;
 
@@ -420,6 +421,10 @@ public class ApplicationActions {
       MySeriesLogger.logger.log(Level.SEVERE, "Could not restart application", ex);
       MyMessages.error("Restart Application", "Could not restart the application", false);
     }
+  }
+
+  public static void latestNews(MySeries m,boolean start) {
+    LatestNews news = new LatestNews(m,start);
   }
 
   private ApplicationActions() {
