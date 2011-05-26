@@ -1,9 +1,9 @@
 ==MySerieS Latest News==
 <div title='news_2'>
-===26/05/2011 : MySerieS version 1.5=== <br />
+===26/05/2011 : MySerieS version 1.5===
 MySerieS v1.5 is almost completed and it will be available in a couple of days.</div>
 
 <div title='news_1'>
-===26/05/2011 : Test===<br />
+===26/05/2011 : Test===
 This is a test
 </div>
