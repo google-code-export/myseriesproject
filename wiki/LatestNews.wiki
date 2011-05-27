@@ -1,8 +1,7 @@
 ==MySerieS Latest News==
 <div title='news_2'>
 ===27/05/2011 : MySerieS version 1.5===
-Thanks for downloading MySeries v1.5.<br>
-There are numerous new features described in the readme.txt file.<br>Some of them are :
+Thanks for downloading MySeries v1.5.<br>There are numerous new features described in the readme.txt file.</br>Some of them are :
   * Support for native and external look and feels.
   * Auto extracting archived subtitle files (zip, rar, 7zip, tar)
   * Downloading whole season subtitles
