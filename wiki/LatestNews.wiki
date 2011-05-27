@@ -1,5 +1,5 @@
 ==MySerieS Latest News==
-<div title='news_2'>
+<div title='news_1'>
 ===27/05/2011 : MySerieS version 1.5===
 Thanks for downloading MySeries v1.5.<br>There are numerous new features described in the readme.txt file.</br><br>Some of them are :</br>
   * Support for native and external look and feels.
@@ -8,8 +8,4 @@ Thanks for downloading MySeries v1.5.<br>There are numerous new features describ
   * Option to download both primary and secondary language subtitles
   * Option to update feeds on start up and/or every x minutes
   * Option to minimize application to tray
-</div>
-<div title='news_1'>
-===27/05/2011 : Just A Test===
-Just a test for the Latest News Wiki page
 </div>
