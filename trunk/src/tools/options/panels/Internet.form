@@ -26,10 +26,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="checkbox_useProxy" alignment="0" pref="269" max="32767" attributes="1"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="cb_updateFeeds" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel2" alignment="1" min="-2" max="-2" attributes="2"/>
-                              </Group>
+                              <Component id="jLabel2" min="-2" max="-2" attributes="2"/>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Component id="spinner_columns" min="-2" pref="41" max="-2" attributes="0"/>
                               <EmptySpace min="77" pref="77" max="77" attributes="0"/>
@@ -46,20 +43,21 @@
                               </Group>
                               <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
                           </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                              <Component id="cb_updateFeeds" pref="267" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="jCheckBox1" alignment="0" max="32767" attributes="1"/>
                           <Component id="jLabel26" alignment="0" min="-2" pref="254" max="-2" attributes="2"/>
                           <Component id="jLabel27" alignment="0" min="-2" pref="154" max="-2" attributes="2"/>
-                          <Component id="sl_feeds" alignment="0" min="-2" pref="263" max="-2" attributes="0"/>
+                          <Component id="sl_feeds" alignment="0" pref="263" max="32767" attributes="1"/>
                       </Group>
-                      <EmptySpace pref="50" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="jCheckBox1" min="-2" pref="178" max="-2" attributes="0"/>
-                      <EmptySpace pref="135" max="32767" attributes="0"/>
+                      <EmptySpace pref="56" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>

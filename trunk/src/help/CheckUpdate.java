@@ -88,7 +88,7 @@ public class CheckUpdate extends MyDraggable {
           } else {
             label_needUpdate.setText("You are up to date!!!");
             MySeriesLogger.logger.log(Level.INFO, "You are up to date!!!");
-          }
+           }
         } else {
           MySeriesLogger.logger.log(Level.WARNING, "Can't get the update data");
           label_needUpdate.setText("Can't get the update data!!!");

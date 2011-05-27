@@ -126,7 +126,7 @@ public class MyTrayIcon {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-      if (e.getClickCount() > 1) {
+      if (e.getButton() == 1 && e.getClickCount() > 1) {
         frame.setVisible(true);
         frame.setExtendedState(Options.toInt(Options.WINDOW_STATE));
         removeIconFromTray();
