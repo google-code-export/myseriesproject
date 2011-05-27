@@ -11,6 +11,7 @@
 package tools.misc.latestNews;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
@@ -38,6 +39,7 @@ public class LatestNews extends MyDraggable {
   private boolean isConected;
   private String LATESTNEWS_URL = "http://code.google.com/p/myseriesproject/wiki/LatestNews?ts=1306404297&updated=LatestNews";
   private ReadNews readNews;
+  private int latestNewsId = 0;
 
   public LatestNews(MySeries m, boolean onStartUp) {
     this.m = m;
@@ -48,18 +50,20 @@ public class LatestNews extends MyDraggable {
     MySeriesLogger.logger.log(Level.INFO, "Initializing components");
     initComponents();
     MySeriesLogger.logger.log(Level.FINE, "Components initialized");
+    setLocationRelativeTo(null);
+
     if (check()) {
       readNews = new ReadNews();
       Thread t = new Thread(readNews);
       t.start();
+      if (!onStartUp && !isVisible()) {
+        setVisible(true);
+      }
     } else {
       MySeries.glassPane.deactivate();
       return;
     }
-    if (!onStartUp) {
-      setLocationRelativeTo(null);
-      setVisible(true);
-    }
+
   }
 
   class ReadNews implements Runnable {
@@ -72,7 +76,17 @@ public class LatestNews extends MyDraggable {
         MySeriesLogger.logger.log(Level.INFO, "Checking for updates");
         latestNewsViewed = Options.toInt(Options.LATEST_NEWS_ID);
         ArrayList<OnlineNew> news = getOnlineNews();
-        showNews(news);
+
+        if (!onStartUp || latestNewsViewed < latestNewsId) {
+          showNews(news);
+          if (!isVisible()) {
+            MySeries.glassPane.activate(null);
+            setVisible(true);
+          }
+          Options.setOption(Options.LATEST_NEWS_ID, latestNewsId);
+          Options.save();
+        }
+
       } catch (MalformedURLException ex) {
         MySeriesLogger.logger.log(Level.SEVERE, "Could not connect to server", ex);
       } catch (IOException ex) {
@@ -83,22 +97,25 @@ public class LatestNews extends MyDraggable {
     }
 
     private void showNews(ArrayList<OnlineNew> news) {
-      String n = "<html><head><title>Latest News</title>" +
-      "<link rel=\"stylesheet\" href=\"styles.css\" type=\"text/css\" /></head><body><table>";
+      MySeriesLogger.logger.log(Level.INFO, "Showing news");
+      String n = "<html><head><title>Latest News</title>"
+          + "<link rel=\"stylesheet\" href=\"styles.css\" type=\"text/css\" /></head><body><table>";
 
       for (Iterator<OnlineNew> it = news.iterator(); it.hasNext();) {
         OnlineNew on = it.next();
-        n+="<tr><th>"+on.date + " - " + on.title+"</th></tr>";
-        n+="<tr><td>"+on.news +"</td></tr>";
+        if (!onStartUp || (onStartUp && on.id > Options.toInt(Options.LATEST_NEWS_ID))) {
+          n += "<tr><th>" + on.date + " - " + on.title + "</th></tr>";
+          n += "<tr><td>" + on.news + "</td></tr>";
+        }
       }
-      n+= "</table></body></html>";
+      n += "</table></body></html>";
       newsPane.setText(n);
     }
   }
 
   private ArrayList<OnlineNew> getOnlineNews() throws MalformedURLException, IOException {
     ArrayList<OnlineNew> news = new ArrayList<OnlineNew>();
-    MySeriesLogger.logger.log(Level.INFO, "Getting the latest version");
+    MySeriesLogger.logger.log(Level.INFO, "Getting the latest news");
     URL v = new URL(LATESTNEWS_URL);
     BufferedReader in = new BufferedReader(new InputStreamReader(v.openStream()));
     progress.setIndeterminate(true);
@@ -109,7 +126,6 @@ public class LatestNews extends MyDraggable {
       int pos = inputLine.indexOf("<div title=\"news_");
       if (pos > -1) {
         String[] tokens = inputLine.split("<div title=\"news_");
-
         for (int i = 1; i < tokens.length; i++) {
           OnlineNew n = new OnlineNew(tokens[i]);
           news.add(n);
@@ -117,8 +133,9 @@ public class LatestNews extends MyDraggable {
 
       }
     }
+    MySeriesLogger.logger.log(Level.INFO, "{0} news found", news.size());
     progress.setIndeterminate(false);
-    progress.setString("");
+    progress.setString(news.size() + " news were found");
     in.close();
 
     return news;
@@ -133,11 +150,15 @@ public class LatestNews extends MyDraggable {
 
     private OnlineNew(String inputLine) {
       inputLine = inputLine.replaceAll("<a.+?</a>", "");
-      String[] t = inputLine.split("(\"> </p><h3>)|( : )|(</h3><p>)");
+      String[] t = inputLine.split("(\"> </p><h3>)|( : )|(</h3><p>)",4);
       id = Integer.parseInt(t[0]);
+      if (id > latestNewsId) {
+        latestNewsId = id;
+      }
       date = t[1];
       title = t[2];
-      news = MyUsefulFunctions.stripHTML(t[3]);
+      news = t[3];
+      MySeriesLogger.logger.log(Level.INFO, "News : {0}", title);
     }
 
     @Override
@@ -178,7 +199,7 @@ public class LatestNews extends MyDraggable {
 
     jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getStyle() | java.awt.Font.BOLD, jLabel1.getFont().getSize()+2));
     jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-    jLabel1.setText("MySerieS Lates News");
+    jLabel1.setText("MySerieS Latest News");
 
     bt_close.setToolTipText("Close");
     bt_close.addActionListener(new java.awt.event.ActionListener() {
@@ -188,7 +209,11 @@ public class LatestNews extends MyDraggable {
     });
 
     inner.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-    inner.setOpaque(false);
+
+    progress.setString("Latest News");
+    progress.setStringPainted(true);
+
+    jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
 
     newsPane.setContentType("text/html");
     newsPane.setEditable(false);
@@ -201,8 +226,8 @@ public class LatestNews extends MyDraggable {
       .addGroup(innerLayout.createSequentialGroup()
         .addContainerGap()
         .addGroup(innerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
-          .addComponent(progress, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE))
+          .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
+          .addComponent(progress, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE))
         .addContainerGap())
     );
     innerLayout.setVerticalGroup(
@@ -211,7 +236,7 @@ public class LatestNews extends MyDraggable {
         .addContainerGap()
         .addComponent(progress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
         .addContainerGap())
     );
 
@@ -223,7 +248,7 @@ public class LatestNews extends MyDraggable {
         .addContainerGap()
         .addGroup(outerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, outerLayout.createSequentialGroup()
-            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(18, 18, 18)
             .addComponent(bt_close, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
           .addGroup(outerLayout.createSequentialGroup()
