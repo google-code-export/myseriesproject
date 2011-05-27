@@ -48,7 +48,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="jLabel1" min="-2" pref="342" max="-2" attributes="0"/>
+                          <Component id="jLabel1" min="-2" pref="474" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="bt_close" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -83,7 +83,7 @@
               </FontInfo>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="MySerieS Lates News"/>
+            <Property name="text" type="java.lang.String" value="MySerieS Latest News"/>
           </Properties>
         </Component>
         <Component class="myComponents.myGUI.buttons.MyButtonCancel" name="bt_close">
@@ -101,7 +101,6 @@
                 <LineBorder/>
               </Border>
             </Property>
-            <Property name="opaque" type="boolean" value="false"/>
           </Properties>
 
           <Layout>
@@ -110,8 +109,8 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane1" alignment="1" pref="370" max="32767" attributes="0"/>
-                          <Component id="progress" alignment="1" pref="370" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" alignment="1" pref="520" max="32767" attributes="0"/>
+                          <Component id="progress" alignment="1" pref="520" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -123,7 +122,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="progress" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="222" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="251" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -131,8 +130,17 @@
           </Layout>
           <SubComponents>
             <Component class="javax.swing.JProgressBar" name="progress">
+              <Properties>
+                <Property name="string" type="java.lang.String" value="Latest News"/>
+                <Property name="stringPainted" type="boolean" value="true"/>
+              </Properties>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+              </Properties>
               <AuxValues>
                 <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
               </AuxValues>
