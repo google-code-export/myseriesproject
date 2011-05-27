@@ -1,4 +1,13 @@
 ==MySerieS Latest News==
+<div title='news_2'>
+===27/05/2011 : Look And Feel package I===
+A package of look and feel files is available for downloading at MySerieS download page.<br>The package contains the following look and feel:</br>
+  * Infonode
+  * Liquid
+  * Napkin
+  * Nimrod
+  * Tinylaf
+</div>
 <div title='news_1'>
 ===27/05/2011 : MySerieS version 1.5===
 Thanks for downloading MySeries v1.5.<br>There are numerous new features described in the readme.txt file.</br><br>Some of them are :</br>
