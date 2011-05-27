@@ -174,7 +174,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
   public Timer memoryTimer = new Timer(Integer.MAX_VALUE, null);
   public Timer feedsTimer = new Timer(Integer.MAX_VALUE, null);
 
-  // TODO delete multiple episodes
   /**
    *
    * @throws java.lang.ClassNotFoundException
@@ -186,7 +185,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
    */
   public MySeries() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, IOException {
     appIcon = new javax.swing.ImageIcon(getClass().getResource(APPLICATION_ICON)).getImage();
-    myTrayIcon = new MyTrayIcon(this, appIcon, "MySeries");
+    String tooltip = "MySeries v"+version;
+    myTrayIcon = new MyTrayIcon(this, appIcon, tooltip);
     if (version.indexOf("dev") > -1) {
       date = MyUsefulFunctions.getToday("dd/MM/yyyy");
     }
