@@ -15,6 +15,7 @@ import myComponents.MyUsefulFunctions;
 import myComponents.myToolbar.Toolbar;
 import myComponents.myToolbar.ToolbarButton;
 import myseries.episodes.Episodes;
+import myseries.series.Series;
 import tools.DesktopSupport;
 import tools.MySeriesLogger;
 
@@ -40,6 +41,9 @@ public class Menus {
     public static void setEpisodesPopup(SeriesRecord series, EpisodesRecord episode,
         boolean singleEpisode, boolean episodesPanel, MySeries m) {
         MySeriesLogger.logger.log(Level.INFO, "Enabling episodes popup");
+        if(series == null){
+          series = Series.getCurrentSerial();
+        }
         String seriesTitle = series != null ? series.getFullTitle() : "";
         String episodeTitle = episode != null ? episode.getTitle() : "";
         String localDir = series != null ? series.getLocalDir() : "";
