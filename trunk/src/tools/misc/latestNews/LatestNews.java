@@ -37,9 +37,10 @@ public class LatestNews extends MyDraggable {
   private MySeries m;
   private boolean onStartUp;
   private boolean isConected;
-  private String LATESTNEWS_URL = "http://code.google.com/p/myseriesproject/wiki/LatestNews?ts=1306404297&updated=LatestNews";
+  private String LATESTNEWS_URL = "http://code.google.com/p/myseriesproject/wiki/LatestNews";
   private ReadNews readNews;
   private int latestNewsId = 0;
+  private int numberOfNews = 0;
 
   public LatestNews(MySeries m, boolean onStartUp) {
     this.m = m;
@@ -79,6 +80,7 @@ public class LatestNews extends MyDraggable {
 
         if (!onStartUp || latestNewsViewed < latestNewsId) {
           showNews(news);
+          progress.setString(numberOfNews + " news were found");
           if (!isVisible()) {
             MySeries.glassPane.activate(null);
             setVisible(true);
@@ -106,6 +108,7 @@ public class LatestNews extends MyDraggable {
         if (!onStartUp || (onStartUp && on.id > Options.toInt(Options.LATEST_NEWS_ID))) {
           n += "<tr><th>" + on.date + " - " + on.title + "</th></tr>";
           n += "<tr><td>" + on.news + "</td></tr>";
+          numberOfNews++;
         }
       }
       n += "</table></body></html>";
