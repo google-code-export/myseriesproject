@@ -341,7 +341,7 @@ public class IsohuntForm extends AbstractTorrentForm implements TorrentConstants
         }
       } else {
         MySeriesLogger.logger.log(Level.WARNING, "Validation failed\nError message : {0}", group.getErrorMessage());
-        MyMessages.warning("IsoHunt Search Form", group.getErrorMessage(), true);
+        MyMessages.warning("IsoHunt Search Form", group.getErrorMessage(), true, true);
       }
     }//GEN-LAST:event_bt_okActionPerformed
   // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -386,7 +386,7 @@ public class IsohuntForm extends AbstractTorrentForm implements TorrentConstants
       query = MyUsefulFunctions.join(q, "&");
       return new URI(address + query);
     } catch (URISyntaxException ex) {
-      MyMessages.error("Wrong url", "Wrong url " + address + query, true);
+      MyMessages.error("Wrong url", "Wrong url " + address + query, true, true);
       MySeriesLogger.logger.log(Level.SEVERE, "Wrong url " + address + query, ex);
       return null;
     } catch (UnsupportedEncodingException ex) {

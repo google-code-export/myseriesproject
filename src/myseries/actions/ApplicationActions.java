@@ -159,18 +159,18 @@ public class ApplicationActions {
     Desktop d = Desktop.getDesktop();
     if (!Desktop.isDesktopSupported()) {
       MySeriesLogger.logger.log(Level.SEVERE, "Desktop is not supported");
-      MyMessages.error("Sorry!!!", "Your OS does not support this function", true);
+      MyMessages.error("Sorry!!!", "Your OS does not support this function", true, true);
     } else {
       if (!d.isSupported(Desktop.Action.OPEN)) {
         MySeriesLogger.logger.log(Level.SEVERE, "Open file is not supported");
-        MyMessages.error("Sorry!!!", "Your OS does not support this function", true);
+        MyMessages.error("Sorry!!!", "Your OS does not support this function", true, true);
       } else {
         try {
           d.open(new File(Paths.LOGS_PATH + "MySeriesLog_0.html"));
           MySeriesLogger.logger.log(Level.FINE, "Log file opened for viewing");
         } catch (Exception ex) {
           MySeriesLogger.logger.log(Level.SEVERE, "Could not read the log file", ex);
-          MyMessages.error("View Log", "Couldn't find the log file", true);
+          MyMessages.error("View Log", "Couldn't find the log file", true, true);
         }
       }
     }
@@ -264,7 +264,7 @@ public class ApplicationActions {
         MyMessages.message("Delete torrents", mess);
       } else {
         MySeriesLogger.logger.log(Level.SEVERE, "The torrents directory does not exist");
-        MyMessages.error("Delete torrents", "The torrents directory does not exist", true);
+        MyMessages.error("Delete torrents", "The torrents directory does not exist", true, true);
       }
     }
   }
@@ -313,7 +313,7 @@ public class ApplicationActions {
       MyUsefulFunctions.sendMail(email);
     } catch (Exception ex) {
       MyMessages.warning("Sending mail", "Could not open your email client.\n"
-          + "Please send it manually to " + MySeries.EMAIL, true);
+          + "Please send it manually to " + MySeries.EMAIL, true, true);
       MySeriesLogger.logger.log(Level.WARNING, "Could not send mail", ex);
     }
   }
@@ -353,7 +353,7 @@ public class ApplicationActions {
       if (Options.toBoolean(Options.WARN_FOR_VERSION)) {
         MyMessages.warning("Java version " + version, "The application is written for java 6.\n"
             + "It seems that you are using java 7.\nThere might be some incopatibility issues",
-            true);
+            true, true);
         Options.setOption(Options.WARN_FOR_VERSION, false);
         Options.save();
       } else {
@@ -398,11 +398,11 @@ public class ApplicationActions {
         ApplicationActions.exitApplication(m);
       } else {
         MySeriesLogger.logger.log(Level.SEVERE, "Could not restart application");
-        MyMessages.error("Restart Application", "Could not restart the application", false);
+        MyMessages.error("Restart Application", "Could not restart the application", false, true);
       }
     } catch (IOException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, "Could not restart application", ex);
-      MyMessages.error("Restart Application", "Could not restart the application", false);
+      MyMessages.error("Restart Application", "Could not restart the application", false, true);
     }
   }
 
@@ -415,11 +415,11 @@ public class ApplicationActions {
         ApplicationActions.exitApplication(m);
       } else {
         MySeriesLogger.logger.log(Level.SEVERE, "Could not restart application");
-        MyMessages.error("Restart Application", "Could not restart the application", false);
+        MyMessages.error("Restart Application", "Could not restart the application", false, true);
       }
     } catch (IOException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, "Could not restart application", ex);
-      MyMessages.error("Restart Application", "Could not restart the application", false);
+      MyMessages.error("Restart Application", "Could not restart the application", false, true);
     }
   }
 

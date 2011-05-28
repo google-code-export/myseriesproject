@@ -151,7 +151,7 @@ public abstract class AbstractUpdate {
 
         } catch (SQLException ex) {
             MySeriesLogger.logger.log(Level.WARNING, "Could not get the series from the database", ex);
-            MyMessages.error("Updating Series", "Could not get the series from the database", true);
+            MyMessages.error("Updating Series", "Could not get the series from the database", true, true);
         }
     }
 

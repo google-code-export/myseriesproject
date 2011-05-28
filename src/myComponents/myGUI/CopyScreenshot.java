@@ -36,10 +36,10 @@ public class CopyScreenshot implements Runnable {
             start();
         } catch (FileNotFoundException ex) {
             MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-            MyMessages.error("I/O error", "Screenshot could not be found", true);
+            MyMessages.error("I/O error", "Screenshot could not be found", true, true);
         } catch (IOException ex) {
             MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-            MyMessages.error("I/O error", "Screenshot could not be read or written", true);
+            MyMessages.error("I/O error", "Screenshot could not be read or written", true, true);
         }
     }
 

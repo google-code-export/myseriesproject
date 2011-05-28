@@ -58,7 +58,7 @@ public class FiltersActions {
     MySeriesLogger.logger.log(Level.INFO, "Saaving filter action");
     if (title.trim().equals("") || title.equals("null")) {
       MySeriesLogger.logger.log(Level.WARNING, "Empty title");
-      MyMessages.warning("Empty title", "Please specify a save name", true);
+      MyMessages.warning("Empty title", "Please specify a save name", true, true);
     } else {
       try {
         f = DBHelper.getFilterByTitle(title);
@@ -76,7 +76,7 @@ public class FiltersActions {
         m.combobox_filters.setModel(m.comboBoxModel_filters);
       } catch (SQLException ex) {
         MySeriesLogger.logger.log(Level.SEVERE, "Error while saving filter", ex);
-        MyMessages.error("SQL Error", "There was an error when saving the filter", true);
+        MyMessages.error("SQL Error", "There was an error when saving the filter", true, true);
       }
     }
   }
@@ -96,13 +96,13 @@ public class FiltersActions {
           MyMessages.message("Filter deleted", "Filter was deleted");
         } else {
           MySeriesLogger.logger.log(Level.WARNING, "Filter not found");
-          MyMessages.warning("Error", "Filter not found", true);
+          MyMessages.warning("Error", "Filter not found", true, true);
         }
         m.comboBoxModel_filters = new DefaultComboBoxModel(DBHelper.getFiltersTitlesList());
         m.combobox_filters.setModel(m.comboBoxModel_filters);
       } catch (SQLException ex) {
         MySeriesLogger.logger.log(Level.SEVERE, "Error while deleting filter", ex);
-        MyMessages.error("SQL Error", "There was an error when deleting the filter", true);
+        MyMessages.error("SQL Error", "There was an error when deleting the filter", true, true);
       }
     } else {
       MySeriesLogger.logger.log(Level.INFO, "Delete filter aborted by user");
@@ -122,7 +122,7 @@ public class FiltersActions {
       }
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, "Error while applying the  filter", ex);
-      MyMessages.error("SQL Error", "There was an error when applying the filter", true);
+      MyMessages.error("SQL Error", "There was an error when applying the filter", true, true);
     }
   }
 

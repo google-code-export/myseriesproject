@@ -56,7 +56,7 @@ public class Video {
       }
     } else if (videos.isEmpty()) {
       MySeriesLogger.logger.log(Level.INFO, "No videos found");
-      MyMessages.error("No file found", "Episode was not found", true);
+      MyMessages.error("No file found", "Episode was not found", true, true);
     } else {
       MySeriesLogger.logger.log(Level.FINE, "Found {0} videos",videos.size());
       String[] videosArray = new String[videos.size()];
@@ -99,7 +99,7 @@ public class Video {
       Episodes.updateEpisodesTable(episodesTable);
     } catch (Exception ex) {
       MySeriesLogger.logger.log(Level.WARNING, "Playing videos is not supported", ex);
-      MyMessages.warning("Not supported", "Playing videos is not supported by your OS", true);
+      MyMessages.warning("Not supported", "Playing videos is not supported by your OS", true, true);
     }
   }
 

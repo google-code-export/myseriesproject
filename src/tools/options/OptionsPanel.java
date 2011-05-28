@@ -245,7 +245,7 @@ public class OptionsPanel extends MyDraggable {
     } catch (IOException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, "Could not write to options file", ex);
     } catch (IllegalArgumentException ex) {
-      MyMessages.error("Wrong Arguments", "The date format pattern you provided is invalid", true);
+      MyMessages.error("Wrong Arguments", "The date format pattern you provided is invalid", true, true);
       MySeriesLogger.logger.log(Level.WARNING, "The date format "
           + String.valueOf(general.combobox_dateFormat.getSelectedItem())
           + " pattern you provided is invalid", ex);
@@ -293,7 +293,7 @@ public class OptionsPanel extends MyDraggable {
     MySeriesLogger.logger.log(Level.INFO, "Validating user input");
     if (!group.validate()) {
       MySeriesLogger.logger.log(Level.WARNING, "Validation failed\nError message: {0}", group.getErrorMessage());
-      MyMessages.warning("Options Form", group.getErrorMessage(), true);
+      MyMessages.warning("Options Form", group.getErrorMessage(), true, true);
       return;
     }
     try {
