@@ -48,7 +48,8 @@ public class ScheduleMouseListener extends MouseAdapter {
         try {
           episodes.clear();
           pop.removeAll();
-          episodes = DBHelper.getEpisodesBySql("SELECT * FROM episodes WHERE aired ='" + date + "' AND downloaded = " + EpisodesRecord.NOT_DOWNLOADED);
+          episodes = DBHelper.getEpisodesBySql("SELECT e.* FROM episodes e JOIN series s ON e.series_ID = s.series_ID "
+                  + "WHERE s.deleted = "+SeriesRecord.NOT_DELETED+" AND aired ='" + date + "' AND downloaded = " + EpisodesRecord.NOT_DOWNLOADED);
           if (!episodes.isEmpty()) {
             for (Iterator<EpisodesRecord> it = episodes.iterator(); it.hasNext();) {
               EpisodesRecord ep = it.next();
