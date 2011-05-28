@@ -6,9 +6,7 @@ package database;
 
 import java.io.File;
 import myComponents.MyUsefulFunctions;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Vector;
 import java.util.logging.Level;
 import tools.MySeriesLogger;
 import tools.options.Options;
@@ -17,7 +15,7 @@ import tools.options.Options;
  * The series database record
  * @author lordovol
  */
-public class SeriesRecord extends Record {
+public class SeriesRecord extends Record implements Comparable<SeriesRecord> {
 
   /** No internet update : 0   */
   public static final int NO_INTERNET_UPDATE = 0;
@@ -273,5 +271,11 @@ public class SeriesRecord extends Record {
 
   public boolean isValidScreenshot() {
     return new File(Options._USER_DIR_+"images/"+getScreenshot()).isFile();
+  }
+
+  public int compareTo(SeriesRecord o) {
+    Integer i = new Integer(series_ID);
+    Integer oI = new Integer(o.series_ID);
+    return i.compareTo(oI);
   }
 }

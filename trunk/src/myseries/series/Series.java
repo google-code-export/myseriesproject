@@ -146,13 +146,13 @@ public class Series {
       table_series.setColumnSelectionAllowed(false);
       table_series.setRowSelectionAllowed(true);
       table_series.setRowSelectionInterval(s, s);
-      series = getCurrentSerial(m, s, true);
+      series = getSeriesAtRow(m, s, true);
       MySeriesLogger.logger.log(Level.INFO, "Select series {0}", series.getFullTitle());
       evt.setSeries(series);
       m.getEvClass().fireMyEvent(evt);
     } else {
       MySeriesLogger.logger.log(Level.INFO, "No series selected");
-      series = getCurrentSerial(m, -1, true);
+      series = getSeriesAtRow(m, -1, true);
       evt.setSeries(series);
       m.getEvClass().fireMyEvent(evt);
     }
@@ -173,18 +173,19 @@ public class Series {
    * @param showEpisodes update episodes or not (deprecated - always update)
    * @throws java.sql.SQLException
    */
-  public static SeriesRecord getCurrentSerial(MySeries m, int s, boolean showEpisodes) throws SQLException {
+  public static SeriesRecord getSeriesAtRow(MySeries m, int s, boolean showEpisodes) throws SQLException {
     MySeriesLogger.logger.log(Level.INFO, "Get series at row {0}", s);
     if (s == -1) {
-      currentSeries = null;
+      return null;
     } else {
-      currentSeries = (SeriesRecord) m.tableSeries.getModel().getValueAt(s, Series.SERIESRECORD_COLUMN);
-      MySeriesLogger.logger.log(Level.FINE, "Found series {0}", currentSeries.getFullTitle());
+     //  MySeriesLogger.logger.log(Level.FINE, "Found series {0}", currentSeries.getFullTitle());
+     return (SeriesRecord) m.tableSeries.getModel().getValueAt(s, Series.SERIESRECORD_COLUMN);
+     
     }
-    MyEvent evt = new MyEvent(m, MyEventHandler.SET_CURRENT_SERIES);
-    evt.setSeries(currentSeries);
-    m.getEvClass().fireMyEvent(evt);
-    return currentSeries;
+   // MyEvent evt = new MyEvent(m, MyEventHandler.SET_CURRENT_SERIES);
+  //  evt.setSeries(currentSeries);
+ //  m.getEvClass().fireMyEvent(evt);
+  // return currentSeries;
   }
 
   /**
