@@ -220,7 +220,7 @@ public class FeedTree extends javax.swing.JPanel {
   private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
       MySeriesLogger.logger.log(Level.INFO, "Updating feed");
       FeedsRecord feed = new FeedsRecord(getSelectedLeaf().id);
-      FeedUpdater fu = new FeedUpdater(this, feed, m);
+      FeedUpdater fu = new FeedUpdater(this, feed, m, true);
       Thread t = new Thread(fu);
       t.start();
   }//GEN-LAST:event_updateActionPerformed

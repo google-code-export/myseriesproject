@@ -109,7 +109,7 @@ public class DBConnection {
             }
             MySeriesLogger.logger.log(Level.INFO, "Database is of an older version and needs update");
             MyMessages.warning("Old Database version",
-                    "Database is of an older version and needs update\nA back Up is taken first!!", true);
+                    "Database is of an older version and needs update\nA back Up is taken first!!", true, true);
             MySeriesLogger.logger.log(Level.INFO, "Database backup");
             SaveDatabase s = new SaveDatabase(db);
             if (s.backUp) {
@@ -167,7 +167,7 @@ public class DBConnection {
             } else {
                 Options.setOption(Options.DB_NAME, "");
                 Options.save();
-                MyMessages.error("No Update", "Could not update the database", true);
+                MyMessages.error("No Update", "Could not update the database", true, true);
                 MySeriesLogger.logger.log(Level.SEVERE, "Could not update the database.Exiting...");
                 isConnected = false;
                 // System.exit(1);

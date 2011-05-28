@@ -35,7 +35,7 @@ public class GetSubtitleOnlineCode implements SubtitleConstants {
             getCode();
         } catch (IOException ex) {
             MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-            MyMessages.error("I/O Error", "could not read from input stream", true);
+            MyMessages.error("I/O Error", "could not read from input stream", true, true);
         }
     }
 

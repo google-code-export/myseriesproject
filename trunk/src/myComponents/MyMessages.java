@@ -86,8 +86,8 @@ public class MyMessages {
    * @param title The title
    * @param message The message
    */
-  public static void error(String title, String message, boolean setColors) {
-    message(title, message, ERROR_MESS, true, setColors);
+  public static void error(String title, String message, boolean setColors, boolean showError) {
+    message(title, message, ERROR_MESS, showError, setColors);
   }
   
   /**
@@ -95,8 +95,8 @@ public class MyMessages {
    * @param title The title
    * @param message The message
    */
-  public static void warning(String title, String message, boolean setColors) {
-    message(title, message, WARNING_MESS, true, setColors);
+  public static void warning(String title, String message, boolean setColors, boolean showWarning) {
+    message(title, message, WARNING_MESS, showWarning, setColors);
   }
 
   /**

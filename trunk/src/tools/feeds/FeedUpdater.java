@@ -43,12 +43,14 @@ public class FeedUpdater implements Runnable {
   private Icon ANIMATION_2 = new ImageIcon(getClass().getResource("/images/rss_2.png"));
   private Icon ANIMATION_3 = new ImageIcon(getClass().getResource("/images/rss_3.png"));
   private static int frame = -1;
+  private boolean showMessages = false;
 
-  public FeedUpdater(FeedTree tree, FeedsRecord feedRecord, MySeries m) {
+  public FeedUpdater(FeedTree tree, FeedsRecord feedRecord, MySeries m, boolean showMessages) {
     MySeriesLogger.logger.log(Level.INFO, "Updating feed {0}", feedRecord.getTitle());
     feeds.add(feedRecord);
     this.m = m;
     this.tree = tree;
+    this.showMessages = showMessages;
 
   }
 
@@ -74,7 +76,7 @@ public class FeedUpdater implements Runnable {
         MySeriesLogger.logger.log(Level.FINE, "Feed updated");
       } else {
         MySeriesLogger.logger.log(Level.WARNING, "Could not connect to {0}", feedRecord.getUrl());
-        MyMessages.warning("Feed update", "Could not connect to " + feedRecord.getUrl(), true);
+        MyMessages.warning("Feed update", "Could not connect to " + feedRecord.getUrl(), true, showMessages);
       }
     }
     updating = false;

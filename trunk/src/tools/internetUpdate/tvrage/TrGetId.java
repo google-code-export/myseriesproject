@@ -275,7 +275,7 @@ public class TrGetId extends MyDraggable {
               adminSeries.setVisible(true);
               return;
             } else {
-              MyMessages.warning("Downloading screenshot", "No screenshot was found", true);
+              MyMessages.warning("Downloading screenshot", "No screenshot was found", true, true);
               adminSeries.setVisible(true);
               return;
             }
@@ -314,7 +314,7 @@ public class TrGetId extends MyDraggable {
         evClass.fireMyEvent(event);
       } catch (SQLException ex) {
         MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-        MyMessages.error("SQL Error", "TvRage ID could not be saved in database", true);
+        MyMessages.error("SQL Error", "TvRage ID could not be saved in database", true, true);
       }
     }
     cancel = false;

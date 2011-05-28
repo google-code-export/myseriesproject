@@ -45,7 +45,7 @@ public class FeedReader {
             File file = new File(Options._USER_DIR_ + Paths.FEEDS_PATH + feedRecord.getFeed_ID());
             if (!file.exists()) {
                 MySeriesLogger.logger.log(Level.INFO, "Feed file does not exist.Updating feed");
-                FeedUpdater fu = new FeedUpdater(tree, feedRecord, m);
+                FeedUpdater fu = new FeedUpdater(tree, feedRecord, m, false);
                 fu.run();
                 MySeriesLogger.logger.log(Level.FINE, "Feed updated");
             }
@@ -68,16 +68,16 @@ public class FeedReader {
             }
         } catch (SQLException ex) {
             MySeriesLogger.logger.log(Level.SEVERE, "Could not save feed to database", ex);
-            MyMessages.error("Feed", "Could not save feed to database", true);
+            MyMessages.error("Feed", "Could not save feed to database", true, false);
         } catch (FeedException ex) {
             MySeriesLogger.logger.log(Level.SEVERE, "Could not read feed from " + feedRecord.getUrl(), ex);
-            MyMessages.error("Feed", "Could not read feed from " + feedRecord.getUrl(), true);
+            MyMessages.error("Feed", "Could not read feed from " + feedRecord.getUrl(), true, false);
         } catch (IOException ex) {
             MySeriesLogger.logger.log(Level.SEVERE, "Could not read feed from " + feedRecord.getUrl(), ex);
-            MyMessages.error("Feed", "Could not read feed from " + feedRecord.getUrl(), true);
+            MyMessages.error("Feed", "Could not read feed from " + feedRecord.getUrl(), true, false);
         } catch (IllegalArgumentException ex) {
             MySeriesLogger.logger.log(Level.SEVERE, "Could not read feed from " + feedRecord.getUrl(), ex);
-            MyMessages.error("Feed", "Could not read feed from " + feedRecord.getUrl(), true);
+            MyMessages.error("Feed", "Could not read feed from " + feedRecord.getUrl(), true, false);
         }
     }
 
