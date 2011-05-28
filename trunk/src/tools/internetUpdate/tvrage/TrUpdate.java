@@ -109,6 +109,8 @@ public class TrUpdate extends AbstractUpdate implements Runnable {
           MySeriesLogger.logger.log(Level.INFO, "Importing episodes of {0}", curSeries);
           header = false;
         }
+        DBConnection.beginTransaction();
+        try{
         for (int e = 0; e < curSeries.episodes.size(); e++) {
           boolean save = false;
           TrEpisode episode = curSeries.episodes.get(e);
@@ -138,6 +140,11 @@ public class TrUpdate extends AbstractUpdate implements Runnable {
             episodeRecord.setAired(airDate);
             episodeRecord.save(DBConnection.conn.createStatement());
           }
+        }
+        } catch (SQLException ex){
+          throw ex;
+        } finally {
+           DBConnection.endTransaction();
         }
          if(newEpisodes == 0 && updEpisodes ==0){
              MySeriesLogger.logger.log(Level.INFO, "No new or updated episodes");
