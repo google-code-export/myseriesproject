@@ -136,7 +136,7 @@ public class Episodes {
   public static void setCurrentEpisode(int episode) throws SQLException {
     MySeriesLogger.logger.log(Level.INFO, "Setting the current episode");
     String sql = "SELECT * FROM episodes "
-        + "WHERE series_ID = " + Series.getCurrentSerial().getSeries_ID() + " AND episode = " + episode;
+            + "WHERE series_ID = " + Series.getCurrentSerial().getSeries_ID() + " AND episode = " + episode;
     ResultSet rs = EpisodesRecord.query(DBConnection.conn.createStatement(), sql);
     if (rs.next()) {
       currentEpisode = new EpisodesRecord();
@@ -189,80 +189,88 @@ public class Episodes {
     }
     if (Series.getCurrentSerial() == null) {
     }
-    String sql = "SELECT * FROM episodes WHERE series_ID = " + Series.getCurrentSerial().getSeries_ID()
-        + " ORDER BY CAST(episode AS UNSIGNED) ASC";
-    Statement stmt = DBConnection.conn.createStatement();
-    ResultSet rs = stmt.executeQuery(sql);
-    while (rs.next()) {
-      EpisodesRecord e = new EpisodesRecord();
-      e.setSeries_ID(rs.getInt("series_ID"));
-      e.setEpisode_ID(rs.getInt("episode_ID"));
-      e.setTitle(rs.getString("title"));
-      aired = rs.getString("aired");
-      e.setAired(rs.getString("aired"));
-      episode = rs.getInt("episode");
-      e.setEpisode(rs.getInt("episode"));
-      download = rs.getBoolean("downloaded");
-      e.setDownloaded(rs.getInt("downloaded"));
-      e.setSeen(rs.getInt("seen"));
-      e.setRate(rs.getDouble("rate"));
-      e.setSubs(LangsList.getLanguageById(rs.getInt("subs")));
-      boolean newDownloadedStatus = download;
-      Language cSubs = e.getSubs();
-      if (MyUsefulFunctions.hasBeenAired(e.getAired(), true)) {
-        seen = rs.getBoolean("seen");
-        //Video files
-        if (videoFiles != null) {
-          newDownloadedStatus = checkDownloads(Series.getCurrentSerial().getSeason(), e.getEpisode(), videoFiles);
+    ResultSet rs = null;
+    try {
+      String sql = "SELECT * FROM episodes WHERE series_ID = " + Series.getCurrentSerial().getSeries_ID()
+              + " ORDER BY CAST(episode AS UNSIGNED) ASC";
+      Statement stmt = DBConnection.conn.createStatement();
+      rs = stmt.executeQuery(sql);
+      while (rs.next()) {
+        EpisodesRecord e = new EpisodesRecord();
+        e.setSeries_ID(rs.getInt("series_ID"));
+        e.setEpisode_ID(rs.getInt("episode_ID"));
+        e.setTitle(rs.getString("title"));
+        aired = rs.getString("aired");
+        e.setAired(rs.getString("aired"));
+        episode = rs.getInt("episode");
+        e.setEpisode(rs.getInt("episode"));
+        download = rs.getBoolean("downloaded");
+        e.setDownloaded(rs.getInt("downloaded"));
+        e.setSeen(rs.getInt("seen"));
+        e.setRate(rs.getDouble("rate"));
+        e.setSubs(LangsList.getLanguageById(rs.getInt("subs")));
+        boolean newDownloadedStatus = download;
+        Language cSubs = e.getSubs();
+        if (MyUsefulFunctions.hasBeenAired(e.getAired(), true)) {
+          seen = rs.getBoolean("seen");
+          //Video files
+          if (videoFiles != null) {
+            newDownloadedStatus = checkDownloads(Series.getCurrentSerial().getSeason(), e.getEpisode(), videoFiles);
 
+          }
+          // Subs fuiles
+          if (subtitleFiles != null) {
+            cSubs = checkSubs(Series.getCurrentSerial().getSeason(), e.getEpisode(), subtitleFiles);
+          }
+        } else {
+          newDownloadedStatus = false;
+          cSubs = LangsList.NONE;
+          seen = false;
         }
-        // Subs fuiles
-        if (subtitleFiles != null) {
-          cSubs = checkSubs(Series.getCurrentSerial().getSeason(), e.getEpisode(), subtitleFiles);
+        if (download != newDownloadedStatus) {
+          e.setDownloaded(newDownloadedStatus ? EpisodesRecord.DOWNLOADED : EpisodesRecord.NOT_DOWNLOADED);
+          updated.add(e);
+          download = newDownloadedStatus;
         }
-      } else {
-        newDownloadedStatus = false;
-        cSubs = LangsList.NONE;
-        seen = false;
+        if (cSubs != e.getSubs()) {
+          e.setSubs(cSubs);
+          updated.add(e);
+        }
+        subs = e.getSubs();
+        Object[] data = {episode, e, e.getAired(), download, e.getSubs(), seen, e.getRate()};
+        model.addRow(data);
+        eps.add(e);
       }
-      if (download != newDownloadedStatus) {
-        e.setDownloaded(newDownloadedStatus ? EpisodesRecord.DOWNLOADED : EpisodesRecord.NOT_DOWNLOADED);
-        updated.add(e);
-        download = newDownloadedStatus;
+      
+      MySeriesLogger.logger.log(Level.FINE, "Found {0} episodes", eps.size());
+      if (!updated.isEmpty()) {
+        MySeriesLogger.logger.log(Level.INFO, "Updating episodes");
+       DBConnection.beginTransaction();
+        long in = System.currentTimeMillis();
+        for (Iterator<EpisodesRecord> it = updated.iterator(); it.hasNext();) {
+          EpisodesRecord episodesRecord = it.next();
+          episodesRecord.save(stmt);
+          MySeriesLogger.logger.log(Level.FINE, "Updating {0}", episodesRecord.getTitle());
+        }
+
+        long d = (System.currentTimeMillis() - in);
+        MySeriesLogger.logger.log(Level.FINE, "Updating finished in {0} msec",d);
       }
-      if (cSubs != e.getSubs()) {
-        e.setSubs(cSubs);
-        updated.add(e);
-      }
-      subs = e.getSubs();
-      Object[] data = {episode, e, e.getAired(), download, e.getSubs(), seen, e.getRate()};
-      model.addRow(data);
-      eps.add(e);
-    }
-    rs.close();
-    MySeriesLogger.logger.log(Level.FINE, "Found {0} episodes", eps.size());
-    if (!updated.isEmpty()) {
-      MySeriesLogger.logger.log(Level.INFO, "Updating episodes");
-      DBConnection.beginTransaction();
-      //System.out.println(System.currentTimeMillis());
-      for (Iterator<EpisodesRecord> it = updated.iterator(); it.hasNext();) {
-        EpisodesRecord episodesRecord = it.next();
-        episodesRecord.save(stmt);
-        MySeriesLogger.logger.log(Level.FINE, "Updating {0}", episodesRecord.getTitle());
-      }
+      episodesTable.setModel(model);
+      return eps;
+    } catch (SQLException ex) {
+      throw ex;
+    } finally {
+      rs.close();
       DBConnection.endTransaction();
-      //System.out.println(System.currentTimeMillis());
-      MySeriesLogger.logger.log(Level.FINE, "Updating finished");
     }
-    episodesTable.setModel(model);
-    return eps;
   }
 
   public static boolean checkDownloads(SeriesRecord series, EpisodesRecord e) {
     int season = series.getSeason();
     int episode = e.getEpisode();
     MySeriesLogger.logger.log(Level.INFO, "Checking downloaded of series {0} episode {1}",
-        new String[]{series.getFullTitle(), e.getTitle()});
+            new String[]{series.getFullTitle(), e.getTitle()});
     File[] videoFiles = Series.getVideoFiles(series);
     try {
       return checkDownloads(season, episode, videoFiles);
@@ -282,7 +290,7 @@ public class Episodes {
     Pattern pattern = Pattern.compile(regex);
     Pattern patternFake = Pattern.compile(regexFake);
     MySeriesLogger.logger.log(Level.INFO, "Getting video files  of season {0} episode {1}",
-        new int[]{season, episode});
+            new int[]{season, episode});
     for (int j = 0; j < videoFiles.length; j++) {
       File file = videoFiles[j];
       Matcher matcher = pattern.matcher(file.getName());
@@ -304,7 +312,7 @@ public class Episodes {
     Pattern pattern = Pattern.compile(regex);
     Pattern patternFake = Pattern.compile(regexFake);
     MySeriesLogger.logger.log(Level.INFO, "Getting subtitle files  of season {0} episode {1}",
-        new int[]{season, episode});
+            new int[]{season, episode});
     for (int j = 0; j < subtitleFiles.length; j++) {
       File file = subtitleFiles[j];
       Matcher matcher = pattern.matcher(file.getName());
