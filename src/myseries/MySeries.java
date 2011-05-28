@@ -51,6 +51,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelListener;
 import javax.swing.plaf.basic.BasicToolBarUI;
+import javax.swing.table.DefaultTableModel;
 import myComponents.MyMessages;
 import myComponents.MyTableModels.MyFilteredSeriesTableModel;
 import myComponents.MyTableModels.MySeriesTableModel;
@@ -185,7 +186,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
    */
   public MySeries() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, IOException {
     appIcon = new javax.swing.ImageIcon(getClass().getResource(APPLICATION_ICON)).getImage();
-    String tooltip = "MySeries v"+version;
+    String tooltip = "MySeries v" + version;
     myTrayIcon = new MyTrayIcon(this, appIcon, tooltip);
     if (version.indexOf("dev") > -1) {
       date = MyUsefulFunctions.getToday("dd/MM/yyyy");
@@ -329,7 +330,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
       FeedsActions.updateFeeds(true, this);
     }
     ApplicationActions.latestNews(this, true);
-    
+
     MySeriesLogger.logger.log(Level.INFO, "Adding schedule mouse listener to schedule");
     scheduler.getSchedule().getTblCalendar().addMouseListener(new ScheduleMouseListener());
     MyUsefulFunctions.createMemoryCons(this);
@@ -1581,17 +1582,13 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
         seriesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
       }
     } else {
-      if (evt.getButton() == MouseEvent.BUTTON1) {
-        try {
-          MySeriesLogger.logger.log(Level.INFO, "No series selected");
+      MyEvent event = new MyEvent(tableSeries, MyEventHandler.SET_CURRENT_SERIES);
+      event.setSeries(null);
+      event.setSeriesPanel(true);
+      getEvClass().fireMyEvent(event);
+       MySeriesLogger.logger.log(Level.INFO, "No series selected");
           tableSeries.removeRowSelectionInterval(0, tableSeries.getRowCount() - 1);
-          MyEvent event = new MyEvent(tableSeries, MyEventHandler.SET_CURRENT_SERIES);
-          event.setSeries(null);
-          event.setSeriesPanel(true);
-          getEvClass().fireMyEvent(event);
-        } catch (IllegalArgumentException ex) {
-        }
-      } else if (evt.getButton() == MouseEvent.BUTTON3) {
+    if (evt.getButton() == MouseEvent.BUTTON3) {
         MySeriesLogger.logger.log(Level.INFO, "Showing popup menu");
         seriesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
       }
@@ -1719,25 +1716,23 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
         try {
           EpisodesRecord ep = null;
           if (rowSelected > -1) {
-            tableEpisodes.setRowSelectionInterval(rowSelected, rowSelected);
-
+            //  tableEpisodes.setRowSelectionInterval(rowSelected, rowSelected);
             ep = (EpisodesRecord) tableEpisodes.getValueAt(rowSelected, Episodes.EPISODERECORD_COLUMN);
             MySeriesLogger.logger.log(Level.INFO, "Episode {0} selected", ep.getTitle());
             int series_ID = ep.getSeries_ID();
             series = DBHelper.getSeriesByID(series_ID);
+            MySeriesLogger.logger.log(Level.INFO, "Setting current series event");
+            event.setType(MyEventHandler.SET_CURRENT_SERIES);
+            event.setSeries(series);
+            getEvClass().fireMyEvent(event);
           } else {
             series = Series.getCurrentSerial();
             ep = null;
           }
-          MySeriesLogger.logger.log(Level.INFO, "Setting current series event");
-          event.setType(MyEventHandler.SET_CURRENT_SERIES);
-          event.setSeries(series);
-          getEvClass().fireMyEvent(event);
           MySeriesLogger.logger.log(Level.INFO, "Setting current episode event");
           event.setType(MyEventHandler.SET_CURRENT_EPISODE);
           event.setEpisode(ep);
           getEvClass().fireMyEvent(event);
-
           MySeriesLogger.logger.log(Level.INFO, "Showing episodes popup");
           episodesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
         } catch (SQLException ex) {
@@ -2024,7 +2019,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
   }//GEN-LAST:event_formWindowDeiconified
 
   private void formWindowStateChanged(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowStateChanged
-    if (evt.getNewState() != NORMAL && evt.getNewState() != MAXIMIZED_BOTH  ) {
+    if (evt.getNewState() != NORMAL && evt.getNewState() != MAXIMIZED_BOTH) {
       Options.setOption(Options.WINDOW_STATE, evt.getOldState());
       Options.save();
     } else {
@@ -2034,9 +2029,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
   }//GEN-LAST:event_formWindowStateChanged
 
   private void menuItem_LatestNewsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_LatestNewsActionPerformed
-    ApplicationActions.latestNews(this,false);
+    ApplicationActions.latestNews(this, false);
   }//GEN-LAST:event_menuItem_LatestNewsActionPerformed
-
   // Variables declaration - do not modify//GEN-BEGIN:variables
   public javax.swing.JMenuItem PopUpItem_AddEpisode;
   public javax.swing.JMenuItem PopUpItem_AddEpisodeInEpisodes;
@@ -2177,15 +2171,15 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
 
   public void createComboBox_filters() {
     comboBox_filterSubtitles.setModel(new DefaultComboBoxModel(
-        new String[]{
-          SubtitleConstants.NONE,
-          languages.getPrimary().getName(),
-          languages.getSecondary().getName(),
-          SubtitleConstants.BOTH,
-          languages.getPrimary().getName() + " or " + languages.getSecondary().getName(),
-          "Not " + languages.getPrimary().getName(),
-          SubtitleConstants.UNAWARE
-        }));
+            new String[]{
+              SubtitleConstants.NONE,
+              languages.getPrimary().getName(),
+              languages.getSecondary().getName(),
+              SubtitleConstants.BOTH,
+              languages.getPrimary().getName() + " or " + languages.getSecondary().getName(),
+              "Not " + languages.getPrimary().getName(),
+              SubtitleConstants.UNAWARE
+            }));
   }
 
   public int getSeriesTableRow(SeriesRecord series) {
