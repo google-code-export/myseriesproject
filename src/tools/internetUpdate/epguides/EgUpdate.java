@@ -41,7 +41,7 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
    * @param iu The update series form
    */
   public EgUpdate(InternetUpdate iu, JTable episodesTable) {
-      MySeriesLogger.logger.log(Level.INFO, "Updating series from EpGuide");
+    MySeriesLogger.logger.log(Level.INFO, "Updating series from EpGuide");
     this.iu = iu;
     this.list = new ArrayList<AbstractSeriesToUpdate>();
     this.site = InternetUpdate.EP_GUIDES_NAME;
@@ -58,7 +58,7 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
       return false;
     }
     try {
-        MySeriesLogger.logger.log(Level.INFO, "Updating episodes for series {0}",series.getFullTitle());
+      MySeriesLogger.logger.log(Level.INFO, "Updating episodes for series {0}", series.getFullTitle());
       list.add(new EgSeriesToUpdate(series));
       epGuides = new URL(InternetUpdate.EP_GUIDES_URL + series.getTitle().toLowerCase().replaceAll(" ", "") + "/");
       in = new BufferedReader(new InputStreamReader(epGuides.openStream()));
@@ -127,14 +127,14 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
       MySeriesLogger.logger.log(Level.SEVERE, "Illegal argument exception.Possibly the update was cancelled", ex);
       return false;
     }
-      MySeriesLogger.logger.log(Level.FINE, "Series updated");
+    MySeriesLogger.logger.log(Level.FINE, "Series updated");
     return true;
   }
 
   private boolean isSeasonRight(String inputLine, int season) {
     String[] lineArr;
     int s = -1;
-      MySeriesLogger.logger.log(Level.INFO, "Checking if season is right");
+    MySeriesLogger.logger.log(Level.INFO, "Checking if season is right");
     if (inputLine.indexOf("Season") > -1 || inputLine.indexOf("Series") > -1) {
       lineArr = inputLine.split("Season", -1);
       if (lineArr.length == 1) {
@@ -149,7 +149,7 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
         }
       }
       if (season == s) {
-          MySeriesLogger.logger.log(Level.FINE, "Right season {0}",s);
+        MySeriesLogger.logger.log(Level.FINE, "Right season {0}", s);
         return true;
       }
     } else {
@@ -167,7 +167,7 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
     int perc;
     iu.progress_bar.setIndeterminate(false);
     iu.progress_bar.setString("0%");
-      MySeriesLogger.logger.log(Level.INFO, "Updating all episodes");
+    MySeriesLogger.logger.log(Level.INFO, "Updating all episodes");
     for (int i = 0; i < list.size(); i++) {
       int newEpisodes = 0;
       int updEpisodes = 0;
@@ -181,43 +181,50 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
           MySeriesLogger.logger.log(Level.INFO, "Importing episodes of {0}", curSeries);
           header = false;
         }
-        for (int e = 0; e < curSeries.episodes.size(); e++) {
-          boolean save = false;
-          EgEpisode episode = curSeries.episodes.get(e);
-          int number = episode.number;
-          String title = episode.title.trim();
-          String airDate = episode.airDate;
-          Vector<EpisodesRecord> episodes = DBHelper.getEpisodesBySql("SELECT * FROM episodes WHERE series_ID = " + series.getSeries_ID()
-                  + " AND episode = " + number + " LIMIT 1");
-          EpisodesRecord episodeRecord;
-          if (episodes.isEmpty()) {
-            newEpisodes++;
-            save = true;
-            episodeRecord = new EpisodesRecord();
-            append("<b>&nbsp;&nbsp;&nbsp;&nbsp;New Episode: " + number + ". " + title + " (Inserted)</b>");
-          } else {
-            episodeRecord = episodes.get(0);
-            if (shouldSaveEpisode(episodeRecord, title, airDate)) {
-              updEpisodes++;
+        DBConnection.beginTransaction();
+        try {
+          for (int e = 0; e < curSeries.episodes.size(); e++) {
+            boolean save = false;
+            EgEpisode episode = curSeries.episodes.get(e);
+            int number = episode.number;
+            String title = episode.title.replaceAll("\\[.+?\\]", "").trim();
+            String airDate = episode.airDate;
+            Vector<EpisodesRecord> episodes = DBHelper.getEpisodesBySql("SELECT * FROM episodes WHERE series_ID = " + series.getSeries_ID()
+                    + " AND episode = " + number + " LIMIT 1");
+            EpisodesRecord episodeRecord;
+            if (episodes.isEmpty()) {
+              newEpisodes++;
               save = true;
-              append("&nbsp;&nbsp;&nbsp;&nbsp;Episode: " + number + ". " + title + " (Updated)");
+              episodeRecord = new EpisodesRecord();
+              append("<b>&nbsp;&nbsp;&nbsp;&nbsp;New Episode: " + number + ". " + title + " (Inserted)</b>");
+            } else {
+              episodeRecord = episodes.get(0);
+              if (shouldSaveEpisode(episodeRecord, title, airDate)) {
+                updEpisodes++;
+                save = true;
+                append("&nbsp;&nbsp;&nbsp;&nbsp;Episode: " + number + ". " + title + " (Updated)");
+              }
+            }
+            if (save) {
+              episodeRecord.setSeries_ID(series.getSeries_ID());
+              episodeRecord.setEpisode(number);
+              episodeRecord.setTitle(title);
+              if (!airDate.trim().equals("")) {
+                episodeRecord.setAired(airDate);
+              }
+              episodeRecord.save(DBConnection.conn.createStatement());
             }
           }
-          if (save) {
-            episodeRecord.setSeries_ID(series.getSeries_ID());
-            episodeRecord.setEpisode(number);
-            episodeRecord.setTitle(title);
-            if (!airDate.trim().equals("")) {
-              episodeRecord.setAired(airDate);
-            }
-            episodeRecord.save(DBConnection.conn.createStatement());
-          }
+        } catch (SQLException ex) {
+          throw ex;
+        } finally {
+          DBConnection.endTransaction();
         }
         if (newEpisodes == 0 && updEpisodes == 0) {
-            MySeriesLogger.logger.log(Level.INFO, "No new or updated episodes");
+          MySeriesLogger.logger.log(Level.INFO, "No new or updated episodes");
           append("No new or updated episodes");
         } else {
-            MySeriesLogger.logger.log(Level.INFO, "{0} new episodes and {1} updates", new Object[]{newEpisodes, updEpisodes});
+          MySeriesLogger.logger.log(Level.INFO, "{0} new episodes and {1} updates", new Object[]{newEpisodes, updEpisodes});
           append(newEpisodes + " new episodes and " + updEpisodes + " updates");
         }
       }
@@ -227,7 +234,7 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
     iu.progress_bar.setString("100%");
     Episodes.updateEpisodesTable(episodesTable);
     append("<br><br>Internet update of series completed in " + calcExecTime());
-      MySeriesLogger.logger.log(Level.INFO, "<br><br>Internet update of series completed in {0}", calcExecTime());
+    MySeriesLogger.logger.log(Level.INFO, "<br><br>Internet update of series completed in {0}", calcExecTime());
     iu.finished = true;
   }
 }
