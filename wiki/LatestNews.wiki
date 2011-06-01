@@ -1,4 +1,16 @@
 ==MySerieS Latest News==
+<div title='news_3'>
+===01/06/2011 : MySerieS v.1.5.1===
+This is a version that fixes the following bugs:
+ * Fixed number of news shown in latest news.
+ * Fixed crash when auto update of feeds are on and a feed url is unaivailable or wrong.
+ * Fixed a bug where deleted series are shown in schedule for downloading.
+ * Optimized internet update speed.
+ * Fix episodes titles when updating from epguides.
+ * Fixed a transaction bug when updating a series episodes.
+If you use v1.5 you could download the patch to 1.5.1. If you use v1.4 and back, you should download the whole v.1.5.1. package
+</div>
+<div title='news_1'>
 <div title='news_2'>
 ===27/05/2011 : Look And Feel package I===
 A package of look and feel files is available for downloading at MySerieS download page.<br>The package contains the following look and feel:</br>
