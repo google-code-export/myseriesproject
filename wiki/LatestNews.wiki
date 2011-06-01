@@ -10,7 +10,6 @@ This is a version that fixes the following bugs:
  * Fixed a transaction bug when updating a series episodes.
 If you use v1.5 you could download the patch to 1.5.1. If you use v1.4 and back, you should download the whole v.1.5.1. package
 </div>
-<div title='news_1'>
 <div title='news_2'>
 ===27/05/2011 : Look And Feel package I===
 A package of look and feel files is available for downloading at MySerieS download page.<br>The package contains the following look and feel:</br>
