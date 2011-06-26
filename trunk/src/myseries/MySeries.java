@@ -263,7 +263,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     Series.selectSeries(this, 0);
 
 
-    tableEpisodes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+    //tableEpisodes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
     //Create the filteredSeries data
     MySeriesLogger.logger.log(Level.INFO, "Creating filters data");

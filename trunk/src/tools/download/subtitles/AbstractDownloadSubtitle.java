@@ -94,7 +94,7 @@ public abstract class AbstractDownloadSubtitle implements SubtitleConstants {
         }
       } catch (IOException ex) {
         MySeriesLogger.logger.log(Level.INFO, "Direct access to subtitle is denied.Opening browser");
-        MyMessages.warning("Access denied", "Direct access to subtitle is denied.Opening browser", true, true);
+        MyMessages.warning("Access denied", "Direct access is denied.Opening browser", true, true);
         openInBrowser(sub);
       }
     }
