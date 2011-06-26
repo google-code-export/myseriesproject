@@ -8,11 +8,15 @@ import database.DBConnection;
 import database.SeriesRecord;
 import java.awt.Image;
 import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import myComponents.MyMessages;
@@ -34,6 +38,7 @@ import tools.download.torrents.eztv.EzTvForm;
 import tools.download.torrents.isohunt.IsohuntForm;
 import tools.internetUpdate.InternetUpdate;
 import tools.internetUpdate.tvrage.TrGetId;
+import tools.languages.Language;
 import tools.options.Options;
 
 /**
@@ -211,17 +216,66 @@ public class SeriesActions {
   }
 
   public static void downloadSeasonSubtitles() {
+    String[] lang = new String[2];
+    Language[] language = new Language[2];
+    String[] link = new String[2];
+    boolean[] langsFound = new boolean[2];
     SeriesRecord series = Series.getCurrentSerial();
     MySeriesLogger.logger.log(Level.INFO, "Downloading whole season subtitles of {0}", series.getFullTitle());
     String code = series.getTvSubtitlesCode().trim();
-    String lang = myseries.MySeries.languages.getPrimary().getCode();
-    String link = SubtitleConstants.TV_SUBTITLES_URL + "download-"
-        + code + "-" + lang + ".html";
+    lang[0] = myseries.MySeries.languages.getPrimary().getCode();
+    language[0] = myseries.MySeries.languages.getPrimary();
+    lang[1] = myseries.MySeries.languages.getSecondary().getCode();
+    language[1] = myseries.MySeries.languages.getSecondary();
+    link[0] = SubtitleConstants.TV_SUBTITLES_URL + "download-"
+        + code + "-" + lang[0] + ".html";
+    link[1] = SubtitleConstants.TV_SUBTITLES_URL + "download-"
+        + code + "-" + lang[1] + ".html";
+    try {
+      URL prim = new URL(link[0]);
+      URL sec = new URL(link[1]);
+      try {
+        prim.openConnection();
+        langsFound[0]=true;
+      } catch (IOException ex) {
+        MySeriesLogger.logger.log(Level.SEVERE, "Primary Lang not found", ex);
+      }
+       try {
+        sec.openConnection();
+        langsFound[1]=true;
+      } catch (IOException ex) {
+        MySeriesLogger.logger.log(Level.SEVERE, "Secondary Lang not found", ex);
+      }
+      Language selected = null;
+      if(langsFound[0] && langsFound[1]){
+        MySeriesLogger.logger.log(Level.INFO, "Both languages found");
+         selected =  (Language) MyMessages.ask("Download whole season subtitles", "Both languages found.\nSelect the language to download", "", language, language[0], false);
+        MySeriesLogger.logger.log(Level.INFO, "Selected {0}", selected);
+
+      } else if(langsFound[0]){
+        MySeriesLogger.logger.log(Level.INFO, "Primary language found");
+        selected = language[0];
+      }  else if(langsFound[1]){
+        MySeriesLogger.logger.log(Level.INFO, "Secondary language found");
+        selected = language[1];
+      } else{
+        MySeriesLogger.logger.log(Level.INFO, "No language found");
+        MyMessages.error("Download whole season subtitles", "No subtitles were found",true,true);
+        return;
+      }
+      String downloadLink ;
+      if(selected.equals(language[0])){
+        downloadLink = link[0];
+      } else {
+        downloadLink = link[1];
+      }
+      TvSubtitlesForm d = new TvSubtitlesForm(downloadLink,series.getLocalDir());
+    } catch (MalformedURLException ex) {
+      MySeriesLogger.logger.log(Level.SEVERE, "Malformed url ", ex);
+    }
     MySeriesLogger.logger.log(Level.INFO, "Showing Tvsubtitles panel");
-    TvSubtitlesForm d = new TvSubtitlesForm(
-        link,
-        Series.getCurrentSerial().getSeason(),
-        Series.getCurrentSerial().getLocalDir());
+
+
   }
 
   private SeriesActions() {
