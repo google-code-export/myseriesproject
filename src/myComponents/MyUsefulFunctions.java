@@ -38,11 +38,13 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -396,8 +398,8 @@ public class MyUsefulFunctions {
   public static void initInternetConnection() {
     if (Options.toBoolean(Options.USE_PROXY)) {
       MySeriesLogger.logger.log(Level.INFO,
-              "Initializing internet connection with proxy [host:{0},port:{1}]",
-              new String[]{Options.toString(Options.PROXY_HOST), Options.toString(Options.PROXY_PORT)});
+          "Initializing internet connection with proxy [host:{0},port:{1}]",
+          new String[]{Options.toString(Options.PROXY_HOST), Options.toString(Options.PROXY_PORT)});
       System.setProperty("http.proxyHost", Options.toString(Options.PROXY_HOST));
       System.setProperty("http.proxyPort", Options.toString(Options.PROXY_PORT));
     } else {
@@ -512,6 +514,17 @@ public class MyUsefulFunctions {
       oBuilder.append(separator).append(oIter.next());
     }
     return oBuilder.toString();
+  }
+
+  /**
+   * Joins an iterable with a seperator
+   * @param iter The iterable object
+   * @param separator The separator to use
+   * @return The joined String
+   */
+  public static String join(String[] array, String separator) {
+    List<String> iter = Arrays.asList(array);
+    return join(iter, separator);
   }
 
   /**
@@ -667,7 +680,7 @@ public class MyUsefulFunctions {
 
   private static File getVideoFile(SeriesRecord series, EpisodesRecord episode) {
     MySeriesLogger.logger.log(Level.INFO, "Getting video file for series {0} and episode {1} ",
-            new String[]{series.getFullTitle(), episode.getTitle()});
+        new String[]{series.getFullTitle(), episode.getTitle()});
     String regex = MyUsefulFunctions.createRegex(series.getSeason(), episode.getEpisode());
     String regexFake = MyUsefulFunctions.createRegex(series.getSeason(), series.getSeason() * 10 + episode.getEpisode());
     File[] videoFiles = Series.getVideoFiles(series);
@@ -688,7 +701,7 @@ public class MyUsefulFunctions {
 
   private static ArrayList<File> getVideoFiles(SeriesRecord series, EpisodesRecord episode) {
     MySeriesLogger.logger.log(Level.INFO, "Getting video files for series {0} and episode {1} ",
-            new String[]{series.getFullTitle(), episode.getTitle()});
+        new String[]{series.getFullTitle(), episode.getTitle()});
 
     String regex = MyUsefulFunctions.createRegex(series.getSeason(), episode.getEpisode());
     String regexFake = MyUsefulFunctions.createRegex(series.getSeason(), series.getSeason() * 10 + episode.getEpisode());
@@ -752,13 +765,13 @@ public class MyUsefulFunctions {
       }
     }
     MySeriesLogger.logger.log(Level.FINE, "Found {0} types ({1})",
-            new Object[]{types.length, MyUsefulFunctions.listArray(types, false)});
+        new Object[]{types.length, MyUsefulFunctions.listArray(types, false)});
     return types;
   }
 
   private static ArrayList<File> getSubtitles(SeriesRecord series, EpisodesRecord episode) {
     MySeriesLogger.logger.log(Level.INFO, "Getting subtitles for {0} episode {1}",
-            new String[]{series.getFullTitle(), episode.getTitle()});
+        new String[]{series.getFullTitle(), episode.getTitle()});
     String regex = MyUsefulFunctions.createRegex(series.getSeason(), episode.getEpisode());
     String regexFake = MyUsefulFunctions.createRegex(series.getSeason(), series.getSeason() * 10 + episode.getEpisode());
     ArrayList<File> subs = new ArrayList<File>();
@@ -785,7 +798,7 @@ public class MyUsefulFunctions {
 
   public static String[][] getSubtitleLangs(EpisodesRecord ep) {
     MySeriesLogger.logger.log(Level.INFO, "Getting subtitle langs episode {1}",
-            ep.getTitle());
+        ep.getTitle());
     SeriesRecord series;
     try {
       series = database.DBHelper.getSeriesByID(ep.getSeries_ID());
@@ -826,7 +839,7 @@ public class MyUsefulFunctions {
       }
     }
     MySeriesLogger.logger.log(Level.FINE, "Found {0} types",
-            types.length);
+        types.length);
     return types;
   }
 
@@ -1081,9 +1094,9 @@ public class MyUsefulFunctions {
       sample = "_sample";
     }
     return series.getTitle()
-            + Options.toString(Options.SEASON_SEPARATOR, false) + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0")
-            + Options.toString(Options.EPISODE_SEPARATOR, false) + MyUsefulFunctions.padLeft(episode.getEpisode(), 2, "0")
-            + Options.toString(Options.TITLE_SEPARATOR, false) + episode.getTitle() + sample + "." + ext;
+        + Options.toString(Options.SEASON_SEPARATOR, false) + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0")
+        + Options.toString(Options.EPISODE_SEPARATOR, false) + MyUsefulFunctions.padLeft(episode.getEpisode(), 2, "0")
+        + Options.toString(Options.TITLE_SEPARATOR, false) + episode.getTitle() + sample + "." + ext;
   }
 
   public static boolean renameEpisode(SeriesRecord series, String filename) {
@@ -1095,11 +1108,11 @@ public class MyUsefulFunctions {
     for (int i = 0; i < numbers.length; i++) {
       String n = numbers[i];
       if (MyUsefulFunctions.isNumeric(n)
-              && Integer.parseInt(n) == series.getSeason()
-              && i < numbers.length - 1) {
+          && Integer.parseInt(n) == series.getSeason()
+          && i < numbers.length - 1) {
         episode = MyUsefulFunctions.isNumeric(numbers[i + 1])
-                ? Integer.parseInt(numbers[i + 1])
-                : -1;
+            ? Integer.parseInt(numbers[i + 1])
+            : -1;
       }
     }
     if (episode > -1) {
@@ -1283,6 +1296,9 @@ public class MyUsefulFunctions {
     }
     return true;
   }
+
+  
+  
 
   private MyUsefulFunctions() {
   }
