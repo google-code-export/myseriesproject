@@ -122,7 +122,20 @@ public class Record {
       stmt.close();
     }
   }
-  
+
+  protected ResultSet query(String table, String[] columns, String whereClause, String[] whereValues, String group,String having, String order, String limit) throws SQLException{
+    Statement stmt = DBConnection.conn.createStatement();
+    String cols = columns == null ? "*" : joinSqlColumns(columns);
+    String where = whereClause==null ? "" : createWhereClause(whereClause, whereValues);
+    group = group == null ? "" : " GROUP BY " +group;
+    having = having == null ? "" : " HAVING " +having;
+    order = order == null ? "" : " ORDER BY " + order;
+    limit  = limit == null ? "" : " LIMIT " + limit;
+    String sql = "SELECT " + cols + " FROM " + table + where + group + having + order + limit;
+    return stmt.executeQuery(sql);
+  }
+
+
   private String createColumnUpdate(String[] columns, String[] values) throws DatabaseException {
     if (columns.length != values.length) {
       throw new DatabaseException("Columns and Values arrays have different lengths");
@@ -182,4 +195,6 @@ public class Record {
     }
     return query;
   }
+
+
 }
