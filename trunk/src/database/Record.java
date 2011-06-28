@@ -4,10 +4,12 @@
  */
 package database;
 
+import Exceptions.DatabaseException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
+import myComponents.MyUsefulFunctions;
 import tools.MySeriesLogger;
 
 /**
@@ -24,7 +26,7 @@ public class Record {
   /**
    * The default constructor
    */
-  Record() {
+  public Record() {
   }
 
   /**
@@ -35,8 +37,8 @@ public class Record {
    * @throws SQLException
    */
   public static ResultSet query(Statement stmt, String sql) throws SQLException {
-      ResultSet rs = stmt.executeQuery(sql);
-      return rs;
+    ResultSet rs = stmt.executeQuery(sql);
+    return rs;
   }
 
   /**
@@ -45,7 +47,7 @@ public class Record {
    * @return the id of the inserted record or -1
    * @throws java.sql.SQLException
    */
-  public static int queryUpdate(Statement stmt, String sql) throws SQLException {
+  public synchronized static int queryUpdate(Statement stmt, String sql) throws SQLException {
     ResultSet rs = null;
     try {
       MySeriesLogger.logger.log(Level.INFO, "Running update query {0}", sql);
@@ -75,5 +77,99 @@ public class Record {
       }
 
     }
+  }
+
+  public synchronized int save(String table, String[] columns, String[] values, String whereClause, String[] whereValues) throws SQLException, DatabaseException {
+    int ai = -1;
+    Statement stmt = DBConnection.conn.createStatement();
+    ResultSet rs = null;
+    String sql;
+    try {
+
+      if (whereClause == null) {
+        sql = "INSERT INTO `" + table
+            + "`(" + joinSqlColumns(columns)
+            + ") VALUES (" + joinSqlValues(values) + ")";
+        System.out.println(sql);
+//        stmt.executeUpdate(sql);
+//        rs = stmt.executeQuery("SELECT last_insert_rowid() AS id");
+//        if (rs.next()) {
+//          ai = rs.getInt("id");
+//          MySeriesLogger.logger.log(Level.FINE, "Row with id {0} was inserted", ai);
+//        }
+
+      } else {
+        sql = "UPDATE `" + table + "` SET "
+            + createColumnUpdate(columns, values)
+            + " WHERE " + createWhereClause(whereClause, whereValues);
+        System.out.println(sql);
+      }
+    } finally {
+      if (rs != null) {
+        rs.close();
+      }
+      stmt.close();
+    }
+    return ai;
+  }
+
+  private String createColumnUpdate(String[] columns, String[] values) throws DatabaseException {
+    if (columns.length != values.length) {
+      throw new DatabaseException("Columns and Values arrays have different lengths");
+    }
+    int n = columns.length;
+    String query = "";
+    for (int i = 0; i < n; i++) {
+      if (i < n - 1) {
+        query += "`" + columns[i] + "`='" + values[i] + "',";
+      } else {
+        query += "`" + columns[i] + "`='" + values[i] + "'";
+      }
+    }
+    return query;
+  }
+
+  private String createWhereClause(String whereClause, String[] whereValues) {
+    int n = whereValues.length;
+    for (int i = 0; i < n; i++) {
+      whereClause = whereClause.replaceFirst("\\?", "'" + whereValues[i] + "'");
+    }
+    return whereClause;
+  }
+
+  /**
+   * Joins values to build SQL query
+   * @param values The values
+   * @return 
+   */
+  public static String joinSqlValues(String[] values) {
+    String query = "";
+    int n = values.length;
+    for (int i = 0; i < n; i++) {
+      if (i < n - 1) {
+        query += "'" + values[i] + "',";
+      } else {
+        query += "'" + values[i] + "'";
+      }
+    }
+    return query;
+  }
+
+  /**
+   * Joins columns for sql query
+   * @param columns The columns
+   * @return 
+   */
+  public static String joinSqlColumns(String[] columns) {
+    String query = "";
+    int n = columns.length;
+    for (int i = 0; i < n; i++) {
+      if (i < n - 1) {
+        query += "`" + columns[i] + "`,";
+      } else {
+        query += "`" + columns[i] + "`";
+      }
+    }
+    return query;
   }
 }
