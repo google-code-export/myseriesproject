@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import myComponents.MyUsefulFunctions;
 import tools.MySeriesLogger;
 
@@ -79,7 +80,7 @@ public class Record {
     }
   }
 
-  public synchronized int save(String table, String[] columns, String[] values, String whereClause, String[] whereValues) throws SQLException, DatabaseException {
+  protected synchronized int save(String table, String[] columns, String[] values, String whereClause, String[] whereValues) throws SQLException, DatabaseException {
     int ai = -1;
     Statement stmt = DBConnection.conn.createStatement();
     ResultSet rs = null;
@@ -90,19 +91,18 @@ public class Record {
         sql = "INSERT INTO `" + table
             + "`(" + joinSqlColumns(columns)
             + ") VALUES (" + joinSqlValues(values) + ")";
-        System.out.println(sql);
-//        stmt.executeUpdate(sql);
-//        rs = stmt.executeQuery("SELECT last_insert_rowid() AS id");
-//        if (rs.next()) {
-//          ai = rs.getInt("id");
-//          MySeriesLogger.logger.log(Level.FINE, "Row with id {0} was inserted", ai);
-//        }
-
+        stmt.executeUpdate(sql);
+        rs = stmt.executeQuery("SELECT last_insert_rowid() AS id");
+        if (rs.next()) {
+          ai = rs.getInt("id");
+          MySeriesLogger.logger.log(Level.FINE, "Row with id {0} was inserted", ai);
+        }
       } else {
         sql = "UPDATE `" + table + "` SET "
             + createColumnUpdate(columns, values)
             + " WHERE " + createWhereClause(whereClause, whereValues);
-        System.out.println(sql);
+
+        stmt.executeUpdate(sql);
       }
     } finally {
       if (rs != null) {
@@ -113,6 +113,16 @@ public class Record {
     return ai;
   }
 
+  protected synchronized void delete(String table, String whereClause,String[] whereValues) throws SQLException{
+      Statement stmt = DBConnection.conn.createStatement();
+      try{
+      String sql = "DELETE FROM `" + table + "` " + "WHERE " + createWhereClause(whereClause, whereValues);
+      stmt.executeUpdate(sql);
+    } finally {
+      stmt.close();
+    }
+  }
+  
   private String createColumnUpdate(String[] columns, String[] values) throws DatabaseException {
     if (columns.length != values.length) {
       throw new DatabaseException("Columns and Values arrays have different lengths");

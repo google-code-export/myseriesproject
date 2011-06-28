@@ -10,6 +10,7 @@
  */
 package tools.feeds;
 
+import Exceptions.DatabaseException;
 import com.googlecode.svalidators.formcomponents.ValidationGroup;
 import com.googlecode.svalidators.validators.RequiredValidator;
 import com.googlecode.svalidators.validators.SValidator;
@@ -213,6 +214,9 @@ public class AdminFeed extends MyDraggable {
               fu.run();
               m.feedTree.populate(feed.getFeed_ID());
           } catch (SQLException ex) {
+              MySeriesLogger.logger.log(Level.SEVERE, "Sql exception while saving feed", ex);
+              MyMessages.error("Feed Saving", "An error occured and the feed is not saved", true, true);
+          } catch (DatabaseException ex) {
               MySeriesLogger.logger.log(Level.SEVERE, "Sql exception while saving feed", ex);
               MyMessages.error("Feed Saving", "An error occured and the feed is not saved", true, true);
           } finally {

@@ -4,6 +4,7 @@
  */
 package tools.feeds;
 
+import Exceptions.DatabaseException;
 import com.sun.syndication.feed.synd.SyndEntryImpl;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.FeedException;
@@ -67,6 +68,9 @@ public class FeedReader {
                 MySeriesLogger.logger.log(Level.FINE, "Added entry {0}",entry.getTitle());
             }
         } catch (SQLException ex) {
+            MySeriesLogger.logger.log(Level.SEVERE, "Could not save feed to database", ex);
+            MyMessages.error("Feed", "Could not save feed to database", true, false);
+        } catch (DatabaseException ex) {
             MySeriesLogger.logger.log(Level.SEVERE, "Could not save feed to database", ex);
             MyMessages.error("Feed", "Could not save feed to database", true, false);
         } catch (FeedException ex) {

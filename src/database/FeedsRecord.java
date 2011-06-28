@@ -4,6 +4,7 @@
  */
 package database;
 
+import Exceptions.DatabaseException;
 import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,6 +29,12 @@ public class FeedsRecord extends Record {
   private int feed_ID = 0;
   private String title = "";
   private String url = "";
+  public static final String TABLE = "feeds";
+
+  public static final String FEED_ID = "feed_ID";
+  public static final String TITLE = "title";
+  public static final String URL = "url";
+  
 
   public FeedsRecord() {
     super();
@@ -63,20 +70,20 @@ public class FeedsRecord extends Record {
     }
   }
 
-  public static boolean deleteById(int id) {
-    if(id > 0){
+
+
+  public boolean delete() {
+    if(this.feed_ID > 0){
       ResultSet rs = null;
-      MySeriesLogger.logger.log(Level.INFO, "Deleting feed : {0}",id);
-      String sql = "DELETE FROM feeds WHERE feed_ID = "+id;
+      MySeriesLogger.logger.log(Level.INFO, "Deleting feed : {0}",feed_ID);
       try {
-        File file = new File(Options._USER_DIR_+Paths.FEEDS_PATH+id);
+        File file = new File(Options._USER_DIR_+Paths.FEEDS_PATH+feed_ID);
         if(file.exists()){
           MySeriesLogger.logger.log(Level.INFO, "Deleting feed file : {0}" , file.getName());
           file.delete();
           MySeriesLogger.logger.log(Level.FINE, "Feed file deleted");
         }
-        Statement stmt =  DBConnection.conn.createStatement();
-        queryUpdate(stmt, sql);
+        delete(TABLE, FEED_ID+ " = ?", new String[]{String.valueOf(this.feed_ID)});
         return true;
       } catch (SQLException ex) {
         MySeriesLogger.logger.log(Level.SEVERE, "Sql exception occured", ex);
@@ -115,23 +122,26 @@ public class FeedsRecord extends Record {
     }
   }
 
+
+
+
   /**
    * Saves a feed Record
    * @return The id of the record or -1 if it's an update
    * @throws SQLException
    */
-  public int save() throws SQLException {
+  public int save() throws SQLException, DatabaseException {
     String sql;
     Statement stmt = DBConnection.conn.createStatement();
     MySeriesLogger.logger.log(Level.INFO, "Saving feed");
     if (this.feed_ID != 0) {
-      sql = "UPDATE feeds SET title = '" + MyUsefulFunctions.escapeString(this.getTitle()) + "', url = '" + this.getUrl()
-              + "' WHERE feed_ID = " + this.feed_ID;
+      return save(TABLE, new String[] {TITLE, URL},
+              new String[] { MyUsefulFunctions.escapeString(this.getTitle()),this.getUrl() },
+              FEED_ID + " = ?", new String[] {String.valueOf(this.feed_ID)});
     } else {
-      sql = "INSERT INTO feeds (title, url) "
-              + "VALUES('" + MyUsefulFunctions.escapeString(this.getTitle()) + "','" + this.getUrl() + "')";
+         return save(TABLE, new String[] {TITLE, URL}, new String[] { MyUsefulFunctions.escapeString(this.getTitle()),this.getUrl() }, null, null);
     }
-    return queryUpdate(stmt, sql);
+    
   }
 
   /**

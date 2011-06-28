@@ -34,104 +34,104 @@ import tools.MySeriesLogger;
  */
 public class FeedTree extends javax.swing.JPanel {
 
-    public static final long serialVersionUID = 34573458937458934L;
-    ArrayList<FeedLeaf> model = new ArrayList<FeedLeaf>();
-    private DefaultTreeModel treemodel;
-    private FeedLeaf selectedLeaf;
-    private int selectedRow;
-    MySeries m;
+  public static final long serialVersionUID = 34573458937458934L;
+  ArrayList<FeedLeaf> model = new ArrayList<FeedLeaf>();
+  private DefaultTreeModel treemodel;
+  private FeedLeaf selectedLeaf;
+  private int selectedRow;
+  MySeries m;
 
-    /** Creates new form FeedTree */
-    public FeedTree() {
-        initComponents();
-        tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+  /** Creates new form FeedTree */
+  public FeedTree() {
+    initComponents();
+    tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 
-    }
+  }
 
-    public void setMySeries(MySeries m){
-      this.m = m;
-    }
+  public void setMySeries(MySeries m) {
+    this.m = m;
+  }
 
-    private void mouseReleased(java.awt.event.MouseEvent evt) {
-        DefaultMutableTreeNode node;
-        Feed feed;
-        FeedPreviewPanel pp;
-        MySeriesLogger.logger.log(Level.INFO, "Mouse released on tree");
-        if (evt.getButton() == MouseEvent.BUTTON3) {
-            Point p = evt.getPoint();
-            TreePath selectedPath = tree.getClosestPathForLocation(p.x, p.y);
-            if (tree.getPathBounds(selectedPath).contains(p)) {
-                tree.setSelectionPath(selectedPath);
-                node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
-                if (node.isLeaf()) {
-                    setSelectedLeaf((FeedLeaf) node.getUserObject());
-                    if (getSelectedLeaf().id > 0) {
-                        MySeriesLogger.logger.log(Level.INFO, "Showing popup menu");
-                        popup.show(this, evt.getX(), evt.getY());
-                    }
-                }
-            }
+  private void mouseReleased(java.awt.event.MouseEvent evt) {
+    DefaultMutableTreeNode node;
+    Feed feed;
+    FeedPreviewPanel pp;
+    MySeriesLogger.logger.log(Level.INFO, "Mouse released on tree");
+    if (evt.getButton() == MouseEvent.BUTTON3) {
+      Point p = evt.getPoint();
+      TreePath selectedPath = tree.getClosestPathForLocation(p.x, p.y);
+      if (tree.getPathBounds(selectedPath).contains(p)) {
+        tree.setSelectionPath(selectedPath);
+        node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
+        if (node.isLeaf()) {
+          setSelectedLeaf((FeedLeaf) node.getUserObject());
+          if (getSelectedLeaf().id > 0) {
+            MySeriesLogger.logger.log(Level.INFO, "Showing popup menu");
+            popup.show(this, evt.getX(), evt.getY());
+          }
         }
+      }
     }
+  }
 
-    public void setCellRenderer(DefaultTreeCellRenderer renderer) {
-        tree.setCellRenderer(renderer);
+  public void setCellRenderer(DefaultTreeCellRenderer renderer) {
+    tree.setCellRenderer(renderer);
+  }
+
+  public TreeCellRenderer getCellRenderer() {
+    return tree.getCellRenderer();
+  }
+
+  public void populate() {
+    populate(selectedRow);
+  }
+
+  public void populate(int id) {
+    MySeriesLogger.logger.log(Level.INFO, "Populating tree");
+    model.clear();
+    ArrayList<FeedsRecord> feeds = FeedsRecord.getAll();
+    for (Iterator<FeedsRecord> it = feeds.iterator(); it.hasNext();) {
+      FeedsRecord f = it.next();
+      FeedLeaf l = new FeedLeaf();
+      l.id = f.getFeed_ID();
+      l.title = f.getTitle();
+      l.url = f.getUrl();
+      model.add(l);
+      MySeriesLogger.logger.log(Level.FINE, "Added leaf {0}", l.title);
     }
+    DefaultMutableTreeNode root = createTree(id);
+    treemodel = new DefaultTreeModel(root);
+    tree.setModel(treemodel);
+    tree.setSelectionRow(selectedRow);
+  }
 
-    public TreeCellRenderer getCellRenderer() {
-        return tree.getCellRenderer();
+  protected DefaultMutableTreeNode createTree(int id) {
+    FeedLeaf rootLeaf = new FeedLeaf();
+    rootLeaf.id = 0;
+    rootLeaf.title = "Rss Feeds";
+    rootLeaf.url = "";
+    DefaultMutableTreeNode root = new DefaultMutableTreeNode(rootLeaf);
+    int i = 0;
+    MySeriesLogger.logger.log(Level.INFO, "Creating tree with {0} leaves", model.size());
+    for (Iterator<FeedLeaf> it = model.iterator(); it.hasNext();) {
+      FeedLeaf feedLeaf = it.next();
+      DefaultMutableTreeNode listNode = new DefaultMutableTreeNode(feedLeaf);
+      root.add(listNode);
+      i++;
+      if (id == feedLeaf.id) {
+        selectedRow = i;
+      }
+
     }
+    return root;
+  }
 
-    public void populate() {
-        populate(selectedRow);
-    }
-
-    public void populate(int id) {
-        MySeriesLogger.logger.log(Level.INFO, "Populating tree");
-        model.clear();
-        ArrayList<FeedsRecord> feeds = FeedsRecord.getAll();
-        for (Iterator<FeedsRecord> it = feeds.iterator(); it.hasNext();) {
-            FeedsRecord f = it.next();
-            FeedLeaf l = new FeedLeaf();
-            l.id = f.getFeed_ID();
-            l.title = f.getTitle();
-            l.url = f.getUrl();
-            model.add(l);
-            MySeriesLogger.logger.log(Level.FINE, "Added leaf {0}",l.title);
-        }
-        DefaultMutableTreeNode root = createTree(id);
-        treemodel = new DefaultTreeModel(root);
-        tree.setModel(treemodel);
-        tree.setSelectionRow(selectedRow);
-    }
-
-    protected DefaultMutableTreeNode createTree(int id) {
-        FeedLeaf rootLeaf = new FeedLeaf();
-        rootLeaf.id = 0;
-        rootLeaf.title = "Rss Feeds";
-        rootLeaf.url = "";
-        DefaultMutableTreeNode root = new DefaultMutableTreeNode(rootLeaf);
-        int i = 0;
-        MySeriesLogger.logger.log(Level.INFO, "Creating tree with {0} leaves",model.size());
-        for (Iterator<FeedLeaf> it = model.iterator(); it.hasNext();) {
-            FeedLeaf feedLeaf = it.next();
-            DefaultMutableTreeNode listNode = new DefaultMutableTreeNode(feedLeaf);
-            root.add(listNode);
-            i++;
-            if (id == feedLeaf.id) {
-                selectedRow = i;
-            }
-
-        }
-        return root;
-    }
-
-    /** This method is called from within the constructor to
-     * initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is
-     * always regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
+  /** This method is called from within the constructor to
+   * initialize the form.
+   * WARNING: Do NOT modify this code. The content of this method is
+   * always regenerated by the Form Editor.
+   */
+  @SuppressWarnings("unchecked")
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
 
@@ -197,58 +197,59 @@ public class FeedTree extends javax.swing.JPanel {
   }// </editor-fold>//GEN-END:initComponents
 
   private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
-      if (MyMessages.confirm("Delete Feed", "Do you really want to delete this feed", true) == JOptionPane.YES_OPTION) {
-          MySeriesLogger.logger.log(Level.INFO, "Deleting feed");
-          boolean deleteById = FeedsRecord.deleteById(getSelectedLeaf().id);
-          if (deleteById) {
-              MySeriesLogger.logger.log(Level.FINE, "Feed deleted");
-              populate(-1);
-          }
+    if (MyMessages.confirm("Delete Feed", "Do you really want to delete this feed", true) == JOptionPane.YES_OPTION) {
+      MySeriesLogger.logger.log(Level.INFO, "Deleting feed");
+      FeedsRecord feed = new FeedsRecord(getSelectedLeaf().id);
+      boolean delete = feed.delete();
+      if (delete) {
+        MySeriesLogger.logger.log(Level.FINE, "Feed deleted");
+        populate(-1);
       }
+    }
 
-      popup.setVisible(false);
+    popup.setVisible(false);
   }//GEN-LAST:event_deleteActionPerformed
 
   private void treeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_treeMouseReleased
-      mouseReleased(evt);
+    mouseReleased(evt);
   }//GEN-LAST:event_treeMouseReleased
 
   private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
-      FeedsActions.addFeedPanel(getSelectedLeaf().id, m);
+    FeedsActions.addFeedPanel(getSelectedLeaf().id, m);
   }//GEN-LAST:event_editActionPerformed
 
   private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
-      MySeriesLogger.logger.log(Level.INFO, "Updating feed");
-      FeedsRecord feed = new FeedsRecord(getSelectedLeaf().id);
-      FeedUpdater fu = new FeedUpdater(this, feed, m, true);
-      Thread t = new Thread(fu);
-      t.start();
+    MySeriesLogger.logger.log(Level.INFO, "Updating feed");
+    FeedsRecord feed = new FeedsRecord(getSelectedLeaf().id);
+    FeedUpdater fu = new FeedUpdater(this, feed, m, true);
+    Thread t = new Thread(fu);
+    t.start();
   }//GEN-LAST:event_updateActionPerformed
 
   private void treeValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_treeValueChanged
-      if (evt.getNewLeadSelectionPath() != null) {
-          MySeriesLogger.logger.log(Level.INFO, "Tree value changed");
-          DefaultMutableTreeNode node = (DefaultMutableTreeNode) evt.getNewLeadSelectionPath().getLastPathComponent();
-          if (node.isLeaf()) {
-              if (node.getUserObject() instanceof FeedLeaf) {
-                  FeedLeaf leaf = (FeedLeaf) node.getUserObject();
-                  //System.out.println("changing to leaf " + leaf);
-                  if (leaf.id > 0) {
-                      MySeriesLogger.logger.log(Level.INFO, "Selected leaf {0}",leaf.title);
-                      selectedRow = tree.getSelectionRows()[0];
-                      FeedsRecord feedsRecord = new FeedsRecord(leaf.id);
-                      FeedReader fr = new FeedReader(this, feedsRecord, m);
-                      Feed feed = fr.getFeed();
-                      FeedPreviewPanel pp = m.feedPreviewPanel;
-                      pp.setFeed(feed);
-                  }
-              } else {
-                  FeedPreviewPanel pp = m.feedPreviewPanel;
-                  pp.removeFeeds();
-              }
+    if (evt.getNewLeadSelectionPath() != null) {
+      MySeriesLogger.logger.log(Level.INFO, "Tree value changed");
+      DefaultMutableTreeNode node = (DefaultMutableTreeNode) evt.getNewLeadSelectionPath().getLastPathComponent();
+      if (node.isLeaf()) {
+        if (node.getUserObject() instanceof FeedLeaf) {
+          FeedLeaf leaf = (FeedLeaf) node.getUserObject();
+          //System.out.println("changing to leaf " + leaf);
+          if (leaf.id > 0) {
+            MySeriesLogger.logger.log(Level.INFO, "Selected leaf {0}", leaf.title);
+            selectedRow = tree.getSelectionRows()[0];
+            FeedsRecord feedsRecord = new FeedsRecord(leaf.id);
+            FeedReader fr = new FeedReader(this, feedsRecord, m);
+            Feed feed = fr.getFeed();
+            FeedPreviewPanel pp = m.feedPreviewPanel;
+            pp.setFeed(feed);
           }
-      } else {
+        } else {
+          FeedPreviewPanel pp = m.feedPreviewPanel;
+          pp.removeFeeds();
+        }
       }
+    } else {
+    }
   }//GEN-LAST:event_treeValueChanged
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JScrollPane FeedScrollPane;
@@ -259,24 +260,24 @@ public class FeedTree extends javax.swing.JPanel {
   private javax.swing.JMenuItem update;
   // End of variables declaration//GEN-END:variables
 
-    public void updateFeeds(ArrayList<FeedsRecord> feeds, boolean readFeeds) {
-        MySeriesLogger.logger.log(Level.INFO, "Updating all feeds");
-        FeedUpdater fu = new FeedUpdater(this, feeds, readFeeds, m);
-        Thread t = new Thread(fu);
-        t.start();
-    }
+  public void updateFeeds(ArrayList<FeedsRecord> feeds, boolean readFeeds) {
+    MySeriesLogger.logger.log(Level.INFO, "Updating all feeds");
+    FeedUpdater fu = new FeedUpdater(this, feeds, readFeeds, m);
+    Thread t = new Thread(fu);
+    t.start();
+  }
 
-    /**
-     * @return the selectedLeaf
-     */
-    public FeedLeaf getSelectedLeaf() {
-        return selectedLeaf;
-    }
+  /**
+   * @return the selectedLeaf
+   */
+  public FeedLeaf getSelectedLeaf() {
+    return selectedLeaf;
+  }
 
-    /**
-     * @param selectedLeaf the selectedLeaf to set
-     */
-    public void setSelectedLeaf(FeedLeaf selectedLeaf) {
-        this.selectedLeaf = selectedLeaf;
-    }
+  /**
+   * @param selectedLeaf the selectedLeaf to set
+   */
+  public void setSelectedLeaf(FeedLeaf selectedLeaf) {
+    this.selectedLeaf = selectedLeaf;
+  }
 }

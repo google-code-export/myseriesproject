@@ -340,16 +340,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     ApplicationActions.warnForJREVersion();
 
     Record r = new Record();
-    try{
-    r.save("feeds", new String[]{"name","title","link","datetime"},
-    new String[] {"myFeed","my ttile","http://www.feed.gr/type=2","1234345678"},
-    null, null);
-    r.save("feeds", new String[]{"name","title","link","datetime"},
-    new String[] {"myFeed","my ttile","http://www.feed.gr/type=2","1234345678"},
-    "id=? AND name=?", new String[]{"3","myName"});
-    }catch(Exception ex){
-      
-    }
   }
 
   private void setGlassPane() {
