@@ -4,6 +4,7 @@
  */
 package tools.internetUpdate.epguides;
 
+import Exceptions.DatabaseException;
 import database.DBConnection;
 import database.DBHelper;
 import tools.MySeriesLogger;
@@ -212,7 +213,7 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
               if (!airDate.trim().equals("")) {
                 episodeRecord.setAired(airDate);
               }
-              episodeRecord.save(DBConnection.conn.createStatement());
+              episodeRecord.save();
             }
           }
         } catch (SQLException ex) {

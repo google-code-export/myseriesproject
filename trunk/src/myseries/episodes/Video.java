@@ -94,7 +94,7 @@ public class Video {
       MySeriesLogger.logger.log(Level.INFO, "Setting episode assert watched");
       EpisodesRecord ep = Episodes.getCurrentEpisode();
       ep.setSeen(1);
-      ep.save(DBConnection.conn.createStatement());
+      ep.save();
       MySeriesLogger.logger.log(Level.FINE, "Episode set as watched;");
       Episodes.updateEpisodesTable(episodesTable);
     } catch (Exception ex) {

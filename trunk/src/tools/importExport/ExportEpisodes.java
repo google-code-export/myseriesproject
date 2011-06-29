@@ -4,6 +4,7 @@
  */
 package tools.importExport;
 
+import Exceptions.DatabaseException;
 import database.EpisodesRecord;
 import java.io.File;
 import java.io.IOException;
@@ -63,7 +64,7 @@ public class ExportEpisodes {
      * @throws java.io.IOException
      * @throws java.sql.SQLException
      */
-    private void exportEpisodesToFile(File file, JTable episodesTable) throws IOException, SQLException {
+    private void exportEpisodesToFile(File file, JTable episodesTable) throws IOException, SQLException, DatabaseException {
         PrintWriter out = myComponents.MyUsefulFunctions.createOutputStream(file, false);
         ArrayList<EpisodesRecord> episodes = Episodes.getCurrentSeriesEpisodes(episodesTable);
         for (int i = 0; i < episodes.size(); i++) {

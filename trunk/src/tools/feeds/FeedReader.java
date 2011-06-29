@@ -70,9 +70,6 @@ public class FeedReader {
         } catch (SQLException ex) {
             MySeriesLogger.logger.log(Level.SEVERE, "Could not save feed to database", ex);
             MyMessages.error("Feed", "Could not save feed to database", true, false);
-        } catch (DatabaseException ex) {
-            MySeriesLogger.logger.log(Level.SEVERE, "Could not save feed to database", ex);
-            MyMessages.error("Feed", "Could not save feed to database", true, false);
         } catch (FeedException ex) {
             MySeriesLogger.logger.log(Level.SEVERE, "Could not read feed from " + feedRecord.getUrl(), ex);
             MyMessages.error("Feed", "Could not read feed from " + feedRecord.getUrl(), true, false);

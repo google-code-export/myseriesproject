@@ -1,5 +1,6 @@
 package tools.importExport;
 
+import Exceptions.DatabaseException;
 import database.DBConnection;
 import database.DBHelper;
 import database.EpisodesRecord;
@@ -41,12 +42,12 @@ class insertEpisodesInDB implements Runnable {
             insert(m.tableEpisodes);
         } catch (SQLException ex) {
             MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
+        }  catch (ParseException ex) {
             MySeriesLogger.logger.log(Level.SEVERE, null, ex);
         }
     }
 
-    private void insert(JTable episodesTable) throws SQLException, ParseException {
+    private void insert(JTable episodesTable) throws SQLException, ParseException, DatabaseException {
         int total = im.newEpisodes.size();
         Iterator<EpisodesRecord> it = im.newEpisodes.iterator();
         EpisodesRecord e;
@@ -68,7 +69,7 @@ class insertEpisodesInDB implements Runnable {
         MySeries.glassPane.deactivate();
     }
 
-    private void save(EpisodesRecord e) throws SQLException {
+    private void save(EpisodesRecord e) throws SQLException, DatabaseException {
         int episode = e.getEpisode();
         int series_ID = e.getSeries_ID();
         Vector<EpisodesRecord> episodes = DBHelper.getEpisodesBySql(
@@ -77,6 +78,6 @@ class insertEpisodesInDB implements Runnable {
             e.setEpisode_ID(episodes.get(0).getEpisode_ID());
         }
         MySeriesLogger.logger.log(Level.INFO, "Saving episode {0}",e.getTitle());
-        e.save(DBConnection.conn.createStatement());
+        e.save();
     }
 }

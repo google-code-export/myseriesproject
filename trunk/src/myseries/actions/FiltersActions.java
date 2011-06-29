@@ -4,6 +4,7 @@
  */
 package myseries.actions;
 
+import Exceptions.DatabaseException;
 import database.DBHelper;
 import database.FilterRecord;
 import java.sql.SQLException;

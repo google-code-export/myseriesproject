@@ -4,6 +4,7 @@
  */
 package database;
 
+import Exceptions.DatabaseException;
 import myComponents.MyUsefulFunctions;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -61,7 +62,16 @@ public class EpisodesRecord extends Record {
   /**
    * The database table
    */
-  public static final String table = "episodes";
+  public static final String TABLE = "episodes";
+  public static final String C_EPISODE_ID = "episode_ID";
+  public static final String C_EPISODE = "episode";
+  public static final String C_TITLE = "title";
+  public static final String C_SERIES_ID = "series_ID";
+  public static final String C_AIRED = "aired";
+  public static final String C_DOWNLOADED = "downloaded";
+  public static final String C_SUBS = "subs";
+  public static final String C_SEEN = "seen";
+  public static final String C_RATE = "rate";
   /**
    * Default values for episode record attributes
    */
@@ -87,22 +97,34 @@ public class EpisodesRecord extends Record {
    * @return The id of the inserted record or -1 if it's an update
    * @throws java.sql.SQLException
    */
-  public int save(Statement stmt) throws SQLException {
-    String sql;
-    MySeriesLogger.logger.log(Level.INFO, "Saving episode {0} " , getTitle());
-    if (this.getEpisode_ID() != 0) {
-      sql = "UPDATE episodes SET title = '" + this.title + "', episode = " + this.episode + ", series_ID = "
-              + this.series_ID + ", aired = '" + this.aired + "' ,"
-              + " subs = " + this.getSubs().getId() + ", downloaded = " + this.getDownloaded() + ", "
-              + "seen = " + this.getSeen() + ", rate =" + getRate()
-              + " WHERE episode_ID = " + this.getEpisode_ID();
+  public int save() throws SQLException, DatabaseException {
+    MySeriesLogger.logger.log(Level.INFO, "Saving episode {0} ", getTitle());
+    if (this.episode_ID == 0) {
+      return save(TABLE, new String[]{C_EPISODE, C_SERIES_ID, C_TITLE, C_AIRED, C_DOWNLOADED,
+            C_SUBS, C_SEEN, C_RATE},
+          new String[]{
+            String.valueOf(this.getEpisode()),
+            String.valueOf(this.getSeries_ID()),
+            this.title,
+            this.getAired(),
+            String.valueOf(this.getDownloaded()),
+            String.valueOf(this.getSubs()),
+            String.valueOf(this.getSeen()),
+            String.valueOf(this.getRate())}, null, null);
     } else {
-      sql = "INSERT INTO episodes (episode, title, series_ID,aired, downloaded, subs, seen, rate) "
-              + "VALUES(" + this.episode + ", '" + this.title
-              + "', " + this.series_ID + ",'" + this.aired + "'," + this.getDownloaded() + ","
-              + this.getSubs().getId() + "," + this.getSeen() + ", " + getRate() + ")";
+       return save(TABLE, new String[]{C_EPISODE, C_SERIES_ID, C_TITLE, C_AIRED, C_DOWNLOADED,
+            C_SUBS, C_SEEN, C_RATE},
+          new String[]{
+            String.valueOf(this.getEpisode()),
+            String.valueOf(this.getSeries_ID()),
+            this.title,
+            this.getAired(),
+            String.valueOf(this.getDownloaded()),
+            String.valueOf(this.getSubs()),
+            String.valueOf(this.getSeen()),
+            String.valueOf(this.getRate())}, C_EPISODE_ID+ "=?", 
+            new String[]{String.valueOf(this.getEpisode_ID())});
     }
-    return queryUpdate(stmt, sql);
   }
 
   /**
@@ -172,8 +194,8 @@ public class EpisodesRecord extends Record {
    * @param aired the aired to set
    */
   public void setAired(String aired) {
-    if(!MyUsefulFunctions.isValidDate(aired)){
-        aired = "";
+    if (!MyUsefulFunctions.isValidDate(aired)) {
+      aired = "";
     }
     this.aired = MyUsefulFunctions.convertDateForMySQL(aired);
   }
