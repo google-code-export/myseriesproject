@@ -138,7 +138,7 @@ public class Episodes {
     MySeriesLogger.logger.log(Level.INFO, "Setting the current episode");
     String sql = "SELECT * FROM episodes "
             + "WHERE series_ID = " + Series.getCurrentSerial().getSeries_ID() + " AND episode = " + episode;
-    ResultSet rs = EpisodesRecord.query(DBConnection.conn.createStatement(), sql);
+    ResultSet rs = EpisodesRecord.query(sql);
     if (rs.next()) {
       currentEpisode = new EpisodesRecord();
       getCurrentEpisode().setEpisode_ID(rs.getInt("episode_ID"));
@@ -152,7 +152,9 @@ public class Episodes {
       getCurrentEpisode().setRate(rs.getDouble("rate"));
       MySeriesLogger.logger.log(Level.FINE, "Current episode set to {0}", getCurrentEpisode().getTitle());
     }
-    rs.close();
+    if (rs != null) {
+      rs.close();
+    }
   }
 
   /**
@@ -242,11 +244,11 @@ public class Episodes {
         model.addRow(data);
         eps.add(e);
       }
-      
+
       MySeriesLogger.logger.log(Level.FINE, "Found {0} episodes", eps.size());
       if (!updated.isEmpty()) {
         MySeriesLogger.logger.log(Level.INFO, "Updating episodes");
-       DBConnection.beginTransaction();
+        DBConnection.beginTransaction();
         long in = System.currentTimeMillis();
         for (Iterator<EpisodesRecord> it = updated.iterator(); it.hasNext();) {
           EpisodesRecord episodesRecord = it.next();
@@ -255,7 +257,7 @@ public class Episodes {
         }
 
         long d = (System.currentTimeMillis() - in);
-        MySeriesLogger.logger.log(Level.FINE, "Updating finished in {0} msec",d);
+        MySeriesLogger.logger.log(Level.FINE, "Updating finished in {0} msec", d);
       }
       episodesTable.setModel(model);
       return eps;

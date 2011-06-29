@@ -257,7 +257,7 @@ public class HouseKeeping extends MyDraggable {
   private void gettingScreenshotsForDb(String db) {
     try {
       MySeriesLogger.logger.log(Level.INFO, "Getting unused screenshots");
-      ResultSet r = SeriesRecord.query(DBConnection.conn.createStatement(), "SELECT screenshot FROM series");
+      ResultSet r = SeriesRecord.query("SELECT screenshot FROM series");
       while (r.next()) {
         String screenshot = r.getString("screenshot");
         if (!screenshot.equals("")) {

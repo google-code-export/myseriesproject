@@ -109,8 +109,7 @@ public class FeedsRecord extends Record {
     try {
       MySeriesLogger.logger.log(Level.INFO, "Getting all feeds");
       String sql = "SELECT * FROM feeds ORDER BY title";
-      Statement stmt = DBConnection.conn.createStatement();
-      rs = query(stmt, sql);
+      rs = query(sql);
       while (rs.next()) {
         FeedsRecord f = new FeedsRecord();
         f.feed_ID = rs.getInt(C_FEED_ID);

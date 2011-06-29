@@ -1122,8 +1122,7 @@ public class MyUsefulFunctions {
     if (episode > -1) {
       ResultSet rs = null;
       try {
-        Statement stmt = DBConnection.conn.createStatement();
-        rs = EpisodesRecord.query(stmt, "SELECT * FROM episodes WHERE series_ID =" + series.getSeries_ID() + " AND episode = " + episode);
+        rs = EpisodesRecord.query("SELECT * FROM episodes WHERE series_ID =" + series.getSeries_ID() + " AND episode = " + episode);
         while (rs.next()) {
           EpisodesRecord e = new EpisodesRecord();
           e.setSeries_ID(rs.getInt("series_ID"));

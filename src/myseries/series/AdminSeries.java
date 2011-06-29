@@ -703,8 +703,7 @@ public class AdminSeries extends MyDraggable {
               String title = (String) cb_existingSeries.getSelectedItem();
               ResultSet rs = null;
               try {
-                Statement stmt = DBConnection.conn.createStatement();
-                rs = SeriesRecord.query(stmt, "SELECT * FROM series WHERE title ='"
+                rs = SeriesRecord.query("SELECT * FROM series WHERE title ='"
                     + title + "' LIMIT 1");
                 while (rs.next()) {
                   textField_Serial.setText(rs.getString("title"));
@@ -801,8 +800,7 @@ public class AdminSeries extends MyDraggable {
     ArrayList<String> list = new ArrayList<String>();
     ResultSet rs = null;
     try {
-      Statement stmt = DBConnection.conn.createStatement();
-      rs = SeriesRecord.query(stmt, "SELECT DISTINCT title FROM series");
+      rs = SeriesRecord.query("SELECT DISTINCT title FROM series");
       list.add("Select from existing series");
       while (rs.next()) {
         list.add(rs.getString(1));
@@ -827,8 +825,7 @@ public class AdminSeries extends MyDraggable {
     int serSeason = Integer.parseInt(String.valueOf(spinner_season.getValue()));
     ResultSet rs = null;
     try {
-      Statement stmt =  DBConnection.conn.createStatement();
-      rs = SeriesRecord.query(stmt, "SELECT * FROM series WHERE title = '" + title + "' AND season = " + serSeason);
+      rs = SeriesRecord.query("SELECT * FROM series WHERE title = '" + title + "' AND season = " + serSeason);
       while (rs.next()) {
         return true;
       }
