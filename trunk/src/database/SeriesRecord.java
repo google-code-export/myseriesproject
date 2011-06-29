@@ -5,8 +5,10 @@
 package database;
 
 import java.io.File;
+import java.sql.ResultSet;
 import myComponents.MyUsefulFunctions;
 import java.sql.SQLException;
+import java.util.Vector;
 import java.util.logging.Level;
 import tools.MySeriesLogger;
 import tools.options.Options;
@@ -67,6 +69,36 @@ public class SeriesRecord extends Record implements Comparable<SeriesRecord> {
     super();
   }
   
+  private static SeriesRecord create(ResultSet rs) throws SQLException {
+    SeriesRecord s = new SeriesRecord();
+        s.setSeason(rs.getInt("season"));
+        s.setSeries_ID(rs.getInt("series_ID"));
+        s.setTitle(rs.getString("title"));
+        s.setTvSubtitlesCode(rs.getString("link"));
+        s.setInternetUpdate(rs.getInt("internetUpdate"));
+        s.setTvrage_ID(rs.getInt("tvrage_ID"));
+        s.setLocalDir(rs.getString("localDir"));
+        s.setScreenshot(rs.getString("screenshot"));
+        s.setSOnlineCode(rs.getString("sonline"));
+    return s;
+  }
+
+  public static SeriesRecord queryOne(String whereClause, String[] whereValues, String order) throws SQLException {
+    ResultSet rs = query(TABLE, null, whereClause, whereValues, null, null, order, "1");
+    if (rs.next()) {
+      return create(rs);
+    }
+    return null;
+  }
+
+  public static Vector<SeriesRecord> queryAll(String whereClause, String[] whereValues, String order, String limit) throws SQLException {
+    ResultSet rs = query(TABLE, null, whereClause, whereValues, null, null, order, limit);
+    Vector<SeriesRecord> a = new Vector<SeriesRecord>();
+    while (rs.next()) {
+      a.add(create(rs));
+    }
+    return a;
+  }
   
   
 

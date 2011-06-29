@@ -141,18 +141,7 @@ public class DBHelper {
     }
   }
 
-  /**
-   * Gets a series by its id
-   * @param series_ID The id
-   * @return The series or null if it's not found
-   * @throws SQLException
-   */
-  public static SeriesRecord getSeriesByID(int series_ID) throws SQLException {
-    MySeriesLogger.logger.log(Level.INFO, "Getting series : {0}", series_ID);
-    Vector<SeriesRecord> series = new Vector<SeriesRecord>();
-    series = getSeriesBySql("SELECT * FROM series WHERE series_ID = " + series_ID);
-    return series.size() == 1 ? series.get(0) : null;
-  }
+  
 
   /**
    * Gets all series

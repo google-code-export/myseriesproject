@@ -53,7 +53,8 @@ public class ScheduleMouseListener extends MouseAdapter {
           if (!episodes.isEmpty()) {
             for (Iterator<EpisodesRecord> it = episodes.iterator(); it.hasNext();) {
               EpisodesRecord ep = it.next();
-              SeriesRecord ser = DBHelper.getSeriesByID(ep.getSeries_ID());
+              SeriesRecord ser = SeriesRecord.queryOne(SeriesRecord.C_SERIES_ID +"=?", 
+                    new String[]{String.valueOf(ep.getSeries_ID())},null);
               pop.add(new ScheduleMenuItem(ser, ep));
               // new EzTvForm(ser, ep);
             }

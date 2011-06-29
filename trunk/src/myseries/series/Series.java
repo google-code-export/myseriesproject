@@ -231,7 +231,8 @@ public class Series {
       // Image image = new ImageIcon(MySeries.class.getResource(MyImagePanel.LOGO)).getImage();
       if (series != null) {
         int series_id = series.getSeries_ID();
-        currentSeries = DBHelper.getSeriesByID(series_id);
+        currentSeries = SeriesRecord.queryOne(SeriesRecord.C_SERIES_ID +"=?", 
+                    new String[]{String.valueOf(series_id)},null);
         MySeriesLogger.logger.log(Level.INFO, "Current series set to {0}", currentSeries != null ? currentSeries.getFullTitle() : "none");
       } else {
         currentSeries = null;

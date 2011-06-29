@@ -173,7 +173,8 @@ public class StatSeries extends javax.swing.JPanel {
       }
       rs = stmt.executeQuery(sql);
       while (rs.next()) {
-        SeriesRecord series = DBHelper.getSeriesByID(rs.getInt("series_ID"));
+        SeriesRecord series = SeriesRecord.queryOne(SeriesRecord.C_SERIES_ID +"=?", 
+                    new String[]{String.valueOf(rs.getInt("series_ID"))},null);
         int episodes = rs.getInt("episodes");
         double rate = rs.getDouble("rate");
         Object[] data = {unified ? series.getTitle() : series, episodes, rate};
