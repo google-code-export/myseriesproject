@@ -5,9 +5,11 @@
 package database;
 
 import Exceptions.DatabaseException;
+import java.sql.ResultSet;
 import myComponents.MyUsefulFunctions;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
 import java.util.logging.Level;
 import tools.MySeriesLogger;
 import tools.languages.LangsList;
@@ -91,6 +93,37 @@ public class EpisodesRecord extends Record {
   public EpisodesRecord() {
     super();
   }
+  
+  private static EpisodesRecord create(ResultSet rs) throws SQLException{
+    EpisodesRecord e = new EpisodesRecord();
+      e.setEpisode_ID(rs.getInt(C_EPISODE_ID));
+      e.setEpisode(rs.getInt(C_EPISODE));
+      e.setTitle(rs.getString(C_TITLE));
+      e.setSeries_ID(rs.getInt(C_SERIES_ID));
+      e.setAired(rs.getString(C_AIRED));
+      e.setDownloaded(rs.getInt(C_DOWNLOADED));
+      e.setSubs(LangsList.getLanguageById(rs.getInt(C_SUBS)));
+      e.setSeen(rs.getInt(C_SEEN));
+      e.setRate(rs.getDouble(C_RATE));
+      return e;
+  }
+
+  public static EpisodesRecord queryOne(String[] columns, String whereClause, String[] whereValues, String group, String having, String order) throws SQLException {
+    ResultSet rs = query(TABLE, columns, whereClause, whereValues, group, having, order, "1");
+    if (rs.next()) {
+      return create(rs);
+    }
+    return null;
+  }
+
+  public static Vector<EpisodesRecord> queryAll(String[] columns, String whereClause, String[] whereValues, String group, String having, String order, String limit) throws SQLException {
+    ResultSet rs = query(TABLE, columns, whereClause, whereValues, group, having, order, limit);
+    Vector<EpisodesRecord> a = new Vector<EpisodesRecord>();
+    while (rs.next()) {
+      a.add(create(rs));
+    }
+    return a;
+  }
 
   /**
    * Inserts a record in the database if it doesn't exist, or updates it if it exists
@@ -112,7 +145,7 @@ public class EpisodesRecord extends Record {
             String.valueOf(this.getSeen()),
             String.valueOf(this.getRate())}, null, null);
     } else {
-       return save(TABLE, new String[]{C_EPISODE, C_SERIES_ID, C_TITLE, C_AIRED, C_DOWNLOADED,
+      return save(TABLE, new String[]{C_EPISODE, C_SERIES_ID, C_TITLE, C_AIRED, C_DOWNLOADED,
             C_SUBS, C_SEEN, C_RATE},
           new String[]{
             String.valueOf(this.getEpisode()),
@@ -122,8 +155,8 @@ public class EpisodesRecord extends Record {
             String.valueOf(this.getDownloaded()),
             String.valueOf(this.getSubs()),
             String.valueOf(this.getSeen()),
-            String.valueOf(this.getRate())}, C_EPISODE_ID+ "=?", 
-            new String[]{String.valueOf(this.getEpisode_ID())});
+            String.valueOf(this.getRate())}, C_EPISODE_ID + "=?",
+          new String[]{String.valueOf(this.getEpisode_ID())});
     }
   }
 

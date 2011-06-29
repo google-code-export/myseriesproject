@@ -40,25 +40,35 @@ public class FilterRecord extends Record {
   public FilterRecord() {
     super();
   }
-  
-  public static Vector<FilterRecord> query(String[] columns, String whereClause, String[] whereValues, String group,String having, String order, String limit) throws SQLException {
-    ResultSet rs = query(TABLE, columns, whereClause, whereValues, group, having, order, limit);
-    Vector<FilterRecord> a = new Vector<FilterRecord>();
-      while (rs.next()) {
-        FilterRecord s = new FilterRecord();
-        s.setFilter_ID(rs.getInt(C_FILTER_ID));
-        s.setDownloaded(rs.getInt(C_DOWNLOADED));
-        s.setSeen(rs.getInt(C_SEEN));
-        s.setSubtitles(rs.getInt(C_SUBTITLES));
-        s.setTitle(rs.getString(C_TITLE));
-        MySeriesLogger.logger.log(Level.FINE, "Found filter: {0}", s);
-        a.add(s);
-      }
-      rs.close();
-      return a;
+
+  private static FilterRecord create(ResultSet rs) throws SQLException {
+    FilterRecord s = new FilterRecord();
+    s.setFilter_ID(rs.getInt(C_FILTER_ID));
+    s.setDownloaded(rs.getInt(C_DOWNLOADED));
+    s.setSeen(rs.getInt(C_SEEN));
+    s.setSubtitles(rs.getInt(C_SUBTITLES));
+    s.setTitle(rs.getString(C_TITLE));
+    return s;
   }
 
-  /**
+  public static FilterRecord queryOne(String whereClause, String[] whereValues, String order) throws SQLException {
+    ResultSet rs = query(TABLE, null, whereClause, whereValues, null, null, order, "1");
+    if (rs.next()) {
+      return create(rs);
+    }
+    return null;
+  }
+
+  public static Vector<FilterRecord> queryAll(String whereClause, String[] whereValues, String order, String limit) throws SQLException {
+    ResultSet rs = query(TABLE, null, whereClause, whereValues, null, null, order, limit);
+    Vector<FilterRecord> a = new Vector<FilterRecord>();
+    while (rs.next()) {
+      a.add(create(rs));
+    }
+    return a;
+  }
+
+   /**
    * Delete a filter
    * @return The row count of the deleted records or -1
    * @throws SQLException
@@ -91,8 +101,8 @@ public class FilterRecord extends Record {
     } else {
       return save(TABLE, new String[]{C_TITLE, C_DOWNLOADED, C_SEEN, C_SUBTITLES},
           new String[]{this.getTitle(), String.valueOf(this.getDownloaded()),
-            String.valueOf(this.getSeen()), String.valueOf(this.getSubtitles())}, C_FILTER_ID+ " = ? ", 
-            new String[] {String.valueOf(this.getFilter_ID())});
+            String.valueOf(this.getSeen()), String.valueOf(this.getSubtitles())}, C_FILTER_ID + " = ? ",
+          new String[]{String.valueOf(this.getFilter_ID())});
     }
 
   }

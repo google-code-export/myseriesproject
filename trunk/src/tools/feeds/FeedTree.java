@@ -13,9 +13,11 @@ package tools.feeds;
 import database.FeedsRecord;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
@@ -199,12 +201,21 @@ public class FeedTree extends javax.swing.JPanel {
   private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
     if (MyMessages.confirm("Delete Feed", "Do you really want to delete this feed", true) == JOptionPane.YES_OPTION) {
       MySeriesLogger.logger.log(Level.INFO, "Deleting feed");
-      FeedsRecord feed = new FeedsRecord(getSelectedLeaf().id);
-      boolean delete = feed.delete();
-      if (delete) {
-        MySeriesLogger.logger.log(Level.FINE, "Feed deleted");
-        populate(-1);
+      FeedsRecord feed;
+      try {
+        feed = FeedsRecord.queryOne(FeedsRecord.C_FEED_ID + "=?",
+            new String[]{String.valueOf(getSelectedLeaf().id)}, null);
+        if (feed.delete()) {
+          MySeriesLogger.logger.log(Level.FINE, "Feed deleted");
+          populate(-1);
+        }else {
+          MyMessages.error("Delete feed", "Could not delete the feed", true, true);
+        }
+      } catch (SQLException ex) {
+        MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+        MyMessages.error("Delete feed", "Could not delete the feed", true, true);
       }
+
     }
 
     popup.setVisible(false);
@@ -220,10 +231,15 @@ public class FeedTree extends javax.swing.JPanel {
 
   private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
     MySeriesLogger.logger.log(Level.INFO, "Updating feed");
-    FeedsRecord feed = new FeedsRecord(getSelectedLeaf().id);
+    try{
+    FeedsRecord feed = FeedsRecord.queryOne(FeedsRecord.C_FEED_ID + "=?",
+            new String[]{String.valueOf(getSelectedLeaf().id)}, null);
     FeedUpdater fu = new FeedUpdater(this, feed, m, true);
     Thread t = new Thread(fu);
     t.start();
+    }catch(SQLException ex){
+      
+    }
   }//GEN-LAST:event_updateActionPerformed
 
   private void treeValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_treeValueChanged
@@ -237,11 +253,16 @@ public class FeedTree extends javax.swing.JPanel {
           if (leaf.id > 0) {
             MySeriesLogger.logger.log(Level.INFO, "Selected leaf {0}", leaf.title);
             selectedRow = tree.getSelectionRows()[0];
-            FeedsRecord feedsRecord = new FeedsRecord(leaf.id);
+            try{
+            FeedsRecord feedsRecord = FeedsRecord.queryOne(FeedsRecord.C_FEED_ID + "=?",
+            new String[]{String.valueOf(leaf.id)}, null);
             FeedReader fr = new FeedReader(this, feedsRecord, m);
             Feed feed = fr.getFeed();
             FeedPreviewPanel pp = m.feedPreviewPanel;
             pp.setFeed(feed);
+            }catch (SQLException ex){
+              MySeriesLogger.logger.log(Level.SEVERE, "Could not change feed");
+            }
           }
         } else {
           FeedPreviewPanel pp = m.feedPreviewPanel;

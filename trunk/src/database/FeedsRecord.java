@@ -39,38 +39,31 @@ public class FeedsRecord extends Record {
     super();
   }
   
-  
-
-  public FeedsRecord(int feed_ID) {
-    super();
-    Statement stmt = null;
-    if (feed_ID > 0) {
-      ResultSet rs = null;
-      try {
-        MySeriesLogger.logger.log(Level.INFO, "Getting feed: {0}", feed_ID);
-        String sql = "SELECT * FROM " + TABLE + " WHERE " + C_FEED_ID + " = " + feed_ID;
-        rs = query(TABLE, null, C_FEED_ID + " = ?", 
-            new String[] {String.valueOf(feed_ID)}, null, null, null, null);
-        while (rs.next()) {
-          this.feed_ID = feed_ID;
-          this.url = rs.getString(C_URL);
-          this.title = rs.getString(C_TITLE);
-          MySeriesLogger.logger.log(Level.FINE, "Feed found : {0}", title);
-        }
-      } catch (SQLException ex) {
-        MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-      } finally {
-        if (rs != null) {
-          try {
-            rs.close();
-          } catch (SQLException ex) {
-           MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-          }
-        }
-      }
-    }
+   private static FeedsRecord create(ResultSet rs) throws SQLException{
+    FeedsRecord f = new FeedsRecord();
+      f.setFeed_ID(rs.getInt(C_FEED_ID));
+      f.setTitle(rs.getString(C_TITLE));
+      f.setUrl(rs.getString(C_URL));
+      return f;
   }
-  
+   
+   public static FeedsRecord queryOne(String whereClause, String[] whereValues, String order) throws SQLException {
+    ResultSet rs = query(TABLE, null, whereClause, whereValues, null, null, order, "1");
+    if (rs.next()) {
+      return create(rs);
+    }
+    return null;
+  }
+
+  public static Vector<FeedsRecord> queryAll( String whereClause, String[] whereValues, String order, String limit) throws SQLException {
+    ResultSet rs = query(TABLE, null, whereClause, whereValues, null, null, order, limit);
+    Vector<FeedsRecord> a = new Vector<FeedsRecord>();
+    while (rs.next()) {
+      a.add(create(rs));
+    }
+    return a;
+  }
+   
   /**
    * Saves a feed Record
    * @return The id of the record or -1 if it's an update
