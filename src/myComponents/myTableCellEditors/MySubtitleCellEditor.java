@@ -81,7 +81,8 @@ public class MySubtitleCellEditor extends AbstractCellEditor implements TableCel
       ep = (EpisodesRecord) table.getValueAt(row, episodeColumn);
       int sid = ep.getSeries_ID();
       try {
-        series = database.DBHelper.getSeriesByID(sid);
+        series = SeriesRecord.queryOne(SeriesRecord.C_SERIES_ID +"=?", 
+                    new String[]{String.valueOf(sid)},null);
       } catch (SQLException ex) {
           MySeriesLogger.logger.log(Level.SEVERE, "SQL error while getting series " + sid, ex);
         return true;

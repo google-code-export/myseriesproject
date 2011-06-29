@@ -665,7 +665,8 @@ public class MyUsefulFunctions {
     String size = "";
     SeriesRecord series;
     try {
-      series = database.DBHelper.getSeriesByID(episode.getSeries_ID());
+      series = SeriesRecord.queryOne(SeriesRecord.C_SERIES_ID +"=?", 
+                    new String[]{String.valueOf(episode.getSeries_ID())},null);
     } catch (SQLException ex) {
       return null;
     }
@@ -730,7 +731,8 @@ public class MyUsefulFunctions {
     SeriesRecord series;
     MySeriesLogger.logger.log(Level.INFO, "Getting video file types for episode : {0}", ep.getTitle());
     try {
-      series = database.DBHelper.getSeriesByID(ep.getSeries_ID());
+      series = SeriesRecord.queryOne(SeriesRecord.C_SERIES_ID +"=?", 
+                    new String[]{String.valueOf(ep.getSeries_ID())},null);
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, "SQL exception while getting series " + ep.getSeries_ID(), ex);
       return null;
@@ -801,7 +803,8 @@ public class MyUsefulFunctions {
         ep.getTitle());
     SeriesRecord series;
     try {
-      series = database.DBHelper.getSeriesByID(ep.getSeries_ID());
+      series = SeriesRecord.queryOne(SeriesRecord.C_SERIES_ID +"=?", 
+                    new String[]{String.valueOf(ep.getSeries_ID())},null);
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, "SQL exception while getting series " + ep.getSeries_ID(), ex);
       return null;
@@ -869,7 +872,8 @@ public class MyUsefulFunctions {
   public static boolean needRenaming(EpisodesRecord ep) {
     SeriesRecord series;
     try {
-      series = database.DBHelper.getSeriesByID(ep.getSeries_ID());
+      series = SeriesRecord.queryOne(SeriesRecord.C_SERIES_ID +"=?", 
+                    new String[]{String.valueOf(ep.getSeries_ID())},null);
       ArrayList<File> videos = new ArrayList<File>();
       ArrayList<File> subs = new ArrayList<File>();
       if (series.isValidLocalDir()) {

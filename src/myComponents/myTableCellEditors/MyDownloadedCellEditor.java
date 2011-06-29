@@ -52,7 +52,8 @@ public class MyDownloadedCellEditor extends DefaultCellEditor implements TableCe
             ep = (EpisodesRecord) table.getValueAt(row, episodeColumn);
             int sid = ep.getSeries_ID();
             try {
-                series = database.DBHelper.getSeriesByID(sid);
+                series = SeriesRecord.queryOne(SeriesRecord.C_SERIES_ID +"=?", 
+                    new String[]{String.valueOf(sid)},null);
             } catch (SQLException ex) {
                 return true;
             }

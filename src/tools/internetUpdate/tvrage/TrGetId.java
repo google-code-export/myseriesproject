@@ -305,7 +305,8 @@ public class TrGetId extends MyDraggable {
     tvRageID = Integer.parseInt(sel.id);
     if (series_ID > 0) {
       try {
-        SeriesRecord cSeries = DBHelper.getSeriesByID(series_ID);
+        SeriesRecord cSeries = SeriesRecord.queryOne(SeriesRecord.C_SERIES_ID +"=?", 
+                    new String[]{String.valueOf(series_ID)},null);
         cSeries.setTvrage_ID(tvRageID);
         cSeries.save();
         MySeriesLogger.logger.log(Level.INFO, "Setting current series to {0}", cSeries.getFullTitle());

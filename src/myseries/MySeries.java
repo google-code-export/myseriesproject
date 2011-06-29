@@ -1722,7 +1722,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
             ep = (EpisodesRecord) tableEpisodes.getValueAt(rowSelected, Episodes.EPISODERECORD_COLUMN);
             MySeriesLogger.logger.log(Level.INFO, "Episode {0} selected", ep.getTitle());
             int series_ID = ep.getSeries_ID();
-            series = DBHelper.getSeriesByID(series_ID);
+            series = SeriesRecord.queryOne(SeriesRecord.C_SERIES_ID +"=?", 
+                    new String[]{String.valueOf(series_ID)},null);
             MySeriesLogger.logger.log(Level.INFO, "Setting current series event");
             event.setType(MyEventHandler.SET_CURRENT_SERIES);
             event.setSeries(series);
@@ -1860,7 +1861,8 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
       MySeriesLogger.logger.log(Level.INFO, "Filters table row {0} selected", rowSelected);
       EpisodesRecord ep = (EpisodesRecord) tableFilters.getValueAt(rowSelected, 2);
       MySeriesLogger.logger.log(Level.INFO, "Episode {0} selected", ep.getTitle());
-      SeriesRecord seriesRec = DBHelper.getSeriesByID(ep.getSeries_ID());
+      SeriesRecord seriesRec = SeriesRecord.queryOne(SeriesRecord.C_SERIES_ID +"=?", 
+                    new String[]{String.valueOf(ep.getSeries_ID())},null);
       MySeriesLogger.logger.log(Level.INFO, "Setting current series event");
       MyEvent event = new MyEvent(this, MyEventHandler.SET_CURRENT_SERIES);
       event.setSeries(seriesRec);
