@@ -4,6 +4,7 @@
  */
 package myseries.filters;
 
+import Exceptions.DatabaseException;
 import database.DBConnection;
 import database.EpisodesRecord;
 import java.sql.SQLException;
@@ -36,7 +37,7 @@ public class UpdateFiltersTable {
           ep.setDownloaded(downloaded ? EpisodesRecord.DOWNLOADED : EpisodesRecord.NOT_DOWNLOADED);
           ep.setSeen(seen ? EpisodesRecord.SEEN : EpisodesRecord.NOT_SEEN);
           ep.setSubs(subs);
-          ep.save(DBConnection.conn.createStatement());
+          ep.save();
           // NextEpisodes.createNextEpisodes();
           // NextEpisodes.show();
           Thread.sleep(100);

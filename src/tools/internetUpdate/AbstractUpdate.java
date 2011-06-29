@@ -4,6 +4,7 @@
  */
 package tools.internetUpdate;
 
+import Exceptions.DatabaseException;
 import database.DBHelper;
 import database.EpisodesRecord;
 import database.SeriesRecord;

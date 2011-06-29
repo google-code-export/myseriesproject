@@ -4,6 +4,7 @@
  */
 package myseries.episodes;
 
+import Exceptions.DatabaseException;
 import database.DBConnection;
 import database.EpisodesRecord;
 import java.sql.SQLException;
@@ -57,14 +58,13 @@ public class UpdateEpisodesTable {
       er.setSeen((Boolean) rec[Episodes.SEEN_COLUMN] ? EpisodesRecord.SEEN : EpisodesRecord.NOT_SEEN);
       er.setRate((Double) rec[Episodes.RATE_COLUMN]);
       MySeriesLogger.logger.log(Level.INFO, "Update episode {0}", er.getTitle());
-      Statement stmt = DBConnection.conn.createStatement();
-      er.save(stmt);
+      er.save();
       MySeriesLogger.logger.log(Level.FINE, "Episode updated");
       // NextEpisodes.createNextEpisodes();
       // NextEpisodes.show();
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, "Sql exception occured", ex);
-    } catch (NumberFormatException ex) {
+    }  catch (NumberFormatException ex) {
       MySeriesLogger.logger.log(Level.WARNING, "Wrong episode number entered");
       MyMessages.warning("Not a number", "The value you entered is not a number", true, true);
     }

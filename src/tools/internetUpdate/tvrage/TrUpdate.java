@@ -4,6 +4,7 @@
  */
 package tools.internetUpdate.tvrage;
 
+import Exceptions.DatabaseException;
 import database.DBConnection;
 import database.DBHelper;
 import database.Database;
@@ -138,7 +139,7 @@ public class TrUpdate extends AbstractUpdate implements Runnable {
             episodeRecord.setEpisode(number);
             episodeRecord.setTitle(title);
             episodeRecord.setAired(airDate);
-            episodeRecord.save(DBConnection.conn.createStatement());
+            episodeRecord.save();
           }
         }
         } catch (SQLException ex){

@@ -89,17 +89,6 @@ public class DBHelper {
   }
 
   /**
-   * Gets all the filters
-   * @return a vector of filtersRecords
-   * @throws SQLException
-   */
-  public static Vector<FilterRecord> getSavedFilterRecords() throws SQLException {
-    MySeriesLogger.logger.log(Level.INFO, "Getting all filters");
-    Vector<FilterRecord> recs = getFilterRecordBySql("SELECT * FROM filters ORDER BY title");
-    return recs;
-  }
-
-  /**
    * Gets a filter by the name
    * @param title The name of the filter
    * @return The filter record if found or null
@@ -107,7 +96,7 @@ public class DBHelper {
    */
   public static FilterRecord getFilterByTitle(String title) throws SQLException {
     MySeriesLogger.logger.log(Level.INFO, "Get filter : {0}", title);
-    Vector<FilterRecord> a = getFilterRecordBySql("SELECT * FROM filters WHERE title = '" + title + "' LIMIT 1");
+    Vector<FilterRecord> a = FilterRecord.query(null, "title = ?", new String[] {title}, null, null, null,"1");
     if (a.size() == 1) {
       return a.get(0);
     } else {
@@ -115,37 +104,7 @@ public class DBHelper {
     }
   }
 
-  /**
-   * Gets filter records by executing a query
-   * @param sql The query to execute
-   * @return a vector of filterRecords
-   * @throws SQLException
-   */
-  public static Vector<FilterRecord> getFilterRecordBySql(String sql) throws SQLException {
-    ResultSet rs = null;
-    MySeriesLogger.logger.log(Level.INFO, "Geting filter record by sql");
-    MySeriesLogger.logger.log(Level.INFO, sql);
-    try {
-      rs = DBConnection.conn.createStatement().executeQuery(sql);
-      Vector<FilterRecord> a = new Vector<FilterRecord>();
-      while (rs.next()) {
-        FilterRecord s = new FilterRecord();
-        s.setFilter_ID(rs.getInt("filter_ID"));
-        s.setDownloaded(rs.getInt("downloaded"));
-        s.setSeen(rs.getInt("seen"));
-        s.setSubtitles(rs.getInt("subtitles"));
-        s.setTitle(rs.getString("title"));
-        MySeriesLogger.logger.log(Level.FINE, "Found filter: {0}", s);
-        a.add(s);
-      }
-      rs.close();
-      return a;
-    } finally {
-      if (rs != null) {
-        rs.close();
-      }
-    }
-  }
+ 
 
   /**
    * Gets an array of the filters titles
@@ -154,7 +113,7 @@ public class DBHelper {
    */
   public static String[] getFiltersTitlesList() throws SQLException {
     MySeriesLogger.logger.log(Level.INFO, "Getting titles of saved filters");
-    Vector<FilterRecord> sfr = getSavedFilterRecords();
+    Vector<FilterRecord> sfr = FilterRecord.query(null, null, null, null, null, "title ASC", null);
     String[] filters = new String[sfr.size()];
     for (int i = 0; i < sfr.size(); i++) {
       filters[i] = sfr.get(i).getTitle();

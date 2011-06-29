@@ -123,10 +123,10 @@ public class Record {
     }
   }
 
-  protected ResultSet query(String table, String[] columns, String whereClause, String[] whereValues, String group,String having, String order, String limit) throws SQLException{
+  protected static ResultSet query(String table, String[] columns, String whereClause, String[] whereValues, String group,String having, String order, String limit) throws SQLException{
     Statement stmt = DBConnection.conn.createStatement();
     String cols = columns == null ? "*" : joinSqlColumns(columns);
-    String where = whereClause==null ? "" : createWhereClause(whereClause, whereValues);
+    String where = whereClause==null ? "" : " WHERE " + createWhereClause(whereClause, whereValues);
     group = group == null ? "" : " GROUP BY " +group;
     having = having == null ? "" : " HAVING " +having;
     order = order == null ? "" : " ORDER BY " + order;
@@ -136,7 +136,7 @@ public class Record {
   }
 
 
-  private String createColumnUpdate(String[] columns, String[] values) throws DatabaseException {
+  private static String createColumnUpdate(String[] columns, String[] values) throws DatabaseException {
     if (columns.length != values.length) {
       throw new DatabaseException("Columns and Values arrays have different lengths");
     }
@@ -152,7 +152,7 @@ public class Record {
     return query;
   }
 
-  private String createWhereClause(String whereClause, String[] whereValues) {
+  private static String createWhereClause(String whereClause, String[] whereValues) {
     int n = whereValues.length;
     for (int i = 0; i < n; i++) {
       whereClause = whereClause.replaceFirst("\\?", "'" + whereValues[i] + "'");
@@ -165,7 +165,7 @@ public class Record {
    * @param values The values
    * @return 
    */
-  public static String joinSqlValues(String[] values) {
+  private static String joinSqlValues(String[] values) {
     String query = "";
     int n = values.length;
     for (int i = 0; i < n; i++) {
@@ -183,7 +183,7 @@ public class Record {
    * @param columns The columns
    * @return 
    */
-  public static String joinSqlColumns(String[] columns) {
+  private static String joinSqlColumns(String[] columns) {
     String query = "";
     int n = columns.length;
     for (int i = 0; i < n; i++) {

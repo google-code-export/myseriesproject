@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import myComponents.MyUsefulFunctions;
@@ -30,13 +31,15 @@ public class FeedsRecord extends Record {
   private String title = "";
   private String url = "";
   public static final String TABLE = "feeds";
-  public static final String FEED_ID = "feed_ID";
-  public static final String TITLE = "title";
-  public static final String URL = "url";
+  public static final String C_FEED_ID = "feed_ID";
+  public static final String C_TITLE = "title";
+  public static final String C_URL = "url";
 
   public FeedsRecord() {
     super();
   }
+  
+  
 
   public FeedsRecord(int feed_ID) {
     super();
@@ -45,13 +48,13 @@ public class FeedsRecord extends Record {
       ResultSet rs = null;
       try {
         MySeriesLogger.logger.log(Level.INFO, "Getting feed: {0}", feed_ID);
-        String sql = "SELECT * FROM " + TABLE + " WHERE " + FEED_ID + " = " + feed_ID;
-        stmt = DBConnection.conn.createStatement();
-        rs = query(stmt, sql);
+        String sql = "SELECT * FROM " + TABLE + " WHERE " + C_FEED_ID + " = " + feed_ID;
+        rs = query(TABLE, null, C_FEED_ID + " = ?", 
+            new String[] {String.valueOf(feed_ID)}, null, null, null, null);
         while (rs.next()) {
           this.feed_ID = feed_ID;
-          this.url = rs.getString("url");
-          this.title = rs.getString("title");
+          this.url = rs.getString(C_URL);
+          this.title = rs.getString(C_TITLE);
           MySeriesLogger.logger.log(Level.FINE, "Feed found : {0}", title);
         }
       } catch (SQLException ex) {
@@ -60,20 +63,11 @@ public class FeedsRecord extends Record {
         if (rs != null) {
           try {
             rs.close();
-
           } catch (SQLException ex) {
            MySeriesLogger.logger.log(Level.SEVERE, null, ex);
           }
-          if (stmt != null) {
-            try {
-              stmt.close();
-            } catch (SQLException ex) {
-             MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-            }
-          }
         }
       }
-
     }
   }
   
@@ -83,15 +77,13 @@ public class FeedsRecord extends Record {
    * @throws SQLException
    */
   public int save() throws SQLException, DatabaseException {
-    String sql;
-    Statement stmt = DBConnection.conn.createStatement();
     MySeriesLogger.logger.log(Level.INFO, "Saving feed");
     if (this.feed_ID != 0) {
-      return save(TABLE, new String[]{TITLE, URL},
+      return save(TABLE, new String[]{C_TITLE, C_URL},
               new String[]{MyUsefulFunctions.escapeString(this.getTitle()), this.getUrl()},
-              FEED_ID + " = ?", new String[]{String.valueOf(this.feed_ID)});
+              C_FEED_ID + " = ?", new String[]{String.valueOf(this.feed_ID)});
     } else {
-      return save(TABLE, new String[]{TITLE, URL}, new String[]{MyUsefulFunctions.escapeString(this.getTitle()), this.getUrl()}, null, null);
+      return save(TABLE, new String[]{C_TITLE, C_URL}, new String[]{MyUsefulFunctions.escapeString(this.getTitle()), this.getUrl()}, null, null);
     }
 
   }
@@ -108,7 +100,7 @@ public class FeedsRecord extends Record {
           file.delete();
           MySeriesLogger.logger.log(Level.FINE, "Feed file deleted");
         }
-        delete(TABLE, FEED_ID + " = ?", new String[]{String.valueOf(this.feed_ID)});
+        delete(TABLE, C_FEED_ID + " = ?", new String[]{String.valueOf(this.feed_ID)});
         return true;
       } catch (SQLException ex) {
         MySeriesLogger.logger.log(Level.SEVERE, "Sql exception occured", ex);
@@ -128,9 +120,9 @@ public class FeedsRecord extends Record {
       rs = query(stmt, sql);
       while (rs.next()) {
         FeedsRecord f = new FeedsRecord();
-        f.feed_ID = rs.getInt("feed_ID");
-        f.title = rs.getString("title");
-        f.url = rs.getString("url");
+        f.feed_ID = rs.getInt(C_FEED_ID);
+        f.title = rs.getString(C_TITLE);
+        f.url = rs.getString(C_URL);
         feeds.add(f);
         MySeriesLogger.logger.log(Level.FINE, "Feed found : {0}", f.title);
       }

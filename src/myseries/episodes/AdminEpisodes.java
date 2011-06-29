@@ -10,6 +10,7 @@
  */
 package myseries.episodes;
 
+import Exceptions.DatabaseException;
 import com.googlecode.svalidators.formcomponents.ValidationGroup;
 import com.googlecode.svalidators.validators.RequiredValidator;
 import database.DBConnection;
@@ -330,8 +331,7 @@ public class AdminEpisodes extends MyDraggable {
         aired = f.format(dateChooser.getDate());
       }
       episodeRecord.setAired(aired);
-      Statement stmt = DBConnection.conn.createStatement();
-      episodeRecord.save(stmt);
+      episodeRecord.save();
       MySeriesLogger.logger.log(Level.INFO, "Episode {0} added", episodeRecord.getTitle());
       Episodes.getCurrentSeriesEpisodes(m.tableEpisodes);
       dispose();

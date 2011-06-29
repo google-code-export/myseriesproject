@@ -216,10 +216,7 @@ public class AdminFeed extends MyDraggable {
           } catch (SQLException ex) {
               MySeriesLogger.logger.log(Level.SEVERE, "Sql exception while saving feed", ex);
               MyMessages.error("Feed Saving", "An error occured and the feed is not saved", true, true);
-          } catch (DatabaseException ex) {
-              MySeriesLogger.logger.log(Level.SEVERE, "Sql exception while saving feed", ex);
-              MyMessages.error("Feed Saving", "An error occured and the feed is not saved", true, true);
-          } finally {
+          }finally {
               dispose();
           }
 

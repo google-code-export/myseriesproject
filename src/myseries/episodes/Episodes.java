@@ -4,6 +4,7 @@
  */
 package myseries.episodes;
 
+import Exceptions.DatabaseException;
 import java.util.logging.Level;
 import myseries.series.Series;
 import tools.MySeriesLogger;
@@ -161,7 +162,7 @@ public class Episodes {
    * @return An arraylist of all the episodes records
    * @throws java.sql.SQLException
    */
-  public static ArrayList<EpisodesRecord> getCurrentSeriesEpisodes(JTable episodesTable) throws SQLException {
+  public static ArrayList<EpisodesRecord> getCurrentSeriesEpisodes(JTable episodesTable) throws SQLException, DatabaseException {
     ArrayList<EpisodesRecord> eps = new ArrayList<EpisodesRecord>();
     ArrayList<EpisodesRecord> updated = new ArrayList<EpisodesRecord>();
     File[] subtitleFiles = null;
@@ -249,7 +250,7 @@ public class Episodes {
         long in = System.currentTimeMillis();
         for (Iterator<EpisodesRecord> it = updated.iterator(); it.hasNext();) {
           EpisodesRecord episodesRecord = it.next();
-          episodesRecord.save(stmt);
+          episodesRecord.save();
           MySeriesLogger.logger.log(Level.FINE, "Updating {0}", episodesRecord.getTitle());
         }
 
@@ -360,7 +361,7 @@ public class Episodes {
    * Updates the episodes table with the current series episodes
    * @throws java.sql.SQLException
    */
-  public static void updateEpisodesTable(JTable table) throws SQLException {
+  public static void updateEpisodesTable(JTable table) throws SQLException, DatabaseException {
     MySeriesLogger.logger.log(Level.INFO, "Updating episodes table");
     Episodes.getCurrentSeriesEpisodes(table);
   }
