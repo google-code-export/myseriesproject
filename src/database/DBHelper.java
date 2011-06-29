@@ -28,19 +28,7 @@ public class DBHelper {
    */
   public static final int LIMIT = 20;
 
-  /**
-   * Gets an episode by the primary key (episode_ID)
-   * @param episode_ID The episode id
-   * @return The episode record or null if it's not found
-   * @throws SQLException
-   */
-  public static EpisodesRecord getEpisodeByID(int episode_ID) throws SQLException {
-    String sql = "SELECT * FROM episodes WHERE episode_ID = " + episode_ID;
-    MySeriesLogger.logger.log(Level.INFO, "Getting episode {0}", episode_ID);
-    Vector<EpisodesRecord> episodes = getEpisodesBySql(sql);
-    return episodes.size() == 1 ? episodes.get(0) : null;
-  }
-
+  
   /**
    * Gets all episodes from the database
    * @return a Vector of episodesRecords
@@ -96,12 +84,7 @@ public class DBHelper {
    */
   public static FilterRecord getFilterByTitle(String title) throws SQLException {
     MySeriesLogger.logger.log(Level.INFO, "Get filter : {0}", title);
-    Vector<FilterRecord> a = FilterRecord.query(null, "title = ?", new String[] {title}, null, null, null,"1");
-    if (a.size() == 1) {
-      return a.get(0);
-    } else {
-      return null;
-    }
+    return FilterRecord.queryOne("title = ?", new String[] {title}, null);
   }
 
  
@@ -113,7 +96,7 @@ public class DBHelper {
    */
   public static String[] getFiltersTitlesList() throws SQLException {
     MySeriesLogger.logger.log(Level.INFO, "Getting titles of saved filters");
-    Vector<FilterRecord> sfr = FilterRecord.query(null, null, null, null, null, "title ASC", null);
+    Vector<FilterRecord> sfr = FilterRecord.queryAll(null, null , FilterRecord.C_TITLE+" ASC",null);
     String[] filters = new String[sfr.size()];
     for (int i = 0; i < sfr.size(); i++) {
       filters[i] = sfr.get(i).getTitle();

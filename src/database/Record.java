@@ -48,37 +48,37 @@ public class Record {
    * @return the id of the inserted record or -1
    * @throws java.sql.SQLException
    */
-  public synchronized static int queryUpdate(Statement stmt, String sql) throws SQLException {
-    ResultSet rs = null;
-    try {
-      MySeriesLogger.logger.log(Level.INFO, "Running update query {0}", sql);
-      // System.out.println("save " + sql);
-      stmt.executeUpdate(sql);
-      rs = stmt.executeQuery("SELECT last_insert_rowid() AS id");
-      int ai;
-      if (rs.next()) {
-        ai = rs.getInt("id");
-        MySeriesLogger.logger.log(Level.FINE, "Row with id {0} was inserted", ai);
-      } else {
-        MySeriesLogger.logger.log(Level.FINE, "Row was updated or deleted");
-        ai = -1;
-      }
-      rs.close();
-      return ai;
-    } catch (SQLException ex) {
-      if (DBerror(ex)) {
-        return queryUpdate(stmt, sql);
-      } else {
-        // System.out.println("fail " + sql);
-        throw ex;
-      }
-    } finally {
-      if (rs != null) {
-        rs.close();
-      }
-
-    }
-  }
+//  public synchronized static int queryUpdate(Statement stmt, String sql) throws SQLException {
+//    ResultSet rs = null;
+//    try {
+//      MySeriesLogger.logger.log(Level.INFO, "Running update query {0}", sql);
+//      // System.out.println("save " + sql);
+//      stmt.executeUpdate(sql);
+//      rs = stmt.executeQuery("SELECT last_insert_rowid() AS id");
+//      int ai;
+//      if (rs.next()) {
+//        ai = rs.getInt("id");
+//        MySeriesLogger.logger.log(Level.FINE, "Row with id {0} was inserted", ai);
+//      } else {
+//        MySeriesLogger.logger.log(Level.FINE, "Row was updated or deleted");
+//        ai = -1;
+//      }
+//      rs.close();
+//      return ai;
+//    } catch (SQLException ex) {
+//      if (DBerror(ex)) {
+//        return queryUpdate(stmt, sql);
+//      } else {
+//        // System.out.println("fail " + sql);
+//        throw ex;
+//      }
+//    } finally {
+//      if (rs != null) {
+//        rs.close();
+//      }
+//
+//    }
+//  }
 
   protected synchronized int save(String table, String[] columns, String[] values, String whereClause, String[] whereValues) throws SQLException, DatabaseException {
     int ai = -1;

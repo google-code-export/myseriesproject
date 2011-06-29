@@ -32,7 +32,19 @@ public class SeriesRecord extends Record implements Comparable<SeriesRecord> {
   /**
    * The table name
    */
-  String table = "series";
+  public static final String TABLE = "series";
+  public static final String C_SERIES_ID = "series_ID";
+  public static final String C_TITLE = "title";
+  public static final String C_SEASON = "season";
+  public static final String C_HIDDEN = "hidden";
+  public static final String C_TV_SUBTITLES_CODE = "link";
+  public static final String C_INTERNET_UPDATE = "internetUpdate";
+  public static final String C_TVRAGE_ID = "tvrage_ID";
+  public static final String C_LOCAL_DIR = "localDir";
+  public static final String C_SCREENSHOT = "screenshot";
+  public static final String C_SONLINE = "sonline";
+  public static final String C_DELETED = "deleted";
+  
   /**
    * The default values for the record attributes
    */
@@ -54,6 +66,9 @@ public class SeriesRecord extends Record implements Comparable<SeriesRecord> {
   public SeriesRecord() {
     super();
   }
+  
+  
+  
 
   /**
    * Inserts a new series record or updates an existing one
@@ -63,24 +78,30 @@ public class SeriesRecord extends Record implements Comparable<SeriesRecord> {
   public int save() throws SQLException {
     String sql;
     MySeriesLogger.logger.log(Level.INFO, "Saving series : {0}",getFullTitle());
-    if (this.series_ID != 0) {
-      sql = "UPDATE series SET title = '" + this.title + "', season = " + this.getSeason()
-          + ", hidden = " + this.getHidden() + ", link ='" + this.getTvSubtitlesCode() + "', internetUpdate  ="
-          + this.getInternetUpdate() + ", tvrage_ID = " + this.getTvrage_ID()
-          + ", localDir = '" + this.localDir + "', screenshot = '"
-          + this.screenshot + "', sonline = '" + this.sOnlineCode
-          + "', deleted = " + this.deleted
-          + " WHERE series_ID = " + this.getSeries_ID();
-    } else {
-      sql = "INSERT INTO series (title, season, hidden, link, internetUpdate, "
-          + "tvrage_ID, localDir, screenshot, sonline, deleted) "
-          + "VALUES('" + this.title + "', " + this.getSeason() + ", "
-          + this.getHidden() + ", '" + this.getTvSubtitlesCode() + "',"
-          + this.getInternetUpdate() + ", " + this.getTvrage_ID() + ", '"
-          + this.getLocalDir() + "','" + this.getScreenshot()
-          + "','" + this.sOnlineCode + "'," + this.deleted + ")";
-    }
-    return queryUpdate(DBConnection.conn.createStatement(), sql);
+     if (this.series_ID == 0) {
+       return save(TABLE, 
+           new String[]{
+           C_TITLE, C_SEASON, C_HIDDEN, C_TV_SUBTITLES_CODE, C_INTERNET_UPDATE,
+           C_TVRAGE_ID, C_LOCAL_DIR,C_SCREENSHOT,C_SONLINE,C_DELETED
+           }
+           , new String[]{
+           this.title, String.valueOf(this.getSeason()),String.valueOf(this.getHidden()),
+           this.tvSubtitlesCode, String.valueOf(this.getInternetUpdate()),
+           String.valueOf(this.getTvrage_ID()),this.getLocalDir(), this.getScreenshot(),
+           this.getSOnlineCode(),String.valueOf(this.getDeleted())}, null, null);
+     } else {
+       return save(TABLE, 
+           new String[]{
+           C_TITLE, C_SEASON, C_HIDDEN, C_TV_SUBTITLES_CODE, C_INTERNET_UPDATE,
+           C_TVRAGE_ID, C_LOCAL_DIR,C_SCREENSHOT,C_SONLINE,C_DELETED
+           }
+           , new String[]{
+           this.title, String.valueOf(this.getSeason()),String.valueOf(this.getHidden()),
+           this.tvSubtitlesCode, String.valueOf(this.getInternetUpdate()),
+           String.valueOf(this.getTvrage_ID()),this.getLocalDir(), this.getScreenshot(),
+           this.getSOnlineCode(),String.valueOf(this.getDeleted())}, C_SERIES_ID + "=?",
+           new String[] {String.valueOf(this.getSeries_ID())});
+     }
   }
 
   /**

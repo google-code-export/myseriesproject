@@ -5,8 +5,10 @@
 package myseries.actions;
 
 import database.FeedsRecord;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myseries.MySeries;
@@ -21,12 +23,20 @@ public class FeedsActions {
 
   public static boolean addFeedPanel(int feed_ID, MySeries m) {
     myseries.MySeries.glassPane.activate(null);
-    FeedsRecord f = new FeedsRecord(feed_ID);
-    MySeriesLogger.logger.log(Level.INFO, "Opening admin feed panel for {0}",
-        new String[]{feed_ID ==0 ? f.getTitle(): "new feed"});
-    AdminFeed a = new AdminFeed(feed_ID == 0 ? null : f, m);
-    myseries.MySeries.glassPane.deactivate();
-    return a.isFeedSaved;
+    FeedsRecord f;
+    try {
+      f = FeedsRecord.queryOne(FeedsRecord.C_FEED_ID + "=?",
+          new String[]{String.valueOf(feed_ID)}, null);
+
+      MySeriesLogger.logger.log(Level.INFO, "Opening admin feed panel for {0}",
+          new String[]{feed_ID == 0 ? f.getTitle() : "new feed"});
+      AdminFeed a = new AdminFeed(feed_ID == 0 ? null : f, m);
+      myseries.MySeries.glassPane.deactivate();
+      return a.isFeedSaved;
+    } catch (SQLException ex) {
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+      return false;
+    }
   }
 
   public static void updateFeeds(boolean onStartUp, MySeries m) {
