@@ -118,16 +118,21 @@ public class TrUpdate extends AbstractUpdate implements Runnable {
           int number = episode.number;
           String title = episode.title.trim();
           String airDate = episode.airDate;
-          Vector<EpisodesRecord> episodes = DBHelper.getEpisodesBySql("SELECT * FROM episodes WHERE series_ID = " + series.getSeries_ID()
-                  + " AND episode = " + number + " LIMIT 1");
-          EpisodesRecord episodeRecord;
-          if (episodes.isEmpty()) {
+          EpisodesRecord episodeRecord = EpisodesRecord.queryOne(null,
+                  EpisodesRecord.C_SERIES_ID +" = ? AND " + EpisodesRecord.C_EPISODE + " = ?",
+                  new String[] {
+                  String.valueOf(series.getSeries_ID()),
+                  String.valueOf(number),
+                  }
+                  , null,null,null);
+         
+          if (episodeRecord == null) {
             newEpisodes++;
             save = true;
             episodeRecord = new EpisodesRecord();
             append("<b>&nbsp;&nbsp;&nbsp;&nbsp;New Episode: " + number + ". " + title + " (Inserted)</b>");
           } else {
-            episodeRecord = episodes.get(0);
+           
             if (shouldSaveEpisode(episodeRecord, title, airDate)) {
               updEpisodes++;
               save = true;
