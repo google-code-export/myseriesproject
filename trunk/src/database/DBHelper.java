@@ -105,41 +105,7 @@ public class DBHelper {
     return filters;
   }
 
-  /**
-   * Gets series by executing a query
-   * @param sql The query to execute
-   * @return a vector of series records
-   * @throws SQLException
-   */
-  public static Vector<SeriesRecord> getSeriesBySql(String sql) throws SQLException {
-    ResultSet rs = null;
-    MySeriesLogger.logger.log(Level.INFO, "Getting series by sql");
-    MySeriesLogger.logger.log(Level.INFO, sql);
-      try {
-      rs = DBConnection.conn.createStatement().executeQuery(sql);
-      Vector<SeriesRecord> a = new Vector<SeriesRecord>();
-      while (rs.next()) {
-        SeriesRecord s = new SeriesRecord();
-        s.setSeason(rs.getInt("season"));
-        s.setSeries_ID(rs.getInt("series_ID"));
-        s.setTitle(rs.getString("title"));
-        s.setTvSubtitlesCode(rs.getString("link"));
-        s.setInternetUpdate(rs.getInt("internetUpdate"));
-        s.setTvrage_ID(rs.getInt("tvrage_ID"));
-        s.setLocalDir(rs.getString("localDir"));
-        s.setScreenshot(rs.getString("screenshot"));
-        s.setSOnlineCode(rs.getString("sonline"));
-        MySeriesLogger.logger.log(Level.FINE, "Found series: {0}", s);
-        a.add(s);
-      }
-      rs.close();
-      return a;
-    } finally {
-      if (rs != null) {
-        rs.close();
-      }
-    }
-  }
+  
 
   
 
@@ -150,9 +116,11 @@ public class DBHelper {
    */
   public static Vector<SeriesRecord> getAllSeries() throws SQLException {
     MySeriesLogger.logger.log(Level.INFO, "Getting all series");
-    return getSeriesBySql("SELECT * FROM series WHERE hidden = "
-        + SeriesRecord.NOT_HIDDEN + " AND deleted = " + SeriesRecord.NOT_DELETED);
-
+    return SeriesRecord.queryAll(SeriesRecord.C_HIDDEN + " = ? AND " + SeriesRecord.C_DELETED +" =?",
+        new String[]{
+        String.valueOf(SeriesRecord.NOT_HIDDEN),
+        String.valueOf(SeriesRecord.NOT_DELETED),
+        },null,null);
   }
 
   public static Vector<EpisodesRecord> getSeriesEpisodesByRate(int series_ID) {
