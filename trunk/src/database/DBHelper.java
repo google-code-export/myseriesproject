@@ -34,7 +34,7 @@ public class DBHelper {
    */
   public static Vector<EpisodesRecord> getEpisodesBySql(String sql) throws SQLException {
 
-    ResultSet rs = DBConnection.conn.createStatement().executeQuery(sql);
+    ResultSet rs = EpisodesRecord.query(sql);
     Vector<EpisodesRecord> a = new Vector<EpisodesRecord>();
     MySeriesLogger.logger.log(Level.INFO, "Getting episodes by sql");
     MySeriesLogger.logger.log(Level.INFO, sql);

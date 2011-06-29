@@ -37,8 +37,9 @@ public class Record {
    *         or (2) 0 for SQL statements that return nothing
    * @throws SQLException
    */
-  public static ResultSet query(Statement stmt, String sql) throws SQLException {
-    ResultSet rs = stmt.executeQuery(sql);
+  public static ResultSet query(String sql) throws SQLException {
+
+    ResultSet rs = DBConnection.conn.createStatement().executeQuery(sql);
     return rs;
   }
 
