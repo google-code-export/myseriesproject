@@ -11,10 +11,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import myseries.schedule.ScheduleEvent;
 import tools.languages.LangsList;
-import myComponents.MyUsefulFunctions;
 import tools.MySeriesLogger;
 
 /**
@@ -28,18 +26,6 @@ public class DBHelper {
    */
   public static final int LIMIT = 20;
 
-  
-  /**
-   * Gets all episodes from the database
-   * @return a Vector of episodesRecords
-   * @throws SQLException
-   */
-  public static Vector<EpisodesRecord> getAllEpisodes() throws SQLException {
-    MySeriesLogger.logger.log(Level.INFO, "Getting all episodes");
-    String sql = "SELECT * FROM episodes ";
-    return getEpisodesBySql(sql);
-  }
-
   /**
    * Gets episodes by executing an sql quey
    * @param sql The query to execute
@@ -47,7 +33,7 @@ public class DBHelper {
    * @throws SQLException
    */
   public static Vector<EpisodesRecord> getEpisodesBySql(String sql) throws SQLException {
-    
+
     ResultSet rs = DBConnection.conn.createStatement().executeQuery(sql);
     Vector<EpisodesRecord> a = new Vector<EpisodesRecord>();
     MySeriesLogger.logger.log(Level.INFO, "Getting episodes by sql");
@@ -84,10 +70,8 @@ public class DBHelper {
    */
   public static FilterRecord getFilterByTitle(String title) throws SQLException {
     MySeriesLogger.logger.log(Level.INFO, "Get filter : {0}", title);
-    return FilterRecord.queryOne("title = ?", new String[] {title}, null);
+    return FilterRecord.queryOne("title = ?", new String[]{title}, null);
   }
-
- 
 
   /**
    * Gets an array of the filters titles
@@ -96,7 +80,7 @@ public class DBHelper {
    */
   public static String[] getFiltersTitlesList() throws SQLException {
     MySeriesLogger.logger.log(Level.INFO, "Getting titles of saved filters");
-    Vector<FilterRecord> sfr = FilterRecord.queryAll(null, null , FilterRecord.C_TITLE+" ASC",null);
+    Vector<FilterRecord> sfr = FilterRecord.queryAll(null, null, FilterRecord.C_TITLE + " ASC", null);
     String[] filters = new String[sfr.size()];
     for (int i = 0; i < sfr.size(); i++) {
       filters[i] = sfr.get(i).getTitle();
@@ -105,29 +89,11 @@ public class DBHelper {
     return filters;
   }
 
-  
-
-  
-
-  /**
-   * Gets all series
-   * @return a vector of series records
-   * @throws SQLException
-   */
-  public static Vector<SeriesRecord> getAllSeries() throws SQLException {
-    MySeriesLogger.logger.log(Level.INFO, "Getting all series");
-    return SeriesRecord.queryAll(SeriesRecord.C_HIDDEN + " = ? AND " + SeriesRecord.C_DELETED +" =?",
-        new String[]{
-        String.valueOf(SeriesRecord.NOT_HIDDEN),
-        String.valueOf(SeriesRecord.NOT_DELETED),
-        },null,null);
-  }
-
-  public static Vector<EpisodesRecord> getSeriesEpisodesByRate(int series_ID) {
+   public static Vector<EpisodesRecord> getSeriesEpisodesByRate(int series_ID) {
     MySeriesLogger.logger.log(Level.INFO, "Getting series {0} episodes by rating", series_ID);
-    String sql = "SELECT * FROM episodes WHERE series_ID = " + series_ID + " AND rate > 0 ORDER BY rate DESC";
     try {
-      return getEpisodesBySql(sql);
+      return EpisodesRecord.queryAll(null, EpisodesRecord.C_SERIES_ID + " = ? AND " + EpisodesRecord.C_RATE + " > ?",
+              new String[]{String.valueOf(series_ID), "0"}, null, null, "rate DESC", null);
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, null, ex);
       return null;
@@ -139,14 +105,14 @@ public class DBHelper {
     ArrayList<ScheduleEvent> events = new ArrayList<ScheduleEvent>();
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     String date = sdf.format(sDay.getDate());
-     ResultSet rs = null;
+    ResultSet rs = null;
     MySeriesLogger.logger.log(Level.INFO, "Getting day events for date : {0}", date);
     String sql = "SELECT series.screenshot as image, episodes.episode AS ep, episodes.title AS title , "
-        + "series.title AS series, episodes.downloaded AS downloaded, episodes.seen AS seen FROM "
-        + "episodes JOIN series on episodes.series_ID = series.series_ID WHERE "
-        + "aired = '" + date + "' AND deleted = 0";
-      try {
-     rs = DBConnection.conn.createStatement().executeQuery(sql);
+            + "series.title AS series, episodes.downloaded AS downloaded, episodes.seen AS seen FROM "
+            + "episodes JOIN series on episodes.series_ID = series.series_ID WHERE "
+            + "aired = '" + date + "' AND deleted = 0";
+    try {
+      rs = DBConnection.conn.createStatement().executeQuery(sql);
       while (rs.next()) {
         ScheduleEvent ev = new ScheduleEvent();
         ev.setSeries(rs.getString("series"));
@@ -163,7 +129,7 @@ public class DBHelper {
       MySeriesLogger.logger.log(Level.SEVERE, "Sql exception occured", ex);
       return events;
     } finally {
-      if(rs!=null){
+      if (rs != null) {
         try {
           rs.close();
         } catch (SQLException ex) {
@@ -176,8 +142,8 @@ public class DBHelper {
   public static Vector<EpisodesRecord> getSeriesEpisodesByRate(String seriesTitle) {
     MySeriesLogger.logger.log(Level.INFO, "Getting series {0} episodes by rate", seriesTitle);
     String sql = "SELECT episodes.* FROM episodes  JOIN series ON "
-        + "series.series_ID = episodes.series_ID "
-        + "WHERE series.title = '" + seriesTitle + "' AND rate > 0 ORDER BY rate DESC LIMIT " + LIMIT;
+            + "series.series_ID = episodes.series_ID "
+            + "WHERE series.title = '" + seriesTitle + "' AND rate > 0 ORDER BY rate DESC LIMIT " + LIMIT;
     try {
       return getEpisodesBySql(sql);
     } catch (SQLException ex) {
@@ -191,14 +157,14 @@ public class DBHelper {
     ResultSet rs = null;
     try {
       String sql = "SELECT series.season FROM series join episodes ON " + "series.series_ID=episodes.series_ID WHERE episodes.episode_ID=" + episode_ID;
-      
+
       rs = DBConnection.conn.createStatement().executeQuery(sql);
       return rs.getInt("season");
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, null, ex);
       return 0;
-    } finally{
-      if(rs!=null){
+    } finally {
+      if (rs != null) {
         try {
           rs.close();
         } catch (SQLException ex) {

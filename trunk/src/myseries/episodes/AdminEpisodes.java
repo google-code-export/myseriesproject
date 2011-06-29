@@ -76,11 +76,11 @@ public class AdminEpisodes extends MyDraggable {
     initComponents();
     MySeriesLogger.logger.log(Level.FINE, "Components initialized");
     combobox_subtitles.setModel(new DefaultComboBoxModel(new Language[]{
-          LangsList.NONE,
-          myseries.MySeries.languages.getPrimary(),
-          myseries.MySeries.languages.getSecondary(),
-          LangsList.MULTIPLE
-        }));
+              LangsList.NONE,
+              myseries.MySeries.languages.getPrimary(),
+              myseries.MySeries.languages.getSecondary(),
+              LangsList.MULTIPLE
+            }));
     setLocationRelativeTo(m);
     label_title.setText("Add new Episode");
     getLatestEpisode();
@@ -95,12 +95,13 @@ public class AdminEpisodes extends MyDraggable {
    */
   private void getLatestEpisode() throws SQLException, IOException {
     MySeriesLogger.logger.log(Level.INFO, "Get the latest episode");
-    Vector<EpisodesRecord> episodes = DBHelper.getEpisodesBySql(
-        "select * from episodes where series_ID = "
-        + seriesRecord.getSeries_ID() + " order by CAST(episode AS INT) desc limit 1");
-    if (episodes.size() > 0) {
-      episodeNo = episodes.get(0).getEpisode() + 1;
-      MySeriesLogger.logger.log(Level.FINE, "Episode found {0}", episodes.get(0).getEpisode());
+    EpisodesRecord ep = EpisodesRecord.queryOne(null, EpisodesRecord.C_SERIES_ID
+            + " = ?", new String[]{String.valueOf(seriesRecord.getSeries_ID())},
+            null, null, " CAST(" + EpisodesRecord.C_EPISODE + " AS INT) desc");
+
+    if (ep != null) {
+      episodeNo = ep.getEpisode() + 1;
+      MySeriesLogger.logger.log(Level.FINE, "Episode found {0}", ep.getEpisode());
     } else {
       episodeNo = 1;
       MySeriesLogger.logger.log(Level.INFO, "No episode found.Setting next episode to 1");
@@ -368,7 +369,7 @@ public class AdminEpisodes extends MyDraggable {
         if (group.validate()) {
           addTheEpisode();
         } else {
-          MySeriesLogger.logger.log(Level.WARNING, "Validating error\n{0}",group.getErrorMessage());
+          MySeriesLogger.logger.log(Level.WARNING, "Validating error\n{0}", group.getErrorMessage());
           MyMessages.warning("Episodes Form", group.getErrorMessage(), true, true);
         }
       } catch (IOException ex) {
@@ -377,7 +378,6 @@ public class AdminEpisodes extends MyDraggable {
         MySeriesLogger.logger.log(Level.SEVERE, "Parse exception occured", ex);
       }
     }//GEN-LAST:event_bt_okActionPerformed
-
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private myComponents.myGUI.buttons.MyButtonCancel bt_cancel;
   private myComponents.myGUI.buttons.MyButtonHelp bt_help;

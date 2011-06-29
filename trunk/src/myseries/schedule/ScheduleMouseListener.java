@@ -16,12 +16,9 @@ import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Vector;
 import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import myComponents.MyUsefulFunctions;
-import tools.download.torrents.eztv.EzTvForm;
 
 /**
  *
