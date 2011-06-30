@@ -9,7 +9,6 @@ import java.util.logging.Level;
 import myseries.series.Series;
 import tools.MySeriesLogger;
 import database.DBConnection;
-import database.Database;
 import database.EpisodesRecord;
 import database.SeriesRecord;
 import java.io.File;
@@ -23,9 +22,7 @@ import java.util.regex.Pattern;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
-import myComponents.MyTableModels.MyEpisodesTableModel;
 import myComponents.MyUsefulFunctions;
-import myComponents.myFileFilters.SubtitlesFilter;
 import myComponents.myFileFilters.ZipFilter;
 import tools.archive.ArchiveFile;
 import tools.download.subtitles.SubtitleMover;
@@ -76,18 +73,7 @@ public class Episodes {
   /** The current episode   */
   private static EpisodesRecord currentEpisode;
 
-//  /** @return the tableModel_episodes   */
-//  public static MyEpisodesTableModel getTableModel_episodes() {
-//    return tableModel_episodes;
-//  }
-//
-//  /**
-//   * Sets the model for the episodes table
-//   * @param aTableModel_episodes the tableModel_episodes to set
-//   */
-//  public static void setTableModel_episodes(MyEpisodesTableModel aTableModel_episodes) {
-//    tableModel_episodes = aTableModel_episodes;
-//  }
+
   public static void setTableWidths(JTable table, Integer[] EpisodesTableWidths) {
     TableColumnModel model = table.getColumnModel();
     for (int i = 0; i < EpisodesTableWidths.length; i++) {
@@ -136,25 +122,14 @@ public class Episodes {
    */
   public static void setCurrentEpisode(int episode) throws SQLException {
     MySeriesLogger.logger.log(Level.INFO, "Setting the current episode");
-    String sql = "SELECT * FROM episodes "
-            + "WHERE series_ID = " + Series.getCurrentSerial().getSeries_ID() + " AND episode = " + episode;
-    ResultSet rs = EpisodesRecord.query(sql);
-    if (rs.next()) {
-      currentEpisode = new EpisodesRecord();
-      getCurrentEpisode().setEpisode_ID(rs.getInt("episode_ID"));
-      getCurrentEpisode().setSeries_ID(rs.getInt("series_ID"));
-      getCurrentEpisode().setEpisode(rs.getInt("episode"));
-      getCurrentEpisode().setTitle(rs.getString("title").trim());
-      getCurrentEpisode().setAired(rs.getString("aired").trim());
-      getCurrentEpisode().setDownloaded(rs.getInt("downloaded"));
-      getCurrentEpisode().setSubs(LangsList.getLanguageById(rs.getInt("subs")));
-      getCurrentEpisode().setSeen(rs.getInt("seen"));
-      getCurrentEpisode().setRate(rs.getDouble("rate"));
-      MySeriesLogger.logger.log(Level.FINE, "Current episode set to {0}", getCurrentEpisode().getTitle());
-    }
-    if (rs != null) {
-      rs.close();
-    }
+    currentEpisode = EpisodesRecord.queryOne(null,
+            EpisodesRecord.C_SERIES_ID + "= ? AND " + EpisodesRecord.C_EPISODE + "=?",
+            new String[]{String.valueOf(Series.getCurrentSerial().getSeries_ID()),
+              String.valueOf(episode)},
+            null, null, null);
+    MySeriesLogger.logger.log(Level.FINE, "Current episode set to {0}", getCurrentEpisode().getTitle());
+
+
   }
 
   /**
@@ -377,18 +352,6 @@ public class Episodes {
     //getTabsPanel().setTitleAt(0, "");
   }
 
-//  /**
-//   * @return the tabsPanel
-//   */
-//  public static JTabbedPane getTabsPanel() {
-//    return myseries.MySeries.tabsPanel;
-//  }
-//  /**
-//   * @param tabsPanel the tabsPanel to set
-//   */
-//  public static void setTabsPanel(JTabbedPane tabsPanel) {
-//    Episodes.tabsPanel = tabsPanel;
-//  }
   /**
    * @return the currentEpisode
    */

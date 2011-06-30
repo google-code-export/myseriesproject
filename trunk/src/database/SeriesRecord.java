@@ -84,11 +84,13 @@ public class SeriesRecord extends Record implements Comparable<SeriesRecord> {
   }
 
   public static SeriesRecord queryOne(String whereClause, String[] whereValues, String order) throws SQLException {
+    SeriesRecord record = null;
     ResultSet rs = query(TABLE, null, whereClause, whereValues, null, null, order, "1");
     if (rs.next()) {
-      return create(rs);
+      record= create(rs);
     }
-    return null;
+    rs.close();
+    return record;
   }
 
   public static Vector<SeriesRecord> queryAll(String whereClause, String[] whereValues, String order, String limit) throws SQLException {
@@ -97,6 +99,7 @@ public class SeriesRecord extends Record implements Comparable<SeriesRecord> {
     while (rs.next()) {
       a.add(create(rs));
     }
+    rs.close();
     return a;
   }
   
