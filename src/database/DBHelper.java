@@ -40,18 +40,7 @@ public class DBHelper {
     MySeriesLogger.logger.log(Level.INFO, sql);
     try {
       while (rs.next()) {
-        EpisodesRecord er = new EpisodesRecord();
-        er.setEpisode_ID(rs.getInt("episode_ID"));
-        er.setEpisode(rs.getInt("episode"));
-        er.setTitle(rs.getString("title"));
-        er.setSeries_ID(rs.getInt("series_ID"));
-        er.setAired(rs.getString("aired"));
-        er.setDownloaded(rs.getInt("downloaded"));
-        er.setSubs(LangsList.getLanguageById(rs.getInt("subs")));
-        er.setSeen(rs.getInt("seen"));
-        er.setRate(rs.getDouble("rate"));
-        a.add(er);
-        MySeriesLogger.logger.log(Level.FINE, "Found episode : {0}", er);
+        a.add(EpisodesRecord.create(rs));
       }
       rs.close();
       return a;

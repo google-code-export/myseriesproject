@@ -94,7 +94,7 @@ public class EpisodesRecord extends Record {
     super();
   }
   
-  private static EpisodesRecord create(ResultSet rs) throws SQLException{
+  public static EpisodesRecord create(ResultSet rs) throws SQLException{
     EpisodesRecord e = new EpisodesRecord();
       e.setEpisode_ID(rs.getInt(C_EPISODE_ID));
       e.setEpisode(rs.getInt(C_EPISODE));
@@ -109,11 +109,13 @@ public class EpisodesRecord extends Record {
   }
 
   public static EpisodesRecord queryOne(String[] columns, String whereClause, String[] whereValues, String group, String having, String order) throws SQLException {
+    EpisodesRecord record = null;
     ResultSet rs = query(TABLE, columns, whereClause, whereValues, group, having, order, "1");
     if (rs.next()) {
-      return create(rs);
+      record = create(rs);
     }
-    return null;
+    rs.close();
+    return record;
   }
 
   public static Vector<EpisodesRecord> queryAll(String[] columns, String whereClause, String[] whereValues, String group, String having, String order, String limit) throws SQLException {
@@ -122,7 +124,9 @@ public class EpisodesRecord extends Record {
     while (rs.next()) {
       a.add(create(rs));
     }
+    rs.close();
     return a;
+
   }
 
   /**

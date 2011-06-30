@@ -27,7 +27,9 @@ public class FeedsActions {
     try {
       f = FeedsRecord.queryOne(FeedsRecord.C_FEED_ID + "=?",
           new String[]{String.valueOf(feed_ID)}, null);
-
+      if(f==null){
+        f = new FeedsRecord();
+      }
       MySeriesLogger.logger.log(Level.INFO, "Opening admin feed panel for {0}",
           new String[]{feed_ID == 0 ? f.getTitle() : "new feed"});
       AdminFeed a = new AdminFeed(feed_ID == 0 ? null : f, m);
