@@ -175,8 +175,10 @@ public class DBConnection {
       }
     } catch (Exception ex1) {
       MySeriesLogger.logger.log(Level.SEVERE, "SQL Error.Exiting...", ex1);
-      // Options.setOption(Options.DB_NAME, "");
-      // Options.save();
+      MyMessages.error("Database", ex1.getMessage()+"\nRestart the application and choose another db"
+      + " or create a new one", true, true);
+      Options.setOption(Options.DB_NAME, "");
+      Options.save();
       isConnected = false;
       //System.exit(1);
       return false;
