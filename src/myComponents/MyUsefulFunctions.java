@@ -247,19 +247,24 @@ public class MyUsefulFunctions {
     if (date == null) {
       return false;
     }
-    //set the format to use as a constructor argument
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    if (date.trim().length() != dateFormat.toPattern().length()) {
+    SimpleDateFormat mySQLDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat userDateFormat = new SimpleDateFormat(Options.toString(Options.DATE_FORMAT));
+
+    if (date.trim().length() != mySQLDateFormat.toPattern().length()) {
       MySeriesLogger.logger.log(Level.WARNING, "Wrong date format : {0}", date);
       return false;
     }
-    dateFormat.setLenient(false);
+    mySQLDateFormat.setLenient(false);
     try {
-      //parse the inDate parameter
-      dateFormat.parse(date.trim());
+      //parse the inDate parameter with mysql format
+      mySQLDateFormat.parse(date.trim());
     } catch (ParseException pe) {
-      MySeriesLogger.logger.log(Level.WARNING, "Parse exception");
-      return false;
+      try {
+        userDateFormat.parse(date.trim());
+      } catch (ParseException ex1) {
+        MySeriesLogger.logger.log(Level.WARNING, "Parse exception");
+        return false;
+      }
     }
     return true;
   }
@@ -665,8 +670,8 @@ public class MyUsefulFunctions {
     String size = "";
     SeriesRecord series;
     try {
-      series = SeriesRecord.queryOne(SeriesRecord.C_SERIES_ID +"=?", 
-                    new String[]{String.valueOf(episode.getSeries_ID())},null);
+      series = SeriesRecord.queryOne(SeriesRecord.C_SERIES_ID + "=?",
+          new String[]{String.valueOf(episode.getSeries_ID())}, null);
     } catch (SQLException ex) {
       return null;
     }
@@ -731,8 +736,8 @@ public class MyUsefulFunctions {
     SeriesRecord series;
     MySeriesLogger.logger.log(Level.INFO, "Getting video file types for episode : {0}", ep.getTitle());
     try {
-      series = SeriesRecord.queryOne(SeriesRecord.C_SERIES_ID +"=?", 
-                    new String[]{String.valueOf(ep.getSeries_ID())},null);
+      series = SeriesRecord.queryOne(SeriesRecord.C_SERIES_ID + "=?",
+          new String[]{String.valueOf(ep.getSeries_ID())}, null);
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, "SQL exception while getting series " + ep.getSeries_ID(), ex);
       return null;
@@ -803,8 +808,8 @@ public class MyUsefulFunctions {
         ep.getTitle());
     SeriesRecord series;
     try {
-      series = SeriesRecord.queryOne(SeriesRecord.C_SERIES_ID +"=?", 
-                    new String[]{String.valueOf(ep.getSeries_ID())},null);
+      series = SeriesRecord.queryOne(SeriesRecord.C_SERIES_ID + "=?",
+          new String[]{String.valueOf(ep.getSeries_ID())}, null);
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, "SQL exception while getting series " + ep.getSeries_ID(), ex);
       return null;
@@ -872,8 +877,8 @@ public class MyUsefulFunctions {
   public static boolean needRenaming(EpisodesRecord ep) {
     SeriesRecord series;
     try {
-      series = SeriesRecord.queryOne(SeriesRecord.C_SERIES_ID +"=?", 
-                    new String[]{String.valueOf(ep.getSeries_ID())},null);
+      series = SeriesRecord.queryOne(SeriesRecord.C_SERIES_ID + "=?",
+          new String[]{String.valueOf(ep.getSeries_ID())}, null);
       ArrayList<File> videos = new ArrayList<File>();
       ArrayList<File> subs = new ArrayList<File>();
       if (series.isValidLocalDir()) {
@@ -1299,9 +1304,6 @@ public class MyUsefulFunctions {
     }
     return true;
   }
-
-  
-  
 
   private MyUsefulFunctions() {
   }
