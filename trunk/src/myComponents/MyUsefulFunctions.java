@@ -250,14 +250,14 @@ public class MyUsefulFunctions {
     SimpleDateFormat mySQLDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     SimpleDateFormat userDateFormat = new SimpleDateFormat(Options.toString(Options.DATE_FORMAT));
 
-    if (date.trim().length() != mySQLDateFormat.toPattern().length()) {
-      MySeriesLogger.logger.log(Level.WARNING, "Wrong date format : {0}", date);
-      return false;
-    }
     mySQLDateFormat.setLenient(false);
     try {
       //parse the inDate parameter with mysql format
       mySQLDateFormat.parse(date.trim());
+      if (date.trim().length() != mySQLDateFormat.toPattern().length()) {
+        MySeriesLogger.logger.log(Level.WARNING, "Wrong date format : {0}", date);
+        return false;
+      }
     } catch (ParseException pe) {
       try {
         userDateFormat.parse(date.trim());
