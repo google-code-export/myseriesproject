@@ -86,7 +86,7 @@ public class SubtitleMover {
         MySeriesLogger.logger.log(Level.FINE, "File deleted");
         return true;
       } else {
-        MySeriesLogger.logger.log(Level.WARNING, "Could not move subtitle {0}", sub.getName());
+        MySeriesLogger.logger.log(Level.INFO, "Could not move subtitle {0}", sub.getName());
       }
     } catch (FileNotFoundException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, "File is not found", ex);

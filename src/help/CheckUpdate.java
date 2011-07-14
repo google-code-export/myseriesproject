@@ -94,10 +94,10 @@ public class CheckUpdate extends MyDraggable {
           label_needUpdate.setText("Can't get the update data!!!");
         }
       } catch (MalformedURLException ex) {
-        MySeriesLogger.logger.log(Level.WARNING, null, ex);
+        MySeriesLogger.logger.log(Level.WARNING, "Malformed URL", ex);
         label_needUpdate.setText("Can't connect to server!!!");
       } catch (IOException ex) {
-        MySeriesLogger.logger.log(Level.WARNING, null, ex);
+        MySeriesLogger.logger.log(Level.WARNING, "Could not read from the input stream", ex);
         label_needUpdate.setText("Can't connect to server!!!");
       }
     }

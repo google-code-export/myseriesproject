@@ -70,7 +70,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
     }
     progress.setIndeterminate(false);
     if (subs.isEmpty()) {
-      MySeriesLogger.logger.log(Level.WARNING, "Subtitle not found");
+      MySeriesLogger.logger.log(Level.INFO, "Subtitle not found");
       form.dispose();
       if (!cancel) {
         MyMessages.warning("Subtitle not found", "The subtitle was not found", true, true);
