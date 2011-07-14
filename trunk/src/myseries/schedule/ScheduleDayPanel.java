@@ -184,7 +184,7 @@ public class ScheduleDayPanel extends javax.swing.JPanel {
       im = new ImageIcon(image.getScaledInstance((int)newW,(int) newH, Options.IMAGE_SCALING[Options.toInt(Options.IMAGE_QUALITY)]));
       MySeriesLogger.logger.log(Level.FINE, "Image scaled");
     } catch (Exception ex) {
-      MySeriesLogger.logger.log(Level.WARNING, "Could not scale image.Using default image");
+      MySeriesLogger.logger.log(Level.INFO, "Could not scale image.Using default image");
       return getScaledImageIcon(getDefaultImage().getImage());
     }
     return im;

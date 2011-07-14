@@ -260,7 +260,7 @@ public class Episodes {
 
   private static boolean checkDownloads(int season, int episode, File[] videoFiles) throws SQLException {
     if (videoFiles == null) {
-      MySeriesLogger.logger.log(Level.WARNING, "No video files found");
+      MySeriesLogger.logger.log(Level.INFO, "No video files found");
       return false;
     }
     String regex = MyUsefulFunctions.createRegex(season, episode);

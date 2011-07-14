@@ -43,9 +43,9 @@ public class UpdateFiltersTable {
           Thread.sleep(100);
           Filters.getFilteredSeries(m.comboBox_seen, m.comboBox_filterSubtitles, m.combobox_downloaded,m.combobox_filters,m.tableFilters);
         } catch (SQLException ex) {
-          MySeriesLogger.logger.log(Level.WARNING, null, ex);
+          MySeriesLogger.logger.log(Level.WARNING, "SQL Exception while updating filters table", ex);
         } catch (InterruptedException ex) {
-          MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+          MySeriesLogger.logger.log(Level.SEVERE, "Interrupted Exception while updating filters table", ex);
         }
       }
     }

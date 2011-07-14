@@ -62,7 +62,7 @@ public class LangsList {
         return language;
       }
     }
-    MySeriesLogger.logger.log(Level.WARNING, "Primary language not found , setting default {0}",
+    MySeriesLogger.logger.log(Level.INFO, "Primary language not found , setting default {0}",
         getDefaultLanguage(Language.PRIMARY).getName());
     return getDefaultLanguage(Language.PRIMARY);
   }
@@ -76,7 +76,7 @@ public class LangsList {
         return language;
       }
     }
-    MySeriesLogger.logger.log(Level.WARNING, "Secondary language not found , setting default {0}",
+    MySeriesLogger.logger.log(Level.INFO, "Secondary language not found , setting default {0}",
         getDefaultLanguage(Language.SECONDARY).getName());
     return getDefaultLanguage(Language.SECONDARY);
   }
@@ -114,7 +114,7 @@ public class LangsList {
         return language;
       }
     }
-    MySeriesLogger.logger.log(Level.WARNING, "Language not found");
+    MySeriesLogger.logger.log(Level.INFO, "Language not found");
     return LangsList.NONE;
   }
 
@@ -127,7 +127,7 @@ public class LangsList {
         return language;
       }
     }
-    MySeriesLogger.logger.log(Level.WARNING, "Language not found");
+    MySeriesLogger.logger.log(Level.INFO, "Language not found");
     return LangsList.NONE;
   }
 
@@ -146,7 +146,7 @@ public class LangsList {
         return language;
       }
     }
-     MySeriesLogger.logger.log(Level.WARNING, "Language not found");
+     MySeriesLogger.logger.log(Level.INFO, "Language not found");
     return null;
   }
 
@@ -163,7 +163,7 @@ public class LangsList {
         return true;
       }
     }
-    MySeriesLogger.logger.log(Level.WARNING, "{0} is not a language code",code);
+    MySeriesLogger.logger.log(Level.INFO, "{0} is not a language code",code);
     return false;
   }
 }

@@ -100,17 +100,17 @@ public class MyUsefulFunctions {
       //MySeriesLogger.logger.log(Level.SEVERE, "Parse exception while parsing date " + date, ex);
     }
     if (date.equals("")) {
-      MySeriesLogger.logger.log(Level.WARNING, "Empty date");
+      MySeriesLogger.logger.log(Level.INFO, "Empty date");
       return "";
     }
     try {
       String[] d = date.split("-", -1);
       if (d[1].equals("00") || d[2].equals("00")) {
-        MySeriesLogger.logger.log(Level.WARNING, "Zero date");
+        MySeriesLogger.logger.log(Level.INFO, "Zero date");
         return "";
       }
     } catch (ArrayIndexOutOfBoundsException ex) {
-      MySeriesLogger.logger.log(Level.SEVERE, "Wrong date format: " + date, ex);
+      MySeriesLogger.logger.log(Level.WARNING, "Wrong date format: " + date, ex);
     }
     try {
       DateFormat df = new SimpleDateFormat(EpisodesRecord.MYSQL_DATE_FORMAT);
@@ -164,7 +164,7 @@ public class MyUsefulFunctions {
       MySeriesLogger.logger.log(Level.FINE, "Internet connection established");
       return true;
     } catch (IOException ex) {
-      MySeriesLogger.logger.log(Level.WARNING, "No internet connection");
+      MySeriesLogger.logger.log(Level.INFO, "No internet connection");
       return false;
     }
   }
@@ -218,7 +218,7 @@ public class MyUsefulFunctions {
       MySeriesLogger.logger.log(Level.FINE, "{0} is link", str);
       return true;
     } catch (MalformedURLException ex) {
-      MySeriesLogger.logger.log(Level.WARNING, "{0} is not a link", str);
+      MySeriesLogger.logger.log(Level.INFO, "{0} is not a link", str);
       return false;
     }
   }
@@ -255,7 +255,7 @@ public class MyUsefulFunctions {
       //parse the inDate parameter with mysql format
       mySQLDateFormat.parse(date.trim());
       if (date.trim().length() != mySQLDateFormat.toPattern().length()) {
-        MySeriesLogger.logger.log(Level.WARNING, "Wrong date format : {0}", date);
+        MySeriesLogger.logger.log(Level.INFO, "Wrong date format : {0}", date);
         return false;
       }
     } catch (ParseException pe) {
@@ -363,7 +363,7 @@ public class MyUsefulFunctions {
 
       if (files.length == 0) {
         MyMessages.warning("Select File", "No files to select", true, true);
-        MySeriesLogger.logger.log(Level.WARNING, "No files in the directory");
+        MySeriesLogger.logger.log(Level.INFO, "No files in the directory");
         System.exit(0);
       } else {
         return (String) MyMessages.ask(title, message, null, files, Options.toString(Options.DB_NAME), true);
@@ -447,7 +447,7 @@ public class MyUsefulFunctions {
   public static boolean hasBeenAired(String aired, boolean includeToday) {
     MySeriesLogger.logger.log(Level.INFO, "Checking if an episode has been aired. Aired date : {0}", aired);
     if (aired.length() != 10) {
-      MySeriesLogger.logger.log(Level.WARNING, "Wrong aired date : {0}", aired);
+      MySeriesLogger.logger.log(Level.INFO, "Wrong aired date : {0}", aired);
       return false;
     }
 
@@ -457,7 +457,7 @@ public class MyUsefulFunctions {
       aired = d[2] + "-" + d[1] + "-" + d[0];
     }
     if (!isValidDate(aired)) {
-      MySeriesLogger.logger.log(Level.WARNING, "Invalid date {0}", aired);
+      MySeriesLogger.logger.log(Level.INFO, "Invalid date {0}", aired);
       return false;
     }
 
@@ -1169,7 +1169,7 @@ public class MyUsefulFunctions {
         return true;
       }
     }
-    MySeriesLogger.logger.log(Level.WARNING, "Did not find a language for {0}", lang);
+    MySeriesLogger.logger.log(Level.INFO, "Did not find a language for {0}", lang);
     return false;
   }
 
@@ -1249,7 +1249,7 @@ public class MyUsefulFunctions {
         }
       }
     }
-    MySeriesLogger.logger.log(Level.WARNING, "Component not found");
+    MySeriesLogger.logger.log(Level.INFO, "Component not found");
     return null;
   }
 
