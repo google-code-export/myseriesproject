@@ -1,4 +1,10 @@
 ==MySerieS Latest News==
+<div title='news_5'>
+===19/07/2011 : MySerieS v.1.5.2 BUG===
+If you have downloaded MySerieS v1.5.2 and keep getting messages that a new version is available please download the update to 1.5.2 again and overwrite the previous one
+
+<a href="http://code.google.com/p/myseriesproject/downloads/detail?name=myseries_1.5.1r849_update.zip">Download here</a>
+</div>
 <div title='news_4'>
 ===19/07/2011 : MySerieS v.1.5.2===
 This is a version that fixes the following bugs:
