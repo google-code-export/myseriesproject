@@ -50,6 +50,7 @@ public abstract class AbstractToolbar extends JToolBar implements ToolbarButtonA
   protected ToolbarButton restart;
   protected ToolbarSeperator sepMem;
   protected ToolbarSeperator memory;
+  protected ToolbarButton news;
   public Integer[] visibleButtons;
 
   public AbstractToolbar() {
@@ -100,6 +101,7 @@ public abstract class AbstractToolbar extends JToolBar implements ToolbarButtonA
       restart = new ToolbarButton(ToolbarButtonActions.RESTART, "Restart", "restart.png");
       sepMem = new ToolbarSeperator(ToolbarButtonActions.SEP_MEM, "", "");
       memory = new ToolbarSeperator(ToolbarButtonActions.MEMORY, "Memory", "ram.png");
+      news = new ToolbarButton(ToolbarButtonActions.NEWS, "Latest News", "news.png");
       MySeriesLogger.logger.log(Level.FINE, "All toolbar buttons created");
       //DEPRECATE BUTTONS
       clearLogs.setDeprecated(true);
@@ -138,6 +140,7 @@ public abstract class AbstractToolbar extends JToolBar implements ToolbarButtonA
     buttons.put(ToolbarButtonActions.EXIT, exit);
     buttons.put(ToolbarButtonActions.SEP_MEM, sepMem);
     buttons.put(ToolbarButtonActions.MEMORY, memory);
+    buttons.put(ToolbarButtonActions.NEWS, news);
       MySeriesLogger.logger.log(Level.FINE, "All buttons added");
     populateToolbar();
   }

@@ -46,4 +46,5 @@ public interface ToolbarButtonActions {
   public static int EXIT = 28;
   public static int SEP_MEM = 29;
   public static int MEMORY = 30;
+  public static int NEWS = 31;
 }
