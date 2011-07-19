@@ -4,15 +4,12 @@
  */
 package myseries.filters;
 
-import Exceptions.DatabaseException;
-import database.DBConnection;
 import database.EpisodesRecord;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.TableModel;
 import tools.languages.Language;
-import myComponents.MyUsefulFunctions;
 import myseries.MySeries;
 import tools.MySeriesLogger;
 
