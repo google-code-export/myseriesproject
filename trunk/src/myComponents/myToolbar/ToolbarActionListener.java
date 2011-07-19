@@ -120,6 +120,9 @@ public class ToolbarActionListener implements ActionListener, ToolbarButtonActio
         case RESTART:
           ApplicationActions.restartApplication(ms);
           break;
+        case NEWS:
+          ApplicationActions.latestNews(ms, false);
+          break;
       }
     }
   }

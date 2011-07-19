@@ -59,8 +59,6 @@ public class ToolbarButtonMouseListener extends MouseAdapter {
     }
   }
 
-
-
   @Override
   public void mouseEntered(MouseEvent e) {
     Component c = (Component) e.getSource();
@@ -87,7 +85,7 @@ public class ToolbarButtonMouseListener extends MouseAdapter {
       ToolbarButton t = (ToolbarButton) c;
       t.setBorder(border);
       t.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-     // t.setBackground(Skin.getColor_1());
+      // t.setBackground(Skin.getColor_1());
     } else {
       ToolbarSeperator t = (ToolbarSeperator) c;
       t.setBorder(border);
@@ -99,11 +97,11 @@ public class ToolbarButtonMouseListener extends MouseAdapter {
   @Override
   public void mouseReleased(MouseEvent e) {
     Component c = (Component) e.getSource();
-   
-    if(grandpa.getComponentCount()>1){
+
+    if (grandpa.getComponentCount() > 1) {
       grandpa.remove(0);
     }
-    if(notMoved(c)){
+    if (notMoved(c)) {
 //      parent.add(c, order);
 //      parent.validate();
 //      parent.repaint();
@@ -111,16 +109,16 @@ public class ToolbarButtonMouseListener extends MouseAdapter {
     }
     Container panelUnder = getPanelUnder(c);
     if (panelUnder == null || panelUnder == parent) {
-      parent.add(c, getNewOrder((JPanel)parent, c));
+      parent.add(c, getNewOrder((JPanel) parent, c));
       parent.validate();
       parent.repaint();
     } else {
       if (parent == panelUsed) {
-        panelUnused.add(c,getNewOrder(panelUnused,c));
+        panelUnused.add(c, getNewOrder(panelUnused, c));
         panelUnused.validate();
         panelUnused.repaint();
       } else {
-        panelUsed.add(c,getNewOrder(panelUsed,c));
+        panelUsed.add(c, getNewOrder(panelUsed, c));
         panelUsed.validate();
         panelUsed.repaint();
       }
@@ -129,16 +127,31 @@ public class ToolbarButtonMouseListener extends MouseAdapter {
     grandpa.repaint();
   }
 
-  private int getNewOrder(JPanel panel, Component c){
+  private int getNewOrder(JPanel panel, Component c) {
     Component[] comps = panel.getComponents();
+    boolean newIconOnSecondLine = false;
+    int hor = panel.getY() + (panel.getHeight() / 2)-12;
+    int buttPosY = c.getY();
+    if (buttPosY > hor) {
+      newIconOnSecondLine = true;
+
+    }
+
     for (int i = 0; i < comps.length; i++) {
       Component underComp = comps[i];
       Rectangle underCompoRect = underComp.getBounds();
-      Rectangle compRect= c.getBounds();
-      if(underCompoRect.x > compRect.x){
-        return i;
+      Rectangle compRect = c.getBounds();
+      boolean oldIconOnSecondLine = false;
+      int compUnder = underComp.getY();
+      int hor2 = (panel.getHeight() / 2)-12;
+      if(compUnder > hor2){
+        oldIconOnSecondLine = true;
+      }
+        if (underCompoRect.x > compRect.x && ((newIconOnSecondLine && oldIconOnSecondLine)|| (!newIconOnSecondLine && !oldIconOnSecondLine))) {
+          return i;
       }
     }
+
     return comps.length;
   }
 
@@ -165,11 +178,12 @@ public class ToolbarButtonMouseListener extends MouseAdapter {
 
   private boolean notMoved(Component c) {
     Point loc = c.getLocation();
-    if(c instanceof ToolbarButton){
-      return ((ToolbarButton)c).startPoint == loc;
-    }if(c instanceof ToolbarSeperator){
-      return ((ToolbarSeperator)c).startPoint == loc;
-    }else{
+    if (c instanceof ToolbarButton) {
+      return ((ToolbarButton) c).startPoint == loc;
+    }
+    if (c instanceof ToolbarSeperator) {
+      return ((ToolbarSeperator) c).startPoint == loc;
+    } else {
       return false;
     }
   }
