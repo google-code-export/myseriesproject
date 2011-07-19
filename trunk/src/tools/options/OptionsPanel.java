@@ -161,7 +161,10 @@ public class OptionsPanel extends MyDraggable {
 
     splitpane.setDividerLocation(150);
 
+    left.setMinimumSize(new java.awt.Dimension(74, 332));
+
     tree.setModel(optionsTreeModel);
+    tree.setMaximumSize(new java.awt.Dimension(200, 400));
     tree.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
       public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
         treeValueChanged(evt);
