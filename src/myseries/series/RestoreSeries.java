@@ -10,6 +10,7 @@
  */
 package myseries.series;
 
+import database.DBHelper;
 import database.SeriesRecord;
 import help.HelpWindow;
 import java.sql.SQLException;
@@ -17,17 +18,15 @@ import java.util.ArrayList;
 import tools.MySeriesLogger;
 import java.util.Iterator;
 import java.util.logging.Level;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import myComponents.MyMessages;
 import myComponents.myEvents.MyEvent;
 import myComponents.myEvents.MyEventHandler;
 import myComponents.myEvents.MyEventsClass;
 import myComponents.myGUI.MyDraggable;
-import tools.Skin;
-import myComponents.MyUsefulFunctions;
 import myComponents.myTableCellRenderers.MyCheckBoxCellRenderer;
-import myComponents.myTableCellRenderers.MyDownloadedCellRenderer;
-import myComponents.myTableCellRenderers.MyWatchedCellRenderer;
 import myseries.MySeries;
 
 /**
@@ -42,10 +41,11 @@ public class RestoreSeries extends MyDraggable {
   private MySeries m;
   public static final int COLUMN_SERIES = 0;
   public static final int COLUMN_RESTORE = 1;
+  public static final int COLUMN_DELETE = 2;
 
   /** Creates new form RestoreSeries */
   public RestoreSeries(MySeries m) {
-    this(new ArrayList<SeriesRecord>(),m);
+    this(new ArrayList<SeriesRecord>(), m);
   }
 
   public RestoreSeries(ArrayList<SeriesRecord> series, MySeries m) {
@@ -58,12 +58,14 @@ public class RestoreSeries extends MyDraggable {
     table.getColumnModel().getColumn(COLUMN_SERIES).setPreferredWidth(400);
     table.getColumnModel().getColumn(COLUMN_RESTORE).setPreferredWidth(100);
     table.getColumnModel().getColumn(COLUMN_RESTORE).setCellRenderer(new MyCheckBoxCellRenderer());
+    table.getColumnModel().getColumn(COLUMN_DELETE).setPreferredWidth(100);
+    table.getColumnModel().getColumn(COLUMN_DELETE).setCellRenderer(new MyCheckBoxCellRenderer(MyCheckBoxCellRenderer.DELETED_CHECK));
     this.series = series;
     DefaultTableModel model = (DefaultTableModel) table.getModel();
     MySeriesLogger.logger.log(Level.INFO, "Filling table with deleted series");
     for (Iterator<SeriesRecord> it = series.iterator(); it.hasNext();) {
       SeriesRecord seriesRecord = it.next();
-      model.addRow(new Object[]{seriesRecord, false});
+      model.addRow(new Object[]{seriesRecord, false, false});
     }
     table.setModel(model);
     setLocationRelativeTo(null);
@@ -101,14 +103,14 @@ public class RestoreSeries extends MyDraggable {
 
       },
       new String [] {
-        "Series", "Restore"
+        "Series", "Restore", "Delete"
       }
     ) {
       Class[] types = new Class [] {
-        java.lang.String.class, java.lang.Boolean.class
+        java.lang.String.class, java.lang.Boolean.class, java.lang.Boolean.class
       };
       boolean[] canEdit = new boolean [] {
-        false, true
+        false, true, true
       };
 
       public Class getColumnClass(int columnIndex) {
@@ -196,21 +198,75 @@ public class RestoreSeries extends MyDraggable {
     myseries.MySeries.glassPane.deactivate();
   }//GEN-LAST:event_bt_cancelActionPerformed
 
-  private void bt_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_okActionPerformed
-    TableModel model = table.getModel();
-    for (int i = 0; i < model.getRowCount(); i++) {
-      if ((Boolean) model.getValueAt(i, 1)) {
-        try {
-          SeriesRecord ser = (SeriesRecord) model.getValueAt(i, 0);
-          ser.setDeleted(0);
-          ser.save();
-          MySeriesLogger.logger.log(Level.FINE, "Restored series {0}",ser.getFullTitle());
-        } catch (SQLException ex) {
-          MySeriesLogger.logger.log(Level.SEVERE, "Sql exception occured", ex);
-        }
+  private int restore(ArrayList<SeriesRecord> series) {
+    int count = 0;
+    for (Iterator<SeriesRecord> it = series.iterator(); it.hasNext();) {
+      SeriesRecord ser = it.next();
+      try {
+        ser.setDeleted(0);
+        ser.save();
+        count++;
+        MySeriesLogger.logger.log(Level.FINE, "Restored series {0}", ser.getFullTitle());
+      } catch (SQLException ex) {
+        MySeriesLogger.logger.log(Level.SEVERE, "Sql exception occured", ex);
+        return count;
       }
     }
-    evClass.fireMyEvent(new MyEvent(this, MyEventHandler.SERIES_UPDATE));
+    return count;
+  }
+
+  private int delete(ArrayList<SeriesRecord> series) {
+    int count = 0;
+    for (Iterator<SeriesRecord> it = series.iterator(); it.hasNext();) {
+      SeriesRecord ser = it.next();
+      try {
+        System.out.println("Deleting ser " + ser.getFullTitle());
+        ser.delete();
+        count++;
+        MySeriesLogger.logger.log(Level.FINE, "Deleted series {0}", ser.getFullTitle());
+      } catch (SQLException ex) {
+        MySeriesLogger.logger.log(Level.SEVERE, "Sql exception occured", ex);
+        return count;
+      }
+    }
+    return count;
+  }
+
+  private void bt_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_okActionPerformed
+    TableModel model = table.getModel();
+    int deletes = 0, restores = 0;
+    ArrayList<SeriesRecord> restoreList = new ArrayList<SeriesRecord>();
+    ArrayList<SeriesRecord> deleteList = new ArrayList<SeriesRecord>();
+    for (int i = 0; i < model.getRowCount(); i++) {
+      if ((Boolean) model.getValueAt(i, COLUMN_RESTORE)) {
+        SeriesRecord ser = (SeriesRecord) model.getValueAt(i, 0);
+        restoreList.add(ser);
+      }
+      if ((Boolean) model.getValueAt(i, COLUMN_DELETE)) {
+        SeriesRecord ser = (SeriesRecord) model.getValueAt(i, 0);
+        deleteList.add(ser);
+      }
+    }
+    if (!restoreList.isEmpty()) {
+      restores = restore(restoreList);
+    }
+    if (!deleteList.isEmpty()) {
+      setVisible(false);
+      int ans = MyMessages.confirm("Delete Series", "Are you sure that you want to delete the following series?\n"
+              + deleteList.toString().replaceAll("[,\\[\\]]", "\n")
+              + "\nThis action can't be undone", true);
+      
+      if(ans==JOptionPane.YES_OPTION){
+        deletes = delete(deleteList);
+      } else {
+        setVisible(true);
+        return;
+      }
+    }
+    
+    if (restores > 0) {
+      evClass.fireMyEvent(new MyEvent(this, MyEventHandler.SERIES_UPDATE));
+    }
     dispose();
     myseries.MySeries.glassPane.deactivate();
   }//GEN-LAST:event_bt_okActionPerformed

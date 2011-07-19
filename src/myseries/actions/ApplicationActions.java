@@ -427,6 +427,6 @@ public class ApplicationActions {
     LatestNews news = new LatestNews(m,start);
   }
 
-  private ApplicationActions() {
+    private ApplicationActions() {
   }
 }

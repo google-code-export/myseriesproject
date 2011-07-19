@@ -80,7 +80,7 @@ public class FilterRecord extends Record {
     try {
       if (this.getFilter_ID() != 0) {
         MySeriesLogger.logger.log(Level.INFO, "Deleting filter: {0} ", getTitle());
-        delete(TABLE, C_FILTER_ID + " = ? ", new String[]{String.valueOf(this.getFilter_ID())});
+        FilterRecord.delete(TABLE, C_FILTER_ID + " = ? ", new String[]{String.valueOf(this.getFilter_ID())});
         return 1;
       }
     } catch (SQLException ex) {

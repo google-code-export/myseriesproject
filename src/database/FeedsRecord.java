@@ -96,7 +96,7 @@ public class FeedsRecord extends Record {
           file.delete();
           MySeriesLogger.logger.log(Level.FINE, "Feed file deleted");
         }
-        delete(TABLE, C_FEED_ID + " = ?", new String[]{String.valueOf(this.feed_ID)});
+        FeedsRecord.delete(TABLE, C_FEED_ID + " = ?", new String[]{String.valueOf(this.feed_ID)});
         return true;
       } catch (SQLException ex) {
         MySeriesLogger.logger.log(Level.SEVERE, "Sql exception occured", ex);
