@@ -62,6 +62,7 @@ public class ToolbarCustomize extends JDialog {
     setUndecorated(true);
 
     inner_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+    inner_panel.setMaximumSize(new java.awt.Dimension(600, 600));
 
     panelUsed.setBorder(javax.swing.BorderFactory.createTitledBorder("Used Buttons"));
     panelUsed.setMaximumSize(new java.awt.Dimension(800, 32767));
@@ -74,14 +75,12 @@ public class ToolbarCustomize extends JDialog {
     addUnusedButtons();
     panelUnused.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEADING, 2, 2));
 
-    bt_ok.setText("");
     bt_ok.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         bt_okActionPerformed(evt);
       }
     });
 
-    bt_add.setText("");
     bt_add.setToolTipText("Add all buttons");
     bt_add.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -89,7 +88,6 @@ public class ToolbarCustomize extends JDialog {
       }
     });
 
-    bt_remove.setText("");
     bt_remove.setToolTipText("Remove all buttons");
     bt_remove.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,7 +95,6 @@ public class ToolbarCustomize extends JDialog {
       }
     });
 
-    bt_cancel.setText("");
     bt_cancel.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         bt_cancelActionPerformed(evt);
@@ -108,32 +105,31 @@ public class ToolbarCustomize extends JDialog {
     inner_panel.setLayout(inner_panelLayout);
     inner_panelLayout.setHorizontalGroup(
       inner_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(inner_panelLayout.createSequentialGroup()
-        .addContainerGap()
-        .addGroup(inner_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inner_panelLayout.createSequentialGroup()
+        .addGroup(inner_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+          .addGroup(javax.swing.GroupLayout.Alignment.LEADING, inner_panelLayout.createSequentialGroup()
+            .addComponent(bt_add, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(bt_remove, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
           .addGroup(inner_panelLayout.createSequentialGroup()
-            .addComponent(panelUnused, javax.swing.GroupLayout.PREFERRED_SIZE, 847, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap())
-          .addGroup(inner_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(inner_panelLayout.createSequentialGroup()
-              .addComponent(panelUsed, javax.swing.GroupLayout.PREFERRED_SIZE, 847, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addContainerGap(21, Short.MAX_VALUE))
-            .addComponent(bt_cancel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-      .addGroup(inner_panelLayout.createSequentialGroup()
-        .addComponent(bt_add, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap()
+            .addGroup(inner_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+              .addComponent(panelUnused, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 676, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addComponent(panelUsed, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 676, javax.swing.GroupLayout.PREFERRED_SIZE))))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(bt_remove, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 776, Short.MAX_VALUE)
         .addComponent(bt_ok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inner_panelLayout.createSequentialGroup()
+        .addContainerGap(692, Short.MAX_VALUE)
+        .addComponent(bt_cancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
     );
     inner_panelLayout.setVerticalGroup(
       inner_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(inner_panelLayout.createSequentialGroup()
         .addComponent(bt_cancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addGap(5, 5, 5)
-        .addComponent(panelUsed, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
-        .addGap(20, 20, 20)
-        .addComponent(panelUnused, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
+        .addComponent(panelUsed, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+        .addComponent(panelUnused, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(inner_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
           .addComponent(bt_remove, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -145,11 +141,11 @@ public class ToolbarCustomize extends JDialog {
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(inner_panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+      .addComponent(inner_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(inner_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+      .addComponent(inner_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
     );
 
     pack();

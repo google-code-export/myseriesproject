@@ -24,12 +24,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="inner_panel" alignment="1" min="-2" max="-2" attributes="0"/>
+          <Component id="inner_panel" alignment="0" min="-2" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="inner_panel" alignment="0" max="32767" attributes="0"/>
+          <Component id="inner_panel" alignment="0" min="-2" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -41,33 +41,35 @@
             <LineBorder thickness="2"/>
           </Border>
         </Property>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[600, 600]"/>
+        </Property>
       </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="1" max="-2" attributes="0">
+                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="panelUnused" min="-2" pref="847" max="-2" attributes="0"/>
+                          <Component id="bt_add" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
+                          <Component id="bt_remove" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="103" alignment="0" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="panelUsed" min="-2" pref="847" max="-2" attributes="0"/>
-                              <EmptySpace pref="21" max="32767" attributes="0"/>
+                      <Group type="102" alignment="1" max="-2" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="panelUnused" alignment="0" min="-2" pref="676" max="-2" attributes="0"/>
+                              <Component id="panelUsed" alignment="0" min="-2" pref="676" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="bt_cancel" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-              </Group>
-              <Group type="102" alignment="0" attributes="0">
-                  <Component id="bt_add" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="bt_remove" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="776" max="32767" attributes="0"/>
                   <Component id="bt_ok" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace pref="692" max="32767" attributes="0"/>
+                  <Component id="bt_cancel" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -76,9 +78,9 @@
               <Group type="102" attributes="0">
                   <Component id="bt_cancel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                  <Component id="panelUsed" pref="113" max="32767" attributes="0"/>
-                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                  <Component id="panelUnused" pref="113" max="32767" attributes="0"/>
+                  <Component id="panelUsed" min="-2" pref="113" max="-2" attributes="0"/>
+                  <EmptySpace pref="20" max="32767" attributes="1"/>
+                  <Component id="panelUnused" min="-2" pref="113" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="2" attributes="0">
                       <Component id="bt_remove" alignment="2" min="-2" max="-2" attributes="0"/>
@@ -134,16 +136,12 @@
           </Layout>
         </Container>
         <Component class="myComponents.myGUI.buttons.MyButtonOk" name="bt_ok">
-          <Properties>
-            <Property name="text" type="java.lang.String" value=""/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_okActionPerformed"/>
           </Events>
         </Component>
         <Component class="myComponents.myGUI.buttons.MyButtonAdd" name="bt_add">
           <Properties>
-            <Property name="text" type="java.lang.String" value=""/>
             <Property name="toolTipText" type="java.lang.String" value="Add all buttons"/>
           </Properties>
           <Events>
@@ -152,7 +150,6 @@
         </Component>
         <Component class="myComponents.myGUI.buttons.MyButtonRemove" name="bt_remove">
           <Properties>
-            <Property name="text" type="java.lang.String" value=""/>
             <Property name="toolTipText" type="java.lang.String" value="Remove all buttons"/>
           </Properties>
           <Events>
@@ -160,9 +157,6 @@
           </Events>
         </Component>
         <Component class="myComponents.myGUI.buttons.MyButtonCancel" name="bt_cancel">
-          <Properties>
-            <Property name="text" type="java.lang.String" value=""/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_cancelActionPerformed"/>
           </Events>
