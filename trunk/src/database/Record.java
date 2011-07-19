@@ -114,7 +114,7 @@ public class Record {
     return ai;
   }
 
-  protected synchronized void delete(String table, String whereClause,String[] whereValues) throws SQLException{
+  public static synchronized void delete(String table, String whereClause,String[] whereValues) throws SQLException{
       Statement stmt = DBConnection.conn.createStatement();
       try{
       String sql = "DELETE FROM `" + table + "` " + "WHERE " + createWhereClause(whereClause, whereValues);

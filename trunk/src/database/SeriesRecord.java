@@ -102,6 +102,17 @@ public class SeriesRecord extends Record implements Comparable<SeriesRecord> {
     rs.close();
     return a;
   }
+
+  public synchronized void delete() throws SQLException {
+    DBConnection.beginTransaction();
+    SeriesRecord.delete(TABLE, C_SERIES_ID+ "=?", new String[] {String.valueOf(this.getSeries_ID())});
+    System.out.println("Deleting episodes of series");
+    EpisodesRecord.delete(EpisodesRecord.TABLE, EpisodesRecord.C_SERIES_ID +"= ?",new String[] {String.valueOf(this.getSeries_ID())});
+    DBConnection.endTransaction();
+
+  }
+
+  
   
   
 

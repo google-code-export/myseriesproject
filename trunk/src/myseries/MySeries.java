@@ -338,8 +338,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     MyUsefulFunctions.feedUpdater(this);
     ApplicationActions.warnForLogLevel();
     ApplicationActions.warnForJREVersion();
-
-    Record r = new Record();
   }
 
   private void setGlassPane() {

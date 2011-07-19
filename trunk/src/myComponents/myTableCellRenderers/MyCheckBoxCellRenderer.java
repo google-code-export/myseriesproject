@@ -20,6 +20,22 @@ public class MyCheckBoxCellRenderer extends DefaultTableCellRenderer {
   private static final long serialVersionUID = 34342424243L;
   public static final int IMAGE_WIDTH = 16;
   public static final int IMAGE_HEIGHT = 16;
+  public static final String CHECKED_OK = "/images/tick.png";
+  public static final String NOT_CHECKED = "/images/notick.png";
+  public static final String DELETED_CHECK = "/images/tickdelete.png";
+  private final String checkedIcon;
+
+  public MyCheckBoxCellRenderer(String checkedIcon) {
+    this.checkedIcon = checkedIcon;
+  }
+
+  public MyCheckBoxCellRenderer() {
+     this(CHECKED_OK);
+  }
+
+
+
+
 
   @Override
   public Component getTableCellRendererComponent(
@@ -37,10 +53,10 @@ public class MyCheckBoxCellRenderer extends DefaultTableCellRenderer {
 
   private Icon createIcon(Boolean checked) {
     if (!checked) {
-      ImageIcon im = new ImageIcon(getClass().getResource("/images/notick.png"));
+      ImageIcon im = new ImageIcon(getClass().getResource(NOT_CHECKED));
       return im;
     }
-    ImageIcon im = new ImageIcon(getClass().getResource("/images/tick.png"));
+    ImageIcon im = new ImageIcon(getClass().getResource(checkedIcon));
     return im;
   }
 }
