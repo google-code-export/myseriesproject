@@ -157,7 +157,7 @@ public class EpisodesRecord extends Record {
             this.title,
             this.getAired(),
             String.valueOf(this.getDownloaded()),
-            String.valueOf(this.getSubs()),
+            String.valueOf(this.getSubs().getId()),
             String.valueOf(this.getSeen()),
             String.valueOf(this.getRate())}, C_EPISODE_ID + "=?",
           new String[]{String.valueOf(this.getEpisode_ID())});
