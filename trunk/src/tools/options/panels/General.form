@@ -22,29 +22,31 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="cb_showPopups" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jLabel3" alignment="0" pref="104" max="32767" attributes="2"/>
+                          <Component id="jLabel3" alignment="0" pref="114" max="32767" attributes="2"/>
                           <Component id="combobox_debugMode" alignment="0" min="-2" pref="104" max="-2" attributes="1"/>
                       </Group>
-                      <EmptySpace min="-2" pref="272" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabel22" min="-2" pref="343" max="-2" attributes="3"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jLabel7" max="32767" attributes="2"/>
+                      <Component id="jLabel7" pref="192" max="32767" attributes="2"/>
                       <EmptySpace min="-2" pref="271" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jLabel4" pref="114" max="32767" attributes="2"/>
+                      <Component id="jLabel4" pref="201" max="32767" attributes="2"/>
                       <EmptySpace min="-2" pref="262" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="combobox_dateFormat" min="-2" pref="106" max="-2" attributes="3"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="bt_dfhelp" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="232" max="-2" attributes="0"/>
+                      <EmptySpace pref="319" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jLabel11" pref="78" max="32767" attributes="2"/>
+                      <Component id="jLabel11" pref="165" max="32767" attributes="2"/>
                       <EmptySpace min="-2" pref="298" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -53,22 +55,17 @@
                       <Component id="bt_mainDirectory" min="-2" pref="32" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jLabel14" pref="298" max="32767" attributes="2"/>
+                      <Component id="jLabel14" pref="385" max="32767" attributes="2"/>
                       <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="jLabel22" alignment="0" max="32767" attributes="3"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="tf_videoApp" min="-2" pref="337" max="-2" attributes="1"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="bt_videoViewer" min="-2" pref="32" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace pref="1" max="-2" attributes="0"/>
+                      <Component id="tf_videoApp" min="-2" pref="337" max="-2" attributes="1"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="bt_videoViewer" min="-2" pref="32" max="-2" attributes="0"/>
+                      <EmptySpace pref="88" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -78,10 +75,13 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="combobox_debugMode" min="-2" pref="23" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jLabel22" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="combobox_debugMode" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="jLabel22" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+              <Component id="cb_showPopups" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="2" attributes="0">
@@ -260,6 +260,17 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_dfhelpActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cb_showPopups">
+      <Properties>
+        <Property name="selected" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="Options.toBoolean(Options.SHOW_POPUPS)" type="code"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Show popup messages"/>
+        <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="Options.SHOW_POPUPS" type="code"/>
+        </Property>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

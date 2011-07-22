@@ -85,7 +85,7 @@ public class FilterRecord extends Record {
       }
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.INFO, "Could not delete filter: {0} ", getTitle());
-      MyMessages.error("Deleting filter", "Could not delete filter", true, true);
+      MyMessages.error("Deleting filter", "Could not delete filter", true);
     }
     return -1;
   }

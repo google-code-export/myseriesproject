@@ -131,7 +131,7 @@ public class CheckUpdate extends MyDraggable {
   private boolean check() {
     isConected = MyUsefulFunctions.hasInternetConnection(MYSERIESPROJECT_URL);
     if (!isConected) {
-      MyMessages.internetError(!onStartUp);
+      MyMessages.internetError();
       return false;
     }
     return true;
@@ -317,7 +317,7 @@ public class CheckUpdate extends MyDraggable {
       if (DesktopSupport.isBrowseSupport()) {
         MyUsefulFunctions.browse(download);
       } else {
-        MyMessages.warning("Browsing not supported", "Opening a browser window is not supported in your OS", true, true);
+        MyMessages.warning("Browsing not supported", "Opening a browser window is not supported in your OS", true);
         MySeriesLogger.logger.log(Level.WARNING, "Opening a browser window is not supported in your OS");
       }
     } catch (URISyntaxException ex) {

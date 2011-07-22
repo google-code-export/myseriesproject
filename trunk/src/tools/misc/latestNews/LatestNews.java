@@ -173,7 +173,7 @@ public class LatestNews extends MyDraggable {
   private boolean check() {
     isConected = MyUsefulFunctions.hasInternetConnection(LATESTNEWS_URL);
     if (!isConected) {
-      MyMessages.internetError(!onStartUp);
+      MyMessages.internetError();
       return false;
     }
     return true;

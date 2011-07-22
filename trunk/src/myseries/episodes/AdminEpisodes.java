@@ -312,12 +312,12 @@ public class AdminEpisodes extends MyDraggable {
       episodeRecord.setEpisode(Integer.parseInt(spinner_episode.getValue().toString()));
     } catch (NumberFormatException ex) {
       MySeriesLogger.logger.log(Level.WARNING, "Episode must be an integer");
-      MyMessages.warning("Not an integer", "Episode must be an integer", true, true);
+      MyMessages.warning("Not an integer", "Episode must be an integer", true);
       return;
     }
     if (textfield_title.getText().trim().equals("")) {
       MySeriesLogger.logger.log(Level.WARNING, "Episode title must not be blank");
-      MyMessages.warning("No Title!!!", "The episode title must not be blank", true, true);
+      MyMessages.warning("No Title!!!", "The episode title must not be blank", true);
       return;
     }
     episodeRecord.setSubs((Language) combobox_subtitles.getSelectedItem());
@@ -340,10 +340,10 @@ public class AdminEpisodes extends MyDraggable {
       MySeriesLogger.logger.log(Level.INFO, "Episode added");
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, "There was an error while writting the episode to the database", ex);
-      MyMessages.error("SQL Error!!!", "There was an error while writting the episode " + episodeRecord.getTitle() + " to the database", true, true);
+      MyMessages.error("SQL Error!!!", "There was an error while writting the episode " + episodeRecord.getTitle() + " to the database", true);
     } catch (NullPointerException ex) {
       MySeriesLogger.logger.log(Level.WARNING, "The date is not in the right format");
-      MyMessages.error("Date Error!!!", "The date is not in the right format", true, true);
+      MyMessages.error("Date Error!!!", "The date is not in the right format", true);
     }
   }
 
@@ -370,7 +370,7 @@ public class AdminEpisodes extends MyDraggable {
           addTheEpisode();
         } else {
           MySeriesLogger.logger.log(Level.WARNING, "Validating error\n{0}", group.getErrorMessage());
-          MyMessages.warning("Episodes Form", group.getErrorMessage(), true, true);
+          MyMessages.validationError("Episodes Form", group.getErrorMessage());
         }
       } catch (IOException ex) {
         MySeriesLogger.logger.log(Level.SEVERE, "I/O exception occured", ex);

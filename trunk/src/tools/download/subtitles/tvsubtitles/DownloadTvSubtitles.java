@@ -65,7 +65,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
         subs.add(new Subtitle("Whole season subtitles", new URL(link), 0, 0, ""));
       } catch (MalformedURLException ex) {
         MySeriesLogger.logger.log(Level.SEVERE, "Malformed url: {0}", link);
-        MyMessages.error("Download whole season subtitles", "Malformed url: " + link, true, true);
+        MyMessages.error("Download whole season subtitles", "Malformed url: " + link, true);
       }
     }
     progress.setIndeterminate(false);
@@ -73,7 +73,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
       MySeriesLogger.logger.log(Level.INFO, "Subtitle not found");
       form.dispose();
       if (!cancel) {
-        MyMessages.warning("Subtitle not found", "The subtitle was not found", true, true);
+        MyMessages.warning("Subtitle not found", "The subtitle was not found", true);
       }
     } else if (subs.size() == 1) {
       MySeriesLogger.logger.log(Level.FINE, "subtitle found {0}", subs.get(0).title);
@@ -91,7 +91,7 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
         try {
           sub.url = new URL(TV_SUBTITLES_URL + newPath);
         } catch (MalformedURLException ex) {
-          MyMessages.error("Error occured!!!", "Wrong url : " + sub.url, true, true);
+          MyMessages.error("Error occured!!!", "Wrong url : " + sub.url, true);
           MySeriesLogger.logger.log(Level.SEVERE, null, ex);
           form.dispose();
         }
@@ -131,16 +131,16 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
           form.dispose();
         }
       } else {
-        MyMessages.internetError(true);
+        MyMessages.internetError();
         form.dispose();
       }
     } catch (MalformedURLException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-      MyMessages.error("Error occured!!!", "Wrong url", true, true);
+      MyMessages.error("Error occured!!!", "Wrong url", true);
       form.dispose();
     } catch (IOException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-      MyMessages.error("Error occured!!!", "Could not read input stream", true, true);
+      MyMessages.error("Error occured!!!", "Could not read input stream", true);
       form.dispose();
     }
   }

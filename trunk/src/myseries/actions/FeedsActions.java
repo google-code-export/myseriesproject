@@ -47,7 +47,7 @@ public class FeedsActions {
       ArrayList<FeedsRecord> feeds = FeedsRecord.getAll();
       m.feedTree.updateFeeds(feeds, false);
     } else {
-      MyMessages.internetError(!onStartUp);
+      MyMessages.internetError();
     }
   }
 

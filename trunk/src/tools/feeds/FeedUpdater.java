@@ -76,7 +76,7 @@ public class FeedUpdater implements Runnable {
         MySeriesLogger.logger.log(Level.FINE, "Feed updated");
       } else {
         MySeriesLogger.logger.log(Level.WARNING, "Could not connect to {0}", feedRecord.getUrl());
-        MyMessages.warning("Feed update", "Could not connect to " + feedRecord.getUrl(), true, showMessages);
+        MyMessages.warning("Feed update", "Could not connect to " + feedRecord.getUrl(), true);
       }
     }
     updating = false;

@@ -279,17 +279,11 @@
                   </Events>
                 </Component>
                 <Component class="myComponents.myGUI.buttons.MyButtonApply" name="bt_apply">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value=""/>
-                  </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_applyActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="myComponents.myGUI.buttons.MyButtonSave" name="bt_save">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value=""/>
-                  </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_saveActionPerformed"/>
                   </Events>
@@ -313,25 +307,16 @@
           </Properties>
         </Component>
         <Component class="myComponents.myGUI.buttons.MyButtonCancel" name="bt_cancel">
-          <Properties>
-            <Property name="text" type="java.lang.String" value=""/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_cancelActionPerformed"/>
           </Events>
         </Component>
         <Component class="myComponents.myGUI.buttons.MyButtonOk" name="bt_ok">
-          <Properties>
-            <Property name="text" type="java.lang.String" value=""/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_okActionPerformed"/>
           </Events>
         </Component>
         <Component class="myComponents.myGUI.buttons.MyButtonHelp" name="bt_help">
-          <Properties>
-            <Property name="text" type="java.lang.String" value=""/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_helpActionPerformed"/>
           </Events>

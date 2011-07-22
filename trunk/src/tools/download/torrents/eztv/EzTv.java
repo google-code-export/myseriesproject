@@ -52,7 +52,7 @@ public class EzTv extends AbstractTorrentDownload implements Runnable, TorrentCo
       progress.setString("Getting rss feeds from " + EZTV_NAME);
       getStream();
     } else {
-      MyMessages.internetError(true);
+      MyMessages.internetError();
     }
   }
 
@@ -64,7 +64,7 @@ public class EzTv extends AbstractTorrentDownload implements Runnable, TorrentCo
       while ((line = in.readLine()) != null) {
         if (line.indexOf("Follow the Swarm") > -1) {
             MySeriesLogger.logger.log(Level.WARNING, "Torrent is not available any more");
-          MyMessages.warning("No Torrents", "Torrent is not available anymore", true, true);
+          MyMessages.warning("No Torrents", "Torrent is not available anymore", true);
           return false;
         }
       }

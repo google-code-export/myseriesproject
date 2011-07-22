@@ -41,7 +41,7 @@ public abstract class AbstractDownloadSubtitle implements SubtitleConstants {
     if (localDir.equals("")) {
       progress.setIndeterminate(false);
       MySeriesLogger.logger.log(Level.INFO, "No local dir for series, opening browser");
-      MyMessages.warning("No local dir", "Local dir for series is not provided.Opening browser", true, true);
+      MyMessages.warning("No local dir", "Local dir for series is not provided.Opening browser", true);
       openInBrowser(sub);
     } else {
       //System.out.println(sub.url);
@@ -58,7 +58,7 @@ public abstract class AbstractDownloadSubtitle implements SubtitleConstants {
         String header = uCon.getHeaderField(0);
         if (!header.equals("HTTP/1.1 200 OK")) {
           MySeriesLogger.logger.log(Level.INFO, "Direct access to subtitle is denied.Opening browser");
-          MyMessages.warning("Access denied", "Direct access to subtitle is denied.Opening browser", true, true);
+          MyMessages.warning("Access denied", "Direct access to subtitle is denied.Opening browser", true);
           openInBrowser(sub);
         } else {
           MySeriesLogger.logger.log(Level.FINE, "Access is granted , downloading the subtitle");
@@ -94,7 +94,7 @@ public abstract class AbstractDownloadSubtitle implements SubtitleConstants {
         }
       } catch (IOException ex) {
         MySeriesLogger.logger.log(Level.INFO, "Direct access to subtitle is denied.Opening browser");
-        MyMessages.warning("Access denied", "Direct access is denied.Opening browser", true, true);
+        MyMessages.warning("Access denied", "Direct access is denied.Opening browser", true);
         openInBrowser(sub);
       }
     }
