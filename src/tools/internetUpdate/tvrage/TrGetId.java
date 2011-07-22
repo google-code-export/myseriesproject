@@ -116,7 +116,7 @@ public class TrGetId extends MyDraggable {
   private void getID() {
     if (!isConected) {
       MySeriesLogger.logger.log(Level.WARNING, "Could not connect to internet");
-      MyMessages.internetError(true);
+      MyMessages.internetError();
       bt_cancelActionPerformed(null);
       return;
     }
@@ -275,7 +275,7 @@ public class TrGetId extends MyDraggable {
               adminSeries.setVisible(true);
               return;
             } else {
-              MyMessages.warning("Downloading screenshot", "No screenshot was found", true, true);
+              MyMessages.warning("Downloading screenshot", "No screenshot was found", true);
               adminSeries.setVisible(true);
               return;
             }
@@ -315,7 +315,7 @@ public class TrGetId extends MyDraggable {
         evClass.fireMyEvent(event);
       } catch (SQLException ex) {
         MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-        MyMessages.error("SQL Error", "TvRage ID could not be saved in database", true, true);
+        MyMessages.error("SQL Error", "TvRage ID could not be saved in database", true);
       }
     }
     cancel = false;

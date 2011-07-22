@@ -38,7 +38,7 @@ public class DownloadScreenshot {
     if (MyUsefulFunctions.hasInternetConnection(InternetUpdate.TV_RAGE_URL)) {
       get();
     } else {
-      MyMessages.internetError(true);
+      MyMessages.internetError();
     }
   }
 

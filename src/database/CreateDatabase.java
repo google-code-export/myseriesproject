@@ -54,7 +54,7 @@ public class CreateDatabase implements Runnable {
         try {
             File dbFile = new File(Options._USER_DIR_ + Paths.DATABASES_PATH + DBConnection.db);
             if (dbFile.exists() && dbFile.length() > 1) {
-                MyMessages.error("DB Exists!!!", "DB File " + DBConnection.db + " already exists\nAborting...", true, true);
+                MyMessages.error("DB Exists!!!", "DB File " + DBConnection.db + " already exists\nAborting...", true);
                 MySeriesLogger.logger.log(Level.SEVERE, "DB File already exists");
             } else {
                 commit();

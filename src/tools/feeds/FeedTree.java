@@ -209,11 +209,11 @@ public class FeedTree extends javax.swing.JPanel {
           MySeriesLogger.logger.log(Level.FINE, "Feed deleted");
           populate(-1);
         }else {
-          MyMessages.error("Delete feed", "Could not delete the feed", true, true);
+          MyMessages.error("Delete feed", "Could not delete the feed", true);
         }
       } catch (SQLException ex) {
         MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-        MyMessages.error("Delete feed", "Could not delete the feed", true, true);
+        MyMessages.error("Delete feed", "Could not delete the feed", true);
       }
 
     }

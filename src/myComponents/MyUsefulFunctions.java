@@ -362,7 +362,7 @@ public class MyUsefulFunctions {
       });
 
       if (files.length == 0) {
-        MyMessages.warning("Select File", "No files to select", true, true);
+        MyMessages.warning("Select File", "No files to select", true);
         MySeriesLogger.logger.log(Level.INFO, "No files in the directory");
         System.exit(0);
       } else {
@@ -961,7 +961,7 @@ public class MyUsefulFunctions {
         MySeriesLogger.logger.log(Level.SEVERE, "IO exception", ex);
       }
     } else {
-      MyMessages.warning("Open browser", "Your OS doesn't support opening a browser window", true, true);
+      MyMessages.warning("Open browser", "Your OS doesn't support opening a browser window", true);
     }
   }
 
@@ -976,7 +976,7 @@ public class MyUsefulFunctions {
       browse(uri);
     } catch (URISyntaxException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, "Wrong uri " + url, ex);
-      MyMessages.warning("Open browser", url + "\nThis is not a valid url", true, true);
+      MyMessages.warning("Open browser", url + "\nThis is not a valid url", true);
     }
   }
 
@@ -991,10 +991,10 @@ public class MyUsefulFunctions {
       browse(uri);
     } catch (MalformedURLException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, "Wrong url " + strUrl, ex);
-      MyMessages.warning("Open browser", strUrl + "\nThis is not a valid url", true, true);
+      MyMessages.warning("Open browser", strUrl + "\nThis is not a valid url", true);
     } catch (URISyntaxException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, "Wrong url " + strUrl, ex);
-      MyMessages.warning("Open browser", strUrl + "\nThis is not a valid url", true, true);
+      MyMessages.warning("Open browser", strUrl + "\nThis is not a valid url", true);
     }
   }
 

@@ -55,7 +55,7 @@ public class EgUpdate extends AbstractUpdate implements Runnable {
     URL epGuides;
     StringBuilder buf = new StringBuilder();
     if (!isConected) {
-      MyMessages.internetError(true);
+      MyMessages.internetError();
       return false;
     }
     try {

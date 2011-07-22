@@ -108,7 +108,7 @@ public class SeriesActions {
     try {
       if (!DesktopSupport.isBrowseSupport()) {
         MySeriesLogger.logger.log(Level.WARNING, "Browse is not supported in the current OS");
-        MyMessages.warning("Browse Error!!!", "Browse is not supported", true, true);
+        MyMessages.warning("Browse Error!!!", "Browse is not supported", true);
         return;
       }
       SeriesRecord series = Series.getCurrentSerial();
@@ -134,12 +134,12 @@ public class SeriesActions {
         DesktopSupport.getDesktop().open(f);
       } else {
         MySeriesLogger.logger.log(Level.WARNING, "{0} is not a directory", f.getCanonicalPath());
-        MyMessages.warning("Directory error", f.getCanonicalPath() + " is not a directory", true, true);
+        MyMessages.warning("Directory error", f.getCanonicalPath() + " is not a directory", true);
         return;
       }
     } catch (Exception ex) {
       MySeriesLogger.logger.log(Level.WARNING, "Browse is not supported in the current OS");
-      MyMessages.warning("Browse Error!!!", "Browse is not supported", true, true);
+      MyMessages.warning("Browse Error!!!", "Browse is not supported", true);
       return;
     }
   }
@@ -260,7 +260,7 @@ public class SeriesActions {
         selected = language[1];
       } else{
         MySeriesLogger.logger.log(Level.INFO, "No language found");
-        MyMessages.error("Download whole season subtitles", "No subtitles were found",true,true);
+        MyMessages.error("Download whole season subtitles", "No subtitles were found",true);
         return;
       }
       String downloadLink ;

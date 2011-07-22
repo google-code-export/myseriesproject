@@ -285,6 +285,10 @@ public class Options {
    */
   public static final String LATEST_NEWS_ID = "LATEST_NEWS_ID";
   /**
+   * Show popup messages
+   */
+  public static final String SHOW_POPUPS = "SHOW_POPUPS";
+  /**
    * The type of iamge scaling from fastest(worst quality) to slower (better quality)
    */
   public static final int[] IMAGE_SCALING = {Image.SCALE_REPLICATE,
@@ -651,6 +655,7 @@ public class Options {
     out.println(Options.SEARCH_FOR_SECONDARY_SUBTITLE + "=true");
     out.println(Options.VIDEO_QUALITY+ "=");
     out.println(Options.LATEST_NEWS_ID+ "=0");
+    out.println(Options.SHOW_POPUPS+ "=true");
 
     out.close();
   }
@@ -760,6 +765,7 @@ public class Options {
     options.put(Options.SEARCH_FOR_SECONDARY_SUBTITLE, true);
     options.put(Options.VIDEO_QUALITY, "");
     options.put(Options.LATEST_NEWS_ID, 0);
+    options.put(Options.SHOW_POPUPS, true);
   }
 
   private static Object getDefaultMainDirectory() {

@@ -21,6 +21,9 @@ import sdialogs.Info;
 public class MyLogTypeRenderer extends DefaultTableCellRenderer {
 
   private static final long serialVersionUID = 23543643523654L;
+  public static final String WARNING_ICON = "warning_small";
+  public static final String ERROR_ICON = "error_small";
+  public static final String INFO_ICON = "info_small";
 
   @Override
   public Component getTableCellRendererComponent(
@@ -31,10 +34,13 @@ public class MyLogTypeRenderer extends DefaultTableCellRenderer {
       int val =(Integer) value;
       switch(val){
         case Info.WARNING_MESS:
-          image = "warning_small";
+          image = WARNING_ICON;
           break;
         case Info.ERROR_MESS:
-          image = "error_small";
+          image = ERROR_ICON;
+          break;
+        case Info.INFO_MESS:
+          image = INFO_ICON;
           break;
       }
       setIcon(new ImageIcon(getClass().getResource("/images/"+image+".png")));

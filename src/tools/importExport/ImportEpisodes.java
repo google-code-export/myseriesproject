@@ -352,22 +352,22 @@ public class ImportEpisodes extends MyDraggable {
         MySeriesLogger.logger.log(Level.INFO, "Validating user input");
         if (!group.validate()) {
             MySeriesLogger.logger.log(Level.WARNING, "Validation failed/nError: {0}", group.getErrorMessage());
-            MyMessages.warning("Import Episodes Form", group.getErrorMessage(), true, true);
+            MyMessages.validationError("Import Episodes Form", group.getErrorMessage());
             return;
         }
         try {
             importEpisodes();
         } catch (FileNotFoundException ex) {
-            MyMessages.error("Error!!!", "Could not find episodes file", true, true);
+            MyMessages.error("Error!!!", "Could not find episodes file", true);
             MySeriesLogger.logger.log(Level.SEVERE, "Could not find episodes file", ex);
         } catch (EpisodeImportFormatException ex) {
-            MyMessages.error("Error!!!", ex.getMessage(), true, true);
+            MyMessages.error("Error!!!", ex.getMessage(), true);
             MySeriesLogger.logger.log(Level.SEVERE, ex.getMessage(), ex);
         } catch (SQLException ex) {
-            MyMessages.error("Error!!!", "Could not insert episodes in Database", true, true);
+            MyMessages.error("Error!!!", "Could not insert episodes in Database", true);
             MySeriesLogger.logger.log(Level.SEVERE, "Could not insert episodes in Database", ex);
         } catch (IOException ex) {
-            MyMessages.error("Error!!!", "Could not read from file", true, true);
+            MyMessages.error("Error!!!", "Could not read from file", true);
             MySeriesLogger.logger.log(Level.SEVERE, "Could not read from file", ex);
         }
 
@@ -399,7 +399,7 @@ public class ImportEpisodes extends MyDraggable {
                 t.start();
             } else {
                 MySeriesLogger.logger.log(Level.SEVERE, "No file selected");
-                MyMessages.error("No file!!!", "No File selected!!!", true, true);
+                MyMessages.error("No file!!!", "No File selected!!!", true);
             }
         } else {
             throw new EpisodeImportFormatException("No Series ID for importing the episodes.");

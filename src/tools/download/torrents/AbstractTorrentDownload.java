@@ -64,7 +64,7 @@ public abstract class AbstractTorrentDownload implements TorrentConstants {
             progress.setIndeterminate(false);
             if (torrents.isEmpty()) {
                 MySeriesLogger.logger.log(Level.INFO, "No torrent found");
-                MyMessages.warning("No Torrents", "No torrent was found",true, true);
+                MyMessages.warning("No Torrents", "No torrent was found",true);
             } else if (torrents.size() == 1) {
                 MySeriesLogger.logger.log(Level.INFO, "Torrent found {0}", torrents.get(0).getTitle());
                 getTorrent(torrents.get(0));

@@ -215,14 +215,14 @@ public class AdminFeed extends MyDraggable {
               m.feedTree.populate(feed.getFeed_ID());
           } catch (SQLException ex) {
               MySeriesLogger.logger.log(Level.SEVERE, "Sql exception while saving feed", ex);
-              MyMessages.error("Feed Saving", "An error occured and the feed is not saved", true, true);
+              MyMessages.error("Feed Saving", "An error occured and the feed is not saved", true);
           }finally {
               dispose();
           }
 
       } else {
           MySeriesLogger.logger.log(Level.WARNING, "Validation failed/nError message {0}",val.getErrorMessage());
-          MyMessages.error("Feeds Form", val.getErrorMessage(), true, true);
+          MyMessages.validationError("Feeds Form", val.getErrorMessage());
       }
 
   }//GEN-LAST:event_bt_okActionPerformed

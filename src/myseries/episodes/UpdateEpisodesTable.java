@@ -66,7 +66,7 @@ public class UpdateEpisodesTable {
       MySeriesLogger.logger.log(Level.SEVERE, "Sql exception occured", ex);
     }  catch (NumberFormatException ex) {
       MySeriesLogger.logger.log(Level.WARNING, "Wrong episode number entered");
-      MyMessages.warning("Not a number", "The value you entered is not a number", true, true);
+      MyMessages.warning("Not a number", "The value you entered is not a number", true);
     }
   }
 }

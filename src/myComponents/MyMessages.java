@@ -45,12 +45,13 @@ public class MyMessages {
    * @param message The message text
    */
   public static void message(String title, String message) {
-    message(title, message, INFO_MESS, true, true);
+    message(title, message, INFO_MESS, false, true);
   }
 
   /**
    * Display a message to the user
    * @param title The message title
+   * @param showWindow If a window should be shown anyway
    * @param message The message text
    */
   private static void message(String title, String message, int type, boolean showWindow, boolean setColors) {
@@ -66,8 +67,9 @@ public class MyMessages {
         level = Level.SEVERE;
         break;
     }
+    
     MySeriesLogger.logger.log(level, "Displaying info dialog : {0}", message);
-    if (showWindow) {
+    if (showWindow || Options.toBoolean(Options.SHOW_POPUPS)) {
       checkpane();
       Info i = new Info(title, message, type);
       if(setColors){
@@ -76,7 +78,7 @@ public class MyMessages {
       i.showDialog();
       hideMessage();
     }
-    if (type != INFO_MESS) {
+    if (type != INFO_MESS || !Options.toBoolean(Options.SHOW_POPUPS)) {
       logToPanel(type, title, message);
     }
   }
@@ -86,8 +88,8 @@ public class MyMessages {
    * @param title The title
    * @param message The message
    */
-  public static void error(String title, String message, boolean setColors, boolean showError) {
-    message(title, message, ERROR_MESS, showError, setColors);
+  public static void error(String title, String message, boolean setColors) {
+    message(title, message, ERROR_MESS, false, setColors);
   }
   
   /**
@@ -95,17 +97,21 @@ public class MyMessages {
    * @param title The title
    * @param message The message
    */
-  public static void warning(String title, String message, boolean setColors, boolean showWarning) {
-    message(title, message, WARNING_MESS, showWarning, setColors);
+  public static void warning(String title, String message, boolean setColors) {
+    message(title, message, WARNING_MESS, false, setColors);
+  }
+  
+  public static void validationError(String title, String message){
+    message(title, message, WARNING_MESS, true, true);
   }
 
   /**
    * Displays an internet connection error
    */
-  public static void internetError(boolean showMessage) {
+  public static void internetError() {
     message("No Internet Connection!!!",
         "Could not connect to internet.\nIf you are behind a proxy check your proxy settings in options",
-        WARNING_MESS, showMessage, true);
+        WARNING_MESS, false, true);
 
   }
 
