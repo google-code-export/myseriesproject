@@ -10,6 +10,7 @@
  */
 package myComponents;
 
+import java.awt.Point;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.logging.Level;
@@ -52,7 +53,8 @@ public class MyLogPanel extends javax.swing.JPanel {
     table.getColumnModel().getColumn(COLUMN_TITLE).setMaxWidth(400);
     
     table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
+    
+    
   }
 
   public void log(int type, long timestamp, String title, String message) {
@@ -74,7 +76,7 @@ public class MyLogPanel extends javax.swing.JPanel {
     table = new javax.swing.JTable();
     bt_clearMessages = new myComponents.myGUI.buttons.MyDefaultButton(MyAbstractButton.CLEAR,"Clear messages");
 
-    title.setText("Errors and warnings");
+    title.setText("Messages Panel");
 
     bt_hide.setToolTipText("Hide");
     bt_hide.addActionListener(new java.awt.event.ActionListener() {
@@ -105,6 +107,16 @@ public class MyLogPanel extends javax.swing.JPanel {
 
       public boolean isCellEditable(int rowIndex, int columnIndex) {
         return canEdit [columnIndex];
+      }
+    });
+    table.addMouseListener(new java.awt.event.MouseAdapter() {
+      public void mouseEntered(java.awt.event.MouseEvent evt) {
+        tableMouseEntered(evt);
+      }
+    });
+    table.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+      public void mouseMoved(java.awt.event.MouseEvent evt) {
+        tableMouseMoved(evt);
       }
     });
     jScrollPane1.setViewportView(table);
@@ -153,6 +165,20 @@ public class MyLogPanel extends javax.swing.JPanel {
     private void bt_clearMessagesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_clearMessagesActionPerformed
       ((DefaultTableModel) table.getModel()).setRowCount(0);
     }//GEN-LAST:event_bt_clearMessagesActionPerformed
+
+private void tableMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseEntered
+
+}//GEN-LAST:event_tableMouseEntered
+
+private void tableMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseMoved
+    Point p = evt.getPoint();
+    int row = table.rowAtPoint(p);
+    String title = (String) table.getModel().getValueAt(row, COLUMN_TITLE);
+    String time = (String) table.getModel().getValueAt(row, COLUMN_TIME);
+    String mess = (String) table.getModel().getValueAt(row, COLUMN_MESSAGE);
+    table.setToolTipText(createTooltip(time, title, mess));
+}//GEN-LAST:event_tableMouseMoved
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private myComponents.myGUI.buttons.MyDefaultButton bt_clearMessages;
   private myComponents.myGUI.buttons.MyButtonCancel bt_hide;
@@ -166,5 +192,15 @@ public class MyLogPanel extends javax.swing.JPanel {
     Calendar c = Calendar.getInstance();
     c.setTimeInMillis(timestamp);
     return sdf.format(c.getTime());
+  }
+  
+  private String createTooltip(String time, String title , String mess){
+    String html="";
+    html+="<html><table>";
+    html+="<tr><td><b>"+title+"</b></td></tr>";
+    html+="<tr><td>(<i>"+time+"</i>)</td></tr>";
+    html+="<tr><td>"+mess.replaceAll("\\.", ".<br />") +"</td></tr>";
+    html+="</table></html>";
+    return html;
   }
 }

@@ -13,13 +13,14 @@ package tools.options.panels;
 
 import java.util.Hashtable;
 import javax.swing.JLabel;
-import tools.options.Options;
+import myseriesproject.MySeries;
+import tools.options.IMySeriesOptions;
 
 /**
  *
  * @author lordovol
  */
-public class Performance extends javax.swing.JPanel {
+public class Performance extends javax.swing.JPanel implements IMySeriesOptions {
 
     /** Creates new form Performance */
     public Performance() {
@@ -68,15 +69,15 @@ public class Performance extends javax.swing.JPanel {
     jLabel17.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
     cb_autoUnzip.setFont(cb_autoUnzip.getFont().deriveFont((cb_autoUnzip.getFont().getStyle() | java.awt.Font.ITALIC), cb_autoUnzip.getFont().getSize()-1));
-    cb_autoUnzip.setSelected(Options.toBoolean(Options.AUTO_EXTRACT_ZIPS));
+    cb_autoUnzip.setSelected(MySeries.options.getBooleanOption(AUTO_EXTRACT_ZIPS));
     cb_autoUnzip.setText("(Also extract subtitles in zip files and delete the zip)");
-    cb_autoUnzip.setName(Options.AUTO_EXTRACT_ZIPS);
+    cb_autoUnzip.setName(AUTO_EXTRACT_ZIPS);
     cb_autoUnzip.setOpaque(false);
 
     cb_autoUpdate.setFont(cb_autoUpdate.getFont().deriveFont((cb_autoUpdate.getFont().getStyle() | java.awt.Font.ITALIC), cb_autoUpdate.getFont().getSize()-1));
-    cb_autoUpdate.setSelected(Options.toBoolean(Options.AUTO_FILE_UPDATING));
+    cb_autoUpdate.setSelected(MySeries.options.getBooleanOption(AUTO_FILE_UPDATING));
     cb_autoUpdate.setText("(Auto update of videos and subs from series folder)");
-    cb_autoUpdate.setName(Options.AUTO_FILE_UPDATING);
+    cb_autoUpdate.setName(AUTO_FILE_UPDATING);
     cb_autoUpdate.setOpaque(false);
     cb_autoUpdate.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -95,8 +96,8 @@ public class Performance extends javax.swing.JPanel {
     sl_memory.setPaintTicks(true);
     sl_memory.setSnapToTicks(true);
     sl_memory.setToolTipText("Frequency of memory consumption update");
-    sl_memory.setValue(Options.toInt(Options.MEMORY_CONSUMPTION_UPDATE));
-    sl_memory.setName(Options.MEMORY_CONSUMPTION_UPDATE);
+    sl_memory.setValue(MySeries.options.getIntegerOption(MEMORY_CONSUMPTION_UPDATE));
+    sl_memory.setName(MEMORY_CONSUMPTION_UPDATE);
     sl_memory.setOpaque(false);
 
     sl_image.setMajorTickSpacing(1);
@@ -104,8 +105,8 @@ public class Performance extends javax.swing.JPanel {
     sl_image.setMinorTickSpacing(1);
     sl_image.setPaintTicks(true);
     sl_image.setSnapToTicks(true);
-    sl_image.setValue(Options.toInt(Options.IMAGE_QUALITY));
-    sl_image.setName(Options.IMAGE_QUALITY);
+    sl_image.setValue(MySeries.options.getIntegerOption(IMAGE_QUALITY));
+    sl_image.setName(IMAGE_QUALITY);
     sl_image.setOpaque(false);
 
     jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);

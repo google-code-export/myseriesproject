@@ -10,8 +10,8 @@
  */
 package tools.misc.latestNews;
 
+import com.googlecode.soptions.Option;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
@@ -19,13 +19,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyDraggable;
-import myseries.MySeries;
+import myseriesproject.MySeries;
 import tools.MySeriesLogger;
-import tools.options.Options;
+import tools.options.MySeriesOptions;
 
 /**
  *
@@ -75,7 +74,7 @@ public class LatestNews extends MyDraggable {
     public void run() {
       try {
         MySeriesLogger.logger.log(Level.INFO, "Checking for updates");
-        latestNewsViewed = Options.toInt(Options.LATEST_NEWS_ID);
+        latestNewsViewed = MySeries.options.getIntegerOption(MySeriesOptions.LATEST_NEWS_ID);
         ArrayList<OnlineNew> news = getOnlineNews();
 
         if (!onStartUp || latestNewsViewed < latestNewsId) {
@@ -85,8 +84,7 @@ public class LatestNews extends MyDraggable {
             MySeries.glassPane.activate(null);
             setVisible(true);
           }
-          Options.setOption(Options.LATEST_NEWS_ID, latestNewsId);
-          Options.save();
+          MySeries.options.setOption( new Option(MySeriesOptions.LATEST_NEWS_ID, Option.INTEGER_CLASS,latestNewsId),true);
         }
 
       } catch (MalformedURLException ex) {
@@ -105,7 +103,7 @@ public class LatestNews extends MyDraggable {
 
       for (Iterator<OnlineNew> it = news.iterator(); it.hasNext();) {
         OnlineNew on = it.next();
-        if (!onStartUp || (onStartUp && on.id > Options.toInt(Options.LATEST_NEWS_ID))) {
+        if (!onStartUp || (onStartUp && on.id > MySeries.options.getIntegerOption(MySeriesOptions.LATEST_NEWS_ID))) {
           n += "<tr><th>" + on.date + " - " + on.title + "</th></tr>";
           n += "<tr><td>" + on.news + "</td></tr>";
           numberOfNews++;

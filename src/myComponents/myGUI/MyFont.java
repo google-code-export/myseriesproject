@@ -4,12 +4,17 @@
  */
 package myComponents.myGUI;
 
+import com.googlecode.soptions.Option;
 import java.awt.Font;
+import java.io.IOException;
 import java.util.logging.Level;
 import javax.swing.UIManager;
 import javax.swing.plaf.FontUIResource;
+import javax.xml.parsers.ParserConfigurationException;
+import myseriesproject.MySeries;
+import org.xml.sax.SAXException;
 import tools.MySeriesLogger;
-import tools.options.Options;
+import tools.options.MySeriesOptions;
 
 /**
  *
@@ -33,11 +38,19 @@ public class MyFont {
    */
   public static void  SetMyFont(){
 
-    String fontFace = Options.toString(Options.FONT_FACE).equals("null") ? DEFAULT_FONT : Options.toString(Options.FONT_FACE);
-    float fontSize = Options.toFloat(Options.FONT_SIZE) == 0 ? DEFAULT_SIZE : Options.toFloat(Options.FONT_SIZE);
-    Options.setOption(Options.FONT_FACE, fontFace);
-    Options.setOption(Options.FONT_SIZE, fontSize);
-    Options.save();
+    String fontFace = MySeries.options.getStringOption(MySeriesOptions.FONT_FACE).equals("null") ? DEFAULT_FONT : MySeries.options.getStringOption(MySeriesOptions.FONT_FACE);
+    float fontSize = MySeries.options.getFloatOption(MySeriesOptions.FONT_SIZE) == 0 ? DEFAULT_SIZE : MySeries.options.getFloatOption(MySeriesOptions.FONT_SIZE);
+    MySeries.options.setOption(new Option(MySeriesOptions.FONT_FACE, Option.STRING_CLASS,fontFace));
+    MySeries.options.setOption(new Option(MySeriesOptions.FONT_SIZE, Option.FLOAT_CLASS,fontSize));
+    try {
+      MySeries.options.save();
+    } catch (ParserConfigurationException ex) {
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+    } catch (IOException ex) {
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+    } catch (SAXException ex) {
+     MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+    }
     int plain = Font.PLAIN;
     int bold = Font.BOLD;
     myFont = new FontUIResource(new Font(fontFace,plain,(int)fontSize));

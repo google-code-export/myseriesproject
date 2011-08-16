@@ -4,7 +4,6 @@
  */
 package tools.feeds;
 
-import Exceptions.DatabaseException;
 import com.sun.syndication.feed.synd.SyndEntryImpl;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.FeedException;
@@ -17,9 +16,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import myComponents.MyMessages;
-import myseries.MySeries;
-import tools.options.Options;
+import myseriesproject.MySeries;
 import tools.MySeriesLogger;
+import tools.options.MySeriesOptions;
 import tools.options.Paths;
 
 /**
@@ -43,7 +42,7 @@ public class FeedReader {
 
     private void _getFeed() {
         try {
-            File file = new File(Options._USER_DIR_ + Paths.FEEDS_PATH + feedRecord.getFeed_ID());
+            File file = new File(MySeriesOptions._USER_DIR_ + Paths.FEEDS_PATH + feedRecord.getFeed_ID());
             if (!file.exists()) {
                 MySeriesLogger.logger.log(Level.INFO, "Feed file does not exist.Updating feed");
                 FeedUpdater fu = new FeedUpdater(tree, feedRecord, m, false);

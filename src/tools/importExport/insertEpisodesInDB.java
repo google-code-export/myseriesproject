@@ -14,8 +14,8 @@ import tools.MySeriesLogger;
 import myComponents.myEvents.MyEvent;
 import myComponents.myEvents.MyEventHandler;
 import myComponents.myEvents.MyEventsClass;
-import myseries.episodes.Episodes;
-import myseries.*;
+import myseriesproject.episodes.Episodes;
+import myseriesproject.*;
 import myComponents.MyUsefulFunctions;
 
 /**

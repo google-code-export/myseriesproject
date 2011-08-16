@@ -11,7 +11,7 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.util.EventObject;
 import javax.swing.JTable;
-import myseries.episodes.Episodes;
+import myseriesproject.episodes.Episodes;
 
 /**
  *

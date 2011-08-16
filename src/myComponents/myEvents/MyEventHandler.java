@@ -10,13 +10,13 @@ import java.awt.Image;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import javax.swing.ImageIcon;
-import myseries.Menus;
-import myseries.MySeries;
-import myseries.MySeriesConstants;
-import myseries.episodes.Episodes;
-import myseries.series.Series;
-import tools.options.Options;
+import myseriesproject.Menus;
+import myseriesproject.MySeries;
+import myseriesproject.MySeriesConstants;
+import myseriesproject.episodes.Episodes;
+import myseriesproject.series.Series;
 import tools.MySeriesLogger;
+import tools.options.MySeriesOptions;
 import tools.options.Paths;
 
 /**
@@ -65,7 +65,7 @@ public class MyEventHandler implements MyEventListener {
           //IMAGE SCREENSHOT
           MySeriesLogger.logger.log(Level.INFO, "Updating series screenshot");
           if (series.isValidScreenshot()) {
-            String imagePath = Options._USER_DIR_ + Paths.SCREENSHOTS_PATH + "/" + series.getScreenshot();
+            String imagePath = MySeriesOptions._USER_DIR_ + Paths.SCREENSHOTS_PATH + "/" + series.getScreenshot();
             Image image = new ImageIcon(imagePath).getImage();
             MySeriesLogger.logger.log(Level.FINE, "Screenshot exists. Setting screenshot to {0}", series.getScreenshot());
             m.imagePanel.setImage(image, false, m);

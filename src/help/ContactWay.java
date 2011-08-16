@@ -29,7 +29,7 @@ public class ContactWay extends MyDraggable {
 
   /** Creates new form ContactWay */
   public ContactWay() {
-    myseries.MySeries.glassPane.activate(null);
+    myseriesproject.MySeries.glassPane.activate(null);
     MySeriesLogger.logger.log(Level.INFO, "Initializing components");
     initComponents();
     MySeriesLogger.logger.log(Level.FINE, "Components initialized");
@@ -171,21 +171,21 @@ public class ContactWay extends MyDraggable {
       MySeriesLogger.logger.log(Level.INFO, "Cancelled by the user");
       way = NONE;
       dispose();
-      myseries.MySeries.glassPane.deactivate();
+      myseriesproject.MySeries.glassPane.deactivate();
     }//GEN-LAST:event_bt_cancelActionPerformed
 
     private void bt_googleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_googleActionPerformed
       MySeriesLogger.logger.log(Level.INFO, "Report in google code");
       way = GOOGLE_CODE;
       dispose();
-       myseries.MySeries.glassPane.deactivate();
+       myseriesproject.MySeries.glassPane.deactivate();
     }//GEN-LAST:event_bt_googleActionPerformed
 
     private void bt_emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_emailActionPerformed
       MySeriesLogger.logger.log(Level.INFO, "Contact by email");
       way = EMAIL;
       dispose();
-       myseries.MySeries.glassPane.deactivate();
+       myseriesproject.MySeries.glassPane.deactivate();
     }//GEN-LAST:event_bt_emailActionPerformed
 
   // Variables declaration - do not modify//GEN-BEGIN:variables

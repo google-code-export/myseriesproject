@@ -9,8 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import javax.swing.JToolBar;
+import myseriesproject.MySeries;
 import tools.MySeriesLogger;
-import tools.options.Options;
 
 /**
  *
@@ -61,7 +61,7 @@ public abstract class AbstractToolbar extends JToolBar implements ToolbarButtonA
   public AbstractToolbar(Integer[] visibleButtons) {
     super();
      if(visibleButtons==null){
-      visibleButtons = Options.getDefaultToolbarButtons();
+      visibleButtons = MySeries.options.getDefaultToolbarButtons();
     }
     this.visibleButtons = visibleButtons;
   }

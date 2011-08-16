@@ -11,13 +11,14 @@
 package tools.options.panels;
 
 import com.googlecode.svalidators.validators.RegularExpressionValidator;
-import tools.options.Options;
+import myseriesproject.MySeries;
+import tools.options.IMySeriesOptions;
 
 /**
  *
  * @author lordovol
  */
-public class Renaming extends javax.swing.JPanel {
+public class Renaming extends javax.swing.JPanel  implements IMySeriesOptions {
 
   private String sepRegex = "^[^/\\\\?%*:|\\\"<>\\.]*$";
 
@@ -64,27 +65,27 @@ public class Renaming extends javax.swing.JPanel {
     jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     jLabel20.setText("Title separator :");
 
-    tf_seasonSep.setText(Options.toString(Options.SEASON_SEPARATOR,false));
-    tf_seasonSep.setName(Options.SEASON_SEPARATOR);
+    tf_seasonSep.setText(MySeries.options.getStringOption(SEASON_SEPARATOR,false));
+    tf_seasonSep.setName(SEASON_SEPARATOR);
 
-    tf_episodeSep.setText(Options.toString(Options.EPISODE_SEPARATOR,false));
-    tf_episodeSep.setName(Options.EPISODE_SEPARATOR);
+    tf_episodeSep.setText(MySeries.options.getStringOption(EPISODE_SEPARATOR,false));
+    tf_episodeSep.setName(EPISODE_SEPARATOR);
 
-    tf_titleSep.setText(Options.toString(Options.TITLE_SEPARATOR,false));
-    tf_titleSep.setName(Options.TITLE_SEPARATOR);
+    tf_titleSep.setText(MySeries.options.getStringOption(TITLE_SEPARATOR,false));
+    tf_titleSep.setName(TITLE_SEPARATOR);
 
-    cb_noRenameConf.setSelected(Options.toBoolean(Options.NO_RENAME_CONFIRMATION));
+    cb_noRenameConf.setSelected(MySeries.options.getBooleanOption(NO_RENAME_CONFIRMATION));
     cb_noRenameConf.setText("Fast single episode renaming");
     cb_noRenameConf.setToolTipText("<html>\nWhen this is checked renaming of a single episode will not bring up the renaming window<br />\nand the files will be renamed with the current renaming options");
     cb_noRenameConf.setMargin(new java.awt.Insets(0, 0, 0, 0));
-    cb_noRenameConf.setName(Options.NO_RENAME_CONFIRMATION);
+    cb_noRenameConf.setName(NO_RENAME_CONFIRMATION);
     cb_noRenameConf.setOpaque(false);
 
-    cd_autoRename.setSelected(Options.toBoolean(Options.AUTO_RENAME_SUBS));
+    cd_autoRename.setSelected(MySeries.options.getBooleanOption(AUTO_RENAME_SUBS));
     cd_autoRename.setText("Auto Renaming");
     cd_autoRename.setToolTipText("<html>Rename subtitles when unzipped or moved from the main series directory to the series directory where they belong");
     cd_autoRename.setMargin(new java.awt.Insets(0, 0, 0, 0));
-    cd_autoRename.setName(Options.AUTO_RENAME_SUBS);
+    cd_autoRename.setName(AUTO_RENAME_SUBS);
     cd_autoRename.setOpaque(false);
     cd_autoRename.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {

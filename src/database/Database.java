@@ -9,8 +9,8 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.Vector;
 import java.util.logging.Level;
-import tools.options.Options;
 import tools.MySeriesLogger;
+import tools.options.MySeriesOptions;
 import tools.options.Paths;
 /**
  * Database helper class
@@ -27,7 +27,7 @@ public class Database implements DatabaseConstants {
   public static Vector<String> getDatabases() {
     MySeriesLogger.logger.log(Level.INFO, "Getting databases");
     Vector<String> databases = new Vector<String>();
-    File dir = new File(Options._USER_DIR_ + Paths.DATABASES_PATH);
+    File dir = new File(MySeriesOptions._USER_DIR_ + Paths.DATABASES_PATH);
     File[] files = dir.listFiles(new FilenameFilter() {
       @Override
       public boolean accept(File dir, String name) {

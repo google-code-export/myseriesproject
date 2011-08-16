@@ -7,19 +7,18 @@ package myComponents.myTableCellEditors;
 import database.EpisodesRecord;
 import database.SeriesRecord;
 import java.awt.Component;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.EventObject;
-import javax.swing.AbstractCellEditor;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JCheckBox;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableCellEditor;
 import myComponents.MyUsefulFunctions;
-import tools.options.Options;
+import myseriesproject.MySeries;
+import tools.options.MySeriesOptions;
 
 /**
  *
@@ -58,7 +57,7 @@ public class MyDownloadedCellEditor extends DefaultCellEditor implements TableCe
                 return true;
             }
         }
-        if (series.isValidLocalDir() && Options.toBoolean(Options.AUTO_FILE_UPDATING) && !MyUsefulFunctions.isNetworkPath(new File(series.getLocalDir()))) {
+        if (series.isValidLocalDir() && MySeries.options.getBooleanOption(MySeriesOptions.AUTO_FILE_UPDATING) && !MyUsefulFunctions.isNetworkPath(new File(series.getLocalDir()))) {
             return false;
         }
         if (!MyUsefulFunctions.hasBeenAired(ep.getAired(), true)) {

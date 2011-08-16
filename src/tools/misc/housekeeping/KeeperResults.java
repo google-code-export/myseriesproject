@@ -178,7 +178,7 @@ public class KeeperResults extends MyDraggable {
   private void myButtonCancel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myButtonCancel1ActionPerformed
     MySeriesLogger.logger.log(Level.INFO, "Closing window");
     dispose();
-    myseries.MySeries.glassPane.deactivate();
+    myseriesproject.MySeries.glassPane.deactivate();
   }//GEN-LAST:event_myButtonCancel1ActionPerformed
 
   // Variables declaration - do not modify//GEN-BEGIN:variables

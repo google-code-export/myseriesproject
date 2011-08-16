@@ -16,7 +16,7 @@ import java.util.logging.Level;
 import javax.swing.JDialog;
 import myComponents.MyUsefulFunctions;
 import tools.MySeriesLogger;
-import tools.options.Options;
+import tools.options.MySeriesOptions;
 
 /**
  *
@@ -36,7 +36,7 @@ public class ToolbarCustomize extends JDialog {
     initComponents();
     MySeriesLogger.logger.log(Level.FINE, "Components initialized");
     setLocationRelativeTo(null);
-    myseries.MySeries.glassPane.activate(null);
+    myseriesproject.MySeries.glassPane.activate(null);
     setVisible(true);
   }
 
@@ -165,7 +165,7 @@ public class ToolbarCustomize extends JDialog {
 
   private void bt_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_addActionPerformed
     MySeriesLogger.logger.log(Level.INFO, "Setting all buttons as visible");
-    ctoolbar.visibleButtons = Options.getDefaultToolbarButtons();
+    ctoolbar.visibleButtons = MySeriesOptions.getDefaultToolbarButtons();
     addRemove();
   }//GEN-LAST:event_bt_addActionPerformed
 
@@ -178,13 +178,13 @@ public class ToolbarCustomize extends JDialog {
   private void bt_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_okActionPerformed
     getNewVisibleButtons();
     Toolbar.customize = false;
-    myseries.MySeries.glassPane.deactivate();
+    myseriesproject.MySeries.glassPane.deactivate();
     MySeriesLogger.logger.log(Level.INFO, "Closing window");
     dispose();
   }//GEN-LAST:event_bt_okActionPerformed
 
   private void bt_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelActionPerformed
-    myseries.MySeries.glassPane.deactivate();
+    myseriesproject.MySeries.glassPane.deactivate();
     Toolbar.customize = false;
     MySeriesLogger.logger.log(Level.INFO, "Closing window");
     dispose();

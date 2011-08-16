@@ -10,6 +10,7 @@
  */
 package tools.download.torrents.isohunt;
 
+import com.googlecode.soptions.Option;
 import com.googlecode.svalidators.formcomponents.SComboBox;
 import com.googlecode.svalidators.formcomponents.ValidationGroup;
 import com.googlecode.svalidators.validators.RequiredValidator;
@@ -28,12 +29,11 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
-import myseries.series.Series;
-import tools.Skin;
+import myseriesproject.MySeries;
+import myseriesproject.series.Series;
 import tools.download.torrents.AbstractTorrentForm;
-import tools.download.torrents.AbstractTorrent;
 import tools.download.torrents.TorrentConstants;
-import tools.options.Options;
+import tools.options.MySeriesOptions;
 
 /**
  *
@@ -55,7 +55,7 @@ public class IsohuntForm extends AbstractTorrentForm implements TorrentConstants
    */
   public IsohuntForm(SeriesRecord series, EpisodesRecord episode) {
     MySeriesLogger.logger.log(Level.INFO, "Showing download torrent from isohunt form");
-    myseries.MySeries.glassPane.activate(null);
+    myseriesproject.MySeries.glassPane.activate(null);
     this.series = series;
     this.episode = episode;
     MySeriesLogger.logger.log(Level.INFO, "Initializong components");
@@ -71,7 +71,7 @@ public class IsohuntForm extends AbstractTorrentForm implements TorrentConstants
   /** Creates new form IsohuntForm */
   public IsohuntForm() {
     MySeriesLogger.logger.log(Level.INFO, "Showing download torrent from isohunt form");
-    myseries.MySeries.glassPane.activate(null);
+    myseriesproject.MySeries.glassPane.activate(null);
     MySeriesLogger.logger.log(Level.INFO, "Initializong components");
     initComponents();
     MySeriesLogger.logger.log(Level.FINE, "Components initialized");
@@ -154,7 +154,7 @@ public class IsohuntForm extends AbstractTorrentForm implements TorrentConstants
     jLabel7.setText("0: Full season");
 
     combo_quality.setModel(qualityModel);
-    combo_quality.setSelectedItem(Options.toString(Options.VIDEO_QUALITY));
+    combo_quality.setSelectedItem(MySeries.options.getStringOption(MySeriesOptions.VIDEO_QUALITY));
 
     jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     jLabel1.setText("Quality :");
@@ -322,7 +322,7 @@ public class IsohuntForm extends AbstractTorrentForm implements TorrentConstants
     private void bt_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelActionPerformed
       dispose();
       MySeriesLogger.logger.log(Level.INFO, "Canceled by the user");
-      myseries.MySeries.glassPane.deactivate();
+      myseriesproject.MySeries.glassPane.deactivate();
     }//GEN-LAST:event_bt_cancelActionPerformed
 
     private void bt_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_okActionPerformed
@@ -331,8 +331,7 @@ public class IsohuntForm extends AbstractTorrentForm implements TorrentConstants
       MySeriesLogger.logger.log(Level.INFO, "Validating user input");
       if (group.validate()) {
         URI uri = createUri();
-        Options.setOption(Options.VIDEO_QUALITY, (String) combo_quality.getSelectedItem());
-        Options.save();
+        MySeries.options.setOption(new Option(MySeriesOptions.VIDEO_QUALITY,Option.STRING_CLASS, (String) combo_quality.getSelectedItem()),true);
         if (uri != null) {
           MySeriesLogger.logger.log(Level.FINE, "Search uri :{0}", uri);
           Isohunt i = new Isohunt(uri, this);

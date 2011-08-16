@@ -5,7 +5,7 @@
 package myComponents.MyTableModels;
 
 import javax.swing.table.DefaultTableModel;
-import myseries.episodes.Episodes;
+import myseriesproject.episodes.Episodes;
 import tools.languages.Language;
 
 /**

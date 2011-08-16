@@ -5,7 +5,7 @@
 package myComponents.MyTableModels;
 
 import javax.swing.table.DefaultTableModel;
-import myseries.filters.Filters;
+import myseriesproject.filters.Filters;
 import tools.languages.Language;
 
 /**

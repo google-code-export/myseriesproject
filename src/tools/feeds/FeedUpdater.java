@@ -21,9 +21,9 @@ import javax.swing.ImageIcon;
 import javax.swing.Timer;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
-import myseries.MySeries;
-import tools.options.Options;
+import myseriesproject.MySeries;
 import tools.MySeriesLogger;
+import tools.options.MySeriesOptions;
 import tools.options.Paths;
 
 /**
@@ -80,7 +80,7 @@ public class FeedUpdater implements Runnable {
       }
     }
     updating = false;
-    int ind = m.tabsPanel.getIndexByName(String.valueOf(myseries.MySeries.TAB_FEEDS_ID));
+    int ind = m.tabsPanel.getIndexByName(String.valueOf(myseriesproject.MySeries.TAB_FEEDS_ID));
     m.tabsPanel.setIconAt(ind, DEFAULT_ICON);
     m.pr_rssUpdating.setVisible(false);
     animation.stop();
@@ -104,7 +104,7 @@ public class FeedUpdater implements Runnable {
       buf = new byte[1024];
       int ByteRead;
       int ByteWritten = 0;
-      String filename = Options._USER_DIR_ + Paths.FEEDS_PATH + feed.getFeed_ID();
+      String filename = MySeriesOptions._USER_DIR_ + Paths.FEEDS_PATH + feed.getFeed_ID();
       outStream = new BufferedOutputStream(new FileOutputStream(filename));
       while ((ByteRead = is.read(buf)) != -1) {
         outStream.write(buf, 0, ByteRead);
@@ -121,7 +121,7 @@ public class FeedUpdater implements Runnable {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-      int ind = m.tabsPanel.getIndexByName(String.valueOf(myseries.MySeries.TAB_FEEDS_ID));
+      int ind = m.tabsPanel.getIndexByName(String.valueOf(myseriesproject.MySeries.TAB_FEEDS_ID));
       frame++;
       switch (frame) {
         case 0:

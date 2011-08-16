@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
 import tools.MySeriesLogger;
-import tools.options.Options;
+import tools.options.MySeriesOptions;
 
 /**
  * The series database record
@@ -69,7 +69,7 @@ public class SeriesRecord extends Record implements Comparable<SeriesRecord> {
     super();
   }
   
-  private static SeriesRecord create(ResultSet rs) throws SQLException {
+  public static SeriesRecord create(ResultSet rs) throws SQLException {
     SeriesRecord s = new SeriesRecord();
         s.setSeason(rs.getInt("season"));
         s.setSeries_ID(rs.getInt("series_ID"));
@@ -106,7 +106,7 @@ public class SeriesRecord extends Record implements Comparable<SeriesRecord> {
   public synchronized void delete() throws SQLException {
     DBConnection.beginTransaction();
     SeriesRecord.delete(TABLE, C_SERIES_ID+ "=?", new String[] {String.valueOf(this.getSeries_ID())});
-    System.out.println("Deleting episodes of series");
+    //System.out.println("Deleting episodes of series");
     EpisodesRecord.delete(EpisodesRecord.TABLE, EpisodesRecord.C_SERIES_ID +"= ?",new String[] {String.valueOf(this.getSeries_ID())});
     DBConnection.endTransaction();
 
@@ -337,7 +337,7 @@ public class SeriesRecord extends Record implements Comparable<SeriesRecord> {
   }
 
   public boolean isValidScreenshot() {
-    return new File(Options._USER_DIR_+"images/"+getScreenshot()).isFile();
+    return new File(MySeriesOptions._USER_DIR_+"images/"+getScreenshot()).isFile();
   }
 
   public int compareTo(SeriesRecord o) {

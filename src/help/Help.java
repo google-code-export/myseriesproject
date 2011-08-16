@@ -17,7 +17,7 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import javax.swing.JFrame;
 import javax.swing.text.BadLocationException;
-import myseries.MySeries;
+import myseriesproject.MySeries;
 import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.buttons.MyAbstractButton;
 import org.jdom.Document;

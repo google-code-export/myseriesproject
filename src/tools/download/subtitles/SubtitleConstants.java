@@ -6,8 +6,9 @@
 package tools.download.subtitles;
 
 import java.util.ArrayList;
+import myseriesproject.MySeries;
 import tools.languages.Language;
-import tools.options.Options;
+import tools.options.MySeriesOptions;
 
 /**
  *
@@ -69,6 +70,6 @@ public interface SubtitleConstants {
   /**
    * The number of subs to search for : 2 , primary and secondary
    */
-  public static int NUM_OF_SUBTITLES = Options.toBoolean(Options.SEARCH_FOR_SECONDARY_SUBTITLE) ? 2 : 1;
+  public static int NUM_OF_SUBTITLES = MySeries.options.getBooleanOption(MySeriesOptions.SEARCH_FOR_SECONDARY_SUBTITLE) ? 2 : 1;
 
 }

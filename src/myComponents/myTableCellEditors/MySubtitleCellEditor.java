@@ -21,10 +21,11 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import myComponents.MyUsefulFunctions;
 import myComponents.myTableCellRenderers.MySubtitleListRenderer;
+import myseriesproject.MySeries;
 import tools.MySeriesLogger;
 import tools.languages.LangsList;
 import tools.languages.Language;
-import tools.options.Options;
+import tools.options.MySeriesOptions;
 
 /**
  *
@@ -48,8 +49,8 @@ public class MySubtitleCellEditor extends AbstractCellEditor implements TableCel
     if (value instanceof Language) {
       Language[] subStatuses = {
         LangsList.NONE,
-        myseries.MySeries.languages.getPrimary(),
-        myseries.MySeries.languages.getSecondary(),
+        myseriesproject.MySeries.languages.getPrimary(),
+        myseriesproject.MySeries.languages.getSecondary(),
         LangsList.MULTIPLE};
       combo.setModel(new DefaultComboBoxModel(subStatuses));
       combo.setSelectedItem(value);
@@ -88,7 +89,7 @@ public class MySubtitleCellEditor extends AbstractCellEditor implements TableCel
         return true;
       }
     }
-    if (series.isValidLocalDir() && Options.toBoolean(Options.AUTO_FILE_UPDATING) && !MyUsefulFunctions.isNetworkPath(new File(series.getLocalDir()))) {
+    if (series.isValidLocalDir() && MySeries.options.getBooleanOption(MySeriesOptions.AUTO_FILE_UPDATING) && !MyUsefulFunctions.isNetworkPath(new File(series.getLocalDir()))) {
       return false;
     }
     if (!MyUsefulFunctions.hasBeenAired(ep.getAired(),true)) {

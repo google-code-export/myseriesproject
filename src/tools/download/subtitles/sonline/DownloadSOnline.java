@@ -11,17 +11,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.logging.Level;
-import javax.swing.JOptionPane;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
-import sdialogs.Info;
 import tools.download.screenshot.SelectSubtitle;
 import tools.download.subtitles.AbstractDownloadSubtitle;
 import tools.download.subtitles.Subtitle;
 import tools.download.subtitles.SubtitleConstants;
 import tools.languages.LangsList;
-import tools.languages.Language;
-import tools.options.Options;
 
 /**
  *
@@ -45,8 +41,8 @@ public class DownloadSOnline extends AbstractDownloadSubtitle implements Runnabl
     this.episode = episode;
     this.form = form;
     this.progress = form.progress;
-    this.lang[0] = myseries.MySeries.languages.getPrimary().getName();
-    this.lang[1] = myseries.MySeries.languages.getSecondary().getName();
+    this.lang[0] = myseriesproject.MySeries.languages.getPrimary().getName();
+    this.lang[1] = myseriesproject.MySeries.languages.getSecondary().getName();
   }
 
   public void run() {

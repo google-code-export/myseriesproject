@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
-import myseries.schedule.ScheduleEvent;
+import myseriesproject.schedule.ScheduleEvent;
 import tools.languages.LangsList;
 import tools.MySeriesLogger;
 

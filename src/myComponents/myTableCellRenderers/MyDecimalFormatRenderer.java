@@ -13,8 +13,8 @@ import java.util.Vector;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
-import myseries.statistics.StatSeries;
-import tools.options.Options;
+import myseriesproject.statistics.StatSeries;
+import tools.options.MySeriesOptions;
 
 /**
  *
@@ -40,7 +40,7 @@ public class MyDecimalFormatRenderer extends DefaultTableCellRenderer {
       }
       
     }
-    value = Options._DEC_FORMAT_.format(value);
+    value = MySeriesOptions._DEC_FORMAT_.format(value);
     setHorizontalAlignment(SwingConstants.RIGHT);
     return super.getTableCellRendererComponent(
         table, value, isSelected, hasFocus, row, column);

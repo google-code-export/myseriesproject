@@ -15,7 +15,7 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import tools.MySeriesLogger;
 import myComponents.myGUI.MyDraggable;
-import myseries.series.Series;
+import myseriesproject.series.Series;
 /**
  *
  * @author lordovol

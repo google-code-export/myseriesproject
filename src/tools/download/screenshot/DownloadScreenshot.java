@@ -4,7 +4,6 @@
  */
 package tools.download.screenshot;
 
-import database.SeriesRecord;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,10 +13,9 @@ import java.net.URLConnection;
 import java.util.logging.Level;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
-import myseries.series.Series;
 import tools.internetUpdate.InternetUpdate;
-import tools.options.Options;
 import tools.MySeriesLogger;
+import tools.options.MySeriesOptions;
 import tools.options.Paths;
 
 /**
@@ -67,7 +65,7 @@ public class DownloadScreenshot {
       byte[] buf = new byte[1024];
       int ByteRead;
       int ByteWritten = 0;
-      setFilename(Options._USER_DIR_ + Paths.SCREENSHOTS_PATH + tvRageID + ".jpg");
+      setFilename(MySeriesOptions._USER_DIR_ + Paths.SCREENSHOTS_PATH + tvRageID + ".jpg");
       BufferedOutputStream outStream = new BufferedOutputStream(new FileOutputStream(getFilename()));
       while ((ByteRead = in.read(buf)) > -1) {
         outStream.write(buf, 0, ByteRead);

@@ -8,25 +8,18 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
 import tools.MySeriesLogger;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import tools.download.screenshot.SelectSubtitle;
 import tools.download.subtitles.AbstractDownloadSubtitle;
 import tools.download.subtitles.Subtitle;
 import tools.download.subtitles.SubtitleConstants;
-import tools.languages.Language;
-import tools.options.Options;
 
 /**
  * Download from tvSubtitles
@@ -49,8 +42,8 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
     this.episode = episode;
     this.form = form;
     this.progress = form.progress;
-    this.lang[0] = myseries.MySeries.languages.getPrimary().getCode();
-    this.lang[1] = myseries.MySeries.languages.getSecondary().getCode();
+    this.lang[0] = myseriesproject.MySeries.languages.getPrimary().getCode();
+    this.lang[1] = myseriesproject.MySeries.languages.getSecondary().getCode();
   }
 
   public void run() {

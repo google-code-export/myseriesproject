@@ -21,7 +21,7 @@ import java.util.logging.Level;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyDraggable;
-import myseries.MySeries;
+import myseriesproject.MySeries;
 import tools.MySeriesLogger;
 import tools.Skin;
 

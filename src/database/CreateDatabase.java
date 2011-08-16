@@ -4,6 +4,7 @@
  */
 package database;
 
+import com.googlecode.soptions.Option;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -12,10 +13,10 @@ import java.text.ParseException;
 import java.util.logging.Level;
 import javax.swing.UnsupportedLookAndFeelException;
 import myComponents.MyMessages;
-import myseries.StartPanel;
-import myseries.actions.ApplicationActions;
+import myseriesproject.StartPanel;
+import myseriesproject.actions.ApplicationActions;
 import tools.MySeriesLogger;
-import tools.options.Options;
+import tools.options.MySeriesOptions;
 import tools.options.Paths;
 
 /**
@@ -52,7 +53,7 @@ public class CreateDatabase implements Runnable {
     @Override
     public void run() {
         try {
-            File dbFile = new File(Options._USER_DIR_ + Paths.DATABASES_PATH + DBConnection.db);
+            File dbFile = new File(MySeriesOptions._USER_DIR_ + Paths.DATABASES_PATH + DBConnection.db);
             if (dbFile.exists() && dbFile.length() > 1) {
                 MyMessages.error("DB Exists!!!", "DB File " + DBConnection.db + " already exists\nAborting...", true);
                 MySeriesLogger.logger.log(Level.SEVERE, "DB File already exists");
@@ -88,8 +89,7 @@ public class CreateDatabase implements Runnable {
         if (startPanel.m == null) {
             startPanel.startMySeries();
         } else {
-            Options.setOption(Options.DB_NAME, startPanel.dbName.trim());
-            Options.save();
+            myseriesproject.MySeries.options.setOption(new Option(MySeriesOptions.DB_NAME,Option.STRING_CLASS, startPanel.dbName.trim()),true);
             MySeriesLogger.logger.log(Level.INFO, "Closing starting panel");
             startPanel.dispose();
             MySeriesLogger.logger.log(Level.INFO, "Closing Main Window");

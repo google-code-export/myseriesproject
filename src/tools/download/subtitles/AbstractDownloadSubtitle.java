@@ -17,9 +17,10 @@ import java.util.logging.Level;
 import javax.swing.JProgressBar;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
-import myseries.series.Series;
+import myseriesproject.MySeries;
+import myseriesproject.series.Series;
 import tools.archive.ArchiveFile;
-import tools.options.Options;
+import tools.options.MySeriesOptions;
 
 /**
  *
@@ -79,7 +80,7 @@ public abstract class AbstractDownloadSubtitle implements SubtitleConstants {
             if (z.unzip(getLocalDir(), true, ArchiveFile.SUBTITLES)) {
               for (Iterator<String> it = z.extractedFiles.iterator(); it.hasNext();) {
                 String name = it.next();
-                if (Options.toBoolean(Options.AUTO_RENAME_SUBS) && MyUsefulFunctions.renameEpisode(Series.getCurrentSerial(), name)) {
+                if (MySeries.options.getBooleanOption(MySeriesOptions.AUTO_RENAME_SUBS) && MyUsefulFunctions.renameEpisode(Series.getCurrentSerial(), name)) {
                   MySeriesLogger.logger.log(Level.INFO, "Subtitle renamed");
                 }
               }
@@ -105,7 +106,7 @@ public abstract class AbstractDownloadSubtitle implements SubtitleConstants {
       MyUsefulFunctions.browse(sub.url.toString());
       form.dispose();
     } finally {
-      myseries.MySeries.glassPane.deactivate();
+      myseriesproject.MySeries.glassPane.deactivate();
     }
   }
 

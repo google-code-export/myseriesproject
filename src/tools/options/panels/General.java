@@ -16,15 +16,16 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import javax.swing.JFileChooser;
+import myseriesproject.MySeries;
 import tools.MySeriesLogger;
 import tools.options.DateFormatHelp;
-import tools.options.Options;
+import tools.options.IMySeriesOptions;
 
 /**
  *
  * @author lordovol
  */
-public class General extends javax.swing.JPanel {
+public class General extends javax.swing.JPanel implements IMySeriesOptions {
 
     /** Creates new form general */
     public General() {
@@ -65,9 +66,9 @@ public class General extends javax.swing.JPanel {
     jLabel3.setName("noname"); // NOI18N
 
     combobox_debugMode.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "OFF", "SEVERE", "WARNING", "ALL" }));
-    combobox_debugMode.setSelectedItem(Options.toString(Options.DEBUG_MODE));
+    combobox_debugMode.setSelectedItem(MySeries.options.getStringOption(DEBUG_MODE));
     combobox_debugMode.setToolTipText("<html>\nThe level of Debuging info that's written in the log file<br />\nSEVERE : Only fatal errors are written<br />\nWARNING : Warnings and fatal errors are written<br />\nALL : Everything is written<br />\nOFF: Nothing is written<br />");
-    combobox_debugMode.setName(Options.DEBUG_MODE);
+    combobox_debugMode.setName(DEBUG_MODE);
     combobox_debugMode.setOpaque(false);
 
     jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -77,15 +78,15 @@ public class General extends javax.swing.JPanel {
 
     combobox_dateFormat.setEditable(true);
     combobox_dateFormat.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "dd/MM/yyyy", "dd-MM-yyyy", "dd/MM/yy", "dd-MM-yy", "d/M/yyyy", "d/M/yy" }));
-    combobox_dateFormat.setSelectedItem(Options.toString(Options.DATE_FORMAT));
-    combobox_dateFormat.setName(Options.DATE_FORMAT);
+    combobox_dateFormat.setSelectedItem(MySeries.options.getStringOption(DATE_FORMAT));
+    combobox_dateFormat.setName(DATE_FORMAT);
 
     jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     jLabel11.setText("Video Viewer :");
     jLabel11.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
-    tf_videoApp.setText(Options.toString(Options.VIDEO_APP));
-    tf_videoApp.setName(Options.VIDEO_APP);
+    tf_videoApp.setText(MySeries.options.getStringOption(VIDEO_APP));
+    tf_videoApp.setName(VIDEO_APP);
 
     jLabel14.setFont(jLabel14.getFont().deriveFont((jLabel14.getFont().getStyle() | java.awt.Font.ITALIC), jLabel14.getFont().getSize()-1));
     jLabel14.setText("(Leave it blank to use your OS default video viewer)");
@@ -101,9 +102,8 @@ public class General extends javax.swing.JPanel {
     jLabel7.setText("Main Series Directory:");
     jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
-    tf_mainDir.setText(Options.toString(Options.MAIN_DIRECTORY));
-    tf_mainDir.setToolTipText("<html>A directory where subtitle (zipped or not) files should be saved. Then the application will move them to the series directory if possible");
-    tf_mainDir.setName(Options.MAIN_DIRECTORY);
+    tf_mainDir.setText(MySeries.options.getStringOption(MAIN_DIRECTORY));
+    tf_mainDir.setName(MAIN_DIRECTORY);
 
     bt_mainDirectory.setToolTipText("Browse for main directory");
     bt_mainDirectory.addActionListener(new java.awt.event.ActionListener() {
@@ -122,9 +122,9 @@ public class General extends javax.swing.JPanel {
       }
     });
 
-    cb_showPopups.setSelected(Options.toBoolean(Options.SHOW_POPUPS));
+    cb_showPopups.setSelected(MySeries.options.getBooleanOption(SHOW_POPUPS));
     cb_showPopups.setText("Show popup messages");
-    cb_showPopups.setName(Options.SHOW_POPUPS);
+    cb_showPopups.setName(SHOW_POPUPS);
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
     this.setLayout(layout);
@@ -233,7 +233,7 @@ public class General extends javax.swing.JPanel {
       File folder;
       MySeriesLogger.logger.log(Level.INFO, "Selecting series main directory");
       String os = System.getProperty("os.name");
-      folder = new File(Options.toString(Options.MAIN_DIRECTORY));
+      folder = new File(MySeries.options.getStringOption(MAIN_DIRECTORY));
       JFileChooser f = new JFileChooser();
       f.setDialogTitle("Choose your series main directory");
       f.setDialogType(JFileChooser.OPEN_DIALOG);

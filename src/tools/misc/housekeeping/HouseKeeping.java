@@ -12,20 +12,18 @@ package tools.misc.housekeeping;
 
 import database.DBConnection;
 import database.SeriesRecord;
-import java.awt.List;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.logging.Level;
 import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyDraggable;
+import myseriesproject.MySeries;
 import tools.MySeriesLogger;
-import tools.Skin;
-import tools.options.Options;
+import tools.options.MySeriesOptions;
 import tools.options.Paths;
 
 /**
@@ -52,7 +50,7 @@ public class HouseKeeping extends MyDraggable {
     screenshots = findUnusedScreenshots();
     lb_screenshots.setText("( " + screenshots.length + " unused screenshots)");
     MySeriesLogger.logger.log(Level.FINE, "Components initialized");
-    myseries.MySeries.glassPane.activate(null);
+    myseriesproject.MySeries.glassPane.activate(null);
     setLocationRelativeTo(null);
     setVisible(true);
   }
@@ -203,7 +201,7 @@ public class HouseKeeping extends MyDraggable {
 
     private void bt_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelActionPerformed
       MySeriesLogger.logger.log(Level.INFO, " Canceled by the user");
-      myseries.MySeries.glassPane.deactivate();
+      myseriesproject.MySeries.glassPane.deactivate();
       dispose();
 }//GEN-LAST:event_bt_cancelActionPerformed
 
@@ -230,7 +228,7 @@ public class HouseKeeping extends MyDraggable {
 
   private File[] gettingTorrents() {
     MySeriesLogger.logger.log(Level.INFO, "Getting torrents in the torrent dir");
-    File torrentDir = new File(Options._USER_DIR_ + Paths.TORRENTS_PATH);
+    File torrentDir = new File(MySeriesOptions._USER_DIR_ + Paths.TORRENTS_PATH);
     torrents = torrentDir.listFiles();
     int t = torrents.length;
     MySeriesLogger.logger.log(Level.INFO, "Found {0} torrents", t);
@@ -271,7 +269,7 @@ public class HouseKeeping extends MyDraggable {
   }
 
   private void gettingUsedScreenshots() {
-    String curDb = Options.toString(Options.DB_NAME);
+    String curDb = MySeries.options.getStringOption(MySeriesOptions.DB_NAME);
     File dbdir = new File(Paths.DATABASES_PATH);
     File[] dbs = dbdir.listFiles(new FilenameFilter() {
 
