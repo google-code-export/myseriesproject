@@ -10,10 +10,8 @@
  */
 package tools.internetUpdate.tvrage;
 
-import database.DBHelper;
 import database.SeriesRecord;
 import java.awt.Dialog.ModalityType;
-import java.util.logging.Logger;
 import tools.MySeriesLogger;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -25,15 +23,13 @@ import myComponents.myEvents.MyEvent;
 import myComponents.myEvents.MyEventHandler;
 import myComponents.myEvents.MyEventsClass;
 import myComponents.myGUI.MyDraggable;
-import myComponents.myGUI.MyImagePanel;
-import myseries.MySeries;
-import myseries.series.AdminSeries;
-import myseries.series.Series;
+import myseriesproject.MySeries;
+import myseriesproject.series.AdminSeries;
+import myseriesproject.series.Series;
 import tools.Skin;
 import tools.download.screenshot.DownloadScreenshot;
 import tools.internetUpdate.InternetUpdate;
 import tools.internetUpdate.tvrage.SearchTvRage.TvRageSeries;
-import tools.options.Options;
 
 /**
  * Get TvRage id form

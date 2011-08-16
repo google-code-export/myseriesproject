@@ -16,14 +16,14 @@ import java.util.logging.Level;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import myComponents.MyMessages;
-import myseries.MySeries;
+import myseriesproject.MySeries;
 import myComponents.myEvents.MyEvent;
 import myComponents.myEvents.MyEventHandler;
-import myseries.MySeriesConstants;
-import myseries.series.Series;
+import myseriesproject.MySeriesConstants;
+import myseriesproject.series.Series;
 import tools.MySeriesLogger;
 import tools.download.screenshot.DownloadScreenshot;
-import tools.options.Options;
+import tools.options.MySeriesOptions;
 
 /**
  * The screenshot panel
@@ -92,14 +92,15 @@ public class MyImagePanel extends JPanel {
    */
   /**
    * Sets an image and it's size
-   * @param image the image to set
    * @param width
    * @param height
    */
   public void changeSize(int width, int height) {
     MySeriesLogger.logger.log(Level.INFO, "Resizing screenshot to {0}x{1}", new Object[]{width, height});
     this.defaultImage = false;
-    image = originalImage.getScaledInstance(width, height, Options.IMAGE_SCALING[Options.toInt(Options.IMAGE_QUALITY)]);
+    int qlt =MySeries.options.getIntegerOption(MySeriesOptions.IMAGE_QUALITY);
+    int scaling = MySeriesOptions.IMAGE_SCALING[qlt];
+    image = originalImage.getScaledInstance(width, height, scaling);
     this.setSize(width, height);
     revalidate();
     repaint();

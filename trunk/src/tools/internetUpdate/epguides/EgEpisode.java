@@ -6,7 +6,6 @@ package tools.internetUpdate.epguides;
 
 import java.util.logging.Level;
 import myComponents.MyUsefulFunctions;
-import myseries.*;
 import tools.MySeriesLogger;
 
 /**

@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import myComponents.MyMessages;
 import myComponents.myGUI.MyDraggable;
-import myseries.MySeries;
+import myseriesproject.MySeries;
 import tools.Skin;
 
 /**

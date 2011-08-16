@@ -14,8 +14,9 @@ import java.util.logging.Level;
 import javax.swing.AbstractCellEditor;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
+import myseriesproject.MySeries;
 import tools.MySeriesLogger;
-import tools.options.Options;
+import tools.options.MySeriesOptions;
 
 /**
  * The cell editor for the datechooser
@@ -31,7 +32,7 @@ public class MyJDateChooserCellEditor extends AbstractCellEditor implements Tabl
     /**
      * The date format
      */
-    private SimpleDateFormat f = new SimpleDateFormat(Options.toString(Options.DATE_FORMAT));
+    private SimpleDateFormat f = new SimpleDateFormat(MySeries.options.getStringOption(MySeriesOptions.DATE_FORMAT));
 
     /**
      * Get the cell component
@@ -53,7 +54,7 @@ public class MyJDateChooserCellEditor extends AbstractCellEditor implements Tabl
             try {
                 date = sdf.parse((String) value);
             } catch (ParseException ex) {
-                sdf = new SimpleDateFormat(Options.toString(Options.DATE_FORMAT));
+                sdf = new SimpleDateFormat(MySeries.options.getStringOption(MySeriesOptions.DATE_FORMAT));
                 try {
                     date = sdf.parse((String) value);
                 } catch (ParseException ex1) {
@@ -63,7 +64,7 @@ public class MyJDateChooserCellEditor extends AbstractCellEditor implements Tabl
         }
 
         dateChooser.setDate(date);
-        dateChooser.setDateFormatString(Options.toString(Options.DATE_FORMAT));
+        dateChooser.setDateFormatString(MySeries.options.getStringOption(MySeriesOptions.DATE_FORMAT));
         return dateChooser;
     }
 

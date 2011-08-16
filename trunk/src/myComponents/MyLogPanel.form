@@ -52,7 +52,7 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="title">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Errors and warnings"/>
+        <Property name="text" type="java.lang.String" value="Messages Panel"/>
       </Properties>
     </Component>
     <Component class="myComponents.myGUI.buttons.MyButtonCancel" name="bt_hide">
@@ -82,6 +82,10 @@
               </Table>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tableMouseEntered"/>
+            <EventHandler event="mouseMoved" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="tableMouseMoved"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

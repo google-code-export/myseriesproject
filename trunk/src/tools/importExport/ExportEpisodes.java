@@ -17,8 +17,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JTable;
 import myComponents.MyMessages;
 import myComponents.myFileFilters.EpisodesExportFilter;
-import myseries.episodes.Episodes;
-import myseries.series.Series;
+import myseriesproject.episodes.Episodes;
+import myseriesproject.series.Series;
 import tools.MySeriesLogger;
 
 /**

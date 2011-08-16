@@ -6,8 +6,9 @@ package myComponents.myGUI;
 
 import java.awt.Image;
 import java.util.logging.Level;
+import myseriesproject.MySeries;
 import tools.MySeriesLogger;
-import tools.options.Options;
+import tools.options.MySeriesOptions;
 
 /**
  *
@@ -33,7 +34,7 @@ public class MyScaledImage {
         this.setWidth((int) imWidth);
         this.setHeight((int) imHeight);
         MySeriesLogger.logger.log(Level.INFO, "Scaling image from {0},{1} to {2},{3}", new Object[]{imWidth, imHeight, fitWidth, fitHeight});
-        this.setImage(getImage().getScaledInstance(this.getWidth(), this.getHeight(), Options.IMAGE_SCALING[Options.toInt(Options.IMAGE_QUALITY)]));
+        this.setImage(getImage().getScaledInstance(this.getWidth(), this.getHeight(), MySeriesOptions.IMAGE_SCALING[MySeries.options.getIntegerOption(MySeriesOptions.IMAGE_QUALITY)]));
     }
 
     /**

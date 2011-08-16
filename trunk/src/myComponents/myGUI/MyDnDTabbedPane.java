@@ -4,6 +4,8 @@
  */
 package myComponents.myGUI;
 
+import com.googlecode.soptions.IOption;
+import com.googlecode.soptions.Option;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Component;
@@ -39,7 +41,9 @@ import javax.swing.Icon;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
-import tools.options.Options;
+import myseriesproject.MySeries;
+import tools.options.MySeriesOptions;
+
 
 /**
  *
@@ -166,13 +170,12 @@ public class MyDnDTabbedPane extends JTabbedPane {
 
       private void saveOrder() {
         int tabCount = getComponentCount();
-        ArrayList<Integer> order = new ArrayList<Integer>();
+        Integer[] order = new Integer[tabCount];
         for (int i = 0; i < tabCount; i++) {
           int id = Integer.parseInt(getComponentAt(i).getName());
-          order.add(id);
+          order[i] =id;
         }
-        Options.setOption(Options.TABS_ORDER, order);
-        Options.save();
+        MySeries.options.setOption(new Option(MySeriesOptions.TABS_ORDER,Option.ARRAY_CLASS, order),true);
       }
     };
     final Transferable t = new Transferable() {

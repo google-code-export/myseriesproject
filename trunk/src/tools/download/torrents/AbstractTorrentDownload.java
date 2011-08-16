@@ -20,8 +20,7 @@ import java.util.logging.Level;
 import javax.swing.JProgressBar;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
-import sdialogs.Info;
-import tools.options.Options;
+import tools.options.MySeriesOptions;
 import tools.options.Paths;
 
 /**
@@ -40,7 +39,7 @@ public abstract class AbstractTorrentDownload implements TorrentConstants {
             progress.setIndeterminate(true);
             MySeriesLogger.logger.log(Level.INFO, "Getting torrent {0}", torrent.getTitle());
             downloadTorrent(torrent);
-            myseries.MySeries.glassPane.deactivate();
+            myseriesproject.MySeries.glassPane.deactivate();
             return;
         }
         URI u = torrent.getUri();
@@ -48,7 +47,7 @@ public abstract class AbstractTorrentDownload implements TorrentConstants {
             if (isTorrent(torrent)) {
                 MyUsefulFunctions.browse(uri);
                 form.dispose();
-                myseries.MySeries.glassPane.deactivate();
+                myseriesproject.MySeries.glassPane.deactivate();
             }
         }
     }
@@ -104,7 +103,7 @@ public abstract class AbstractTorrentDownload implements TorrentConstants {
             String[] t = torrent.getLink().split("/", -1);
             torrentName = t[t.length - 1];
             String filename = Paths.TORRENTS_PATH + torrentName;
-            outStream = new BufferedOutputStream(new FileOutputStream(Options._USER_DIR_ + filename));
+            outStream = new BufferedOutputStream(new FileOutputStream(MySeriesOptions._USER_DIR_ + filename));
             while ((ByteRead = is.read(buf)) != -1) {
                 outStream.write(buf, 0, ByteRead);
                 ByteWritten += ByteRead;
@@ -118,7 +117,7 @@ public abstract class AbstractTorrentDownload implements TorrentConstants {
         } catch (IOException ex) {
             MySeriesLogger.logger.log(Level.SEVERE, "Could not read torrent stream", ex);
         } finally {
-            myseries.MySeries.glassPane.deactivate();
+            myseriesproject.MySeries.glassPane.deactivate();
         }
     }
 

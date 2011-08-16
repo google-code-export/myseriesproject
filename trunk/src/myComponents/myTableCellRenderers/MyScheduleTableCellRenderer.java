@@ -17,7 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.plaf.ColorUIResource;
-import myseries.schedule.ScheduleDayPanel;
+import myseriesproject.schedule.ScheduleDayPanel;
 import tools.Skin;
 
 /**

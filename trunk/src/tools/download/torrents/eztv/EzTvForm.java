@@ -10,6 +10,7 @@
  */
 package tools.download.torrents.eztv;
 
+import com.googlecode.soptions.Option;
 import database.EpisodesRecord;
 import tools.MySeriesLogger;
 import database.SeriesRecord;
@@ -28,11 +29,10 @@ import com.googlecode.svalidators.formcomponents.SComboBox;
 import com.googlecode.svalidators.formcomponents.ValidationGroup;
 import com.googlecode.svalidators.validators.RequiredValidator;
 import help.HelpWindow;
-import myseries.series.Series;
-import tools.Skin;
+import myseriesproject.MySeries;
+import myseriesproject.series.Series;
 import tools.download.torrents.AbstractTorrentForm;
-import tools.download.torrents.AbstractTorrent;
-import tools.options.Options;
+import tools.options.MySeriesOptions;
 
 /**
  * The form to submit a torrent search to EzTv
@@ -59,7 +59,7 @@ public class EzTvForm extends AbstractTorrentForm {
      * @param episode The episode to search
      */
     public EzTvForm(SeriesRecord series, EpisodesRecord episode) {
-        myseries.MySeries.glassPane.activate(null);
+        myseriesproject.MySeries.glassPane.activate(null);
         this.series = series;
         this.episode = episode;
         showUp();
@@ -68,7 +68,7 @@ public class EzTvForm extends AbstractTorrentForm {
 
     private void showUp() {
         MySeriesLogger.logger.log(Level.INFO, "Showing download from eztv form");
-        myseries.MySeries.glassPane.activate(null);
+        myseriesproject.MySeries.glassPane.activate(null);
         MySeriesLogger.logger.log(Level.INFO, "Initializong components");
         initComponents();
         MySeriesLogger.logger.log(Level.FINE, "Components initialized");
@@ -140,7 +140,7 @@ public class EzTvForm extends AbstractTorrentForm {
     spinner_episode.setModel(new javax.swing.SpinnerNumberModel(1, 0, 60, 1));
 
     combo_quality.setModel(qualityModel);
-    combo_quality.setSelectedItem(Options.toString(Options.VIDEO_QUALITY));
+    combo_quality.setSelectedItem(MySeries.options.getStringOption(MySeriesOptions.VIDEO_QUALITY));
 
     progress.setString("");
     progress.setStringPainted(true);
@@ -298,10 +298,10 @@ public class EzTvForm extends AbstractTorrentForm {
   }//GEN-LAST:event_combo_seriesActionPerformed
 
   private void bt_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelActionPerformed
-      myseries.MySeries.glassPane.deactivate();
+      myseriesproject.MySeries.glassPane.deactivate();
       MySeriesLogger.logger.log(Level.INFO, "Canceled by the user");
       dispose();
-      myseries.MySeries.glassPane.deactivate();
+      myseriesproject.MySeries.glassPane.deactivate();
   }//GEN-LAST:event_bt_cancelActionPerformed
 
   private void bt_helpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_helpActionPerformed
@@ -315,8 +315,7 @@ public class EzTvForm extends AbstractTorrentForm {
       MySeriesLogger.logger.log(Level.INFO, "Validating user input");
       if (group.validate()) {
           URI uri = createUri();
-          Options.setOption(Options.VIDEO_QUALITY, (String)combo_quality.getSelectedItem());
-          Options.save();
+          MySeries.options.setOption(new Option(MySeriesOptions.VIDEO_QUALITY, Option.STRING_CLASS,(String)combo_quality.getSelectedItem()),true);
           if (uri != null) {
               MySeriesLogger.logger.log(Level.FINE, "Search uri :{0}", uri);
               EzTv e = new EzTv(uri, this);

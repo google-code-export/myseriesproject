@@ -10,8 +10,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import myComponents.MyUsefulFunctions;
-import myseries.episodes.Episodes;
-import myseries.filters.Filters;
+import myseriesproject.episodes.Episodes;
+import myseriesproject.filters.Filters;
 import tools.download.subtitles.SubtitleConstants;
 import tools.languages.Language;
 

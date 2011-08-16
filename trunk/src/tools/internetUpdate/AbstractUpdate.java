@@ -4,8 +4,6 @@
  */
 package tools.internetUpdate;
 
-import Exceptions.DatabaseException;
-import database.DBHelper;
 import database.EpisodesRecord;
 import database.SeriesRecord;
 import java.sql.SQLException;
@@ -15,9 +13,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import javax.swing.JTable;
 import myComponents.MyMessages;
-import myComponents.MyUsefulFunctions;
-import myseries.*;
-import tools.options.Options;
+import myseriesproject.*;
 import myComponents.MyUsefulFunctions;
 
 /**

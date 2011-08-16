@@ -6,7 +6,7 @@
 package myComponents.myEvents;
 
 import java.util.EventListener;
-import myseries.MySeries;
+import myseriesproject.MySeries;
 
 /**
  *

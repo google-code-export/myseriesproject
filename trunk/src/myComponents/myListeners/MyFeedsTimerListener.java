@@ -10,8 +10,8 @@ import java.awt.event.ActionListener;
 import javax.swing.SwingConstants;
 import myComponents.MyUsefulFunctions;
 import myComponents.myToolbar.ToolbarSeperator;
-import myseries.MySeries;
-import myseries.actions.FeedsActions;
+import myseriesproject.MySeries;
+import myseriesproject.actions.FeedsActions;
 
 /**
  *

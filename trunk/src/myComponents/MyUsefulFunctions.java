@@ -4,7 +4,6 @@
  */
 package myComponents;
 
-import database.DBConnection;
 import database.EpisodesRecord;
 import database.SeriesRecord;
 import java.awt.Color;
@@ -33,7 +32,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -47,7 +45,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.BorderFactory;
@@ -62,8 +59,8 @@ import myComponents.myTableCellRenderers.MyTitleCellRenderer;
 import myComponents.myToolbar.AbstractToolbar;
 import myComponents.myToolbar.ToolbarButtonActions;
 import myComponents.myToolbar.ToolbarSeperator;
-import myseries.MySeries;
-import myseries.series.Series;
+import myseriesproject.MySeries;
+import myseriesproject.series.Series;
 import tools.DesktopSupport;
 import tools.MySeriesLogger;
 import tools.Skin;
@@ -72,7 +69,7 @@ import tools.archive.ArchiveFile;
 import tools.download.subtitles.SubtitleConstants;
 import tools.languages.LangsList;
 import tools.languages.Language;
-import tools.options.Options;
+import tools.options.MySeriesOptions;
 
 /**
  * Useful functions helper class
@@ -85,13 +82,13 @@ public class MyUsefulFunctions {
   public static final String GOOGLE = "http://www.google.com";
 
   /**
-   * Converts a date from the database (YYYY-MM-DD) to the Options._DATE_FORMAT_
+   * Converts a date from the database (YYYY-MM-DD) to the MySeriesOptions._DATE_FORMAT_
    * @param date
    * @return
    */
   public static String convertDateForRendering(String date) {
     MySeriesLogger.logger.log(Level.INFO, "Converting date {0} for rendering", date);
-    SimpleDateFormat sdf = new SimpleDateFormat(Options.toString(Options.DATE_FORMAT));
+    SimpleDateFormat sdf = new SimpleDateFormat(MySeries.options.getStringOption(MySeriesOptions.DATE_FORMAT));
     try {
       Date dateD = sdf.parse(date);
       sdf = new SimpleDateFormat(EpisodesRecord.MYSQL_DATE_FORMAT);
@@ -115,7 +112,7 @@ public class MyUsefulFunctions {
     try {
       DateFormat df = new SimpleDateFormat(EpisodesRecord.MYSQL_DATE_FORMAT);
       Date sDate = df.parse(date);
-      SimpleDateFormat f = new SimpleDateFormat(Options.toString(Options.DATE_FORMAT));
+      SimpleDateFormat f = new SimpleDateFormat(MySeries.options.getStringOption(MySeriesOptions.DATE_FORMAT));
       String formatedDate = f.format(sDate);
       MySeriesLogger.logger.log(Level.FINE, "Date converted to {0}", formatedDate);
       return formatedDate;
@@ -133,7 +130,7 @@ public class MyUsefulFunctions {
   public static String convertDateForMySQL(String date) {
     try {
       MySeriesLogger.logger.log(Level.INFO, "Converting date {0} for sql", date);
-      DateFormat df = new SimpleDateFormat(Options.toString(Options.DATE_FORMAT));
+      DateFormat df = new SimpleDateFormat(MySeries.options.getStringOption(MySeriesOptions.DATE_FORMAT));
       Date sDate = df.parse(date);
       SimpleDateFormat f = new SimpleDateFormat(EpisodesRecord.MYSQL_DATE_FORMAT);
       String formatedDate = f.format(sDate);
@@ -248,7 +245,7 @@ public class MyUsefulFunctions {
       return false;
     }
     SimpleDateFormat mySQLDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    SimpleDateFormat userDateFormat = new SimpleDateFormat(Options.toString(Options.DATE_FORMAT));
+    SimpleDateFormat userDateFormat = new SimpleDateFormat(MySeries.options.getStringOption(MySeriesOptions.DATE_FORMAT));
 
     mySQLDateFormat.setLenient(false);
     try {
@@ -366,7 +363,7 @@ public class MyUsefulFunctions {
         MySeriesLogger.logger.log(Level.INFO, "No files in the directory");
         System.exit(0);
       } else {
-        return (String) MyMessages.ask(title, message, null, files, Options.toString(Options.DB_NAME), true);
+        return (String) MyMessages.ask(title, message, null, files, MySeries.options.getStringOption(MySeriesOptions.DB_NAME), true);
       }
 
       return null;
@@ -401,12 +398,12 @@ public class MyUsefulFunctions {
    * Initializes internet connection settings
    */
   public static void initInternetConnection() {
-    if (Options.toBoolean(Options.USE_PROXY)) {
+    if (MySeries.options.getBooleanOption(MySeriesOptions.USE_PROXY)) {
       MySeriesLogger.logger.log(Level.INFO,
           "Initializing internet connection with proxy [host:{0},port:{1}]",
-          new String[]{Options.toString(Options.PROXY_HOST), Options.toString(Options.PROXY_PORT)});
-      System.setProperty("http.proxyHost", Options.toString(Options.PROXY_HOST));
-      System.setProperty("http.proxyPort", Options.toString(Options.PROXY_PORT));
+          new String[]{MySeries.options.getStringOption(MySeriesOptions.PROXY_HOST), MySeries.options.getStringOption(MySeriesOptions.PROXY_PORT)});
+      System.setProperty("http.proxyHost", MySeries.options.getStringOption(MySeriesOptions.PROXY_HOST));
+      System.setProperty("http.proxyPort", MySeries.options.getStringOption(MySeriesOptions.PROXY_PORT));
     } else {
       MySeriesLogger.logger.log(Level.INFO, "Initializing internet connection");
       System.setProperty("http.proxyHost", "");
@@ -486,7 +483,7 @@ public class MyUsefulFunctions {
    * @return The regular expression
    */
   public static String createRegex(int season, int episode) {
-    return "\\D*" + season + Options._REGEX_ + episode + "\\D";
+    return "\\D*" + season + MySeriesOptions._REGEX_ + episode + "\\D";
   }
 
   /**
@@ -743,7 +740,7 @@ public class MyUsefulFunctions {
       return null;
     }
     ArrayList<File> videos = new ArrayList<File>();
-    if (series.isValidLocalDir() && Options.toBoolean(Options.AUTO_FILE_UPDATING)) {
+    if (series.isValidLocalDir() && MySeries.options.getBooleanOption(MySeriesOptions.AUTO_FILE_UPDATING)) {
       videos = MyUsefulFunctions.getVideoFiles(series, ep);
       if (videos.isEmpty()) {
         return null;
@@ -815,7 +812,7 @@ public class MyUsefulFunctions {
       return null;
     }
     ArrayList<File> subtitles = new ArrayList<File>();
-    if (series.isValidLocalDir() && Options.toBoolean(Options.AUTO_FILE_UPDATING)) {
+    if (series.isValidLocalDir() && MySeries.options.getBooleanOption(MySeriesOptions.AUTO_FILE_UPDATING)) {
       subtitles = MyUsefulFunctions.getSubtitles(series, ep);
     } else {
       return null;
@@ -856,13 +853,13 @@ public class MyUsefulFunctions {
     if (value < 1024) {
       strValue = strValue + " bytes";
     } else if (value < Math.pow(1024l, 2)) {
-      strValue = Options._DEC_FORMAT_.format(value / 1024) + " KB";
+      strValue = MySeriesOptions._DEC_FORMAT_.format(value / 1024) + " KB";
     } else if (value < Math.pow(1024l, 3)) {
-      strValue = Options._DEC_FORMAT_.format(value / Math.pow(1024, 2)) + " MB";
+      strValue = MySeriesOptions._DEC_FORMAT_.format(value / Math.pow(1024, 2)) + " MB";
     } else if (value < Math.pow(1024l, 4)) {
-      strValue = Options._DEC_FORMAT_.format(value / Math.pow(1024, 3)) + " GB";
+      strValue = MySeriesOptions._DEC_FORMAT_.format(value / Math.pow(1024, 3)) + " GB";
     } else if (value < Math.pow(1024l, 5)) {
-      strValue = Options._DEC_FORMAT_.format(value / Math.pow(1024, 4)) + " TB";
+      strValue = MySeriesOptions._DEC_FORMAT_.format(value / Math.pow(1024, 4)) + " TB";
     }
     return strValue;
   }
@@ -1103,9 +1100,9 @@ public class MyUsefulFunctions {
       sample = "_sample";
     }
     return series.getTitle()
-        + Options.toString(Options.SEASON_SEPARATOR, false) + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0")
-        + Options.toString(Options.EPISODE_SEPARATOR, false) + MyUsefulFunctions.padLeft(episode.getEpisode(), 2, "0")
-        + Options.toString(Options.TITLE_SEPARATOR, false) + episode.getTitle() + sample + "." + ext;
+        + MySeries.options.getStringOption(MySeriesOptions.SEASON_SEPARATOR, false) + MyUsefulFunctions.padLeft(series.getSeason(), 2, "0")
+        + MySeries.options.getStringOption(MySeriesOptions.EPISODE_SEPARATOR, false) + MyUsefulFunctions.padLeft(episode.getEpisode(), 2, "0")
+        + MySeries.options.getStringOption(MySeriesOptions.TITLE_SEPARATOR, false) + episode.getTitle() + sample + "." + ext;
   }
 
   public static boolean renameEpisode(SeriesRecord series, String filename) {
@@ -1161,7 +1158,7 @@ public class MyUsefulFunctions {
 
   private static boolean isLanguage(String lang) {
     MySeriesLogger.logger.log(Level.INFO, "Checking if {0} is a language", lang);
-    ArrayList<Language> langs = myseries.MySeries.languages.getLangs();
+    ArrayList<Language> langs = myseriesproject.MySeries.languages.getLangs();
     for (Iterator<Language> it = langs.iterator(); it.hasNext();) {
       Language language = it.next();
       if (language.getCode().equals(lang)) {
@@ -1195,8 +1192,8 @@ public class MyUsefulFunctions {
   }
 
   public static void feedUpdater(MySeries m) {
-    if (Options.toInt(Options.FEED_UPDATE_FREQUENCY) > 0) {
-      int fr = Options.toInt(Options.FEED_UPDATE_FREQUENCY) * 60 * 1000;
+    if (MySeries.options.getIntegerOption(MySeriesOptions.FEED_UPDATE_FREQUENCY) > 0) {
+      int fr = MySeries.options.getIntegerOption(MySeriesOptions.FEED_UPDATE_FREQUENCY) * 60 * 1000;
       m.feedsTimer = new Timer(fr, new MyFeedsTimerListener(m));
       m.feedsTimer.start();
     } else {
@@ -1207,10 +1204,10 @@ public class MyUsefulFunctions {
   public static void createMemoryCons(MySeries m) {
 
     MySeriesLogger.logger.log(Level.INFO, "Creating the timer for memory consumption");
-    if (Options.toInt(Options.MEMORY_CONSUMPTION_UPDATE) > 0) {
+    if (MySeries.options.getIntegerOption(MySeriesOptions.MEMORY_CONSUMPTION_UPDATE) > 0) {
       m.myToolbar.addButton(AbstractToolbar.MEMORY);
       ToolbarSeperator mem = getMemoryToolbarSeperator(m);
-      m.memoryTimer = new Timer(Options.toInt(Options.MEMORY_CONSUMPTION_UPDATE), new MyMemoryTimerListener(mem, m.myToolbar.getOrientation()));
+      m.memoryTimer = new Timer(MySeries.options.getIntegerOption(MySeriesOptions.MEMORY_CONSUMPTION_UPDATE), new MyMemoryTimerListener(mem, m.myToolbar.getOrientation()));
       MySeriesLogger.logger.log(Level.INFO, "Starting timer");
       m.memoryTimer.start();
     } else {
@@ -1234,7 +1231,7 @@ public class MyUsefulFunctions {
           t.setOpaque(true);
           // t.setBounds(0, 0, 120, 32);
           if (m.myToolbar.getOrientation() == SwingConstants.HORIZONTAL) {
-            FontMetrics fm = t.getFontMetrics(new Font(Options.toString(Options.FONT_FACE), Font.BOLD, (int) Options.toFloat(Options.FONT_SIZE)));
+            FontMetrics fm = t.getFontMetrics(new Font(MySeries.options.getStringOption(MySeriesOptions.FONT_FACE), Font.BOLD, (int) MySeries.options.getFloatOption(MySeriesOptions.FONT_SIZE)));
             int width = fm.stringWidth(Dummy);
             t.setMinimumSize(new Dimension(width + 40, 26));
             t.setPreferredSize(new Dimension(width + 40, 26));

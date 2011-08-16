@@ -130,11 +130,11 @@
           </StringArray>
         </Property>
         <Property name="selectedItem" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Options.toString(Options.DEBUG_MODE)" type="code"/>
+          <Connection code="MySeries.options.getStringOption(DEBUG_MODE)" type="code"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;The level of Debuging info that&apos;s written in the log file&lt;br /&gt;&#xa;SEVERE : Only fatal errors are written&lt;br /&gt;&#xa;WARNING : Warnings and fatal errors are written&lt;br /&gt;&#xa;ALL : Everything is written&lt;br /&gt;&#xa;OFF: Nothing is written&lt;br /&gt;"/>
         <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Options.DEBUG_MODE" type="code"/>
+          <Connection code="DEBUG_MODE" type="code"/>
         </Property>
         <Property name="opaque" type="boolean" value="false"/>
       </Properties>
@@ -164,10 +164,10 @@
           </StringArray>
         </Property>
         <Property name="selectedItem" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Options.toString(Options.DATE_FORMAT)" type="code"/>
+          <Connection code="MySeries.options.getStringOption(DATE_FORMAT)" type="code"/>
         </Property>
         <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Options.DATE_FORMAT" type="code"/>
+          <Connection code="DATE_FORMAT" type="code"/>
         </Property>
       </Properties>
       <AuxValues>
@@ -184,10 +184,10 @@
     <Component class="com.googlecode.svalidators.formcomponents.STextField" name="tf_videoApp">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Options.toString(Options.VIDEO_APP)" type="code"/>
+          <Connection code="MySeries.options.getStringOption(VIDEO_APP)" type="code"/>
         </Property>
         <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Options.VIDEO_APP" type="code"/>
+          <Connection code="VIDEO_APP" type="code"/>
         </Property>
       </Properties>
       <AuxValues>
@@ -223,11 +223,10 @@
     <Component class="com.googlecode.svalidators.formcomponents.STextField" name="tf_mainDir">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Options.toString(Options.MAIN_DIRECTORY)" type="code"/>
+          <Connection code="MySeries.options.getStringOption(MAIN_DIRECTORY)" type="code"/>
         </Property>
-        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;A directory where subtitle (zipped or not) files should be saved. Then the application will move them to the series directory if possible"/>
         <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Options.MAIN_DIRECTORY" type="code"/>
+          <Connection code="MAIN_DIRECTORY" type="code"/>
         </Property>
       </Properties>
       <AuxValues>
@@ -264,11 +263,11 @@
     <Component class="javax.swing.JCheckBox" name="cb_showPopups">
       <Properties>
         <Property name="selected" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Options.toBoolean(Options.SHOW_POPUPS)" type="code"/>
+          <Connection code="MySeries.options.getBooleanOption(SHOW_POPUPS)" type="code"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Show popup messages"/>
         <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Options.SHOW_POPUPS" type="code"/>
+          <Connection code="SHOW_POPUPS" type="code"/>
         </Property>
       </Properties>
     </Component>

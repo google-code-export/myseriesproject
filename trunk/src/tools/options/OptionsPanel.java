@@ -10,8 +10,10 @@
  */
 package tools.options;
 
+import com.googlecode.soptions.Option;
 import java.awt.Component;
 import java.awt.Font;
+import javax.swing.SpinnerModel;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import tools.MySeriesLogger;
@@ -31,18 +33,21 @@ import javax.swing.JTextField;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyDraggable;
-import myseries.MySeries;
+import myseriesproject.MySeries;
 import com.googlecode.svalidators.formcomponents.ValidationGroup;
 import help.HelpWindow;
 import java.awt.BorderLayout;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JSlider;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.xml.parsers.ParserConfigurationException;
 import myComponents.myGUI.MyFont;
-import myseries.actions.ApplicationActions;
+import myseriesproject.actions.ApplicationActions;
+import org.xml.sax.SAXException;
 import tools.languages.Language;
 import tools.options.panels.Appearance;
 import tools.options.panels.General;
@@ -239,11 +244,15 @@ public class OptionsPanel extends MyDraggable {
       MySeriesLogger.logger.log(Level.INFO, "Saving options");
       SimpleDateFormat f = new SimpleDateFormat(String.valueOf(general.combobox_dateFormat.getSelectedItem()));
       getOptionsComponents();
-      Options.save();
-      Options.getOptions();
+      MySeries.options.save();
+      MySeries.options.readOptions();
       dispose();
       MySeries.glassPane.deactivate();
     } catch (FileNotFoundException ex) {
+      MySeriesLogger.logger.log(Level.SEVERE, "Could not save the options", ex);
+    } catch (ParserConfigurationException ex) {
+      MySeriesLogger.logger.log(Level.SEVERE, "Could not save the options", ex);
+    } catch (SAXException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, "Could not save the options", ex);
     } catch (IOException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, "Could not write to options file", ex);
@@ -271,13 +280,13 @@ public class OptionsPanel extends MyDraggable {
     } else if (currentPanel.equals(renaming)) {
       MySeriesLogger.logger.log(Level.INFO, "Showing Rename options help window");
       HelpWindow helpWindow = new HelpWindow(HelpWindow.RENAME_OPTIONS);
-    }else if (currentPanel.equals(appearance)) {
+    } else if (currentPanel.equals(appearance)) {
       MySeriesLogger.logger.log(Level.INFO, "Showing appearance options help window");
       HelpWindow helpWindow = new HelpWindow(HelpWindow.APPEARANCE_OPTIONS);
-    }else if (currentPanel.equals(performance)) {
+    } else if (currentPanel.equals(performance)) {
       MySeriesLogger.logger.log(Level.INFO, "Showing performance options help window");
       HelpWindow helpWindow = new HelpWindow(HelpWindow.PERFORMANCE_OPTIONS);
-    }else if (currentPanel.equals(subtitles)) {
+    } else if (currentPanel.equals(subtitles)) {
       MySeriesLogger.logger.log(Level.INFO, "Showing subtitles options help window");
       HelpWindow helpWindow = new HelpWindow(HelpWindow.SUBTITLES_OPTIONS);
     }
@@ -302,22 +311,23 @@ public class OptionsPanel extends MyDraggable {
     try {
       String mess = "";
       saveOptions();
+      MySeriesLogger.logger.setLevel(Level.parse(MySeries.options.getStringOption(MySeriesOptions.DEBUG_MODE)));
       MyUsefulFunctions.createMemoryCons(m);
       MyUsefulFunctions.feedUpdater(m);
       MySeries.languages.setPrimary((Language) subtitles.combo_primaryLang.getSelectedItem());
       MySeries.languages.setSecondary((Language) subtitles.combo_secondaryLang.getSelectedItem());
       MyUsefulFunctions.initInternetConnection();
-      MySeriesLogger.logger.setLevel(Level.parse(Options.toString(Options.DEBUG_MODE)));
+      MySeriesLogger.logger.setLevel(Level.parse(MySeries.options.getStringOption(MySeriesOptions.DEBUG_MODE)));
       m.createComboBox_filters();
-      if (!appearance.oldFontFace.equals(Options.toString(Options.FONT_FACE))) {
+      if (!appearance.oldFontFace.equals(MySeries.options.getStringOption(MySeriesOptions.FONT_FACE))) {
         MySeriesLogger.logger.log(Level.INFO, "Font face changed");
         mess = "Font face, ";
       }
-      if (!appearance.oldFontSize.equals(Options.toString(Options.FONT_SIZE))) {
+      if (!appearance.oldFontSize.equals(MySeries.options.getStringOption(MySeriesOptions.FONT_SIZE))) {
         MySeriesLogger.logger.log(Level.INFO, "Font size changed");
         mess += "Font size, ";
       }
-      if (!appearance.oldColor.equals(Options.toColor(Options.SKIN_COLOR))) {
+      if (!appearance.oldColor.equals(MySeries.options.getColorOption(MySeriesOptions.SKIN_COLOR))) {
         MySeriesLogger.logger.log(Level.INFO, "Skin color changed");
         mess += "Skin color, ";
         skinChange = true;
@@ -327,7 +337,7 @@ public class OptionsPanel extends MyDraggable {
         mess += "Skin, ";
         skinChange = true;
       }
-      if (!appearance.oldLaf.equals(Options.toString(Options.LOOK_AND_FEEL))) {
+      if (!appearance.oldLaf.equals(MySeries.options.getStringOption(MySeriesOptions.LOOK_AND_FEEL))) {
         MySeriesLogger.logger.log(Level.INFO, "Look and feel changed");
         mess += "Look and Feel, ";
       }
@@ -337,7 +347,7 @@ public class OptionsPanel extends MyDraggable {
         if (!skinChange) {
           MyFont.SetMyFont();
           try {
-            appearance.lap.setLookAndFeel(Options.toString(Options.LOOK_AND_FEEL));
+            appearance.lap.setLookAndFeel(MySeries.options.getStringOption(MySeriesOptions.LOOK_AND_FEEL));
           } catch (Exception ex) {
             Logger.getLogger(OptionsPanel.class.getName()).log(Level.SEVERE, null, ex);
           }
@@ -345,7 +355,7 @@ public class OptionsPanel extends MyDraggable {
           SwingUtilities.updateComponentTreeUI(m.seriesPopUp);
           SwingUtilities.updateComponentTreeUI(m.episodesPopUp);
           // m.pack();
-          m.setExtendedState(Options.toInt(Options.WINDOW_STATE));
+          m.setExtendedState(MySeries.options.getIntegerOption(MySeriesOptions.WINDOW_STATE));
         } else {
           mess = "Skin changes ";
           int a = MyMessages.confirm("Options", mess + "will take effect when you restart the application\nRestart now?", false);
@@ -367,7 +377,7 @@ public class OptionsPanel extends MyDraggable {
     String selection = (String) node.getUserObject();
     BorderLayout layout = (BorderLayout) right.getLayout();
     Component c = layout.getLayoutComponent(right, BorderLayout.CENTER);
-    if(c!=null){
+    if (c != null) {
       right.remove(c);
       right.validate();
       right.repaint();
@@ -386,7 +396,7 @@ public class OptionsPanel extends MyDraggable {
       currentPanel = renaming;
     } else if (selection.equals(PERFORMANCE)) {
       right.add(performance, BorderLayout.CENTER);
-      currentPanel =  performance;
+      currentPanel = performance;
     } else if (selection.equals(SUBTITLES)) {
       right.add(subtitles, BorderLayout.CENTER);
       currentPanel = subtitles;
@@ -437,53 +447,58 @@ public class OptionsPanel extends MyDraggable {
   private void parse(JPanel panel) {
     MySeriesLogger.logger.log(Level.INFO, "Parsing panel {0}", panel.getName());
     Component[] c = panel.getComponents();
+    Option option;
     for (int i = 0; i < c.length; i++) {
       if (c[i].getName() == null) {
       } else if (!c[i].getName().equals("noname") && !c[i].getName().equals("null")) {
-        Options.setOption(c[i].getName(), getValue(c[i]));
+        String name = c[i].getName();
+        option = MySeries.options.getOption(name);
+        option.setValue(getValue(c[i]));
+        MySeries.options.setOption(option);
       }
     }
   }
 
   /**
-   * Getting a value of a component <br />
-   * Components are JSpinner, JCheckBox, JComboBox
+   * Getting the value and type of a component <br />
+   * Components are JSpinner, JCheckBox, JComboBox, JTextField, JButton, JSlider
    * @param c The component
    * @return the value of the component
    */
   private Object getValue(Component c) {
-    MySeriesLogger.logger.log(Level.INFO, "Getting {0} components value", c.getName());
-    Object obj = "";
+    MySeriesLogger.logger.log(Level.INFO, "Getting {0} components value and type", c.getName());
+    Object val = "";
+    Object type = Option.STRING_CLASS;
     if (c instanceof JSpinner) {
       JSpinner spin = (JSpinner) c;
-      obj = spin.getValue();
+      val = spin.getValue();
+      SpinnerModel model = spin.getModel();
+      
     } else if (c instanceof JCheckBox) {
       JCheckBox check = (JCheckBox) c;
-      obj = check.isSelected();
+      val = check.isSelected();
     } else if (c instanceof JTextField) {
       JTextField text = (JTextField) c;
-      obj = text.getText();
+      val = text.getText();
     } else if (c instanceof JComboBox) {
       JComboBox combo = (JComboBox) c;
       // In some combos get the item instead of index
       String name = combo.getName();
-      if (MyUsefulFunctions.isInArray(Options._COMBO_OPTIONS_, name)) {
-        obj = String.valueOf(combo.getSelectedItem());
+      if (MyUsefulFunctions.isInArray(MySeriesOptions._COMBO_OPTIONS_, name)) {
+        val = String.valueOf(combo.getSelectedItem());
       } else {
-        obj = combo.getSelectedIndex();
+        val = combo.getSelectedIndex();
       }
     } else // Get color buttons
     if (c instanceof JButton) {
       JButton button = (JButton) c;
-      return button.getBackground().getRed() + ", "
-          + button.getBackground().getGreen() + ", "
-          + button.getBackground().getBlue();
+      val =  button.getBackground();
     } else if (c instanceof JSlider) {
       JSlider sl = (JSlider) c;
-      obj = sl.getValue();
+      val = sl.getValue();
     }
-    MySeriesLogger.logger.log(Level.INFO, "Components value is {0}", obj);
-    return obj;
+    MySeriesLogger.logger.log(Level.INFO, "Components value is {0}", val);
+    return val;
   }
 
   private void createTreeModel() {

@@ -28,7 +28,7 @@ public abstract class AbstractDownloadForm extends MyDraggable {
         MySeriesLogger.logger.log(Level.INFO, "Initializong components");
         initComponents();
         MySeriesLogger.logger.log(Level.FINE, "Components initialized");
-        myseries.MySeries.glassPane.activate(null);
+        myseriesproject.MySeries.glassPane.activate(null);
     }
 
     public AbstractDownloadForm() {
@@ -142,7 +142,7 @@ public abstract class AbstractDownloadForm extends MyDraggable {
   }// </editor-fold>//GEN-END:initComponents
 
   private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-      myseries.MySeries.glassPane.deactivate();
+      myseriesproject.MySeries.glassPane.deactivate();
   }//GEN-LAST:event_formWindowClosed
 
   private void myButtonCancel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myButtonCancel1ActionPerformed

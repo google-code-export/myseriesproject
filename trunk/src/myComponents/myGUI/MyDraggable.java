@@ -7,7 +7,6 @@ package myComponents.myGUI;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.JDialog;
-import tools.options.Options;
 import tools.Skin;
 
 public class MyDraggable extends JDialog {

@@ -10,9 +10,8 @@ import javax.swing.BorderFactory;
 import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
-import javax.swing.plaf.basic.BasicViewportUI;
-import org.jdesktop.swingbinding.adapters.BeanAdapterBase;
-import tools.options.Options;
+import myseriesproject.MySeries;
+import tools.options.MySeriesOptions;
 
 /**
  * Skin class
@@ -80,28 +79,28 @@ public final class Skin {
    * @return the brighter
    */
   public static Color getColor_2() {
-    return Options.toBoolean(Options.USE_SKIN) ? skinColor.brighter() : null;
+    return MySeries.options.getBooleanOption(MySeriesOptions.USE_SKIN) ? skinColor.brighter() : null;
   }
 
   /**
    * @return the brightest
    */
   public static Color getColor_1() {
-    return Options.toBoolean(Options.USE_SKIN) ? skinColor.brighter().brighter() : null;
+    return MySeries.options.getBooleanOption(MySeriesOptions.USE_SKIN) ? skinColor.brighter().brighter() : null;
   }
 
   /**
    * @return the darker
    */
   public static Color getColor_4() {
-    return Options.toBoolean(Options.USE_SKIN) ? skinColor.darker() : null;
+    return MySeries.options.getBooleanOption(MySeriesOptions.USE_SKIN) ? skinColor.darker() : null;
   }
 
   /**
    * @return the darkest
    */
   public static Color getColor_5() {
-    return Options.toBoolean(Options.USE_SKIN) ? skinColor.darker().darker() : null;
+    return MySeries.options.getBooleanOption(MySeriesOptions.USE_SKIN) ? skinColor.darker().darker() : null;
   }
 
   /**
@@ -130,27 +129,27 @@ public final class Skin {
   }
 
   public static Color getButtonForegroundColor() {
-    return Options.toBoolean(Options.USE_SKIN) ? getForeGroundColor(Color.white) : null;
+    return MySeries.options.getBooleanOption(MySeriesOptions.USE_SKIN) ? getForeGroundColor(Color.white) : null;
   }
 
   public static Color getSpinnerForegroundColor() {
-    return Options.toBoolean(Options.USE_SKIN) ? getForeGroundColor(Color.white) : null;
+    return MySeries.options.getBooleanOption(MySeriesOptions.USE_SKIN) ? getForeGroundColor(Color.white) : null;
   }
 
   public static Color getOuterColor() {
-    return Options.toBoolean(Options.USE_SKIN) ? getColor_5() : null;
+    return MySeries.options.getBooleanOption(MySeriesOptions.USE_SKIN) ? getColor_5() : null;
   }
 
   public static Color getInnerColor() {
-    return Options.toBoolean(Options.USE_SKIN) ? getColor_1() : getLafTextAreaColor();
+    return MySeries.options.getBooleanOption(MySeriesOptions.USE_SKIN) ? getColor_1() : getLafTextAreaColor();
   }
 
   public static Color getTitleColor() {
-    return Options.toBoolean(Options.USE_SKIN) ? getColor_1() : null;
+    return MySeries.options.getBooleanOption(MySeriesOptions.USE_SKIN) ? getColor_1() : null;
   }
 
   public static Color getForeGroundColor(Color color) {
-    if (!Options.toBoolean(Options.USE_SKIN)) {
+    if (!MySeries.options.getBooleanOption(MySeriesOptions.USE_SKIN)) {
       return null;
     }
     float[] hsbVals = new float[3];

@@ -5,6 +5,8 @@
 package database;
 
 import Exceptions.DatabaseException;
+import com.googlecode.soptions.IOption;
+import com.googlecode.soptions.Option;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,9 +16,8 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import myComponents.MyMessages;
-import sdialogs.Info;
 import tools.MySeriesLogger;
-import tools.options.Options;
+import tools.options.MySeriesOptions;
 import tools.options.Paths;
 
 /**
@@ -165,8 +166,7 @@ public class DBConnection {
         checkDatabase();
         return true;
       } else {
-        Options.setOption(Options.DB_NAME, "");
-        Options.save();
+        myseriesproject.MySeries.options.setOption(new Option(MySeriesOptions.DB_NAME,Option.STRING_CLASS ,""),true);
         MyMessages.error("No Update", "Could not update the database", true);
         MySeriesLogger.logger.log(Level.SEVERE, "Could not update the database.Exiting...");
         isConnected = false;
@@ -177,9 +177,8 @@ public class DBConnection {
       MySeriesLogger.logger.log(Level.SEVERE, "SQL Error.Exiting...", ex1);
       MyMessages.error("Database", ex1.getMessage()+"\nRestart the application and choose another db"
       + " or create a new one", true);
-      Options.setOption(Options.DB_NAME, "");
-      Options.save();
-      isConnected = false;
+      myseriesproject.MySeries.options.setOption(new Option(MySeriesOptions.DB_NAME,Option.STRING_CLASS ,""),true);
+        isConnected = false;
       //System.exit(1);
       return false;
     }
@@ -193,12 +192,12 @@ public class DBConnection {
     try {
       MySeriesLogger.logger.log(Level.INFO, "Creating database connection with {0}", db);
       Class.forName("org.sqlite.JDBC");
-      conn = DriverManager.getConnection("jdbc:sqlite:" + Options._USER_DIR_ + Paths.DATABASES_PATH + db);
+      conn = DriverManager.getConnection("jdbc:sqlite:" + MySeriesOptions._USER_DIR_ + Paths.DATABASES_PATH + db);
       stmt = conn.createStatement();
       if (!newDatabase) {
         if (checkDatabase()) {
-          Options.setOption(Options.DB_NAME, db);
-          Options.save();
+          myseriesproject.MySeries.options.setOption(new Option(MySeriesOptions.DB_NAME,Option.STRING_CLASS ,db),true);
+        
           MySeriesLogger.logger.log(Level.FINE, "Database connection established");
           isConnected = true;
         } else {
@@ -220,7 +219,7 @@ public class DBConnection {
    * @return
    */
   public static boolean databaseExists(String dbName) {
-    if (new File(Options._USER_DIR_ + Paths.DATABASES_PATH + dbName).isFile()) {
+    if (new File(MySeriesOptions._USER_DIR_ + Paths.DATABASES_PATH + dbName).isFile()) {
       MySeriesLogger.logger.log(Level.FINE, "Database {0} exists", dbName);
       return true;
     }

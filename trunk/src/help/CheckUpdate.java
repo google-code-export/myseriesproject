@@ -24,7 +24,7 @@ import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyDraggable;
 import myComponents.myGUI.buttons.MyButtonCancel;
-import myseries.*;
+import myseriesproject.*;
 import tools.DesktopSupport;
 import tools.Skin;
 import tools.MySeriesLogger;

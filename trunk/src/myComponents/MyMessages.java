@@ -5,16 +5,14 @@
 package myComponents;
 
 import components.MyDraggable;
-import java.awt.Color;
 import java.util.logging.Level;
-import javax.swing.JPanel;
 import myComponents.myGUI.MyDisabledGlassPane;
+import myseriesproject.MySeries;
 import sdialogs.Ask;
 import sdialogs.Confirm;
 import sdialogs.Info;
 import tools.MySeriesLogger;
-import tools.Skin;
-import tools.options.Options;
+import tools.options.MySeriesOptions;
 
 /**
  * The messages helper class
@@ -35,7 +33,7 @@ public class MyMessages {
   private static void checkpane() {
     wasGlassPaneActive = MyDisabledGlassPane.isActivated;
     if (!wasGlassPaneActive) {
-      myseries.MySeries.glassPane.activate(null);
+      myseriesproject.MySeries.glassPane.activate(null);
     }
   }
 
@@ -69,7 +67,7 @@ public class MyMessages {
     }
     
     MySeriesLogger.logger.log(level, "Displaying info dialog : {0}", message);
-    if (showWindow || Options.toBoolean(Options.SHOW_POPUPS)) {
+    if (showWindow || MySeries.options.getBooleanOption(MySeriesOptions.SHOW_POPUPS)) {
       checkpane();
       Info i = new Info(title, message, type);
       if(setColors){
@@ -78,7 +76,7 @@ public class MyMessages {
       i.showDialog();
       hideMessage();
     }
-    if (type != INFO_MESS || !Options.toBoolean(Options.SHOW_POPUPS)) {
+    if (type != INFO_MESS || !MySeries.options.getBooleanOption(MySeriesOptions.SHOW_POPUPS)) {
       logToPanel(type, title, message);
     }
   }
@@ -165,7 +163,7 @@ public class MyMessages {
   }
 
   private static void setColors(MyDraggable drag) {
-    if (Options.toBoolean(Options.USE_SKIN)) {
+    if (MySeries.options.getBooleanOption(MySeriesOptions.USE_SKIN)) {
       //drag.setOuterColor(Skin.getOuterColor());
       //drag.setInnerColor(Color.WHITE);
       //drag.setTitleColor(Skin.getTitleColor());
@@ -175,7 +173,7 @@ public class MyMessages {
 
   private static void hideMessage() {
     if (!wasGlassPaneActive) {
-      myseries.MySeries.glassPane.deactivate();
+      myseriesproject.MySeries.glassPane.deactivate();
     }
   }
 

@@ -11,8 +11,9 @@ import java.util.logging.Level;
 import javax.swing.JOptionPane;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
-import tools.options.Options;
+import myseriesproject.MySeries;
 import tools.MySeriesLogger;
+import tools.options.MySeriesOptions;
 import tools.options.Paths;
 
 /**
@@ -29,7 +30,7 @@ public class SaveDatabase {
      */
     public SaveDatabase() {
         try {
-            myseries.MySeries.glassPane.activate(null);
+            myseriesproject.MySeries.glassPane.activate(null);
             MySeriesLogger.logger.log(Level.INFO, "Showing save database panel");
             showSavePane();
         } catch (FileNotFoundException ex) {
@@ -39,7 +40,7 @@ public class SaveDatabase {
             MySeriesLogger.logger.log(Level.SEVERE, "Could not save database", ex);
             MyMessages.error("Database not saved!!!", "The database could not be saved (" + ex.getMessage() + ")", true);
         } finally {
-            myseries.MySeries.glassPane.deactivate();
+            myseriesproject.MySeries.glassPane.deactivate();
         }
     }
 
@@ -49,8 +50,8 @@ public class SaveDatabase {
      */
     public SaveDatabase(String dbName) {
         try {
-            String source = Options._USER_DIR_ + Paths.DATABASES_PATH  + dbName;
-            String dest = Options._USER_DIR_ + Paths.DATABASES_PATH  + dbName + Database.BACK_UP_EXT;
+            String source = MySeriesOptions._USER_DIR_ + Paths.DATABASES_PATH  + dbName;
+            String dest = MySeriesOptions._USER_DIR_ + Paths.DATABASES_PATH  + dbName + Database.BACK_UP_EXT;
             MySeriesLogger.logger.log(Level.INFO, "Taking a backup of the database");
             if (MyUsefulFunctions.copyfile(source, dest)) {
                 MySeriesLogger.logger.log(Level.INFO, "Database backed up!!!");
@@ -67,7 +68,7 @@ public class SaveDatabase {
     }
 
     private boolean overwriteDatabase() {
-        File db = new File(Options._USER_DIR_ + Paths.DATABASES_PATH  + name + Database.EXT);
+        File db = new File(MySeriesOptions._USER_DIR_ + Paths.DATABASES_PATH  + name + Database.EXT);
         if (db.isFile()) {
           MySeriesLogger.logger.log(Level.INFO, "Overwrite database?");
             return MyMessages.confirm("File Exists",
@@ -79,8 +80,8 @@ public class SaveDatabase {
 
     private void commitSave() {
         try {
-            String source = Options._USER_DIR_ + Paths.DATABASES_PATH  + Options.toString(Options.DB_NAME);
-            String dest = Options._USER_DIR_ + Paths.DATABASES_PATH  + name + Database.EXT;
+            String source = MySeriesOptions._USER_DIR_ + Paths.DATABASES_PATH  + MySeries.options.getStringOption(MySeriesOptions.DB_NAME);
+            String dest = MySeriesOptions._USER_DIR_ + Paths.DATABASES_PATH  + name + Database.EXT;
             MySeriesLogger.logger.log(Level.INFO, "Saving database");
             if (MyUsefulFunctions.copyfile(source, dest)) {
                 MySeriesLogger.logger.log(Level.INFO, "Database saved");
@@ -106,7 +107,7 @@ public class SaveDatabase {
             MySeriesLogger.logger.log(Level.INFO, "Save Database aborted");
         } else {
             if (!overwriteDatabase()) {
-                if ((name).equals(Options.toString(Options.DB_NAME).replace(Database.EXT, ""))) {
+                if ((name).equals(MySeries.options.getStringOption(MySeriesOptions.DB_NAME).replace(Database.EXT, ""))) {
                     MyMessages.error("Error", "Cannot save the database on itself!!!", true);
                     MySeriesLogger.logger.log(Level.WARNING, "Cannot save the database on itself!!!");
                 } else {

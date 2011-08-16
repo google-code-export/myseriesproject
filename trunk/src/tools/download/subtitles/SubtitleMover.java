@@ -15,8 +15,9 @@ import tools.MySeriesLogger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import myComponents.myFileFilters.SubtitlesFilter;
-import tools.options.Options;
 import myComponents.MyUsefulFunctions;
+import myseriesproject.MySeries;
+import tools.options.MySeriesOptions;
 
 /**
  *
@@ -38,7 +39,7 @@ public class SubtitleMover {
         ArrayList<File> subs = getSubtitles(ser);
         for (Iterator<File> it1 = subs.iterator(); it1.hasNext();) {
           File sub = it1.next();
-          if (move(sub, ser.getLocalDir()) && Options.toBoolean(Options.AUTO_RENAME_SUBS)) {
+          if (move(sub, ser.getLocalDir()) && MySeries.options.getBooleanOption(MySeriesOptions.AUTO_RENAME_SUBS)) {
             MyUsefulFunctions.renameEpisode(ser, sub.getName());
           }
         }
@@ -48,7 +49,7 @@ public class SubtitleMover {
 
   private ArrayList<File> getSubtitles(SeriesRecord ser) {
     ArrayList<File> subs = new ArrayList<File>();
-    File mainDir = new File(Options.toString(Options.MAIN_DIRECTORY));
+    File mainDir = new File(MySeries.options.getStringOption(MySeriesOptions.MAIN_DIRECTORY));
     File[] allSubs = mainDir.listFiles(new SubtitlesFilter());
     if (allSubs != null) {
       for (int i = 0; i < allSubs.length; i++) {

@@ -27,17 +27,20 @@ import javax.swing.JColorChooser;
 import javax.swing.JTextField;
 import lap.LafAndPlay;
 import myComponents.MyUsefulFunctions;
-import myseries.MySeriesConstants;
+import myseriesproject.MySeries;
+import myseriesproject.MySeriesConstants;
 import tools.MySeriesLogger;
+import tools.options.IMySeriesOptions;
 import tools.options.MyOptionsFontRenderer;
-import tools.options.Options;
+import tools.options.MySeriesOptions;
 import tools.options.Paths;
 
 /**
  *
  * @author lordovol
  */
-public class Appearance extends javax.swing.JPanel {
+public class Appearance extends javax.swing.JPanel implements IMySeriesOptions {
+  private static final long serialVersionUID = 1L;
 
   private DefaultComboBoxModel model_laf = new DefaultComboBoxModel();
   public boolean colorsChanged;
@@ -54,14 +57,14 @@ public class Appearance extends javax.swing.JPanel {
   public Appearance() {
     initComponents();
     combobox_laf.setEnabled(!checkbox_dontUseSkin.isSelected());
-    oldFontFace = Options.toString(Options.FONT_FACE);
-    oldFontSize = Options.toString(Options.FONT_SIZE);
-    oldColor = Options.toColor(Options.SKIN_COLOR);
-    oldUseSkin = Options.toBoolean(Options.USE_SKIN);
-    oldLaf = Options.toString(Options.LOOK_AND_FEEL);
+    oldFontFace = MySeries.options.getStringOption(FONT_FACE);
+    oldFontSize = MySeries.options.getStringOption(FONT_SIZE);
+    oldColor = MySeries.options.getColorOption(SKIN_COLOR);
+    oldUseSkin = MySeries.options.getBooleanOption(USE_SKIN);
+    oldLaf = MySeries.options.getStringOption(LOOK_AND_FEEL);
     createModelFonts();
     JTextField t = (JTextField) combobox_fonts.getEditor().getEditorComponent();
-    t.setText(Options.toString(Options.FONT_FACE));
+    t.setText(MySeries.options.getStringOption(FONT_FACE));
   }
 
   private void createLafModel() {
@@ -83,7 +86,7 @@ public class Appearance extends javax.swing.JPanel {
     fonts = getCachedFonts();
     model_fonts = new DefaultComboBoxModel(fonts);
     combobox_fonts.setModel(model_fonts);
-    model_fonts.setSelectedItem(Options.toString(Options.FONT_FACE));
+    model_fonts.setSelectedItem(MySeries.options.getStringOption(FONT_FACE));
     combobox_fonts.addValidator(new ListValidator("", fonts, false));
     MySeriesLogger.logger.log(Level.INFO, "Added {0} fonts", model_fonts.getSize());
     //System.out.println(System.currentTimeMillis());
@@ -91,7 +94,7 @@ public class Appearance extends javax.swing.JPanel {
 
   private String[] getCachedFonts() {
     MySeriesLogger.logger.log(Level.INFO, "Checking for cached fonts model");
-    File c = new File(Options._USER_DIR_ + "/f.obj");
+    File c = new File(MySeriesOptions._USER_DIR_ + "/f.obj");
     if (c.exists() && (System.currentTimeMillis() - c.lastModified()) / 3600000 / 24 < 15) {
       MySeriesLogger.logger.log(Level.INFO, "Cached model exists an it's new.Reading file");
       try {
@@ -112,7 +115,7 @@ public class Appearance extends javax.swing.JPanel {
       
       FileOutputStream fout;
       try {
-        fout = new FileOutputStream(Options._USER_DIR_ + "/f.obj");
+        fout = new FileOutputStream(MySeriesOptions._USER_DIR_ + "/f.obj");
         ObjectOutputStream oos = new ObjectOutputStream(fout);
         oos.writeObject(f);
         oos.close();
@@ -157,19 +160,19 @@ public class Appearance extends javax.swing.JPanel {
     jLabel5.setName("noname"); // NOI18N
 
     combobox_laf.setModel(model_laf);
-    combobox_laf.setSelectedItem(Options.toString(Options.LOOK_AND_FEEL));
-    combobox_laf.setName(Options.LOOK_AND_FEEL);
+    combobox_laf.setSelectedItem(MySeries.options.getStringOption(LOOK_AND_FEEL));
+    combobox_laf.setName(LOOK_AND_FEEL);
     combobox_laf.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         combobox_lafActionPerformed(evt);
       }
     });
 
-    checkbox_dontUseSkin.setSelected(Options.toBoolean(Options.USE_SKIN));
+    checkbox_dontUseSkin.setSelected(MySeries.options.getBooleanOption(USE_SKIN));
     checkbox_dontUseSkin.setText("Use Skin :");
     checkbox_dontUseSkin.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     checkbox_dontUseSkin.setMargin(new java.awt.Insets(0, 0, 0, 0));
-    checkbox_dontUseSkin.setName(Options.USE_SKIN);
+    checkbox_dontUseSkin.setName(USE_SKIN);
     checkbox_dontUseSkin.setOpaque(false);
     checkbox_dontUseSkin.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -177,9 +180,9 @@ public class Appearance extends javax.swing.JPanel {
       }
     });
 
-    button_BGColor.setBackground(Options.toColor(Options.SKIN_COLOR));
+    button_BGColor.setBackground(MySeries.options.getColorOption(SKIN_COLOR));
     button_BGColor.setText("Set Color");
-    button_BGColor.setName(Options.SKIN_COLOR);
+    button_BGColor.setName(SKIN_COLOR);
     button_BGColor.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         button_BGColorActionPerformed(evt);
@@ -187,7 +190,7 @@ public class Appearance extends javax.swing.JPanel {
     });
 
     combobox_fonts.setMinimumSize(new java.awt.Dimension(23, 20));
-    combobox_fonts.setName(Options.FONT_FACE);
+    combobox_fonts.setName(FONT_FACE);
     combobox_fonts.setRenderer(new MyOptionsFontRenderer());
     combobox_fonts.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -200,9 +203,10 @@ public class Appearance extends javax.swing.JPanel {
     jLabel10.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
     jLabel10.setName("noname"); // NOI18N
 
-    spinner_fontSize.setName(Options.FONT_SIZE);
+    spinner_fontSize.setModel(new javax.swing.SpinnerNumberModel());
+    spinner_fontSize.setName(FONT_SIZE);
     spinner_fontSize.setOpaque(false);
-    spinner_fontSize.setValue((int)Options.toFloat(Options.FONT_SIZE));
+    spinner_fontSize.setValue((int)MySeries.options.getFloatOption(FONT_SIZE));
     spinner_fontSize.addChangeListener(new javax.swing.event.ChangeListener() {
       public void stateChanged(javax.swing.event.ChangeEvent evt) {
         spinner_fontSizeStateChanged(evt);
@@ -217,18 +221,18 @@ public class Appearance extends javax.swing.JPanel {
     label_preview.setText(String.valueOf(combobox_fonts.getSelectedItem()));
     label_preview.setName("noname"); // NOI18N
 
-    cb_minimizeTray.setSelected(Options.toBoolean(Options.MINIMIZE_TO_TRAY));
+    cb_minimizeTray.setSelected(MySeries.options.getBooleanOption(MINIMIZE_TO_TRAY));
     cb_minimizeTray.setText("Minimize to tray");
     cb_minimizeTray.setToolTipText("Minimize Application to tray");
     cb_minimizeTray.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     cb_minimizeTray.setMargin(new java.awt.Insets(0, 0, 0, 0));
-    cb_minimizeTray.setName(Options.MINIMIZE_TO_TRAY);
+    cb_minimizeTray.setName(MINIMIZE_TO_TRAY);
     cb_minimizeTray.setOpaque(false);
 
-    cb_randomizeLaf.setSelected(Options.toBoolean(Options.RANDOMIZE_LAF));
+    cb_randomizeLaf.setSelected(MySeries.options.getBooleanOption(RANDOMIZE_LAF));
     cb_randomizeLaf.setText("Use a random LAF on startup");
     cb_randomizeLaf.setMargin(new java.awt.Insets(0, 0, 0, 0));
-    cb_randomizeLaf.setName(Options.RANDOMIZE_LAF);
+    cb_randomizeLaf.setName(RANDOMIZE_LAF);
     cb_randomizeLaf.setOpaque(false);
 
     bt_downloadLafs.setToolTipText("Download Look and Feels");
@@ -302,11 +306,11 @@ public class Appearance extends javax.swing.JPanel {
           .addComponent(label_preview, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addGap(18, 18, 18)
         .addComponent(cb_minimizeTray)
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addContainerGap(10, Short.MAX_VALUE))
     );
 
     createLafModel();
-    combobox_laf.setSelectedItem(Options.toString(Options.LOOK_AND_FEEL));
+    combobox_laf.setSelectedItem(MySeries.options.getStringOption(LOOK_AND_FEEL));
   }// </editor-fold>//GEN-END:initComponents
 
     private void combobox_lafActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combobox_lafActionPerformed
@@ -321,8 +325,8 @@ public class Appearance extends javax.swing.JPanel {
 
     private void button_BGColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_BGColorActionPerformed
       MySeriesLogger.logger.log(Level.INFO, "howing color browser");
-      JColorChooser c = new JColorChooser(Options.toColor(Options.SKIN_COLOR));
-      Color newColor = JColorChooser.showDialog(null, "Choose a background color", Options.toColor(Options.SKIN_COLOR));
+      JColorChooser c = new JColorChooser(MySeries.options.getColorOption(SKIN_COLOR));
+      Color newColor = JColorChooser.showDialog(null, "Choose a background color", MySeries.options.getColorOption(SKIN_COLOR));
       if (newColor != null) {
         MySeriesLogger.logger.log(Level.INFO, "Selected color {0}", newColor);
         button_BGColor.setBackground(newColor);

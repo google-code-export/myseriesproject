@@ -10,25 +10,19 @@
  */
 package tools.options.panels;
 
-import com.googlecode.svalidators.validators.CompareValidator;
 import com.googlecode.svalidators.validators.NoSpaceValidator;
 import com.googlecode.svalidators.validators.NullValidator;
 import com.googlecode.svalidators.validators.PositiveNumberValidator;
-import com.googlecode.svalidators.validators.SValidator;
 import java.util.Hashtable;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
-import myComponents.myTableCellRenderers.MySubtitleListRenderer;
-import tools.download.subtitles.SubtitleConstants;
-import tools.options.Options;
-import myseries.MySeries;
+import myseriesproject.MySeries;
+import tools.options.IMySeriesOptions;
 
 /**
  *
  * @author lordovol
  */
-public class Internet extends javax.swing.JPanel {
+public class Internet extends javax.swing.JPanel implements IMySeriesOptions{
 
   
   /** Creates new form Internet */
@@ -77,12 +71,12 @@ public class Internet extends javax.swing.JPanel {
 
     setName("Internet"); // NOI18N
 
-    checkbox_useProxy.setSelected(Options.toBoolean(Options.USE_PROXY));
+    checkbox_useProxy.setSelected(MySeries.options.getBooleanOption(USE_PROXY));
     checkbox_useProxy.setText("Use Proxy");
     checkbox_useProxy.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     checkbox_useProxy.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
     checkbox_useProxy.setMargin(new java.awt.Insets(0, 0, 0, 0));
-    checkbox_useProxy.setName(Options.USE_PROXY);
+    checkbox_useProxy.setName(USE_PROXY);
     checkbox_useProxy.setOpaque(false);
     checkbox_useProxy.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -98,24 +92,24 @@ public class Internet extends javax.swing.JPanel {
     jLabel9.setText("Port :");
     jLabel9.setName("noname"); // NOI18N
 
-    textfield_proxy.setText(Options.toString(Options.PROXY_HOST));
-    textfield_proxy.setName(Options.PROXY_HOST);
+    textfield_proxy.setText(MySeries.options.getStringOption(PROXY_HOST));
+    textfield_proxy.setName(PROXY_HOST);
     textfield_proxy.addKeyListener(new java.awt.event.KeyAdapter() {
       public void keyReleased(java.awt.event.KeyEvent evt) {
         textfield_proxyKeyReleased(evt);
       }
     });
 
-    jCheckBox1.setSelected(Options.toBoolean(Options.CHECK_VERSION));
+    jCheckBox1.setSelected(MySeries.options.getBooleanOption(CHECK_VERSION));
     jCheckBox1.setText("Check for updates on startup");
     jCheckBox1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     jCheckBox1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
     jCheckBox1.setMargin(new java.awt.Insets(0, 0, 0, 0));
-    jCheckBox1.setName(Options.CHECK_VERSION);
+    jCheckBox1.setName(CHECK_VERSION);
     jCheckBox1.setOpaque(false);
 
-    textfield_port.setText(Options.toString(Options.PROXY_PORT));
-    textfield_port.setName(Options.PROXY_PORT);
+    textfield_port.setText(MySeries.options.getStringOption(PROXY_PORT));
+    textfield_port.setName(PROXY_PORT);
     textfield_port.addKeyListener(new java.awt.event.KeyAdapter() {
       public void keyReleased(java.awt.event.KeyEvent evt) {
         textfield_portKeyReleased(evt);
@@ -125,15 +119,15 @@ public class Internet extends javax.swing.JPanel {
     jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     jLabel2.setText("Number of columns in Feeds :");
 
-    spinner_columns.setName(Options.FEED_COLUMNS);
-    spinner_columns.setValue(Options.toInt(Options.FEED_COLUMNS));
+    spinner_columns.setName(FEED_COLUMNS);
+    spinner_columns.setValue(MySeries.options.getIntegerOption(FEED_COLUMNS));
 
-    cb_updateFeeds.setSelected(Options.toBoolean(Options.UPDATE_FEEDS));
+    cb_updateFeeds.setSelected(MySeries.options.getBooleanOption(UPDATE_FEEDS));
     cb_updateFeeds.setText("Update feeds on startup");
     cb_updateFeeds.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     cb_updateFeeds.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
     cb_updateFeeds.setMargin(new java.awt.Insets(0, 0, 0, 0));
-    cb_updateFeeds.setName(Options.UPDATE_FEEDS);
+    cb_updateFeeds.setName(UPDATE_FEEDS);
     cb_updateFeeds.setOpaque(false);
 
     jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -151,8 +145,8 @@ public class Internet extends javax.swing.JPanel {
     sl_feeds.setPaintTicks(true);
     sl_feeds.setSnapToTicks(true);
     sl_feeds.setToolTipText("Frequency of memory consumption update");
-    sl_feeds.setValue(Options.toInt(Options.FEED_UPDATE_FREQUENCY));
-    sl_feeds.setName(Options.FEED_UPDATE_FREQUENCY);
+    sl_feeds.setValue(MySeries.options.getIntegerOption(FEED_UPDATE_FREQUENCY));
+    sl_feeds.setName(FEED_UPDATE_FREQUENCY);
     sl_feeds.setOpaque(false);
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -231,8 +225,8 @@ public class Internet extends javax.swing.JPanel {
         textfield_port.addValidator(new NullValidator());
         textfield_proxy.addValidator(new NullValidator());
       } else {
-        textfield_port.addValidator(new PositiveNumberValidator(Options.toString(Options.PROXY_PORT), false, false));
-        textfield_proxy.addValidator(new NoSpaceValidator(Options.toString(Options.PROXY_HOST), false));
+        textfield_port.addValidator(new PositiveNumberValidator(MySeries.options.getStringOption(PROXY_PORT), false, false));
+        textfield_proxy.addValidator(new NoSpaceValidator(MySeries.options.getStringOption(PROXY_HOST), false));
       }
       textfield_port.validateValue();
       textfield_proxy.validateValue();

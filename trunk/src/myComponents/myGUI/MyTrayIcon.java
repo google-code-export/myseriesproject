@@ -5,7 +5,6 @@
 package myComponents.myGUI;
 
 import java.awt.AWTException;
-import java.awt.Frame;
 import java.awt.Image;
 import java.awt.MenuItem;
 import java.awt.PopupMenu;
@@ -17,8 +16,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 import javax.swing.JFrame;
+import myseriesproject.MySeries;
 import tools.MySeriesLogger;
-import tools.options.Options;
+import tools.options.MySeriesOptions;
 
 /**
  *
@@ -128,7 +128,7 @@ public class MyTrayIcon {
     public void mouseReleased(MouseEvent e) {
       if (e.getButton() == 1 && e.getClickCount() > 1) {
         frame.setVisible(true);
-        frame.setExtendedState(Options.toInt(Options.WINDOW_STATE));
+        frame.setExtendedState(MySeries.options.getIntegerOption(MySeriesOptions.WINDOW_STATE));
         removeIconFromTray();
       }
     }
@@ -148,12 +148,12 @@ public class MyTrayIcon {
       switch (action) {
         case RESTORE:
           frame.setVisible(true);
-          frame.setExtendedState(Options.toInt(Options.WINDOW_STATE));
+          frame.setExtendedState(MySeries.options.getIntegerOption(MySeriesOptions.WINDOW_STATE));
           removeIconFromTray();
           break;
         case EXIT:
           removeIconFromTray();
-          frame.setExtendedState(Options.toInt(Options.WINDOW_STATE));
+          frame.setExtendedState(MySeries.options.getIntegerOption(MySeriesOptions.WINDOW_STATE));
           frame.dispose();
           break;
       }

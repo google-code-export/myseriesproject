@@ -30,8 +30,9 @@ import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.StyleSheet;
 import myComponents.MyUsefulFunctions;
 import myComponents.myGUI.MyScrollableFlowPanel;
+import myseriesproject.MySeries;
 import tools.MySeriesLogger;
-import tools.options.Options;
+import tools.options.MySeriesOptions;
 
 /**
  *
@@ -59,7 +60,7 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
     public static int min_height = 60;
     public static int max_height = 300;
     public int id = -1;
-    private int numberOfColumns = Options.toInt(Options.FEED_COLUMNS);
+    private int numberOfColumns = MySeries.options.getIntegerOption(MySeriesOptions.FEED_COLUMNS);
     public static final int CUT_TITLE_PADDING = 120;
     private JPanel feedPreviewPanel;
 
@@ -326,7 +327,7 @@ public class FeedPanel extends javax.swing.JPanel implements Runnable {
 
     private String getDate() {
         MySeriesLogger.logger.log(Level.INFO, "Getting feed date");
-        DateFormat df = new SimpleDateFormat(Options.toString(Options.DATE_FORMAT));
+        DateFormat df = new SimpleDateFormat(MySeries.options.getStringOption(MySeriesOptions.DATE_FORMAT));
         if (entry.getPublishedDate() != null) {
             return df.format(entry.getPublishedDate());
         } else if (entry.getUpdatedDate() != null) {

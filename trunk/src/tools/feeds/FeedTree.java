@@ -26,8 +26,8 @@ import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 import myComponents.MyMessages;
-import myseries.MySeries;
-import myseries.actions.FeedsActions;
+import myseriesproject.MySeries;
+import myseriesproject.actions.FeedsActions;
 import tools.MySeriesLogger;
 
 /**

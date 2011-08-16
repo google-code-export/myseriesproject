@@ -4,8 +4,9 @@
  */
 package myComponents.MyTableModels;
 
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
-import myseries.series.Series;
+import myseriesproject.series.Series;
 
 /**
  * The tablemodel for the series table
@@ -32,10 +33,6 @@ public class MySeriesTableModel extends DefaultTableModel {
 
   @Override
   public boolean isCellEditable(int row, int col) {
-    if (col == Series.HIDDEN_COLUMN || col == Series.UPDATE_COLUMN) {
-      return true;
-    } else {
-      return false;
-    }
+    return  col == Series.HIDDEN_COLUMN || col == Series.UPDATE_COLUMN;
   }
 }

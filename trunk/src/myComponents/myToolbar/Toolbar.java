@@ -15,10 +15,10 @@ import java.util.logging.Level;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import myComponents.MyUsefulFunctions;
-import myseries.MySeries;
-import myseries.actions.ApplicationActions;
+import myseriesproject.MySeries;
+import myseriesproject.actions.ApplicationActions;
 import tools.MySeriesLogger;
-import tools.options.Options;
+import tools.options.MySeriesOptions;
 
 /**
  *
@@ -59,7 +59,7 @@ public class Toolbar extends AbstractToolbar {
   public void populateToolbar() {
     MySeriesLogger.logger.log(Level.INFO, "Populating the toolbar");
     removeAll();
-    visibleButtons = visibleButtons == null ? Options.getDefaultToolbarButtons() : visibleButtons;
+    visibleButtons = visibleButtons == null ? MySeriesOptions.getDefaultToolbarButtons() : visibleButtons;
     for (int i = 0; i < visibleButtons.length; i++) {
       Integer key = visibleButtons[i];
       if (key != null && buttons.containsKey(key)) {

@@ -8,14 +8,13 @@ import Exceptions.DatabaseException;
 import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import myComponents.MyUsefulFunctions;
-import tools.options.Options;
 import tools.MySeriesLogger;
+import tools.options.MySeriesOptions;
 import tools.options.Paths;
 
 /**
@@ -90,7 +89,7 @@ public class FeedsRecord extends Record {
       ResultSet rs = null;
       MySeriesLogger.logger.log(Level.INFO, "Deleting feed : {0}", feed_ID);
       try {
-        File file = new File(Options._USER_DIR_ + Paths.FEEDS_PATH + feed_ID);
+        File file = new File(MySeriesOptions._USER_DIR_ + Paths.FEEDS_PATH + feed_ID);
         if (file.exists()) {
           MySeriesLogger.logger.log(Level.INFO, "Deleting feed file : {0}", file.getName());
           file.delete();

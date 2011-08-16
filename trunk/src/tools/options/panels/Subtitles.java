@@ -16,14 +16,14 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import myComponents.myTableCellRenderers.MySubtitleListRenderer;
 import tools.download.subtitles.SubtitleConstants;
-import tools.options.Options;
-import myseries.MySeries;
+import myseriesproject.MySeries;
+import tools.options.IMySeriesOptions;
 
 /**
  *
  * @author Spyros Soldatos
  */
-public class Subtitles extends javax.swing.JPanel {
+public class Subtitles extends javax.swing.JPanel implements IMySeriesOptions {
 
   private ComboBoxModel primarySubtitlesModel = new DefaultComboBoxModel(SubtitleConstants.SUBTITLE_LANG.toArray());
   private ComboBoxModel secondarySubtitlesModel = new DefaultComboBoxModel(SubtitleConstants.SUBTITLE_LANG.toArray());
@@ -62,8 +62,8 @@ public class Subtitles extends javax.swing.JPanel {
     jLabel13.setName("noname"); // NOI18N
 
     combo_primaryLang.setModel(primarySubtitlesModel);
-    combo_primaryLang.setSelectedItem(MySeries.languages.getLanguageByName(Options.toString(Options.PRIMARY_SUB)));
-    combo_primaryLang.setName(Options.PRIMARY_SUB);
+    combo_primaryLang.setSelectedItem(MySeries.languages.getLanguageByName(MySeries.options.getStringOption(PRIMARY_SUB)));
+    combo_primaryLang.setName(PRIMARY_SUB);
     combo_primaryLang.setOpaque(false);
     combo_primaryLang.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -77,9 +77,9 @@ public class Subtitles extends javax.swing.JPanel {
     jLabel15.setName("noname"); // NOI18N
 
     combo_secondaryLang.setModel(secondarySubtitlesModel);
-    combo_secondaryLang.setSelectedItem(MySeries.languages.getLanguageByName(Options.toString(Options.SECONDARY_SUB)));
+    combo_secondaryLang.setSelectedItem(MySeries.languages.getLanguageByName(MySeries.options.getStringOption(SECONDARY_SUB)));
     combo_secondaryLang.setMinimumSize(new java.awt.Dimension(23, 20));
-    combo_secondaryLang.setName(Options.SECONDARY_SUB);
+    combo_secondaryLang.setName(SECONDARY_SUB);
     combo_secondaryLang.setOpaque(false);
     combo_secondaryLang.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -87,10 +87,10 @@ public class Subtitles extends javax.swing.JPanel {
       }
     });
 
-    jCheckBox1.setSelected(Options.toBoolean(Options.SEARCH_FOR_SECONDARY_SUBTITLE));
+    jCheckBox1.setSelected(MySeries.options.getBooleanOption(SEARCH_FOR_SECONDARY_SUBTITLE));
     jCheckBox1.setText("Search for both languages subtitles");
     jCheckBox1.setMargin(new java.awt.Insets(0, 0, 0, 0));
-    jCheckBox1.setName(Options.SEARCH_FOR_SECONDARY_SUBTITLE);
+    jCheckBox1.setName(SEARCH_FOR_SECONDARY_SUBTITLE);
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
     this.setLayout(layout);
