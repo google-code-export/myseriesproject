@@ -36,7 +36,6 @@ public class MySeriesOptions extends SOptions implements IMySeriesOptions {
     super(_USER_DIR_ + FILENAME);
   }
 
-  @Override
   protected Option[] createDefaultOptionsArray() {
     return new Option[]{
           new Option(ACTIVE_FILTER, STRING_CLASS, ""),

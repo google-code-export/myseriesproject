@@ -12,7 +12,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
-import myseries.MySeries;
+import myseriesproject.MySeries;
 
 /**
  * Looks and Feels
@@ -64,13 +64,13 @@ public class LookAndFeels {
       SwingUtilities.updateComponentTreeUI(m);
       m.pack();
     } catch (ClassNotFoundException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     } catch (InstantiationException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     } catch (IllegalAccessException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     } catch (UnsupportedLookAndFeelException ex) {
-      MySeries.logger.log(Level.SEVERE, null, ex);
+      MySeriesLogger.logger.log(Level.SEVERE, null, ex);
     }
   }
   
