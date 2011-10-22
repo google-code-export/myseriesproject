@@ -13,13 +13,13 @@ import myComponents.MyUsefulFunctions;
  *
  * @author lordovol
  */
-public class Subtitle  {
+public class Subtitle implements Comparable<Subtitle>  {
 
   public String title;
   public URL url;
   public int love = 0;
   public int hate = 0;
-  public int percent = 0;
+  public int score = 0;
   public String language;
   private Color bgColor;
 
@@ -35,7 +35,7 @@ public class Subtitle  {
     this.hate = hate;
     this.language = language;
     if(this.love + this.hate > 0){
-      percent = this.love * 100 / (this.love + this.hate);
+      score = this.love * 100 / (this.love + this.hate);
     }
     
   }
@@ -46,27 +46,31 @@ public class Subtitle  {
 
   @Override
   public String toString() {
-    if (percent == 0) {
+    if (score == 0) {
       return title;
     }
-    return percent + "% "  + title + "(" + love + "/" + hate + ")";
+    return score + "% "  + title + "(" + love + "/" + hate + ")";
   }
 
   /**
    * @return the bgColor
    */
   public Color getBgColor() {
-    if (percent == 0){
+    if (score == 0){
       return Color.WHITE;
     }
-    if(percent < 30){
+    if(score < 30){
       return new Color(255,64,64);
-    } else if (percent < 60){
+    } else if (score < 60){
       return new Color(255,218,185);
-    } else if (percent < 80){
+    } else if (score < 80){
       return new Color(219,219,112);
     }else {
       return new Color(152,251,152);
     }
+  }
+
+  public int compareTo(Subtitle o) {
+    return o.score- score;
   }
 }
