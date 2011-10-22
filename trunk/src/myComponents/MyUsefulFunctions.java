@@ -280,7 +280,7 @@ public class MyUsefulFunctions {
     }
     str = padStr + str;
     while (str.length() < length) {
-      str += padStr + str;
+      str += (padStr + str);
     }
 
     return str;

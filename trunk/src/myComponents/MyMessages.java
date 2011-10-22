@@ -22,9 +22,9 @@ public class MyMessages {
 
   private static boolean wasGlassPaneActive;
   private static MyLogPanel logPanel;
-  private static final int ERROR_MESS = 0;
-  private static final int WARNING_MESS = 2;
-  private static final int INFO_MESS = 1;
+  public static final int ERROR_MESS = 0;
+  public static final int WARNING_MESS = 2;
+  public static final int INFO_MESS = 1;
 
   public static void setLogPanel(MyLogPanel logPanel) {
     MyMessages.logPanel = logPanel;
@@ -49,6 +49,23 @@ public class MyMessages {
   /**
    * Display a message to the user
    * @param title The message title
+   * @param type The type of the message
+   * @param log Log the message
+   * @param message The message text
+   */
+  public static void message(String title, String message, int type, boolean log) {
+    if(log){
+      message(title, message, type, false, true);
+    } else {
+      Info i = new Info(title, message, type);
+      i.showDialog();
+      hideMessage();
+    }
+  }
+
+  /**
+   * Display a message to the user
+   * @param title The message title
    * @param showWindow If a window should be shown anyway
    * @param message The message text
    */
@@ -65,7 +82,6 @@ public class MyMessages {
         level = Level.SEVERE;
         break;
     }
-    
     MySeriesLogger.logger.log(level, "Displaying info dialog : {0}", message);
     if (showWindow || MySeries.options.getBooleanOption(MySeriesOptions.SHOW_POPUPS)) {
       checkpane();
