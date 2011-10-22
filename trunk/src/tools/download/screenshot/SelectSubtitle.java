@@ -15,6 +15,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.Collections;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
@@ -35,6 +36,7 @@ public class SelectSubtitle extends MyDraggable {
 
   /** Creates new form SelectSubtitle */
   public SelectSubtitle(ArrayList<Subtitle> subs) {
+    Collections.sort(subs);
     this.subs = subs;
     comboModel = new DefaultComboBoxModel(subs.toArray());
     initComponents();
