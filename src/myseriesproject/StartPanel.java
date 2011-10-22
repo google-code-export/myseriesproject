@@ -415,6 +415,8 @@ public class StartPanel extends MyDraggable {
       File oldOptions = new File(OldOptions._USER_DIR_ + "MySeries.ini");
       File newOptions = new File(OldOptions._USER_DIR_ + "MySeries.xml");
       if (oldOptions.isFile() && !newOptions.isFile()) {
+        MyMessages.message("Importing Options", "Importing options from ini to xml file.\n"
+                + "If the application won't start or freeze, delete MySeries.ini file and try again", MyMessages.INFO_MESS ,false);
         MySeriesLogger.logger.log(Level.INFO, "Reading old options file");
         OldOptions.getOptions();
         updateopts = true;
@@ -433,9 +435,9 @@ public class StartPanel extends MyDraggable {
       if (updateopts) {
         MySeriesLogger.logger.log(Level.INFO, "Updating options file");
         MySeries.options.updateOptions();
+        MyMessages.message("Importing Options", "Importing options from ini to xml was finished sucessfully.", MyMessages.INFO_MESS ,false);
       }
       MySeries.options.readOptions();
-
       MySeriesLogger.logger.log(Level.FINE, "Logger created");
       MySeriesLogger.logger.log(Level.INFO, "Setting font and font sizes");
       MyFont.SetMyFont();

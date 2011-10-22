@@ -10,8 +10,10 @@
  */
 package tools.download.screenshot;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
@@ -173,16 +175,17 @@ public class SelectSubtitle extends MyDraggable {
 
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
       if (isSelected) {
-        setBackground(list.getSelectionBackground());
-        setForeground(list.getSelectionForeground());
+        setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        setFont(getFont().deriveFont(Font.BOLD));
       } else {
-        setBackground(list.getBackground());
-        setForeground(list.getForeground());
+        setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
+        setFont(getFont().deriveFont(Font.PLAIN));
       }
       if (value instanceof Subtitle) {
         Subtitle sub = (Subtitle) value;
         setText(sub.toString());
         setIcon(sub.getIcon());
+        setBackground(sub.getBgColor());
       } else {
         setText(value.toString());
       }
