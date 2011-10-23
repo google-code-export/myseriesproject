@@ -541,6 +541,8 @@ public class StartPanel extends MyDraggable {
       MySeriesLogger.logger.log(Level.SEVERE, ex.getMessage(), ex);
     } catch (Exception ex) {
       MySeriesLogger.logger.log(Level.SEVERE, "Exception", ex);
+      ex.printStackTrace();
+      System.exit(1);
     }
   }
 
