@@ -365,4 +365,9 @@ public class SeriesRecord extends Record implements Comparable<SeriesRecord> {
   public void setQuality(int quality) {
     this.quality = quality;
   }
+
+  public Icon getQualityIcon() {
+    Quality q = new Quality(getQuality());
+    return q.getIcon();
+  }
 }

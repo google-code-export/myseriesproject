@@ -74,6 +74,7 @@ import myComponents.myTableCellRenderers.MyScheduleTableCellRenderer;
 import myComponents.myTableCellRenderers.MyTitleCellRenderer;
 import myComponents.myTableCellRenderers.MyDownloadedCellRenderer;
 import myComponents.myTableCellRenderers.MySeriesBooleanCellRenderer;
+import myComponents.myTableCellRenderers.MySeriesTitleCellRenderer;
 import myComponents.myTableCellRenderers.MySubtitlesCellRenderer;
 import myComponents.myTableCellRenderers.MyWatchedCellRenderer;
 import myComponents.myTreeCellRenderers.FeedTreeCellRenderer;
@@ -425,6 +426,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     //SERIES TABLE
     MySeriesLogger.logger.log(Level.INFO, "Setting cell editors, renderers and listener for series table");
     tableSeries.getModel().addTableModelListener(this);
+    tableSeries.getColumn(Series.SERIES_RECORD_COLUMN_TITLE).setCellRenderer(new MySeriesTitleCellRenderer());
     tableSeries.getColumn(Series.HIDDEN_COLUMN_TITLE).setCellRenderer(new MySeriesBooleanCellRenderer());
     tableSeries.getColumn(Series.UPDATE_COLUMN_TITLE).setCellRenderer(new MySeriesBooleanCellRenderer());
 
