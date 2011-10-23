@@ -30,6 +30,7 @@ import javax.swing.DefaultComboBoxModel;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myseriesproject.MySeries;
+import myseriesproject.series.Quality;
 import myseriesproject.series.Series;
 import tools.download.torrents.AbstractTorrentForm;
 import tools.download.torrents.TorrentConstants;
@@ -64,6 +65,11 @@ public class IsohuntForm extends AbstractTorrentForm implements TorrentConstants
     combo_series.setSelectedItem(series.getTitle());
     spinner_episode.setValue(episode.getEpisode());
     spinner_season.setValue(series.getSeason());
+    if (series.getQuality() == Quality.HIGH_QUALITY) {
+      combo_quality.setSelectedIndex(2);
+    } else {
+      combo_quality.setSelectedIndex(0);
+    }
     setLocationRelativeTo(null);
     setVisible(true);
   }
@@ -154,7 +160,6 @@ public class IsohuntForm extends AbstractTorrentForm implements TorrentConstants
     jLabel7.setText("0: Full season");
 
     combo_quality.setModel(qualityModel);
-    combo_quality.setSelectedItem(MySeries.options.getStringOption(MySeriesOptions.VIDEO_QUALITY));
 
     jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     jLabel1.setText("Quality :");
@@ -331,7 +336,7 @@ public class IsohuntForm extends AbstractTorrentForm implements TorrentConstants
       MySeriesLogger.logger.log(Level.INFO, "Validating user input");
       if (group.validate()) {
         URI uri = createUri();
-        MySeries.options.setOption(new Option(MySeriesOptions.VIDEO_QUALITY,Option.STRING_CLASS, (String) combo_quality.getSelectedItem()),true);
+        MySeries.options.setOption(new Option(MySeriesOptions.VIDEO_QUALITY, Option.STRING_CLASS, (String) combo_quality.getSelectedItem()), true);
         if (uri != null) {
           MySeriesLogger.logger.log(Level.FINE, "Search uri :{0}", uri);
           Isohunt i = new Isohunt(uri, this);
@@ -375,9 +380,9 @@ public class IsohuntForm extends AbstractTorrentForm implements TorrentConstants
     String episode = String.valueOf(spinner_episode.getValue()).equals("0") ? "" : "E" + MyUsefulFunctions.padLeft(String.valueOf(spinner_episode.getValue()), 2, "0");
     try {
       q.add("ihq=" + URLEncoder.encode(
-          String.valueOf(combo_series.getSelectedItem())
-          + season + episode + "+"
-          + String.valueOf(combo_quality.getSelectedItem()), "UTF-8"));
+              String.valueOf(combo_series.getSelectedItem())
+              + season + episode + "+"
+              + String.valueOf(combo_quality.getSelectedItem()), "UTF-8"));
       q.add("sort=" + String.valueOf(combo_sort.getSelectedItem()).toLowerCase());
       q.add("order=" + String.valueOf(combo_order.getSelectedItem()).toLowerCase());
       q.add("iht=3");
