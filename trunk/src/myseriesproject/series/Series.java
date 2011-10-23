@@ -68,7 +68,7 @@ public class Series {
    * @throws java.sql.SQLException
    */
   public static void updateSeriesTable(JTable seriesTable, boolean deleted) throws SQLException {
-    MySeriesLogger.logger.log(Level.INFO, "Updating series table");
+    MySeriesLogger.logger.log(Level.INFO, "Updating {0} table",SeriesRecord.TABLE);
     emptySeries(seriesTable);
     ArrayList<SeriesRecord> series = getSeries(false);
     DefaultTableModel model = (DefaultTableModel) seriesTable.getModel();
@@ -98,29 +98,30 @@ public class Series {
    */
   public static ArrayList<SeriesRecord> getSeries(boolean deleted) throws SQLException {
     int d = deleted ? 1 : 0;
-    MySeriesLogger.logger.log(Level.INFO, "Getting all the {0} series", deleted ? "deleted" : "");
+    MySeriesLogger.logger.log(Level.INFO, "Getting all the {0} series", deleted ? SeriesRecord.C_DELETED : "");
     ArrayList<SeriesRecord> series = new ArrayList<SeriesRecord>();
-    String sql = "SELECT * FROM series  WHERE deleted = " + d + " ORDER BY title , season";
-   
+    String sql = "SELECT * FROM "+SeriesRecord.TABLE+"  WHERE " + SeriesRecord.C_DELETED + " = " + d + " ORDER BY " + SeriesRecord.C_TITLE + " , " + SeriesRecord.C_SEASON;
+
     ResultSet rs = DBConnection.conn.createStatement().executeQuery(sql);
     boolean hidden;
     boolean update;
     while (rs.next()) {
       SeriesRecord s = new SeriesRecord();
-      s.setTitle(rs.getString("title"));
-      s.setSeason(rs.getInt("season"));
-      s.setSeries_ID(rs.getInt("series_ID"));
-      s.setTvrage_ID(rs.getInt("tvrage_ID"));
-      s.setLocalDir(rs.getString("localDir"));
-      s.setScreenshot(rs.getString("screenshot"));
-      s.setSOnlineCode(rs.getString("sonline"));
-      s.setTvSubtitlesCode(rs.getString("link"));
-      hidden = rs.getBoolean("hidden");
-      s.setHidden(rs.getInt("hidden"));
-      update = rs.getBoolean("internetUpdate");
-      s.setInternetUpdate(rs.getInt("internetUpdate"));
-      deleted = rs.getBoolean("deleted");
-      s.setDeleted(rs.getInt("deleted"));
+      s.setTitle(rs.getString(SeriesRecord.C_TITLE));
+      s.setSeason(rs.getInt(SeriesRecord.C_SEASON));
+      s.setSeries_ID(rs.getInt(SeriesRecord.C_SERIES_ID));
+      s.setTvrage_ID(rs.getInt(SeriesRecord.C_TVRAGE_ID));
+      s.setLocalDir(rs.getString(SeriesRecord.C_LOCAL_DIR));
+      s.setScreenshot(rs.getString(SeriesRecord.C_SCREENSHOT));
+      s.setSOnlineCode(rs.getString(SeriesRecord.C_SONLINE));
+      s.setTvSubtitlesCode(rs.getString(SeriesRecord.C_TV_SUBTITLES_CODE));
+      hidden = rs.getBoolean(SeriesRecord.C_HIDDEN);
+      s.setHidden(rs.getInt(SeriesRecord.C_HIDDEN));
+      update = rs.getBoolean(SeriesRecord.C_INTERNET_UPDATE);
+      s.setInternetUpdate(rs.getInt(SeriesRecord.C_INTERNET_UPDATE));
+      deleted = rs.getBoolean(SeriesRecord.C_DELETED);
+      s.setDeleted(rs.getInt(SeriesRecord.C_DELETED));
+      s.setQuality(rs.getInt(SeriesRecord.C_QUALITY));
       series.add(s);
       MySeriesLogger.logger.log(Level.FINE, "Found series {0}", s.getFullTitle());
     }
@@ -176,14 +177,14 @@ public class Series {
     if (s == -1) {
       return null;
     } else {
-     //  MySeriesLogger.logger.log(Level.FINE, "Found series {0}", currentSeries.getFullTitle());
-     return (SeriesRecord) m.tableSeries.getModel().getValueAt(s, Series.SERIESRECORD_COLUMN);
-     
+      //  MySeriesLogger.logger.log(Level.FINE, "Found series {0}", currentSeries.getFullTitle());
+      return (SeriesRecord) m.tableSeries.getModel().getValueAt(s, Series.SERIESRECORD_COLUMN);
+
     }
-   // MyEvent evt = new MyEvent(m, MyEventHandler.SET_CURRENT_SERIES);
-  //  evt.setSeries(currentSeries);
- //  m.getEvClass().fireMyEvent(evt);
-  // return currentSeries;
+    // MyEvent evt = new MyEvent(m, MyEventHandler.SET_CURRENT_SERIES);
+    //  evt.setSeries(currentSeries);
+    //  m.getEvClass().fireMyEvent(evt);
+    // return currentSeries;
   }
 
   /**
@@ -229,8 +230,8 @@ public class Series {
       // Image image = new ImageIcon(MySeries.class.getResource(MyImagePanel.LOGO)).getImage();
       if (series != null) {
         int series_id = series.getSeries_ID();
-        currentSeries = SeriesRecord.queryOne(SeriesRecord.C_SERIES_ID +"=?", 
-                    new String[]{String.valueOf(series_id)},null);
+        currentSeries = SeriesRecord.queryOne(SeriesRecord.C_SERIES_ID + "=?",
+                new String[]{String.valueOf(series_id)}, null);
         MySeriesLogger.logger.log(Level.INFO, "Current series set to {0}", currentSeries != null ? currentSeries.getFullTitle() : "none");
       } else {
         currentSeries = null;
