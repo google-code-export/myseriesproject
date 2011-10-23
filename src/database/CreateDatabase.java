@@ -131,6 +131,7 @@ public class CreateDatabase implements Runnable {
                 + "[localDir] VARCHAR DEFAULT '',"
                 + "[sonline] VARCHAR DEFAULT '',"
                 + "[screenshot] VARCHAR DEFAULT '',"
+                + "[quality] INTEGER DEFAULT 0,"
                 + "[deleted]INTEGER DEFAULT 0)");
         MySeriesLogger.logger.log(Level.INFO, "Creating table filters");
         DBConnection.conn.createStatement().executeUpdate("CREATE  TABLE IF NOT EXISTS [filters] "

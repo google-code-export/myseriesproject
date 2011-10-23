@@ -66,6 +66,7 @@ public class DBConnection {
     boolean newSubs = false;
     boolean rate = false;
     boolean deleted = false;
+    boolean quality = false;
     boolean feeds = false;
 
     try {
@@ -90,6 +91,9 @@ public class DBConnection {
         if (rsSeries.getString(2).equals("deleted")) {
           deleted = true;
         }
+        if (rsSeries.getString(2).equals("quality")) {
+          quality = true;
+        }
       }
       MySeriesLogger.logger.log(Level.INFO, "Checking episodes table");
       rsEpisodes = stmt.executeQuery(sqlEpisodes);
@@ -104,7 +108,7 @@ public class DBConnection {
         feeds = true;
       }
 
-      if (tvRageID && internetUpdate && localDir && screenshot && sonline && rate && deleted && feeds) {
+      if (tvRageID && internetUpdate && localDir && screenshot && sonline && rate && deleted && feeds && quality) {
         MySeriesLogger.logger.log(Level.INFO, "Database does not need updating");
         return true;
       }
@@ -144,6 +148,11 @@ public class DBConnection {
         if (!deleted) {
           MySeriesLogger.logger.log(Level.INFO, "Adding deleted column");
           sqlSeries = "ALTER TABLE series ADD COLUMN deleted INTEGER DEFAULT 0";
+          stmt.execute(sqlSeries);
+        }
+        if (!quality) {
+          MySeriesLogger.logger.log(Level.INFO, "Adding quality column");
+          sqlSeries = "ALTER TABLE series ADD COLUMN quality INTEGER DEFAULT 0";
           stmt.execute(sqlSeries);
         }
         if (!rate) {

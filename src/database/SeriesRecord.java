@@ -31,6 +31,12 @@ public class SeriesRecord extends Record implements Comparable<SeriesRecord> {
   public static final int NOT_DELETED = 0;
   /** Deleted : 1 **/
   public static final int DELETED = 1;
+  /** All video qualities  **/
+  public static final int ALL_QUALITIES = 0;
+  /** Low quality  **/
+  public static final int LOW_QUALITY = 1;
+  /** High quality  **/
+  public static final int HIGH_QUALITY = 2;
   /**
    * The table name
    */
@@ -46,6 +52,7 @@ public class SeriesRecord extends Record implements Comparable<SeriesRecord> {
   public static final String C_SCREENSHOT = "screenshot";
   public static final String C_SONLINE = "sonline";
   public static final String C_DELETED = "deleted";
+  public static final String C_QUALITY = "quality";
   
   /**
    * The default values for the record attributes
@@ -61,6 +68,7 @@ public class SeriesRecord extends Record implements Comparable<SeriesRecord> {
   private String screenshot = "";
   private String sOnlineCode = "";
   private int deleted = NOT_DELETED;
+  private int quality = ALL_QUALITIES;
 
   /**
    * The default constructor
@@ -71,15 +79,16 @@ public class SeriesRecord extends Record implements Comparable<SeriesRecord> {
   
   public static SeriesRecord create(ResultSet rs) throws SQLException {
     SeriesRecord s = new SeriesRecord();
-        s.setSeason(rs.getInt("season"));
-        s.setSeries_ID(rs.getInt("series_ID"));
-        s.setTitle(rs.getString("title"));
-        s.setTvSubtitlesCode(rs.getString("link"));
-        s.setInternetUpdate(rs.getInt("internetUpdate"));
-        s.setTvrage_ID(rs.getInt("tvrage_ID"));
-        s.setLocalDir(rs.getString("localDir"));
-        s.setScreenshot(rs.getString("screenshot"));
-        s.setSOnlineCode(rs.getString("sonline"));
+        s.setSeason(rs.getInt(C_SEASON));
+        s.setSeries_ID(rs.getInt(C_SERIES_ID));
+        s.setTitle(rs.getString(C_TITLE));
+        s.setTvSubtitlesCode(rs.getString(C_TV_SUBTITLES_CODE));
+        s.setInternetUpdate(rs.getInt(C_INTERNET_UPDATE));
+        s.setTvrage_ID(rs.getInt(C_TVRAGE_ID));
+        s.setLocalDir(rs.getString(C_LOCAL_DIR));
+        s.setScreenshot(rs.getString(C_SCREENSHOT));
+        s.setSOnlineCode(rs.getString(C_SONLINE));
+        s.setQuality(rs.getInt(C_QUALITY));
     return s;
   }
 
@@ -128,24 +137,24 @@ public class SeriesRecord extends Record implements Comparable<SeriesRecord> {
        return save(TABLE, 
            new String[]{
            C_TITLE, C_SEASON, C_HIDDEN, C_TV_SUBTITLES_CODE, C_INTERNET_UPDATE,
-           C_TVRAGE_ID, C_LOCAL_DIR,C_SCREENSHOT,C_SONLINE,C_DELETED
+           C_TVRAGE_ID, C_LOCAL_DIR,C_SCREENSHOT,C_SONLINE,C_DELETED, C_QUALITY
            }
            , new String[]{
            this.title, String.valueOf(this.getSeason()),String.valueOf(this.getHidden()),
            this.tvSubtitlesCode, String.valueOf(this.getInternetUpdate()),
            String.valueOf(this.getTvrage_ID()),this.getLocalDir(), this.getScreenshot(),
-           this.getSOnlineCode(),String.valueOf(this.getDeleted())}, null, null);
+           this.getSOnlineCode(),String.valueOf(this.getDeleted()), String.valueOf(this.getQuality())}, null, null);
      } else {
        return save(TABLE, 
            new String[]{
            C_TITLE, C_SEASON, C_HIDDEN, C_TV_SUBTITLES_CODE, C_INTERNET_UPDATE,
-           C_TVRAGE_ID, C_LOCAL_DIR,C_SCREENSHOT,C_SONLINE,C_DELETED
+           C_TVRAGE_ID, C_LOCAL_DIR,C_SCREENSHOT,C_SONLINE,C_DELETED, C_QUALITY
            }
            , new String[]{
            this.title, String.valueOf(this.getSeason()),String.valueOf(this.getHidden()),
            this.tvSubtitlesCode, String.valueOf(this.getInternetUpdate()),
            String.valueOf(this.getTvrage_ID()),this.getLocalDir(), this.getScreenshot(),
-           this.getSOnlineCode(),String.valueOf(this.getDeleted())}, C_SERIES_ID + "=?",
+           this.getSOnlineCode(),String.valueOf(this.getDeleted()), String.valueOf(this.getQuality())}, C_SERIES_ID + "=?",
            new String[] {String.valueOf(this.getSeries_ID())});
      }
   }
@@ -344,5 +353,19 @@ public class SeriesRecord extends Record implements Comparable<SeriesRecord> {
     Integer i = new Integer(series_ID);
     Integer oI = new Integer(o.series_ID);
     return i.compareTo(oI);
+  }
+
+  /**
+   * @return the quality
+   */
+  public int getQuality() {
+    return quality;
+  }
+
+  /**
+   * @param quality the quality to set
+   */
+  public void setQuality(int quality) {
+    this.quality = quality;
   }
 }
