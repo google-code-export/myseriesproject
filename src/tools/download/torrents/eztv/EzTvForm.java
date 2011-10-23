@@ -30,6 +30,7 @@ import com.googlecode.svalidators.formcomponents.ValidationGroup;
 import com.googlecode.svalidators.validators.RequiredValidator;
 import help.HelpWindow;
 import myseriesproject.MySeries;
+import myseriesproject.series.Quality;
 import myseriesproject.series.Series;
 import tools.download.torrents.AbstractTorrentForm;
 import tools.options.MySeriesOptions;
@@ -71,6 +72,13 @@ public class EzTvForm extends AbstractTorrentForm {
         myseriesproject.MySeries.glassPane.activate(null);
         MySeriesLogger.logger.log(Level.INFO, "Initializong components");
         initComponents();
+        if(series!=null){
+          if(series.getQuality() == Quality.HIGH_QUALITY){
+            combo_quality.setSelectedIndex(2);
+          } else {
+            combo_quality.setSelectedIndex(0);
+          }
+        }
         MySeriesLogger.logger.log(Level.FINE, "Components initialized");
         combo_series.setSelectedItem(Series.getCurrentSerial().getTitle());
         combo_series.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
@@ -140,7 +148,6 @@ public class EzTvForm extends AbstractTorrentForm {
     spinner_episode.setModel(new javax.swing.SpinnerNumberModel(1, 0, 60, 1));
 
     combo_quality.setModel(qualityModel);
-    combo_quality.setSelectedItem(MySeries.options.getStringOption(MySeriesOptions.VIDEO_QUALITY));
 
     progress.setString("");
     progress.setStringPainted(true);
@@ -315,7 +322,7 @@ public class EzTvForm extends AbstractTorrentForm {
       MySeriesLogger.logger.log(Level.INFO, "Validating user input");
       if (group.validate()) {
           URI uri = createUri();
-          MySeries.options.setOption(new Option(MySeriesOptions.VIDEO_QUALITY, Option.STRING_CLASS,(String)combo_quality.getSelectedItem()),true);
+          //MySeries.options.setOption(new Option(MySeriesOptions.VIDEO_QUALITY, Option.STRING_CLASS,(String)combo_quality.getSelectedItem()),true);
           if (uri != null) {
               MySeriesLogger.logger.log(Level.FINE, "Search uri :{0}", uri);
               EzTv e = new EzTv(uri, this);

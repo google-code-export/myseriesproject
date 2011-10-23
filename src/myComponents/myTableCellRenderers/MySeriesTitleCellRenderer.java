@@ -8,6 +8,7 @@ import database.SeriesRecord;
 import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
+import myseriesproject.series.Quality;
 
 /**
  *
@@ -30,6 +31,7 @@ public class MySeriesTitleCellRenderer extends DefaultTableCellRenderer {
     if (value instanceof SeriesRecord) {
       SeriesRecord s = (SeriesRecord) value;
       setIcon(s.getQualityIcon());
+      setToolTipText(s.getFullTitle() + " (Preferred video quality:"+Quality.QUALITIES_NAMES[s.getQuality()]+")");
       setText(s.getFullTitle());
     } else {
       setText(value.toString());
