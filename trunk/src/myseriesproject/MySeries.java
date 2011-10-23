@@ -427,6 +427,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     tableSeries.getModel().addTableModelListener(this);
     tableSeries.getColumn(Series.HIDDEN_COLUMN_TITLE).setCellRenderer(new MySeriesBooleanCellRenderer());
     tableSeries.getColumn(Series.UPDATE_COLUMN_TITLE).setCellRenderer(new MySeriesBooleanCellRenderer());
+
     tableSeries.setRowHeight(fontHeight + CELL_MARGIN);
     Series.setTableWidths(tableSeries, seriesTableWidths);
 

@@ -44,6 +44,7 @@ import myComponents.myEvents.MyEvent;
 import myComponents.myEvents.MyEventHandler;
 import myComponents.myEvents.MyEventsClass;
 import myComponents.myGUI.MyScaledImage;
+import myComponents.myTableCellRenderers.MyQualityListRenderer;
 import myseriesproject.actions.SeriesActions;
 import tools.download.screenshot.DownloadScreenshot;
 import tools.download.subtitles.sonline.GetSubtitleOnlineCode;
@@ -115,6 +116,8 @@ public class AdminSeries extends MyDraggable {
     MySeriesLogger.logger.log(Level.FINE, "Components initialized");
     setLocationRelativeTo(m);
     spinner_season.setModel(new SpinnerNumberModel(Series.DEFAULT_SEASON, Series.MINIMUM_SEASON, Series.MAXIMUM_SEASON, Series.SEASON_STEP));
+    combo_quality.setModel(new DefaultComboBoxModel(Quality.getAllQualities().toArray()));
+    combo_quality.setRenderer(new MyQualityListRenderer());
     if (seriesRecord.getSeries_ID() > 0) {
       newSeries = false;
       cb_existingSeries.setVisible(false);
@@ -129,6 +132,7 @@ public class AdminSeries extends MyDraggable {
       setScreenshot();
       textfield_tvSubsId.setText(seriesRecord.getTvSubtitlesCode());
       textfield_subsOnline.setText(seriesRecord.getSOnlineCode());
+      combo_quality.setSelectedIndex(seriesRecord.getQuality());
       // button_Add.setText("Edit");
     } else {
       newSeries = true;
@@ -192,6 +196,8 @@ public class AdminSeries extends MyDraggable {
     bt_subsOn = new myComponents.myGUI.buttons.MyButtonInternet();
     bt_tvRage = new myComponents.myGUI.buttons.MyButtonInternet();
     cb_existingSeries = new javax.swing.JComboBox();
+    label_quality = new javax.swing.JLabel();
+    combo_quality = new javax.swing.JComboBox();
     myButtonHelp1 = new myComponents.myGUI.buttons.MyButtonHelp();
     label_Title = new javax.swing.JLabel();
     myButtonOk1 = new myComponents.myGUI.buttons.MyButtonOk();
@@ -308,6 +314,8 @@ public class AdminSeries extends MyDraggable {
       }
     });
 
+    label_quality.setText("Quality :");
+
     javax.swing.GroupLayout inner_panelLayout = new javax.swing.GroupLayout(inner_panel);
     inner_panel.setLayout(inner_panelLayout);
     inner_panelLayout.setHorizontalGroup(
@@ -330,7 +338,12 @@ public class AdminSeries extends MyDraggable {
               .addComponent(textField_Serial, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
               .addComponent(textfield_localDir, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
               .addComponent(textfield_screenshot, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
-              .addComponent(spinner_season, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+              .addGroup(inner_panelLayout.createSequentialGroup()
+                .addComponent(spinner_season, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(label_quality)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(combo_quality, 0, 123, Short.MAX_VALUE)))
             .addGap(6, 6, 6)
             .addGroup(inner_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
               .addGroup(inner_panelLayout.createSequentialGroup()
@@ -368,7 +381,9 @@ public class AdminSeries extends MyDraggable {
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(inner_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
           .addComponent(label_season)
-          .addComponent(spinner_season, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addComponent(spinner_season, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(label_quality)
+          .addComponent(combo_quality, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(inner_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
           .addComponent(label_localDir)
@@ -508,6 +523,7 @@ public class AdminSeries extends MyDraggable {
       seriesRecord.setLocalDir(textfield_localDir.getText());
       seriesRecord.setTvSubtitlesCode(textfield_tvSubsId.getText().trim());
       seriesRecord.setSOnlineCode(textfield_subsOnline.getText().trim());
+      seriesRecord.setQuality(combo_quality.getSelectedIndex());
       File sc = null;
       if (!screenshot.equals("")) {
         sc = new File(screenshot);
@@ -730,11 +746,13 @@ public class AdminSeries extends MyDraggable {
   private myComponents.myGUI.buttons.MyButtonInternet bt_tvSubs;
   private javax.swing.JComboBox cb_existingSeries;
   private javax.swing.JCheckBox checkbox_updateEpisodes;
+  private javax.swing.JComboBox combo_quality;
   private javax.swing.JPanel inner_panel;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel label_Title;
   private javax.swing.JLabel label_localDir;
   private javax.swing.JLabel label_message;
+  private javax.swing.JLabel label_quality;
   private javax.swing.JLabel label_screenshot;
   private javax.swing.JLabel label_season;
   private javax.swing.JLabel label_subOnlineId;

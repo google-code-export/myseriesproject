@@ -6,10 +6,12 @@ package database;
 
 import java.io.File;
 import java.sql.ResultSet;
+import javax.swing.Icon;
 import myComponents.MyUsefulFunctions;
 import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
+import myseriesproject.series.Quality;
 import tools.MySeriesLogger;
 import tools.options.MySeriesOptions;
 
@@ -31,12 +33,7 @@ public class SeriesRecord extends Record implements Comparable<SeriesRecord> {
   public static final int NOT_DELETED = 0;
   /** Deleted : 1 **/
   public static final int DELETED = 1;
-  /** All video qualities  **/
-  public static final int ALL_QUALITIES = 0;
-  /** Low quality  **/
-  public static final int LOW_QUALITY = 1;
-  /** High quality  **/
-  public static final int HIGH_QUALITY = 2;
+  
   /**
    * The table name
    */
@@ -68,7 +65,7 @@ public class SeriesRecord extends Record implements Comparable<SeriesRecord> {
   private String screenshot = "";
   private String sOnlineCode = "";
   private int deleted = NOT_DELETED;
-  private int quality = ALL_QUALITIES;
+  private int quality = Quality.ALL_QUALITIES;
 
   /**
    * The default constructor

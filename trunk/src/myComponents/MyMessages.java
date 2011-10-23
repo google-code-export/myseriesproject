@@ -46,6 +46,16 @@ public class MyMessages {
     message(title, message, INFO_MESS, false, true);
   }
 
+   /**
+   * Display a message to the user
+   * @param title The message title
+   * @param showWindow Show the window
+   * @param message The message text
+   */
+  public static void message(String title, String message, boolean showWindow) {
+    message(title, message, INFO_MESS, true, true);
+  }
+
   /**
    * Display a message to the user
    * @param title The message title
@@ -113,6 +123,16 @@ public class MyMessages {
    */
   public static void warning(String title, String message, boolean setColors) {
     message(title, message, WARNING_MESS, false, setColors);
+  }
+
+  /**
+   * Displays a warning dialog
+   * @param title The title
+   * @param showWindow Show the window
+   * @param message The message
+   */
+  public static void warning(String title, String message,boolean showWindow, boolean setColors) {
+    message(title, message, WARNING_MESS, true, setColors);
   }
   
   public static void validationError(String title, String message){
