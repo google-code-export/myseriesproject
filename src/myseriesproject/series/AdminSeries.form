@@ -115,7 +115,13 @@
                                   <Component id="textField_Serial" alignment="0" pref="224" max="32767" attributes="1"/>
                                   <Component id="textfield_localDir" alignment="0" pref="224" max="32767" attributes="1"/>
                                   <Component id="textfield_screenshot" alignment="0" pref="224" max="32767" attributes="1"/>
-                                  <Component id="spinner_season" alignment="0" min="-2" pref="46" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="spinner_season" min="-2" pref="46" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="label_quality" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="combo_quality" pref="123" max="32767" attributes="0"/>
+                                  </Group>
                               </Group>
                               <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -167,6 +173,8 @@
                       <Group type="103" groupAlignment="2" attributes="0">
                           <Component id="label_season" alignment="2" min="-2" max="-2" attributes="0"/>
                           <Component id="spinner_season" alignment="2" min="-2" max="-2" attributes="0"/>
+                          <Component id="label_quality" alignment="2" min="-2" max="-2" attributes="0"/>
+                          <Component id="combo_quality" alignment="2" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="2" attributes="0">
@@ -419,6 +427,13 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cb_existingSeriesActionPerformed"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="label_quality">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Quality :"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="combo_quality">
             </Component>
           </SubComponents>
         </Container>

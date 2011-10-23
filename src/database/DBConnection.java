@@ -114,7 +114,7 @@ public class DBConnection {
       }
       MySeriesLogger.logger.log(Level.INFO, "Database is of an older version and needs update");
       MyMessages.warning("Old Database version",
-          "Database is of an older version and needs update\nA back Up is taken first!!", true);
+          "Database is of an older version and needs update\nA back Up is taken first!!",true, true);
       MySeriesLogger.logger.log(Level.INFO, "Database backup");
       SaveDatabase s = new SaveDatabase(db);
       if (s.backUp) {
@@ -169,7 +169,7 @@ public class DBConnection {
               + "[url] VARCHAR NOT NULL )");
         }
         MySeriesLogger.logger.log(Level.FINE, "Database was updated");
-        MyMessages.message("Database Update", "Database Update done!!!");
+        MyMessages.message("Database Update", "Database Update done!!!", true);
         // Options.setOption(Options.DB_NAME, db);
         // Options.save();
         checkDatabase();
