@@ -14,6 +14,7 @@ import java.net.URLEncoder;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import tools.download.screenshot.SelectSubtitle;
@@ -69,8 +70,10 @@ public class DownloadTvSubtitles extends AbstractDownloadSubtitle implements Run
         MyMessages.warning("Subtitle not found", "The subtitle was not found", true);
       }
     } else if (subs.size() == 1) {
-      MySeriesLogger.logger.log(Level.FINE, "subtitle found {0}", subs.get(0).title);
-      download(subs.get(0));
+      if(subs.get(0).language.equals(lang[0]) || MyMessages.confirm("Download subtitle", "Only secondary language found.Download?",true) == JOptionPane.OK_OPTION){
+        MySeriesLogger.logger.log(Level.FINE, "Found one subtitle.Downloading {0}", subs.get(0).url);
+        download(subs.get(0));
+      }
       form.dispose();
     } else {
       // Subtitle sub = (Subtitle) JOptionPane.showInputDialog(null, "Choose the subtitle to download", "Choose subtitle", JOptionPane.QUESTION_MESSAGE, null, subs.toArray(), 0);
