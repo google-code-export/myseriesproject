@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.logging.Level;
+import javax.swing.JOptionPane;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import tools.download.screenshot.SelectSubtitle;
@@ -63,8 +64,10 @@ public class DownloadSOnline extends AbstractDownloadSubtitle implements Runnabl
             "The subtitle was not found", true);
       }
     } else if (subs.size() == 1) {
-      MySeriesLogger.logger.log(Level.FINE, "Found one subtitle.Downloading {0}", subs.get(0).url);
-      download(subs.get(0));
+      if(subs.get(0).language.equals(lang[0]) || MyMessages.confirm("Download subtitle", "Only secondary language found.Download?",true) == JOptionPane.OK_OPTION){
+        MySeriesLogger.logger.log(Level.FINE, "Found one subtitle.Downloading {0}", subs.get(0).url);
+        download(subs.get(0));
+      }
       form.dispose();
     } else {
       MySeriesLogger.logger.log(Level.FINE, "Found {0} subtitles", subs.size());
