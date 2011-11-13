@@ -25,7 +25,7 @@ public class Quality {
   /** Low quality  **/
   public static final String LOW_QUALITY_NAME = "Low Quality";
   /** High quality  **/
-  public static final String HIGH_QUALITY_NAME = "High hQuality";
+  public static final String HIGH_QUALITY_NAME = "High Quality";
   /**
    * Qualities Values Array
    */

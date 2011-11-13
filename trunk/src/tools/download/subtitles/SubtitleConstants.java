@@ -67,9 +67,5 @@ public interface SubtitleConstants {
  * Ziped subtitles extensions (zip, rar)
  */
   public static final String[] ZIP_EXT = new String[]{"zip","rar","7z","gz","tar"};
-  /**
-   * The number of subs to search for : 2 , primary and secondary
-   */
-  public static int NUM_OF_SUBTITLES = MySeries.options.getBooleanOption(MySeriesOptions.SEARCH_FOR_SECONDARY_SUBTITLE) ? 2 : 1;
 
 }

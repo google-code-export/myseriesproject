@@ -8,7 +8,7 @@
  *
  * Created on 20 Μαϊ 2011, 9:03:05 μμ
  */
-package tools.download.screenshot;
+package tools.download.subtitles;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -16,6 +16,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
