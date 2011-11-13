@@ -14,7 +14,7 @@ import java.util.logging.Level;
 import javax.swing.JOptionPane;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
-import tools.download.screenshot.SelectSubtitle;
+import tools.download.subtitles.SelectSubtitle;
 import tools.download.subtitles.AbstractDownloadSubtitle;
 import tools.download.subtitles.Subtitle;
 import tools.download.subtitles.SubtitleConstants;

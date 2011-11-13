@@ -59,29 +59,28 @@ public class IsohuntForm extends AbstractTorrentForm implements TorrentConstants
     myseriesproject.MySeries.glassPane.activate(null);
     this.series = series;
     this.episode = episode;
-    MySeriesLogger.logger.log(Level.INFO, "Initializong components");
-    initComponents();
-    MySeriesLogger.logger.log(Level.FINE, "Components initialized");
-    combo_series.setSelectedItem(series.getTitle());
-    spinner_episode.setValue(episode.getEpisode());
-    spinner_season.setValue(series.getSeason());
-    if (series.getQuality() == Quality.HIGH_QUALITY) {
-      combo_quality.setSelectedIndex(2);
-    } else {
-      combo_quality.setSelectedIndex(0);
-    }
-    setLocationRelativeTo(null);
-    setVisible(true);
+    MySeriesLogger.logger.log(Level.INFO, "Initializing components");
+    showUp();
   }
 
   /** Creates new form IsohuntForm */
   public IsohuntForm() {
     MySeriesLogger.logger.log(Level.INFO, "Showing download torrent from isohunt form");
     myseriesproject.MySeries.glassPane.activate(null);
-    MySeriesLogger.logger.log(Level.INFO, "Initializong components");
+    MySeriesLogger.logger.log(Level.INFO, "Initializing components");
+    this.series = Series.getCurrentSerial();
+    showUp();
+  }
+
+  private void showUp() {
     initComponents();
     MySeriesLogger.logger.log(Level.FINE, "Components initialized");
-    combo_series.setSelectedItem(Series.getCurrentSerial().getTitle());
+    combo_series.setSelectedItem(series.getTitle());
+    if (series.getQuality() == Quality.HIGH_QUALITY) {
+      combo_quality.setSelectedIndex(2);
+    } else {
+      combo_quality.setSelectedIndex(0);
+    }
     setLocationRelativeTo(null);
     setVisible(true);
   }

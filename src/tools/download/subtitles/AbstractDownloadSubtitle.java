@@ -37,6 +37,16 @@ public abstract class AbstractDownloadSubtitle implements SubtitleConstants {
   protected String srtFilename = "";
   protected boolean cancel = false;
   protected String[] lang = new String[2];
+  /**
+   * The number of subs to search for : 2 , primary and secondary
+   */
+  public static int NUM_OF_SUBTITLES;
+
+  public AbstractDownloadSubtitle() {
+    NUM_OF_SUBTITLES = MySeries.options.getBooleanOption(MySeriesOptions.SEARCH_FOR_SECONDARY_SUBTITLE) ? 2 : 1;
+  }
+
+
 
   protected void download(Subtitle sub) {
     if (localDir.equals("")) {
