@@ -66,11 +66,16 @@ public class SubtitleMover {
 
   private boolean isValid(File file, SeriesRecord ser) {
     if (file.isFile()) {
+      // Search for pattern " the big bang theory"
       String name = file.getName().replaceAll("[^A-Za-z0-9]", " ");
       String regex = ser.getTitle() + "\\D*0*" + ser.getSeason() + "\\D";
+      // Search for pattern " thebigbangtheory"
+      String regex2 = ser.getTitle().replaceAll(" ", "") + "\\D*0*" + ser.getSeason() + "\\D";
       Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+      Pattern pattern2 = Pattern.compile(regex2, Pattern.CASE_INSENSITIVE);
       Matcher matcher = pattern.matcher(name);
-      if (matcher.find()) {
+      Matcher matcher2 = pattern2.matcher(name);
+      if (matcher.find() || matcher2.find()) {
         return true;
       }
     }
