@@ -218,7 +218,7 @@ public class ApplicationActions {
       ArrayList<SeriesRecord> series = Series.getSeries(true);
       if (series.isEmpty()) {
         MySeriesLogger.logger.log(Level.INFO, "No deleted series in recycle bin");
-        MyMessages.message("Restore Series", "There are no deleted series in the recycle bin");
+        MyMessages.message("Recycle bin", "There are no deleted series in the recycle bin");
       } else {
         MySeriesLogger.logger.log(Level.INFO, "Opening recycling series panel");
         new RecycleSeries(series, m);
