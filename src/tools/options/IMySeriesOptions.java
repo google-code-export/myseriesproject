@@ -192,6 +192,10 @@ public interface IMySeriesOptions {
    */
   public static final String VIDEO_APP = "videoApp";
   /**
+   * Arguments to pass to the video application
+   */
+  public static final String VIDEO_APP_ARGS = "videoAppArgs";
+  /**
    * Auto extract zip files
    */
   public static final String AUTO_EXTRACT_ZIPS = "autoExtractArchives";
