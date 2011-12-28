@@ -1277,7 +1277,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
         menu_Edit.add(menuItem_deleteSeries);
 
         menuItem_restore.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
-        menuItem_restore.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/restore.png"))); // NOI18N
+        menuItem_restore.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/recycle.png"))); // NOI18N
         menuItem_restore.setText("Recycle Bin");
         menuItem_restore.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
