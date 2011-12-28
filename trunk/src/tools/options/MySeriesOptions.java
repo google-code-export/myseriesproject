@@ -82,6 +82,7 @@ public class MySeriesOptions extends SOptions implements IMySeriesOptions {
           new Option(USE_PROXY, BOOLEAN_CLASS, false),
           new Option(USE_SKIN, BOOLEAN_CLASS, false),
           new Option(VIDEO_APP, STRING_CLASS, ""),
+          new Option(VIDEO_APP_ARGS, STRING_CLASS, ""),
           new Option(VIDEO_QUALITY, STRING_CLASS, ""),
           new Option(WARN_FOR_LOG_USE, BOOLEAN_CLASS, true),
           new Option(WARN_FOR_VERSION, BOOLEAN_CLASS, true),

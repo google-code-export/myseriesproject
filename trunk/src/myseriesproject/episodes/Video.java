@@ -90,7 +90,7 @@ public class Video {
       } else {
         MySeriesLogger.logger.log(Level.INFO, "Using application",app);
         ArrayList<String> commands = new ArrayList<String>();
-        String extArgs = "-f --aspect-ratio 16:9";
+        String extArgs = MySeries.options.getStringOption(MySeriesOptions.VIDEO_APP_ARGS);
         String [] args = extArgs.split(" ");
         commands.add(app);
         commands.addAll(1, Arrays.asList(args));
