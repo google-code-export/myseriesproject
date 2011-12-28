@@ -29,7 +29,7 @@ import javax.swing.table.TableColumnModel;
 import myComponents.MyMessages;
 import myseriesproject.MySeries;
 import myseriesproject.filters.Filters;
-import myseriesproject.series.RestoreSeries;
+import myseriesproject.series.RecycleSeries;
 import myseriesproject.series.Series;
 import tools.internetUpdate.tvrage.TrGetId;
 import myComponents.MyUsefulFunctions;
@@ -212,16 +212,16 @@ public class ApplicationActions {
     }
   }
 
-  public static void restoreSeries(MySeries m) {
+  public static void recycleSeries(MySeries m) {
     try {
       MySeriesLogger.logger.log(Level.INFO, "Restoring series");
       ArrayList<SeriesRecord> series = Series.getSeries(true);
       if (series.isEmpty()) {
-        MySeriesLogger.logger.log(Level.INFO, "No deleted series to restore");
-        MyMessages.message("Restore Series", "There are no deleted series to restore");
+        MySeriesLogger.logger.log(Level.INFO, "No deleted series in recycle bin");
+        MyMessages.message("Restore Series", "There are no deleted series in the recycle bin");
       } else {
-        MySeriesLogger.logger.log(Level.INFO, "Opening restoring series panel");
-        new RestoreSeries(series, m);
+        MySeriesLogger.logger.log(Level.INFO, "Opening recycling series panel");
+        new RecycleSeries(series, m);
       }
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, "Sql exception occured", ex);

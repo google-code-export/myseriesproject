@@ -22,7 +22,7 @@ public interface ToolbarButtonActions {
   public static int ADD_SERIES = 4;
   public static int EDIT_SERIES = 5;
   public static int DELETE_SERIES = 6;
-  public static int RESTORE_SERIES = 7;
+  public static int RECYCLE_BIN = 7;
   public static int ADD_EPISODE = 8;
   public static int SEP_EDIT = 9;
   public static int EXPORT_EPISODES = 10;

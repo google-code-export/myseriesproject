@@ -89,7 +89,7 @@
               </FontInfo>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Restore Series"/>
+            <Property name="text" type="java.lang.String" value="Recycle Bin"/>
           </Properties>
         </Component>
         <Container class="javax.swing.JScrollPane" name="scroll">

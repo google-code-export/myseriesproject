@@ -60,8 +60,8 @@ public class ToolbarActionListener implements ActionListener, ToolbarButtonActio
         case DELETE_SERIES:
           SeriesActions.deleteSeries(ms);
           break;
-        case RESTORE_SERIES:
-          ApplicationActions.restoreSeries(ms);
+        case RECYCLE_BIN:
+          ApplicationActions.recycleSeries(ms);
           break;
         case ADD_EPISODE:
           EpisodesActions.AddEpisode(ms);

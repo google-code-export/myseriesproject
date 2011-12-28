@@ -26,7 +26,7 @@ public class HelpWindow extends MyDraggable {
   private static final long serialVersionUID = 1241234234L;
   public static final int ADMIN_SERIES = 0;
   public static final int ADMIN_EPISODES = 1;
-  public static final int RESTORE_SERIES = 2;
+  public static final int RECYCLE_BIN = 2;
   public static final int START_APPLICATION = 3;
   public static final int DOWNLOAD_TORRENT = 4;
   public static final int IMPORT_EPISODES = 5;
@@ -54,9 +54,9 @@ public class HelpWindow extends MyDraggable {
         label_title.setText("Episodes Administration");
         url = "episodes_administration";
         break;
-      case RESTORE_SERIES:
-        label_title.setText("Restore Series");
-        url = "restore_series";
+      case RECYCLE_BIN:
+        label_title.setText("Recycle Bin");
+        url = "recycle_bin";
         break;
       case START_APPLICATION:
         label_title.setText("Start Application");
