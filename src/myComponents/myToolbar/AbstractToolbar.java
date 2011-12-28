@@ -26,7 +26,7 @@ public abstract class AbstractToolbar extends JToolBar implements ToolbarButtonA
   protected ToolbarButton addSeries;
   protected ToolbarButton editSeries;
   protected ToolbarButton deleteSeries;
-  protected ToolbarButton restoreSeries;
+  protected ToolbarButton recycleBin;
   protected ToolbarButton addepisode;
   protected ToolbarSeperator sepEdit;
   protected ToolbarButton exportEpisodes;
@@ -77,7 +77,7 @@ public abstract class AbstractToolbar extends JToolBar implements ToolbarButtonA
       addSeries = new ToolbarButton(ToolbarButtonActions.ADD_SERIES, "Add Series", "add_series.png");
       editSeries = new ToolbarButton(ToolbarButtonActions.EDIT_SERIES, "Edit Series", "edit_series.png");
       deleteSeries = new ToolbarButton(ToolbarButtonActions.DELETE_SERIES, "Delete Series", "delete_series.png");
-      restoreSeries = new ToolbarButton(ToolbarButtonActions.RESTORE_SERIES, "Restore Series", "restore.png");
+      recycleBin = new ToolbarButton(ToolbarButtonActions.RECYCLE_BIN, "Recycle Bin", "recycle.png");
       addepisode = new ToolbarButton(ToolbarButtonActions.ADD_EPISODE, "Add episode", "add_episode.png");
       sepEdit = new ToolbarSeperator(ToolbarButtonActions.SEP_EDIT, "", "");
       exportEpisodes = new ToolbarButton(ToolbarButtonActions.EXPORT_EPISODES, "Export episodes", "export_episodes.png");
@@ -116,7 +116,7 @@ public abstract class AbstractToolbar extends JToolBar implements ToolbarButtonA
     buttons.put(ToolbarButtonActions.ADD_SERIES, addSeries);
     buttons.put(ToolbarButtonActions.EDIT_SERIES, editSeries);
     buttons.put(ToolbarButtonActions.DELETE_SERIES, deleteSeries);
-    buttons.put(ToolbarButtonActions.RESTORE_SERIES, restoreSeries);
+    buttons.put(ToolbarButtonActions.RECYCLE_BIN, recycleBin);
     buttons.put(ToolbarButtonActions.ADD_EPISODE, addepisode);
     buttons.put(ToolbarButtonActions.SEP_EDIT, sepEdit);
     buttons.put(ToolbarButtonActions.EXPORT_EPISODES, exportEpisodes);
