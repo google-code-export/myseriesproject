@@ -252,6 +252,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JSpinner" name="spinner_season">
+              <Events>
+                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="spinner_seasonStateChanged"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="label_tvsubsId">
               <Properties>
