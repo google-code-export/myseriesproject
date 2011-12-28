@@ -273,7 +273,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     //Create the filteredSeries data
     MySeriesLogger.logger.log(Level.INFO, "Creating filters data");
     Filters.setTableModel_filterSeries(tableModel_filterSeries);
-    //    
+    //
     //    Filters.getFilteredSeries(comboBox_seen, comboBox_filterSubtitles, combobox_downloaded);
     FiltersActions.applyFilter(this);
     MySeriesLogger.logger.log(Level.INFO, "Creating toolbar");
@@ -1577,9 +1577,9 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
         MySeriesLogger.logger.log(Level.INFO, "Showing popup menu");
         seriesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
       } else {
-          if (evt.getClickCount() == 2){
-              SeriesActions.editSeries(this);
-          }
+        if (evt.getClickCount() == 2) {
+          SeriesActions.editSeries(this);
+        }
       }
     } else {
       MyEvent event = new MyEvent(tableSeries, MyEventHandler.SET_CURRENT_SERIES);
@@ -1703,6 +1703,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
     Point p = evt.getPoint();
     MyEvent event = new MyEvent(this, MyEventHandler.SET_CURRENT_EPISODE);
     int rowSelected = tableEpisodes.rowAtPoint(p);
+    EpisodesRecord ep = null;
     MySeriesLogger.logger.log(Level.INFO, "Table episodes row {0}  selected", rowSelected);
     if (evt.getButton() == MouseEvent.BUTTON3) {
       if (tableEpisodes.getSelectedRowCount() > 1) {
@@ -1714,14 +1715,13 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
       } else {
         //init menus
         try {
-          EpisodesRecord ep = null;
           if (rowSelected > -1) {
             //  tableEpisodes.setRowSelectionInterval(rowSelected, rowSelected);
             ep = (EpisodesRecord) tableEpisodes.getValueAt(rowSelected, Episodes.EPISODERECORD_COLUMN);
             MySeriesLogger.logger.log(Level.INFO, "Episode {0} selected", ep.getTitle());
             int series_ID = ep.getSeries_ID();
             series = SeriesRecord.queryOne(SeriesRecord.C_SERIES_ID + "=?",
-                new String[]{String.valueOf(series_ID)}, null);
+                    new String[]{String.valueOf(series_ID)}, null);
             MySeriesLogger.logger.log(Level.INFO, "Setting current series event");
             event.setType(MyEventHandler.SET_CURRENT_SERIES);
             event.setSeries(series);
@@ -1739,6 +1739,22 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
         } catch (SQLException ex) {
           MySeriesLogger.logger.log(Level.SEVERE, "Sql exception occured", ex);
         } catch (Exception ex) {
+        }
+      }
+    } else if (evt.getButton() == MouseEvent.BUTTON1) {
+      if (evt.getClickCount() == 2 && tableEpisodes.columnAtPoint(p) == Episodes.EPISODERECORD_COLUMN && rowSelected > -1) {
+        ep = (EpisodesRecord) tableEpisodes.getValueAt(rowSelected, Episodes.EPISODERECORD_COLUMN);
+        MySeriesLogger.logger.log(Level.INFO, "Setting current episode event");
+        event.setType(MyEventHandler.SET_CURRENT_EPISODE);
+        event.setEpisode(ep);
+        getEvClass().fireMyEvent(event);
+        series = Series.getCurrentSerial();
+        if (Episodes.isWatchable(ep)) {
+          MySeriesLogger.logger.log(Level.INFO, "Opening {0} for watching", ep.getTitle());
+          EpisodesActions.viewEpisode(tableEpisodes);
+        } else {
+          MySeriesLogger.logger.log(Level.INFO, "{0} is not watchable", ep.getTitle());
+          MyMessages.error("Watching episode", ep.getTitle() + " is not available", true);
         }
       }
     }
@@ -1860,7 +1876,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
       EpisodesRecord ep = (EpisodesRecord) tableFilters.getValueAt(rowSelected, 2);
       MySeriesLogger.logger.log(Level.INFO, "Episode {0} selected", ep.getTitle());
       SeriesRecord seriesRec = SeriesRecord.queryOne(SeriesRecord.C_SERIES_ID + "=?",
-          new String[]{String.valueOf(ep.getSeries_ID())}, null);
+              new String[]{String.valueOf(ep.getSeries_ID())}, null);
       MySeriesLogger.logger.log(Level.INFO, "Setting current series event");
       MyEvent event = new MyEvent(this, MyEventHandler.SET_CURRENT_SERIES);
       event.setSeries(seriesRec);
@@ -2002,15 +2018,15 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
   }//GEN-LAST:event_myToolbarPropertyChange
 
   private void menuItem_showErrorPanelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_showErrorPanelActionPerformed
-   boolean selected = menuItem_showErrorPanel.isSelected();
-   logPanel.setVisible(selected);
-    menuItem_showErrorPanel.setText(selected?"Hide Messages Panel":"Show Messages Panel");
+    boolean selected = menuItem_showErrorPanel.isSelected();
+    logPanel.setVisible(selected);
+    menuItem_showErrorPanel.setText(selected ? "Hide Messages Panel" : "Show Messages Panel");
   }//GEN-LAST:event_menuItem_showErrorPanelActionPerformed
 
   private void menu_HelpMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_menu_HelpMenuSelected
     boolean selected = logPanel.isVisible();
     logPanel.setVisible(selected);
-    menuItem_showErrorPanel.setText(selected?"Hide Messages Panel":"Show Messages Panel");
+    menuItem_showErrorPanel.setText(selected ? "Hide Messages Panel" : "Show Messages Panel");
     menuItem_showErrorPanel.setSelected(selected);
   }//GEN-LAST:event_menu_HelpMenuSelected
 
@@ -2041,11 +2057,10 @@ private void menuItem_showHideToolbarActionPerformed(java.awt.event.ActionEvent 
   JCheckBoxMenuItem item = (JCheckBoxMenuItem) evt.getSource();
   boolean selected = item.isSelected();
   myToolbar.setVisible(selected);
-  item.setText(selected?"Hide Toolbar":"Show Toolbar");
+  item.setText(selected ? "Hide Toolbar" : "Show Toolbar");
   MySeries.options.setOption(
-      new Option(MySeriesOptions.SHOW_TOOLBAR, MySeriesOptions.BOOLEAN_CLASS, selected), true);
+          new Option(MySeriesOptions.SHOW_TOOLBAR, MySeriesOptions.BOOLEAN_CLASS, selected), true);
 }//GEN-LAST:event_menuItem_showHideToolbarActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JMenuItem PopUpItem_AddEpisode;
     public javax.swing.JMenuItem PopUpItem_AddEpisodeInEpisodes;
@@ -2187,15 +2202,15 @@ private void menuItem_showHideToolbarActionPerformed(java.awt.event.ActionEvent 
 
   public void createComboBox_filters() {
     comboBox_filterSubtitles.setModel(new DefaultComboBoxModel(
-        new String[]{
-          SubtitleConstants.NONE,
-          languages.getPrimary().getName(),
-          languages.getSecondary().getName(),
-          SubtitleConstants.BOTH,
-          languages.getPrimary().getName() + " or " + languages.getSecondary().getName(),
-          "Not " + languages.getPrimary().getName(),
-          SubtitleConstants.UNAWARE
-        }));
+            new String[]{
+              SubtitleConstants.NONE,
+              languages.getPrimary().getName(),
+              languages.getSecondary().getName(),
+              SubtitleConstants.BOTH,
+              languages.getPrimary().getName() + " or " + languages.getSecondary().getName(),
+              "Not " + languages.getPrimary().getName(),
+              SubtitleConstants.UNAWARE
+            }));
   }
 
   public int getSeriesTableRow(SeriesRecord series) {

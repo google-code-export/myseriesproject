@@ -9,6 +9,8 @@ import java.awt.Desktop;
 import java.io.File;
 import tools.MySeriesLogger;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
@@ -87,7 +89,13 @@ public class Video {
         Desktop.getDesktop().open(video);
       } else {
         MySeriesLogger.logger.log(Level.INFO, "Using application",app);
-        MyUsefulFunctions.runExternalProgram(new String[] {app, video.getAbsolutePath()}, video.getParentFile());
+        ArrayList<String> commands = new ArrayList<String>();
+        String extArgs = "-f --aspect-ratio 16:9";
+        String [] args = extArgs.split(" ");
+        commands.add(app);
+        commands.addAll(1, Arrays.asList(args));
+        commands.add(video.getAbsolutePath());
+        MyUsefulFunctions.runExternalProgram(commands.toArray(new String[commands.size()]), video.getParentFile());
       }
       MySeriesLogger.logger.log(Level.INFO, "Setting episode assert watched");
       EpisodesRecord ep = Episodes.getCurrentEpisode();

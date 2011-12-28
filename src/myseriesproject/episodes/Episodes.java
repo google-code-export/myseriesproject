@@ -113,6 +113,15 @@ public class Episodes {
     }
   }
 
+  /**
+   * Checks if an episode is available for watching
+   * @param episode The episode record
+   */
+    public static boolean isWatchable(EpisodesRecord episode) {
+        SeriesRecord series = Series.getCurrentSerial();
+        return (episode!=null && series.isValidLocalDir() && Episodes.checkDownloads(series, episode));
+    }
+
   private Episodes() {
   }
 
