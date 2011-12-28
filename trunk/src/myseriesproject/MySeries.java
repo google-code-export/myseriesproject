@@ -809,9 +809,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
         tableSeries.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
         tableSeries.getTableHeader().setReorderingAllowed(false);
         tableSeries.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableSeriesMouseClicked(evt);
-            }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 tableSeriesMouseReleased(evt);
             }
@@ -1557,21 +1554,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-  private void tableSeriesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableSeriesMouseClicked
-//      try {
-//          seriesMouseReleased(evt);
-//      } catch (IOException ex) {
-//          MySeriesLogger.logger.log(Level.SEVERE, null, ex);
-//      }
-}//GEN-LAST:event_tableSeriesMouseClicked
-
-  private void seriesMouseClicked() throws IOException {
-    int selectedRow = tableSeries.getSelectedRow();
-    if (selectedRow > -1) {
-    } else {
-    }
-  }
-
   private void tableSeriesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableSeriesMouseReleased
     try {
       seriesMouseReleased(evt);
@@ -1594,6 +1576,10 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
       if (evt.getButton() == MouseEvent.BUTTON3) {
         MySeriesLogger.logger.log(Level.INFO, "Showing popup menu");
         seriesPopUp.show(evt.getComponent(), evt.getX(), evt.getY());
+      } else {
+          if (evt.getClickCount() == 2){
+              SeriesActions.editSeries(this);
+          }
       }
     } else {
       MyEvent event = new MyEvent(tableSeries, MyEventHandler.SET_CURRENT_SERIES);
