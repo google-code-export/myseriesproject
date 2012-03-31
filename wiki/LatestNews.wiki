@@ -1,4 +1,20 @@
 ==MySerieS Latest News==
+<div title='news_6'>
+===31/03/2012 : MySerieS v.1.6===
+What's New:
+ * Ability to pass arguments to the video player application.
+ * Double clicking on episodes in Episodes table opens the media player for watching the episode (if available)
+ * Double clicking on series on series table opens the "Edit Series" panel.
+ * Fix that some subtitles were not properly recognised
+ * If only a subtitle is found and it's the secondary, you are asked if you want to download it.
+ * Added quality to series (HD, normal, both).Then when downloading torrents or subtitles this option is taken in account.
+ * When more than one subtitles (from tvsubtitles) are found they're ordered first by their type (HD or not) and then by their score.
+ * Added option to hide the toolbar.
+ * Convert ini text file to xml file.
+ * Added option to not show information popups but display the message in the messages panel.
+ * Fixed manually edited episodes not saved.
+ * Added delete series from the recycle bin, in this case series are deleted from the database.This action cannot be undone
+<div>
 <div title='news_5'>
 ===19/07/2011 : MySerieS v.1.5.2 BUG===
 If you have downloaded MySerieS v1.5.2 and keep getting messages that a new version is available please download a fixed update to 1.5.2 and overwrite the previous one
