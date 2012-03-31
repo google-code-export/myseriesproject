@@ -9,10 +9,14 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.security.CodeSource;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 import myComponents.MyUsefulFunctions;
 import tools.MySeriesLogger;
 
@@ -31,32 +35,46 @@ public class SearchHelp {
     this.phrase = phrase;
   }
 
-  public void search() {
-    URL res = this.getClass().getResource("/help/html/");
-    File[] resources = getResourceFiles(res);
-    for (int i = 0; i < resources.length; i++) {
-      File file = resources[i];
+  public void search() throws IOException {
+
+    ArrayList<File> resources = getResourceFiles();
+    for (int i = 0; i < resources.size(); i++) {
+      File file = resources.get(i);
+      MySeriesLogger.logger.log(Level.INFO, "Searching file {0}", file);
       String phraseFound = phraseFound(file);
-      if ( phraseFound != null) {
-        results.add(new Result(file.getName(),phraseFound));
+      if (phraseFound != null) {
+        MySeriesLogger.logger.log(Level.FINE, "Found phrase {0}", phraseFound);
+        results.add(new Result(file.getName(), phraseFound));
       }
+    }
+
+    if (results.isEmpty()) {
+      MySeriesLogger.logger.log(Level.WARNING, "No results found");
     }
   }
 
-  private File[] getResourceFiles(URL res) {
-    try {
-      File dir = new File(res.toURI());
-      return dir.listFiles();
-    } catch (URISyntaxException ex) {
-      return new File[]{};
+  private ArrayList<File> getResourceFiles() throws IOException {
+    CodeSource src = this.getClass().getProtectionDomain().getCodeSource();
+    ArrayList<File> resources = new ArrayList<File>();
+    if (src != null) {
+      URL jar = src.getLocation();
+      ZipInputStream zip = new ZipInputStream(jar.openStream());
+      ZipEntry ze = null;
+      while ((ze = zip.getNextEntry()) != null) {
+        String entryName = ze.getName();
+        if (entryName.startsWith("help") && entryName.endsWith("html")) {
+          resources.add(new File(entryName));
+        }
+      }
     }
+    return resources;
   }
 
   private String phraseFound(File file) {
     try {
       StringBuilder sb = new StringBuilder(1024);
       BufferedInputStream inStream = new BufferedInputStream(
-          this.getClass().getResourceAsStream("/help/html/" + file.getName()));
+              this.getClass().getResourceAsStream("/help/html/" + file.getName()));
       byte[] chars = new byte[1024];
       int bytesRead = 0;
       while ((bytesRead = inStream.read(chars)) > -1) {
@@ -71,12 +89,15 @@ public class SearchHelp {
         int pos = contents.indexOf(tok);
         if (pos > -1 && tok.length() > 3) {
           int l = contents.length();
-          return getText(contents,pos);
+          return getText(contents, pos);
         }
       }
 
       return null;
     } catch (IOException ex) {
+      MySeriesLogger.logger.log(Level.SEVERE, "Could not read help file " + file.getName(), ex);
+      return null;
+    } catch (Exception ex) {
       MySeriesLogger.logger.log(Level.SEVERE, "Could not read help file " + file.getName(), ex);
       return null;
     }
@@ -86,11 +107,13 @@ public class SearchHelp {
     int start = 0;
     int length = contents.length();
     int end = contents.length();
-    start = pos-40 < 0 ? 0 : pos-40;
-    end = pos + 40 > length ? length : pos+40;
-    String pre = start==0 ? "" : "...";
-    String suf = end==length ? "" : "...";
+    start = pos - 40 < 0 ? 0 : pos - 40;
+    end = pos + 40 > length ? length : pos + 40;
+    String pre = start == 0 ? "" : "...";
+    String suf = end == length ? "" : "...";
     return pre + contents.substring(start, end) + suf;
+
+
   }
 
   public class Result {

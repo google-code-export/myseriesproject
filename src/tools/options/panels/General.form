@@ -1,4 +1,4 @@
-<?xml version="1.1" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <Properties>
@@ -22,15 +22,14 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="tf_videoApp" alignment="0" min="-2" pref="337" max="-2" attributes="1"/>
-                  <Component id="jLabel7" pref="343" max="32767" attributes="2"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="tf_mainDir" min="-2" pref="338" max="-2" attributes="1"/>
-                      <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="jLabel8" pref="343" max="32767" attributes="2"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="tf_args" min="-2" pref="338" max="-2" attributes="1"/>
+                  <Component id="jLabel7" max="32767" attributes="2"/>
+                  <Component id="jLabel8" max="32767" attributes="2"/>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="tf_videoApp" alignment="0" min="-2" pref="337" max="-2" attributes="1"/>
+                          <Component id="tf_mainDir" alignment="0" min="-2" pref="338" max="-2" attributes="1"/>
+                          <Component id="tf_args" alignment="0" min="-2" pref="338" max="-2" attributes="1"/>
+                      </Group>
                       <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -43,38 +42,36 @@
           </Group>
           <Group type="102" alignment="0" attributes="1">
               <EmptySpace min="10" pref="10" max="10" attributes="0"/>
-              <Component id="jLabel11" pref="105" max="32767" attributes="2"/>
+              <Component id="jLabel11" max="32767" attributes="2"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jLabel14" pref="252" max="32767" attributes="3"/>
-              <EmptySpace pref="136" max="32767" attributes="0"/>
+              <Component id="jLabel14" min="-2" pref="316" max="-2" attributes="3"/>
+              <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="10" pref="10" max="10" attributes="0"/>
-              <Component id="combobox_dateFormat" min="-2" pref="106" max="-2" attributes="3"/>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="bt_dfhelp" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="355" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="10" pref="10" max="10" attributes="0"/>
-              <Component id="jLabel4" pref="237" max="32767" attributes="2"/>
+              <Component id="jLabel4" max="32767" attributes="2"/>
               <EmptySpace min="-2" pref="262" max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="10" pref="10" max="10" attributes="0"/>
-              <Component id="combobox_debugMode" min="-2" pref="104" max="-2" attributes="1"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jLabel22" min="-2" pref="304" max="-2" attributes="3"/>
-              <EmptySpace pref="87" max="32767" attributes="0"/>
+              <Component id="jLabel3" max="32767" attributes="2"/>
           </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="10" pref="10" max="10" attributes="0"/>
-              <Component id="jLabel3" pref="499" max="32767" attributes="2"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="10" pref="10" max="10" attributes="0"/>
-              <Component id="cb_showPopups" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="364" max="32767" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="combobox_dateFormat" min="-2" pref="106" max="-2" attributes="3"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Component id="bt_dfhelp" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="combobox_debugMode" min="-2" pref="104" max="-2" attributes="1"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabel22" min="-2" pref="286" max="-2" attributes="3"/>
+                  </Group>
+                  <Component id="cb_showPopups" alignment="0" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

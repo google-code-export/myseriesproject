@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.text.BadLocationException;
 import myseriesproject.MySeries;
@@ -346,8 +347,13 @@ public class Help extends JFrame {
 
     private void bt_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_searchActionPerformed
       String s = tf_search.getText();
+      MySeriesLogger.logger.log(Level.INFO, "Searching for {0}", s);
       SearchHelp search = new SearchHelp(this, s);
+    try {
       search.search();
+    } catch (IOException ex) {
+      Logger.getLogger(Help.class.getName()).log(Level.SEVERE, null, ex);
+    }
       setMainContent(search.results);
     }//GEN-LAST:event_bt_searchActionPerformed
 
