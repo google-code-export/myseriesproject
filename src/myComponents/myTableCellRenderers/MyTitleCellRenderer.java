@@ -62,7 +62,7 @@ public class MyTitleCellRenderer extends DefaultTableCellRenderer {
     }
 
     private void addIcon(EpisodesRecord ep) {
-        int icon = MyUsefulFunctions.getTitleCellIcon(ep);
+        int icon = MyUsefulFunctions.getTitleCellIcon(ep,true);
         String image = null;
         setToolTipText(null);
         switch (icon) {

@@ -62,11 +62,11 @@ public class Menus {
                 : "Delete selected episodes");
 
         //VIEW EPISODE
-        m.popUpItem_viewEpisode.setEnabled(episode!=null && !localDir.equals("") && singleEpisode && Episodes.checkDownloads(series, episode));
+        m.popUpItem_viewEpisode.setEnabled(episode!=null && !localDir.equals("") && singleEpisode && Episodes.checkDownloads(series, episode,true));
         m.popUpItem_viewEpisode.setText("View episode " + episodeTitle);
 
         //RENAME EPISODE
-        m.popUpItem_renameEpisode.setEnabled(episode!=null && !localDir.equals("") && singleEpisode && Episodes.checkDownloads(series, episode));
+        m.popUpItem_renameEpisode.setEnabled(episode!=null && !localDir.equals("") && singleEpisode && Episodes.checkDownloads(series, episode,true));
         m.popUpItem_renameEpisode.setText("Rename episode " + episodeTitle);
 
         //DOWNLOAD SUBS

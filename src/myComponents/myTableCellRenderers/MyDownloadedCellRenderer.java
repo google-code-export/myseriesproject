@@ -46,7 +46,7 @@ public class MyDownloadedCellRenderer extends DefaultTableCellRenderer {
       setText("");
       if (val) {
         EpisodesRecord ep = (EpisodesRecord) table.getValueAt(row, this.episodeColumn);
-        String[] types = MyUsefulFunctions.getVideoFileTypes(ep);
+        String[] types = MyUsefulFunctions.getVideoFileTypes(ep,true);
         if (types != null) {
           setIcon(createIcon(types));
         } else {

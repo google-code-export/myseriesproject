@@ -117,9 +117,9 @@ public class Episodes {
    * Checks if an episode is available for watching
    * @param episode The episode record
    */
-    public static boolean isWatchable(EpisodesRecord episode) {
+    public static boolean isWatchable(EpisodesRecord episode, boolean ignoreOption) {
         SeriesRecord series = Series.getCurrentSerial();
-        return (episode!=null && series.isValidLocalDir() && Episodes.checkDownloads(series, episode));
+        return (episode!=null && series.isValidLocalDir() && Episodes.checkDownloads(series, episode, ignoreOption));
     }
 
   private Episodes() {
@@ -172,8 +172,8 @@ public class Episodes {
         MySeriesLogger.logger.log(Level.INFO, "Auto extracting subtitles is active");
         unzipSubtitleFiles(series);
       }
-      subtitleFiles = Series.getSubtitleFiles(series);
-      videoFiles = Series.getVideoFiles(series);
+      subtitleFiles = Series.getSubtitleFiles(series,false);
+      videoFiles = Series.getVideoFiles(series,false);
     }
     if (Series.getCurrentSerial() == null) {
     }
@@ -254,12 +254,12 @@ public class Episodes {
     }
   }
 
-  public static boolean checkDownloads(SeriesRecord series, EpisodesRecord e) {
+  public static boolean checkDownloads(SeriesRecord series, EpisodesRecord e, boolean ignoreOption) {
     int season = series.getSeason();
     int episode = e.getEpisode();
     MySeriesLogger.logger.log(Level.INFO, "Checking downloaded of series {0} episode {1}",
             new String[]{series.getFullTitle(), e.getTitle()});
-    File[] videoFiles = Series.getVideoFiles(series);
+    File[] videoFiles = Series.getVideoFiles(series,ignoreOption);
     try {
       return checkDownloads(season, episode, videoFiles);
     } catch (SQLException ex) {

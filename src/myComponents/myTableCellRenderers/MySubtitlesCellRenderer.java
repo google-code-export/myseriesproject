@@ -50,7 +50,7 @@ public class MySubtitlesCellRenderer extends DefaultTableCellRenderer {
       setText("");
       if (val != LangsList.NONE) {
         EpisodesRecord ep = (EpisodesRecord) table.getValueAt(row, this.episodeColumn);
-        langs = MyUsefulFunctions.getSubtitleLangs(ep);
+        langs = MyUsefulFunctions.getSubtitleLangs(ep,true);
         if (langs != null) {
           tooltip = createToolTip(langs);
           setIcon(createIcon(langs));
