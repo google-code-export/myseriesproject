@@ -126,7 +126,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
   public MyEpisodesTableModel tableModel_episodes;
   private MyFilteredSeriesTableModel tableModel_filterSeries;
   public ComboBoxModel comboBoxModel_filters;
-  public static String version = "1.6";
+  public static String version = "1.6.1(r907)";
   public String date = "2012-03-31";
   public static MyDisabledGlassPane glassPane = new MyDisabledGlassPane();
   public static final long serialVersionUID = 234563636363L;
