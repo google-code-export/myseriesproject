@@ -27,48 +27,73 @@ import tools.options.MySeriesOptions;
 
 /**
  * The series table
+ *
  * @author lordovol
  */
 public class Series {
 
-  /**  The number of columns in Series table : 3 */
+  /**
+   * The number of columns in Series table : 3
+   */
   public static final int NUMBER_OF_COLUMS = 3;
-  /**  The fulltitle field : 0  */
+  /**
+   * The fulltitle field : 0
+   */
   public static final int SERIESRECORD_COLUMN = 0;
-  /** The hidden field : 1   */
+  /**
+   * The hidden field : 1
+   */
   public static final int HIDDEN_COLUMN = 1;
-  /** The update field : 2  */
+  /**
+   * The update field : 2
+   */
   public static final int UPDATE_COLUMN = 2;
-  /** The fulltitle field title : Title   */
+  /**
+   * The fulltitle field title : Title
+   */
   public static final String SERIES_RECORD_COLUMN_TITLE = "Title";
-  /** The hidden field title : Hidden   */
+  /**
+   * The hidden field title : Hidden
+   */
   public static final String HIDDEN_COLUMN_TITLE = "Hidden";
-  /** The update field title : Update   */
+  /**
+   * The update field title : Update
+   */
   public static final String UPDATE_COLUMN_TITLE = "Update";
-  /** The default season : 1   */
+  /**
+   * The default season : 1
+   */
   public static final int DEFAULT_SEASON = 1;
-  /** The minimum season : 1   */
+  /**
+   * The minimum season : 1
+   */
   public static final int MINIMUM_SEASON = 1;
-  /** The maximum season : 100   */
+  /**
+   * The maximum season : 100
+   */
   public static final int MAXIMUM_SEASON = 100;
-  /** The season step : 1   */
+  /**
+   * The season step : 1
+   */
   public static final int SEASON_STEP = 1;
-  /** The current series record   */
+  /**
+   * The current series record
+   */
   private static SeriesRecord currentSeries;
 
   private Series() {
   }
 
   /**
-   * Gets all the series
-   * First empties the series, gets all the series by title and sets the
-   * model of the series table.
+   * Gets all the series First empties the series, gets all the series by title
+   * and sets the model of the series table.
+   *
    * @param deleted Show deleted series or not
    * @return an arraylist of all the series records
    * @throws java.sql.SQLException
    */
   public static void updateSeriesTable(JTable seriesTable, boolean deleted) throws SQLException {
-    MySeriesLogger.logger.log(Level.INFO, "Updating {0} table",SeriesRecord.TABLE);
+    MySeriesLogger.logger.log(Level.INFO, "Updating {0} table", SeriesRecord.TABLE);
     emptySeries(seriesTable);
     ArrayList<SeriesRecord> series = getSeries(false);
     DefaultTableModel model = (DefaultTableModel) seriesTable.getModel();
@@ -89,9 +114,9 @@ public class Series {
   }
 
   /**
-   * Gets all the series
-   * First empties the series, gets all the series by title and sets the
-   * model of the series table.
+   * Gets all the series First empties the series, gets all the series by title
+   * and sets the model of the series table.
+   *
    * @param deleted If should search for deleted series
    * @return an arraylist of all the series records
    * @throws java.sql.SQLException
@@ -100,7 +125,7 @@ public class Series {
     int d = deleted ? 1 : 0;
     MySeriesLogger.logger.log(Level.INFO, "Getting all the {0} series", deleted ? SeriesRecord.C_DELETED : "");
     ArrayList<SeriesRecord> series = new ArrayList<SeriesRecord>();
-    String sql = "SELECT * FROM "+SeriesRecord.TABLE+"  WHERE " + SeriesRecord.C_DELETED + " = " + d + " ORDER BY " + SeriesRecord.C_TITLE + " , " + SeriesRecord.C_SEASON;
+    String sql = "SELECT * FROM " + SeriesRecord.TABLE + "  WHERE " + SeriesRecord.C_DELETED + " = " + d + " ORDER BY " + SeriesRecord.C_TITLE + " , " + SeriesRecord.C_SEASON;
 
     ResultSet rs = DBConnection.conn.createStatement().executeQuery(sql);
     boolean hidden;
@@ -166,8 +191,9 @@ public class Series {
   }
 
   /**
-   * Gets the serial of the selected row in the series table
-   * Then sets the current serial and updates the episodes list
+   * Gets the serial of the selected row in the series table Then sets the
+   * current serial and updates the episodes list
+   *
    * @param s The selected row or -1 for no series
    * @param showEpisodes update episodes or not (deprecated - always update)
    * @throws java.sql.SQLException
@@ -195,21 +221,9 @@ public class Series {
     ((DefaultTableModel) seriesTable.getModel()).setRowCount(0);
   }
 
-//    /**
-//     * @return the tableModel_series
-//     */
-//    public static MySeriesTableModel getTableModel_series() {
-//        return tableModel_series;
-//    }
-//
-//    /**
-//     * @param tableModel_series the tableModel_series to set
-//     */
-//    public static void setTableModel_series(MySeriesTableModel tableModel_series) {
-//        Series.tableModel_series = tableModel_series;
-//    }
   /**
    * Gets the current series or a new empty series if current series is null
+   *
    * @return the currentSerial
    */
   public static SeriesRecord getCurrentSerial() {
@@ -246,20 +260,23 @@ public class Series {
   /**
    * @return the subtitleFiles
    */
-  public static File[] getSubtitleFiles(SeriesRecord series) {
-    return getFiles(series, new SubtitlesFilter());
+  public static File[] getSubtitleFiles(SeriesRecord series, boolean ignoreOption) {
+    return getFiles(series, new SubtitlesFilter(), ignoreOption);
   }
 
   /**
    * @return the videoFiles
    */
-  public static File[] getVideoFiles(SeriesRecord series) {
-    return getFiles(series, new VideoFilter());
+  public static File[] getVideoFiles(SeriesRecord series, boolean ignoreOption) {
+    return getFiles(series, new VideoFilter(), ignoreOption);
   }
 
-  private static File[] getFiles(SeriesRecord series, FilenameFilter filter) {
+  private static File[] getFiles(SeriesRecord series, FilenameFilter filter, boolean ignoreOption) {
     File directory = new File(series.getLocalDir());
-    if (!series.isValidLocalDir() || !MySeries.options.getBooleanOption(MySeriesOptions.AUTO_FILE_UPDATING) || MyUsefulFunctions.isNetworkPath(directory)) {
+    if (!ignoreOption) {
+      ignoreOption = MySeries.options.getBooleanOption(MySeriesOptions.AUTO_FILE_UPDATING);
+    }
+    if (!series.isValidLocalDir() || !ignoreOption || MyUsefulFunctions.isNetworkPath(directory)) {
       return null;
     }
     MySeriesLogger.logger.log(Level.INFO, "Getting files interface dir {0}", directory);

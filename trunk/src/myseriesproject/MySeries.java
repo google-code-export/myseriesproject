@@ -1720,7 +1720,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
         event.setEpisode(ep);
         getEvClass().fireMyEvent(event);
         series = Series.getCurrentSerial();
-        if (Episodes.isWatchable(ep)) {
+        if (Episodes.isWatchable(ep,true)) {
           MySeriesLogger.logger.log(Level.INFO, "Opening {0} for watching", ep.getTitle());
           EpisodesActions.viewEpisode(tableEpisodes);
         } else {

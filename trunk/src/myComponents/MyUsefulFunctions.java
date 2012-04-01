@@ -663,7 +663,7 @@ public class MyUsefulFunctions {
     return list.substring(0, list.length() - (newLine ? 1 : 2));
   }
 
-  public static String getVideoFileSize(EpisodesRecord episode) {
+  public static String getVideoFileSize(EpisodesRecord episode, boolean ignoreOption) {
     String size = "";
     SeriesRecord series;
     try {
@@ -673,7 +673,7 @@ public class MyUsefulFunctions {
       return null;
     }
     if (new File(series.getLocalDir()).isDirectory()) {
-      File video = MyUsefulFunctions.getVideoFile(series, episode);
+      File video = MyUsefulFunctions.getVideoFile(series, episode, ignoreOption);
       if (video != null) {
         return " (" + createFileSize(video.length()) + ")";
       }
@@ -681,12 +681,12 @@ public class MyUsefulFunctions {
     return size;
   }
 
-  private static File getVideoFile(SeriesRecord series, EpisodesRecord episode) {
+  private static File getVideoFile(SeriesRecord series, EpisodesRecord episode, boolean ignoreOption) {
     MySeriesLogger.logger.log(Level.INFO, "Getting video file for series {0} and episode {1} ",
         new String[]{series.getFullTitle(), episode.getTitle()});
     String regex = MyUsefulFunctions.createRegex(series.getSeason(), episode.getEpisode());
     String regexFake = MyUsefulFunctions.createRegex(series.getSeason(), series.getSeason() * 10 + episode.getEpisode());
-    File[] videoFiles = Series.getVideoFiles(series);
+    File[] videoFiles = Series.getVideoFiles(series, ignoreOption);
     Pattern pattern = Pattern.compile(regex);
     Pattern patternFake = Pattern.compile(regexFake);
     for (int j = 0; j < videoFiles.length; j++) {
@@ -702,14 +702,14 @@ public class MyUsefulFunctions {
     return null;
   }
 
-  private static ArrayList<File> getVideoFiles(SeriesRecord series, EpisodesRecord episode) {
+  private static ArrayList<File> getVideoFiles(SeriesRecord series, EpisodesRecord episode, boolean ignoreOption) {
     MySeriesLogger.logger.log(Level.INFO, "Getting video files for series {0} and episode {1} ",
         new String[]{series.getFullTitle(), episode.getTitle()});
 
     String regex = MyUsefulFunctions.createRegex(series.getSeason(), episode.getEpisode());
     String regexFake = MyUsefulFunctions.createRegex(series.getSeason(), series.getSeason() * 10 + episode.getEpisode());
     ArrayList<File> files = new ArrayList<File>();
-    File[] videoFiles = Series.getVideoFiles(series);
+    File[] videoFiles = Series.getVideoFiles(series, ignoreOption);
     Pattern pattern = Pattern.compile(regex);
     Pattern patternFake = Pattern.compile(regexFake);
     if (videoFiles == null) {
@@ -729,7 +729,7 @@ public class MyUsefulFunctions {
     return files;
   }
 
-  public static String[] getVideoFileTypes(EpisodesRecord ep) {
+  public static String[] getVideoFileTypes(EpisodesRecord ep, boolean ignoreOption) {
     SeriesRecord series;
     MySeriesLogger.logger.log(Level.INFO, "Getting video file types for episode : {0}", ep.getTitle());
     try {
@@ -741,7 +741,7 @@ public class MyUsefulFunctions {
     }
     ArrayList<File> videos = new ArrayList<File>();
     if (series.isValidLocalDir() && MySeries.options.getBooleanOption(MySeriesOptions.AUTO_FILE_UPDATING)) {
-      videos = MyUsefulFunctions.getVideoFiles(series, ep);
+      videos = MyUsefulFunctions.getVideoFiles(series, ep, ignoreOption);
       if (videos.isEmpty()) {
         return null;
       }
@@ -773,13 +773,13 @@ public class MyUsefulFunctions {
     return types;
   }
 
-  private static ArrayList<File> getSubtitles(SeriesRecord series, EpisodesRecord episode) {
+  private static ArrayList<File> getSubtitles(SeriesRecord series, EpisodesRecord episode, boolean ignoreOption) {
     MySeriesLogger.logger.log(Level.INFO, "Getting subtitles for {0} episode {1}",
         new String[]{series.getFullTitle(), episode.getTitle()});
     String regex = MyUsefulFunctions.createRegex(series.getSeason(), episode.getEpisode());
     String regexFake = MyUsefulFunctions.createRegex(series.getSeason(), series.getSeason() * 10 + episode.getEpisode());
     ArrayList<File> subs = new ArrayList<File>();
-    File[] subtitles = Series.getSubtitleFiles(series);
+    File[] subtitles = Series.getSubtitleFiles(series, ignoreOption);
     Pattern pattern = Pattern.compile(regex);
     Pattern patternFake = Pattern.compile(regexFake);
     if (subtitles == null) {
@@ -800,7 +800,7 @@ public class MyUsefulFunctions {
     return subs;
   }
 
-  public static String[][] getSubtitleLangs(EpisodesRecord ep) {
+  public static String[][] getSubtitleLangs(EpisodesRecord ep, boolean ignoreOption) {
     MySeriesLogger.logger.log(Level.INFO, "Getting subtitle langs episode {1}",
         ep.getTitle());
     SeriesRecord series;
@@ -813,7 +813,7 @@ public class MyUsefulFunctions {
     }
     ArrayList<File> subtitles = new ArrayList<File>();
     if (series.isValidLocalDir() && MySeries.options.getBooleanOption(MySeriesOptions.AUTO_FILE_UPDATING)) {
-      subtitles = MyUsefulFunctions.getSubtitles(series, ep);
+      subtitles = MyUsefulFunctions.getSubtitles(series, ep, ignoreOption);
     } else {
       return null;
     }
@@ -871,7 +871,7 @@ public class MyUsefulFunctions {
     return false;
   }
 
-  public static boolean needRenaming(EpisodesRecord ep) {
+  public static boolean needRenaming(EpisodesRecord ep, boolean ignoreOption) {
     SeriesRecord series;
     try {
       series = SeriesRecord.queryOne(SeriesRecord.C_SERIES_ID + "=?",
@@ -880,8 +880,8 @@ public class MyUsefulFunctions {
       ArrayList<File> subs = new ArrayList<File>();
       if (series.isValidLocalDir()) {
         MySeriesLogger.logger.log(Level.INFO, "Check if episodes need renaming {0}", ep.getTitle());
-        videos = getVideoFiles(series, ep);
-        subs = getSubtitles(series, ep);
+        videos = getVideoFiles(series, ep,ignoreOption);
+        subs = getSubtitles(series, ep, ignoreOption);
         if (videos.isEmpty() || subs.isEmpty()) {
           MySeriesLogger.logger.log(Level.INFO, "No video or subtitle files");
           return false;
@@ -1272,11 +1272,11 @@ public class MyUsefulFunctions {
     return String.valueOf(chars);
   }
 
-  public static int getTitleCellIcon(EpisodesRecord ep) {
+  public static int getTitleCellIcon(EpisodesRecord ep, boolean ignoreOption) {
     boolean aired = MyUsefulFunctions.hasBeenAired(ep.getAired(), false);
     boolean downloaded = ep.getDownloaded() == 1;
     boolean subs = !ep.getSubs().getName().equals(SubtitleConstants.NONE);
-    boolean needRenaming = MyUsefulFunctions.needRenaming(ep);
+    boolean needRenaming = MyUsefulFunctions.needRenaming(ep,ignoreOption);
     boolean watched = ep.getSeen() == 1;
     if (watched || !aired) {
       return MyTitleCellRenderer.NO_ICON;
