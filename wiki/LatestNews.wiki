@@ -1,4 +1,13 @@
 ==MySerieS Latest News==
+<div title='news_7'>
+===01/04/2012 : MySerieS v.1.6.1===
+This is a version that fixes the following bugs:
+ * Fix recognition of files when auto updating of files is turned off
+ * Fix isohunt search form to display the right number of series, episode
+This is an update from version 1.6 to 1.6.1.<br />
+If you use MySerieS v1.6 download this and extarct it to your MySerieS directory overwritting the myseriesproject.jar and readme.txt files.<br />
+If you have a version previous to 1.6 you should download the whole version 1.6.1 package
+</div>
 <div title='news_6'>
 ===31/03/2012 : MySerieS v.1.6===
 What's New:
