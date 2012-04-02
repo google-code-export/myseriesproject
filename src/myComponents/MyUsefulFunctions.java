@@ -57,6 +57,7 @@ import myComponents.myTableCellRenderers.MyDownloadedCellRenderer;
 import myComponents.myTableCellRenderers.MySubtitlesCellRenderer;
 import myComponents.myTableCellRenderers.MyTitleCellRenderer;
 import myComponents.myToolbar.AbstractToolbar;
+import myComponents.myToolbar.ToolbarButton;
 import myComponents.myToolbar.ToolbarButtonActions;
 import myComponents.myToolbar.ToolbarSeperator;
 import myseriesproject.MySeries;
@@ -1202,7 +1203,9 @@ public class MyUsefulFunctions {
   }
 
   public static void createMemoryCons(MySeries m) {
-
+    if(!Arrays.asList(m.myToolbar.visibleButtons).contains(ToolbarButton.MEMORY)){
+      return;
+    }
     MySeriesLogger.logger.log(Level.INFO, "Creating the timer for memory consumption");
     if (MySeries.options.getIntegerOption(MySeriesOptions.MEMORY_CONSUMPTION_UPDATE) > 0) {
       m.myToolbar.addButton(AbstractToolbar.MEMORY);

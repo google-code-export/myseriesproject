@@ -19,6 +19,7 @@ import java.lang.Integer;
 import java.net.URI;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Vector;
 import java.util.logging.Level;
 import javax.swing.JFrame;
@@ -33,6 +34,7 @@ import myseriesproject.series.RecycleSeries;
 import myseriesproject.series.Series;
 import tools.internetUpdate.tvrage.TrGetId;
 import myComponents.MyUsefulFunctions;
+import myComponents.myToolbar.ToolbarButton;
 import myComponents.myToolbar.ToolbarCustomize;
 import myseriesproject.MySeriesConstants;
 import sdialogs.Info;
@@ -301,7 +303,6 @@ public class ApplicationActions {
     ToolbarCustomize tc = new ToolbarCustomize(m.myToolbar.getVisibleButtons());
     m.myToolbar.visibleButtons = tc.newVisibleButtons;
     MySeries.options.setOption(new Option(MySeriesOptions.TOOLBAR_BUTTONS,Option.ARRAY_CLASS, m.myToolbar.visibleButtons));
-    
     m.myToolbar.populateToolbar();
     MyUsefulFunctions.createMemoryCons(m);
   }
