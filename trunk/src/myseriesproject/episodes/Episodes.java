@@ -26,7 +26,8 @@ import myComponents.MyUsefulFunctions;
 import myComponents.myFileFilters.ZipFilter;
 import myseriesproject.MySeries;
 import tools.archive.ArchiveFile;
-import tools.download.subtitles.SubtitleMover;
+import tools.files.SubtitleMover;
+import tools.files.VideoMover;
 import tools.languages.LangsList;
 import tools.languages.Language;
 import tools.options.MySeriesOptions;
@@ -168,6 +169,8 @@ public class Episodes {
       list.add(series);
       SubtitleMover sm = new SubtitleMover(list);
       sm.move();
+      VideoMover vm = new VideoMover(list);
+      vm.move();
       if (MySeries.options.getBooleanOption(MySeriesOptions.AUTO_EXTRACT_ZIPS)) {
         MySeriesLogger.logger.log(Level.INFO, "Auto extracting subtitles is active");
         unzipSubtitleFiles(series);
