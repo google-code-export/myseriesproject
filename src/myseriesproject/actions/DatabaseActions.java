@@ -43,6 +43,7 @@ public class DatabaseActions {
         CreateDatabase c = new CreateDatabase(null, db);
         c.run();
         doLoad(m, c.db, oldDb, true);
+        
       }
       MySeries.glassPane.deactivate();
     } catch (Exception ex) {
@@ -74,7 +75,7 @@ public class DatabaseActions {
       MySeriesLogger.logger.log(Level.INFO, "Database to load : {0}", load);
       conn = new DBConnection(load, newDatabase);
       if (DBConnection.checkDatabase()) {
-        m.setTitle("MySerieS v" + MySeries.version + " - Database: " + MySeries.options.getStringOption(MySeriesOptions.DB_NAME).replace(".db", ""));
+        m.setTitle("MySerieS v" + MySeries.version + " - Database: " + load.replace(".db", ""));
         MyEventsClass evClass = new MyEventsClass(m);
         ev = new MyEvent(m, MyEventHandler.SERIES_UPDATE);
         evClass.fireMyEvent(ev);

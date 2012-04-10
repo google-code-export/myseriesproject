@@ -821,7 +821,6 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
         panel_episodes.setLayout(new java.awt.BorderLayout());
 
         tabsPanel.setToolTipText("");
-        tabsPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         tabsPanel.setMinimumSize(new java.awt.Dimension(120, 460));
         tabsPanel.setPaintGhost(false);
         tabsPanel.setPreferredSize(new java.awt.Dimension(400, 463));
@@ -1121,7 +1120,7 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
             tabpanel_feedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tabpanel_feedsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(feedSplitPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE)
+                .addComponent(feedSplitPanel)
                 .addContainerGap())
         );
 
@@ -1353,6 +1352,11 @@ public class MySeries extends javax.swing.JFrame implements TableModelListener, 
         menuItem_updateFiles.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/updateFiles.png"))); // NOI18N
         menuItem_updateFiles.setText("Update Files");
         menuItem_updateFiles.setText("Update Files");
+        menuItem_updateFiles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItem_updateFilesActionPerformed(evt);
+            }
+        });
         menu_Tools.add(menuItem_updateFiles);
 
         menuItem_housekeeping.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
