@@ -215,7 +215,7 @@ public class MyMessages {
 
   public static void logToPanel(int type, String title,  String message) {
     if (logPanel != null) {
-      logPanel.setVisible(true);
+      //logPanel.setVisible(true);
       logPanel.log(type, System.currentTimeMillis(),title, message);
 
     }
