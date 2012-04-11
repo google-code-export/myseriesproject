@@ -4,6 +4,8 @@
  */
 package myseriesproject.actions;
 
+import com.googlecode.soptions.Option;
+import com.googlecode.soptions.SOptions;
 import database.CreateDatabase;
 import database.DBConnection;
 import database.Database;
@@ -76,6 +78,7 @@ public class DatabaseActions {
       conn = new DBConnection(load, newDatabase);
       if (DBConnection.checkDatabase()) {
         m.setTitle("MySerieS v" + MySeries.version + " - Database: " + load.replace(".db", ""));
+        MySeries.options.setOption(new Option(MySeriesOptions.DB_NAME, Option.STRING_CLASS, load),true);
         MyEventsClass evClass = new MyEventsClass(m);
         ev = new MyEvent(m, MyEventHandler.SERIES_UPDATE);
         evClass.fireMyEvent(ev);
