@@ -273,6 +273,10 @@ public interface IMySeriesOptions {
    */
   public static final String SHOW_TOOLBAR = "showToolbar";
   /**
+   * Move video files from main series directory
+   */
+  public static final String MOVE_VIDEO_FILES = "moveVideoFiles";
+  /**
    * The type of iamge scaling from fastest(worst quality) to slower (better quality)
    */
   public static final int[] IMAGE_SCALING = {Image.SCALE_REPLICATE,

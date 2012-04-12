@@ -741,7 +741,7 @@ public class MyUsefulFunctions {
       return null;
     }
     ArrayList<File> videos = new ArrayList<File>();
-    if (series.isValidLocalDir() && MySeries.options.getBooleanOption(MySeriesOptions.AUTO_FILE_UPDATING)) {
+    if (series.isValidLocalDir()) {
       videos = MyUsefulFunctions.getVideoFiles(series, ep, ignoreOption);
       if (videos.isEmpty()) {
         return null;
@@ -813,7 +813,7 @@ public class MyUsefulFunctions {
       return null;
     }
     ArrayList<File> subtitles = new ArrayList<File>();
-    if (series.isValidLocalDir() && MySeries.options.getBooleanOption(MySeriesOptions.AUTO_FILE_UPDATING)) {
+    if (series.isValidLocalDir()) {
       subtitles = MyUsefulFunctions.getSubtitles(series, ep, ignoreOption);
     } else {
       return null;

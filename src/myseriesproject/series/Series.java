@@ -261,22 +261,19 @@ public class Series {
    * @return the subtitleFiles
    */
   public static File[] getSubtitleFiles(SeriesRecord series, boolean ignoreOption) {
-    return getFiles(series, new SubtitlesFilter(), ignoreOption);
+    return getFiles(series, new SubtitlesFilter());
   }
 
   /**
    * @return the videoFiles
    */
   public static File[] getVideoFiles(SeriesRecord series, boolean ignoreOption) {
-    return getFiles(series, new VideoFilter(), ignoreOption);
+    return getFiles(series, new VideoFilter());
   }
 
-  private static File[] getFiles(SeriesRecord series, FilenameFilter filter, boolean ignoreOption) {
+  private static File[] getFiles(SeriesRecord series, FilenameFilter filter) {
     File directory = new File(series.getLocalDir());
-    if (!ignoreOption) {
-      ignoreOption = MySeries.options.getBooleanOption(MySeriesOptions.AUTO_FILE_UPDATING);
-    }
-    if (!series.isValidLocalDir() || !ignoreOption || MyUsefulFunctions.isNetworkPath(directory)) {
+    if (!series.isValidLocalDir() || MyUsefulFunctions.isNetworkPath(directory)) {
       return null;
     }
     MySeriesLogger.logger.log(Level.INFO, "Getting files interface dir {0}", directory);

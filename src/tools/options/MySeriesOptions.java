@@ -4,7 +4,6 @@
  */
 package tools.options;
 
-import com.googlecode.soptions.IOption;
 import com.googlecode.soptions.Option;
 import com.googlecode.soptions.SOptions;
 import java.awt.Color;
@@ -12,7 +11,6 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JToolBar;
 import javax.xml.parsers.ParserConfigurationException;
@@ -40,7 +38,7 @@ public class MySeriesOptions extends SOptions implements IMySeriesOptions {
     return new Option[]{
           new Option(ACTIVE_FILTER, STRING_CLASS, ""),
           new Option(AUTO_EXTRACT_ZIPS, BOOLEAN_CLASS, false),
-          new Option(AUTO_FILE_UPDATING, BOOLEAN_CLASS, false),
+          new Option(AUTO_FILE_UPDATING, BOOLEAN_CLASS, true),
           new Option(AUTO_RENAME_SUBS, BOOLEAN_CLASS, false),
           new Option(CHECK_VERSION, BOOLEAN_CLASS, true),
           new Option(DATE_FORMAT, STRING_CLASS, "dd/MM/yyyy"),
@@ -87,7 +85,8 @@ public class MySeriesOptions extends SOptions implements IMySeriesOptions {
           new Option(WARN_FOR_LOG_USE, BOOLEAN_CLASS, true),
           new Option(WARN_FOR_VERSION, BOOLEAN_CLASS, true),
           new Option(WIDTH, INTEGER_CLASS, 100),
-          new Option(WINDOW_STATE, INTEGER_CLASS, JFrame.NORMAL)
+          new Option(WINDOW_STATE, INTEGER_CLASS, JFrame.NORMAL),
+          new Option(MOVE_VIDEO_FILES, BOOLEAN_CLASS, false)
         };
   }
 
@@ -114,7 +113,7 @@ public class MySeriesOptions extends SOptions implements IMySeriesOptions {
     setOption(new Option(PRIMARY_SUB, STRING_CLASS, OldOptions.getStringOption(IOldOptions.PRIMARY_SUB)));
     setOption(new Option(SECONDARY_SUB, STRING_CLASS, OldOptions.getStringOption(IOldOptions.SECONDARY_SUB)));
     setOption(new Option(SUBTITLE_SITE, STRING_CLASS, OldOptions.getStringOption(IOldOptions.SUBTITLE_SITE)));
-    setOption(new Option(AUTO_FILE_UPDATING, BOOLEAN_CLASS, OldOptions.getBooleanOption(IOldOptions.AUTO_FILE_UPDATING)));
+    setOption(new Option(AUTO_FILE_UPDATING, BOOLEAN_CLASS, true));
     setOption(new Option(SEASON_SEPARATOR, STRING_CLASS, OldOptions.getStringOption(IOldOptions.SEASON_SEPARATOR)));
     setOption(new Option(EPISODE_SEPARATOR, STRING_CLASS, OldOptions.getStringOption(IOldOptions.EPISODE_SEPARATOR)));
     setOption(new Option(TITLE_SEPARATOR, STRING_CLASS, OldOptions.getStringOption(IOldOptions.TITLE_SEPARATOR, false)));

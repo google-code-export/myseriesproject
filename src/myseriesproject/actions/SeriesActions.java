@@ -155,9 +155,7 @@ public class SeriesActions {
 
   public static void updateFiles(MySeries m) {
     MySeriesLogger.logger.log(Level.INFO, "Updating files");
-    boolean update = MySeries.options.getBooleanOption(MySeriesOptions.AUTO_FILE_UPDATING);
     boolean unzip = MySeries.options.getBooleanOption(MySeriesOptions.AUTO_EXTRACT_ZIPS);
-    MySeries.options.setOption(new Option(MySeriesOptions.AUTO_FILE_UPDATING,Option.BOOLEAN_CLASS, true));
     MySeries.options.setOption(new Option(MySeriesOptions.AUTO_EXTRACT_ZIPS,Option.BOOLEAN_CLASS, true));
     try {
       SeriesRecord origSeries = Series.getCurrentSerial();
@@ -180,7 +178,6 @@ public class SeriesActions {
     } catch (SQLException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, "Sql exception occured", ex);
     } finally {
-      MySeries.options.setOption(new Option(MySeriesOptions.AUTO_FILE_UPDATING,Option.BOOLEAN_CLASS, update));
       MySeries.options.setOption(new Option(MySeriesOptions.AUTO_EXTRACT_ZIPS,Option.BOOLEAN_CLASS, unzip));
     }
 
