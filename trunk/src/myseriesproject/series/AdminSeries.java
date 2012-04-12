@@ -657,7 +657,7 @@ public class AdminSeries extends MyDraggable {
             MyMessages.message("Downloading screenshot", "The screenshot was saved in the images folder");
           } else {
             MySeriesLogger.logger.log(Level.WARNING, "Screenshot not found");
-            MyMessages.warning("Downloading screenshot", "No screenshot was found", true);
+            MyMessages.warning("Downloading screenshot", g.message, true);
     }//GEN-LAST:event_bt_iuScreenshotActionPerformed
 
       }
