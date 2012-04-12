@@ -163,15 +163,17 @@ public class Episodes {
     SeriesRecord series = Series.getCurrentSerial();
     DefaultTableModel model = (DefaultTableModel) episodesTable.getModel();
     MySeriesLogger.logger.log(Level.INFO, "Getting episodes of series {0}", series.getFullTitle());
-    if (MySeries.options.getBooleanOption(MySeriesOptions.AUTO_FILE_UPDATING) && series.isValidLocalDir()) {
+    if (series.isValidLocalDir()) {
       MySeriesLogger.logger.log(Level.INFO, "File auto updating is active");
       ArrayList<SeriesRecord> list = new ArrayList<SeriesRecord>();
       list.add(series);
-      SubtitleMover sm = new SubtitleMover(list);
-      sm.move();
-      VideoMover vm = new VideoMover(list);
-      vm.move();
+      if(MySeries.options.getBooleanOption(MySeriesOptions.MOVE_VIDEO_FILES)){
+        VideoMover vm = new VideoMover(list);
+        vm.move();
+      }
       if (MySeries.options.getBooleanOption(MySeriesOptions.AUTO_EXTRACT_ZIPS)) {
+        SubtitleMover sm = new SubtitleMover(list);
+        sm.move();
         MySeriesLogger.logger.log(Level.INFO, "Auto extracting subtitles is active");
         unzipSubtitleFiles(series);
       }

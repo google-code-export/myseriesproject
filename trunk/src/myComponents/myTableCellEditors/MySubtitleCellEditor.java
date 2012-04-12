@@ -89,7 +89,7 @@ public class MySubtitleCellEditor extends AbstractCellEditor implements TableCel
         return true;
       }
     }
-    if (series.isValidLocalDir() && MySeries.options.getBooleanOption(MySeriesOptions.AUTO_FILE_UPDATING) && !MyUsefulFunctions.isNetworkPath(new File(series.getLocalDir()))) {
+    if (series.isValidLocalDir() && !MyUsefulFunctions.isNetworkPath(new File(series.getLocalDir()))) {
       return false;
     }
     if (!MyUsefulFunctions.hasBeenAired(ep.getAired(),true)) {

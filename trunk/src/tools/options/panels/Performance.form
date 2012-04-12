@@ -1,4 +1,4 @@
-<?xml version="1.1" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <Properties>
@@ -22,13 +22,18 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabel1" alignment="0" min="-2" pref="247" max="-2" attributes="2"/>
-                  <Component id="sl_memory" alignment="0" min="-2" pref="263" max="-2" attributes="0"/>
-                  <Component id="jLabel25" alignment="0" min="-2" pref="265" max="-2" attributes="0"/>
-                  <Component id="sl_image" alignment="0" min="-2" max="-2" attributes="1"/>
-                  <Component id="jLabel17" alignment="0" min="-2" pref="256" max="-2" attributes="2"/>
-                  <Component id="cb_autoUpdate" alignment="0" pref="391" max="32767" attributes="3"/>
-                  <Component id="cb_autoUnzip" alignment="0" pref="391" max="32767" attributes="3"/>
+                  <Component id="cb_moveVideoFiles" alignment="0" pref="391" max="32767" attributes="3"/>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabel1" alignment="0" min="-2" pref="247" max="-2" attributes="2"/>
+                          <Component id="sl_memory" alignment="0" min="-2" pref="263" max="-2" attributes="0"/>
+                          <Component id="jLabel25" alignment="0" min="-2" pref="265" max="-2" attributes="0"/>
+                          <Component id="sl_image" alignment="0" min="-2" max="-2" attributes="1"/>
+                          <Component id="jLabel17" alignment="0" min="-2" pref="256" max="-2" attributes="2"/>
+                      </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="cb_autoUnzip" alignment="1" max="32767" attributes="3"/>
               </Group>
           </Group>
       </Group>
@@ -44,13 +49,13 @@
               <Component id="jLabel25" min="-2" pref="28" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="sl_image" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               <Component id="jLabel17" min="-2" pref="14" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="cb_autoUpdate" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="cb_autoUnzip" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="23" max="32767" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="cb_moveVideoFiles" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="39" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -73,32 +78,12 @@
         <Property name="selected" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="MySeries.options.getBooleanOption(AUTO_EXTRACT_ZIPS)" type="code"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="(Also extract subtitles in zip files and delete the zip)"/>
+        <Property name="text" type="java.lang.String" value="Move , extract subtitles in zip files and delete the zip"/>
         <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="AUTO_EXTRACT_ZIPS" type="code"/>
         </Property>
         <Property name="opaque" type="boolean" value="false"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JCheckBox" name="cb_autoUpdate">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.editors2.FontEditor">
-          <FontInfo relative="true">
-            <Font component="cb_autoUpdate" italic="true" property="font" relativeSize="true" size="-1"/>
-          </FontInfo>
-        </Property>
-        <Property name="selected" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="MySeries.options.getBooleanOption(AUTO_FILE_UPDATING)" type="code"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="(Auto update of videos and subs from series folder)"/>
-        <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="AUTO_FILE_UPDATING" type="code"/>
-        </Property>
-        <Property name="opaque" type="boolean" value="false"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cb_autoUpdateActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
@@ -146,6 +131,26 @@
         <Property name="horizontalAlignment" type="int" value="2"/>
         <Property name="text" type="java.lang.String" value="Screenshots quality"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cb_moveVideoFiles">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.editors2.FontEditor">
+          <FontInfo relative="true">
+            <Font component="cb_moveVideoFiles" italic="true" property="font" relativeSize="true" size="-1"/>
+          </FontInfo>
+        </Property>
+        <Property name="selected" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="MySeries.options.getBooleanOption(MOVE_VIDEO_FILES)" type="code"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Move avi files from series main directory"/>
+        <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="MOVE_VIDEO_FILES" type="code"/>
+        </Property>
+        <Property name="opaque" type="boolean" value="false"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cb_moveVideoFilesActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

@@ -6,7 +6,6 @@ package tools.files;
 
 import database.SeriesRecord;
 import java.util.ArrayList;
-import myComponents.myFileFilters.SubtitlesFilter;
 import myComponents.myFileFilters.VideoFilter;
 
 /**
