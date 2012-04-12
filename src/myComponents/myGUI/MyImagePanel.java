@@ -245,7 +245,7 @@ public class MyImagePanel extends JPanel {
           }
         } else {
           MySeriesLogger.logger.log(Level.WARNING, "Screenshot not found");
-          MyMessages.error("Downloading screenshot", "No screenshot was found", true);
+          MyMessages.error("Downloading screenshot", scrDownload.message, true);
         }
       }
     }

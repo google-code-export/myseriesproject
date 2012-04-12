@@ -4,13 +4,13 @@
  */
 package tools.download.screenshot;
 
-import java.io.BufferedOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.awt.Image;
+import java.awt.image.ImageObserver;
+import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.logging.Level;
+import javax.swing.ImageIcon;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import tools.internetUpdate.InternetUpdate;
@@ -26,8 +26,9 @@ public class DownloadScreenshot {
 
   private final int tvRageID;
   private String filename;
-  private boolean success;
+  private boolean success = false;
   private final String series;
+  public String message = "";
 
   public DownloadScreenshot(int tvRageID, String series) {
     MySeriesLogger.logger.log(Level.INFO, "Downloading screenshot for series {0} with tvrage id {1}", new Object[]{series, tvRageID});
@@ -52,11 +53,13 @@ public class DownloadScreenshot {
       if (con.getHeaderField("Content-type").equals("image/jpeg")) {
         in = u.openStream();
         download(in);
-        return;
+      } else {
+        this.message = "Could not find a screenshot for series " + series;
       }
     } catch (IOException ex) {
+      this.message = "Could not find a screenshot for series " + series;
       MySeriesLogger.logger.log(Level.SEVERE, "I/O exception occured", ex);
-    } 
+    }
 
   }
 
@@ -73,11 +76,23 @@ public class DownloadScreenshot {
       }
       in.close();
       outStream.close();
-      setSuccess(true);
-      MySeriesLogger.logger.log(Level.FINE, "Screenshot downloaded");
+      if (checkImage()) {
+        setSuccess(true);
+        MySeriesLogger.logger.log(Level.FINE, "Screenshot downloaded");
+      } else {
+        new File(filename).delete();
+        this.message = "Screenshot for series " + series + " was not a valid jpg file";
+        MySeriesLogger.logger.log(Level.WARNING, "Screenshot downloaded but was not a valid jpg");
+      }
+      
     } catch (IOException ex) {
       MySeriesLogger.logger.log(Level.SEVERE, "Could not read from input stream", ex);
     }
+  }
+
+  private boolean checkImage() {
+    ImageIcon im = new ImageIcon(filename);
+    return im.getIconHeight() > -1 && im.getIconWidth() > -1;
   }
 
   /**
