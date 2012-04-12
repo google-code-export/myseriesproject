@@ -11,6 +11,7 @@
 package myseriesproject.statistics;
 
 import database.DBConnection;
+import database.SeriesRecord;
 import java.awt.Color;
 import java.sql.Statement;
 import java.sql.ResultSet;
@@ -20,7 +21,9 @@ import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import myComponents.MyUsefulFunctions;
 import myComponents.myTableCellRenderers.MyDecimalFormatRenderer;
+import myseriesproject.MySeries;
 import tools.MySeriesLogger;
+import tools.options.MySeriesOptions;
 
 /**
  *
@@ -120,9 +123,13 @@ public class StatEpisodes extends javax.swing.JPanel {
     ResultSet rs = null;
     try {
       Statement stmt = DBConnection.conn.createStatement();
+      String showDeleted = " ";
+      if(MySeries.options.getBooleanOption(MySeriesOptions.HIDE_DELETED_SERIES_RATINGS)){
+        showDeleted = "AND series.deleted = " + SeriesRecord.NOT_DELETED;
+      }
       String sql = "SELECT  series.title AS series, episodes.episode as episode,  series.season as season, episodes.title as title, episodes.rate as rate "
           + "FROM series join episodes on series.series_ID = episodes.series_ID "
-          + "where episodes.rate > 0 order by rate desc";
+          + "where episodes.rate > 0 " + showDeleted + " order by rate desc";
       rs = stmt.executeQuery(sql);
       while (rs.next()) {
         String series = rs.getString("series") + " S" + MyUsefulFunctions.padLeft(rs.getInt("season"), 2, "0");
@@ -131,6 +138,7 @@ public class StatEpisodes extends javax.swing.JPanel {
         Object[] data = {title, series, rate};
         model.addRow(data);
       }
+      lb_title.setText("Episodes Ratings (" + model.getRowCount() + " episodes)");
     } catch (SQLException ex) {
     } finally {
       try {

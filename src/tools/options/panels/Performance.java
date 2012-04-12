@@ -61,6 +61,7 @@ public class Performance extends javax.swing.JPanel implements IMySeriesOptions 
         sl_image = new javax.swing.JSlider();
         jLabel25 = new javax.swing.JLabel();
         cb_moveVideoFiles = new javax.swing.JCheckBox();
+        cb_autoUnzip1 = new javax.swing.JCheckBox();
 
         setName("Performance"); // NOI18N
 
@@ -68,10 +69,9 @@ public class Performance extends javax.swing.JPanel implements IMySeriesOptions 
         jLabel17.setText("Auto update Files :");
         jLabel17.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
-        cb_autoUnzip.setFont(cb_autoUnzip.getFont().deriveFont((cb_autoUnzip.getFont().getStyle() | java.awt.Font.ITALIC), cb_autoUnzip.getFont().getSize()-1));
-        cb_autoUnzip.setSelected(MySeries.options.getBooleanOption(AUTO_EXTRACT_ZIPS));
-        cb_autoUnzip.setText("Move , extract subtitles in zip files and delete the zip");
-        cb_autoUnzip.setName(AUTO_EXTRACT_ZIPS);
+        cb_autoUnzip.setSelected(MySeries.options.getBooleanOption(HIDE_DELETED_SERIES_RATINGS));
+        cb_autoUnzip.setText("Hide deleted series ratings");
+        cb_autoUnzip.setName(HIDE_DELETED_SERIES_RATINGS);
         cb_autoUnzip.setOpaque(false);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -112,6 +112,12 @@ public class Performance extends javax.swing.JPanel implements IMySeriesOptions 
             }
         });
 
+        cb_autoUnzip1.setFont(cb_autoUnzip1.getFont().deriveFont((cb_autoUnzip1.getFont().getStyle() | java.awt.Font.ITALIC), cb_autoUnzip1.getFont().getSize()-1));
+        cb_autoUnzip1.setSelected(MySeries.options.getBooleanOption(AUTO_EXTRACT_ZIPS));
+        cb_autoUnzip1.setText("Move , extract subtitles in zip files and delete the zip");
+        cb_autoUnzip1.setName(AUTO_EXTRACT_ZIPS);
+        cb_autoUnzip1.setOpaque(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -119,6 +125,9 @@ public class Performance extends javax.swing.JPanel implements IMySeriesOptions 
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(cb_autoUnzip, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
                     .addComponent(cb_moveVideoFiles, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,7 +137,7 @@ public class Performance extends javax.swing.JPanel implements IMySeriesOptions 
                             .addComponent(sl_image, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(cb_autoUnzip, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(cb_autoUnzip1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -141,13 +150,15 @@ public class Performance extends javax.swing.JPanel implements IMySeriesOptions 
                 .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(sl_image, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(cb_autoUnzip)
+                .addGap(6, 6, 6)
+                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cb_autoUnzip1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cb_moveVideoFiles)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -160,6 +171,7 @@ public class Performance extends javax.swing.JPanel implements IMySeriesOptions 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox cb_autoUnzip;
+    private javax.swing.JCheckBox cb_autoUnzip1;
     private javax.swing.JCheckBox cb_moveVideoFiles;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel17;

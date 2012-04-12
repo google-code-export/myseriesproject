@@ -277,6 +277,10 @@ public interface IMySeriesOptions {
    */
   public static final String MOVE_VIDEO_FILES = "moveVideoFiles";
   /**
+   * Hide ratings for deleted series
+   */
+  public static final String HIDE_DELETED_SERIES_RATINGS = "HideDeletedSeriesRatings";
+  /**
    * The type of iamge scaling from fastest(worst quality) to slower (better quality)
    */
   public static final int[] IMAGE_SCALING = {Image.SCALE_REPLICATE,

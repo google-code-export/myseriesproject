@@ -86,7 +86,8 @@ public class MySeriesOptions extends SOptions implements IMySeriesOptions {
           new Option(WARN_FOR_VERSION, BOOLEAN_CLASS, true),
           new Option(WIDTH, INTEGER_CLASS, 100),
           new Option(WINDOW_STATE, INTEGER_CLASS, JFrame.NORMAL),
-          new Option(MOVE_VIDEO_FILES, BOOLEAN_CLASS, false)
+          new Option(MOVE_VIDEO_FILES, BOOLEAN_CLASS, false),
+          new Option(HIDE_DELETED_SERIES_RATINGS, BOOLEAN_CLASS, false)
         };
   }
 
