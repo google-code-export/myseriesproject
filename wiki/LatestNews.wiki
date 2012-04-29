@@ -1,4 +1,18 @@
 ==MySerieS Latest News==
+<div title='news_8'>
+===29/04/2012 : MySerieS v.1.6.2===
+This is a version that fixes the following bugs:
+ * Memory icon that could not be hidden
+ * Bugs with creating and loading a database
+ * Issue with screenshots that cannot be read by the application
+Also added the following:
+ * Added option to move video files if they're in the main series directory
+ * If the messages panel is hidden it's not forced to show when there's a new message
+ * Added option to show ratings of deleted episodes or not
+This is an update from version 1.6.x to 1.6.2.<br />
+If you use MySerieS v1.6.x download this and extarct it to your MySerieS directory overwritting the myseriesproject.jar and readme.txt files.<br />
+If you have a version previous to 1.6 you should download the whole version 1.6.1 package
+</div>
 <div title='news_7'>
 ===01/04/2012 : MySerieS v.1.6.1===
 This is a version that fixes the following bugs:
