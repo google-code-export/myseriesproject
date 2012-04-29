@@ -17,6 +17,6 @@ public class VideoMover extends AbstractMover{
   
   public VideoMover(ArrayList<SeriesRecord> series) {
     super(series);
-    filter = new VideoFilter();
+    filter = new VideoFilter(false);
   }
 }

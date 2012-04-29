@@ -12,13 +12,20 @@ import java.io.FilenameFilter;
  * @author lordovol
  */
 public class VideoFilter implements FilenameFilter {
+  private boolean acceptDirs = true;
+
+  public VideoFilter(boolean dirs) {
+    this.acceptDirs = dirs;
+    
+  }
+    
 
   public static final String[] EXTENSIONS = {"avi", "mkv","mpg","mp4"};
 
 
   public boolean accept(File dir, String name) {
     if(new File(dir + "/" + name).isDirectory()){
-      return true;
+      return acceptDirs;
     }
     for (int i = 0; i < EXTENSIONS.length; i++) {
       String ext = EXTENSIONS[i];

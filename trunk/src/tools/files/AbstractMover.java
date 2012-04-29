@@ -35,9 +35,9 @@ public abstract class AbstractMover {
     for (Iterator<SeriesRecord> it = series.iterator(); it.hasNext();) {
       SeriesRecord ser = it.next();
       if (ser.isValidLocalDir()) {
-        MySeriesLogger.logger.log(Level.INFO, "Moving subtitles of series {0}", ser.getFullTitle());
-        ArrayList<File> subs = getFiles(ser);
-        for (Iterator<File> iter = subs.iterator(); iter.hasNext();) {
+        MySeriesLogger.logger.log(Level.INFO, "Moving files of series {0}", ser.getFullTitle());
+        ArrayList<File> files = getFiles(ser);
+        for (Iterator<File> iter = files.iterator(); iter.hasNext();) {
           File sub = iter.next();
           move(sub, ser);
         }
@@ -70,19 +70,19 @@ public abstract class AbstractMover {
   }
   
   protected ArrayList<File> getFiles(SeriesRecord ser) {
-    ArrayList<File> subtitles = new ArrayList<File>();
+    ArrayList<File> files = new ArrayList<File>();
     File mainDir = new File(MySeries.options.getStringOption(MySeriesOptions.MAIN_DIRECTORY));
-    File[] allSubs = mainDir.listFiles(filter);
-    if (allSubs != null) {
-      for (int i = 0; i < allSubs.length; i++) {
-        File file = allSubs[i];
+    File[] allFiles = mainDir.listFiles(filter);
+    if (allFiles != null) {
+      for (int i = 0; i < allFiles.length; i++) {
+        File file = allFiles[i];
         if (isValid(file, ser)) {
-          MySeriesLogger.logger.log(Level.FINE, "Found subtitle {0}", file);
-          subtitles.add(file);
+          MySeriesLogger.logger.log(Level.FINE, "Found file {0}", file);
+          files.add(file);
         }
       }
     }
 
-    return subtitles;
+    return files;
   }
 }

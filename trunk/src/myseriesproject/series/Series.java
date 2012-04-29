@@ -268,7 +268,7 @@ public class Series {
    * @return the videoFiles
    */
   public static File[] getVideoFiles(SeriesRecord series, boolean ignoreOption) {
-    return getFiles(series, new VideoFilter());
+    return getFiles(series, new VideoFilter(true));
   }
 
   private static File[] getFiles(SeriesRecord series, FilenameFilter filter) {

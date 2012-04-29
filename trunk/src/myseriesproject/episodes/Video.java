@@ -35,7 +35,7 @@ public class Video {
   public static void getVideos(File directory, String regex, String regexFake, JTable episodesTable) {
     MySeriesLogger.logger.log(Level.INFO, "Getting videos interface directory {0}",directory);
     ArrayList<File> videos = new ArrayList<File>();
-    File[] files = directory.listFiles(new VideoFilter());
+    File[] files = directory.listFiles(new VideoFilter(true));
     Pattern sPattern = Pattern.compile(regex);
     Pattern sPatternFake = Pattern.compile(regexFake);
     for (int i = 0; i < files.length; i++) {
