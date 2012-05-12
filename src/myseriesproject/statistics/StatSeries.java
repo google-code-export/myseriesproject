@@ -18,6 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import myComponents.myTableCellRenderers.MyDecimalFormatRenderer;
 import myseriesproject.MySeries;
@@ -28,25 +29,27 @@ import tools.options.MySeriesOptions;
  *
  * @author ssoldatos
  */
-public class StatSeries extends javax.swing.JPanel {
+public class StatSeries extends AbstractStat {
 
   public static int SERIES_COLUMN = 0;
   public static int EPISODES_COLUMN = 1;
   public static int RATE_COLUMN = 2;
   private boolean unifiedSeries = false;
-  private DefaultTableModel model;
 
   /**
    * Creates new form StatSeries
    */
   public StatSeries() {
-    super();
     initComponents();
+    create();
+
+  }
+
+  private void create() {
     jScrollPane1.getViewport().setOpaque(false);
-    model = (DefaultTableModel) table_stat_series.getModel();
-    table_stat_series.getColumnModel().getColumn(RATE_COLUMN).setCellRenderer(new MyDecimalFormatRenderer());
-    table_stat_series.getTableHeader().setReorderingAllowed(false);
-    validate();
+    model = (DefaultTableModel) getTable().getModel();
+    getTable().getColumnModel().getColumn(RATE_COLUMN).setCellRenderer(new MyDecimalFormatRenderer());
+    getTable().getTableHeader().setReorderingAllowed(false);
     setVisible(true);
   }
 
@@ -198,26 +201,6 @@ public class StatSeries extends javax.swing.JPanel {
     }
   }
 
-  private void clearModel() {
-    setModel((DefaultTableModel) table_stat_series.getModel());
-    getModel().getDataVector().removeAllElements();
-    getModel().fireTableDataChanged();
-  }
-
-  /**
-   * @return the model
-   */
-  public DefaultTableModel getModel() {
-    return model;
-  }
-
-  /**
-   * @param model the model to set
-   */
-  public void setModel(DefaultTableModel model) {
-    this.model = model;
-  }
-
   /**
    * @return the isUnifiedSeries
    */
@@ -238,5 +221,10 @@ public class StatSeries extends javax.swing.JPanel {
     lb_title.setForeground(color);
     lb_tip.setForeground(color);
     cb_unified.setForeground(color);
+  }
+
+  @Override
+  JTable getTable() {
+    return table_stat_series;
   }
 }
