@@ -1,4 +1,4 @@
-<?xml version="1.1" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
   <Properties>
@@ -48,18 +48,22 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="67" pref="67" max="67" attributes="0"/>
-                          <Component id="label_Title" min="-2" pref="436" max="-2" attributes="2"/>
-                          <EmptySpace min="-2" max="-2" attributes="0"/>
-                          <Component id="myButtonHelp1" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" max="-2" attributes="0"/>
-                          <Component id="myButtonCancel1" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="myButtonOk1" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="inner_panel" max="32767" attributes="2"/>
                           <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="label_Title" min="-2" pref="436" max="-2" attributes="2"/>
+                                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                                  <Component id="myButtonHelp1" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                                  <Component id="myButtonCancel1" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="myButtonOk1" alignment="1" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
               </Group>
@@ -76,8 +80,8 @@
                       <Component id="myButtonCancel1" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="inner_panel" pref="310" max="32767" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="inner_panel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Component id="myButtonOk1" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -96,73 +100,66 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="label_tvrageId" min="-2" max="-2" attributes="0"/>
-                          <Component id="label_season" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="label_title" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="label_localDir" min="-2" max="-2" attributes="0"/>
-                          <Component id="label_screenshot" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="label_tvsubsId" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="label_subOnlineId" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="textField_Serial" alignment="0" pref="224" max="32767" attributes="1"/>
-                                  <Component id="textfield_localDir" alignment="0" pref="224" max="32767" attributes="1"/>
-                                  <Component id="textfield_screenshot" alignment="0" pref="224" max="32767" attributes="1"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="spinner_season" min="-2" pref="46" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="label_quality" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="combo_quality" pref="123" max="32767" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="bt_iuScreenshot" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="bt_screenshot" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="bt_localDir" min="-2" max="-2" attributes="0"/>
-                                  <Component id="cb_existingSeries" alignment="0" min="-2" pref="189" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="180" pref="180" max="-2" attributes="0"/>
+                              <Component id="label_quality" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="combo_quality" min="-2" pref="114" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                          <Component id="textfield_tvRageID" alignment="0" max="32767" attributes="1"/>
-                                          <Component id="textfield_subsOnline" alignment="0" max="32767" attributes="1"/>
-                                          <Component id="textfield_tvSubsId" alignment="0" min="-2" pref="148" max="-2" attributes="1"/>
+                                  <Component id="label_title" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="label_season" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="label_localDir" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="label_screenshot" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="label_tvsubsId" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="label_subOnlineId" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="label_tvrageId" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel1" alignment="1" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="textField_Serial" alignment="0" min="-2" pref="222" max="-2" attributes="1"/>
+                                  <Component id="spinner_season" alignment="0" min="-2" pref="46" max="-2" attributes="0"/>
+                                  <Component id="cb_replace" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="textfield_localDir" alignment="0" min="-2" pref="222" max="-2" attributes="1"/>
+                                  <Component id="textfield_screenshot" alignment="0" max="32767" attributes="1"/>
+                                  <Component id="textfield_tvSubsId" alignment="0" max="32767" attributes="1"/>
+                                  <Component id="textfield_subsOnline" alignment="0" max="32767" attributes="1"/>
+                                  <Component id="textfield_tvRageID" alignment="0" max="32767" attributes="1"/>
+                                  <Component id="checkbox_updateEpisodes" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="bt_tvRage" alignment="1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="bt_subsOn" alignment="1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="bt_tvSubs" alignment="1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="bt_iuScreenshot" alignment="1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="bt_localDir" alignment="1" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="-2" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="bt_subsOn" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="bt_tvSubs" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="bt_tvRage" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="bt_screenshot" min="-2" max="-2" attributes="0"/>
+                                          <Component id="scrPanel" alignment="0" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <Component id="checkbox_updateEpisodes" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cb_existingSeries" min="-2" pref="253" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="scrPanel" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" max="-2" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="2" attributes="0">
                           <Component id="label_title" alignment="2" min="-2" max="-2" attributes="0"/>
@@ -176,6 +173,8 @@
                           <Component id="label_quality" alignment="2" min="-2" max="-2" attributes="0"/>
                           <Component id="combo_quality" alignment="2" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                      <Component id="cb_replace" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="2" attributes="0">
                           <Component id="label_localDir" alignment="2" min="-2" max="-2" attributes="0"/>
@@ -215,12 +214,12 @@
                                   <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="scrPanel" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <Component id="scrPanel" max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -363,12 +362,12 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="225" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="146" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
@@ -437,6 +436,14 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="combo_quality">
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="cb_replace">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Replace season"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cb_replaceActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
