@@ -45,15 +45,11 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="inner_panel" max="32767" attributes="2"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="0" pref="72" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="label_Title" min="-2" pref="436" max="-2" attributes="2"/>
@@ -64,6 +60,10 @@
                               </Group>
                               <Component id="myButtonOk1" alignment="1" min="-2" max="-2" attributes="0"/>
                           </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="inner_panel" max="32767" attributes="2"/>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -101,59 +101,78 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="180" pref="180" max="-2" attributes="0"/>
-                              <Component id="label_quality" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="combo_quality" min="-2" pref="114" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="label_title" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="label_season" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="label_localDir" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="label_screenshot" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="label_tvsubsId" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="label_subOnlineId" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="label_tvrageId" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel1" alignment="1" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="cb_replace" max="32767" attributes="0"/>
+                              <EmptySpace min="-2" pref="141" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="label_title" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="label_season" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="label_localDir" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="label_screenshot" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="label_tvsubsId" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="label_subOnlineId" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="label_tvrageId" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel1" alignment="1" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="textField_Serial" alignment="0" min="-2" pref="222" max="-2" attributes="1"/>
-                                  <Component id="spinner_season" alignment="0" min="-2" pref="46" max="-2" attributes="0"/>
-                                  <Component id="cb_replace" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="textfield_localDir" alignment="0" min="-2" pref="222" max="-2" attributes="1"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="spinner_season" min="-2" pref="46" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="label_quality" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Component id="textfield_localDir" alignment="0" max="32767" attributes="1"/>
                                   <Component id="textfield_screenshot" alignment="0" max="32767" attributes="1"/>
-                                  <Component id="textfield_tvSubsId" alignment="0" max="32767" attributes="1"/>
-                                  <Component id="textfield_subsOnline" alignment="0" max="32767" attributes="1"/>
-                                  <Component id="textfield_tvRageID" alignment="0" max="32767" attributes="1"/>
-                                  <Component id="checkbox_updateEpisodes" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <EmptySpace pref="10" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="bt_tvRage" alignment="1" min="-2" max="-2" attributes="0"/>
-                                          <Component id="bt_subsOn" alignment="1" min="-2" max="-2" attributes="0"/>
-                                          <Component id="bt_tvSubs" alignment="1" min="-2" max="-2" attributes="0"/>
-                                          <Component id="bt_iuScreenshot" alignment="1" min="-2" max="-2" attributes="0"/>
-                                          <Component id="bt_localDir" alignment="1" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="bt_screenshot" min="-2" max="-2" attributes="0"/>
-                                          <Component id="scrPanel" alignment="0" max="32767" attributes="0"/>
-                                      </Group>
+                                      <Component id="bt_iuScreenshot" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="bt_screenshot" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="cb_existingSeries" min="-2" pref="253" max="-2" attributes="0"/>
+                                  <Component id="bt_localDir" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="checkbox_updateEpisodes" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="textfield_tvSubsId" min="-2" max="-2" attributes="1"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="bt_tvSubs" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="textfield_subsOnline" min="-2" pref="80" max="-2" attributes="1"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="bt_subsOn" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="textfield_tvRageID" min="-2" pref="80" max="-2" attributes="1"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="bt_tvRage" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <Component id="scrPanel" max="32767" attributes="0"/>
+                              <EmptySpace min="66" pref="66" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="combo_quality" alignment="1" min="-2" pref="118" max="-2" attributes="0"/>
+                                  <Component id="textField_Serial" alignment="1" min="-2" pref="219" max="-2" attributes="1"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="cb_existingSeries" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -185,12 +204,12 @@
                       <Group type="103" groupAlignment="2" attributes="0">
                           <Component id="label_screenshot" alignment="2" min="-2" max="-2" attributes="0"/>
                           <Component id="textfield_screenshot" alignment="2" min="-2" max="-2" attributes="0"/>
-                          <Component id="bt_screenshot" alignment="2" min="-2" max="-2" attributes="0"/>
                           <Component id="bt_iuScreenshot" alignment="2" min="-2" max="-2" attributes="0"/>
+                          <Component id="bt_screenshot" alignment="2" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="2" attributes="0">
                                   <Component id="label_tvsubsId" alignment="2" min="-2" max="-2" attributes="0"/>
                                   <Component id="textfield_tvSubsId" alignment="2" min="-2" max="-2" attributes="0"/>
@@ -214,8 +233,8 @@
                                   <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                               <Component id="scrPanel" max="32767" attributes="0"/>
                           </Group>
                       </Group>

@@ -94,6 +94,17 @@ public class EpisodesActions {
     Video.getVideos(localDir, regex, regexFake, episodesTable);
   }
 
+  public static void deleteEpisodes (SeriesRecord series){
+    MySeriesLogger.logger.log(Level.INFO, "Deleting episodes of series {0}", series.getFullTitle());
+      try {
+        String sql = "DELETE FROM episodes WHERE series_ID = " + series.getSeries_ID();
+        DBConnection.conn.createStatement().execute(sql);
+        MySeriesLogger.logger.log(Level.FINE, "Episodes deleted");
+      } catch (SQLException ex) {
+        MySeriesLogger.logger.log(Level.SEVERE, "Could not delete episodes", ex);
+      } 
+  }
+  
   public static void deleteEpisode(JTable episodesTable) {
     String title = Episodes.getCurrentEpisode().getTitle();
     int episode_ID = Episodes.getCurrentEpisode().getEpisode_ID();
