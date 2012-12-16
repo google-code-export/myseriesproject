@@ -43,4 +43,13 @@ public abstract class AbstractTorrentForm extends MyDraggable implements Torrent
   }
 
   protected abstract URI createUri();
+  
+  public EpisodesRecord getEpisode(){
+    return this.episode;
+  }
+  
+  public SeriesRecord getSeries(){
+    return this.series;
+  }
+  
 }

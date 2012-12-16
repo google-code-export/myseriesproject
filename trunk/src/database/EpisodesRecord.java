@@ -9,8 +9,12 @@ import java.sql.ResultSet;
 import myComponents.MyUsefulFunctions;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Vector;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import tools.MySeriesLogger;
 import tools.languages.LangsList;
 import tools.languages.Language;
@@ -296,5 +300,9 @@ public class EpisodesRecord extends Record {
    */
   public void setRate(double rate) {
     this.rate = rate;
+  }
+  
+  public long getTimestamp(){
+    return MyUsefulFunctions.getTimestamp(this.getAired());
   }
 }

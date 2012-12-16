@@ -40,7 +40,7 @@ public class EzTv extends AbstractTorrentDownload implements Runnable, TorrentCo
    * @param form
    */
   public EzTv(URI uri, EzTvForm form) {
-      MySeriesLogger.logger.log(Level.INFO, "Downloading from eztv");
+    MySeriesLogger.logger.log(Level.INFO, "Downloading from eztv");
     this.uri = uri;
     this.form = form;
     this.progress = form.progress;

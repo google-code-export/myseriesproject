@@ -28,8 +28,8 @@ public abstract class AbstractTorrent {
   }
 
   public AbstractTorrent(String title, String link) {
-    this.title = title;
-    this.link = link;
+    this.title = title.trim();
+    this.link = link.trim();
   }
 
   @Override
@@ -62,7 +62,7 @@ public abstract class AbstractTorrent {
    * @param title the title to set
    */
   public void setTitle(String title) {
-    this.title = title;
+    this.title = title.trim();
   }
 
   /**
@@ -76,6 +76,6 @@ public abstract class AbstractTorrent {
    * @param link the link to set
    */
   public void setLink(String link) {
-    this.link = link;
+    this.link = link.trim();
   }
 }

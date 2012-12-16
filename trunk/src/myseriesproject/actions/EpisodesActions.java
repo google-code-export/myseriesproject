@@ -20,10 +20,12 @@ import javax.swing.JTable;
 import myComponents.MyMessages;
 import myComponents.MyUsefulFunctions;
 import myseriesproject.MySeries;
-import myseriesproject.episodes.*;
+import myseriesproject.episodes.AdminEpisodes;
+import myseriesproject.episodes.Episodes;
 import myseriesproject.episodes.Video;
 import myseriesproject.filters.Filters;
 import myseriesproject.series.Series;
+import tools.MySeriesLogger;
 import tools.download.subtitles.SubtitleConstants;
 import tools.download.subtitles.sonline.GetSubtitleOnlineCode;
 import tools.download.subtitles.sonline.SOnlineForm;
@@ -35,7 +37,6 @@ import tools.download.torrents.isohunt.IsohuntForm;
 import tools.importExport.ExportEpisodes;
 import tools.importExport.ImportEpisodes;
 import tools.renaming.RenameEpisodes;
-import tools.MySeriesLogger;
 
 /**
  *
