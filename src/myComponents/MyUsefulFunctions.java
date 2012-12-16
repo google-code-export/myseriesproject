@@ -1305,6 +1305,16 @@ public class MyUsefulFunctions {
     return true;
   }
 
+  public static long getTimestamp(String strDate) {
+    try {
+      Date date = new SimpleDateFormat("yyyy-MM-dd").parse(strDate);
+      return date.getTime();
+    } catch (ParseException ex) {
+     MySeriesLogger.logger.log(Level.SEVERE, null, ex);
+     return 0L;
+    }
+  }
+
   private MyUsefulFunctions() {
   }
 }

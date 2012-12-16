@@ -19,6 +19,14 @@ public interface TorrentConstants {
    */
   public static String EZTV_RSS = "http://ezrss.it/search/index.php?";
   /**
+   * The date EZTV RSS stoped working
+   */
+  public static String EZTV_OFF = "2012-09-22";
+  /**
+   * The eztv search link "http://eztv.it/search.php?"
+   */
+  public static String EZTV_SEARCH = "http://eztv.it/search.php?";
+  /**
    * The Isohunt name : Isohunt
    */
   public static String ISOHUNT_NAME = "Isohunt";
