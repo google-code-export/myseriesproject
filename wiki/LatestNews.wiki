@@ -1,4 +1,15 @@
 ==MySerieS Latest News==
+<div title='news_9'>
+===16/12/2012 : MySerieS v.1.6.3===
+This is a version that fixes the following bugs:
+ * Fixed episodes stats count
+ * Fixed downloading torrents from Eztv. Since eztv rss is down for a long time I changed the way the application was finding torrents. This may not be so accurate but it whould work in most cases. If it doesn't please contact me and tell me the series/episodes you were searching for.
+Also added the following:
+ * Added an option to replace a season with a newer one instead of keeping the old one.
+This is an update from version 1.6.x to 1.6.3.<br />
+If you use MySerieS v1.6.x download this and extarct it to your MySerieS directory overwritting the myseriesproject.jar and readme.txt files.<br />
+If you have a version previous to 1.6 you should download the whole version 1.6.3 package
+</div>
 <div title='news_8'>
 ===29/04/2012 : MySerieS v.1.6.2===
 This is a version that fixes the following bugs:
@@ -11,7 +22,7 @@ Also added the following:
  * Added option to show ratings of deleted episodes or not
 This is an update from version 1.6.x to 1.6.2.<br />
 If you use MySerieS v1.6.x download this and extarct it to your MySerieS directory overwritting the myseriesproject.jar and readme.txt files.<br />
-If you have a version previous to 1.6 you should download the whole version 1.6.1 package
+If you have a version previous to 1.6 you should download the whole version 1.6.2 package
 </div>
 <div title='news_7'>
 ===01/04/2012 : MySerieS v.1.6.1===
