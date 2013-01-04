@@ -20,7 +20,7 @@ public class VideoFilter implements FilenameFilter {
   }
     
 
-  public static final String[] EXTENSIONS = {"avi", "mkv","mpg","mp4"};
+  public static final String[] EXTENSIONS = {"avi", "mkv","mpg","mp4","wmv"};
 
 
   public boolean accept(File dir, String name) {
