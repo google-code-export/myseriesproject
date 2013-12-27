@@ -6,6 +6,11 @@ package tools.download.torrents;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import tools.MySeriesLogger;
+import tools.download.torrents.uriSchemeHandler.CouldNotOpenUriSchemeHandler;
+import tools.download.torrents.uriSchemeHandler.URISchemeHandler;
 
 /**
  *
@@ -21,8 +26,13 @@ public abstract class AbstractTorrent {
    * The torrents link
    */
   private String link;
+  
+  /**
+   * If this is a magnet link
+   */
+  private boolean isMagnetLink = false;
 
-  public AbstractTorrent(){
+  public AbstractTorrent() {
     this.title = "";
     this.link = "";
   }
@@ -39,16 +49,30 @@ public abstract class AbstractTorrent {
 
   /**
    * Gets the torrents URI
+   *
    * @return The torrents URI or null if there's a syntax error
    */
   public URI getUri() {
-    String encodedLink = getLink().replaceAll("\\[", "%5B");
-    encodedLink = encodedLink.replaceAll("\\]", "%5D");
-    try {
-      return new URI(encodedLink);
-    } catch (URISyntaxException ex) {
-      return null;
+    String link = getLink();
+    String encodedLink = null;
+    encodedLink = getLink().replaceAll("\\[", "%5B").replaceAll("\\]", "%5D");
+    if(link.startsWith("magnet")){
+      encodedLink = encodedLink.replaceAll(" ", "%20");
+      try {
+        setIsMagnetLink(true);
+        return new URI(encodedLink);
+      } catch (URISyntaxException ex1) {
+        MySeriesLogger.logger.log(Level.SEVERE, "Wrong syntax for magnet link URI",ex1);
+      }
+    } else {
+      try {    
+        return new URI(encodedLink);
+      } catch (URISyntaxException ex) {
+        MySeriesLogger.logger.log(Level.SEVERE, "URI syntax exception",ex);
+      }
+      
     }
+      return null;
   }
 
   /**
@@ -77,5 +101,19 @@ public abstract class AbstractTorrent {
    */
   public void setLink(String link) {
     this.link = link.trim();
+  }
+
+  /**
+   * @return the isMagnetLink
+   */
+  public boolean isIsMagnetLink() {
+    return isMagnetLink;
+  }
+
+  /**
+   * @param isMagnetLink the isMagnetLink to set
+   */
+  public void setIsMagnetLink(boolean isMagnetLink) {
+    this.isMagnetLink = isMagnetLink;
   }
 }
