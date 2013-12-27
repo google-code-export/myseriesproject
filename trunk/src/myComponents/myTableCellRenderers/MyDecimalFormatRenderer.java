@@ -26,36 +26,39 @@ public class MyDecimalFormatRenderer extends DefaultTableCellRenderer {
 
   @Override
   public Component getTableCellRendererComponent(
-      JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+          JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
     if (table.getName().equals("seriesStats")) {
       Vector<EpisodesRecord> episodes;
       if (table.getValueAt(row, StatSeries.SERIES_COLUMN) instanceof SeriesRecord) {
         SeriesRecord series = (SeriesRecord) table.getValueAt(row, StatSeries.SERIES_COLUMN);
-         episodes= DBHelper.getSeriesEpisodesByRate(series.getSeries_ID());
-        setToolTipText(createTooltip(episodes,false));
-      }else{
-        String title = (String) table.getValueAt(row, StatSeries.SERIES_COLUMN) ;
-       episodes= DBHelper.getSeriesEpisodesByRate(title);
-       setToolTipText(createTooltip(episodes,true));
+        episodes = DBHelper.getSeriesEpisodesByRate(series.getSeries_ID());
+        setToolTipText(createTooltip(episodes, false));
+      } else {
+        String title = (String) table.getValueAt(row, StatSeries.SERIES_COLUMN);
+        episodes = DBHelper.getSeriesEpisodesByRate(title);
+        setToolTipText(createTooltip(episodes, true));
       }
-      
+
     }
     value = MySeriesOptions._DEC_FORMAT_.format(value);
     setHorizontalAlignment(SwingConstants.RIGHT);
     return super.getTableCellRendererComponent(
-        table, value, isSelected, hasFocus, row, column);
+            table, value, isSelected, hasFocus, row, column);
   }
 
   private String createTooltip(Vector<EpisodesRecord> episodes, boolean unified) {
+    if(episodes == null){
+      return "";
+    }
     String tip = "<html><table>";
     for (Iterator<EpisodesRecord> it = episodes.iterator(); it.hasNext();) {
       EpisodesRecord episode = it.next();
-      String seasonStr="";
-      if(unified){
-      int season = DBHelper.getSeasonByEpisodeId(episode.getEpisode_ID());
-       seasonStr = season+".";
+      String seasonStr = "";
+      if (unified) {
+        int season = DBHelper.getSeasonByEpisodeId(episode.getEpisode_ID());
+        seasonStr = season + ".";
       }
-      tip += "<hr color='black'><tr><td align='right'>"+seasonStr+ episode.getEpisode() + "</td><td>" + episode.getTitle() + "</td><td align='right'>" + episode.getRate() + "</td></tr>";
+      tip += "<hr color='black'><tr><td align='right'>" + seasonStr + episode.getEpisode() + "</td><td>" + episode.getTitle() + "</td><td align='right'>" + episode.getRate() + "</td></tr>";
     }
     tip += "</table></html>";
     return tip;
