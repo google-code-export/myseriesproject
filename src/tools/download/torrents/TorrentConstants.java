@@ -33,7 +33,7 @@ public interface TorrentConstants {
   /**
    * The eztv rss link "http://ezrss.it/search/index.php?"
    */
-  public static String ISOHUNT_JSON = "http://isohunt.com/js/json.php?";
+  public static String ISOHUNT_JSON = "http://isohunt.to/js/json.php?";
   /**
    * List of qualities
    */

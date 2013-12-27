@@ -73,6 +73,11 @@ public class IsohuntForm extends AbstractTorrentForm implements TorrentConstants
   }
 
   private void showUp() {
+    if(!MyUsefulFunctions.hasInternetConnection(ISOHUNT_JSON)){
+      MyMessages.error("Download Torrent from Isohunt", "Isohunt is not available at the moment", true);
+      myseriesproject.MySeries.glassPane.deactivate();
+      return;
+    }
     initComponents();
     MySeriesLogger.logger.log(Level.FINE, "Components initialized");
     combo_series.setSelectedItem(series.getTitle());
