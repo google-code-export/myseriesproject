@@ -30,6 +30,9 @@ public class ToolbarButtonMouseMotionListener extends MouseAdapter {
         Component c = (Component) e.getSource();
 
         int order = c.getParent().getComponentZOrder(c);
+        c.setSize(ToolbarButtonActions.BUTTON_DIMENSION);
+        c.setMaximumSize(ToolbarButtonActions.BUTTON_DIMENSION);
+        
         if (c instanceof ToolbarButton) {
             ToolbarButton t = (ToolbarButton) c;
                 t.getTopLevelAncestor().setComponentZOrder(t, 0);

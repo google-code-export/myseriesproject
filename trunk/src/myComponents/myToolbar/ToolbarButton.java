@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package myComponents.myToolbar;
 
 import java.awt.Cursor;
@@ -17,6 +16,7 @@ import tools.MySeriesLogger;
  * @author ssoldatos
  */
 public class ToolbarButton extends JButton implements ToolbarButtonActions {
+
   private static final long serialVersionUID = 9471034018190L;
   private int actionName = NONE;
   private String tooltip;
@@ -25,7 +25,7 @@ public class ToolbarButton extends JButton implements ToolbarButtonActions {
   private boolean deprecated = false;
 
   public ToolbarButton() {
-    this(-1,"","");
+    this(-1, "", "");
   }
 
   @Override
@@ -33,20 +33,20 @@ public class ToolbarButton extends JButton implements ToolbarButtonActions {
     return super.clone();
   }
 
-  public ToolbarButton(int actionName,String tooltip, String image) {
+  public ToolbarButton(int actionName, String tooltip, String image) {
     this.actionName = actionName;
     this.tooltip = tooltip;
     this.setToolTipText(tooltip);
-    if(image.equals("")){
-     // setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
-    }else{
-    this.setIcon(new ImageIcon(getClass().getResource("/images/"+image)));
+    if (image.equals("")) {
+      // setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
+    } else {
+      this.setIcon(new ImageIcon(getClass().getResource("/images/" + image)));
     }
     setCursor(new Cursor(Cursor.HAND_CURSOR));
     addActionListener(new ToolbarActionListener());
     //setBackground(Skin.getSkinColor());
     //setOpaque(false);
-    MySeriesLogger.logger.log(Level.FINE, "Toolbar button {0} was created",this.toString());
+    MySeriesLogger.logger.log(Level.FINE, "Toolbar button {0} was created", this.toString());
   }
 
   /**
@@ -68,12 +68,12 @@ public class ToolbarButton extends JButton implements ToolbarButtonActions {
     return getTooltip();
   }
 
-    /**
-     * @return the tooltip
-     */
-    public String getTooltip() {
-        return tooltip;
-    }
+  /**
+   * @return the tooltip
+   */
+  public String getTooltip() {
+    return tooltip;
+  }
 
   /**
    * @return the deprecated
@@ -88,7 +88,4 @@ public class ToolbarButton extends JButton implements ToolbarButtonActions {
   public void setDeprecated(boolean deprecated) {
     this.deprecated = deprecated;
   }
-
-
-
 }
