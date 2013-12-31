@@ -1,4 +1,15 @@
 ==MySerieS Latest News==
+<div title='news_10'>
+===31/12/2013 : MySerieS v.1.6.4===
+This is a version that fixes the following bugs:
+ * Fixed downloading torrents from EzTv
+ * Fixed customizing toolbar when using Java 7.
+Also
+ * Removed downloading torrents from Isohunt until the API is up and running again (if ever).
+This is an update from version 1.6.x to 1.6.4.<br />
+If you use MySerieS v1.6.x download this and extarct it to your MySerieS directory overwritting the myseriesproject.jar ,readme.txt files and add commons-io-2.4.jar and apache-license.txt in the lib folder.<br />
+If you have a version previous to 1.6 you should download the whole version 1.6.4 package
+</div>
 <div title='news_9'>
 ===16/12/2012 : MySerieS v.1.6.3===
 This is a version that fixes the following bugs:
